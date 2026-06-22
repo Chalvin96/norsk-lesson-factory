@@ -1,0 +1,112 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment
+.env
+.env.local
+
+# Temp artifacts
+*.tmp
+*.log
+tmp/
+generated/
+
+# dist/ contains final lesson JSON payloads -- track them, ignore everything else
+dist/*
+!dist/manifest.json
+!dist/lessons/
+!dist/lessons/**
+!dist/schema/
+!dist/schema/**
+
+# Raw and source corpora are local artifacts
+content/raw/*
+!content/raw/.gitkeep
+content/source/*
+!content/source/.gitkeep
+content/processed/
+
+# Generated internal lesson outputs
+content/lessons/*.json
+
+# Pipeline artifacts: per-lesson stage outputs, routing reports, retrieval
+# report. These may contain source citations (publisher/title/page IDs)
+# and should never be published. .logs/ for run logs likewise.
+content/artifacts/*
+!content/artifacts/.gitkeep
+.logs/
+
+# Snapshot/benchmark directories for local before/after comparisons
+.benchmarks/
+
+# Generated local reports
+reports/
+
+# Object store may contain licensed corpus text (top-level only; not src/ or tests/ packages)
+/store/
+
+# Playwright MCP
+.playwright-mcp/
+
+# Generated curriculum audit artifact
+curriculum/structure_audit.json
+
+# Design docs / implementation plans (kept local, not published)
+docs/superpowers/plans/
+docs/superpowers/specs/
+plans/
+
+# Sentence-corpus source data is regenerable via scripts/fetch_*.py (large; CC-licensed
+# but kept out of tree). Keep the per-source ATTRIBUTION.md so obligations travel with the repo.
+data/sentence_corpus/sources/**/*.jsonl
+data/sentence_corpus/sources/**/*.conllu
+data/sentence_corpus/sources/**/*.csv
+data/sentence_corpus/sources/**/*.tsv*
+data/sentence_corpus/store/
+
+# Pinned extractions may contain textbook-derived example text — local determinism
+# artifact (re-create with `build pin-extraction <slug>`), not public data.
+data/extractions/
+
+# Generated local dictionary/cache artifacts. The Ordbokene/norsk-lexicon release
+# is a dependency for local gates, but is too large to keep in this repo.
+data/cache.db
+data/lexicon/
+
+# Local Claude Code agent state
+.claude/
+
+# LangGraph dev/Studio local runtime state
+.langgraph_api/

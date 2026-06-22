@@ -1,0 +1,70 @@
+name: release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify dist is up to date
+        run: |
+          shopt -s nullglob
+
+          sources=(data/lessons/*.json)
+          dist_files=(dist/lessons/*.json)
+
+          if [ "${#sources[@]}" -eq 0 ]; then
+            echo "::error::No source lessons found in data/lessons/"
+            exit 1
+          fi
+
+          if [ "${#dist_files[@]}" -eq 0 ]; then
+            echo "::error::No exported lessons found in dist/lessons/"
+            exit 1
+          fi
+
+          if [ ! -f "curriculum/structure.json" ]; then
+            echo "::error::Missing curriculum/structure.json"
+            exit 1
+          fi
+
+          missing=0
+          for src in "${sources[@]}"; do
+            slug=$(basename "$src" .json)
+            if [ "$slug" = "test-lesson" ]; then continue; fi
+            if [ ! -f "dist/lessons/${slug}.json" ]; then
+              echo "MISSING: dist/lessons/${slug}.json"
+              missing=$((missing + 1))
+            fi
+          done
+          if [ "$missing" -gt 0 ]; then
+            echo "::error::$missing lesson(s) missing from dist/lessons/"
+            exit 1
+          fi
+          echo "All ${#dist_files[@]} dist files present"
+
+      - name: Stage shipped files
+        run: |
+          mkdir -p staging/lessons
+          cp curriculum/structure.json staging/structure.json
+          cp dist/lessons/*.json staging/lessons/
+
+      - name: Build tarball
+        run: tar czf lessons.tar.gz -C staging .
+
+      - name: Verify contents
+        run: tar tzf lessons.tar.gz
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: lessons.tar.gz
+          generate_release_notes: true
