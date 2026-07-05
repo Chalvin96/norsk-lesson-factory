@@ -1,0 +1,2284 @@
+{
+  "$defs": {
+    "BuildPayload": {
+      "additionalProperties": false,
+      "properties": {
+        "tokens": {
+          "items": {
+            "$ref": "#/$defs/_Token"
+          },
+          "title": "Tokens",
+          "type": "array"
+        },
+        "answer_order": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Answer Order",
+          "type": "array"
+        }
+      },
+      "required": [
+        "tokens",
+        "answer_order"
+      ],
+      "title": "BuildPayload",
+      "type": "object"
+    },
+    "CalloutBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "callout",
+          "title": "Kind",
+          "type": "string"
+        },
+        "level": {
+          "enum": [
+            "tip",
+            "warning",
+            "note"
+          ],
+          "title": "Level",
+          "type": "string"
+        },
+        "blocks": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "callout": "#/$defs/CalloutBlock",
+                "example": "#/$defs/ExampleBlock",
+                "examples": "#/$defs/ExamplesBlock",
+                "heading": "#/$defs/HeadingBlock",
+                "list": "#/$defs/ListBlock",
+                "paragraph": "#/$defs/ParagraphBlock",
+                "rule": "#/$defs/RuleBlock",
+                "table": "#/$defs/TableBlock",
+                "word_list": "#/$defs/WordListBlock"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/HeadingBlock"
+              },
+              {
+                "$ref": "#/$defs/ParagraphBlock"
+              },
+              {
+                "$ref": "#/$defs/ListBlock"
+              },
+              {
+                "$ref": "#/$defs/RuleBlock"
+              },
+              {
+                "$ref": "#/$defs/ExampleBlock"
+              },
+              {
+                "$ref": "#/$defs/ExamplesBlock"
+              },
+              {
+                "$ref": "#/$defs/WordListBlock"
+              },
+              {
+                "$ref": "#/$defs/TableBlock"
+              },
+              {
+                "$ref": "#/$defs/CalloutBlock"
+              }
+            ]
+          },
+          "title": "Blocks",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "level",
+        "blocks"
+      ],
+      "title": "CalloutBlock",
+      "type": "object"
+    },
+    "CategorizePayload": {
+      "additionalProperties": false,
+      "properties": {
+        "buckets": {
+          "items": {
+            "$ref": "#/$defs/_Bucket"
+          },
+          "minItems": 2,
+          "title": "Buckets",
+          "type": "array"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/_CategorizeItem"
+          },
+          "title": "Items",
+          "type": "array"
+        }
+      },
+      "required": [
+        "buckets",
+        "items"
+      ],
+      "title": "CategorizePayload",
+      "type": "object"
+    },
+    "ChoosePayload": {
+      "additionalProperties": false,
+      "properties": {
+        "options": {
+          "items": {
+            "$ref": "#/$defs/_ChooseOption"
+          },
+          "minItems": 2,
+          "title": "Options",
+          "type": "array"
+        },
+        "answer_id": {
+          "title": "Answer Id",
+          "type": "string"
+        },
+        "stem": {
+          "anyOf": [
+            {
+              "items": {
+                "discriminator": {
+                  "mapping": {
+                    "code": "#/$defs/CodeSpan",
+                    "emphasis": "#/$defs/EmphasisSpan",
+                    "foreign_term": "#/$defs/ForeignTermSpan",
+                    "strong": "#/$defs/StrongSpan",
+                    "text": "#/$defs/TextSpan"
+                  },
+                  "propertyName": "kind"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/TextSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/EmphasisSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/StrongSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/CodeSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/ForeignTermSpan"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Stem"
+        }
+      },
+      "required": [
+        "options",
+        "answer_id"
+      ],
+      "title": "ChoosePayload",
+      "type": "object"
+    },
+    "CodeSpan": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "code",
+          "title": "Kind",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "value"
+      ],
+      "title": "CodeSpan",
+      "type": "object"
+    },
+    "EmphasisSpan": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "emphasis",
+          "title": "Kind",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "value"
+      ],
+      "title": "EmphasisSpan",
+      "type": "object"
+    },
+    "ExampleBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "example",
+          "title": "Kind",
+          "type": "string"
+        },
+        "no": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "No",
+          "type": "array"
+        },
+        "en": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "En",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "no",
+        "en"
+      ],
+      "title": "ExampleBlock",
+      "type": "object"
+    },
+    "ExampleItem": {
+      "additionalProperties": false,
+      "properties": {
+        "no": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "No",
+          "type": "array"
+        },
+        "en": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "En",
+          "type": "array"
+        }
+      },
+      "required": [
+        "no",
+        "en"
+      ],
+      "title": "ExampleItem",
+      "type": "object"
+    },
+    "ExamplesBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "examples",
+          "title": "Kind",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/ExampleItem"
+          },
+          "title": "Items",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "items"
+      ],
+      "title": "ExamplesBlock",
+      "type": "object"
+    },
+    "ExportedExercise_build": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "exercise",
+          "title": "Kind",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "operation": {
+          "const": "build",
+          "title": "Operation",
+          "type": "string"
+        },
+        "prompt": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "Prompt",
+          "type": "array"
+        },
+        "explanation": {
+          "anyOf": [
+            {
+              "items": {
+                "discriminator": {
+                  "mapping": {
+                    "code": "#/$defs/CodeSpan",
+                    "emphasis": "#/$defs/EmphasisSpan",
+                    "foreign_term": "#/$defs/ForeignTermSpan",
+                    "strong": "#/$defs/StrongSpan",
+                    "text": "#/$defs/TextSpan"
+                  },
+                  "propertyName": "kind"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/TextSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/EmphasisSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/StrongSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/CodeSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/ForeignTermSpan"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Explanation"
+        },
+        "payload": {
+          "$ref": "#/$defs/BuildPayload"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "operation",
+        "prompt",
+        "explanation",
+        "payload"
+      ],
+      "title": "ExportedExercise_build",
+      "type": "object"
+    },
+    "ExportedExercise_categorize": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "exercise",
+          "title": "Kind",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "operation": {
+          "const": "categorize",
+          "title": "Operation",
+          "type": "string"
+        },
+        "prompt": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "Prompt",
+          "type": "array"
+        },
+        "explanation": {
+          "anyOf": [
+            {
+              "items": {
+                "discriminator": {
+                  "mapping": {
+                    "code": "#/$defs/CodeSpan",
+                    "emphasis": "#/$defs/EmphasisSpan",
+                    "foreign_term": "#/$defs/ForeignTermSpan",
+                    "strong": "#/$defs/StrongSpan",
+                    "text": "#/$defs/TextSpan"
+                  },
+                  "propertyName": "kind"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/TextSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/EmphasisSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/StrongSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/CodeSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/ForeignTermSpan"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Explanation"
+        },
+        "payload": {
+          "$ref": "#/$defs/CategorizePayload"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "operation",
+        "prompt",
+        "explanation",
+        "payload"
+      ],
+      "title": "ExportedExercise_categorize",
+      "type": "object"
+    },
+    "ExportedExercise_choose": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "exercise",
+          "title": "Kind",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "operation": {
+          "const": "choose",
+          "title": "Operation",
+          "type": "string"
+        },
+        "prompt": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "Prompt",
+          "type": "array"
+        },
+        "explanation": {
+          "anyOf": [
+            {
+              "items": {
+                "discriminator": {
+                  "mapping": {
+                    "code": "#/$defs/CodeSpan",
+                    "emphasis": "#/$defs/EmphasisSpan",
+                    "foreign_term": "#/$defs/ForeignTermSpan",
+                    "strong": "#/$defs/StrongSpan",
+                    "text": "#/$defs/TextSpan"
+                  },
+                  "propertyName": "kind"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/TextSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/EmphasisSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/StrongSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/CodeSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/ForeignTermSpan"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Explanation"
+        },
+        "payload": {
+          "$ref": "#/$defs/ChoosePayload"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "operation",
+        "prompt",
+        "explanation",
+        "payload"
+      ],
+      "title": "ExportedExercise_choose",
+      "type": "object"
+    },
+    "ExportedExercise_find_fix": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "exercise",
+          "title": "Kind",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "operation": {
+          "const": "find_fix",
+          "title": "Operation",
+          "type": "string"
+        },
+        "prompt": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "Prompt",
+          "type": "array"
+        },
+        "explanation": {
+          "anyOf": [
+            {
+              "items": {
+                "discriminator": {
+                  "mapping": {
+                    "code": "#/$defs/CodeSpan",
+                    "emphasis": "#/$defs/EmphasisSpan",
+                    "foreign_term": "#/$defs/ForeignTermSpan",
+                    "strong": "#/$defs/StrongSpan",
+                    "text": "#/$defs/TextSpan"
+                  },
+                  "propertyName": "kind"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/TextSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/EmphasisSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/StrongSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/CodeSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/ForeignTermSpan"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Explanation"
+        },
+        "payload": {
+          "$ref": "#/$defs/FindFixPayload"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "operation",
+        "prompt",
+        "explanation",
+        "payload"
+      ],
+      "title": "ExportedExercise_find_fix",
+      "type": "object"
+    },
+    "ExportedExercise_judge": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "exercise",
+          "title": "Kind",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "operation": {
+          "const": "judge",
+          "title": "Operation",
+          "type": "string"
+        },
+        "prompt": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "Prompt",
+          "type": "array"
+        },
+        "explanation": {
+          "anyOf": [
+            {
+              "items": {
+                "discriminator": {
+                  "mapping": {
+                    "code": "#/$defs/CodeSpan",
+                    "emphasis": "#/$defs/EmphasisSpan",
+                    "foreign_term": "#/$defs/ForeignTermSpan",
+                    "strong": "#/$defs/StrongSpan",
+                    "text": "#/$defs/TextSpan"
+                  },
+                  "propertyName": "kind"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/TextSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/EmphasisSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/StrongSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/CodeSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/ForeignTermSpan"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Explanation"
+        },
+        "payload": {
+          "$ref": "#/$defs/JudgePayload"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "operation",
+        "prompt",
+        "explanation",
+        "payload"
+      ],
+      "title": "ExportedExercise_judge",
+      "type": "object"
+    },
+    "ExportedExercise_match_pairs": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "exercise",
+          "title": "Kind",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "operation": {
+          "const": "match_pairs",
+          "title": "Operation",
+          "type": "string"
+        },
+        "prompt": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "Prompt",
+          "type": "array"
+        },
+        "explanation": {
+          "anyOf": [
+            {
+              "items": {
+                "discriminator": {
+                  "mapping": {
+                    "code": "#/$defs/CodeSpan",
+                    "emphasis": "#/$defs/EmphasisSpan",
+                    "foreign_term": "#/$defs/ForeignTermSpan",
+                    "strong": "#/$defs/StrongSpan",
+                    "text": "#/$defs/TextSpan"
+                  },
+                  "propertyName": "kind"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/TextSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/EmphasisSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/StrongSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/CodeSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/ForeignTermSpan"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Explanation"
+        },
+        "payload": {
+          "$ref": "#/$defs/MatchPairsPayload"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "operation",
+        "prompt",
+        "explanation",
+        "payload"
+      ],
+      "title": "ExportedExercise_match_pairs",
+      "type": "object"
+    },
+    "ExportedExercise_recall_fill": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "exercise",
+          "title": "Kind",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "operation": {
+          "const": "recall_fill",
+          "title": "Operation",
+          "type": "string"
+        },
+        "prompt": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "Prompt",
+          "type": "array"
+        },
+        "explanation": {
+          "anyOf": [
+            {
+              "items": {
+                "discriminator": {
+                  "mapping": {
+                    "code": "#/$defs/CodeSpan",
+                    "emphasis": "#/$defs/EmphasisSpan",
+                    "foreign_term": "#/$defs/ForeignTermSpan",
+                    "strong": "#/$defs/StrongSpan",
+                    "text": "#/$defs/TextSpan"
+                  },
+                  "propertyName": "kind"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/TextSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/EmphasisSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/StrongSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/CodeSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/ForeignTermSpan"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Explanation"
+        },
+        "payload": {
+          "$ref": "#/$defs/RecallFillPayload"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "operation",
+        "prompt",
+        "explanation",
+        "payload"
+      ],
+      "title": "ExportedExercise_recall_fill",
+      "type": "object"
+    },
+    "ExportedSection": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "section",
+          "title": "Kind",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "orient",
+            "model",
+            "contrast",
+            "recap"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "blocks": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "callout": "#/$defs/CalloutBlock",
+                "example": "#/$defs/ExampleBlock",
+                "examples": "#/$defs/ExamplesBlock",
+                "heading": "#/$defs/HeadingBlock",
+                "list": "#/$defs/ListBlock",
+                "paragraph": "#/$defs/ParagraphBlock",
+                "rule": "#/$defs/RuleBlock",
+                "table": "#/$defs/TableBlock",
+                "word_list": "#/$defs/WordListBlock"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/HeadingBlock"
+              },
+              {
+                "$ref": "#/$defs/ParagraphBlock"
+              },
+              {
+                "$ref": "#/$defs/ListBlock"
+              },
+              {
+                "$ref": "#/$defs/RuleBlock"
+              },
+              {
+                "$ref": "#/$defs/ExampleBlock"
+              },
+              {
+                "$ref": "#/$defs/ExamplesBlock"
+              },
+              {
+                "$ref": "#/$defs/WordListBlock"
+              },
+              {
+                "$ref": "#/$defs/TableBlock"
+              },
+              {
+                "$ref": "#/$defs/CalloutBlock"
+              }
+            ]
+          },
+          "title": "Blocks",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "role",
+        "title",
+        "blocks"
+      ],
+      "title": "ExportedSection",
+      "type": "object"
+    },
+    "FindFixPayload": {
+      "additionalProperties": false,
+      "properties": {
+        "tokens": {
+          "items": {
+            "$ref": "#/$defs/_FindToken"
+          },
+          "title": "Tokens",
+          "type": "array"
+        },
+        "error_token_id": {
+          "title": "Error Token Id",
+          "type": "string"
+        },
+        "feedback": {
+          "title": "Feedback",
+          "type": "string"
+        }
+      },
+      "required": [
+        "tokens",
+        "error_token_id",
+        "feedback"
+      ],
+      "title": "FindFixPayload",
+      "type": "object"
+    },
+    "ForeignTermSpan": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "foreign_term",
+          "title": "Kind",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "string"
+        },
+        "lang": {
+          "enum": [
+            "no",
+            "en"
+          ],
+          "title": "Lang",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "value",
+        "lang"
+      ],
+      "title": "ForeignTermSpan",
+      "type": "object"
+    },
+    "HeadingBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "heading",
+          "title": "Kind",
+          "type": "string"
+        },
+        "level": {
+          "enum": [
+            3,
+            4
+          ],
+          "title": "Level",
+          "type": "integer"
+        },
+        "spans": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "Spans",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "level",
+        "spans"
+      ],
+      "title": "HeadingBlock",
+      "type": "object"
+    },
+    "JudgePayload": {
+      "additionalProperties": false,
+      "properties": {
+        "sentence": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "Sentence",
+          "type": "array"
+        },
+        "is_correct": {
+          "title": "Is Correct",
+          "type": "boolean"
+        },
+        "feedback": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Feedback"
+        }
+      },
+      "required": [
+        "sentence",
+        "is_correct",
+        "feedback"
+      ],
+      "title": "JudgePayload",
+      "type": "object"
+    },
+    "ListBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "list",
+          "title": "Kind",
+          "type": "string"
+        },
+        "ordered": {
+          "title": "Ordered",
+          "type": "boolean"
+        },
+        "items": {
+          "items": {
+            "items": {
+              "discriminator": {
+                "mapping": {
+                  "code": "#/$defs/CodeSpan",
+                  "emphasis": "#/$defs/EmphasisSpan",
+                  "foreign_term": "#/$defs/ForeignTermSpan",
+                  "strong": "#/$defs/StrongSpan",
+                  "text": "#/$defs/TextSpan"
+                },
+                "propertyName": "kind"
+              },
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/TextSpan"
+                },
+                {
+                  "$ref": "#/$defs/EmphasisSpan"
+                },
+                {
+                  "$ref": "#/$defs/StrongSpan"
+                },
+                {
+                  "$ref": "#/$defs/CodeSpan"
+                },
+                {
+                  "$ref": "#/$defs/ForeignTermSpan"
+                }
+              ]
+            },
+            "type": "array"
+          },
+          "title": "Items",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "ordered",
+        "items"
+      ],
+      "title": "ListBlock",
+      "type": "object"
+    },
+    "MatchPairsPayload": {
+      "additionalProperties": false,
+      "properties": {
+        "left": {
+          "items": {
+            "$ref": "#/$defs/_Left"
+          },
+          "title": "Left",
+          "type": "array"
+        },
+        "right": {
+          "items": {
+            "$ref": "#/$defs/_Right"
+          },
+          "title": "Right",
+          "type": "array"
+        },
+        "pairs": {
+          "items": {
+            "$ref": "#/$defs/_Pair"
+          },
+          "title": "Pairs",
+          "type": "array"
+        }
+      },
+      "required": [
+        "left",
+        "right",
+        "pairs"
+      ],
+      "title": "MatchPairsPayload",
+      "type": "object"
+    },
+    "ParagraphBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "paragraph",
+          "title": "Kind",
+          "type": "string"
+        },
+        "spans": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "Spans",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "spans"
+      ],
+      "title": "ParagraphBlock",
+      "type": "object"
+    },
+    "Pool": {
+      "additionalProperties": false,
+      "properties": {
+        "key": {
+          "title": "Key",
+          "type": "string"
+        },
+        "objective_id": {
+          "title": "Objective Id",
+          "type": "string"
+        },
+        "cards": {
+          "items": {
+            "$ref": "#/$defs/PoolCard"
+          },
+          "title": "Cards",
+          "type": "array"
+        }
+      },
+      "required": [
+        "key",
+        "objective_id",
+        "cards"
+      ],
+      "title": "Pool",
+      "type": "object"
+    },
+    "PoolCard": {
+      "additionalProperties": false,
+      "properties": {
+        "uuid": {
+          "format": "uuid",
+          "title": "Uuid",
+          "type": "string"
+        },
+        "exercise_id": {
+          "title": "Exercise Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "uuid",
+        "exercise_id"
+      ],
+      "title": "PoolCard",
+      "type": "object"
+    },
+    "RecallFillPayload": {
+      "additionalProperties": false,
+      "properties": {
+        "segments": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "blank": "#/$defs/_RecallBlank",
+                "span": "#/$defs/_RecallSpanSeg"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/_RecallSpanSeg"
+              },
+              {
+                "$ref": "#/$defs/_RecallBlank"
+              }
+            ]
+          },
+          "title": "Segments",
+          "type": "array"
+        }
+      },
+      "required": [
+        "segments"
+      ],
+      "title": "RecallFillPayload",
+      "type": "object"
+    },
+    "ReviewPool": {
+      "additionalProperties": false,
+      "properties": {
+        "pools": {
+          "items": {
+            "$ref": "#/$defs/Pool"
+          },
+          "title": "Pools",
+          "type": "array"
+        }
+      },
+      "required": [
+        "pools"
+      ],
+      "title": "ReviewPool",
+      "type": "object"
+    },
+    "RuleBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "rule",
+          "title": "Kind",
+          "type": "string"
+        },
+        "statement": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "Statement",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "statement"
+      ],
+      "title": "RuleBlock",
+      "type": "object"
+    },
+    "StrongSpan": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "strong",
+          "title": "Kind",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "value"
+      ],
+      "title": "StrongSpan",
+      "type": "object"
+    },
+    "TableBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "table",
+          "title": "Kind",
+          "type": "string"
+        },
+        "col_langs": {
+          "items": {
+            "enum": [
+              "en",
+              "no"
+            ],
+            "type": "string"
+          },
+          "title": "Col Langs",
+          "type": "array"
+        },
+        "headers": {
+          "items": {
+            "items": {
+              "discriminator": {
+                "mapping": {
+                  "code": "#/$defs/CodeSpan",
+                  "emphasis": "#/$defs/EmphasisSpan",
+                  "foreign_term": "#/$defs/ForeignTermSpan",
+                  "strong": "#/$defs/StrongSpan",
+                  "text": "#/$defs/TextSpan"
+                },
+                "propertyName": "kind"
+              },
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/TextSpan"
+                },
+                {
+                  "$ref": "#/$defs/EmphasisSpan"
+                },
+                {
+                  "$ref": "#/$defs/StrongSpan"
+                },
+                {
+                  "$ref": "#/$defs/CodeSpan"
+                },
+                {
+                  "$ref": "#/$defs/ForeignTermSpan"
+                }
+              ]
+            },
+            "type": "array"
+          },
+          "title": "Headers",
+          "type": "array"
+        },
+        "rows": {
+          "items": {
+            "items": {
+              "items": {
+                "discriminator": {
+                  "mapping": {
+                    "code": "#/$defs/CodeSpan",
+                    "emphasis": "#/$defs/EmphasisSpan",
+                    "foreign_term": "#/$defs/ForeignTermSpan",
+                    "strong": "#/$defs/StrongSpan",
+                    "text": "#/$defs/TextSpan"
+                  },
+                  "propertyName": "kind"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/TextSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/EmphasisSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/StrongSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/CodeSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/ForeignTermSpan"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            "type": "array"
+          },
+          "title": "Rows",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "col_langs",
+        "headers",
+        "rows"
+      ],
+      "title": "TableBlock",
+      "type": "object"
+    },
+    "TextSpan": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "text",
+          "title": "Kind",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "value"
+      ],
+      "title": "TextSpan",
+      "type": "object"
+    },
+    "WordListBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "word_list",
+          "title": "Kind",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/WordListItem"
+          },
+          "title": "Items",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "items"
+      ],
+      "title": "WordListBlock",
+      "type": "object"
+    },
+    "WordListItem": {
+      "additionalProperties": false,
+      "properties": {
+        "term": {
+          "title": "Term",
+          "type": "string"
+        },
+        "form": {
+          "title": "Form",
+          "type": "string"
+        }
+      },
+      "required": [
+        "term",
+        "form"
+      ],
+      "title": "WordListItem",
+      "type": "object"
+    },
+    "_Bucket": {
+      "additionalProperties": false,
+      "properties": {
+        "bucket_id": {
+          "title": "Bucket Id",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        }
+      },
+      "required": [
+        "bucket_id",
+        "label"
+      ],
+      "title": "_Bucket",
+      "type": "object"
+    },
+    "_CategorizeItem": {
+      "additionalProperties": false,
+      "properties": {
+        "item_id": {
+          "title": "Item Id",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "bucket_id": {
+          "title": "Bucket Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "item_id",
+        "text",
+        "bucket_id"
+      ],
+      "title": "_CategorizeItem",
+      "type": "object"
+    },
+    "_ChooseOption": {
+      "additionalProperties": false,
+      "properties": {
+        "option_id": {
+          "title": "Option Id",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "why": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Why"
+        }
+      },
+      "required": [
+        "option_id",
+        "text"
+      ],
+      "title": "_ChooseOption",
+      "type": "object"
+    },
+    "_FindToken": {
+      "additionalProperties": false,
+      "properties": {
+        "token_id": {
+          "title": "Token Id",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "token_id",
+        "text"
+      ],
+      "title": "_FindToken",
+      "type": "object"
+    },
+    "_Left": {
+      "additionalProperties": false,
+      "properties": {
+        "left_id": {
+          "title": "Left Id",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "left_id",
+        "text"
+      ],
+      "title": "_Left",
+      "type": "object"
+    },
+    "_Pair": {
+      "additionalProperties": false,
+      "properties": {
+        "left_id": {
+          "title": "Left Id",
+          "type": "string"
+        },
+        "right_id": {
+          "title": "Right Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "left_id",
+        "right_id"
+      ],
+      "title": "_Pair",
+      "type": "object"
+    },
+    "_RecallBlank": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "blank",
+          "title": "Kind",
+          "type": "string"
+        },
+        "blank_id": {
+          "title": "Blank Id",
+          "type": "string"
+        },
+        "options": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 2,
+          "title": "Options",
+          "type": "array"
+        },
+        "answer_index": {
+          "title": "Answer Index",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "kind",
+        "blank_id",
+        "options",
+        "answer_index"
+      ],
+      "title": "_RecallBlank",
+      "type": "object"
+    },
+    "_RecallSpanSeg": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "span",
+          "title": "Kind",
+          "type": "string"
+        },
+        "spans": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "Spans",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "spans"
+      ],
+      "title": "_RecallSpanSeg",
+      "type": "object"
+    },
+    "_Right": {
+      "additionalProperties": false,
+      "properties": {
+        "right_id": {
+          "title": "Right Id",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "right_id",
+        "text"
+      ],
+      "title": "_Right",
+      "type": "object"
+    },
+    "_Token": {
+      "additionalProperties": false,
+      "properties": {
+        "token_id": {
+          "title": "Token Id",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "fixed": {
+          "title": "Fixed",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "token_id",
+        "text",
+        "fixed"
+      ],
+      "title": "_Token",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "3.0",
+      "default": "3.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "key": {
+      "title": "Key",
+      "type": "string"
+    },
+    "concept_slug": {
+      "title": "Concept Slug",
+      "type": "string"
+    },
+    "grounding_mode": {
+      "enum": [
+        "grounded",
+        "fallback_no_wiki"
+      ],
+      "title": "Grounding Mode",
+      "type": "string"
+    },
+    "title": {
+      "title": "Title",
+      "type": "string"
+    },
+    "cefr_level": {
+      "enum": [
+        "A1",
+        "A2",
+        "B1",
+        "B2",
+        "C1",
+        "C2"
+      ],
+      "title": "Cefr Level",
+      "type": "string"
+    },
+    "goal": {
+      "title": "Goal",
+      "type": "string"
+    },
+    "elements": {
+      "items": {
+        "discriminator": {
+          "mapping": {
+            "exercise": {
+              "discriminator": {
+                "mapping": {
+                  "build": "#/$defs/ExportedExercise_build",
+                  "categorize": "#/$defs/ExportedExercise_categorize",
+                  "choose": "#/$defs/ExportedExercise_choose",
+                  "find_fix": "#/$defs/ExportedExercise_find_fix",
+                  "judge": "#/$defs/ExportedExercise_judge",
+                  "match_pairs": "#/$defs/ExportedExercise_match_pairs",
+                  "recall_fill": "#/$defs/ExportedExercise_recall_fill"
+                },
+                "propertyName": "operation"
+              },
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/ExportedExercise_recall_fill"
+                },
+                {
+                  "$ref": "#/$defs/ExportedExercise_match_pairs"
+                },
+                {
+                  "$ref": "#/$defs/ExportedExercise_judge"
+                },
+                {
+                  "$ref": "#/$defs/ExportedExercise_choose"
+                },
+                {
+                  "$ref": "#/$defs/ExportedExercise_categorize"
+                },
+                {
+                  "$ref": "#/$defs/ExportedExercise_build"
+                },
+                {
+                  "$ref": "#/$defs/ExportedExercise_find_fix"
+                }
+              ]
+            },
+            "section": "#/$defs/ExportedSection"
+          },
+          "propertyName": "kind"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/$defs/ExportedSection"
+          },
+          {
+            "discriminator": {
+              "mapping": {
+                "build": "#/$defs/ExportedExercise_build",
+                "categorize": "#/$defs/ExportedExercise_categorize",
+                "choose": "#/$defs/ExportedExercise_choose",
+                "find_fix": "#/$defs/ExportedExercise_find_fix",
+                "judge": "#/$defs/ExportedExercise_judge",
+                "match_pairs": "#/$defs/ExportedExercise_match_pairs",
+                "recall_fill": "#/$defs/ExportedExercise_recall_fill"
+              },
+              "propertyName": "operation"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/ExportedExercise_recall_fill"
+              },
+              {
+                "$ref": "#/$defs/ExportedExercise_match_pairs"
+              },
+              {
+                "$ref": "#/$defs/ExportedExercise_judge"
+              },
+              {
+                "$ref": "#/$defs/ExportedExercise_choose"
+              },
+              {
+                "$ref": "#/$defs/ExportedExercise_categorize"
+              },
+              {
+                "$ref": "#/$defs/ExportedExercise_build"
+              },
+              {
+                "$ref": "#/$defs/ExportedExercise_find_fix"
+              }
+            ]
+          }
+        ]
+      },
+      "title": "Elements",
+      "type": "array"
+    },
+    "review_pool": {
+      "$ref": "#/$defs/ReviewPool"
+    }
+  },
+  "required": [
+    "key",
+    "concept_slug",
+    "grounding_mode",
+    "title",
+    "cefr_level",
+    "goal",
+    "elements",
+    "review_pool"
+  ],
+  "title": "ExportedLesson",
+  "type": "object"
+}
