@@ -1,0 +1,14 @@
+description: Evaluate bounded exact edits for normalization content-preservation failures.
+
+prompts:
+  - file://prompts.py:create_preservation_repair_prompt
+
+providers:
+  - id: file://provider.py:call_api
+    label: configured-normalization-repair
+    config:
+      job: normalizer
+
+defaultTest: file://defaults/structured-response.yaml
+
+tests: file://cases/preservation_repair.yaml

@@ -1,0 +1,286 @@
+- handle: notice_passive_focus
+  op: choose
+  objective: obj-passive-bli-and-s-02
+  bloom: understand
+  derived_from:
+  - section_id: checkpoint-noticing-passive-focus
+  prompt_md: Compare the two supplied library messages. Select one complete interpretation
+    of what each passive puts in focus and why the employee need not be named.
+  stem_md: Compare «Bord ryddes etter bruk.» and «Det nye skiltet blir hengt opp i
+    kveld.» Which interpretation best explains what each passive puts in focus and
+    why the worker is unnecessary?
+  options:
+  - id: focus-agent
+    text: Begge setningene setter den ansatte som utfører handlingen, i fokus; bordene
+      og skiltet er bare bakgrunn. (Both sentences focus on the employee who acts;
+      the tables and sign are only background.)
+    correct: false
+    why: This reverses the information focus of a passive sentence.
+  - id: focus-reversed
+    text: «Bord ryddes etter bruk.» handler om én bestemt ansatt, mens «Det nye skiltet
+      blir hengt opp i kveld.» er en generell rutine. Derfor må den ansatte navngis.
+      (The first is about one particular employee, while the second is a general routine.
+      Therefore the employee must be named.)
+    correct: false
+    why: It confuses the routine with the particular event and wrongly makes the agent
+      necessary.
+  - id: focus-correct
+    text: «Bord ryddes etter bruk.» setter bordene og rutinen i fokus, mens «Det nye
+      skiltet blir hengt opp i kveld.» setter den konkrete hendelsen med skiltet i
+      fokus. Hvem som utfører handlingen, er ikke viktig. (The first focuses on tables
+      and the routine; the second focuses on the particular sign event. The worker
+      is not important.)
+    correct: true
+    why: The affected thing or particular event is the focus, while the agent is irrelevant.
+- handle: form_s_passive_for_procedures
+  op: build
+  objective: obj-passive-bli-and-s-01
+  bloom: apply
+  derived_from:
+  - section_id: checkpoint-form-s-passive
+  prompt_md: Rewrite the procedural statement Ansatte rydder bord etter bruk. (Staff
+    clear tables after use.) Put the affected item first, omit the worker, and remove
+    the present-tense -r where needed to form the s-passive. Build exactly one complete
+    Norwegian notice from the supplied tokens.
+  tokens:
+  - token_id: s-1
+    text: Bord
+  - token_id: s-2
+    text: ryddes
+  - token_id: s-3
+    text: etter
+  - token_id: s-4
+    text: bruk.
+  answer_order:
+  - s-1
+  - s-2
+  - s-3
+  - s-4
+- handle: form_bli_passive_for_events
+  op: build
+  objective: obj-passive-bli-and-s-01
+  bloom: apply
+  derived_from:
+  - section_id: checkpoint-form-bli-passive
+  prompt_md: 'Recast two particular library updates as one complete sentence: the
+    new sign will be put up this evening, and the door was repaired on Friday. Use
+    blir/ble + past participle, place tense on bli, and omit the agents.'
+  tokens:
+  - token_id: b-1
+    text: Det
+  - token_id: b-2
+    text: nye
+  - token_id: b-3
+    text: skiltet
+  - token_id: b-4
+    text: blir
+  - token_id: b-5
+    text: hengt
+  - token_id: b-6
+    text: opp
+  - token_id: b-7
+    text: i
+  - token_id: b-8
+    text: kveld,
+  - token_id: b-9
+    text: og
+  - token_id: b-10
+    text: døren
+  - token_id: b-11
+    text: ble
+  - token_id: b-12
+    text: reparert
+  - token_id: b-13
+    text: på
+  - token_id: b-14
+    text: fredag.
+  answer_order:
+  - b-1
+  - b-2
+  - b-3
+  - b-4
+  - b-5
+  - b-6
+  - b-7
+  - b-8
+  - b-9
+  - b-10
+  - b-11
+  - b-12
+  - b-13
+  - b-14
+- handle: choose_passive_for_routine_or_event
+  op: build
+  objective: obj-passive-bli-and-s-01
+  bloom: apply
+  derived_from:
+  - section_id: checkpoint-choose-passive-pattern
+  prompt_md: Build one complete library-reopening message from the tokens. Combine
+    a recurring after-use procedure with a particular sign event this evening. Use
+    an s-passive for the procedure, a bli-passive for the event, and omit the workers.
+  tokens:
+  - token_id: r-1
+    text: Bord
+  - token_id: r-2
+    text: ryddes
+  - token_id: r-3
+    text: etter
+  - token_id: r-4
+    text: bruk,
+  - token_id: r-5
+    text: og
+  - token_id: r-6
+    text: det
+  - token_id: r-7
+    text: nye
+  - token_id: r-8
+    text: skiltet
+  - token_id: r-9
+    text: blir
+  - token_id: r-10
+    text: hengt
+  - token_id: r-11
+    text: opp
+  - token_id: r-12
+    text: i
+  - token_id: r-13
+    text: kveld.
+  answer_order:
+  - r-1
+  - r-2
+  - r-3
+  - r-4
+  - r-5
+  - r-6
+  - r-7
+  - r-8
+  - r-9
+  - r-10
+  - r-11
+  - r-12
+  - r-13
+- handle: omit_irrelevant_agent
+  op: write
+  objective: obj-passive-bli-and-s-02
+  bloom: apply
+  derived_from:
+  - section_id: checkpoint-omit-irrelevant-agent
+  prompt_md: 'Rewrite the following practical notices in Norwegian. The named workers
+    in the first two notices are irrelevant: put the affected item first, omit the
+    worker, and choose a natural passive. Use an s-passive for the after-use routine
+    and a bli-passive for the particular evening event. The worker in the third notice
+    is relevant, so leave that notice unchanged. Return only the three resulting notices.
+    1. Renholderen rydder bord etter bruk. (The cleaner clears tables after use.)
+    2. Teknikeren henger opp det nye skiltet i kveld. (The technician puts up the
+    new sign this evening.) 3. En bibliotekar møter deg ved inngangen klokka fem.
+    (A librarian meets you at the entrance at five.)'
+  response_language: 'no'
+  min_words: 15
+  max_words: 35
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    The expected core rewrites are «Bord ryddes etter bruk.» and «Det nye skiltet
+    blir hengt opp i kveld.», but accept equally natural Bokmål variants that preserve
+    the same passive patterns and information focus. The relevant librarian must remain
+    in the third notice.
+  criteria:
+  - id: omit-irrelevant-agents
+    instruction: Omits the irrelevant worker in the first two rewrites, puts the affected
+      item first, and leaves the relevant librarian in the third notice.
+  - id: passive-pattern-support
+    instruction: Uses a natural s-passive for the after-use routine and a natural
+      bli-passive for the evening event.
+- handle: revise_library_reopening_notice
+  op: write
+  objective: obj-passive-bli-and-s-01
+  bloom: apply
+  derived_from:
+  - section_id: checkpoint-revise-library-reopening-notice
+  prompt_md: Revise Marius's draft public notice for the library reopening. Return
+    only the revised Norwegian notice. Keep all four content points, remove irrelevant
+    workers, put affected items or events first, use s-passives for recurring or instructional
+    points, and use bli-passives for particular event updates. 1. Ansatte rydder bord
+    etter bruk. (Staff clear tables after use.) 2. Renholderen vasker gulvet hver
+    dag. (The cleaner washes the floor every day.) 3. Teknikeren henger opp det nye
+    skiltet i kveld. (The technician puts up the new sign this evening.) 4. Vaktmesteren
+    reparerte døren på fredag. (The caretaker repaired the door on Friday.)
+  response_language: 'no'
+  min_words: 20
+  max_words: 50
+  judge_prompt: Check all four content points against the task and report evidence
+    for each criterion. Expected core forms are «Bord ryddes etter bruk.», «Gulvet
+    vaskes hver dag.», «Det nye skiltet blir hengt opp i kveld.», and «Døren ble reparert
+    på fredag.». Accept natural Bokmål variants only when they preserve all content
+    cues, the requested passive distinction, and omission of irrelevant agents.
+  criteria:
+  - id: routine-s-passives
+    instruction: Recasts the first two recurring or instructional points as natural
+      s-passives and preserves their cues such as etter bruk and hver dag.
+  - id: event-bli-passives
+    instruction: Recasts the last two particular events as natural blir/ble + past
+      participle forms and preserves their time cues.
+  - id: integrated-agent-omission
+    instruction: Removes irrelevant workers and makes the affected items or events
+      the focus throughout the revised notice.
+- handle: create_cafe_opening_update
+  op: write
+  objective: obj-passive-bli-and-s-02
+  bloom: apply
+  derived_from:
+  - section_id: cafe-opening-transfer
+  prompt_md: 'Write two short Norwegian parts for a café opening: one public notice
+    and one conversational internal update. In the public notice, state that napkins
+    are collected at the counter every day and cups are cleared after use. Use s-passives
+    for these recurring customer procedures. In the internal update, report that the
+    new coffee machine will be installed tomorrow and the ventilation was inspected
+    on Friday. Use bli-passives for these particular events. Omit workers when their
+    identities do not matter. Use original café wording.'
+  response_language: 'no'
+  min_words: 20
+  max_words: 50
+  judge_prompt: Check both parts against the task and report evidence for each criterion.
+    Expected evidence is two public procedure sentences in -s and two internal event
+    updates using blir/ble + past participle, with worker identities omitted. Accept
+    natural Bokmål lexical variants that preserve the two communicative settings and
+    passive prototypes, but do not accept a verbatim lesson sentence as the transfer
+    response.
+  criteria:
+  - id: cafe-public-s-passives
+    instruction: Uses natural s-passives for both recurring or direct-customer procedures
+      in the public notice.
+  - id: cafe-internal-bli-passives
+    instruction: Uses natural blir/ble + past participle forms for both particular
+      event updates in the internal message.
+  - id: cafe-agent-omission
+    instruction: Omits worker identities where they do not matter and keeps the affected
+      items or events in focus.
+- handle: retrieve_bli_and_s_passive
+  op: write
+  objective: obj-passive-bli-and-s-02
+  bloom: apply
+  derived_from:
+  - section_id: short-retrieval-review
+  prompt_md: Respond in Norwegian. First state
+    the practical tendency that distinguishes the two passive patterns. Then produce
+    one Norwegian sentence for a recurring procedure with the exact cue hver dag and
+    an s-passive, and one conversational report about a particular event happening
+    now or already completed with a bli-passive and an explicit time cue. Omit an
+    irrelevant agent in both sentences. Use original wording for a setting such as
+    a café, office, or shop.
+  response_language: 'no'
+  min_words: 20
+  max_words: 45
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept concise natural Bokmål wording and different lexical frames, including
+    either blir or ble for the particular event, when the time cue and event reading
+    are clear. Do not require a verbatim model sentence.
+  criteria:
+  - id: states-passive-tendency
+    instruction: States in Norwegian that s-passive is often used for routines, procedures,
+      or instructions, while bli-passive is often used for particular events.
+  - id: recurring-s-sentence
+    instruction: Provides one natural Bokmål s-passive sentence with hver dag, omitting
+      an irrelevant agent and focusing the affected thing.
+  - id: event-bli-sentence
+    instruction: Provides one natural Bokmål bli-passive sentence for a current or
+      completed particular event with an explicit time cue, omitting an irrelevant
+      agent and focusing the affected event or thing.

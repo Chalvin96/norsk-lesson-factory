@@ -1,0 +1,283 @@
+- handle: identify_central_message
+  op: choose
+  objective: obj-report-workplace-absence-01
+  bloom: understand
+  prompt_md: 'Sara says: «Hei, Henrik. Det er Sara. Jeg er dessverre syk og kan ikke
+    komme på jobb i dag.» Choose the option that identifies both the absence and its
+    timing, without using later meeting details.'
+  derived_from:
+  - section_id: sec-essential-absence-message
+  stem_md: Which option states both Sara's absence and its timing?
+  options:
+  - id: central-today
+    text: Jeg er syk og kan ikke komme på jobb i dag.
+    correct: true
+    why: This identifies both the absence and the fact that it applies today.
+  - id: central-tomorrow
+    text: Jeg kan ikke komme på jobb i morgen.
+    correct: false
+    why: This gives tomorrow as the timing, not today.
+  - id: at-work-now
+    text: Jeg er på jobb nå.
+    correct: false
+    why: This says that the speaker is at work, not absent.
+  - id: after-lunch
+    text: Jeg kan komme på jobb etter lunsj, men ikke før.
+    correct: false
+    why: This describes coming after lunch rather than being unable to come today.
+- handle: make_timing_precise
+  op: build
+  objective: obj-report-workplace-absence-01
+  bloom: apply
+  prompt_md: Build the complete Norwegian timing message. Say that Sara stays home
+    today (Tuesday) and does not yet know whether she can come tomorrow (Wednesday).
+    Use every token exactly once.
+  derived_from:
+  - section_id: sec-giving-useful-timing
+  tokens:
+  - token_id: tok-1
+    text: Jeg
+  - token_id: tok-2
+    text: blir
+  - token_id: tok-3
+    text: hjemme
+  - token_id: tok-4
+    text: i
+  - token_id: tok-5
+    text: dag.
+  - token_id: tok-6
+    text: Jeg
+  - token_id: tok-7
+    text: vet
+  - token_id: tok-8
+    text: ikke
+  - token_id: tok-9
+    text: ennå
+  - token_id: tok-10
+    text: om
+  - token_id: tok-11
+    text: jeg
+  - token_id: tok-12
+    text: kan
+  - token_id: tok-13
+    text: komme
+  - token_id: tok-14
+    text: i
+  - token_id: tok-15
+    text: morgen.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+  - tok-11
+  - tok-12
+  - tok-13
+  - tok-14
+  - tok-15
+- handle: add_next_contact
+  op: build
+  objective: obj-report-workplace-absence-01
+  bloom: apply
+  prompt_md: Build one Norwegian sentence for Sara to say to her team leader on Tuesday.
+    Promise an update by a specific time.
+  derived_from:
+  - section_id: sec-saying-what-happens-next
+  tokens:
+  - token_id: contact-01
+    text: Jeg
+  - token_id: contact-02
+    text: gir
+  - token_id: contact-03
+    text: deg
+  - token_id: contact-04
+    text: beskjed
+  - token_id: contact-05
+    text: innen
+  - token_id: contact-06
+    text: klokka
+  - token_id: contact-07
+    text: tre.
+  answer_order:
+  - contact-01
+  - contact-02
+  - contact-03
+  - contact-04
+  - contact-05
+  - contact-06
+  - contact-07
+- handle: complete_handover
+  op: build
+  objective: obj-report-workplace-absence-01
+  bloom: apply
+  prompt_md: Build one short Norwegian handover sentence. State that Nora can take
+    the ten o'clock meeting and that you have sent her the notes.
+  derived_from:
+  - section_id: sec-arranging-a-handover
+  tokens:
+  - token_id: handover-01
+    text: Nora
+  - token_id: handover-02
+    text: kan
+  - token_id: handover-03
+    text: ta
+  - token_id: handover-04
+    text: møtet
+  - token_id: handover-05
+    text: klokka
+  - token_id: handover-06
+    text: ti,
+  - token_id: handover-07
+    text: og
+  - token_id: handover-08
+    text: jeg
+  - token_id: handover-09
+    text: har
+  - token_id: handover-10
+    text: sendt
+  - token_id: handover-11
+    text: henne
+  - token_id: handover-12
+    text: notatene.
+  answer_order:
+  - handover-01
+  - handover-02
+  - handover-03
+  - handover-04
+  - handover-05
+  - handover-06
+  - handover-07
+  - handover-08
+  - handover-09
+  - handover-10
+  - handover-11
+  - handover-12
+- handle: build_central_absence_message
+  op: build
+  objective: obj-report-workplace-absence-01
+  bloom: apply
+  prompt_md: Build one Norwegian absence statement for Emil. Say that he cannot come
+    to work on Thursday and will be away all day.
+  derived_from:
+  - section_id: sec-practice-build-a-message-in-stages
+  tokens:
+  - token_id: central-01
+    text: Jeg
+  - token_id: central-02
+    text: kan
+  - token_id: central-03
+    text: ikke
+  - token_id: central-04
+    text: komme
+  - token_id: central-05
+    text: på
+  - token_id: central-06
+    text: jobb
+  - token_id: central-07
+    text: på
+  - token_id: central-08
+    text: torsdag
+  - token_id: central-09
+    text: og
+  - token_id: central-10
+    text: blir
+  - token_id: central-11
+    text: borte
+  - token_id: central-12
+    text: hele
+  - token_id: central-13
+    text: dagen.
+  answer_order:
+  - central-01
+  - central-02
+  - central-03
+  - central-04
+  - central-05
+  - central-06
+  - central-07
+  - central-08
+  - central-09
+  - central-10
+  - central-11
+  - central-12
+  - central-13
+- handle: add_handover_to_message
+  op: build
+  objective: obj-report-workplace-absence-01
+  bloom: apply
+  prompt_md: Build one Norwegian handover sentence saying that Lise can receive the
+    delivery.
+  derived_from:
+  - section_id: sec-practice-build-a-message-in-stages
+  tokens:
+  - token_id: lise-01
+    text: Lise
+  - token_id: lise-02
+    text: kan
+  - token_id: lise-03
+    text: ta
+  - token_id: lise-04
+    text: imot
+  - token_id: lise-05
+    text: leveransen.
+  answer_order:
+  - lise-01
+  - lise-02
+  - lise-03
+  - lise-04
+  - lise-05
+- handle: add_next_contact_to_staged_message
+  op: write
+  objective: obj-report-workplace-absence-01
+  bloom: apply
+  prompt_md: Write a concise professional Norwegian message for Emil. State that he
+    cannot come to work on Thursday, will be away all day, and will update his manager
+    by four about whether he can work on Friday.
+  derived_from:
+  - section_id: sec-practice-build-a-message-in-stages
+  response_language: 'no'
+  min_words: 15
+  max_words: 35
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept equivalent natural Bokmål wording and either one sentence or several short
+    sentences, provided all requested facts remain clear.
+  criteria:
+  - id: emil-absence
+    instruction: States that Emil cannot come to work on Thursday.
+  - id: emil-timing
+    instruction: States that Emil will be away all day.
+  - id: emil-next-contact
+    instruction: States that Emil will update his manager by four about whether he
+      can work on Friday.
+- handle: final_retrieval_and_review
+  op: write
+  objective: obj-report-workplace-absence-01
+  bloom: apply
+  prompt_md: Imagine you work at a library and cannot attend your Friday shift. Write
+    a short Norwegian workplace absence message for this new situation. Use original
+    wording. State that you cannot come to work, give
+    clear timing, and finish with either a specific next contact or a practical handover.
+  derived_from:
+  - section_id: sec-final-retrieval-and-review
+  response_language: 'no'
+  min_words: 15
+  max_words: 35
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept equivalent natural Bokmål wording and either a concrete next contact or
+    a concrete handover. Do not require exact lesson wording.
+  criteria:
+  - id: new-situation
+    instruction: Uses the new library and Friday-shift situation without copying a
+      complete lesson sentence.
+  - id: absence
+    instruction: States that the writer cannot attend work.
+  - id: timing
+    instruction: Gives clear timing for the absence.
+  - id: next-step
+    instruction: Finishes with either a specific next contact or a practical handover.

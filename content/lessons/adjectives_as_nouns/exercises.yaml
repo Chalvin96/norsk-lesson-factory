@@ -1,0 +1,408 @@
+- handle: identify_understood_noun
+  op: choose
+  objective: obj-adjectives-as-nouns-01
+  bloom: understand
+  prompt_md: A shop assistant has mentioned «et lite bord» and «de blå stolene».
+    Later, the assistant refers to them only as «det lille» and «de blå». Choose
+    the complete interpretation for both shortened phrases. Focus on which nouns
+    are understood; adjective endings are not the primary target.
+  derived_from:
+  - section_id: understanding-what-has-been-left-out
+  stem_md: Which option correctly identifies the understood noun for each phrase?
+  options:
+  - id: reversed
+    text: det lille viser til stolene; de blå viser til et bord
+    correct: false
+    why: The noun references are reversed.
+  - id: correct
+    text: det lille viser til et bord; de blå viser til stolene
+    correct: true
+    why: The shop context makes et bord the understood noun for det lille and stolene
+      the understood plural noun for de blå.
+  - id: other-objects
+    text: det lille viser til et skjerf; de blå viser til en stol
+    correct: false
+    why: These references do not match the established shop context or the singular
+      and plural phrases.
+- handle: distinguish_definite_gender_and_number
+  op: choose
+  objective: obj-adjectives-as-nouns-01
+  bloom: understand
+  prompt_md: In the second-hand shop, interpret den, det, and de. Choose the complete
+    interpretation that identifies one common-gender object, one neuter object, and
+    several objects.
+  derived_from:
+  - section_id: definite-forms-the-red-one-and-the-red-ones
+  stem_md: Which option correctly classifies den røde, det røde, and de røde?
+  options:
+  - id: correct
+    text: den røde = én stol eller én kopp; det røde = ett skjerf eller ett glass;
+      de røde = flere ting
+    correct: true
+    why: Den marks one common-gender object, det marks one neuter object, and de marks
+      several objects.
+  - id: swapped-singular-genders
+    text: den røde = ett skjerf eller ett glass; det røde = én stol eller én kopp;
+      de røde = flere ting
+    correct: false
+    why: The two singular gender interpretations are swapped.
+  - id: swapped-number
+    text: den røde = flere ting; det røde = ett skjerf eller ett glass; de røde =
+      én stol eller én kopp
+    correct: false
+    why: The interpretations for den and de have the wrong number.
+- handle: build_definite_shortened_phrases
+  op: build
+  objective: obj-adjectives-as-nouns-01
+  bloom: apply
+  prompt_md: The shop context has one red common-gender item, one red neuter item,
+    and several red items. Build the Norwegian question showing all three definite
+    adjective-only phrases. Omit every noun and use the supplied words exactly.
+  explanation_md: "When the noun is understood, keep den, det, or de and use the adjective in -e: den røde, det røde, de røde."
+  derived_from:
+  - section_id: definite-forms-the-red-one-and-the-red-ones
+  tokens:
+  - token_id: tok-1
+    text: Tar
+  - token_id: tok-2
+    text: vi
+  - token_id: tok-3
+    text: den
+  - token_id: tok-4
+    text: røde
+  - token_id: tok-5
+    text: eller
+  - token_id: tok-6
+    text: det
+  - token_id: tok-7
+    text: røde
+  - token_id: tok-8
+    text: eller
+  - token_id: tok-9
+    text: de
+  - token_id: tok-10
+    text: røde?
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+- handle: contrast_indefinite_and_definite_singular
+  op: recall_fill
+  objective: obj-adjectives-as-nouns-01
+  bloom: apply
+  prompt_md: Complete four short shop turns. In each pair, the first phrase introduces
+    an unspecified singular item and the second identifies a particular singular item.
+    Keep the gender and definiteness contrast clear.
+  explanation_md: "Use en or et plus the singular agreement form for an unspecified item; use den or det plus -e for a particular item."
+  derived_from:
+  - section_id: indefinite-singular-a-new-one
+  audio_target: "Maja ser på en lampe. Hun trenger en billig. Nå velger hun den billige. Erik ser på et bord. Han trenger et stort. Nå velger han det store."
+  segments:
+  - text_md: 'Maja ser på en lampe. Hun trenger '
+  - blank_id: common-indefinite
+    options:
+    - en billig
+    - den billige
+    answer_index: 0
+  - text_md: '. Nå velger hun '
+  - blank_id: common-definite
+    options:
+    - den billige
+    - en billig
+    answer_index: 0
+  - text_md: '. Erik ser på et bord. Han trenger '
+  - blank_id: neuter-indefinite
+    options:
+    - et stort
+    - det store
+    answer_index: 0
+  - text_md: '. Nå velger han '
+  - blank_id: neuter-definite
+    options:
+    - det store
+    - et stort
+    answer_index: 0
+  - text_md: .
+- handle: produce_neuter_singular_forms
+  op: build
+  objective: obj-adjectives-as-nouns-01
+  bloom: apply
+  prompt_md: Build the Norwegian sentence. It refers first to an unspecified neuter
+    item and then to a particular neuter item, with both nouns omitted. Preserve the
+    contrast between et plus -t and det plus -e.
+  derived_from:
+  - section_id: indefinite-singular-a-new-one
+  tokens:
+  - token_id: tok-1
+    text: Hun
+  - token_id: tok-2
+    text: vil
+  - token_id: tok-3
+    text: kjøpe
+  - token_id: tok-4
+    text: et
+  - token_id: tok-5
+    text: stort,
+  - token_id: tok-6
+    text: men
+  - token_id: tok-7
+    text: hun
+  - token_id: tok-8
+    text: velger
+  - token_id: tok-9
+    text: det
+  - token_id: tok-10
+    text: store.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+- handle: separate_plural_number_from_definiteness
+  op: categorize
+  objective: obj-adjectives-as-nouns-01
+  bloom: analyze
+  prompt_md: Sort each shop statement by definiteness. Classify whether it uses an
+    indefinite plural adjective phrase without de or a definite plural phrase with
+    de. The adjective spelling is supplied; classify the presence or absence of de.
+  explanation_md: "Without a noun, bare svarte can mean unspecified black ones; de svarte points to a known group."
+  derived_from:
+  - section_id: plural-forms-new-ones-and-the-new-ones
+  buckets:
+  - bucket_id: indefinite-plural
+    label: 'Indefinite plural adjective phrase: no de'
+  - bucket_id: definite-plural
+    label: 'Definite plural adjective phrase: de'
+  items:
+  - item_id: item-1
+    text: Vi trenger svarte.
+    bucket_id: indefinite-plural
+  - item_id: item-2
+    text: Vi tar de svarte.
+    bucket_id: definite-plural
+  - item_id: item-3
+    text: Erik ser etter gamle.
+    bucket_id: indefinite-plural
+  - item_id: item-4
+    text: Erik ser etter de gamle.
+    bucket_id: definite-plural
+- handle: form_plural_adjective_phrases
+  op: build
+  objective: obj-adjectives-as-nouns-01
+  bloom: apply
+  prompt_md: Build one Norwegian shop sentence. The black items are an unspecified
+    group, while the blue items are a particular known group. Omit both plural nouns
+    and show the correct absence or presence of de.
+  derived_from:
+  - section_id: plural-forms-new-ones-and-the-new-ones
+  tokens:
+  - token_id: tok-1
+    text: Vi
+  - token_id: tok-2
+    text: trenger
+  - token_id: tok-3
+    text: svarte,
+  - token_id: tok-4
+    text: men
+  - token_id: tok-5
+    text: vi
+  - token_id: tok-6
+    text: tar
+  - token_id: tok-7
+    text: de
+  - token_id: tok-8
+    text: blå.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+- handle: retrieve_forms_of_liten
+  op: recall_fill
+  objective: obj-adjectives-as-nouns-01
+  bloom: remember
+  prompt_md: Complete six short shop statements using forms of liten. The six blanks
+    cover indefinite and definite common-gender singular, indefinite and definite
+    neuter singular, and indefinite and definite plural.
+  explanation_md: "Use liten or lite for indefinite singular, lille for definite singular, and små for plural; add de only for definite plural."
+  derived_from:
+  - section_id: a-familiar-irregular-adjective-liten
+  audio_target: "Maja ser på en lampe. Hun trenger en liten. Erik ser på et bord. Han trenger et lite. Nå velger Maja den lille og Erik velger det lille. Vi trenger små. Vi tar de små."
+  segments:
+  - text_md: 'Maja ser på en lampe. Hun trenger '
+  - blank_id: liten-common-indefinite
+    options:
+    - en liten
+    - den lille
+    answer_index: 0
+  - text_md: '. Erik ser på et bord. Han trenger '
+  - blank_id: liten-neuter-indefinite
+    options:
+    - et lite
+    - det lille
+    answer_index: 0
+  - text_md: '. Nå velger Maja '
+  - blank_id: liten-common-definite
+    options:
+    - den lille
+    - en liten
+    answer_index: 0
+  - text_md: ' og Erik velger '
+  - blank_id: liten-neuter-definite
+    options:
+    - det lille
+    - et lite
+    answer_index: 0
+  - text_md: '. Vi trenger '
+  - blank_id: liten-plural-indefinite
+    options:
+    - små
+    - de små
+    answer_index: 0
+  - text_md: '. Vi tar '
+  - blank_id: liten-plural-definite
+    options:
+    - de små
+    - små
+    answer_index: 0
+  - text_md: .
+- handle: track_reference_across_the_dialogue
+  op: choose
+  objective: obj-adjectives-as-nouns-01
+  bloom: understand
+  prompt_md: 'Read this shop exchange: «Vi trenger noen svarte stoler. De svarte
+    står ved døra, og de blå står ved vinduet.» Choose the complete interpretation
+    showing which phrase introduces an indefinite group, which phrase refers back
+    to it, and which phrase identifies the other known group.'
+  derived_from:
+  - section_id: returning-to-maja-and-erik
+  stem_md: Which interpretation correctly tracks noen svarte, de svarte, and de blå?
+  options:
+  - id: definite-first
+    text: noen svarte og de svarte viser begge til en kjent gruppe; de blå introduserer
+      en ny gruppe
+    correct: false
+    why: Noen is indefinite, and de does not introduce an indefinite group.
+  - id: reversed-reference
+    text: noen svarte introduserer en gruppe; de svarte viser til en annen gruppe;
+      de blå viser tilbake til de svarte
+    correct: false
+    why: The later phrase de svarte is the one that refers back to the introduced
+      group.
+  - id: correct
+    text: noen svarte introduserer noen svarte stoler; de svarte viser tilbake til
+      disse stolene; de blå viser til en annen kjent gruppe blå stoler
+    correct: true
+    why: Noen introduces an indefinite group, de svarte refers back to that group,
+      and de blå identifies another known group.
+- handle: transfer_adjective_noun_phrases_to_the_bakery
+  op: write
+  objective: obj-adjectives-as-nouns-01
+  bloom: apply
+  prompt_md: 'At a bakery, Nora and Hassan are choosing cakes for a meeting. Write
+    six short Norwegian responses using adjectives as complete noun phrases and omitting
+    the cake nouns. Cover these situations: an unspecified singular common-gender
+    cake, an unspecified singular neuter cake, a particular visible common-gender
+    cake, a particular visible neuter cake, an unspecified plural group, and a particular
+    visible plural group. Use familiar adjectives from the lesson, but create bakery
+    responses rather than copying a complete furniture-shop sentence.'
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+  response_language: 'no'
+  min_words: 20
+  max_words: 45
+  judge_prompt: Check all six requested bakery responses and report evidence for each
+    criterion. Accept any adjective form taught in the lesson when it agrees with
+    the requested definiteness, gender, and number; do not require one particular
+    adjective. Each response must use an adjective-only noun phrase rather than speaking
+    the cake noun.
+  criteria:
+  - id: indefinite-common-singular
+    instruction: Includes an unspecified singular common-gender bakery choice with
+      en and an agreeing adjective form.
+  - id: indefinite-neuter-singular
+    instruction: Includes an unspecified singular neuter bakery choice with et and
+      an agreeing adjective form.
+  - id: definite-common-singular
+    instruction: Includes a particular singular common-gender bakery choice with den
+      and a definite adjective form.
+  - id: definite-neuter-singular
+    instruction: Includes a particular singular neuter bakery choice with det and
+      a definite adjective form.
+  - id: indefinite-plural
+    instruction: Includes an unspecified plural bakery choice with the plural adjective
+      form and no de.
+  - id: definite-plural
+    instruction: Includes a particular plural bakery choice with de and the plural
+      adjective form.
+- handle: recall_the_core_patterns
+  op: recall_fill
+  objective: obj-adjectives-as-nouns-01
+  bloom: remember
+  prompt_md: Without looking back, complete each phrase using rød. The six contexts
+    require indefinite common-gender singular, indefinite neuter singular, definite
+    common-gender singular, definite neuter singular, indefinite plural, and definite
+    plural.
+  derived_from:
+  - section_id: short-retrieval-review
+  audio_target: "Jeg trenger en rød stol. Jeg trenger et rødt eple. Jeg velger den røde stolen. Jeg velger det røde eplet. Vi trenger røde stoler. Vi tar de røde stolene."
+  segments:
+  - text_md: 'Common-gender singular, indefinite: Jeg trenger '
+  - blank_id: red-common-indefinite
+    options:
+    - en rød
+    - et rødt
+    answer_index: 0
+  - text_md: '. '
+  - text_md: 'Neuter singular, indefinite: Jeg trenger '
+  - blank_id: red-neuter-indefinite
+    options:
+    - et rødt
+    - en rød
+    answer_index: 0
+  - text_md: '. '
+  - text_md: 'Common-gender singular, definite: Jeg velger '
+  - blank_id: red-common-definite
+    options:
+    - den røde
+    - det røde
+    answer_index: 0
+  - text_md: '. '
+  - text_md: 'Neuter singular, definite: Jeg velger '
+  - blank_id: red-neuter-definite
+    options:
+    - det røde
+    - den røde
+    answer_index: 0
+  - text_md: '. '
+  - text_md: 'Plural, indefinite: Vi trenger '
+  - blank_id: red-plural-indefinite
+    options:
+    - røde
+    - de røde
+    answer_index: 0
+  - text_md: '. '
+  - text_md: 'Plural, definite: Vi tar '
+  - blank_id: red-plural-definite
+    options:
+    - de røde
+    - røde
+    answer_index: 0
+  - text_md: .

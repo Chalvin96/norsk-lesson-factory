@@ -1,0 +1,295 @@
+- handle: notice_the_linked_changes
+  op: choose
+  objective: obj-jo-desto-correlatives-01
+  bloom: understand
+  prompt_md: Read these five proportional statements from a kitchen decision. Choose
+    the interpretation that identifies both changing scales and the direction of the
+    second scale in every statement. 1. Jo lenger vi venter, desto senere blir kjøkkenet
+    ferdig. 2. Jo raskere vi bestemmer oss, desto større blir risikoen for feil valg.
+    3. Jo flere tilbud vi sammenligner, desto lettere blir det å velge. 4. Jo mer jeg
+    ser på prisene, jo mindre sikker blir jeg. 5. Jo tidligere vi sender bestillingen,
+    desto bedre blir resultatet.
+  derived_from:
+  - section_id: a-kitchen-decision
+  stem_md: Choose the interpretation that shows the proportional statements describe
+    connected changes rather than unrelated facts.
+  options:
+  - id: reversed-directions
+    text: Ventetiden øker, og kjøkkenet blir ferdig tidligere; beslutningstempoet
+      øker, og risikoen for feil valg blir mindre; antallet tilbud vi sammenligner
+      øker, og det blir vanskeligere å velge; jeg ser mer på prisene, og jeg blir
+      sikrere; vi sender bestillingen tidligere, og resultatet blir dårligere.
+    correct: false
+    why: This reverses the direction of the connected changes.
+  - id: all-linked-correct
+    text: Ventetiden øker, og kjøkkenet blir ferdig senere; beslutningstempoet øker,
+      og risikoen for feil valg blir større; antallet tilbud vi sammenligner øker,
+      og det blir lettere å velge; jeg ser mer på prisene, og jeg blir mindre sikker;
+      vi sender bestillingen tidligere, og resultatet blir bedre.
+    correct: true
+    why: This option identifies both changing things and the direction of the second
+      change in all five statements.
+  - id: unrelated-facts
+    text: 'Utsagnene beskriver bare fem separate fakta: kjøkkenet blir ferdig, beslutningen
+      tas, tilbud sammenlignes, priser sees på og bestilling sendes. Ingen endring
+      i den ene delen er koblet til den andre.'
+    correct: false
+    why: The construction explicitly connects two changes in each statement.
+- handle: match_the_direction_of_change
+  op: choose
+  objective: obj-jo-desto-correlatives-01
+  bloom: understand
+  prompt_md: Choose the Norwegian set that expresses all four proportional relationships
+    listed here (study, money, travel, and work).
+  derived_from:
+  - section_id: one-change-follows-another
+  stem_md: 'Choose the set that expresses all four intended relationships: more practice
+    leads to more confidence; buying less leads to saving more; leaving earlier leads
+    to meeting less traffic; working longer on the text leads to a better text.'
+  options:
+  - id: directions-match
+    text: 'Jo mer du øver, desto tryggere blir du. Jo mindre vi kjøper, jo mer sparer
+      vi. Jo tidligere vi drar, desto mindre trafikk møter vi. Jo lenger hun arbeider
+      med teksten, desto bedre blir den. '
+    correct: true
+    why: All four second comparatives express the intended result of the first change.
+  - id: one-direction-reversed
+    text: 'Jo mer du øver, desto tryggere blir du. Jo mindre vi kjøper, jo mer sparer
+      vi. Jo tidligere vi drar, desto mer trafikk møter vi. Jo lenger hun arbeider
+      med teksten, desto bedre blir den. '
+    correct: false
+    why: The travel relationship gives more traffic after leaving earlier, contrary
+      to the intended result.
+  - id: directions-reversed
+    text: 'Jo mindre du øver, desto tryggere blir du. Jo mindre vi kjøper, jo mindre
+      sparer vi. Jo tidligere vi drar, desto mer trafikk møter vi. Jo lenger hun arbeider
+      med teksten, desto verre blir den. '
+    correct: false
+    why: Several second comparatives give the opposite direction from the intended
+      relationships.
+- handle: complete_the_proportional_frame
+  op: build
+  objective: obj-jo-desto-correlatives-01
+  bloom: apply
+  prompt_md: 'Build one complete Norwegian sentence for exam preparation: more practice
+    leads to greater confidence. Use jo ... desto and all supplied tokens.'
+  explanation_md: "Each half has comparative wording. In the jo-clause, the finite verb follows the subject; in the desto-clause, the finite verb comes before the subject: jo mer du øver, desto tryggere blir du."
+  derived_from:
+  - section_id: completing-the-relationship
+  tokens:
+  - token_id: tok-1
+    text: Jo
+  - token_id: tok-2
+    text: mer
+  - token_id: tok-3
+    text: du
+  - token_id: tok-4
+    text: øver,
+  - token_id: tok-5
+    text: desto
+  - token_id: tok-6
+    text: tryggere
+  - token_id: tok-7
+    text: blir
+  - token_id: tok-8
+    text: du.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+- handle: repair_the_clause_order
+  op: find_fix
+  objective: obj-jo-desto-correlatives-01
+  bloom: analyze
+  prompt_md: 'Select the token misplaced in the second clause. The feedback gives the corrected order.'
+  derived_from:
+  - section_id: completing-the-relationship
+  tokens:
+  - token_id: tok-1
+    text: Jo
+  - token_id: tok-2
+    text: tidligere
+  - token_id: tok-3
+    text: vi
+  - token_id: tok-4
+    text: drar,
+  - token_id: tok-5
+    text: jo
+  - token_id: tok-6
+    text: mindre
+  - token_id: tok-7
+    text: trafikk
+  - token_id: tok-8
+    text: vi.
+  - token_id: tok-9
+    text: møter
+  error_token_id: tok-9
+  feedback: 'Move møter before the subject vi. Correct sentence: Jo tidligere vi drar,
+    jo mindre trafikk møter vi.'
+- handle: preserve_meaning_with_the_alternative_pairing
+  op: build
+  objective: obj-jo-desto-correlatives-01
+  bloom: apply
+  prompt_md: Build the same proportional statement with the alternative second marker.
+    Replace desto with jo while keeping the comparative meaning and clause order unchanged.
+    The original is Jo lenger vi venter, desto dyrere blir reisen.
+  explanation_md: "Jo may replace desto in the second half of the correlation, but both halves still require a comparative expression."
+  derived_from:
+  - section_id: choosing-jo-desto-or-jo-jo
+  tokens:
+  - token_id: tok-1
+    text: Jo
+  - token_id: tok-2
+    text: lenger
+  - token_id: tok-3
+    text: vi
+  - token_id: tok-4
+    text: venter,
+  - token_id: tok-5
+    text: jo
+  - token_id: tok-6
+    text: dyrere
+  - token_id: tok-7
+    text: blir
+  - token_id: tok-8
+    text: reisen.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+- handle: combine_two_observations
+  op: build
+  objective: obj-jo-desto-correlatives-01
+  bloom: apply
+  prompt_md: 'Combine these observations into one natural Norwegian proportional sentence
+    using jo ... jo: I spend less time on my phone; I get more done.'
+  derived_from:
+  - section_id: making-the-relationship-explicit
+  tokens:
+  - token_id: tok-1
+    text: Jo
+  - token_id: tok-2
+    text: mindre
+  - token_id: tok-3
+    text: tid
+  - token_id: tok-4
+    text: jeg
+  - token_id: tok-5
+    text: bruker
+  - token_id: tok-6
+    text: på
+  - token_id: tok-7
+    text: telefonen,
+  - token_id: tok-8
+    text: jo
+  - token_id: tok-9
+    text: mer
+  - token_id: tok-10
+    text: får
+  - token_id: tok-11
+    text: jeg
+  - token_id: tok-12
+    text: gjort.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+  - tok-11
+  - tok-12
+- handle: advise_maja_and_henrik
+  op: write
+  objective: obj-jo-desto-correlatives-01
+  bloom: apply
+  prompt_md: 'Write three short recommendations in Norwegian for Maja and Henrik,
+    one for each update: delaying the order further means later kitchen completion;
+    discovering more extra costs makes the cheapest offer less attractive; requesting
+    fewer changes lets the company finish sooner. Link each change and result with
+    either jo ... desto or jo ... jo. Use your own wording.'
+  derived_from:
+  - section_id: back-to-maja-and-henrik
+  response_language: 'no'
+  min_words: 20
+  max_words: 55
+  judge_prompt: Accept natural Norwegian variants that preserve the supplied renovation
+    facts and target construction. Check the response against the task and report
+    evidence for each criterion.
+  criteria:
+  - id: renovation-links
+    instruction: Links each of the three renovation changes to its likely result in
+      a proportional construction.
+  - id: target-pairing
+    instruction: Uses jo ... desto or jo ... jo in each recommendation.
+  - id: independent-wording
+    instruction: Uses original Norwegian wording for the renovation recommendations.
+- handle: build_journey_planning_statements
+  op: write
+  objective: obj-jo-desto-correlatives-01
+  bloom: apply
+  prompt_md: 'Write three complete Norwegian proportional statements for Nora and
+    Elias, one for each fact: booking later raises ticket prices; earlier trains are
+    less crowded; more luggage makes changing trains harder. Use jo ... desto in at
+    least one statement and jo ... jo in at least one other. Include at least one
+    relationship where the first scale increases while the second decreases. Use new
+    lexical framing in the three statements.'
+  derived_from:
+  - section_id: cumulative-transfer-planning-a-journey
+  response_language: 'no'
+  min_words: 25
+  max_words: 65
+  judge_prompt: Accept natural Norwegian variants that preserve all three journey
+    facts and the requested construction choices. Check the response against the task
+    and report evidence for each criterion.
+  criteria:
+  - id: journey-facts
+    instruction: Connects each of the three journey facts in a complete proportional
+      sentence.
+  - id: both-pairings
+    instruction: Uses jo ... desto in at least one sentence and jo ... jo in at least
+      one other sentence.
+  - id: opposite-direction
+    instruction: Includes a relationship in which one changing scale increases while
+      the other decreases.
+  - id: clause-order
+    instruction: Maintains accurate clause order in both approved pairings.
+- handle: recall_and_apply
+  op: write
+  objective: obj-jo-desto-correlatives-01
+  bloom: apply
+  prompt_md: 'Write three complete Norwegian proportional sentences for new situations:
+    study habits, household spending, and travel time. Use jo ... desto in one sentence
+    and jo ... jo in another. Show how one change increases or decreases with another,
+    using your own wording.'
+  derived_from:
+  - section_id: final-retrieval
+  response_language: 'no'
+  min_words: 24
+  max_words: 60
+  judge_prompt: Accept natural Norwegian variants that fit all three new situations
+    and preserve the requested proportional meanings. Check the response against the
+    task and report evidence for each criterion.
+  criteria:
+  - id: three-new-situations
+    instruction: Writes one proportional Norwegian sentence for study, household spending,
+      and travel time.
+  - id: both-pairings
+    instruction: Uses jo ... desto in at least one sentence and jo ... jo in at least
+      one other sentence.
+  - id: connected-change
+    instruction: Shows a logical increase or decrease relationship in each sentence.

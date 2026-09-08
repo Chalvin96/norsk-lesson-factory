@@ -1,0 +1,275 @@
+- handle: notice_routine_and_event
+  op: choose
+  objective: obj-past-habits-with-pleide-a-01
+  bloom: understand
+  prompt_md: Choose the complete interpretation of the supplied Maja and Jonas statements
+    that separates recurring childhood routines from actions during Maja's single
+    trip yesterday and identifies the helpful time expressions.
+  derived_from:
+  - section_id: back-in-the-old-neighborhood
+  stem_md: Which interpretation correctly separates the recurring routines from the
+    finished trip?
+  options:
+  - id: wrong-all-event
+    text: The four lines with «pleide å» describe one finished event, while the lines
+      connected to «I går» describe routines. «I går» names a recurring past period.
+    correct: false
+    why: «Pleide å» marks recurring past behavior, and «I går» places an action in
+      a finished past time.
+  - id: wrong-time-cues
+    text: Only «hver morgen» marks a routine. «Da jeg bodde her» and «etter skolen»
+      describe single events, while the three actions connected to «I går» are routines.
+    correct: false
+    why: The context presents «Da jeg bodde her» and «etter skolen» as part of repeated
+      childhood routines, not single events.
+  - id: correct
+    text: The recurring childhood routines are «Da jeg bodde her, pleide jeg å sykle
+      langs elva hver morgen.» (When I lived here, I used to cycle along the river
+      every morning), «Ja, og du pleide å vente på meg ved den gamle brua.» (Yes,
+      and you used to wait for me by the old bridge), «Vi pleide å kjøpe is i kiosken
+      etter skolen også.» (We used to buy ice cream at the kiosk after school too),
+      and «Det stemmer. Eieren pleide å kjenne alle barna i området.» (That’s right.
+      The owner used to know all the children in the area.). The single trip yesterday
+      includes «I går syklet jeg langs elva igjen.» (Yesterday I cycled along the
+      river again), «Stoppet du ved kiosken?» (Did you stop at the kiosk?), and «Ja,
+      jeg kjøpte en is.» (Yes, I bought an ice cream). «Da jeg bodde her», «hver morgen»,
+      and «etter skolen» support a recurring past period, while «I går» places actions
+      in one finished trip.
+    correct: true
+    why: This separates recurring past behavior from actions in one finished visit
+      and uses the conversation’s time expressions as evidence.
+  - id: wrong-repetition
+    text: All seven actions belong to recurring childhood behavior because several
+      actions occurred. The distinction between «pleide å» and ordinary past forms
+      does not matter.
+    correct: false
+    why: Several actions during one visit do not become a recurring past habit.
+- handle: build_the_pleide_a_pattern
+  op: build
+  objective: obj-past-habits-with-pleide-a-01
+  bloom: apply
+  prompt_md: 'A former routine: We regularly read together at weekends. Build one
+    complete Norwegian sentence using subject + pleide å + infinitive.'
+  derived_from:
+  - section_id: saying-what-someone-used-to-do
+  tokens:
+  - token_id: tok-1
+    text: Vi
+  - token_id: tok-2
+    text: pleide
+  - token_id: tok-3
+    text: å
+  - token_id: tok-4
+    text: lese
+  - token_id: tok-5
+    text: sammen
+  - token_id: tok-6
+    text: i
+  - token_id: tok-7
+    text: helgene.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+- handle: choose_past_habit_or_finished_event
+  op: choose
+  objective: obj-past-habits-with-pleide-a-01
+  bloom: understand
+  prompt_md: Sara regularly bought coffee on her way to work in the past. This morning
+    she bought two cups. Choose the pair that uses pleide å only for the former recurring
+    behavior and ordinary past for today's finished action.
+  derived_from:
+  - section_id: a-former-evening-habit-and-one-evening
+  stem_md: Which pair completes both situations with the correct meaning?
+  options:
+  - id: ordinary-past-for-both
+    text: «Sara kjøpte kaffe på vei til jobb. I morges kjøpte Sara to kopper kaffe.»
+      (Sara bought coffee on her way to work. This morning Sara bought two cups of
+      coffee.)
+    correct: false
+    why: The first situation is a recurring former behavior, so the taught pattern
+      uses pleide å.
+  - id: correct
+    text: «Sara pleide å kjøpe kaffe på vei til jobb. I morges kjøpte Sara to kopper
+      kaffe.» (Sara used to buy coffee on her way to work. This morning Sara bought
+      two cups of coffee.)
+    correct: true
+    why: The first sentence presents a former routine with pleide å, while the second
+      presents one finished action with ordinary past.
+- handle: test_the_habit_boundary
+  op: build
+  objective: obj-past-habits-with-pleide-a-01
+  bloom: apply
+  prompt_md: 'Situation: I called Mum three times yesterday, during one finished day.
+    Build the Norwegian sentence that presents this as one finished occasion rather
+    than an established routine.'
+  derived_from:
+  - section_id: more-than-once-does-not-always-mean-a-habit
+  tokens:
+  - token_id: tok-1
+    text: I
+  - token_id: tok-2
+    text: går
+  - token_id: tok-3
+    text: ringte
+  - token_id: tok-4
+    text: jeg
+  - token_id: tok-5
+    text: mamma
+  - token_id: tok-6
+    text: tre
+  - token_id: tok-7
+    text: ganger.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+- handle: repair_the_target_construction
+  op: find_fix
+  objective: obj-past-habits-with-pleide-a-01
+  bloom: analyze
+  prompt_md: Find the one incorrect token in this sentence about a former routine
+    and identify its taught repair. The error is inside pleide å + infinitive.
+  derived_from:
+  - section_id: keep-the-next-verb-in-the-infinitive
+  tokens:
+  - token_id: tok-1
+    text: Hun
+  - token_id: tok-2
+    text: pleide
+  - token_id: tok-3
+    text: å
+  - token_id: tok-4
+    text: gikk
+  - token_id: tok-5
+    text: hjem
+  - token_id: tok-6
+    text: etter
+  - token_id: tok-7
+    text: skolen.
+  error_token_id: tok-4
+  feedback: Replace «gikk» with the infinitive «gå» after «å». «Pleide» already carries
+    the past meaning.
+- handle: continue_maja_and_jonas_memory
+  op: build
+  objective: obj-past-habits-with-pleide-a-01
+  bloom: apply
+  prompt_md: Build a short continuation of Maja and Jonas's conversation. Include
+    two old routines and one action from Maja's finished visit yesterday. Use pleide
+    å + infinitive for routines and an ordinary past form for the visit.
+  derived_from:
+  - section_id: returning-to-maja-and-jonas
+  tokens:
+  - token_id: tok-1
+    text: Vi
+  - token_id: tok-2
+    text: pleide
+  - token_id: tok-3
+    text: å
+  - token_id: tok-4
+    text: spille
+  - token_id: tok-5
+    text: fotball
+  - token_id: tok-6
+    text: der
+  - token_id: tok-7
+    text: etter
+  - token_id: tok-8
+    text: skolen,
+  - token_id: tok-9
+    text: og
+  - token_id: tok-10
+    text: du
+  - token_id: tok-11
+    text: pleide
+  - token_id: tok-12
+    text: å
+  - token_id: tok-13
+    text: ta
+  - token_id: tok-14
+    text: med
+  - token_id: tok-15
+    text: appelsiner
+  - token_id: tok-16
+    text: til
+  - token_id: tok-17
+    text: alle,
+  - token_id: tok-18
+    text: men
+  - token_id: tok-19
+    text: i
+  - token_id: tok-20
+    text: går
+  - token_id: tok-21
+    text: gikk
+  - token_id: tok-22
+    text: jeg
+  - token_id: tok-23
+    text: gjennom
+  - token_id: tok-24
+    text: parken.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+  - tok-11
+  - tok-12
+  - tok-13
+  - tok-14
+  - tok-15
+  - tok-16
+  - tok-17
+  - tok-18
+  - tok-19
+  - tok-20
+  - tok-21
+  - tok-22
+  - tok-23
+  - tok-24
+- handle: retrieve_and_transfer_old_neighborhood
+  op: write
+  objective: obj-past-habits-with-pleide-a-01
+  bloom: apply
+  prompt_md: Henrik has returned to the neighborhood where he lived as a student.
+    Write 5–7 short Norwegian sentences about his regular travel, meals, study, and
+    evening activities during his student years, using pleide å + infinitive for each
+    recurring habit. Report one completed action during today's visit with an ordinary
+    past-tense verb. Then briefly explain in Norwegian why pleide å fits the routine
+    sentences but not today's finished event. Use your own wording; do not copy a
+    complete sentence from the lesson.
+  derived_from:
+  - section_id: final-retrieval-and-transfer
+  response_language: 'no'
+  min_words: 25
+  max_words: 60
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål variants and suitable ordinary past-tense verbs; do not
+    require exact wording from the lesson.
+  criteria:
+  - id: recurring-habits
+    instruction: Describes Henrik's regular travel, meals, study, and evening activities
+      with pleide å + infinitive.
+  - id: finished-event
+    instruction: Reports one completed action during today's visit with an ordinary
+      past-tense verb, not pleide å.
+  - id: contrast-explanation
+    instruction: Briefly explains in Norwegian why pleide å fits recurring past behavior
+      but not one finished event.
+  - id: independent-transfer
+    instruction: Uses Henrik's new situation and own wording instead of copying a
+      complete sentence from the lesson.

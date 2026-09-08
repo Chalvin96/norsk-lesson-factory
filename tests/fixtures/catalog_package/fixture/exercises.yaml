@@ -1,0 +1,124 @@
+- handle: identify-question
+  op: choose
+  objective: obj-question-order
+  bloom: understand
+  prompt_md: Choose the direct yes/no question.
+  stem_md: "Du vil spørre: Do you speak Norwegian?"
+  options:
+    - id: question_form
+      text: Snakker du norsk?
+      correct: true
+      why: The finite verb `snakker` comes before the subject `du`.
+    - id: statement_form
+      text: Du snakker norsk.
+      correct: false
+      why: This is a statement, not a direct yes/no question.
+    - id: subject_after_rest
+      text: Snakker norsk du?
+      correct: false
+      why: The subject normally follows the finite verb immediately in this pattern.
+  derived_from:
+    - section_id: sec-orient
+
+- handle: choose-infinitive
+  op: choose
+  objective: obj-question-order
+  bloom: understand
+  prompt_md: Choose the verb form that follows the modal `kan`.
+  stem_md: "Kan jeg ___ litt vann?"
+  options:
+    - id: infinitive_faa
+      text: få
+      correct: true
+      why: "A modal is followed by the infinitive: `kan få`."
+    - id: present_faar
+      text: får
+      correct: false
+      why: The present-tense form does not follow `kan` in this pattern.
+    - id: past_fikk
+      text: fikk
+      correct: false
+      why: The past-tense form does not fit after `kan`.
+  derived_from:
+    - section_id: sec-model
+
+- handle: judge-question-order
+  op: judge
+  objective: obj-question-order
+  bloom: apply
+  prompt_md: Is this a natural yes/no question?
+  sentence_md: "Kan jeg få litt vann?"
+  is_correct: true
+  feedback: "Yes. The finite verb `kan` comes before the subject `jeg`, and `få` follows the modal."
+  derived_from:
+    - section_id: sec-model
+
+- handle: find-fix-modal
+  op: find_fix
+  objective: obj-question-order
+  bloom: apply
+  prompt_md: Tap the token that makes the modal-verb phrase incorrect.
+  tokens:
+    - token_id: ffm_kan
+      text: Kan
+    - token_id: ffm_jeg
+      text: jeg
+    - token_id: ffm_faar
+      text: får
+    - token_id: ffm_litt
+      text: litt
+    - token_id: ffm_vann
+      text: vann?
+  error_token_id: ffm_faar
+  feedback: "After `kan`, use the infinitive `få`: `Kan jeg få litt vann?`, not `får`."
+  derived_from:
+    - section_id: sec-model
+
+- handle: judge-fronted-time
+  op: judge
+  objective: obj-question-order
+  bloom: apply
+  prompt_md: Is this sentence correct when the time phrase comes first?
+  sentence_md: "I dag jeg jobber hjemme."
+  is_correct: false
+  feedback: "No. The finite verb must stay in second clause position: `I dag jobber jeg hjemme.`"
+  derived_from:
+    - section_id: sec-contrast
+
+- handle: build-fronted-time
+  op: build
+  objective: obj-question-order
+  bloom: apply
+  prompt_md: Build a sentence with the time phrase first and the finite verb in second position.
+  tokens:
+    - token_id: bft_hjemme
+      text: hjemme.
+    - token_id: bft_jeg
+      text: jeg
+    - token_id: bft_jobber
+      text: jobber
+    - token_id: bft_dag
+      text: dag
+    - token_id: bft_i
+      text: I
+  answer_order: [bft_i, bft_dag, bft_jobber, bft_jeg, bft_hjemme]
+  derived_from:
+    - section_id: sec-contrast
+
+- handle: recall-question
+  op: recall_fill
+  objective: obj-question-order
+  bloom: apply
+  prompt_md: Complete the direct yes/no question.
+  audio_target: "Snakker du norsk?"
+  segments:
+    - blank_id: finite_verb
+      options:
+        - Snakker
+        - Snakke
+        - Du
+      answer_index: 0
+    - text_md: " du norsk?"
+  explanation_md: "The finite verb comes before the subject in a direct yes/no question: `Snakker du norsk?`."
+  derived_from:
+    - section_id: sec-contrast

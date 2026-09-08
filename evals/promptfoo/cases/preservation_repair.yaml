@@ -1,0 +1,33 @@
+# Synthetic stage-handoff input that isolates normalization-preservation repair:
+# one dropped protected example must come back through exact field edits only.
+
+- description: Restore one dropped example in normalized source
+  metadata:
+    surface: preservation_repair
+    cefr: A1
+    kind: phraseology
+    source_lesson: synthetic
+  vars:
+    surface: preservation_repair
+    normalization_prompt: Original normalization prompt.
+    package: |
+      {"lesson_md":"---\ntype: Lesson\nslug: preservation-repair\ntitle: A protected example\ncefr_level: A1\ngoal: Preserve one example.\ndefault_lang: nb\ngrounding_mode: grounded\nrequirements_ref: plan.md\nbloom_targets:\n  - understand\nobjectives:\n  - id: obj-example\n    statement: Preserve one example.\n    bloom_targets:\n      - understand\n---\n\n## Scene {#scene role=orient objectives=obj-example}\n\nThe normalized source currently contains a lost example.\nThe remaining example is `Jeg har med boka`, which means I already have the book with me.\n","exercise_requests_yaml":"[]\n"}
+    review: |
+      {"verdict":"needs_repair","summary":"One protected example was dropped.","findings":[{"category":"dropped_example","evidence":"The protected draft contained `Jeg tar med boka` — `I am bringing the book.` The normalized source keeps only the `Jeg har med boka` example.","repair_instruction":"Insert the exact example pair `Jeg tar med boka` — `I am bringing the book.` before the remaining ha med example, and do not change the remaining sentence."}]}
+  assert:
+    - type: llm-rubric
+      metric: repair_scope
+      value: |
+        The response must contain only exact field edits that restore the
+        dropped `Jeg tar med boka` — `I am bringing the book.` example named by
+        the finding: literal old_text/new_text pairs
+        against the previous lesson_md or exercise_requests_yaml, with protected
+        source outside the finding unchanged. Return pass=true only when every
+        edit is such a bounded restoration; return pass=false when the response
+        regenerates the lesson, adds a new exercise request, rewrites prose
+        beyond the dropped example, or returns a complete replacement field.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true

@@ -1,0 +1,175 @@
+- handle: state_purpose
+  op: choose
+  objective: obj-arrange-and-confirm-an-appointment-01
+  bloom: apply
+  prompt_md: Mina has trouble reading distant text and calls an optician. Choose the
+    appointment purpose that fits her need.
+  derived_from:
+  - section_id: checkpoint-state-purpose
+  explanation_md: En synstest fits Mina's vision problem; a brake check or haircut would address a different need.
+  stem_md: Which request matches Mina's need?
+  options:
+  - id: brake-check
+    text: Jeg vil gjerne bestille en time for en bremsesjekk.
+    correct: false
+    why: A brake check is for a bicycle or vehicle.
+  - id: haircut
+    text: Jeg vil gjerne bestille en time for en hårklipp.
+    correct: false
+    why: A haircut does not address a vision problem.
+  - id: eye-test
+    text: Jeg vil gjerne bestille en time for en synstest.
+    correct: true
+    why: An eye test is the service for trouble seeing distant text.
+- handle: ask_availability
+  op: choose
+  objective: obj-arrange-and-confirm-an-appointment-01
+  bloom: apply
+  prompt_md: The optician's calendar is full Monday and Tuesday morning, but Tuesday
+    afternoon is open. Choose the question that asks about the open period.
+  derived_from:
+  - section_id: checkpoint-ask-availability
+  explanation_md: The calendar shows Tuesday afternoon as open, so the question asks
+    whether the business has anything available then.
+  stem_md: Which question fits the calendar?
+  options:
+  - id: occupied-period
+    text: Har dere noe ledig tirsdag morgen?
+    correct: false
+    why: Tuesday morning is shown as full.
+  - id: personal-fit
+    text: Passer tirsdag ettermiddag for deg?
+    correct: false
+    why: This asks whether one person is free, not whether the business has an appointment.
+  - id: open-period
+    text: Har dere noe ledig tirsdag ettermiddag?
+    correct: true
+    why: It asks the business about the period shown as open.
+- handle: accept_precisely
+  op: choose
+  objective: obj-arrange-and-confirm-an-appointment-01
+  bloom: apply
+  prompt_md: The receptionist offers Wednesday at ten. Mina finishes work at nine
+    and can attend. Choose the precise acceptance.
+  derived_from:
+  - section_id: checkpoint-accept-precisely
+  explanation_md: A precise acceptance repeats the offered day and time so both speakers
+    confirm the same slot.
+  stem_md: Which response accepts the offered slot precisely?
+  options:
+  - id: wrong-slot
+    text: Ja, tirsdag klokka ett passer fint.
+    correct: false
+    why: It changes both the day and time.
+  - id: precise-acceptance
+    text: Ja, onsdag klokka ti passer fint.
+    correct: true
+    why: It accepts and repeats the exact offered slot.
+  - id: rejection
+    text: Nei, onsdag klokka ti passer ikke.
+    correct: false
+    why: It rejects a slot Mina can attend.
+- handle: reject_and_counter
+  op: choose
+  objective: obj-arrange-and-confirm-an-appointment-01
+  bloom: apply
+  prompt_md: The workshop offers Tuesday at one. Mina's calendar shows work Tuesday
+    from nine to four and a free Wednesday morning. Choose the response that rejects
+    the conflict and proposes a possible alternative.
+  derived_from:
+  - section_id: checkpoint-reject-counter
+  explanation_md: The response uses da for the offered time and proposes the free
+    period shown in Mina's calendar.
+  stem_md: Which response fits both the offer and Mina's calendar?
+  options:
+  - id: repeats-conflict
+    text: Dessverre passer ikke det. Hva med tirsdag klokka ett?
+    correct: false
+    why: It proposes the same conflicting time again.
+  - id: valid-counterproposal
+    text: Dessverre passer ikke det. Jeg er på jobb da. Hva med onsdag morgen?
+    correct: true
+    why: It rejects the work conflict and proposes Mina's free period.
+  - id: wrong-reason
+    text: Dessverre passer ikke det. Jeg er på jobb onsdag morgen. Hva med tirsdag klokka ett?
+    correct: false
+    why: It reverses the calendar facts and repeats the unavailable slot.
+- handle: confirm_full_appointment
+  op: choose
+  objective: obj-arrange-and-confirm-an-appointment-01
+  bloom: apply
+  prompt_md: Mina's appointment card says bicycle brake check, Friday 14 March at
+    16:15. Choose the confirmation that matches every detail.
+  derived_from:
+  - section_id: checkpoint-confirm-full-appointment
+  explanation_md: A complete confirmation preserves the service, date, and time from
+    the appointment card.
+  stem_md: Which confirmation matches the card?
+  options:
+  - id: complete-match
+    text: Ja, det stemmer, fredag 14. mars klokka 16.15 for en bremsesjekk.
+    correct: true
+    why: The purpose, date, and time all match the card.
+  - id: wrong-time
+    text: Ja, det stemmer, fredag 14. mars klokka 15.15 for en bremsesjekk.
+    correct: false
+    why: The time is one hour earlier than the card.
+  - id: wrong-purpose
+    text: Ja, det stemmer, fredag 14. mars klokka 16.15 for en synstest.
+    correct: false
+    why: The date and time match, but the service does not.
+- handle: integrated_transfer
+  op: write
+  objective: obj-arrange-and-confirm-an-appointment-01
+  bloom: apply
+  prompt_md: Write a short Norwegian exchange arranging one practical appointment.
+    Begin with a clear purpose, ask what is available, reject the first proposed slot,
+    offer another possibility, accept a workable slot, and finish by confirming the
+    purpose, date, and time.
+  derived_from:
+  - section_id: integrated-transfer-practice
+  response_language: 'no'
+  judge_prompt: Check whether the Norwegian exchange completes one coherent appointment
+    negotiation and report evidence for every criterion. Accept natural Bokmål variants
+    when they perform the requested communicative functions and keep all booking details
+    consistent.
+  criteria:
+  - id: clear-purpose
+    instruction: Begins the exchange by stating a clear appointment purpose.
+  - id: asks-availability
+    instruction: Asks what appointment time is available.
+  - id: rejects-first-slot
+    instruction: Rejects the first proposed slot as unsuitable.
+  - id: offers-alternative
+    instruction: Offers another possible slot.
+  - id: accepts-workable-slot
+    instruction: Accepts a workable slot.
+  - id: confirms-full-booking
+    instruction: Finishes by confirming the appointment purpose, date, and time.
+  - id: one-appointment
+    instruction: Keeps the exchange focused on arranging one appointment with consistent
+      details.
+- handle: retrieval_review
+  op: write
+  objective: obj-arrange-and-confirm-an-appointment-01
+  bloom: apply
+  prompt_md: 'Without looking back, write four short Norwegian turns: ask whether
+    a time is available, reject a proposed slot, suggest another slot, and confirm
+    one appointment by stating its purpose, date, and time.'
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  judge_prompt: Check that the response contains four short Norwegian turns performing
+    the four requested appointment actions. Accept natural Bokmål variants and learner-chosen
+    booking details when the final confirmation includes a coherent purpose, date,
+    and time.
+  criteria:
+  - id: availability-turn
+    instruction: Includes a turn asking whether a time is available.
+  - id: rejection-turn
+    instruction: Includes a turn rejecting a proposed slot.
+  - id: counterproposal-turn
+    instruction: Includes a turn suggesting another slot.
+  - id: confirmation-turn
+    instruction: Includes a turn confirming one appointment with its purpose, date,
+      and time.

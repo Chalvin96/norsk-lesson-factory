@@ -1,0 +1,367 @@
+- handle: notice_real_condition_order
+  op: recall_fill
+  objective: obj-conditional-clauses-01
+  bloom: understand
+  prompt_md: Complete each real condition by selecting the order that places ikke
+    before the finite verb. The result clauses already show supporting verb–subject
+    order.
+  explanation_md: "In a hvis-clause, put ikke before the finite verb: hvis det ikke regner."
+  derived_from:
+  - section_id: real-conditions
+  audio_target: "Hvis det ikke regner, går vi en lang tur. Hvis du ikke tar med kaffe, kjøper jeg kaffe."
+  segments:
+  - text_md: 'Hvis det '
+  - blank_id: weather-order
+    options:
+    - ikke regner
+    - regner ikke
+    answer_index: 0
+  - text_md: ', går vi en lang tur. Hvis du '
+  - blank_id: coffee-order
+    options:
+    - tar ikke med kaffe
+    - ikke tar med kaffe
+    answer_index: 1
+  - text_md: ', kjøper jeg kaffe.'
+- handle: build_condition_first_results
+  op: build
+  objective: obj-conditional-clauses-01
+  bloom: apply
+  prompt_md: 'Build the complete cabin decision: If the bus does not come, we will
+    take a taxi. Begin the result clause with the finite verb followed by the subject.'
+  explanation_md: "After the hvis-clause, keep the main-clause verb second by placing it before the subject: tar vi taxi."
+  derived_from:
+  - section_id: real-conditions
+  tokens:
+  - token_id: tok-2
+    text: bussen
+  - token_id: tok-3
+    text: ikke
+  - token_id: tok-4
+    text: kommer,
+  - token_id: tok-5
+    text: tar
+  - token_id: tok-6
+    text: vi
+  - token_id: tok-7
+    text: taxi.
+  - token_id: tok-1
+    text: Hvis
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+- handle: move_real_condition
+  op: build
+  objective: obj-conditional-clauses-01
+  bloom: apply
+  prompt_md: Rewrite Vi går en lang tur hvis det ikke regner. by moving the hvis-clause
+    to the beginning. Keep the meaning and subordinate-clause order unchanged, and
+    invert the following main clause.
+  derived_from:
+  - section_id: putting-condition-second
+  tokens:
+  - token_id: tok-2
+    text: det
+  - token_id: tok-3
+    text: ikke
+  - token_id: tok-4
+    text: regner,
+  - token_id: tok-5
+    text: går
+  - token_id: tok-6
+    text: vi
+  - token_id: tok-7
+    text: en
+  - token_id: tok-8
+    text: lang
+  - token_id: tok-9
+    text: tur.
+  - token_id: tok-1
+    text: Hvis
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+- handle: write_real_plan_conditions
+  op: write
+  objective: obj-conditional-clauses-01
+  bloom: apply
+  prompt_md: 'Write exactly four brief hvis-sentences in Norwegian for Maja''s plan:
+    the train may arrive on time, the weather may improve, Jonas may not make dinner,
+    and the bus may not come for the return trip. Present all four as real possibilities.
+    Put the condition first in two sentences and second in two. Use correct word order
+    in both clauses, including ikke before the finite verb inside each negative hvis-clause.
+    Vocabulary variety is not scored.'
+  derived_from:
+  - section_id: real-condition-uses
+  response_language: 'no'
+  min_words: 28
+  max_words: 80
+  judge_prompt: Check the four Norwegian sentences against the supplied situations.
+    Accept natural variants that preserve real-condition meaning and required word
+    order. Report evidence for every criterion; do not score vocabulary variety.
+  criteria:
+  - id: real-possibilities
+    instruction: Presents all four supplied situations as real possibilities rather
+      than imagined alternatives.
+  - id: clause-order-variation
+    instruction: Uses two condition-first sentences and two condition-second sentences.
+  - id: subordinate-order
+    instruction: Places ikke before the finite verb in each negative hvis-clause.
+  - id: main-clause-order
+    instruction: Uses verb–subject inversion after each initial hvis-clause and ordinary
+      main-clause order when the result comes first.
+- handle: distinguish_real_and_imagined_conditions
+  op: categorize
+  objective: obj-conditional-clauses-01
+  bloom: analyze
+  prompt_md: Classify each cabin statement by the meaning and verb-form contrast shown.
+    Use the present-pattern versus past-in-the-hvis-clause plus ville-in-the-result
+    evidence. Word order is not separately scored.
+  explanation_md: "Use present forms for a real or open condition; past in the hvis-clause plus ville marks an imagined present situation."
+  derived_from:
+  - section_id: imagined-conditions
+  buckets:
+  - bucket_id: real
+    label: 'Real possibility: present pattern'
+  - bucket_id: imagined
+    label: 'Imagined or remote: past form plus ville'
+  items:
+  - item_id: item-1
+    text: Hvis hytta har internett, tar jeg med datamaskinen.
+    bucket_id: real
+  - item_id: item-2
+    text: Hvis hytta hadde internett, ville jeg tatt med datamaskinen.
+    bucket_id: imagined
+  - item_id: item-3
+    text: Hvis jeg har tid, hjelper jeg deg.
+    bucket_id: real
+  - item_id: item-4
+    text: Hvis jeg hadde tid, ville jeg hjulpet deg.
+    bucket_id: imagined
+  - item_id: item-5
+    text: Hvis vi bor nærmere, besøker vi dem oftere.
+    bucket_id: real
+  - item_id: item-6
+    text: Hvis vi bodde nærmere, ville vi besøkt dem oftere.
+    bucket_id: imagined
+- handle: form_imagined_conditions
+  op: build
+  objective: obj-conditional-clauses-01
+  bloom: apply
+  prompt_md: The cabin does not have internet. Build a sentence imagining the present
+    situation as different, using past tense in the hvis-clause and ville in the result.
+  derived_from:
+  - section_id: imagined-conditions
+  tokens:
+  - token_id: tok-2
+    text: hytta
+  - token_id: tok-3
+    text: hadde
+  - token_id: tok-4
+    text: internett,
+  - token_id: tok-5
+    text: ville
+  - token_id: tok-6
+    text: jeg
+  - token_id: tok-7
+    text: tatt
+  - token_id: tok-8
+    text: med
+  - token_id: tok-9
+    text: datamaskinen.
+  - token_id: tok-1
+    text: Hvis
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+- handle: place_negation_in_imagined_conditions
+  op: recall_fill
+  objective: obj-conditional-clauses-01
+  bloom: apply
+  prompt_md: Complete the imagined sentences. In the first, negate the condition;
+    in the second, negate the result. Select the placement of ikke relative to the
+    finite verb in its clause.
+  explanation_md: "Put ikke before the finite verb in the hvis-clause, but after ville in the main clause."
+  derived_from:
+  - section_id: imagined-condition-word-order
+  audio_target: "Hvis vi ikke hadde bil, ville vi tatt bussen. Hvis vi hadde bil, ville vi ikke tatt bussen."
+  segments:
+  - text_md: 'Hvis vi '
+  - blank_id: negative-condition
+    options:
+    - ikke hadde bil
+    - hadde ikke bil
+    answer_index: 0
+  - text_md: ', ville vi tatt bussen. Hvis vi hadde bil, ville vi '
+  - blank_id: negative-result
+    options:
+    - tatt ikke bussen
+    - ikke tatt bussen
+    answer_index: 1
+  - text_md: .
+- handle: reorder_imagined_condition_sentences
+  op: build
+  objective: obj-conditional-clauses-01
+  bloom: apply
+  prompt_md: Rewrite Hvis hytta lå nærmere byen, ville vi ikke trengt bil. with the
+    result first. Keep the imagined meaning, past tense, ville, and the intended negation.
+  derived_from:
+  - section_id: imagined-condition-word-order
+  tokens:
+  - token_id: tok-2
+    text: ville
+  - token_id: tok-3
+    text: ikke
+  - token_id: tok-4
+    text: trengt
+  - token_id: tok-5
+    text: bil
+  - token_id: tok-6
+    text: hvis
+  - token_id: tok-7
+    text: hytta
+  - token_id: tok-8
+    text: lå
+  - token_id: tok-9
+    text: nærmere
+  - token_id: tok-10
+    text: byen.
+  - token_id: tok-1
+    text: Vi
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+- handle: revise_the_cabin_plan
+  op: recall_fill
+  objective: obj-conditional-clauses-01
+  bloom: apply
+  prompt_md: Complete the revised plan. Choose real forms for possibilities that can
+    still affect the weekend and imagined forms for facts that do not match the present
+    cabin. Keep the displayed clause order correct.
+  derived_from:
+  - section_id: back-at-the-cabin-plan
+  audio_target: "Hvis været blir bedre, kan vi gå ut. Hvis hytta lå nærmere byen, ville vi gå ut. Vi tar taxi hvis bussen ikke kommer."
+  segments:
+  - text_md: 'The forecast may still improve. Hvis været '
+  - blank_id: possible-weather-condition
+    options:
+    - blir bedre
+    - var bedre
+    answer_index: 0
+  - text_md: ', '
+  - blank_id: possible-weather-result
+    options:
+    - ville vi gå ut
+    - kan vi gå ut
+    answer_index: 1
+  - text_md: '. The cabin is not nearer town. Hvis hytta '
+  - blank_id: imagined-location-condition
+    options:
+    - lå nærmere byen
+    - er nærmere byen
+    answer_index: 0
+  - text_md: ', '
+  - blank_id: imagined-location-result
+    options:
+    - kan vi gå ut
+    - ville vi gå ut
+    answer_index: 1
+  - text_md: '. The bus may still fail to arrive. Vi tar taxi hvis bussen '
+  - blank_id: possible-negative-condition
+    options:
+    - ikke kommer
+    - kommer ikke
+    answer_index: 0
+  - text_md: .
+- handle: plan_neighbourhood_meal_with_conditions
+  op: write
+  objective: obj-conditional-clauses-01
+  bloom: apply
+  prompt_md: 'Write exactly four Norwegian planning sentences for a neighbourhood
+    meal. Sentence 1: rain remains possible; put a negative real condition first and
+    say that the group can eat outside if it does not rain. Sentence 2: tables may
+    be available; state the result first and the real condition second. Sentence 3:
+    the current venue is not larger; put an imagined condition first and use a negative
+    ville-result. Sentence 4: the bus may not come; state the real result first and
+    put the negative condition second. Use hvis in every sentence, place ikke according
+    to its clause, and use inversion after each initial hvis-clause.'
+  derived_from:
+  - section_id: transfer-to-new-situation
+  response_language: 'no'
+  min_words: 32
+  max_words: 90
+  judge_prompt: Check each planning sentence against its supplied fact, required condition
+    type, clause order, negation location, and main-clause order. Accept natural Bokmål
+    variants that preserve those constraints.
+  criteria:
+  - id: condition-patterns
+    instruction: Uses real forms for the possible weather, tables, and bus events,
+      and an imagined past-plus-ville pattern for the venue that is not larger.
+  - id: negation-placement
+    instruction: Places ikke before the finite verb in negative hvis-clauses and after
+      ville in the requested negative imagined result.
+  - id: inversion
+    instruction: Begins each result following an initial hvis-clause with finite verb
+      followed by subject.
+  - id: integrated-plan
+    instruction: Produces four complete hvis-sentences covering all supplied meal-planning
+      facts and required clause orders.
+- handle: retrieve_hvis_condition_patterns
+  op: write
+  objective: obj-conditional-clauses-01
+  bloom: apply
+  prompt_md: 'Write exactly four complete Norwegian hvis-sentences for these new situations.
+    1: A train may be delayed; put the real condition first and state what you will
+    do. 2: A friend may not find the meeting place; state a real result first and
+    put the negative condition second. 3: Your home does not have more space; put
+    an imagined condition first and state what you would do. 4: Give advice to another
+    person with Hvis jeg var deg, placing the advice result first. Use correct subordinate-clause
+    and main-clause word order throughout.'
+  derived_from:
+  - section_id: short-retrieval-review
+  response_language: 'no'
+  min_words: 28
+  max_words: 80
+  judge_prompt: Check independent retrieval of the required real and imagined hvis-patterns.
+    Accept natural Bokmål wording when meaning, specified clause order, verb forms,
+    and word order are correct. Report evidence for each criterion.
+  criteria:
+  - id: real-retrieval
+    instruction: Produces real conditions for the possible train delay and the possible
+      failure to find the meeting place.
+  - id: imagined-retrieval
+    instruction: Uses an imagined past-plus-ville pattern for the home and an appropriate
+      Hvis jeg var deg advice pattern.
+  - id: subordinate-order
+    instruction: Uses subordinate-clause order, including ikke before the finite verb
+      in the negative hvis-clause.
+  - id: main-clause-order
+    instruction: Uses inversion after the initial conditions and ordinary subject–verb
+      order when the result is placed first.

@@ -1,0 +1,298 @@
+- handle: notice_gender_articles_in_the_shop
+  op: categorize
+  objective: obj-noun-gender-01
+  bloom: analyze
+  prompt_md: Maja and Jonas are choosing objects in the second-hand shop. Group each
+    complete Norwegian singular object phrase under its indefinite article. Classify
+    the full phrase, not the noun alone.
+  derived_from:
+  - section_id: checkpoint-notice-the-article
+  buckets:
+  - bucket_id: bucket-en
+    label: en
+  - bucket_id: bucket-ei
+    label: ei
+  - bucket_id: bucket-et
+    label: et
+  items:
+  - item_id: shop-chair
+    text: en stol
+    bucket_id: bucket-en
+  - item_id: shop-lamp
+    text: ei lampe
+    bucket_id: bucket-ei
+  - item_id: shop-shelf
+    text: ei hylle
+    bucket_id: bucket-ei
+  - item_id: shop-table
+    text: et bord
+    bucket_id: bucket-et
+  - item_id: shop-book
+    text: ei bok
+    bucket_id: bucket-ei
+  - item_id: shop-picture
+    text: et bilde
+    bucket_id: bucket-et
+- handle: choose_en_or_ei_for_known_objects
+  op: recall_fill
+  objective: obj-noun-gender-01
+  bloom: remember
+  prompt_md: Maja is making a list of small items for her flat. Fill each blank with
+    the missing indefinite article. Recall each article-noun unit rather than using
+    an English-style default. This exercise uses the traditional three-gender
+    convention, so choose ei for feminine nouns; en is also a valid common-gender
+    Bokmål variant in general.
+  derived_from:
+  - section_id: checkpoint-retrieve-en-and-ei
+  audio_target: "Maja skriver en liste: Jeg trenger en stol. Jeg trenger en nøkkel. Jeg trenger ei lampe. Jeg trenger ei bok. Jeg trenger ei hylle. Jeg trenger ei avis."
+  segments:
+  - text_md: 'Maja skriver en liste: Jeg trenger '
+  - blank_id: article-stol
+    options:
+    - en
+    - ei
+    answer_index: 0
+  - text_md: ' stol. Jeg trenger '
+  - blank_id: article-nokkel
+    options:
+    - en
+    - ei
+    answer_index: 0
+  - text_md: ' nøkkel. Jeg trenger '
+  - blank_id: article-lampe
+    options:
+    - en
+    - ei
+    answer_index: 1
+  - text_md: ' lampe. Jeg trenger '
+  - blank_id: article-bok
+    options:
+    - en
+    - ei
+    answer_index: 1
+  - text_md: ' bok. Jeg trenger '
+  - blank_id: article-hylle
+    options:
+    - en
+    - ei
+    answer_index: 1
+  - text_md: ' hylle. Jeg trenger '
+  - blank_id: article-avis
+    options:
+    - en
+    - ei
+    answer_index: 1
+  - text_md: ' avis.'
+- handle: supply_en_ei_et_in_room_descriptions
+  op: recall_fill
+  objective: obj-noun-gender-01
+  bloom: apply
+  prompt_md: Complete this short description of Maja's flat by supplying the missing
+    indefinite article before each familiar noun. Use the connected context, but focus
+    on the gender article. This exercise uses the traditional three-gender convention,
+    so choose ei for feminine nouns; en is also a valid common-gender Bokmål variant
+    in general.
+  derived_from:
+  - section_id: checkpoint-distinguish-all-three-genders
+  audio_target: "På rommet står en stol ved et vindu. Ved siden av stolen står ei lampe. På gulvet ligger et teppe. Ved veggen står ei hylle. På hylla ligger ei bok. Ved siden av boka ligger en nøkkel. Over hylla henger et bilde. Midt i rommet står et bord."
+  segments:
+  - text_md: 'På rommet står '
+  - blank_id: room-chair
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 0
+  - text_md: ' stol ved '
+  - blank_id: room-window
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 2
+  - text_md: ' vindu. Ved siden av stolen står '
+  - blank_id: room-lamp
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 1
+  - text_md: ' lampe. På gulvet ligger '
+  - blank_id: room-rug
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 2
+  - text_md: ' teppe. Ved veggen står '
+  - blank_id: room-shelf
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 1
+  - text_md: ' hylle. På hylla ligger '
+  - blank_id: room-book
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 1
+  - text_md: ' bok. Ved siden av boka ligger '
+  - blank_id: room-key
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 0
+  - text_md: ' nøkkel. Over hylla henger '
+  - blank_id: room-picture
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 2
+  - text_md: ' bilde. Midt i rommet står '
+  - blank_id: room-table
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 2
+  - text_md: ' bord.'
+- handle: correct_gender_errors_on_majas_list
+  op: choose
+  objective: obj-noun-gender-01
+  bloom: analyze
+  prompt_md: 'Maja writes `en hylle` in a Bokmål shopping list. Which statement correctly
+    describes the article choice? Remember that Bokmål permits both common-gender `en`
+    and feminine `ei` for this noun.'
+  derived_from:
+  - section_id: checkpoint-repair-article-mistakes
+  options:
+  - id: both-accepted
+    text: Both `en hylle` and `ei hylle` are valid Bokmål forms.
+    correct: true
+    why: Hylle can use common gender with en or feminine gender with ei in Bokmål.
+  - id: feminine-only
+    text: Only `ei hylle` is valid; `en hylle` must be corrected.
+    correct: false
+    why: Common-gender `en hylle` is also an accepted Bokmål form.
+  - id: common-only
+    text: Only `en hylle` is valid; `ei hylle` must be corrected.
+    correct: false
+    why: Feminine `ei hylle` is also an accepted Bokmål form.
+- handle: complete_majas_purchase_summary
+  op: recall_fill
+  objective: obj-noun-gender-01
+  bloom: apply
+  prompt_md: Complete Maja's new message by filling each blank with en, ei, or et.
+    Each target noun appears in a new sentence; carry the known article-noun units
+    into this everyday shopping message. This exercise uses the traditional three-
+    gender convention, so choose ei for feminine nouns; en is also a valid common-
+    gender Bokmål variant in general.
+  derived_from:
+  - section_id: controlled-production
+  audio_target: "Maja sender en melding: I dag kjøpte jeg en stol. Jeg tok også med ei bok. Nå trenger jeg et bord. Jeg fant en nøkkel, men jeg mangler ei hylle."
+  segments:
+  - text_md: 'Maja sender en melding: I dag kjøpte jeg '
+  - blank_id: summary-chair
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 0
+  - text_md: ' stol. Jeg tok også med '
+  - blank_id: summary-book
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 1
+  - text_md: ' bok. Nå trenger jeg '
+  - blank_id: summary-table
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 2
+  - text_md: ' bord. Jeg fant '
+  - blank_id: summary-key
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 0
+  - text_md: ' nøkkel, men jeg mangler '
+  - blank_id: summary-shelf
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 1
+  - text_md: ' hylle.'
+- handle: describe_missing_items_in_the_study_room
+  op: write
+  objective: obj-noun-gender-01
+  bloom: apply
+  prompt_md: 'Jonas is checking a study room. Write three short Norwegian sentences:
+    say whether a chair is present or missing, do the same for a shelf, and do the
+    same for a table. Use complete phrases with the correct indefinite articles for
+    stol, hylle, and bord. You may use either traditional three-gender Bokmål with ei
+    for feminine nouns or consistent common-gender Bokmål with en. Communicate about
+    this study room rather than copying the shop dialogue.'
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+  response_language: 'no'
+  min_words: 12
+  max_words: 35
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål wording and ordinary word order. This exercise uses the
+    traditional three-gender convention, so prefer en stol, ei hylle, and et bord; also
+    accept consistent common-gender en with feminine nouns as valid Bokmål. Require clear
+    statements about whether each object is present or missing.
+  criteria:
+  - id: study-chair
+    instruction: Uses the correct indefinite article with stol in a complete Norwegian
+      sentence about the study room.
+  - id: study-shelf
+    instruction: Uses the correct indefinite article with hylle in a complete Norwegian
+      sentence about the study room.
+  - id: study-table
+    instruction: Uses the correct indefinite article with bord in a complete Norwegian
+      sentence about the study room.
+  - id: study-status
+    instruction: States whether each of the three objects is present or missing in
+      new Norwegian sentences about the study room.
+- handle: retrieve_three_gender_patterns
+  op: write
+  objective: obj-noun-gender-01
+  bloom: apply
+  prompt_md: 'Complete all three parts in Norwegian. First write
+    the article-noun phrases for stol (chair), lampe (lamp), and bord (table). Then
+    add the correct article to bok (book), nøkkel (key), teppe (rug), hylle (shelf),
+    vindu (window), and bilde (picture). Finally write three short sentences about
+    objects needed in a room: one with an en noun, one with an ei noun, and one with
+    an et noun. You may use either traditional three-gender Bokmål with ei for feminine
+    nouns or consistent common-gender Bokmål with en.'
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  min_words: 25
+  max_words: 70
+  judge_prompt: Check every requested phrase and sentence. Accept ordinary natural
+    Bokmål wording and word order. This exercise uses the traditional three-gender
+    convention, so the taught forms are en stol, ei lampe, et bord, ei bok, en nøkkel,
+    et teppe, ei hylle, et vindu, and et bilde; also accept consistent common-gender en
+    with feminine nouns as valid Bokmål. For the final part, require three Norwegian
+    room-object sentences about what is needed, with one en phrase, one feminine phrase,
+    and one et phrase. Report evidence for each criterion.
+  criteria:
+  - id: first-three-phrases
+    instruction: Writes the correct article-noun phrases for stol, lampe, and bord.
+  - id: remaining-six-phrases
+    instruction: Writes the correct articles with bok, nøkkel, teppe, hylle, vindu,
+      and bilde.
+  - id: three-gender-sentences
+    instruction: Writes three short Norwegian sentences about objects needed in a
+      room, with one masculine en phrase, one feminine ei or en phrase, and one et phrase.

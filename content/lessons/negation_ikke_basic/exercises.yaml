@@ -1,0 +1,440 @@
+- handle: notice_ikke_in_anchor_statements
+  op: recall_fill
+  objective: obj-negation-ikke-basic-01
+  bloom: understand
+  prompt_md: Use the taught statements below. For each complete Norwegian statement,
+    select its subject, its finite verb, and the order around ikke. Do not rewrite
+    or produce the sentences. The target pattern is subject + finite verb + ikke +
+    rest.
+  derived_from:
+  - section_id: statements-finite-verb-subject
+  audio_target: "Elias har ikke matpakke. Kantina er ikke åpen. Vi går ikke nå. Maja spiser ikke i kantina. Jeg drikker ikke kaffe."
+  segments:
+  - text_md: 'Elias har ikke matpakke. Subject: '
+  - blank_id: notice-elias-subject
+    options:
+    - Elias
+    - Kantina
+    - Maja
+    answer_index: 0
+  - text_md: ' Finite verb: '
+  - blank_id: notice-elias-finite
+    options:
+    - har
+    - er
+    - går
+    answer_index: 0
+  - text_md: ' Order: '
+  - blank_id: notice-elias-order
+    options:
+    - subjekt + finit verb + ikke
+    - subjekt + ikke + finit verb
+    - ikke + subjekt + finit verb
+    answer_index: 0
+  - text_md: ' Next statement: Kantina er ikke åpen. Subject: '
+  - blank_id: notice-kantina-subject
+    options:
+    - Kantina
+    - Elias
+    - Maja
+    answer_index: 0
+  - text_md: ' Finite verb: '
+  - blank_id: notice-kantina-finite
+    options:
+    - er
+    - har
+    - går
+    answer_index: 0
+  - text_md: ' Order: '
+  - blank_id: notice-kantina-order
+    options:
+    - subjekt + finit verb + ikke
+    - subjekt + ikke + finit verb
+    - ikke + subjekt + finit verb
+    answer_index: 0
+  - text_md: ' Next statement: Vi går ikke nå. Subject: '
+  - blank_id: notice-vi-subject
+    options:
+    - Vi
+    - Jeg
+    - du
+    answer_index: 0
+  - text_md: ' Finite verb: '
+  - blank_id: notice-vi-finite
+    options:
+    - går
+    - har
+    - er
+    answer_index: 0
+  - text_md: ' Order: '
+  - blank_id: notice-vi-order
+    options:
+    - subjekt + finit verb + ikke
+    - subjekt + ikke + finit verb
+    - ikke + subjekt + finit verb
+    answer_index: 0
+  - text_md: ' Next statement: Maja spiser ikke i kantina. Subject: '
+  - blank_id: notice-maja-subject
+    options:
+    - Maja
+    - Elias
+    - Kantina
+    answer_index: 0
+  - text_md: ' Finite verb: '
+  - blank_id: notice-maja-finite
+    options:
+    - spiser
+    - drikker
+    - jobber
+    answer_index: 0
+  - text_md: ' Order: '
+  - blank_id: notice-maja-order
+    options:
+    - subjekt + finit verb + ikke
+    - subjekt + ikke + finit verb
+    - ikke + subjekt + finit verb
+    answer_index: 0
+  - text_md: ' Next statement: Jeg drikker ikke kaffe. Subject: '
+  - blank_id: notice-jeg-subject
+    options:
+    - Jeg
+    - Vi
+    - du
+    answer_index: 0
+  - text_md: ' Finite verb: '
+  - blank_id: notice-jeg-finite
+    options:
+    - drikker
+    - spiser
+    - jobber
+    answer_index: 0
+  - text_md: ' Order: '
+  - blank_id: notice-jeg-order
+    options:
+    - subjekt + finit verb + ikke
+    - subjekt + ikke + finit verb
+    - ikke + subjekt + finit verb
+    answer_index: 0
+- handle: place_ikke_in_basic_statements
+  op: recall_fill
+  objective: obj-negation-ikke-basic-01
+  bloom: apply
+  prompt_md: Complete these office and cafeteria statements with the negative adverb
+    ikke. The first element varies, but ikke must follow the finite verb and subject.
+    Select ikke in each blank and leave every other word unchanged.
+  derived_from:
+  - section_id: initial-element-statements
+  audio_target: "Jeg drikker ikke kaffe. I dag har Elias ikke matpakke. Vi går ikke til kantina nå. På mandager jobber Maja ikke hjemme."
+  segments:
+  - text_md: 'Item 1: Jeg drikker '
+  - blank_id: place-statement-1
+    options:
+    - ikke
+    - snart
+    answer_index: 0
+  - text_md: ' kaffe. 2. I dag har Elias '
+  - blank_id: place-statement-2
+    options:
+    - ikke
+    - snart
+    answer_index: 0
+  - text_md: ' matpakke. 3. Vi går '
+  - blank_id: place-statement-3
+    options:
+    - ikke
+    - snart
+    answer_index: 0
+  - text_md: ' til kantina nå. 4. På mandager jobber Maja '
+  - blank_id: place-statement-4
+    options:
+    - ikke
+    - snart
+    answer_index: 0
+  - text_md: ' hjemme.'
+- handle: distinguish_finite_verb_position
+  op: build
+  objective: obj-negation-ikke-basic-01
+  bloom: apply
+  prompt_md: Build the negative form of the positive two-verb statement Maja kan vente.
+    Place ikke after the finite verb kan and before the second verb vente. Keep the
+    final punctuation.
+  derived_from:
+  - section_id: statements-two-verbs
+  tokens:
+  - token_id: distinguish-maja
+    text: Maja
+  - token_id: distinguish-kan
+    text: kan
+  - token_id: distinguish-ikke
+    text: ikke
+  - token_id: distinguish-vente
+    text: vente.
+  answer_order:
+  - distinguish-maja
+  - distinguish-kan
+  - distinguish-ikke
+  - distinguish-vente
+- handle: repair_statement_word_order
+  op: write
+  objective: obj-negation-ikke-basic-01
+  bloom: analyze
+  prompt_md: Write one natural Norwegian sentence beginning with I dag that means
+    Elias does not have a lunchbox. After the sentence, briefly explain in Norwegian
+    why ikke follows the finite verb har and the subject Elias.
+  derived_from:
+  - section_id: statements-two-verbs
+  response_language: 'no'
+  min_words: 10
+  max_words: 30
+  judge_prompt: Check the Norwegian sentence and explanation. Report evidence for
+    every criterion. Accept natural Bokmål variants that preserve the requested
+    meaning and word order.
+  criteria:
+  - id: time-initial-sentence
+    instruction: Writes a Norwegian sentence beginning with I dag that says Elias does
+      not have a lunchbox.
+  - id: negative-placement
+    instruction: Places finite verb har before subject Elias and ikke after Elias.
+  - id: norwegian-explanation
+    instruction: Explains briefly in Norwegian why ikke follows har and Elias.
+- handle: build_negative_pronoun_questions
+  op: build
+  objective: obj-negation-ikke-basic-01
+  bloom: apply
+  prompt_md: Turn the positive yes-no question Skal du spise? into a negative question.
+    Build the complete question with finite verb + pronoun subject + ikke + rest,
+    and keep the question punctuation.
+  derived_from:
+  - section_id: negative-pronoun-questions
+  tokens:
+  - token_id: pronoun-question-skal
+    text: Skal
+  - token_id: pronoun-question-du
+    text: du
+  - token_id: pronoun-question-ikke
+    text: ikke
+  - token_id: pronoun-question-spise
+    text: spise?
+  answer_order:
+  - pronoun-question-skal
+  - pronoun-question-du
+  - pronoun-question-ikke
+  - pronoun-question-spise
+- handle: contrast_question_subject_types
+  op: build
+  objective: obj-negation-ikke-basic-01
+  bloom: apply
+  prompt_md: 'Build one paired neutral negative question. In the first clause, use
+    the pronoun subject hun; in the second clause, use the full-noun subject Maja.
+    Preserve the taught contrast: pronoun + ikke, but ikke + full noun subject.'
+  derived_from:
+  - section_id: negative-full-noun-questions
+  tokens:
+  - token_id: contrast-verb-1
+    text: Kommer
+  - token_id: contrast-pronoun
+    text: hun
+  - token_id: contrast-ikke-1
+    text: ikke
+  - token_id: contrast-i-1
+    text: i
+  - token_id: contrast-dag-1
+    text: dag,
+  - token_id: contrast-eller
+    text: eller
+  - token_id: contrast-verb-2
+    text: kommer
+  - token_id: contrast-ikke-2
+    text: ikke
+  - token_id: contrast-full-noun
+    text: Maja
+  - token_id: contrast-i-2
+    text: i
+  - token_id: contrast-dag-2
+    text: dag?
+  answer_order:
+  - contrast-verb-1
+  - contrast-pronoun
+  - contrast-ikke-1
+  - contrast-i-1
+  - contrast-dag-1
+  - contrast-eller
+  - contrast-verb-2
+  - contrast-ikke-2
+  - contrast-full-noun
+  - contrast-i-2
+  - contrast-dag-2
+- handle: complete_negative_wh_questions
+  op: recall_fill
+  objective: obj-negation-ikke-basic-01
+  bloom: apply
+  prompt_md: Complete these negative hvorfor questions about delayed lunch plans.
+    The question word comes first, followed by the finite verb. Use pronoun + ikke
+    for pronoun subjects and ikke + full noun subject for names.
+  derived_from:
+  - section_id: negative-question-word-questions
+  audio_target: "Hvorfor kommer du ikke? Hvorfor kommer ikke Elias? Hvorfor spiser dere ikke nå? Hvorfor spiser ikke Maja nå?"
+  segments:
+  - text_md: 'Item 1: Hvorfor kommer du '
+  - blank_id: wh-question-1
+    options:
+    - ikke
+    - snart
+    answer_index: 0
+  - text_md: '? 2. Hvorfor kommer '
+  - blank_id: wh-question-2
+    options:
+    - ikke
+    - snart
+    answer_index: 0
+  - text_md: ' Elias? 3. Hvorfor spiser dere '
+  - blank_id: wh-question-3
+    options:
+    - ikke
+    - snart
+    answer_index: 0
+  - text_md: ' nå? 4. Hvorfor spiser '
+  - blank_id: wh-question-4
+    options:
+    - ikke
+    - snart
+    answer_index: 0
+  - text_md: ' Maja nå?'
+- handle: complete_return_to_cafeteria
+  op: recall_fill
+  objective: obj-negation-ikke-basic-01
+  bloom: apply
+  prompt_md: Continue the cafeteria exchange by selecting ikke in each blank. Keep
+    the speaker turns and all other words unchanged so the statements and questions
+    remain connected to the scene.
+  derived_from:
+  - section_id: back-at-cafeteria
+  audio_target: "Maja: Spiser du ikke varm mat til lunsj? Elias: Jeg kjøper ikke varm mat. Maja: Hvorfor kjøper du ikke et rundstykke? Elias: Da trenger jeg ikke å vente mer."
+  segments:
+  - text_md: 'Maja: Spiser du '
+  - blank_id: return-cafeteria-1
+    options:
+    - ikke
+    - snart
+    answer_index: 0
+  - text_md: ' varm mat til lunsj? Elias: Jeg kjøper '
+  - blank_id: return-cafeteria-2
+    options:
+    - ikke
+    - snart
+    answer_index: 0
+  - text_md: ' varm mat. Maja: Hvorfor kjøper du '
+  - blank_id: return-cafeteria-3
+    options:
+    - ikke
+    - snart
+    answer_index: 0
+  - text_md: ' et rundstykke? Elias: Da trenger jeg '
+  - blank_id: return-cafeteria-4
+    options:
+    - ikke
+    - snart
+    answer_index: 0
+  - text_md: ' å vente mer.'
+- handle: diagnose_ikke_across_sentence_types
+  op: write
+  objective: obj-negation-ikke-basic-01
+  bloom: analyze
+  prompt_md: Write four natural Norwegian lines about Maja and Elias. Include a
+    subject-first negative statement with Jeg, a neutral negative question with pronoun
+    subject du, a neutral negative question with full-noun subject Maja, and a negative
+    modal statement beginning with Vi kan. Use ikke in each line. After each line,
+    briefly identify its sentence type and subject form in Norwegian.
+  derived_from:
+  - section_id: common-placement-mistakes
+  response_language: 'no'
+  min_words: 24
+  max_words: 70
+  judge_prompt: Check the four Norwegian lines and their short Norwegian labels.
+    Report evidence for every criterion. Accept natural Bokmål variants when each
+    requested sentence type, subject, meaning, and ikke placement are clear.
+  criteria:
+  - id: subject-first-statement
+    instruction: Includes a subject-first negative statement with Jeg and places ikke
+      after the finite verb and subject.
+  - id: pronoun-question
+    instruction: Includes a neutral negative yes-no question with pronoun subject du
+      and places ikke after du.
+  - id: full-noun-question
+    instruction: Includes a neutral negative yes-no question with full-noun subject
+      Maja and places ikke after the finite verb and before Maja.
+  - id: modal-statement
+    instruction: Includes a negative statement beginning with Vi kan and places ikke
+      after kan.
+  - id: sentence-labels
+    instruction: Identifies each line's sentence type and subject form in Norwegian.
+- handle: transfer_ikke_to_evening_plans
+  op: write
+  objective: obj-negation-ikke-basic-01
+  bloom: apply
+  prompt_md: 'Write a short four-line exchange in natural Bokmål about Maja and Elias
+    making plans after work. Include: a subject-first negative statement saying that
+    Elias cannot come; a negative statement beginning with the time expression I kveld,
+    saying that the shop is not open; a neutral yes-no negative question with pronoun
+    subject du, asking whether du will go to the shop; and a neutral negative question
+    with full-noun subject Maja, asking whether Maja is coming to the shop. The exchange
+    should show that one person is unavailable, the shop is closed, and the original
+    plan changes. Use ikke and your own wording.'
+  derived_from:
+  - section_id: transfer-evening-plans
+  response_language: 'no'
+  min_words: 16
+  max_words: 35
+  judge_prompt: Check the response against the task and report evidence for every
+    criterion. Accept natural Bokmål variants only when they preserve the requested
+    meaning, sentence type, and ikke placement.
+  criteria:
+  - id: transfer-subject-statement
+    instruction: Includes a subject-first negative statement with ikke after the finite
+      verb and subject.
+  - id: transfer-fronted-time
+    instruction: Includes a negative statement beginning with I kveld, with the finite
+      verb before the subject and ikke after the subject.
+  - id: transfer-pronoun-question
+    instruction: Includes a neutral negative yes-no question with pronoun du in the
+      order finite verb + du + ikke.
+  - id: transfer-full-noun-question
+    instruction: Includes a neutral negative question with full-noun subject Maja
+      in the order finite verb + ikke + Maja.
+  - id: transfer-evening-context
+    instruction: Uses the requested after-work situation with an unavailable person,
+      a closed shop, and a changed plan in original wording.
+- handle: retrieve_basic_ikke_patterns
+  op: write
+  objective: obj-negation-ikke-basic-01
+  bloom: apply
+  prompt_md: 'Write four natural Bokmål sentences, one for each meaning. First write
+    a negative statement meaning I am not going to the shop. Then write a negative
+    yes-no question meaning Aren’t you going to the shop?, using pronoun du. Switch
+    to a different evening-plans situation for the last pair: write a negative statement
+    meaning Elias is not coming this evening, then a neutral negative yes-no question
+    meaning Isn’t Elias coming this evening?, using full-noun Elias. Use the stated
+    statement and question patterns and your own wording.'
+  derived_from:
+  - section_id: retrieval-review
+  response_language: 'no'
+  min_words: 18
+  max_words: 35
+  judge_prompt: Check the response against the task and report evidence for every
+    criterion. Accept natural Bokmål variants with the same meanings when they preserve
+    the required statement order, question order, and subject type.
+  criteria:
+  - id: retrieval-first-statement
+    instruction: Reconstructs the first negative statement with subject + finite verb
+      + ikke + rest.
+  - id: retrieval-pronoun-question
+    instruction: Reconstructs the first negative question with finite verb + pronoun
+      du + ikke.
+  - id: retrieval-second-statement
+    instruction: Writes the evening-plans negative statement with ikke after the finite
+      verb and subject.
+  - id: retrieval-full-noun-question
+    instruction: Writes the evening-plans neutral negative question with finite verb
+      + ikke + full-noun subject Elias.
+  - id: retrieval-new-situation
+    instruction: Uses a different evening-plans situation with original wording.

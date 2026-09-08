@@ -1,0 +1,284 @@
+- handle: identify_present_participles_in_context
+  op: recall_fill
+  objective: obj-present-participle-01
+  bloom: understand
+  prompt_md: Complete each blank with the taught present participle that fits the
+    meaningful Norwegian sentence. Use the form that describes the person, thing,
+    or event.
+  explanation_md: "The -ende form is invariable across gender and number and presents an accompanying activity or manner."
+  derived_from:
+  - section_id: the-present-participle
+  audio_target: "Jeg så en sovende katt som lå stille i vogna. Vi våknet av en pipende alarm. I gangen hørte vi en pipende røykvarsler. Vaktmesteren kommer løpende etter alarmen."
+  segments:
+  - text_md: 'Jeg så en '
+  - blank_id: sleeping-cat
+    options:
+    - sovende
+    - pipende
+    - løpende
+    answer_index: 0
+  - text_md: ' katt som lå stille i vogna.'
+  - text_md: " Vi våknet av en "
+  - blank_id: beeping-alarm
+    options:
+    - pipende
+    - sovende
+    - smilende
+    answer_index: 0
+  - text_md: ' alarm.'
+  - text_md: " I gangen hørte vi en "
+  - blank_id: beeping-smoke-alarm
+    options:
+    - pipende
+    - sovende
+    - smilende
+    answer_index: 0
+  - text_md: ' røykvarsler.'
+  - text_md: " Vaktmesteren kommer "
+  - blank_id: running-caretaker
+    options:
+    - løpende
+    - bærende
+    - smilende
+    answer_index: 0
+  - text_md: ' etter alarmen.'
+- handle: keep_ende_forms_invariable
+  op: recall_fill
+  objective: obj-present-participle-01
+  bloom: apply
+  prompt_md: Complete all three blanks with the present participle formed from å sove.
+    The noun phrases change gender and number, so keep the participle unchanged.
+  derived_from:
+  - section_id: adjective-like-use
+  audio_target: "en sovende katt, et sovende barn og sovende passasjerer."
+  segments:
+  - text_md: 'en '
+  - blank_id: sleeping-cat-form
+    options:
+    - sovende
+    - spennende
+    answer_index: 0
+  - text_md: ' katt, et '
+  - blank_id: sleeping-child-form
+    options:
+    - sovende
+    - spennende
+    answer_index: 0
+  - text_md: ' barn og '
+  - blank_id: sleeping-passengers-form
+    options:
+    - sovende
+    - spennende
+    answer_index: 0
+  - text_md: ' passasjerer.'
+- handle: choose_participle_or_relative_clause
+  op: choose
+  objective: obj-present-participle-01
+  bloom: analyze
+  prompt_md: Choose the natural everyday Norwegian reformulation. The English meaning
+    identifies the people by where they live, so score the structural choice between
+    a relative clause and a compressed participle phrase.
+  derived_from:
+  - section_id: relative-clause
+  stem_md: The people living on the floor above you are an older couple.
+  options:
+  - id: relative-clause
+    text: De som bor i etasjen over, er et eldre par.
+    correct: true
+    why: A relative clause is the usual conversational choice when people are identified
+      by where they live.
+  - id: compressed-participle
+    text: De boende i etasjen over er et eldre par.
+    correct: false
+    why: De boende is a formal or compressed expression; the relative clause is more
+      natural in this everyday context.
+- handle: use_participle_for_accompanying_action
+  op: recall_fill
+  objective: obj-present-participle-01
+  bloom: apply
+  prompt_md: Fill each blank with the invariable -ende form that adds an accompanying
+    action, posture, or manner. Each sentence already contains its finite main verb.
+  derived_from:
+  - section_id: adverb-like-use
+  audio_target: "Vaktmesteren kommer løpende til inngangen. Naboen kom bærende på en stor eske. Ingrid nikket smilende til Mari."
+  segments:
+  - text_md: 'Vaktmesteren kommer '
+  - blank_id: caretaker-running
+    options:
+    - løpende
+    - bærende
+    - smilende
+    answer_index: 0
+  - text_md: ' til inngangen.'
+  - text_md: " Naboen kom "
+  - blank_id: neighbour-carrying
+    options:
+    - bærende
+    - løpende
+    - nølende
+    answer_index: 0
+  - text_md: ' på en stor eske.'
+  - text_md: " Ingrid nikket "
+  - blank_id: ingrid-smiling
+    options:
+    - smilende
+    - spørrende
+    - haltende
+    answer_index: 0
+  - text_md: ' til Mari.'
+- handle: replace_false_progressive_forms
+  op: find_fix
+  objective: obj-present-participle-01
+  bloom: analyze
+  prompt_md: Find the single erroneous progressive construction in this mechanical
+    translation. The intended meaning is that looking is the main activity.
+  derived_from:
+  - section_id: norwegian-no-progressive
+  tokens:
+  - token_id: tok-1
+    text: Ingrid
+  - token_id: tok-2
+    text: er seende
+  - token_id: tok-3
+    text: på
+  - token_id: tok-4
+    text: kjøkkenet.
+  error_token_id: tok-2
+  feedback: 'Replace the selected construction er seende with the finite verb ser:
+    Ingrid ser på kjøkkenet. Norwegian normally uses an ordinary finite verb when
+    the activity itself is the main statement.'
+- handle: select_natural_structure_for_english_ing
+  op: write
+  objective: obj-present-participle-01
+  bloom: apply
+  prompt_md: 'Write four short Norwegian sentences, one for each numbered meaning.
+    Use a different natural structure for each: (1) during an apartment viewing, we
+    noticed a beeping alarm in the hallway; use an invariable -ende form to describe
+    the alarm; (2) Jonas is waiting for the train; use an ordinary finite verb because
+    waiting is the main activity; (3) the people living above us seem pleasant; use
+    a relative clause with som; (4) reading the contract carefully is important; use
+    an infinitive-based structure. Do not translate every English -ing form mechanically
+    as -ende.'
+  derived_from:
+  - section_id: other-english-ing-structures
+  response_language: 'no'
+  min_words: 18
+  max_words: 55
+  judge_prompt: Check all four sentences against the four numbered meanings and report
+    evidence for each criterion. Accept natural lexical and word-order alternatives
+    when they preserve the meaning and required structure. Reject mechanical er plus
+    -ende progressive forms.
+  criteria:
+  - id: noun-participle
+    instruction: Describes the alarm with an adjective-like, invariable -ende form.
+  - id: finite-main-activity
+    instruction: Uses an ordinary finite Norwegian verb for Jonas’s main waiting activity,
+      not være plus -ende.
+  - id: relative-clause
+    instruction: Uses a relative clause with som to identify the people living above.
+  - id: infinitive-structure
+    instruction: Uses an infinitive-based structure to express reading the contract
+      as a general activity.
+- handle: reconstruct_the_apartment_discussion
+  op: build
+  objective: obj-present-participle-01
+  bloom: apply
+  prompt_md: Build the complete connected Norwegian sentence from all supplied tokens.
+    It must describe the beeping smoke alarm, the caretaker carrying all the tools,
+    and their grandchild sleeping peacefully. Keep the relative clause, the accompanying
+    -ende form, and the finite verb for sleeping.
+  derived_from:
+  - section_id: returning-to-ingrid-and-jonas
+  tokens:
+  - token_id: tok-1
+    text: Jeg
+  - token_id: tok-2
+    text: så
+  - token_id: tok-3
+    text: den
+  - token_id: tok-4
+    text: pipende
+  - token_id: tok-5
+    text: røykvarsleren
+  - token_id: tok-6
+    text: og
+  - token_id: tok-7
+    text: vaktmesteren
+  - token_id: tok-8
+    text: som
+  - token_id: tok-9
+    text: kom
+  - token_id: tok-10
+    text: bærende
+  - token_id: tok-11
+    text: på
+  - token_id: tok-12
+    text: alle
+  - token_id: tok-13
+    text: de
+  - token_id: tok-14
+    text: verktøyene,
+  - token_id: tok-15
+    text: mens
+  - token_id: tok-16
+    text: barnebarnet
+  - token_id: tok-17
+    text: deres
+  - token_id: tok-18
+    text: sov
+  - token_id: tok-19
+    text: rolig.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+  - tok-11
+  - tok-12
+  - tok-13
+  - tok-14
+  - tok-15
+  - tok-16
+  - tok-17
+  - tok-18
+  - tok-19
+- handle: retrieve_ende_choices_at_the_station
+  op: write
+  objective: obj-present-participle-01
+  bloom: apply
+  prompt_md: 'Write four short natural Norwegian sentences about Ingrid and Jonas
+    at the railway station, one for each numbered meaning: (1) the waiting passengers
+    look at the clock; use an invariable adjective-like -ende form; (2) a conductor
+    comes running along the platform while speaking on the phone; use an adverb-like
+    -ende form with a finite main verb; (3) Jonas is looking at the train times; use
+    an ordinary finite Norwegian verb, not være plus -ende; (4) Ingrid buys coffee
+    by pressing the green button; use a natural non-participle method structure with
+    ved å plus an infinitive. Do not use -ende as an automatic translation of every
+    English -ing form.'
+  derived_from:
+  - section_id: cumulative-transfer
+  response_language: 'no'
+  min_words: 20
+  max_words: 65
+  judge_prompt: Check the four sentences against the four numbered meanings and report
+    evidence for each criterion. Accept natural Norwegian lexical and word-order variants
+    when each required structural contrast remains clear.
+  criteria:
+  - id: waiting-passengers
+    instruction: Uses an invariable adjective-like -ende form to describe the waiting
+      passengers.
+  - id: conductor-accompanying-action
+    instruction: Uses an adverb-like -ende form with a finite main verb for the conductor’s
+      accompanying running.
+  - id: station-main-activity
+    instruction: Uses an ordinary finite Norwegian verb for Jonas’s looking or checking
+      activity, without være plus -ende.
+  - id: method-infinitive
+    instruction: Uses a natural non-participle method expression, such as ved å plus
+      an infinitive, for getting the coffee.

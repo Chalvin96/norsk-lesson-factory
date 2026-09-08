@@ -1,0 +1,281 @@
+- handle: notice_known_past_time
+  op: choose
+  objective: obj-past-tense-01
+  bloom: understand
+  prompt_md: 'Read the Monday-morning exchange. Choose the one interpretation that
+    identifies the first known-past expression and correctly links the event verbs
+    to their infinitives. Maja: Hva gjorde du i går? Jonas: Jeg gikk til byen og tok
+    bussen hjem.'
+  derived_from:
+  - section_id: checkpoint-notice-known-past-time
+  stem_md: Which interpretation matches the exchange?
+  options:
+  - id: shared-known-past
+    text: «I går» etablerer kjent fortid. «Gjorde» er preteritum av «å gjøre», «gikk»
+      er preteritum av «å gå», og «tok» er preteritum av «å ta». De senere verbene
+      hører til samme tidsramme, selv om «i går» ikke gjentas.
+    correct: true
+    why: The expression establishes known past time, and the verb–infinitive links
+      and shared frame are correct.
+  - id: present-routine
+    text: «I går» beskriver nåtid. «Gjorde», «gikk» og «tok» må derfor leses som nåtidsformer,
+      og de senere setningene har ingen felles tidsramme.
+    correct: false
+    why: «I går» is a past-time expression, and these forms are preteritum.
+  - id: separate-time-frames
+    text: «I går» etablerer ikke tidsrammen. «Gjorde», «gikk» og «tok» må tolkes hver
+      for seg, så samtalen viser ikke en felles fortid.
+    correct: false
+    why: The dialogue uses one shared past-time frame established by «i går».
+- handle: form_regular_preteritum
+  op: recall_fill
+  objective: obj-past-tense-01
+  bloom: apply
+  prompt_md: 'Complete the short account by selecting the preteritum form of each
+    listed verb, in order: «å vente», «å ringe», «å prøve», and «å nå». The four blanks
+    represent the -et, -te, -de, and -dde patterns.'
+  derived_from:
+  - section_id: checkpoint-form-regular-preteritum
+  audio_target: "I går etter jobb ventet Sara på bussen. Jonas ringte Maja. Sara prøvde å finne nøklene. Til slutt nådde de stasjonen."
+  segments:
+  - text_md: 'I går etter jobb '
+  - blank_id: wait-past
+    options:
+    - venter
+    - ventet
+    answer_index: 1
+  - text_md: ' Sara på bussen. Jonas '
+  - blank_id: call-past
+    options:
+    - ringer
+    - ringte
+    answer_index: 1
+  - text_md: ' Maja. Sara '
+  - blank_id: try-past
+    options:
+    - prøver
+    - prøvde
+    answer_index: 1
+  - text_md: ' å finne nøklene. Til slutt '
+  - blank_id: reach-past
+    options:
+    - når
+    - nådde
+    answer_index: 1
+  - text_md: ' de stasjonen.'
+- handle: retrieve_common_irregular_preteritum
+  op: recall_fill
+  objective: obj-past-tense-01
+  bloom: remember
+  prompt_md: 'Complete the account with the preteritum of these verbs, in order: «å
+    være», «å gå», «å ta», «å se», «å få», «å gjøre», and «å komme».'
+  derived_from:
+  - section_id: checkpoint-retrieve-common-irregular-preteritum
+  audio_target: "I går var Jonas hjemme om morgenen. Senere gikk han til byen. Der tok han bussen. På veien så han en venn og fikk en melding. Etterpå gjorde han noen ærender og kom hjem sent på kvelden."
+  segments:
+  - text_md: 'I går '
+  - blank_id: be-past
+    options:
+    - er
+    - var
+    answer_index: 1
+  - text_md: ' Jonas hjemme om morgenen. Senere '
+  - blank_id: go-past
+    options:
+    - går
+    - gikk
+    answer_index: 1
+  - text_md: ' han til byen. Der '
+  - blank_id: take-past
+    options:
+    - tar
+    - tok
+    answer_index: 1
+  - text_md: ' han bussen. På veien '
+  - blank_id: see-past
+    options:
+    - ser
+    - så
+    answer_index: 1
+  - text_md: ' han en venn og '
+  - blank_id: get-past
+    options:
+    - får
+    - fikk
+    answer_index: 1
+  - text_md: ' en melding. Etterpå '
+  - blank_id: do-past
+    options:
+    - gjør
+    - gjorde
+    answer_index: 1
+  - text_md: ' han noen ærender og '
+  - blank_id: come-past
+    options:
+    - kommer
+    - kom
+    answer_index: 1
+  - text_md: ' hjem sent på kvelden.'
+- handle: maintain_preteritum_in_questions_and_negatives
+  op: build
+  objective: obj-past-tense-01
+  bloom: apply
+  prompt_md: Maja asks about Jonas's evening. Turn the statement «Du tok bussen.»
+    into a negative past-tense question. Build the complete Norwegian question. Keep
+    the main verb in preteritum and do not add an English-style auxiliary.
+  derived_from:
+  - section_id: checkpoint-maintain-preteritum-questions-negatives
+  tokens:
+  - token_id: tok-1
+    text: Tok
+  - token_id: tok-2
+    text: du
+  - token_id: tok-3
+    text: ikke
+  - token_id: tok-4
+    text: bussen?
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+- handle: choose_tense_from_time_frame
+  op: choose
+  objective: obj-past-tense-01
+  bloom: understand
+  prompt_md: Read the exchange and choose the form that fits the shared time frame.
+  derived_from:
+  - section_id: checkpoint-choose-tense-time-frame
+  stem_md: 'Maja: Hva gjorde du i går? Jonas: Jeg [BLANK] hjemme.'
+  options:
+  - id: past-form
+    text: var
+    correct: true
+    why: The preceding question establishes a known past time, so «var» is required.
+  - id: present-form
+    text: er
+    correct: false
+    why: «Er» is present tense and does not fit the past time established by «i går».
+- handle: reconstruct_the_evening
+  op: write
+  objective: obj-past-tense-01
+  bloom: apply
+  prompt_md: 'Write a short account in Norwegian for Maja''s incomplete notes about
+    Sara and Jonas''s evening. The fixed time frame is «I går kveld». Use these events
+    in this order: - Sara waited for the bus (å vente). - Jonas called Maja (å ringe).
+    - Sara tried to find a café (å prøve). - Jonas went to the station (å gå). - Jonas
+    did not take the bus (å ta). - They came home (å komme). Include positive statements
+    and one negative statement.'
+  derived_from:
+  - section_id: practice-reconstruct-evening
+  response_language: 'no'
+  min_words: 25
+  max_words: 45
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål wording and normal sentence variation when the required
+    event meanings, event order, and verb forms are clear.
+  criteria:
+  - id: consistent-preteritum
+    instruction: Uses Norwegian preteritum consistently for the shared past time «I
+      går kveld».
+  - id: regular-forms
+    instruction: Uses the correct preteritum forms «ventet», «ringte», and «prøvde»
+      for the supplied regular events.
+  - id: irregular-forms
+    instruction: Uses the correct preteritum forms «gikk», «tok», and «kom» for the
+      supplied irregular events.
+  - id: positive-negative
+    instruction: Includes positive statements and one clear negative statement for
+      the bus event, using «tok ikke» or an equivalent natural Bokmål construction.
+  - id: event-content
+    instruction: >-
+      Includes all six requested events: Sara waits for the bus, Jonas calls Maja,
+      Sara tries to find a café, Jonas goes to the station, Jonas does not take the
+      bus, and they come home.
+  - id: event-sequence
+    instruction: Presents the six requested events in the stated order.
+- handle: report_yesterdays_journey
+  op: recall_fill
+  objective: obj-past-tense-01
+  bloom: apply
+  prompt_md: 'Complete this new journey report. The past time has already been established
+    by «I går». Choose the preteritum form of these verbs in order: «å være», «å vente»,
+    «å prøve», «å ringe», «å gå», «å ta», «å komme», and «å nå».'
+  derived_from:
+  - section_id: practice-report-yesterdays-journey
+  audio_target: "Jeg var klar for en tur til byen. Først ventet jeg på bussen. Så prøvde jeg å ringe en venn. Jeg ringte ham fra holdeplassen. Derfor gikk jeg til stasjonen. Der tok jeg toget. Jeg kom fram. Til slutt nådde jeg fram til møtet."
+  segments:
+  - text_md: 'Jeg '
+  - blank_id: journey-be
+    options:
+    - er
+    - var
+    answer_index: 1
+  - text_md: ' klar for en tur til byen. Først '
+  - blank_id: journey-wait
+    options:
+    - venter
+    - ventet
+    answer_index: 1
+  - text_md: ' jeg på bussen. Så '
+  - blank_id: journey-try
+    options:
+    - prøver
+    - prøvde
+    answer_index: 1
+  - text_md: ' jeg å ringe en venn. Jeg '
+  - blank_id: journey-call
+    options:
+    - ringer
+    - ringte
+    answer_index: 1
+  - text_md: ' ham fra holdeplassen. Derfor '
+  - blank_id: journey-go
+    options:
+    - går
+    - gikk
+    answer_index: 1
+  - text_md: ' jeg til stasjonen. Der '
+  - blank_id: journey-take
+    options:
+    - tar
+    - tok
+    answer_index: 1
+  - text_md: ' jeg toget. Jeg '
+  - blank_id: journey-come
+    options:
+    - kommer
+    - kom
+    answer_index: 1
+  - text_md: ' fram. Til slutt '
+  - blank_id: journey-reach
+    options:
+    - når
+    - nådde
+    answer_index: 1
+  - text_md: ' jeg fram til møtet.'
+- handle: past_tense_quick_recall
+  op: write
+  objective: obj-past-tense-01
+  bloom: apply
+  prompt_md: 'Without returning to the explanations, write exactly three short sentences
+    in Norwegian about «forrige lørdag»: one positive statement, one negative statement,
+    and one question. Retrieve at least four taught preteritum forms from the lesson,
+    including at least one regular and one common irregular verb.'
+  derived_from:
+  - section_id: retrieval-review-past-tense
+  response_language: 'no'
+  min_words: 12
+  max_words: 35
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept any natural Bokmål wording and any correctly formed regular or common irregular
+    preteritum verbs taught in the lesson.
+  criteria:
+  - id: recalled-preteritum
+    instruction: Uses at least four correctly formed preteritum verbs from the lesson,
+      including at least one regular and one common irregular verb.
+  - id: specified-past-day
+    instruction: Uses «forrige lørdag» as the known past-time context for the sentences.
+  - id: sentence-types
+    instruction: 'Provides three short Norwegian sentences: one positive statement,
+      one negative statement, and one question.'
