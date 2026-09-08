@@ -1,0 +1,319 @@
+- handle: identify_present_meaning
+  op: choose
+  objective: obj-present-tense-01
+  bloom: understand
+  prompt_md: Read both Norwegian statements. Choose the interpretation that classifies
+    each whole sentence as happening now or happening regularly.
+  stem_md: 'Item 1: Mina jobber hjemme i dag. 2. Jonas vasker kjøkkenet hver lørdag.
+    Which classification is correct?'
+  options:
+  - id: now-regular
+    text: 1. noe som skjer nå (happening now); 2. noe som skjer regelmessig (happens
+      regularly).
+    correct: true
+    why: The time expressions show that the first statement describes now and the
+      second describes a regular habit.
+  - id: regular-now
+    text: 1. noe som skjer regelmessig (happens regularly); 2. noe som skjer nå (happening
+      now).
+    correct: false
+    why: 'The classifications are reversed: i dag signals now, while hver lørdag signals
+      a regular habit.'
+  derived_from:
+  - section_id: present-tense-two-common-meanings
+- handle: build_regular_present_forms
+  op: recall_fill
+  objective: obj-present-tense-01
+  bloom: apply
+  prompt_md: Complete each short statement with the present-tense form of the shown
+    infinitive.
+  explanation_md: 'For these regular verbs, add -r to the infinitive: jobbe becomes
+    jobber, and bo becomes bor. The forms without -r are infinitives, not the
+    present-tense forms required here.'
+  audio_target: "Jeg jobber hjemme. Jonas lager kaffe. Vi spiller musikk hver kveld. De vasker kjøkkenet nå. Mina bor i Bergen."
+  segments:
+  - text_md: 'For å jobbe: Jeg '
+  - blank_id: jobbe-present
+    options:
+    - jobber
+    - jobbe
+    answer_index: 0
+  - text_md: ' hjemme. For å lage: Jonas '
+  - blank_id: lage-present
+    options:
+    - lager
+    - lage
+    answer_index: 0
+  - text_md: ' kaffe. For å spille: Vi '
+  - blank_id: spille-present
+    options:
+    - spiller
+    - spille
+    answer_index: 0
+  - text_md: ' musikk hver kveld. For å vaske: De '
+  - blank_id: vaske-present
+    options:
+    - vasker
+    - vaske
+    answer_index: 0
+  - text_md: ' kjøkkenet nå. For å bo: Mina '
+  - blank_id: bo-present
+    options:
+    - bor
+    - bo
+    answer_index: 0
+  - text_md: ' i Bergen.'
+  derived_from:
+  - section_id: forming-present-tense-regular-verbs
+- handle: keep_verb_unchanged
+  op: build
+  objective: obj-present-tense-01
+  bloom: apply
+  prompt_md: Start with Mina jobber hjemme. Rebuild it with Vi as the subject. Change
+    only the subject and keep the present-tense verb unchanged.
+  explanation_md: 'Changing Mina to Vi changes who works, but not the verb: both Mina
+    jobber and Vi jobber use jobber. Norwegian present-tense verbs do not change with
+    the subject.'
+  tokens:
+  - token_id: subject-vi
+    text: Vi
+  - token_id: verb-jobber
+    text: jobber
+  - token_id: place-hjemme
+    text: hjemme.
+  answer_order:
+  - subject-vi
+  - verb-jobber
+  - place-hjemme
+  derived_from:
+  - section_id: verb-does-not-change-with-subject
+- handle: select_er_har_gjor
+  op: recall_fill
+  objective: obj-present-tense-01
+  bloom: understand
+  prompt_md: Complete each sentence with er, har, or gjør. Use each form once; let
+    the meaning decide.
+  audio_target: "Jeg er hjemme. Mina har kaffe. Jonas gjør mye hjemme."
+  segments:
+  - text_md: 'Jeg '
+  - blank_id: location-er
+    options:
+    - er
+    - har
+    - gjør
+    answer_index: 0
+  - text_md: ' hjemme. Mina '
+  - blank_id: possession-har
+    options:
+    - er
+    - har
+    - gjør
+    answer_index: 1
+  - text_md: ' kaffe. Jonas '
+  - blank_id: task-gjor
+    options:
+    - er
+    - har
+    - gjør
+    answer_index: 2
+  - text_md: ' mye hjemme.'
+  derived_from:
+  - section_id: three-essential-present-tense-forms
+- handle: avoid_english_progressive_pattern
+  op: find_fix
+  objective: obj-present-tense-01
+  bloom: analyze
+  prompt_md: Select the one token that is wrong/needs changing.
+  tokens:
+  - token_id: subject-jeg
+    text: Jeg
+  - token_id: extra-er
+    text: er
+  - token_id: verb-jobber
+    text: jobber
+  - token_id: place-hjemme
+    text: hjemme.
+  error_token_id: extra-er
+  feedback: Remove er. The repaired sentence is Jeg jobber hjemme. Norwegian uses
+    the single present-tense verb jobber for this current action.
+  derived_from:
+  - section_id: norwegian-present-tense-and-english-ing
+- handle: add_clear_time_frame
+  op: build
+  objective: obj-present-tense-01
+  bloom: apply
+  prompt_md: 'Add nå to the first statement and hver kveld to the second statement.
+    Build one sentence that clearly shows both a current action and a regular habit:
+    Vi lager middag. Vi lager middag.'
+  tokens:
+  - token_id: subject-vi-now
+    text: Vi
+  - token_id: verb-lager-now
+    text: lager
+  - token_id: object-middag-now
+    text: middag
+  - token_id: time-now-comma
+    text: nå,
+  - token_id: connector-og
+    text: og
+  - token_id: subject-vi-habit
+    text: vi
+  - token_id: verb-lager-habit
+    text: lager
+  - token_id: object-middag-habit
+    text: middag
+  - token_id: time-every
+    text: hver
+  - token_id: time-evening
+    text: kveld.
+  answer_order:
+  - subject-vi-now
+  - verb-lager-now
+  - object-middag-now
+  - time-now-comma
+  - connector-og
+  - subject-vi-habit
+  - verb-lager-habit
+  - object-middag-habit
+  - time-every
+  - time-evening
+  derived_from:
+  - section_id: time-expressions-clarify-the-situation
+- handle: complete_returning_scene
+  op: recall_fill
+  objective: obj-present-tense-01
+  bloom: apply
+  prompt_md: Complete the Saturday scene with one present-tense verb per blank. Use
+    each sentence meaning and any time expression as evidence.
+  audio_target: "Nå har jeg tid. Jeg vasker koppene, og du lager mat. Jeg lager vanligvis mat på lørdager. Og jeg gjør rent. Det er en god plan."
+  segments:
+  - text_md: 'Nå '
+  - blank_id: scene-have
+    options:
+    - jobber
+    - lager
+    - vasker
+    - har
+    - gjør
+    - er
+    answer_index: 3
+  - text_md: ' jeg tid. Jeg '
+  - blank_id: scene-wash
+    options:
+    - jobber
+    - lager
+    - vasker
+    - har
+    - gjør
+    - er
+    answer_index: 2
+  - text_md: ' koppene, og du '
+  - blank_id: scene-make-now
+    options:
+    - jobber
+    - lager
+    - vasker
+    - har
+    - gjør
+    - er
+    answer_index: 1
+  - text_md: ' mat. Jeg '
+  - blank_id: scene-make-habit
+    options:
+    - jobber
+    - lager
+    - vasker
+    - har
+    - gjør
+    - er
+    answer_index: 1
+  - text_md: ' vanligvis mat på lørdager. Og jeg '
+  - blank_id: scene-clean
+    options:
+    - jobber
+    - lager
+    - vasker
+    - har
+    - gjør
+    - er
+    answer_index: 4
+  - text_md: ' rent. Det '
+  - blank_id: scene-be
+    options:
+    - jobber
+    - lager
+    - vasker
+    - har
+    - gjør
+    - er
+    answer_index: 5
+  - text_md: ' en god plan.'
+  derived_from:
+  - section_id: back-in-the-flat
+- handle: describe_sara_and_emil
+  op: write
+  objective: obj-present-tense-01
+  bloom: apply
+  prompt_md: Write six short Bokmål statements about Sara and Emil. State that Sara
+    is at home today, usually works in a café on Saturdays, and does some work on
+    her computer; state that Emil is in the kitchen, has time, and is making lunch.
+    Use natural present-tense forms, including regular verbs and er, har, and gjør.
+    Add suitable time expressions so current actions and habits are clear. Keep the
+    response focused on these present-tense forms.
+  response_language: 'no'
+  min_words: 25
+  max_words: 50
+  judge_prompt: Check all six statements against the task and report evidence for
+    each criterion. Accept natural Bokmål variants that preserve the requested facts
+    and present-tense forms, including natural placement of time expressions. Do not
+    accept an unnecessary er before an action verb.
+  criteria:
+  - id: sara-current-location
+    instruction: States in natural Norwegian that Sara is at home today, using **er**
+      and a present-time expression.
+  - id: sara-cafe-habit
+    instruction: States that Sara usually works in a café on Saturdays, using a regular
+      present-tense form and a habitual time expression.
+  - id: emil-state-possession
+    instruction: States that Emil is in the kitchen and has time, using **er** and
+      **har**.
+  - id: current-work-actions
+    instruction: States that Emil is making lunch and Sara is doing some work on her
+      computer, using natural present-tense forms including **lager** and **gjør**.
+  - id: target-scope
+    instruction: Uses the requested simple present-tense forms without introducing
+      another grammatical target.
+  derived_from:
+  - section_id: transfer-to-new-everyday-situation
+- handle: retrieve_the_present_tense
+  op: write
+  objective: obj-present-tense-01
+  bloom: apply
+  prompt_md: 'Write five separate short Bokmål statements, one for each prompt: Sara
+    is working at home today; Emil works at a café every Saturday; Sara is at home;
+    Emil has a meeting; Sara cleans every Saturday. Retrieve the appropriate present-
+    tense forms for the two actions, the location, the possession, and the cleaning
+    activity. Use time expressions and never put er before an action verb.'
+  response_language: 'no'
+  min_words: 20
+  max_words: 40
+  judge_prompt: Check the five statements against the task and report evidence for
+    each criterion. Accept natural Bokmål variants that preserve the requested facts,
+    time meanings, and target forms. Do not accept er jobber or another form that
+    adds an unnecessary progressive pattern.
+  criteria:
+  - id: current-action
+    instruction: States that Sara works at home today with **jobber** and a current-time
+      expression, without **er** before the action verb.
+  - id: habitual-action
+    instruction: States that Emil works at a café every Saturday with the unchanged
+      form **jobber** used for the other subject.
+  - id: state-er
+    instruction: States Sara’s location with **er**.
+  - id: possession-har
+    instruction: States that Emil has a meeting with **har**.
+  - id: task-gjor
+    instruction: States that Sara cleans every Saturday with **gjør rent** and a habitual
+      time expression.
+  derived_from:
+  - section_id: short-retrieval-review

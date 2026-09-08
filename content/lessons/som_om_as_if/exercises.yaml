@@ -1,0 +1,232 @@
+- handle: notice_imagined_resemblance
+  op: choose
+  objective: obj-som-om-as-if-01
+  bloom: understand
+  prompt_md: 'Read the two office comments. Choose the interpretation that identifies
+    the observable behaviour and imagined situation in both comments. Mina: «Erik
+    smiler som om ingenting har skjedd.» Jonas: «Erik ser ut som om han ikke er bekymret.»'
+  derived_from:
+  - section_id: checkpoint-notice-imagined-resemblance
+  stem_md: Which interpretation correctly explains both comments?
+  options:
+  - id: facts
+    text: Mina vet at ingenting har skjedd, og Jonas vet at Erik ikke er bekymret.
+    correct: false
+    why: It turns both imagined situations into facts and removes the comparison meaning.
+  - id: question-condition
+    text: Mina spør om ingenting har skjedd, og Jonas beskriver hva som skjer hvis
+      Erik ikke er bekymret.
+    correct: false
+    why: It replaces imagined resemblance with an embedded question and a condition.
+  - id: observation-only
+    text: Mina og Jonas legger merke til Erik, men de trekker ingen sammenligning
+      med en forestilt situasjon.
+    correct: false
+    why: It mentions observation but supplies no imagined situation for either comment.
+  - id: correct
+    text: Mina kan observere at Erik smiler som om ingenting har skjedd; dette er
+      en forestilt sammenligning, ikke et faktum. Jonas kan observere at Erik ser
+      ut som om han ikke er bekymret; også dette er en forestilt sammenligning, ikke
+      et faktum.
+    correct: true
+    why: It identifies both observable behaviours and both imagined situations, and
+      it treats neither imagined situation as established fact.
+- handle: distinguish_comparison_question_condition
+  op: recall_fill
+  objective: obj-som-om-as-if-01
+  bloom: understand
+  prompt_md: 'Complete each context with the connector that matches its meaning: an
+    imagined resemblance, an embedded yes-or-no question, or a condition.'
+  explanation_md: "Som om introduces an apparent or imagined comparison, rather than a factual reason, condition, or question."
+  derived_from:
+  - section_id: checkpoint-distinguish-comparison-question-condition
+  audio_target: "Han smiler som om ingenting har skjedd. Vi finner ut om toget kommer. Vi går inn hvis toget kommer."
+  segments:
+  - text_md: 'Han smiler '
+  - blank_id: comparison-connector
+    options:
+    - som om
+    - om
+    - hvis
+    answer_index: 0
+  - text_md: ' ingenting har skjedd. Vi finner ut '
+  - blank_id: embedded-question-connector
+    options:
+    - som om
+    - om
+    - hvis
+    answer_index: 1
+  - text_md: ' toget kommer. Vi går inn '
+  - blank_id: condition-connector
+    options:
+    - som om
+    - om
+    - hvis
+    answer_index: 2
+  - text_md: ' toget kommer.'
+- handle: repair_som_om_comparisons
+  op: find_fix
+  objective: obj-som-om-as-if-01
+  bloom: analyze
+  prompt_md: 'Erik''s smile gives the impression that nothing happened; this is an
+    imagined comparison, not a condition. Select the one token that is wrong/needs
+    changing.'
+  derived_from:
+  - section_id: checkpoint-repair-som-om-comparisons
+  tokens:
+  - token_id: tok-1
+    text: Erik
+  - token_id: tok-2
+    text: smiler
+  - token_id: tok-3
+    text: hvis
+  - token_id: tok-4
+    text: ingenting
+  - token_id: tok-5
+    text: har
+  - token_id: tok-6
+    text: skjedd.
+  error_token_id: tok-3
+  feedback: Replace hvis with som om. This changes the intended conditional connector
+    to the taught imagined-comparison connector.
+- handle: build_comparison_from_observation
+  op: build
+  objective: obj-som-om-as-if-01
+  bloom: apply
+  prompt_md: 'Combine the three observation–imagined-situation pairs into one natural
+    Norwegian sentence. Use som om for each pair: he laughs and everything is fine;
+    he looks as if nothing has happened; and he sounds as if he is calm.'
+  derived_from:
+  - section_id: checkpoint-build-comparison-from-observation
+  tokens:
+  - token_id: tok-1
+    text: Han
+  - token_id: tok-2
+    text: ler
+  - token_id: tok-3
+    text: som om
+  - token_id: tok-4
+    text: alt
+  - token_id: tok-5
+    text: er
+  - token_id: tok-6
+    text: greit,
+  - token_id: tok-7
+    text: ser
+  - token_id: tok-8
+    text: ut
+  - token_id: tok-9
+    text: som om
+  - token_id: tok-10
+    text: ingenting
+  - token_id: tok-11
+    text: har
+  - token_id: tok-12
+    text: skjedd,
+  - token_id: tok-13
+    text: og
+  - token_id: tok-14
+    text: høres
+  - token_id: tok-15
+    text: ut
+  - token_id: tok-16
+    text: som om
+  - token_id: tok-17
+    text: han
+  - token_id: tok-18
+    text: er
+  - token_id: tok-19
+    text: rolig.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+  - tok-11
+  - tok-12
+  - tok-13
+  - tok-14
+  - tok-15
+  - tok-16
+  - tok-17
+  - tok-18
+  - tok-19
+- handle: interpret_office_follow_up
+  op: write
+  objective: obj-som-om-as-if-01
+  bloom: apply
+  prompt_md: After Erik’s result, answer in Norwegian. Explain the difference between
+    om in å vite om noe skjedde and som om in å smile som om ingenting har skjedd.
+    Then write one additional sentence about Erik’s behaviour using som om for an
+    imagined comparison.
+  derived_from:
+  - section_id: checkpoint-interpret-office-follow-up
+  response_language: 'no'
+  min_words: 18
+  max_words: 40
+  judge_prompt: Check that the response explains the two connector meanings and includes
+    one additional natural Norwegian sentence with som om. Accept natural wording
+    variants that preserve the distinction and imagined meaning; do not require exact
+    wording.
+  criteria:
+  - id: connector-meaning-boundary
+    instruction: Explains in Norwegian that om introduces whether something happened,
+      while som om presents an imagined comparison.
+  - id: erik-behaviour-sentence
+    instruction: Writes one additional natural Norwegian sentence about Erik’s behaviour
+      using som om to connect an observable behaviour with an imagined situation.
+- handle: transfer_som_om_station_scene
+  op: write
+  objective: obj-som-om-as-if-01
+  bloom: apply
+  prompt_md: 'Write 3–4 short Norwegian sentences about this station scene: the departure
+    board has stopped updating; one traveller repeatedly checks the time; another
+    unpacks food for a long wait; and a railway employee continues working calmly.
+    The travellers do not know whether the train has been cancelled. Use som om in
+    a comparison for each visible behaviour. Use these familiar imagined-clause ideas:
+    toget er forsinket, det blir lenge å vente, and ingenting har skjedd.'
+  derived_from:
+  - section_id: cumulative-transfer-a-delayed-train
+  response_language: 'no'
+  min_words: 25
+  max_words: 60
+  judge_prompt: Check that the response includes all three observations and uses som
+    om to connect each visible behaviour with an imagined situation. Accept natural
+    Norwegian variants that preserve the three requested meanings and the target construction;
+    do not require exact wording.
+  criteria:
+  - id: station-observations
+    instruction: Includes repeated time-checking, unpacking food for a long wait,
+      and the railway employee working calmly.
+  - id: station-som-om-comparisons
+    instruction: Uses som om with imagined clauses expressing a delayed train, a long
+      wait, and nothing having happened.
+- handle: retrieve_som_om_boundary
+  op: write
+  objective: obj-som-om-as-if-01
+  bloom: apply
+  prompt_md: Answer in Norwegian. State when Norwegian uses
+    som om. Write one sentence about behaviour or appearance using som om. Briefly
+    explain why your sentence expresses a comparison with an imagined situation, not
+    a condition with hvis or an embedded yes-or-no question with om.
+  derived_from:
+  - section_id: retrieval-review-som-om-boundary
+  response_language: 'no'
+  min_words: 18
+  max_words: 45
+  judge_prompt: Check for the rule, one Norwegian sentence using som om, and a brief
+    meaning boundary explanation. Accept natural Norwegian wording variants that preserve
+    the comparison, condition, and embedded-question distinction.
+  criteria:
+  - id: rule-and-application
+    instruction: States that som om links observable behaviour or appearance to an
+      imagined situation and uses som om in one natural Norwegian sentence.
+  - id: meaning-boundary
+    instruction: Explains why the sentence expresses imagined resemblance rather than
+      a condition with hvis or an embedded yes-or-no question with om.

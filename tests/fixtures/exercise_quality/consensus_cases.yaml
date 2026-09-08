@@ -1,0 +1,531 @@
+schema_version: 1
+cases:
+  - family: missing_attempt_context
+    lesson: ask_for_repetition_or_clarification
+    handle: isolating-an-unfamiliar-word
+    mode: semantic
+    surfaces: [attempt]
+    label_source: maintainer_consensus
+    captured_at: "2026-08-29"
+    adversarial_category: standalone_context
+    evidence: >-
+      The prompt asks for a word-specific question and a confirmation after an
+      explanation, but supplies neither the unfamiliar word nor Jonas's explanation.
+    bad:
+      elements:
+        - element_kind: exercise
+          id: isolating-an-unfamiliar-word
+          operation: write
+          prompt:
+            - kind: text
+              value: >-
+                Write Mina's two short Norwegian contributions: ask what the
+                unfamiliar word means; after a simple explanation, confirm the
+                meaning and show that she now understands.
+          derived_from:
+            - section_id: isolating-an-unfamiliar-word
+          payload:
+            response_language: no
+            criteria:
+              - id: focused-question
+                instruction: Ask what the unfamiliar word means.
+              - id: meaning-confirmed
+                instruction: Confirm the explained meaning after Jonas replies.
+            judge_prompt: Check both stages.
+    good:
+      elements:
+        - element_kind: exercise
+          id: isolating-an-unfamiliar-word
+          operation: write
+          prompt:
+            - kind: text
+              value: >-
+                Jonas says «Legg koppen på hylla». Mina does not know the word
+                «hylla». Write her Norwegian question, then after Jonas explains
+                that it means shelf, confirm that she understands.
+          payload:
+            response_language: no
+            criteria:
+              - id: focused-question
+                instruction: Ask what «hylla» means in Norwegian.
+              - id: meaning-confirmed
+                instruction: Confirm in Norwegian that «hylla» means shelf and that you understand.
+            judge_prompt: Check the question and the Norwegian confirmation.
+
+  - family: broad_speak_hidden_exact_target
+    lesson: make_weather_small_talk
+    handle: first_checkpoint_opening
+    mode: mechanical
+    surfaces: [attempt]
+    label_source: maintainer_consensus
+    captured_at: "2026-08-29"
+    adversarial_category: hidden_answer_key
+    evidence: >-
+      The prompt says “Say one short Norwegian weather observation”, while the
+      hidden target is exactly “Det regner skikkelig mye i dag.”
+    bad:
+      lesson.md: |
+        # Weather
+
+        {{exercise: first_checkpoint_opening}}
+      exercises.yaml: |
+        - handle: first_checkpoint_opening
+          op: speak
+          objective: obj-make-weather-small-talk-01
+          bloom: apply
+          prompt_md: 'Say something: one short Norwegian weather observation to begin a conversation.'
+          target: Det regner skikkelig mye i dag.
+          derived_from:
+          - section_id: first-checkpoint-make-opening
+    review_bad:
+      elements:
+        - element_kind: exercise
+          id: first_checkpoint_opening
+          operation: speak
+          prompt: [{kind: text, value: 'Say something: one short Norwegian weather observation to begin a conversation.'}]
+          payload: {target: 'Det regner skikkelig mye i dag.'}
+    review_good:
+      elements:
+        - element_kind: exercise
+          id: first_checkpoint_opening
+          operation: speak
+          prompt: [{kind: text, value: 'Say exactly “Det regner skikkelig mye i dag.” in Norwegian.'}]
+          payload: {target: 'Det regner skikkelig mye i dag.'}
+    good:
+      lesson.md: |
+        # Weather
+
+        {{exercise: first_checkpoint_opening}}
+      exercises.yaml: |
+        - handle: first_checkpoint_opening
+          op: speak
+          objective: obj-make-weather-small-talk-01
+          bloom: apply
+          prompt_md: Say exactly “Det regner skikkelig mye i dag.” in Norwegian.
+          target: Det regner skikkelig mye i dag.
+          derived_from:
+          - section_id: first-checkpoint-make-opening
+
+  - family: malformed_keyed_norwegian
+    lesson: adjective_and_adverb_comparison
+    handle: use_irregular_forms_for_actions
+    mode: semantic
+    surfaces: [answer]
+    label_source: maintainer_consensus
+    captured_at: "2026-08-29"
+    adversarial_category: semantic_correctness
+    evidence: >-
+      The action-focused keyed reconstruction is “På lørdag syklet gruppa
+      lengre enn på fredag.”; Bokmål uses “lenger” for the adverbial comparison.
+    bad:
+      elements:
+        - element_kind: exercise
+          id: use_irregular_forms_for_actions
+          operation: recall_fill
+          prompt:
+            - kind: text
+              value: Complete the action-focused comparison for cycling distance.
+          payload:
+            audio_target: På lørdag syklet gruppa lengre enn på fredag.
+            segments:
+              - kind: span
+                spans:
+                  - kind: text
+                    value: På lørdag syklet gruppa
+                  - kind: text
+                    value: ' '
+              - kind: blank
+                blank_id: action-irregular-5
+                options: [lengre, lengst]
+                answer_index: 0
+              - kind: span
+                spans:
+                  - kind: text
+                    value: ' enn på fredag.'
+    good:
+      elements:
+        - element_kind: exercise
+          id: use_irregular_forms_for_actions
+          operation: recall_fill
+          prompt:
+            - kind: text
+              value: Complete the action-focused comparison for cycling distance.
+          payload:
+            audio_target: På lørdag syklet gruppa lenger enn på fredag.
+            segments:
+              - kind: span
+                spans:
+                  - kind: text
+                    value: På lørdag syklet gruppa
+                  - kind: text
+                    value: ' '
+              - kind: blank
+                blank_id: action-irregular-5
+                options: [lenger, lengst]
+                answer_index: 0
+              - kind: span
+                spans:
+                  - kind: text
+                    value: ' enn på fredag.'
+
+  - family: feminine_en_alternative
+    lesson: indefinite_articles
+    handle: room_article_hunt
+    mode: semantic
+    surfaces: [attempt, answer]
+    label_source: maintainer_consensus
+    captured_at: "2026-08-29"
+    adversarial_category: convention_nearmiss
+    evidence: >-
+      The keyed answer accepts only “ei hylle” while standard Bokmål also allows
+      “en hylle”; the attempt does not select a taught three-gender convention.
+    bad:
+      elements:
+        - element_kind: exercise
+          id: room_article_hunt
+          operation: recall_fill
+          prompt:
+            - kind: text
+              value: Fill each blank with the correct Norwegian indefinite article.
+          payload:
+            audio_target: Amina ser ei hylle.
+            segments:
+              - kind: span
+                spans: [{kind: text, value: 'Amina ser ' }]
+              - kind: blank
+                blank_id: room-hylle-article
+                options: [ei, en]
+                answer_index: 0
+              - kind: span
+                spans: [{kind: text, value: ' hylle.'}]
+    good:
+      elements:
+        - element_kind: exercise
+          id: room_article_hunt
+          operation: recall_fill
+          prompt:
+            - kind: text
+              value: >-
+                For this task use the traditional three-gender convention: choose
+                «ei» for feminine nouns. Other standard Bokmål variants are accepted
+                in open responses.
+          payload:
+            audio_target: Amina ser ei hylle.
+            segments:
+              - kind: span
+                spans: [{kind: text, value: 'Amina ser ' }]
+              - kind: blank
+                blank_id: room-hylle-article
+                options: [ei, en]
+                answer_index: 0
+              - kind: span
+                spans: [{kind: text, value: ' hylle.'}]
+
+  - family: find_fix_attempt_capability
+    lesson: adjective_agreement
+    handle: moving-note-correction
+    mode: mechanical
+    surfaces: [attempt]
+    label_source: maintainer_consensus
+    captured_at: "2026-08-29"
+    adversarial_category: capability_mismatch
+    evidence: >-
+      The find_fix prompt says “repair only that adjective”, but the operation
+      collects only the selected erroneous token and cannot collect a correction.
+    bad:
+      lesson.md: |
+        # Adjective agreement
+
+        {{exercise: moving-note-correction}}
+      exercises.yaml: |
+        - handle: moving-note-correction
+          op: find_fix
+          objective: obj-adjective-agreement-01
+          bloom: analyze
+          prompt_md: Find it and repair the adjective while preserving the meaning.
+          tokens:
+          - token_id: tok-1
+            text: Det
+          - token_id: tok-2
+            text: store.
+          error_token_id: tok-2
+          feedback: Replace «store» with «stort».
+          derived_from:
+          - section_id: returning-to-maja-and-elias
+    review_bad:
+      elements:
+        - element_kind: exercise
+          id: moving-note-correction
+          operation: find_fix
+          prompt: [{kind: text, value: 'Find it and repair the adjective while preserving the meaning.'}]
+          payload:
+            tokens: [{token_id: tok-1, text: Det}, {token_id: tok-2, text: 'store.'}]
+    review_good:
+      elements:
+        - element_kind: exercise
+          id: moving-note-correction
+          operation: find_fix
+          prompt: [{kind: text, value: 'Select the token that is wrong; the correction will be shown afterward.'}]
+          payload:
+            tokens: [{token_id: tok-1, text: Det}, {token_id: tok-2, text: 'store.'}]
+    good:
+      lesson.md: |
+        # Adjective agreement
+
+        {{exercise: moving-note-correction}}
+      exercises.yaml: |
+        - handle: moving-note-correction
+          op: find_fix
+          objective: obj-adjective-agreement-01
+          bloom: analyze
+          prompt_md: Select the token that is wrong; the correction will be shown afterward.
+          tokens:
+          - token_id: tok-1
+            text: Det
+          - token_id: tok-2
+            text: store.
+          error_token_id: tok-2
+          feedback: Replace «store» with «stort».
+          derived_from:
+          - section_id: returning-to-maja-and-elias
+
+  - family: response_language_english_conflict
+    lesson: ask_for_help
+    handle: practice_4_understand_and_accept
+    mode: mechanical
+    surfaces: [attempt, rubric]
+    label_source: maintainer_consensus
+    captured_at: "2026-08-29"
+    adversarial_category: instruction_following
+    evidence: >-
+      response_language is “no”, but the prompt and criteria require the learner
+      to state three action meanings in English.
+    bad:
+      lesson.md: |
+        # Asking for help
+
+        {{exercise: practice_4_understand_and_accept}}
+      exercises.yaml: |
+        - handle: practice_4_understand_and_accept
+          op: write
+          objective: obj-ask-for-help-01
+          bloom: apply
+          prompt_md: Write in English what the learner should do next, then respond in Norwegian.
+          response_language: 'no'
+          judge_prompt: Check the English meaning and Norwegian response.
+          criteria:
+          - id: meaning
+            instruction: Write in English what to do next.
+          derived_from:
+          - section_id: practising-in-new-situations
+    good:
+      lesson.md: |
+        # Asking for help
+
+        {{exercise: practice_4_understand_and_accept}}
+      exercises.yaml: |
+        - handle: practice_4_understand_and_accept
+          op: write
+          objective: obj-ask-for-help-01
+          bloom: apply
+          prompt_md: State what the learner should do next in Norwegian, then give a short Norwegian acceptance.
+          response_language: 'no'
+          judge_prompt: Check the Norwegian action and acceptance.
+          criteria:
+          - id: meaning
+            instruction: States in Norwegian what to do next.
+          - id: acceptance
+            instruction: Gives a short Norwegian acceptance.
+          derived_from:
+          - section_id: practising-in-new-situations
+
+    review_bad:
+      elements:
+        - element_kind: exercise
+          id: practice_4_understand_and_accept
+          operation: write
+          prompt: [{kind: text, value: 'Write in English what the learner should do next, then respond in Norwegian.'}]
+          payload:
+            response_language: 'no'
+            criteria: [{id: meaning, instruction: 'Write in English what to do next.'}]
+            judge_prompt: Check the English meaning and Norwegian response.
+    review_good:
+      elements:
+        - element_kind: exercise
+          id: practice_4_understand_and_accept
+          operation: write
+          prompt: [{kind: text, value: 'State what the learner should do next in Norwegian, then give a short Norwegian acceptance.'}]
+          payload:
+            response_language: 'no'
+            criteria:
+              - {id: meaning, instruction: 'States in Norwegian what to do next.'}
+              - {id: acceptance, instruction: 'Gives a short Norwegian acceptance.'}
+            judge_prompt: Check the Norwegian action and acceptance.
+
+  - family: open_criteria_omits_required_work
+    lesson: directional_vs_locative_adverbs
+    handle: reconstruct_the_meeting_route
+    mode: semantic
+    surfaces: [rubric]
+    label_source: maintainer_consensus
+    captured_at: "2026-08-29"
+    adversarial_category: rubric_completeness
+    evidence: >-
+      The prompt requests room 204, movement down to the café, the café's location,
+      and later movement home, but the sole criterion checks only form switching.
+    bad:
+      elements:
+        - element_kind: exercise
+          id: reconstruct_the_meeting_route
+          operation: write
+          prompt:
+            - kind: text
+              value: >-
+                Write a Norwegian route account. Include room 204, movement down
+                to the café, the café's location, and later movement home.
+          payload:
+            response_language: no
+            criteria:
+              - id: route-location-direction-switching
+                instruction: Uses location forms for places and directional forms for movement.
+            judge_prompt: Check the response against the task.
+    good:
+      elements:
+        - element_kind: exercise
+          id: reconstruct_the_meeting_route
+          operation: write
+          prompt:
+            - kind: text
+              value: >-
+                Write a Norwegian route account. Include room 204, movement down
+                to the café, the café's location, and later movement home.
+          payload:
+            response_language: no
+            criteria:
+              - id: room
+                instruction: States that Emil is in room 204.
+              - id: cafe-direction
+                instruction: States that Emil moves down to the café.
+              - id: cafe-location
+                instruction: States where the café is.
+              - id: home-direction
+                instruction: States that Emil later moves home.
+              - id: forms
+                instruction: Uses location forms for places and directional forms for movement.
+            judge_prompt: Check every requested route fact and the form contrast.
+
+  - family: recall_segments_missing_separator
+    lesson: adjective_and_adverb_comparison
+    handle: form_regular_comparatives
+    mode: mechanical
+    surfaces: [answer]
+    deterministic_only: true
+    label_source: maintainer_consensus
+    captured_at: "2026-08-29"
+    adversarial_category: rendering_boundary
+    evidence: >-
+      Adjacent keyed segments render “den røde.Jonas” without a word or sentence
+      boundary.
+    bad:
+      lesson.md: |
+        # Comparisons
+
+        {{exercise: form_regular_comparatives}}
+      exercises.yaml: |
+        - handle: form_regular_comparatives
+          op: recall_fill
+          objective: obj-adjective-and-adverb-comparison-01
+          bloom: apply
+          prompt_md: Complete the two comparisons.
+          audio_target: Den blå sykkelen er lettere enn den røde. Jonas er raskere enn Mina.
+          segments:
+          - text_md: 'Den blå sykkelen er '
+          - blank_id: first
+            options: [lettere, lettest]
+            answer_index: 0
+          - text_md: ' enn den røde.'
+          - text_md: 'Jonas er '
+          - blank_id: second
+            options: [raskere, raskest]
+            answer_index: 0
+          - text_md: ' enn Mina.'
+          derived_from:
+          - section_id: regular-comparison
+    good:
+      lesson.md: |
+        # Comparisons
+
+        {{exercise: form_regular_comparatives}}
+      exercises.yaml: |
+        - handle: form_regular_comparatives
+          op: recall_fill
+          objective: obj-adjective-and-adverb-comparison-01
+          bloom: apply
+          prompt_md: Complete the two comparisons.
+          audio_target: Den blå sykkelen er lettere enn den røde. Jonas er raskere enn Mina.
+          segments:
+          - text_md: 'Den blå sykkelen er '
+          - blank_id: first
+            options: [lettere, lettest]
+            answer_index: 0
+          - text_md: ' enn den røde.'
+          - text_md: ' Jonas er '
+          - blank_id: second
+            options: [raskere, raskest]
+            answer_index: 0
+          - text_md: ' enn Mina.'
+          derived_from:
+          - section_id: regular-comparison
+
+  - family: sentence_initial_keyed_lowercase
+    lesson: noun_plurals
+    handle: form_regular_definite_plurals
+    mode: mechanical
+    surfaces: [answer]
+    deterministic_only: true
+    label_source: maintainer_consensus
+    captured_at: "2026-08-29"
+    adversarial_category: normalization
+    evidence: >-
+      A keyed option at the proven start of a complete sentence is lowercase:
+      “posene ligger på bordet.”
+    bad:
+      lesson.md: |
+        # Noun plurals
+
+        {{exercise: form_regular_definite_plurals}}
+      exercises.yaml: |
+        - handle: form_regular_definite_plurals
+          op: recall_fill
+          objective: obj-noun-plurals-01
+          bloom: apply
+          prompt_md: Complete the sentence.
+          audio_target: 'Posene ligger på bordet.'
+          segments:
+          - text_md: 'Singular: en pose. '
+          - blank_id: pose-def
+            options: [posene, poser]
+            answer_index: 0
+          - text_md: ' ligger på bordet.'
+          derived_from:
+          - section_id: nouns-ending-in-an-unstressed-e
+    good:
+      lesson.md: |
+        # Noun plurals
+
+        {{exercise: form_regular_definite_plurals}}
+      exercises.yaml: |
+        - handle: form_regular_definite_plurals
+          op: recall_fill
+          objective: obj-noun-plurals-01
+          bloom: apply
+          prompt_md: Complete the sentence.
+          audio_target: 'Posene ligger på bordet.'
+          segments:
+          - text_md: 'Singular: en pose. '
+          - blank_id: pose-def
+            options: [Posene, poser]
+            answer_index: 0
+          - text_md: ' ligger på bordet.'
+          derived_from:
+          - section_id: nouns-ending-in-an-unstressed-e

@@ -1,0 +1,265 @@
+- handle: notice-order-in-the-quiz
+  op: choose
+  objective: obj-ordinal-numbers-01
+  bloom: understand
+  prompt_md: Choose the mapping that correctly explains all four ordinal expressions
+    as order, rank, or position rather than quantity.
+  derived_from:
+  - section_id: showing-order-rather-than-quantity
+  stem_md: Which option correctly maps for andre gang, det første bordet, den tredje
+    runden, and andreplass to a visit, a table, a round, and a team's rank?
+  options:
+  - id: swapped-meanings
+    text: for andre gang — a table; det første bordet — a round; den tredje runden
+      — a team's rank; andreplass — a visit.
+    correct: false
+    why: The expressions are matched to the wrong ordered objects or positions.
+  - id: correct
+    text: for andre gang — a visit; det første bordet — a table; den tredje runden
+      — a round; andreplass — a team's rank.
+    correct: true
+    why: Each ordinal expression identifies the stated visit occurrence, table, round,
+      or team rank.
+  - id: rotated-meanings
+    text: for andre gang — a round; det første bordet — a team's rank; den tredje
+      runden — a visit; andreplass — a table.
+    correct: false
+    why: The expressions are matched to the wrong ordered objects or positions.
+- handle: retrieve-common-ordinal-forms
+  op: recall_fill
+  objective: obj-ordinal-numbers-01
+  bloom: remember
+  prompt_md: Fill each blank with the Norwegian ordinal word for the cardinal number
+    shown.
+  derived_from:
+  - section_id: common-ordinal-numbers
+  audio_target: "Første, andre, tredje, fjerde, femte, sjette, sjuende, åttende, niende, tiende, ellevte og tolvte."
+  segments:
+  - text_md: '1 — '
+  - blank_id: ordinal-1
+    options:
+    - andre
+    - første
+    answer_index: 1
+  - text_md: '; 2 — '
+  - blank_id: ordinal-2
+    options:
+    - andre
+    - tredje
+    answer_index: 0
+  - text_md: '; 3 — '
+  - blank_id: ordinal-3
+    options:
+    - fjerde
+    - tredje
+    answer_index: 1
+  - text_md: '; 4 — '
+  - blank_id: ordinal-4
+    options:
+    - fjerde
+    - femte
+    answer_index: 0
+  - text_md: '; 5 — '
+  - blank_id: ordinal-5
+    options:
+    - sjette
+    - femte
+    answer_index: 1
+  - text_md: '; 6 — '
+  - blank_id: ordinal-6
+    options:
+    - sjette
+    - sjuende
+    answer_index: 0
+  - text_md: '; 7 — '
+  - blank_id: ordinal-7
+    options:
+    - åttende
+    - sjuende
+    answer_index: 1
+  - text_md: '; 8 — '
+  - blank_id: ordinal-8
+    options:
+    - åttende
+    - niende
+    answer_index: 0
+  - text_md: '; 9 — '
+  - blank_id: ordinal-9
+    options:
+    - niende
+    - tiende
+    answer_index: 0
+  - text_md: '; 10 — '
+  - blank_id: ordinal-10
+    options:
+    - ellevte
+    - tiende
+    answer_index: 1
+  - text_md: '; 11 — '
+  - blank_id: ordinal-11
+    options:
+    - ellevte
+    - tolvte
+    answer_index: 0
+  - text_md: '; 12 — '
+  - blank_id: ordinal-12
+    options:
+    - tolvte
+    - ellevte
+    answer_index: 0
+- handle: choose-quantity-or-order
+  op: choose
+  objective: obj-ordinal-numbers-01
+  bloom: understand
+  prompt_md: Choose the option whose Norwegian sentences express all six meanings.
+    The scored dimension is quantity versus order, not sentence-form variation.
+  derived_from:
+  - section_id: a-likely-mistake
+  stem_md: 'Choose the set that expresses these meanings: two rounds exist; a person
+    has number four; someone is playing the second round; a room is on the fifth floor;
+    people sit in the third row; Nora came in first place.'
+  options:
+  - id: correct
+    text: 'Vi har to runder. Hun har nummer fire. Vi spiller den andre runden. Rommet
+      ligger i femte etasje. Vi sitter på tredje rad. Nora kom på førsteplass. '
+    correct: true
+    why: The set uses cardinal numbers for quantity or identification and ordinal
+      numbers for round, floor, row, and rank.
+  - id: quantity-mix
+    text: 'Vi har to runder. Hun har nummer fire. Vi spiller to runder. Hotellet har
+      fem etasjer. Vi sitter på tredje rad. Nora kom på førsteplass. '
+    correct: false
+    why: Vi spiller to runder and Hotellet har fem etasjer express quantities, not
+      the second round and the fifth floor.
+  - id: wrong-rank
+    text: 'Vi har to runder. Hun har nummer fire. Vi spiller den andre runden. Rommet
+      ligger i femte etasje. Vi sitter på tredje rad. Nora kom på tredjeplass. '
+    correct: false
+    why: The final sentence gives Nora third place instead of first place.
+- handle: express-rank-and-position
+  op: write
+  objective: obj-ordinal-numbers-01
+  bloom: apply
+  prompt_md: 'A race finishes in this order: Sofie first, Omar second, and Lina third.
+    Write three short Norwegian sentences stating each person''s position. Use ordinal
+    numbers to express first, second, and third place.'
+  derived_from:
+  - section_id: position-and-rank
+  response_language: 'no'
+  min_words: 9
+  max_words: 25
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål variants only when they clearly state the three race positions
+    with ordinal forms, not cardinal-number statements.
+  criteria:
+  - id: sofie-first
+    instruction: States that Sofie came in first place, using første as an ordinal.
+  - id: omar-second
+    instruction: States that Omar came in second place, using andre as an ordinal.
+  - id: lina-third
+    instruction: States that Lina came in third place, using tredje as an ordinal.
+- handle: locate-by-ordered-position
+  op: write
+  objective: obj-ordinal-numbers-01
+  bloom: apply
+  prompt_md: 'A visitor asks for directions in a building. Write three short Norwegian
+    sentences in your own wording: say that the meeting room is on the fourth floor,
+    the visitor''s seat is in the second row, and the third door is on the left. Use
+    an ordinal in each sentence; use your own wording.'
+  derived_from:
+  - section_id: finding-places-in-an-ordered-setting
+  response_language: 'no'
+  min_words: 12
+  max_words: 30
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål variants that preserve all three locations and use fjerde,
+    andre, and tredje as ordinals; exact wording is not required.
+  criteria:
+  - id: fourth-floor
+    instruction: Locates the meeting room on the fourth floor with fjerde as an ordinal.
+  - id: second-row
+    instruction: Locates the visitor's seat in the second row with andre as an ordinal.
+  - id: third-door
+    instruction: Identifies the third door on the left with tredje as an ordinal.
+- handle: complete-the-quiz-result
+  op: write
+  objective: obj-ordinal-numbers-01
+  bloom: apply
+  prompt_md: 'Reconstruct this quiz result in four or five short Norwegian sentences.
+    Facts: you played in the third round; you answered the first and fourth questions
+    correctly; your team came in first place; the team at the first table came in
+    second place. Use complete Norwegian phrases with ordinal numbers.'
+  derived_from:
+  - section_id: returning-to-the-quiz
+  response_language: 'no'
+  min_words: 20
+  max_words: 50
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål variants and pronoun changes only when all four facts remain
+    explicit and each position uses the corresponding ordinal form.
+  criteria:
+  - id: third-round
+    instruction: States that the quiz took place in the third round, using tredje
+      as an ordinal.
+  - id: first-fourth-questions
+    instruction: States that the first and fourth questions were answered correctly,
+      using første and fjerde as ordinals.
+  - id: team-first-place
+    instruction: States that the learner's team came in first place, using første
+      as an ordinal.
+  - id: first-table-second-place
+    instruction: States that the team at the first table came in second place, using
+      første and andre as ordinals.
+- handle: describe-saras-ordered-day
+  op: write
+  objective: obj-ordinal-numbers-01
+  bloom: apply
+  prompt_md: 'Write five short Norwegian sentences describing Sara''s ordered
+    day. Include these facts: her office is on the fourth floor; she attends her first
+    meeting in the morning; she visits the second office along the corridor; she takes
+    the third bus home; the next day she is second in the café queue. Use an ordinal
+    for every position or sequence. Use your own wording.'
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+  response_language: 'no'
+  min_words: 25
+  max_words: 65
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål variants that preserve all five facts and use the requested
+    ordinal forms; do not accept cardinal forms for these positions.
+  criteria:
+  - id: sara-fourth-floor
+    instruction: States that Sara's office is on the fourth floor, using fjerde as
+      an ordinal.
+  - id: sara-first-meeting
+    instruction: States that Sara attends her first meeting, using første as an ordinal.
+  - id: sara-second-office
+    instruction: States that Sara visits the second office along the corridor, using
+      andre as an ordinal.
+  - id: sara-third-bus
+    instruction: States that Sara takes the third bus home, using tredje as an ordinal.
+  - id: sara-second-queue
+    instruction: States that Sara is second in the café queue, using andre as an ordinal.
+- handle: recall-and-use-three-ordinals
+  op: write
+  objective: obj-ordinal-numbers-01
+  bloom: apply
+  prompt_md: 'Write three short Norwegian sentences about a train station: use første,
+    andre, and tredje once each, with one target word in each sentence. Each sentence
+    must show order, rank, or position, not quantity. Use your own wording.'
+  derived_from:
+  - section_id: quick-retrieval-and-review
+  response_language: 'no'
+  min_words: 9
+  max_words: 30
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept any natural Bokmål sentence that uses each target word as an ordinal showing
+    order, rank, or position. Reject uses where a target word only identifies quantity
+    or a number.
+  criteria:
+  - id: uses-forste
+    instruction: Uses første in one sentence to show first position, rank, or order.
+  - id: uses-andre
+    instruction: Uses andre in one sentence to show second position, rank, or order.
+  - id: uses-tredje
+    instruction: Uses tredje in one sentence to show third position, rank, or order.

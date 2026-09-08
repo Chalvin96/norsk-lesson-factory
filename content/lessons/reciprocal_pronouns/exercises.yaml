@@ -1,0 +1,192 @@
+- handle: notice_shared_action
+  op: choose
+  objective: obj-reciprocal-pronouns-01
+  bloom: understand
+  prompt_md: Choose the interpretation that shows a reciprocal relationship and identifies
+    the participants connected by the action.
+  derived_from:
+  - section_id: checkpoint-notice-reciprocal-relationship
+  stem_md: Which situation calls for hverandre?
+  options:
+  - id: one-way-volunteer
+    text: 'En frivillig hjelper lederen med forberedelsene. / One volunteer helps
+      the leader with the preparations; connected participants: the volunteer and
+      the leader.'
+    correct: false
+    why: The action goes from one volunteer to one leader, so it is not reciprocal.
+  - id: reciprocal-volunteers
+    text: 'De frivillige hjelper hverandre med forberedelsene. / The volunteers help
+      one another with the preparations; connected participants: the volunteers.'
+    correct: true
+    why: The volunteers act toward one another, so the relationship is reciprocal.
+- handle: complete_direct_reciprocal_object
+  op: recall_fill
+  objective: obj-reciprocal-pronouns-01
+  bloom: apply
+  prompt_md: Complete each Norwegian sentence with the reciprocal object form. In
+    every sentence, the volunteers act toward one another.
+  derived_from:
+  - section_id: checkpoint-complete-shared-action
+  audio_target: "De frivillige hjelper hverandre i sentrum. De frivillige møter hverandre etter møtet. De frivillige kjenner hverandre godt. De frivillige støtter hverandre under forberedelsene. De frivillige kontakter hverandre senere."
+  segments:
+  - text_md: 'De frivillige hjelper '
+  - blank_id: direct-help
+    options:
+    - hverandre
+    - dem
+    answer_index: 0
+  - text_md: ' i sentrum. De frivillige møter '
+  - blank_id: direct-meet
+    options:
+    - hverandre
+    - dem
+    answer_index: 0
+  - text_md: ' etter møtet. De frivillige kjenner '
+  - blank_id: direct-know
+    options:
+    - hverandre
+    - dem
+    answer_index: 0
+  - text_md: ' godt. De frivillige støtter '
+  - blank_id: direct-support
+    options:
+    - hverandre
+    - dem
+    answer_index: 0
+  - text_md: ' under forberedelsene. De frivillige kontakter '
+  - blank_id: direct-contact
+    options:
+    - hverandre
+    - dem
+    answer_index: 0
+  - text_md: ' senere.'
+- handle: use_reciprocal_after_preposition
+  op: build
+  objective: obj-reciprocal-pronouns-01
+  bloom: apply
+  prompt_md: Rewrite the two Norwegian statements as one natural Norwegian sentence.
+    Use De as the plural subject, the supplied verb expression, and hverandre. Maria
+    snakker med Jonas. Jonas snakker med Maria.
+  explanation_md: "Hverandre expresses participants acting on one another and follows any required preposition."
+  derived_from:
+  - section_id: checkpoint-preposition-reciprocal
+  tokens:
+  - token_id: tok-1
+    text: De
+  - token_id: tok-2
+    text: snakker
+  - token_id: tok-3
+    text: med
+  - token_id: tok-4
+    text: hverandre.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+- handle: distinguish_joint_and_reciprocal_meaning
+  op: categorize
+  objective: obj-reciprocal-pronouns-01
+  bloom: analyze
+  prompt_md: 'Classify each Norwegian sentence into exactly one bucket: a joint activity
+    or a reciprocal action.'
+  explanation_md: "Doing something together is a joint action; hverandre is reserved for participants directing the action toward one another."
+  derived_from:
+  - section_id: checkpoint-joint-and-reciprocal
+  buckets:
+  - bucket_id: joint
+    label: 'Joint activity: participants act together, not toward one another.'
+  - bucket_id: reciprocal
+    label: 'Reciprocal action: participants act toward one another.'
+  items:
+  - item_id: joint-travel
+    text: Kollegaene reiser sammen. / The colleagues travel together.
+    bucket_id: joint
+  - item_id: joint-cooking
+    text: Vennene lager mat sammen. / The friends cook together.
+    bucket_id: joint
+  - item_id: joint-studying
+    text: Søsknene studerer sammen. / The siblings study together.
+    bucket_id: joint
+  - item_id: reciprocal-help
+    text: Naboene hjelper hverandre med snøen. / The neighbors help one another with
+      the snow.
+    bucket_id: reciprocal
+- handle: combine_actions_with_hverandre
+  op: build
+  objective: obj-reciprocal-pronouns-01
+  bloom: apply
+  prompt_md: Combine the two Norwegian statements into one natural Norwegian sentence.
+    Use Mina og Jonas as the plural subject and hverandre; do not repeat the names
+    as separate objects. Mina hjelper Jonas. Jonas hjelper Mina.
+  derived_from:
+  - section_id: checkpoint-combine-directions
+  tokens:
+  - token_id: tok-1
+    text: Mina
+  - token_id: tok-2
+    text: og
+  - token_id: tok-3
+    text: Jonas
+  - token_id: tok-4
+    text: hjelper
+  - token_id: tok-5
+    text: hverandre.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+- handle: write_reciprocal_sentences_in_new_context
+  op: write
+  objective: obj-reciprocal-pronouns-01
+  bloom: apply
+  prompt_md: 'Write three complete Norwegian sentences about neighbors in a new everyday
+    setting, not the community center. Use these cues: 1. The neighbors help one another
+    after a storm. Use hjelpe. 2. They send messages containing information about
+    icy paths to one another. Use sende meldinger til. 3. Last week, they borrowed
+    tools from one another. Use låne verktøy av. Use hverandre directly where the
+    verb takes a direct object and after the required preposition in the other expressions.'
+  derived_from:
+  - section_id: guided-transfer-new-situation
+  response_language: 'no'
+  min_words: 18
+  max_words: 50
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål variants that preserve reciprocal meaning and the required
+    prepositions.
+  criteria:
+  - id: reciprocal-action
+    instruction: Uses hverandre to describe reciprocal actions between two or more
+      neighbors in the new setting.
+  - id: required-constructions
+    instruction: Uses hverandre directly with hjelpe and after the required prepositions
+      in sende meldinger til and låne verktøy av.
+- handle: retrieve_and_transfer_hverandre
+  op: write
+  objective: obj-reciprocal-pronouns-01
+  bloom: apply
+  prompt_md: 'Write four concise Norwegian sentences from these English cues about
+    friends planning a weekend trip: 1. The friends call one another to coordinate
+    departure. 2. They wait for one another at the station. 3. They help one another
+    with packing. 4. They send messages to one another while planning. Use hverandre
+    only when the action is reciprocal. Include at least one verb that takes hverandre
+    directly and at least one expression with a preposition before hverandre.'
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  min_words: 20
+  max_words: 50
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål variants that preserve the intended reciprocal meanings.
+  criteria:
+  - id: reciprocal-meaning
+    instruction: Uses hverandre accurately only for reciprocal actions among two or
+      more friends.
+  - id: construction-coverage
+    instruction: Includes at least one direct-object use of hverandre and at least
+      one preposition plus hverandre construction.
+  - id: cue-completion
+    instruction: Writes one complete Norwegian sentence for each of the four weekend-trip
+      cues.

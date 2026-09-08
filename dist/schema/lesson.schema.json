@@ -1,0 +1,3054 @@
+{
+  "$defs": {
+    "BuildPayload": {
+      "additionalProperties": false,
+      "properties": {
+        "tokens": {
+          "items": {
+            "$ref": "#/$defs/_Token"
+          },
+          "title": "Tokens",
+          "type": "array"
+        },
+        "answer_order": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Answer Order",
+          "type": "array"
+        }
+      },
+      "required": [
+        "tokens",
+        "answer_order"
+      ],
+      "title": "BuildPayload",
+      "type": "object"
+    },
+    "CategorizePayload": {
+      "additionalProperties": false,
+      "properties": {
+        "buckets": {
+          "items": {
+            "$ref": "#/$defs/_Bucket"
+          },
+          "minItems": 2,
+          "title": "Buckets",
+          "type": "array"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/_CategorizeItem"
+          },
+          "title": "Items",
+          "type": "array"
+        }
+      },
+      "required": [
+        "buckets",
+        "items"
+      ],
+      "title": "CategorizePayload",
+      "type": "object"
+    },
+    "CodeSpan": {
+      "additionalProperties": false,
+      "description": "Inline code leaf span.",
+      "properties": {
+        "kind": {
+          "const": "code",
+          "title": "Kind",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "value"
+      ],
+      "title": "CodeSpan",
+      "type": "object"
+    },
+    "EmphasisSpan": {
+      "additionalProperties": false,
+      "description": "Emphasised text leaf span (renders as italic).",
+      "properties": {
+        "kind": {
+          "const": "emphasis",
+          "title": "Kind",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "value"
+      ],
+      "title": "EmphasisSpan",
+      "type": "object"
+    },
+    "ExportedAudio": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "url": {
+          "title": "Url",
+          "type": "string"
+        },
+        "mime": {
+          "title": "Mime",
+          "type": "string"
+        },
+        "duration_ms": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Duration Ms"
+        },
+        "sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sha256"
+        },
+        "status": {
+          "const": "synthesized",
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "path",
+        "url",
+        "mime",
+        "status"
+      ],
+      "title": "ExportedAudio",
+      "type": "object"
+    },
+    "ExportedBuildExercise": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "exercise",
+          "title": "Kind",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "operation": {
+          "const": "build",
+          "title": "Operation",
+          "type": "string"
+        },
+        "objective_id": {
+          "title": "Objective Id",
+          "type": "string"
+        },
+        "prompt": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "Prompt",
+          "type": "array"
+        },
+        "explanation": {
+          "anyOf": [
+            {
+              "items": {
+                "discriminator": {
+                  "mapping": {
+                    "code": "#/$defs/CodeSpan",
+                    "emphasis": "#/$defs/EmphasisSpan",
+                    "foreign_term": "#/$defs/ForeignTermSpan",
+                    "strong": "#/$defs/StrongSpan",
+                    "text": "#/$defs/TextSpan"
+                  },
+                  "propertyName": "kind"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/TextSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/EmphasisSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/StrongSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/CodeSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/ForeignTermSpan"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Explanation"
+        },
+        "audio_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Audio Id"
+        },
+        "payload": {
+          "$ref": "#/$defs/BuildPayload"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "operation",
+        "objective_id",
+        "prompt",
+        "explanation",
+        "payload"
+      ],
+      "title": "ExportedExerciseBase[Literal['build'], BuildPayload]",
+      "type": "object"
+    },
+    "ExportedCalloutBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "callout",
+          "title": "Kind",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "level": {
+          "enum": [
+            "tip",
+            "warning",
+            "note"
+          ],
+          "title": "Level",
+          "type": "string"
+        },
+        "blocks": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "callout": "#/$defs/ExportedCalloutBlock",
+                "example": "#/$defs/ExportedExampleBlock",
+                "examples": "#/$defs/ExportedExamplesBlock",
+                "heading": "#/$defs/ExportedHeadingBlock",
+                "list": "#/$defs/ExportedListBlock",
+                "paragraph": "#/$defs/ExportedParagraphBlock",
+                "reading": "#/$defs/ExportedReadingBlock",
+                "rule": "#/$defs/ExportedRuleBlock",
+                "table": "#/$defs/ExportedTableBlock",
+                "word_list": "#/$defs/ExportedWordListBlock"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/ExportedHeadingBlock"
+              },
+              {
+                "$ref": "#/$defs/ExportedParagraphBlock"
+              },
+              {
+                "$ref": "#/$defs/ExportedReadingBlock"
+              },
+              {
+                "$ref": "#/$defs/ExportedListBlock"
+              },
+              {
+                "$ref": "#/$defs/ExportedRuleBlock"
+              },
+              {
+                "$ref": "#/$defs/ExportedExampleBlock"
+              },
+              {
+                "$ref": "#/$defs/ExportedExamplesBlock"
+              },
+              {
+                "$ref": "#/$defs/ExportedWordListBlock"
+              },
+              {
+                "$ref": "#/$defs/ExportedTableBlock"
+              },
+              {
+                "$ref": "#/$defs/ExportedCalloutBlock"
+              }
+            ]
+          },
+          "title": "Blocks",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "level",
+        "blocks"
+      ],
+      "title": "ExportedCalloutBlock",
+      "type": "object"
+    },
+    "ExportedCategorizeExercise": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "exercise",
+          "title": "Kind",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "operation": {
+          "const": "categorize",
+          "title": "Operation",
+          "type": "string"
+        },
+        "objective_id": {
+          "title": "Objective Id",
+          "type": "string"
+        },
+        "prompt": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "Prompt",
+          "type": "array"
+        },
+        "explanation": {
+          "anyOf": [
+            {
+              "items": {
+                "discriminator": {
+                  "mapping": {
+                    "code": "#/$defs/CodeSpan",
+                    "emphasis": "#/$defs/EmphasisSpan",
+                    "foreign_term": "#/$defs/ForeignTermSpan",
+                    "strong": "#/$defs/StrongSpan",
+                    "text": "#/$defs/TextSpan"
+                  },
+                  "propertyName": "kind"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/TextSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/EmphasisSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/StrongSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/CodeSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/ForeignTermSpan"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Explanation"
+        },
+        "audio_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Audio Id"
+        },
+        "payload": {
+          "$ref": "#/$defs/CategorizePayload"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "operation",
+        "objective_id",
+        "prompt",
+        "explanation",
+        "payload"
+      ],
+      "title": "ExportedExerciseBase[Literal['categorize'], CategorizePayload]",
+      "type": "object"
+    },
+    "ExportedChooseExercise": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "exercise",
+          "title": "Kind",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "operation": {
+          "const": "choose",
+          "title": "Operation",
+          "type": "string"
+        },
+        "objective_id": {
+          "title": "Objective Id",
+          "type": "string"
+        },
+        "prompt": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "Prompt",
+          "type": "array"
+        },
+        "explanation": {
+          "anyOf": [
+            {
+              "items": {
+                "discriminator": {
+                  "mapping": {
+                    "code": "#/$defs/CodeSpan",
+                    "emphasis": "#/$defs/EmphasisSpan",
+                    "foreign_term": "#/$defs/ForeignTermSpan",
+                    "strong": "#/$defs/StrongSpan",
+                    "text": "#/$defs/TextSpan"
+                  },
+                  "propertyName": "kind"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/TextSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/EmphasisSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/StrongSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/CodeSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/ForeignTermSpan"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Explanation"
+        },
+        "audio_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Audio Id"
+        },
+        "payload": {
+          "$ref": "#/$defs/ExportedChoosePayload"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "operation",
+        "objective_id",
+        "prompt",
+        "explanation",
+        "payload"
+      ],
+      "title": "ExportedExerciseBase[Literal['choose'], ExportedChoosePayload]",
+      "type": "object"
+    },
+    "ExportedChooseOption": {
+      "additionalProperties": false,
+      "properties": {
+        "option_id": {
+          "title": "Option Id",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "why": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Why"
+        }
+      },
+      "required": [
+        "option_id",
+        "text"
+      ],
+      "title": "ExportedChooseOption",
+      "type": "object"
+    },
+    "ExportedChoosePayload": {
+      "additionalProperties": false,
+      "properties": {
+        "options": {
+          "items": {
+            "$ref": "#/$defs/ExportedChooseOption"
+          },
+          "minItems": 2,
+          "title": "Options",
+          "type": "array"
+        },
+        "answer_id": {
+          "title": "Answer Id",
+          "type": "string"
+        },
+        "stem": {
+          "anyOf": [
+            {
+              "items": {
+                "discriminator": {
+                  "mapping": {
+                    "code": "#/$defs/CodeSpan",
+                    "emphasis": "#/$defs/EmphasisSpan",
+                    "foreign_term": "#/$defs/ForeignTermSpan",
+                    "strong": "#/$defs/StrongSpan",
+                    "text": "#/$defs/TextSpan"
+                  },
+                  "propertyName": "kind"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/TextSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/EmphasisSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/StrongSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/CodeSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/ForeignTermSpan"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Stem"
+        }
+      },
+      "required": [
+        "options",
+        "answer_id"
+      ],
+      "title": "ExportedChoosePayload",
+      "type": "object"
+    },
+    "ExportedContentItem": {
+      "additionalProperties": false,
+      "description": "One ordered learner-facing section or exercise reference.",
+      "properties": {
+        "kind": {
+          "enum": [
+            "section",
+            "exercise"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "id"
+      ],
+      "title": "ExportedContentItem",
+      "type": "object"
+    },
+    "ExportedExampleBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "example",
+          "title": "Kind",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "no": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "No",
+          "type": "array"
+        },
+        "en": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "En",
+          "type": "array"
+        },
+        "audio_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Audio Id"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "no",
+        "en"
+      ],
+      "title": "ExportedExampleBlock",
+      "type": "object"
+    },
+    "ExportedExampleItem": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "no": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "No",
+          "type": "array"
+        },
+        "en": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "En",
+          "type": "array"
+        },
+        "audio_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Audio Id"
+        }
+      },
+      "required": [
+        "id",
+        "no",
+        "en"
+      ],
+      "title": "ExportedExampleItem",
+      "type": "object"
+    },
+    "ExportedExamplesBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "examples",
+          "title": "Kind",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/ExportedExampleItem"
+          },
+          "title": "Items",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "items"
+      ],
+      "title": "ExportedExamplesBlock",
+      "type": "object"
+    },
+    "ExportedFindFixExercise": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "exercise",
+          "title": "Kind",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "operation": {
+          "const": "find_fix",
+          "title": "Operation",
+          "type": "string"
+        },
+        "objective_id": {
+          "title": "Objective Id",
+          "type": "string"
+        },
+        "prompt": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "Prompt",
+          "type": "array"
+        },
+        "explanation": {
+          "anyOf": [
+            {
+              "items": {
+                "discriminator": {
+                  "mapping": {
+                    "code": "#/$defs/CodeSpan",
+                    "emphasis": "#/$defs/EmphasisSpan",
+                    "foreign_term": "#/$defs/ForeignTermSpan",
+                    "strong": "#/$defs/StrongSpan",
+                    "text": "#/$defs/TextSpan"
+                  },
+                  "propertyName": "kind"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/TextSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/EmphasisSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/StrongSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/CodeSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/ForeignTermSpan"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Explanation"
+        },
+        "audio_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Audio Id"
+        },
+        "payload": {
+          "$ref": "#/$defs/FindFixPayload"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "operation",
+        "objective_id",
+        "prompt",
+        "explanation",
+        "payload"
+      ],
+      "title": "ExportedExerciseBase[Literal['find_fix'], FindFixPayload]",
+      "type": "object"
+    },
+    "ExportedHeadingBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "heading",
+          "title": "Kind",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "level": {
+          "enum": [
+            3,
+            4
+          ],
+          "title": "Level",
+          "type": "integer"
+        },
+        "spans": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "Spans",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "level",
+        "spans"
+      ],
+      "title": "ExportedHeadingBlock",
+      "type": "object"
+    },
+    "ExportedJudgeExercise": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "exercise",
+          "title": "Kind",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "operation": {
+          "const": "judge",
+          "title": "Operation",
+          "type": "string"
+        },
+        "objective_id": {
+          "title": "Objective Id",
+          "type": "string"
+        },
+        "prompt": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "Prompt",
+          "type": "array"
+        },
+        "explanation": {
+          "anyOf": [
+            {
+              "items": {
+                "discriminator": {
+                  "mapping": {
+                    "code": "#/$defs/CodeSpan",
+                    "emphasis": "#/$defs/EmphasisSpan",
+                    "foreign_term": "#/$defs/ForeignTermSpan",
+                    "strong": "#/$defs/StrongSpan",
+                    "text": "#/$defs/TextSpan"
+                  },
+                  "propertyName": "kind"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/TextSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/EmphasisSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/StrongSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/CodeSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/ForeignTermSpan"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Explanation"
+        },
+        "audio_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Audio Id"
+        },
+        "payload": {
+          "$ref": "#/$defs/ExportedJudgePayload"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "operation",
+        "objective_id",
+        "prompt",
+        "explanation",
+        "payload"
+      ],
+      "title": "ExportedExerciseBase[Literal['judge'], ExportedJudgePayload]",
+      "type": "object"
+    },
+    "ExportedJudgePayload": {
+      "additionalProperties": false,
+      "properties": {
+        "sentence": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "Sentence",
+          "type": "array"
+        },
+        "is_correct": {
+          "title": "Is Correct",
+          "type": "boolean"
+        },
+        "feedback": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Feedback"
+        }
+      },
+      "required": [
+        "sentence",
+        "is_correct"
+      ],
+      "title": "ExportedJudgePayload",
+      "type": "object"
+    },
+    "ExportedListBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "list",
+          "title": "Kind",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "ordered": {
+          "title": "Ordered",
+          "type": "boolean"
+        },
+        "items": {
+          "items": {
+            "items": {
+              "discriminator": {
+                "mapping": {
+                  "code": "#/$defs/CodeSpan",
+                  "emphasis": "#/$defs/EmphasisSpan",
+                  "foreign_term": "#/$defs/ForeignTermSpan",
+                  "strong": "#/$defs/StrongSpan",
+                  "text": "#/$defs/TextSpan"
+                },
+                "propertyName": "kind"
+              },
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/TextSpan"
+                },
+                {
+                  "$ref": "#/$defs/EmphasisSpan"
+                },
+                {
+                  "$ref": "#/$defs/StrongSpan"
+                },
+                {
+                  "$ref": "#/$defs/CodeSpan"
+                },
+                {
+                  "$ref": "#/$defs/ForeignTermSpan"
+                }
+              ]
+            },
+            "type": "array"
+          },
+          "title": "Items",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "ordered",
+        "items"
+      ],
+      "title": "ExportedListBlock",
+      "type": "object"
+    },
+    "ExportedMatchPairsExercise": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "exercise",
+          "title": "Kind",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "operation": {
+          "const": "match_pairs",
+          "title": "Operation",
+          "type": "string"
+        },
+        "objective_id": {
+          "title": "Objective Id",
+          "type": "string"
+        },
+        "prompt": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "Prompt",
+          "type": "array"
+        },
+        "explanation": {
+          "anyOf": [
+            {
+              "items": {
+                "discriminator": {
+                  "mapping": {
+                    "code": "#/$defs/CodeSpan",
+                    "emphasis": "#/$defs/EmphasisSpan",
+                    "foreign_term": "#/$defs/ForeignTermSpan",
+                    "strong": "#/$defs/StrongSpan",
+                    "text": "#/$defs/TextSpan"
+                  },
+                  "propertyName": "kind"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/TextSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/EmphasisSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/StrongSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/CodeSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/ForeignTermSpan"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Explanation"
+        },
+        "audio_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Audio Id"
+        },
+        "payload": {
+          "$ref": "#/$defs/MatchPairsPayload"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "operation",
+        "objective_id",
+        "prompt",
+        "explanation",
+        "payload"
+      ],
+      "title": "ExportedExerciseBase[Literal['match_pairs'], MatchPairsPayload]",
+      "type": "object"
+    },
+    "ExportedMedia": {
+      "additionalProperties": false,
+      "properties": {
+        "audio": {
+          "items": {
+            "$ref": "#/$defs/ExportedAudio"
+          },
+          "title": "Audio",
+          "type": "array"
+        }
+      },
+      "required": [
+        "audio"
+      ],
+      "title": "ExportedMedia",
+      "type": "object"
+    },
+    "ExportedObjective": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "statement": {
+          "title": "Statement",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "statement"
+      ],
+      "title": "ExportedObjective",
+      "type": "object"
+    },
+    "ExportedParagraphBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "paragraph",
+          "title": "Kind",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "spans": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "Spans",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "spans"
+      ],
+      "title": "ExportedParagraphBlock",
+      "type": "object"
+    },
+    "ExportedPracticeGroup": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "objective_id": {
+          "title": "Objective Id",
+          "type": "string"
+        },
+        "exercise_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Exercise Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "objective_id",
+        "exercise_ids"
+      ],
+      "title": "ExportedPracticeGroup",
+      "type": "object"
+    },
+    "ExportedReadingBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "reading",
+          "title": "Kind",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "spans": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "Spans",
+          "type": "array"
+        },
+        "translation": {
+          "minLength": 1,
+          "title": "Translation",
+          "type": "string"
+        },
+        "speaker_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Speaker Id"
+        },
+        "speaker_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Speaker Name"
+        },
+        "dialogue_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dialogue Id"
+        },
+        "turn_index": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Turn Index"
+        },
+        "speaker_icon_url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Speaker Icon Url"
+        },
+        "audio_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Audio Id"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "spans",
+        "translation"
+      ],
+      "title": "ExportedReadingBlock",
+      "type": "object"
+    },
+    "ExportedRecallBlank": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "blank",
+          "title": "Kind",
+          "type": "string"
+        },
+        "blank_id": {
+          "title": "Blank Id",
+          "type": "string"
+        },
+        "options": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 2,
+          "title": "Options",
+          "type": "array"
+        },
+        "answer_index": {
+          "title": "Answer Index",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "kind",
+        "blank_id",
+        "options",
+        "answer_index"
+      ],
+      "title": "ExportedRecallBlank",
+      "type": "object"
+    },
+    "ExportedRecallFillExercise": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "exercise",
+          "title": "Kind",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "operation": {
+          "const": "recall_fill",
+          "title": "Operation",
+          "type": "string"
+        },
+        "objective_id": {
+          "title": "Objective Id",
+          "type": "string"
+        },
+        "prompt": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "Prompt",
+          "type": "array"
+        },
+        "explanation": {
+          "anyOf": [
+            {
+              "items": {
+                "discriminator": {
+                  "mapping": {
+                    "code": "#/$defs/CodeSpan",
+                    "emphasis": "#/$defs/EmphasisSpan",
+                    "foreign_term": "#/$defs/ForeignTermSpan",
+                    "strong": "#/$defs/StrongSpan",
+                    "text": "#/$defs/TextSpan"
+                  },
+                  "propertyName": "kind"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/TextSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/EmphasisSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/StrongSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/CodeSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/ForeignTermSpan"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Explanation"
+        },
+        "audio_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Audio Id"
+        },
+        "payload": {
+          "$ref": "#/$defs/ExportedRecallFillPayload"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "operation",
+        "objective_id",
+        "prompt",
+        "explanation",
+        "payload"
+      ],
+      "title": "ExportedExerciseBase[Literal['recall_fill'], ExportedRecallFillPayload]",
+      "type": "object"
+    },
+    "ExportedRecallFillPayload": {
+      "additionalProperties": false,
+      "properties": {
+        "segments": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "blank": "#/$defs/ExportedRecallBlank",
+                "span": "#/$defs/ExportedRecallSpanSegment"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/ExportedRecallSpanSegment"
+              },
+              {
+                "$ref": "#/$defs/ExportedRecallBlank"
+              }
+            ]
+          },
+          "title": "Segments",
+          "type": "array"
+        }
+      },
+      "required": [
+        "segments"
+      ],
+      "title": "ExportedRecallFillPayload",
+      "type": "object"
+    },
+    "ExportedRecallSpanSegment": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "span",
+          "title": "Kind",
+          "type": "string"
+        },
+        "spans": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "Spans",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "spans"
+      ],
+      "title": "ExportedRecallSpanSegment",
+      "type": "object"
+    },
+    "ExportedRuleBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "rule",
+          "title": "Kind",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "statement": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "Statement",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "statement"
+      ],
+      "title": "ExportedRuleBlock",
+      "type": "object"
+    },
+    "ExportedSection": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "section",
+          "title": "Kind",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "orient",
+            "model",
+            "contrast",
+            "recap"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "objective_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Objective Ids",
+          "type": "array"
+        },
+        "blocks": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "callout": "#/$defs/ExportedCalloutBlock",
+                "example": "#/$defs/ExportedExampleBlock",
+                "examples": "#/$defs/ExportedExamplesBlock",
+                "heading": "#/$defs/ExportedHeadingBlock",
+                "list": "#/$defs/ExportedListBlock",
+                "paragraph": "#/$defs/ExportedParagraphBlock",
+                "reading": "#/$defs/ExportedReadingBlock",
+                "rule": "#/$defs/ExportedRuleBlock",
+                "table": "#/$defs/ExportedTableBlock",
+                "word_list": "#/$defs/ExportedWordListBlock"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/ExportedHeadingBlock"
+              },
+              {
+                "$ref": "#/$defs/ExportedParagraphBlock"
+              },
+              {
+                "$ref": "#/$defs/ExportedReadingBlock"
+              },
+              {
+                "$ref": "#/$defs/ExportedListBlock"
+              },
+              {
+                "$ref": "#/$defs/ExportedRuleBlock"
+              },
+              {
+                "$ref": "#/$defs/ExportedExampleBlock"
+              },
+              {
+                "$ref": "#/$defs/ExportedExamplesBlock"
+              },
+              {
+                "$ref": "#/$defs/ExportedWordListBlock"
+              },
+              {
+                "$ref": "#/$defs/ExportedTableBlock"
+              },
+              {
+                "$ref": "#/$defs/ExportedCalloutBlock"
+              }
+            ]
+          },
+          "title": "Blocks",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "role",
+        "title",
+        "objective_ids",
+        "blocks"
+      ],
+      "title": "ExportedSection",
+      "type": "object"
+    },
+    "ExportedSpeakExercise": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "exercise",
+          "title": "Kind",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "operation": {
+          "const": "speak",
+          "title": "Operation",
+          "type": "string"
+        },
+        "objective_id": {
+          "title": "Objective Id",
+          "type": "string"
+        },
+        "prompt": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "Prompt",
+          "type": "array"
+        },
+        "explanation": {
+          "anyOf": [
+            {
+              "items": {
+                "discriminator": {
+                  "mapping": {
+                    "code": "#/$defs/CodeSpan",
+                    "emphasis": "#/$defs/EmphasisSpan",
+                    "foreign_term": "#/$defs/ForeignTermSpan",
+                    "strong": "#/$defs/StrongSpan",
+                    "text": "#/$defs/TextSpan"
+                  },
+                  "propertyName": "kind"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/TextSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/EmphasisSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/StrongSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/CodeSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/ForeignTermSpan"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Explanation"
+        },
+        "audio_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Audio Id"
+        },
+        "payload": {
+          "$ref": "#/$defs/SpeakPayload"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "operation",
+        "objective_id",
+        "prompt",
+        "explanation",
+        "payload"
+      ],
+      "title": "ExportedExerciseBase[Literal['speak'], SpeakPayload]",
+      "type": "object"
+    },
+    "ExportedTableBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "table",
+          "title": "Kind",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "col_langs": {
+          "items": {
+            "enum": [
+              "en",
+              "no"
+            ],
+            "type": "string"
+          },
+          "title": "Col Langs",
+          "type": "array"
+        },
+        "headers": {
+          "items": {
+            "items": {
+              "discriminator": {
+                "mapping": {
+                  "code": "#/$defs/CodeSpan",
+                  "emphasis": "#/$defs/EmphasisSpan",
+                  "foreign_term": "#/$defs/ForeignTermSpan",
+                  "strong": "#/$defs/StrongSpan",
+                  "text": "#/$defs/TextSpan"
+                },
+                "propertyName": "kind"
+              },
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/TextSpan"
+                },
+                {
+                  "$ref": "#/$defs/EmphasisSpan"
+                },
+                {
+                  "$ref": "#/$defs/StrongSpan"
+                },
+                {
+                  "$ref": "#/$defs/CodeSpan"
+                },
+                {
+                  "$ref": "#/$defs/ForeignTermSpan"
+                }
+              ]
+            },
+            "type": "array"
+          },
+          "title": "Headers",
+          "type": "array"
+        },
+        "rows": {
+          "items": {
+            "items": {
+              "items": {
+                "discriminator": {
+                  "mapping": {
+                    "code": "#/$defs/CodeSpan",
+                    "emphasis": "#/$defs/EmphasisSpan",
+                    "foreign_term": "#/$defs/ForeignTermSpan",
+                    "strong": "#/$defs/StrongSpan",
+                    "text": "#/$defs/TextSpan"
+                  },
+                  "propertyName": "kind"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/TextSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/EmphasisSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/StrongSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/CodeSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/ForeignTermSpan"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            "type": "array"
+          },
+          "title": "Rows",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "col_langs",
+        "headers",
+        "rows"
+      ],
+      "title": "ExportedTableBlock",
+      "type": "object"
+    },
+    "ExportedWordListBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "word_list",
+          "title": "Kind",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/ExportedWordListItem"
+          },
+          "title": "Items",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "items"
+      ],
+      "title": "ExportedWordListBlock",
+      "type": "object"
+    },
+    "ExportedWordListItem": {
+      "additionalProperties": false,
+      "properties": {
+        "term": {
+          "title": "Term",
+          "type": "string"
+        },
+        "form": {
+          "title": "Form",
+          "type": "string"
+        }
+      },
+      "required": [
+        "term",
+        "form"
+      ],
+      "title": "ExportedWordListItem",
+      "type": "object"
+    },
+    "ExportedWriteExercise": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "exercise",
+          "title": "Kind",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "operation": {
+          "const": "write",
+          "title": "Operation",
+          "type": "string"
+        },
+        "objective_id": {
+          "title": "Objective Id",
+          "type": "string"
+        },
+        "prompt": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "title": "Prompt",
+          "type": "array"
+        },
+        "explanation": {
+          "anyOf": [
+            {
+              "items": {
+                "discriminator": {
+                  "mapping": {
+                    "code": "#/$defs/CodeSpan",
+                    "emphasis": "#/$defs/EmphasisSpan",
+                    "foreign_term": "#/$defs/ForeignTermSpan",
+                    "strong": "#/$defs/StrongSpan",
+                    "text": "#/$defs/TextSpan"
+                  },
+                  "propertyName": "kind"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/TextSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/EmphasisSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/StrongSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/CodeSpan"
+                  },
+                  {
+                    "$ref": "#/$defs/ForeignTermSpan"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Explanation"
+        },
+        "audio_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Audio Id"
+        },
+        "payload": {
+          "$ref": "#/$defs/WritePayload"
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "operation",
+        "objective_id",
+        "prompt",
+        "explanation",
+        "payload"
+      ],
+      "title": "ExportedExerciseBase[Literal['write'], WritePayload]",
+      "type": "object"
+    },
+    "FindFixPayload": {
+      "additionalProperties": false,
+      "properties": {
+        "tokens": {
+          "items": {
+            "$ref": "#/$defs/_FindToken"
+          },
+          "title": "Tokens",
+          "type": "array"
+        },
+        "error_token_id": {
+          "title": "Error Token Id",
+          "type": "string"
+        },
+        "feedback": {
+          "title": "Feedback",
+          "type": "string"
+        }
+      },
+      "required": [
+        "tokens",
+        "error_token_id",
+        "feedback"
+      ],
+      "title": "FindFixPayload",
+      "type": "object"
+    },
+    "ForeignTermSpan": {
+      "additionalProperties": false,
+      "description": "Foreign-term leaf span carrying a language tag (``no`` or ``en``).",
+      "properties": {
+        "kind": {
+          "const": "foreign_term",
+          "title": "Kind",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "string"
+        },
+        "lang": {
+          "enum": [
+            "no",
+            "en"
+          ],
+          "title": "Lang",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "value",
+        "lang"
+      ],
+      "title": "ForeignTermSpan",
+      "type": "object"
+    },
+    "MatchPairsPayload": {
+      "additionalProperties": false,
+      "properties": {
+        "left": {
+          "items": {
+            "$ref": "#/$defs/_Left"
+          },
+          "title": "Left",
+          "type": "array"
+        },
+        "right": {
+          "items": {
+            "$ref": "#/$defs/_Right"
+          },
+          "title": "Right",
+          "type": "array"
+        },
+        "pairs": {
+          "items": {
+            "$ref": "#/$defs/_Pair"
+          },
+          "title": "Pairs",
+          "type": "array"
+        }
+      },
+      "required": [
+        "left",
+        "right",
+        "pairs"
+      ],
+      "title": "MatchPairsPayload",
+      "type": "object"
+    },
+    "SpeakPayload": {
+      "additionalProperties": false,
+      "description": "Authored target utterance for optional downstream recording and STT.",
+      "properties": {
+        "target": {
+          "minLength": 1,
+          "title": "Target",
+          "type": "string"
+        }
+      },
+      "required": [
+        "target"
+      ],
+      "title": "SpeakPayload",
+      "type": "object"
+    },
+    "StrongSpan": {
+      "additionalProperties": false,
+      "description": "Strong-importance text leaf span (renders as bold).",
+      "properties": {
+        "kind": {
+          "const": "strong",
+          "title": "Kind",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "value"
+      ],
+      "title": "StrongSpan",
+      "type": "object"
+    },
+    "TextSpan": {
+      "additionalProperties": false,
+      "description": "Plain text leaf span.",
+      "properties": {
+        "kind": {
+          "const": "text",
+          "title": "Kind",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "value"
+      ],
+      "title": "TextSpan",
+      "type": "object"
+    },
+    "WriteCriterion": {
+      "additionalProperties": false,
+      "description": "One observable criterion for an app-side LLM writing judgment.",
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "instruction": {
+          "minLength": 1,
+          "title": "Instruction",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "instruction"
+      ],
+      "title": "WriteCriterion",
+      "type": "object"
+    },
+    "WritePayload": {
+      "additionalProperties": false,
+      "description": "Authoring contract for bounded learner prose judged downstream.",
+      "properties": {
+        "response_language": {
+          "const": "no",
+          "default": "no",
+          "title": "Response Language",
+          "type": "string"
+        },
+        "min_words": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Min Words"
+        },
+        "max_words": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Words"
+        },
+        "judge_prompt": {
+          "minLength": 1,
+          "title": "Judge Prompt",
+          "type": "string"
+        },
+        "criteria": {
+          "items": {
+            "$ref": "#/$defs/WriteCriterion"
+          },
+          "minItems": 1,
+          "title": "Criteria",
+          "type": "array"
+        }
+      },
+      "required": [
+        "judge_prompt",
+        "criteria"
+      ],
+      "title": "WritePayload",
+      "type": "object"
+    },
+    "_Bucket": {
+      "additionalProperties": false,
+      "properties": {
+        "bucket_id": {
+          "title": "Bucket Id",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        }
+      },
+      "required": [
+        "bucket_id",
+        "label"
+      ],
+      "title": "_Bucket",
+      "type": "object"
+    },
+    "_CategorizeItem": {
+      "additionalProperties": false,
+      "properties": {
+        "item_id": {
+          "title": "Item Id",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "bucket_id": {
+          "title": "Bucket Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "item_id",
+        "text",
+        "bucket_id"
+      ],
+      "title": "_CategorizeItem",
+      "type": "object"
+    },
+    "_FindToken": {
+      "additionalProperties": false,
+      "properties": {
+        "token_id": {
+          "title": "Token Id",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "token_id",
+        "text"
+      ],
+      "title": "_FindToken",
+      "type": "object"
+    },
+    "_Left": {
+      "additionalProperties": false,
+      "properties": {
+        "left_id": {
+          "title": "Left Id",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "left_id",
+        "text"
+      ],
+      "title": "_Left",
+      "type": "object"
+    },
+    "_Pair": {
+      "additionalProperties": false,
+      "properties": {
+        "left_id": {
+          "title": "Left Id",
+          "type": "string"
+        },
+        "right_id": {
+          "title": "Right Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "left_id",
+        "right_id"
+      ],
+      "title": "_Pair",
+      "type": "object"
+    },
+    "_Right": {
+      "additionalProperties": false,
+      "properties": {
+        "right_id": {
+          "title": "Right Id",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "right_id",
+        "text"
+      ],
+      "title": "_Right",
+      "type": "object"
+    },
+    "_Token": {
+      "additionalProperties": false,
+      "properties": {
+        "token_id": {
+          "title": "Token Id",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "fixed": {
+          "title": "Fixed",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "token_id",
+        "text",
+        "fixed"
+      ],
+      "title": "_Token",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "The lesson packet consumed by the learning app.\n\nSections and exercises remain separate lookup collections. ``content`` is\nthe authored learner-facing order that interleaves those collections without\nadding app-side page or session state to the contract.",
+  "properties": {
+    "schema_version": {
+      "const": "4.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "kind": {
+      "enum": [
+        "grammar",
+        "phraseology",
+        "communicative",
+        "pronunciation",
+        "writing"
+      ],
+      "title": "Kind",
+      "type": "string"
+    },
+    "language": {
+      "const": "nb-NO",
+      "default": "nb-NO",
+      "title": "Language",
+      "type": "string"
+    },
+    "title": {
+      "title": "Title",
+      "type": "string"
+    },
+    "cefr_level": {
+      "enum": [
+        "A1",
+        "A2",
+        "B1",
+        "B2",
+        "C1",
+        "C2"
+      ],
+      "title": "Cefr Level",
+      "type": "string"
+    },
+    "goal": {
+      "title": "Goal",
+      "type": "string"
+    },
+    "objectives": {
+      "items": {
+        "$ref": "#/$defs/ExportedObjective"
+      },
+      "minItems": 1,
+      "title": "Objectives",
+      "type": "array"
+    },
+    "content": {
+      "items": {
+        "$ref": "#/$defs/ExportedContentItem"
+      },
+      "title": "Content",
+      "type": "array"
+    },
+    "sections": {
+      "items": {
+        "$ref": "#/$defs/ExportedSection"
+      },
+      "title": "Sections",
+      "type": "array"
+    },
+    "exercises": {
+      "items": {
+        "discriminator": {
+          "mapping": {
+            "build": "#/$defs/ExportedBuildExercise",
+            "categorize": "#/$defs/ExportedCategorizeExercise",
+            "choose": "#/$defs/ExportedChooseExercise",
+            "find_fix": "#/$defs/ExportedFindFixExercise",
+            "judge": "#/$defs/ExportedJudgeExercise",
+            "match_pairs": "#/$defs/ExportedMatchPairsExercise",
+            "recall_fill": "#/$defs/ExportedRecallFillExercise",
+            "speak": "#/$defs/ExportedSpeakExercise",
+            "write": "#/$defs/ExportedWriteExercise"
+          },
+          "propertyName": "operation"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/$defs/ExportedRecallFillExercise"
+          },
+          {
+            "$ref": "#/$defs/ExportedMatchPairsExercise"
+          },
+          {
+            "$ref": "#/$defs/ExportedJudgeExercise"
+          },
+          {
+            "$ref": "#/$defs/ExportedChooseExercise"
+          },
+          {
+            "$ref": "#/$defs/ExportedCategorizeExercise"
+          },
+          {
+            "$ref": "#/$defs/ExportedBuildExercise"
+          },
+          {
+            "$ref": "#/$defs/ExportedFindFixExercise"
+          },
+          {
+            "$ref": "#/$defs/ExportedSpeakExercise"
+          },
+          {
+            "$ref": "#/$defs/ExportedWriteExercise"
+          }
+        ]
+      },
+      "title": "Exercises",
+      "type": "array"
+    },
+    "practice_groups": {
+      "items": {
+        "$ref": "#/$defs/ExportedPracticeGroup"
+      },
+      "title": "Practice Groups",
+      "type": "array"
+    },
+    "media": {
+      "$ref": "#/$defs/ExportedMedia"
+    }
+  },
+  "required": [
+    "schema_version",
+    "id",
+    "kind",
+    "title",
+    "cefr_level",
+    "goal",
+    "objectives",
+    "content",
+    "sections",
+    "exercises",
+    "practice_groups",
+    "media"
+  ],
+  "title": "ExportedLesson",
+  "type": "object"
+}

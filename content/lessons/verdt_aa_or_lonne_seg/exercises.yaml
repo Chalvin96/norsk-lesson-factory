@@ -1,0 +1,268 @@
+- handle: identify_broad_evaluations
+  op: categorize
+  objective: obj-verdt-aa-or-lonne-seg-01
+  bloom: analyze
+  prompt_md: Sort each Norwegian statement into General worth or Practical payoff.
+    Choose the bucket that matches the meaning of the statement.
+  buckets:
+  - bucket_id: general-worth
+    label: General worth
+  - bucket_id: practical-payoff
+    label: Practical payoff
+  items:
+  - item_id: broad-1
+    text: Museet er verdt å besøke.
+    bucket_id: general-worth
+  - item_id: practical-1
+    text: Det lønner seg å bestille tidlig.
+    bucket_id: practical-payoff
+  - item_id: broad-2
+    text: Filmen er ikke verdt å se.
+    bucket_id: general-worth
+  - item_id: practical-2
+    text: Det lønner seg å sammenligne prisene.
+    bucket_id: practical-payoff
+  - item_id: broad-3
+    text: Det er verdt å stå opp tidlig for å se soloppgangen.
+    bucket_id: general-worth
+  - item_id: practical-3
+    text: Det lønner seg å skrive ned adressen.
+    bucket_id: practical-payoff
+  explanation_md: "Verdt å gives a broad evaluation of worth; lønne seg describes a practical payoff for the subject."
+  derived_from:
+  - section_id: general-worth-verdt-a
+- handle: find_practical_advantage
+  op: write
+  objective: obj-verdt-aa-or-lonne-seg-01
+  bloom: apply
+  prompt_md: For each situation, write one short sentence in Norwegian stating the
+    concrete practical advantage. Do not give only a general evaluation such as saying
+    that the action is pleasant or interesting. 1. Book train tickets several weeks
+    before departure instead of at the last minute. 2. Compare prices at several shops
+    before buying the same item. 3. Take a direct bus instead of a route with changes.
+    4. Buy several items together when a shop offers a lower total price for the group.
+  response_language: 'no'
+  min_words: 20
+  max_words: 70
+  judge_prompt: Check each sentence against its situation and report evidence for
+    the criterion. Accept natural Bokmål variants when they clearly name a concrete
+    benefit or saving.
+  criteria:
+  - id: concrete-practical-payoff
+    instruction: For all four situations, states a concrete benefit or saving such
+      as money, time, fewer problems, or a better result rather than only pleasure
+      or interest.
+  derived_from:
+  - section_id: practical-payoff-lonne-seg
+- handle: choose_according_to_reason
+  op: choose
+  objective: obj-verdt-aa-or-lonne-seg-01
+  bloom: analyze
+  prompt_md: 'Choose the pair that completes the two reasons in order. The action
+    is taking a detour. Reason one is broad: the view is beautiful, so the experience
+    deserves the effort. Reason two is practical: the detour helps avoid traffic.'
+  stem_md: Choose the Norwegian pair that matches the two reasons.
+  options:
+  - id: payoff-then-worth
+    text: Det lønner seg å ta en omvei fordi utsikten er vakker. Det er verdt å ta
+      en omvei fordi du unngår kø.
+    correct: false
+    why: The expressions are reversed for the stated broad and practical reasons.
+  - id: worth-then-payoff
+    text: Det er verdt å ta en omvei fordi utsikten er vakker. Det lønner seg å ta
+      en omvei fordi du unngår kø.
+    correct: true
+    why: The first sentence presents a beautiful view as general worth; the second
+      presents avoiding traffic as practical payoff.
+  derived_from:
+  - section_id: either-expression
+- handle: build_complete_frames
+  op: build
+  objective: obj-verdt-aa-or-lonne-seg-01
+  bloom: apply
+  prompt_md: Build three complete Norwegian sentences from the supplied tokens in
+    this order. Use every token exactly once. Sentence one is an affirmative general
+    evaluation of seeing the exhibition. Sentence two is a negative practical recommendation
+    about taking a taxi when the bus runs every ten minutes. Sentence three is a question
+    about whether taking a detour is broadly worthwhile.
+  tokens:
+  - token_id: frame-01
+    text: Det
+  - token_id: frame-02
+    text: er
+  - token_id: frame-03
+    text: verdt
+  - token_id: frame-04
+    text: å
+  - token_id: frame-05
+    text: se
+  - token_id: frame-06
+    text: utstillingen.
+  - token_id: frame-07
+    text: Det
+  - token_id: frame-08
+    text: lønner
+  - token_id: frame-09
+    text: seg
+  - token_id: frame-10
+    text: ikke
+  - token_id: frame-11
+    text: å
+  - token_id: frame-12
+    text: ta
+  - token_id: frame-13
+    text: taxi
+  - token_id: frame-14
+    text: når
+  - token_id: frame-15
+    text: bussen
+  - token_id: frame-16
+    text: går
+  - token_id: frame-17
+    text: hvert
+  - token_id: frame-18
+    text: tiende
+  - token_id: frame-19
+    text: minutt.
+  - token_id: frame-20
+    text: Er
+  - token_id: frame-21
+    text: det
+  - token_id: frame-22
+    text: verdt
+  - token_id: frame-23
+    text: å
+  - token_id: frame-24
+    text: ta
+  - token_id: frame-25
+    text: en
+  - token_id: frame-26
+    text: omvei?
+  answer_order:
+  - frame-01
+  - frame-02
+  - frame-03
+  - frame-04
+  - frame-05
+  - frame-06
+  - frame-07
+  - frame-08
+  - frame-09
+  - frame-10
+  - frame-11
+  - frame-12
+  - frame-13
+  - frame-14
+  - frame-15
+  - frame-16
+  - frame-17
+  - frame-18
+  - frame-19
+  - frame-20
+  - frame-21
+  - frame-22
+  - frame-23
+  - frame-24
+  - frame-25
+  - frame-26
+  derived_from:
+  - section_id: useful-sentence-frames
+- handle: repair_meaning_and_form
+  op: find_fix
+  objective: obj-verdt-aa-or-lonne-seg-01
+  bloom: analyze
+  prompt_md: 'Select the token where the practical-payoff expression is incomplete. The feedback gives the complete form.'
+  tokens:
+  - token_id: repair-01
+    text: Det
+  - token_id: repair-02
+    text: lønner
+  - token_id: repair-03
+    text: å
+  - token_id: repair-04
+    text: bestille
+  - token_id: repair-05
+    text: tidlig.
+  error_token_id: repair-02
+  feedback: The practical-payoff expression is lønne seg. Add seg after lønner and
+    before å; the repaired sentence is Det lønner seg å bestille tidlig.
+  derived_from:
+  - section_id: common-mistakes
+- handle: guided_application_decisions
+  op: write
+  objective: obj-verdt-aa-or-lonne-seg-01
+  bloom: apply
+  prompt_md: Write four short Norwegian recommendations, one for each development.
+    Use one target expression in each response and include a brief reason. 1. Advance
+    tickets are discounted when bought early. 2. The restaurant is excellent but far
+    away. 3. The slower route has beautiful scenery. 4. A travel card covers several
+    journeys.
+  response_language: 'no'
+  min_words: 30
+  max_words: 80
+  judge_prompt: Check each recommendation against its development and report evidence
+    for each criterion. Accept natural Bokmål variants with the required target expression
+    and a clear reason.
+  criteria:
+  - id: broad-worth-experiences
+    instruction: Uses verdt å for the excellent distant restaurant and the scenic
+      slow route, with a reason showing quality or experience.
+  - id: practical-benefit-actions
+    instruction: Uses lønner seg for the discounted advance tickets and the travel
+      card, with a reason showing a measurable advantage.
+  derived_from:
+  - section_id: guided-application
+- handle: revise_dual_interpretations
+  op: write
+  objective: obj-verdt-aa-or-lonne-seg-01
+  bloom: apply
+  prompt_md: 'Write two Norwegian sentences about the same action: getting up early.
+    In the first sentence, the reason is that the roads are quieter and traffic is
+    easier; use the practical-payoff expression. In the second sentence, the reason
+    is that the sunrise over the fjord is beautiful; use the general-worth expression.
+    Keep the action constant and include the reason in each sentence.'
+  response_language: 'no'
+  min_words: 20
+  max_words: 50
+  judge_prompt: Check both sentences for the same action, the requested reason, and
+    the matching target expression. Report evidence for each criterion and accept
+    natural Bokmål variants.
+  criteria:
+  - id: constant-action
+    instruction: Keeps getting up early as the same action in both sentences.
+  - id: reason-matched-expressions
+    instruction: Uses lønner seg for the practical traffic reason and verdt å for
+      the broad sunrise experience.
+  derived_from:
+  - section_id: guided-application
+- handle: retrieval_and_review
+  op: write
+  objective: obj-verdt-aa-or-lonne-seg-01
+  bloom: apply
+  prompt_md: 'Without looking back, write in Norwegian. Write one sentence recommending
+    an experience with verdt å and a short general-worth reason. Write one sentence
+    recommending a practical action with lønner seg and a short concrete-benefit reason.
+    Finally, write one question about the same action in two versions: use verdt å
+    with a broad reason and lønner seg with a practical reason. Add a short reason
+    to each sentence.'
+  response_language: 'no'
+  min_words: 35
+  max_words: 80
+  judge_prompt: Check all recommendations and both versions of the question against
+    the task. Report evidence for each criterion and accept natural Bokmål variants
+    that keep the intended distinction clear.
+  criteria:
+  - id: experience-recommendation
+    instruction: The experience recommendation uses verdt å and gives a short general-worth
+      reason.
+  - id: practical-recommendation
+    instruction: The practical-action recommendation uses lønner seg and gives a short
+      concrete-benefit reason.
+  - id: dual-question-forms
+    instruction: The same action appears in both question versions, with verdt å for
+      the broad reason and lønner seg for the practical reason.
+  - id: clear-reasons
+    instruction: Each sentence includes a short reason that makes its intended framing
+      clear.
+  derived_from:
+  - section_id: retrieval-and-review

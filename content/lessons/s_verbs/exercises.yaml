@@ -1,0 +1,372 @@
+- handle: identify_lexical_s_verbs_in_context
+  op: categorize
+  objective: obj-s-verbs-01
+  bloom: analyze
+  prompt_md: Classify each Norwegian sentence by the meaning of its s-ending verb.
+    Use the specific bucket that fits the whole sentence; do not classify from the
+    final -s alone.
+  explanation_md: "Lexical s-verbs such as synes, trives, finnes, møtes, and ses have their own meanings; the -s does not automatically mark a passive."
+  derived_from:
+  - section_id: first-checkpoint-notice-difference
+  buckets:
+  - bucket_id: lexical-opinion
+    label: Personal opinion
+  - bucket_id: lexical-comfort
+    label: Comfort in a place, group, or situation
+  - bucket_id: lexical-existence
+    label: Existence or availability
+  - bucket_id: lexical-mutual-meeting
+    label: Mutual meeting
+  - bucket_id: lexical-seeing
+    label: Seeing one another or saying goodbye
+  - bucket_id: passive-action
+    label: Passive action done to the subject
+  items:
+  - item_id: item-opinion
+    text: Jeg synes byen er fin.
+    bucket_id: lexical-opinion
+  - item_id: item-comfort
+    text: Amir trives på jobben.
+    bucket_id: lexical-comfort
+  - item_id: item-existence
+    text: Det finnes en kafé ved biblioteket.
+    bucket_id: lexical-existence
+  - item_id: item-meeting
+    text: Amir og Nora møtes på kafeen.
+    bucket_id: lexical-mutual-meeting
+  - item_id: item-seeing
+    text: Flott. Vi ses der!
+    bucket_id: lexical-seeing
+  - item_id: item-passive
+    text: Kafeen stenges klokka seks.
+    bucket_id: passive-action
+- handle: choose_synes_for_personal_opinion
+  op: recall_fill
+  objective: obj-s-verbs-01
+  bloom: understand
+  prompt_md: Complete both Norwegian sentences with the taught form of synes. The
+    first continues with a statement; the second uses synes om.
+  derived_from:
+  - section_id: synes-expressing-an-opinion
+  audio_target: "Jeg synes byen er fin. Hva synes du om den nye jobben?"
+  segments:
+  - text_md: 'Jeg '
+  - blank_id: synes-statement
+    options:
+    - synes
+    - syne
+    answer_index: 0
+  - text_md: ' byen er fin. Hva '
+  - blank_id: synes-om
+    options:
+    - synes
+    - syne
+    answer_index: 0
+  - text_md: ' du om den nye jobben?'
+- handle: use_trives_for_comfort_in_a_situation
+  op: build
+  objective: obj-s-verbs-01
+  bloom: apply
+  prompt_md: Build one Norwegian sentence saying that you feel comfortable with your
+    colleagues. Use all tokens exactly once.
+  derived_from:
+  - section_id: trives-feeling-comfortable-in-a-situation
+  tokens:
+  - token_id: tok-1
+    text: Jeg
+  - token_id: tok-2
+    text: trives
+  - token_id: tok-3
+    text: godt
+  - token_id: tok-4
+    text: sammen
+  - token_id: tok-5
+    text: med
+  - token_id: tok-6
+    text: kollegene
+  - token_id: tok-7
+    text: mine.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+- handle: distinguish_finnes_from_finne
+  op: recall_fill
+  objective: obj-s-verbs-01
+  bloom: understand
+  prompt_md: Complete the two Norwegian sentences. Use finnes for existence or availability,
+    and finne when a person locates something.
+  derived_from:
+  - section_id: finnes-saying-that-something-exists-or-is-available
+  audio_target: "Det finnes en kafé ved biblioteket. Jeg finner kafeen."
+  segments:
+  - text_md: 'Det '
+  - blank_id: existence-verb
+    options:
+    - finnes
+    - finner
+    answer_index: 0
+  - text_md: ' en kafé ved biblioteket. Jeg '
+  - blank_id: locating-verb
+    options:
+    - finner
+    - finnes
+    answer_index: 0
+  - text_md: ' kafeen.'
+- handle: build_mutual_meetings_with_motes
+  op: build
+  objective: obj-s-verbs-01
+  bloom: apply
+  prompt_md: Build a Norwegian sentence in which Amir and Nora meet one another at
+    the café. Put both participants in the subject and do not add a direct object
+    after møtes.
+  derived_from:
+  - section_id: motes-meeting-one-another
+  tokens:
+  - token_id: tok-1
+    text: Amir
+  - token_id: tok-2
+    text: og
+  - token_id: tok-3
+    text: Nora
+  - token_id: tok-4
+    text: møtes
+  - token_id: tok-5
+    text: på
+  - token_id: tok-6
+    text: kafeen.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+- handle: select_motes_or_ses_by_intended_meaning
+  op: choose
+  objective: obj-s-verbs-01
+  bloom: understand
+  prompt_md: Amir and a colleague have arranged to meet at the station, and Amir is
+    ending the exchange by referring to seeing one another there. Choose the Norwegian
+    line that matches the focus.
+  derived_from:
+  - section_id: motes-and-ses-together
+  stem_md: Choose the line that focuses on seeing one another while ending the exchange.
+  options:
+  - id: ses-line
+    text: Flott. Vi ses der!
+    correct: true
+    why: This line refers to seeing one another while ending the exchange.
+  - id: motes-line
+    text: Vi møtes på stasjonen klokka åtte.
+    correct: false
+    why: This line arranges or describes a meeting rather than expressing the farewell
+      focus.
+- handle: contrast_lexical_s_meaning_with_passive_meaning
+  op: categorize
+  objective: obj-s-verbs-01
+  bloom: analyze
+  prompt_md: Classify each Norwegian sentence by the meaning of its s-ending verb.
+    Interpret the whole sentence instead of classifying from the final letter alone.
+  explanation_md: "An -s ending can belong to a lexical verb such as synes or møtes; interpret its meaning before treating it as passive."
+  derived_from:
+  - section_id: one-spelling-different-grammatical-jobs
+  buckets:
+  - bucket_id: opinion
+    label: Personal opinion
+  - bucket_id: comfort
+    label: Comfort in a situation
+  - bucket_id: existence
+    label: Existence or availability
+  - bucket_id: mutual-meeting
+    label: Mutual meeting
+  - bucket_id: seeing
+    label: Seeing one another
+  - bucket_id: passive
+    label: Passive action done to the subject
+  items:
+  - item_id: item-1
+    text: Jeg synes kaffen er god.
+    bucket_id: opinion
+  - item_id: item-2
+    text: Jeg trives godt sammen med kollegene mine.
+    bucket_id: comfort
+  - item_id: item-3
+    text: Det finnes mange turstier rundt Bergen.
+    bucket_id: existence
+  - item_id: item-4
+    text: Vi møtes etter jobb.
+    bucket_id: mutual-meeting
+  - item_id: item-5
+    text: Nå jobber vi i samme bygning, så vi ses ofte.
+    bucket_id: seeing
+  - item_id: item-6
+    text: Bordene vaskes hver kveld.
+    bucket_id: passive
+- handle: complete_amirs_update_with_target_s_verbs
+  op: recall_fill
+  objective: obj-s-verbs-01
+  bloom: apply
+  prompt_md: Complete the Norwegian update with each of synes, trives, finnes, møtes,
+    and ses once. Choose the form that fits the meaning of each sentence.
+  derived_from:
+  - section_id: guided-production
+  audio_target: "Jeg synes den nye byen er interessant, og jeg trives sammen med kollegene mine. Det finnes et ledig bord i nærheten. Kollegene mine møtes etter jobb, og vi ses ofte i helgene."
+  segments:
+  - text_md: 'Jeg '
+  - blank_id: amirs-synes
+    options:
+    - synes
+    - trives
+    answer_index: 0
+  - text_md: ' den nye byen er interessant, og jeg '
+  - blank_id: amirs-trives
+    options:
+    - trives
+    - synes
+    answer_index: 0
+  - text_md: ' sammen med kollegene mine. Det '
+  - blank_id: amirs-finnes
+    options:
+    - finnes
+    - finner
+    answer_index: 0
+  - text_md: ' et ledig bord i nærheten. Kollegene mine '
+  - blank_id: amirs-motes
+    options:
+    - møtes
+    - møter
+    answer_index: 0
+  - text_md: ' etter jobb, og vi '
+  - blank_id: amirs-ses
+    options:
+    - ses
+    - møtes
+    answer_index: 0
+  - text_md: ' ofte i helgene.'
+- handle: reformulate_without_removing_lexical_s
+  op: find_fix
+  objective: obj-s-verbs-01
+  bloom: analyze
+  prompt_md: Select the one token that is wrong/needs changing.
+  derived_from:
+  - section_id: guided-production
+  tokens:
+  - token_id: tok-1
+    text: Jeg
+  - token_id: tok-2
+    text: syne
+  - token_id: tok-3
+    text: Bergen
+  - token_id: tok-4
+    text: er
+  - token_id: tok-5
+    text: fin.
+  - token_id: tok-6
+    text: Jeg
+  - token_id: tok-7
+    text: trives
+  - token_id: tok-8
+    text: på
+  - token_id: tok-9
+    text: jobben.
+  - token_id: tok-10
+    text: Det
+  - token_id: tok-11
+    text: finnes
+  - token_id: tok-12
+    text: et
+  - token_id: tok-13
+    text: apotek
+  - token_id: tok-14
+    text: i
+  - token_id: tok-15
+    text: nærheten.
+  - token_id: tok-16
+    text: Kollegene
+  - token_id: tok-17
+    text: mine
+  - token_id: tok-18
+    text: møtes
+  - token_id: tok-19
+    text: etter
+  - token_id: tok-20
+    text: jobb.
+  - token_id: tok-21
+    text: Vi
+  - token_id: tok-22
+    text: ses
+  - token_id: tok-23
+    text: ofte.
+  error_token_id: tok-2
+  feedback: Replace syne with synes; the other four target s-verbs are already complete.
+- handle: respond_to_everyday_questions_with_s_verbs
+  op: speak
+  objective: obj-s-verbs-01
+  bloom: apply
+  prompt_md: >-
+    Read these five Norwegian sentences aloud. Say exactly:
+    «Jeg synes kafeen er hyggelig. Jeg trives godt på jobben. Det finnes et apotek
+    i nærheten. Vi møtes etter jobb. Vi ses i pausen.»
+  derived_from:
+  - section_id: guided-production
+  target: Jeg synes kafeen er hyggelig. Jeg trives godt på jobben. Det finnes et apotek
+    i nærheten. Vi møtes etter jobb. Vi ses i pausen.
+- handle: transfer_s_verbs_to_an_evening_course
+  op: write
+  objective: obj-s-verbs-01
+  bloom: apply
+  prompt_md: Write a short connected message in Norwegian to Jonas about Maja and
+    her evening course. Use each of synes, trives, finnes, møtes, and ses exactly
+    once as a complete lexical verb. Give an opinion about the course, say how Maja
+    feels in the group, mention something that exists or is available at the school,
+    and describe when the classmates meet and when Maja and Jonas see one another.
+    For every meeting or seeing statement, include all mutual participants in its
+    subject.
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+  response_language: 'no'
+  min_words: 25
+  max_words: 60
+  judge_prompt: Check the message against the task and report concrete evidence for
+    each criterion.
+  criteria:
+  - id: five-complete-forms
+    instruction: Uses synes, trives, finnes, møtes, and ses exactly once as complete
+      lexical s-verbs.
+  - id: central-meanings
+    instruction: Uses the five verbs for personal opinion, comfort in a situation,
+      existence or availability, mutual meeting, and seeing one another.
+  - id: mutual-subjects
+    instruction: Represents all mutual participants in the subject of every meeting
+      or seeing statement.
+- handle: retrieve_five_lexical_s_verbs
+  op: write
+  objective: obj-s-verbs-01
+  bloom: apply
+  prompt_md: 'Write exactly five brief sentences in Norwegian to a friend about a
+    new club. In order, give your opinion, say how comfortable you feel there, mention
+    something that exists or is available, describe when club members meet one another,
+    and say when you will see one another again. Retrieve one different taught lexical
+    s-verb for each meaning and use each complete verb exactly once.'
+  derived_from:
+  - section_id: short-retrieval-review
+  response_language: 'no'
+  min_words: 20
+  max_words: 45
+  judge_prompt: Check the five sentences against the task and report concrete evidence
+    for each criterion.
+  criteria:
+  - id: five-sentence-format
+    instruction: Provides exactly five brief Norwegian sentences, one for each requested
+      meaning.
+  - id: five-complete-forms
+    instruction: Uses synes, trives, finnes, møtes, and ses exactly once as complete
+      lexical s-verbs.
+  - id: meaning-contrast
+    instruction: 'Uses each verb with its taught central meaning: opinion, comfort,
+      existence or availability, mutual meeting, and seeing one another.'

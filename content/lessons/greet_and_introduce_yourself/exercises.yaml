@@ -1,0 +1,193 @@
+- handle: notice_four_jobs
+  op: choose
+  objective: obj-greet-and-introduce-yourself-01
+  bloom: understand
+  prompt_md: Identify the communicative job of each selected line in the first-meeting
+    exchange.
+  derived_from:
+  - section_id: the-shape-of-the-exchange
+  stem_md: 'Read these lines: Hei! Jeg heter Mina. Hva heter du? Jeg heter Jonas.
+    Ha det! Choose the complete mapping of greeting, name statement, name question,
+    and closing.'
+  options:
+  - id: swapped-statement-question
+    text: Hei! = greeting; Jeg heter Mina. and Jeg heter Jonas. = ask for a name;
+      Hva heter du? = state a name; Ha det! = close.
+    correct: false
+    why: Jeg heter states a name, while Hva heter du? asks for one.
+  - id: swapped-greeting-closing
+    text: Hei! = closing; Jeg heter Mina. and Jeg heter Jonas. = state a name; Hva
+      heter du? = ask for a name; Ha det! = greeting.
+    correct: false
+    why: Hei! opens the exchange, while Ha det! closes it.
+  - id: mixed-jobs
+    text: Hei! = greeting; Jeg heter Mina. = close; Jeg heter Jonas. = ask for a name;
+      Hva heter du? = state a name; Ha det! = close.
+    correct: false
+    why: The two Jeg heter lines state names, and Hva heter du? is the question.
+  - id: complete-mapping
+    text: Hei! = greeting; Jeg heter Mina. and Jeg heter Jonas. = state a name; Hva
+      heter du? = ask for a name; Ha det! = close.
+    correct: true
+    why: Each expression is connected to its communicative job in the exchange.
+- handle: begin_the_meeting
+  op: speak
+  objective: obj-greet-and-introduce-yourself-01
+  bloom: apply
+  prompt_md: 'At the door of your first Norwegian class, use Nora as your name. Say exactly: Hei! Jeg heter Nora.'
+  derived_from:
+  - section_id: greeting-with-hei
+  target: Hei! Jeg heter Nora.
+- handle: add_the_identity_fact
+  op: speak
+  objective: obj-greet-and-introduce-yourself-01
+  bloom: apply
+  prompt_md: 'At the language-school doorway, use Lea as your name. Say exactly: Hei! Jeg heter Lea.'
+  derived_from:
+  - section_id: saying-your-name-with-jeg-heter
+  target: Hei! Jeg heter Lea.
+- handle: complete_the_opening
+  op: speak
+  objective: obj-greet-and-introduce-yourself-01
+  bloom: apply
+  prompt_md: "From Robin's perspective, greet Sigrid, state your name, and ask Sigrid's name. Say exactly: Hei, Sigrid! Jeg heter Robin. Hva heter du?"
+  derived_from:
+  - section_id: asking-the-other-persons-name
+  target: Hei, Sigrid! Jeg heter Robin. Hva heter du?
+- handle: answer_and_return_the_exchange
+  op: speak
+  objective: obj-greet-and-introduce-yourself-01
+  bloom: apply
+  prompt_md: 'Maja has introduced herself and asked your name. Respond as the second student and use Iben as your name. Say exactly: Jeg heter Iben. Hyggelig å møte deg.'
+  derived_from:
+  - section_id: responding-to-the-name-question
+  target: Jeg heter Iben. Hyggelig å møte deg.
+- handle: make_the_middle_reciprocal
+  op: speak
+  objective: obj-greet-and-introduce-yourself-01
+  bloom: apply
+  prompt_md: "Liv and Erik have exchanged names, and Liv has made a friendly meeting comment. Give Erik's natural reply. Say exactly: Hyggelig å møte deg også."
+  derived_from:
+  - section_id: marking-the-meeting-as-friendly
+  target: Hyggelig å møte deg også.
+- handle: close_at_the_right_moment
+  op: speak
+  objective: obj-greet-and-introduce-yourself-01
+  bloom: apply
+  prompt_md: 'After two new students exchange names and the classroom door opens, close the friendly exchange. Say exactly: Hyggelig å møte deg. Ha det!'
+  derived_from:
+  - section_id: closing-the-exchange
+  target: Hyggelig å møte deg. Ha det!
+- handle: retell_their_meeting
+  op: write
+  objective: obj-greet-and-introduce-yourself-01
+  bloom: apply
+  prompt_md: 'Retell Mina and Jonas''s first meeting in your own Norwegian words.
+    Use two names other than Mina and Jonas. Keep the same sequence: greet, state
+    one speaker''s name, ask for the other speaker''s name, answer with the second
+    name, and finish with a friendly closing. Do not add extra identity information.'
+  derived_from:
+  - section_id: guided-exchange-practice
+  response_language: 'no'
+  judge_prompt: Check the response as one connected Norwegian exchange. Accept any
+    two names other than Mina and Jonas, and accept the taught forms Hei!, Jeg heter,
+    Hva heter du?, Hyggelig å møte deg, Ha det!, and Vi ses!. Report evidence for
+    every criterion and do not award isolated phrases that do not form an exchange.
+  criteria:
+  - id: greeting
+    instruction: Includes a natural Norwegian greeting.
+  - id: first_name_statement
+    instruction: Has one speaker state their name with Jeg heter and a name other
+      than Mina or Jonas.
+  - id: name_question
+    instruction: Has a speaker ask for the other person's name with Hva heter du?.
+  - id: second_name_answer
+    instruction: Has the other speaker answer with Jeg heter and their own different
+      name.
+  - id: friendly_closing
+    instruction: Finishes with a taught friendly ending, using Hyggelig å møte deg.
+      followed by Ha det! or using Vi ses!.
+- handle: create_a_community_event_exchange
+  op: write
+  objective: obj-greet-and-introduce-yourself-01
+  bloom: apply
+  prompt_md: At a community event, write a short complete first-meeting exchange for
+    both speakers in Norwegian. Use two names different from Mina and Jonas. Make
+    it one connected conversation rather than isolated phrases. Include a greeting,
+    each speaker's name in response to the matching question, and a friendly closing.
+  derived_from:
+  - section_id: guided-exchange-practice
+  response_language: 'no'
+  judge_prompt: Check that the response is a connected Norwegian conversation set
+    at a community event. Accept any two names different from Mina and Jonas and the
+    taught forms for greeting, Jeg heter, Hva heter du?, Hyggelig å møte deg, Ha det!,
+    and Vi ses!. Report evidence for each criterion.
+  criteria:
+  - id: community_setting
+    instruction: Frames the exchange at a community event.
+  - id: greeting
+    instruction: Opens with a natural Norwegian greeting.
+  - id: first_name_and_question
+    instruction: Has the first speaker state a name and ask for the other speaker's
+      name.
+  - id: second_name_response
+    instruction: Has the second speaker answer the matching question with their name.
+  - id: connected_exchange
+    instruction: Presents both speakers' lines as one connected conversation with
+      appropriate responses.
+  - id: friendly_closing
+    instruction: Ends with a taught friendly closing such as Ha det! or Vi ses!, with
+      Hyggelig å møte deg. when used before it.
+- handle: finish_from_the_second_speaker
+  op: write
+  objective: obj-greet-and-introduce-yourself-01
+  bloom: apply
+  prompt_md: 'Aleksander says: Hei! Jeg heter Aleksander. Hva heter du? Continue and
+    finish the meeting as the second speaker. Give your name, return the friendly
+    expression Hyggelig å møte deg, and close with Ha det! or Vi ses!.'
+  derived_from:
+  - section_id: guided-exchange-practice
+  response_language: 'no'
+  judge_prompt: Check that the response continues Aleksander's line coherently. Accept
+    any natural first name after Jeg heter, Hyggelig å møte deg or Hyggelig å møte
+    deg også, and either Ha det! or Vi ses! as the closing. Report evidence for every
+    criterion.
+  criteria:
+  - id: name_answer
+    instruction: Answers Aleksander's question with Jeg heter and a name.
+  - id: friendly_return
+    instruction: Returns the meeting expression with Hyggelig å møte deg or Hyggelig
+      å møte deg også.
+  - id: closing
+    instruction: Closes the meeting with Ha det! or Vi ses!.
+  - id: coherent_continuation
+    instruction: Connects the name answer, friendly return, and closing as a natural
+      continuation.
+- handle: short_review
+  op: write
+  objective: obj-greet-and-introduce-yourself-01
+  bloom: apply
+  prompt_md: Write a complete first-meeting exchange in Norwegian between two named
+    speakers. Include a greeting, one identity fact from each person
+    in response to the matching name question, and a natural closing.
+  derived_from:
+  - section_id: short-review
+  response_language: 'no'
+  judge_prompt: Check the response as a complete Norwegian first-meeting exchange.
+    Accept natural names and the taught forms Hei!, Jeg heter, Hva heter du?, Hyggelig
+    å møte deg, Ha det!, and Vi ses!. Report evidence for every criterion and require
+    the two name facts to answer the matching question.
+  criteria:
+  - id: greeting
+    instruction: Includes a natural Norwegian greeting.
+  - id: first_identity_fact
+    instruction: Includes one named speaker stating their identity fact with Jeg heter.
+  - id: matching_name_question
+    instruction: Includes Hva heter du? as the matching question for the other speaker's
+      name.
+  - id: second_identity_fact
+    instruction: Includes the other named speaker answering with Jeg heter and their
+      name.
+  - id: natural_closing
+    instruction: Ends with a natural taught closing using Ha det! or Vi ses!, with
+      Hyggelig å møte deg. when appropriate.

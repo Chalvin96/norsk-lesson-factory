@@ -1,0 +1,285 @@
+- handle: notice_focus_in_cabin_dialogue
+  op: choose
+  objective: obj-focus-particles-and-constituent-scope-01
+  bloom: understand
+  prompt_md: Choose the complete interpretation that correctly identifies the scope
+    of bare, også, til og med, and selv in the supplied cabin-dinner sentences.
+  derived_from:
+  - section_id: cabin-dinner
+  stem_md: Which interpretation correctly identifies what each particle focuses on
+    and paraphrases the messages in English?
+  options:
+  - id: interpretation-whole-sentence
+    text: Bare and også describe the whole sentence without a focused constituent.
+      Til og med adds blue cheese, while selv means only Liv. The English translations
+      are only Amir, Liv too, only bread, cheese as well, even blue cheese, and even
+      Liv.
+    correct: false
+    why: The option gives translations but does not identify the actual particle scope
+      and misstates the functions of til og med and selv.
+  - id: interpretation-swapped
+    text: “Bare Amir kommer klokka seks.” restricts klokka seks. “Også Liv kommer
+      klokka seks.” adds klokka seks. “Amir tar bare brød.” means Amir is bringing
+      bread as well. “Liv tar også ost.” restricts ost. “I kveld tar hun til og med
+      blåmuggost.” presents hun as surprising. “Ja, selv Liv vil prøve den.” means
+      Liv did the action herself.
+    correct: false
+    why: The option assigns particles to the wrong constituents and confuses focus
+      selv with personal-action selv.
+  - id: interpretation-correct
+    text: '“Bare Amir kommer klokka seks.” means “Only Amir is coming at six”: bare
+      restricts Amir. “Også Liv kommer klokka seks.” means “Liv is coming at six too”:
+      også adds Liv. “Amir tar bare brød.” means “Amir is bringing only bread”: bare
+      restricts bread. “Liv tar også ost.” means “Liv is bringing cheese as well”:
+      også adds cheese. “I kveld tar hun til og med blåmuggost.” means “Tonight she
+      is even bringing blue cheese”: til og med marks blue cheese as surprising. “Ja,
+      selv Liv vil prøve den.” means “Yes, even Liv wants to try it”: selv marks Liv
+      as surprising.'
+    correct: true
+    why: The interpretation identifies the focused person or thing for every particle
+      and gives the intended English meaning.
+- handle: place_bare_by_restricted_constituent
+  op: build
+  objective: obj-focus-particles-and-constituent-scope-01
+  bloom: apply
+  prompt_md: In cabin preparations, build the Norwegian sentence meaning “Nora works
+    only on Friday.” Put bare directly before the restricted time and keep normal
+    main-clause word order.
+  explanation_md: "Place the focus particle immediately before what it restricts or adds: «bare på fredag», «også ost», and «til og med blåmuggost»."
+  derived_from:
+  - section_id: restricting-with-bare
+  tokens:
+  - token_id: tok-2
+    text: arbeider
+  - token_id: tok-3
+    text: bare
+  - token_id: tok-4
+    text: på
+  - token_id: tok-5
+    text: fredag.
+  - token_id: tok-1
+    text: Nora
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+- handle: interpret_bare_position_contrasts
+  op: choose
+  objective: obj-focus-particles-and-constituent-scope-01
+  bloom: analyze
+  prompt_md: Compare the paired messages and choose the interpretation that explains
+    the scope contrast and the alternatives excluded in each sentence.
+  derived_from:
+  - section_id: bare-scope-mistake
+  stem_md: Which interpretation correctly explains both sentences?
+  options:
+  - id: bare-contrast-reversed
+    text: '“Bare Liv kjøper dessert.” means “Liv is buying only dessert”: bare restricts
+      dessert. “Liv kjøper bare dessert.” means “Only Liv is buying dessert”: bare
+      restricts Liv.'
+    correct: false
+    why: The option reverses the scope of bare in both sentences.
+  - id: bare-contrast-correct
+    text: '“Bare Liv kjøper dessert.” means “Only Liv is buying dessert”: bare restricts
+      the person and excludes other people from buying dessert. “Liv kjøper bare dessert.”
+      means “Liv is buying only dessert”: bare restricts what Liv buys and excludes
+      other purchases.'
+    correct: true
+    why: Moving bare changes whether the excluded alternatives are other people or
+      other purchases by Liv.
+  - id: bare-contrast-mechanical
+    text: Both sentences mean “Liv is buying only dessert” because bare always restricts
+      the object, regardless of its position.
+    correct: false
+    why: Particle placement determines scope; bare does not always restrict the object.
+- handle: place_ogsa_by_added_constituent
+  op: build
+  objective: obj-focus-particles-and-constituent-scope-01
+  bloom: apply
+  prompt_md: Build the Norwegian update meaning “Liv is bringing cheese as well.”
+    Bread is already known, so place også directly before the added object.
+  derived_from:
+  - section_id: adding-with-ogsa
+  tokens:
+  - token_id: tok-2
+    text: tar
+  - token_id: tok-3
+    text: også
+  - token_id: tok-4
+    text: ost.
+  - token_id: tok-1
+    text: Liv
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+- handle: repair_ogsa_scope_in_messages
+  op: find_fix
+  objective: obj-focus-particles-and-constituent-scope-01
+  bloom: analyze
+  prompt_md: The intended meaning is “Liv is bringing cheese as well.” The current
+    message is “Også Liv tar ost.” Find the one particle token whose placement communicates
+    the wrong addition.
+  derived_from:
+  - section_id: ogsa-scope-mistake
+  tokens:
+  - token_id: tok-1
+    text: Også
+  - token_id: tok-2
+    text: Liv
+  - token_id: tok-3
+    text: tar
+  - token_id: tok-4
+    text: ost.
+  error_token_id: tok-1
+  feedback: 'Også focuses on Liv here, so it adds a participant. Move også before
+    ost to add cheese instead: “Liv tar også ost.”'
+- handle: place_surprising_inclusion_particle
+  op: build
+  objective: obj-focus-particles-and-constituent-scope-01
+  bloom: apply
+  prompt_md: During the cabin evening, build the Norwegian sentence meaning “Tonight
+    she is even bringing blue cheese.” Place the supplied particle til og med directly
+    before the surprising food.
+  derived_from:
+  - section_id: surprising-inclusion
+  tokens:
+  - token_id: tok-2
+    text: kveld
+  - token_id: tok-3
+    text: tar
+  - token_id: tok-4
+    text: hun
+  - token_id: tok-5
+    text: til
+  - token_id: tok-6
+    text: og
+  - token_id: tok-7
+    text: med
+  - token_id: tok-8
+    text: blåmuggost.
+  - token_id: tok-1
+    text: I
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+- handle: distinguish_even_selv_from_personal_selv
+  op: find_fix
+  objective: obj-focus-particles-and-constituent-scope-01
+  bloom: analyze
+  prompt_md: The intended meaning is “Even Liv made the food.” In the message “Liv
+    lagde maten selv.” find the one token whose placement gives the personal-action
+    meaning instead of the even meaning.
+  derived_from:
+  - section_id: personal-selv-mistake
+  tokens:
+  - token_id: tok-1
+    text: Liv
+  - token_id: tok-2
+    text: lagde
+  - token_id: tok-3
+    text: maten
+  - token_id: tok-4
+    text: selv.
+  error_token_id: tok-4
+  feedback: 'Selv follows maten, so it means that Liv did the work herself. For the
+    intended even meaning, place selv before Liv and capitalize it: “Selv Liv lagde
+    maten.”'
+- handle: transfer_focus_to_workplace_picnic
+  op: write
+  objective: obj-focus-particles-and-constituent-scope-01
+  bloom: apply
+  prompt_md: 'Write four original short Norwegian updates about a workplace picnic.
+    Make these meanings explicit:
+    (1) only one employee attends, with bare before the restricted participant; (2)
+    a food, time, or place is added to an established picnic plan, with også before
+    the added constituent; (3) an unexpected person participates, with selv before
+    that person; and (4) a different food, time, or place is surprising, with til
+    og med before that constituent. Make each focus scope clear through placement.'
+  derived_from:
+  - section_id: transfer-workplace-picnic
+  response_language: 'no'
+  min_words: 20
+  max_words: 45
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+  criteria:
+  - id: bare-participant-scope
+    instruction: Uses bare before the participant being restricted in one workplace-picnic
+      update.
+  - id: ogsa-added-scope
+    instruction: Uses også before the constituent being added in one workplace-picnic
+      update.
+  - id: selv-surprising-person
+    instruction: Uses selv before an unexpected person in one workplace-picnic update.
+  - id: til-og-med-surprising-constituent
+    instruction: Uses til og med before a different surprising food, time, or place
+      in one workplace-picnic update.
+  - id: clear-transfer-scope
+    instruction: Places each particle so the restricted, added, or surprising constituent
+      is clear.
+- handle: compare_picnic_scope_shifts
+  op: write
+  objective: obj-focus-particles-and-constituent-scope-01
+  bloom: apply
+  prompt_md: Create two pairs of original Norwegian sentences about one workplace
+    picnic. In pair one,
+    keep the core event broadly constant but shift bare from restricting which employee
+    brings salad to restricting what that employee brings. In pair two, keep the core
+    meeting event broadly constant but shift også from adding a participant to adding
+    the meeting location. After the pairs, explain each scope contrast briefly in
+    Norwegian.
+  derived_from:
+  - section_id: transfer-workplace-picnic
+  response_language: 'no'
+  min_words: 25
+  max_words: 70
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+  criteria:
+  - id: bare-scope-shift
+    instruction: Provides a sentence pair where bare shifts restriction from a participant
+      to an item while the core picnic event remains constant.
+  - id: ogsa-scope-shift
+    instruction: Provides a sentence pair where også shifts addition from a participant
+      to a location while the core meeting event remains constant.
+  - id: contrast-explanation
+    instruction: Explains in Norwegian which constituent is restricted or added in each
+      sentence.
+  - id: intentional-placement
+    instruction: Uses particle placement intentionally rather than repeating one memorized
+      position.
+- handle: retrieve_focus_particle_placement
+  op: write
+  objective: obj-focus-particles-and-constituent-scope-01
+  bloom: apply
+  prompt_md: Write exactly four original short Norwegian sentences about planning
+    a workplace lunch. Use one sentence to restrict a person or thing with bare, one
+    to add a different constituent with også, one to mark a surprising person with
+    selv, and one to mark another surprising constituent with til og med. Underline
+    the constituent each particle highlights.
+  derived_from:
+  - section_id: retrieval-review
+  response_language: 'no'
+  min_words: 20
+  max_words: 45
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+  criteria:
+  - id: retrieved-bare
+    instruction: Uses bare to restrict a person or thing and underlines the restricted
+      constituent.
+  - id: retrieved-ogsa
+    instruction: Uses også to add a different constituent and underlines the added
+      constituent.
+  - id: retrieved-selv
+    instruction: Uses selv before a surprising person and underlines that person.
+  - id: retrieved-til-og-med
+    instruction: Uses til og med before another surprising constituent and underlines
+      that constituent.

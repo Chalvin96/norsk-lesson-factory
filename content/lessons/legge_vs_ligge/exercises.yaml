@@ -1,0 +1,178 @@
+- handle: identify_action_or_location
+  op: categorize
+  objective: obj-legge-vs-ligge-01
+  bloom: analyze
+  prompt_md: 'Classify each cabin sentence by its meaning: someone puts an object
+    somewhere, or something is located somewhere. Do not change the sentences.'
+  explanation_md: "Legge describes causing something to change location and normally takes an object; ligge describes the resulting location."
+  derived_from:
+  - section_id: first-checkpoint
+  buckets:
+  - bucket_id: placement-action
+    label: Putting an object somewhere
+  - bucket_id: location
+    label: Saying where something is located
+  items:
+  - item_id: towels-action
+    text: Maja legger håndklærne på senga.
+    bucket_id: placement-action
+  - item_id: keys-location
+    text: Nøklene ligger på bordet.
+    bucket_id: location
+  - item_id: food-action
+    text: Henrik legger maten i kjøleskapet.
+    bucket_id: placement-action
+  - item_id: clothes-location
+    text: Klærne ligger i skapet.
+    bucket_id: location
+  - item_id: jackets-action
+    text: Maja legger jakkene på benken.
+    bucket_id: placement-action
+  - item_id: towels-location
+    text: Håndklærne ligger på badet.
+    bucket_id: location
+- handle: complete_cabin_preparations
+  op: recall_fill
+  objective: obj-legge-vs-ligge-01
+  bloom: apply
+  prompt_md: Complete each cabin exchange with the correct supplied form of legge
+    or ligge.
+  derived_from:
+  - section_id: second-checkpoint
+  audio_target: "Maja: Hvor skal jeg legge håndklærne? Henrik: På senga. Maja: Hvor skal nøklene ligge? Henrik: På bordet. Maja: Skal jeg legge maten i kjøleskapet? Henrik: Ja, der skal den ligge."
+  segments:
+  - text_md: 'Maja: Hvor skal jeg '
+  - blank_id: towels-placement
+    options:
+    - legge
+    - ligge
+    answer_index: 0
+  - text_md: ' håndklærne? Henrik: På senga. Maja: Hvor skal nøklene '
+  - blank_id: keys-location
+    options:
+    - legge
+    - ligge
+    answer_index: 1
+  - text_md: '? Henrik: På bordet. Maja: Skal jeg '
+  - blank_id: food-placement
+    options:
+    - legge
+    - ligge
+    answer_index: 0
+  - text_md: ' maten i kjøleskapet? Henrik: Ja, der skal den '
+  - blank_id: food-location
+    options:
+    - legge
+    - ligge
+    answer_index: 1
+  - text_md: .
+- handle: repair_the_misunderstanding
+  op: find_fix
+  objective: obj-legge-vs-ligge-01
+  bloom: analyze
+  prompt_md: 'Select the verb that confuses placement with location. The feedback gives the corrected form.'
+  derived_from:
+  - section_id: third-checkpoint
+  tokens:
+  - token_id: subject-henrik
+    text: Henrik
+  - token_id: incorrect-placement-verb
+    text: ligger
+  - token_id: keys-object
+    text: nøklene
+  - token_id: keys-place-preposition
+    text: på
+  - token_id: keys-place
+    text: bordet,
+  - token_id: towels-subject
+    text: håndklærne
+  - token_id: towels-verb
+    text: ligger
+  - token_id: towels-place-preposition
+    text: på
+  - token_id: towels-place
+    text: senga,
+  - token_id: groceries-subject
+    text: dagligvarene
+  - token_id: groceries-verb
+    text: ligger
+  - token_id: groceries-place-preposition
+    text: i
+  - token_id: groceries-place
+    text: kjøleskapet,
+  - token_id: conjunction
+    text: og
+  - token_id: jackets-subject
+    text: jakkene
+  - token_id: jackets-verb
+    text: ligger
+  - token_id: jackets-place-preposition
+    text: i
+  - token_id: jackets-place
+    text: gangen.
+  error_token_id: incorrect-placement-verb
+  feedback: 'Replace ligger with legger: Henrik is the subject and moves the keys
+    to the table. The corrected opening is Henrik legger nøklene på bordet.'
+- handle: follow_one_object
+  op: write
+  objective: obj-legge-vs-ligge-01
+  bloom: apply
+  prompt_md: 'Choose one object that naturally follows the legge–ligge pattern, such
+    as a passport during a journey or a contract at an office. Write four connected
+    Norwegian sentences about the same situation: first a present placement using
+    legger, then its present location using ligger, one past placement using la, and
+    one past location using lå.'
+  derived_from:
+  - section_id: fourth-checkpoint
+  response_language: 'no'
+  min_words: 20
+  max_words: 60
+  judge_prompt: Check whether the learner follows one compatible object through present
+    and past placement and location. Report evidence for every criterion and accept
+    natural Bokmål variation that preserves the requested forms and situation.
+  criteria:
+  - id: present-placement
+    instruction: Describes someone putting the object somewhere in the present using
+      **legger**.
+  - id: present-location
+    instruction: Describes the object's compatible present location using **ligger**.
+  - id: past-placement
+    instruction: Describes a past act of putting the object somewhere using **la**.
+  - id: past-location
+    instruction: Describes the object's compatible past location using **lå**.
+  - id: same-situation
+    instruction: Keeps the same object and a coherent basic situation across all four
+      sentences.
+- handle: final_guided_practice
+  op: write
+  objective: obj-legge-vs-ligge-01
+  bloom: apply
+  prompt_md: Write a short connected continuation about the group looking for one
+    more cabin object needed for the evening. Choose an object that naturally follows
+    the legge–ligge pattern. Include a question about its location, an explanation
+    of where someone put it, a statement about where it is now, and a final instruction
+    to put it in a useful place. Use forms of legge for placement and forms of ligge
+    for location.
+  derived_from:
+  - section_id: final-guided-practice
+  response_language: 'no'
+  min_words: 25
+  max_words: 70
+  judge_prompt: Check the continuation for all four requested parts, connected cabin
+    context, and consistent use of legge for placement actions and ligge for compatible
+    locations. Report evidence for every criterion and accept natural Bokmål variants.
+  criteria:
+  - id: location-question
+    instruction: Includes a question about the object's location using an appropriate
+      form of **ligge**.
+  - id: placement-explanation
+    instruction: Explains where someone put the object using an appropriate form of
+      **legge**.
+  - id: current-location
+    instruction: States where the object is now using an appropriate form of **ligge**.
+  - id: final-instruction
+    instruction: Ends with an instruction to put the object in a useful place using
+      an appropriate form of **legge**.
+  - id: connected-continuation
+    instruction: Presents all four parts as connected language in the cabin situation
+      with one compatible object.

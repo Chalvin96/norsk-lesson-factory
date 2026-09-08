@@ -1,0 +1,213 @@
+- handle: first_checkpoint_finding_change
+  op: choose
+  objective: obj-bli-med-or-vaere-med-01
+  bloom: understand
+  prompt_md: Choose the interpretation that matches both uses in the developing trip
+    plan. Identify what each Norwegian expression highlights.
+  derived_from:
+  - section_id: central-contrast
+  stem_md: The plan says «Først spør Sara om Jonas vil bli med.» About Omar, Sara
+    says «Han er med på turen, men han blir med først i morgen.» Which interpretation
+    matches both uses?
+  options:
+  - id: reversed-viewpoints
+    text: «Først spør Sara om Jonas vil bli med» reports that Jonas already participates;
+      «Han er med på turen» presents an invitation for Omar to join.
+    correct: false
+    why: 'This reverses the viewpoints: the first expression concerns joining, and
+      the second reports inclusion.'
+  - id: correct
+    text: «Først spør Sara om Jonas vil bli med» presents an invitation for Jonas
+      to enter the trip; «Han er med på turen» presents Omar as already included in
+      the trip.
+    correct: true
+    why: Bli med highlights entry through an invitation or decision, while er med
+      reports existing participation or inclusion.
+  - id: both-entry
+    text: Both expressions describe someone entering the trip through a new decision
+      to join.
+    correct: false
+    why: The second expression uses er med and describes participation that is already
+      settled.
+- handle: controlled_bli_med_viewpoint
+  op: recall_fill
+  objective: obj-bli-med-or-vaere-med-01
+  bloom: apply
+  prompt_md: Complete each sentence with the appropriate taught form of bli med. Use
+    the context to distinguish a present or upcoming decision from a past joining.
+  explanation_md: "Use blir med for deciding to join now or later, and ble med when the act of joining happened in the past."
+  derived_from:
+  - section_id: invitations-decisions-bli-med
+  audio_target: "En venn inviterer Mina til biblioteket i kveld. Mina svarer: «Ja, jeg blir med til biblioteket.» På mandag sa Erik nei til arbeidsgruppen. Tirsdag ombestemte han seg og ble med i arbeidsgruppen. Et barn spør om å få delta i leken. Moren svarer: «Ja, du blir med i leken.»"
+  segments:
+  - text_md: 'En venn inviterer Mina til biblioteket i kveld. Mina svarer: «Ja, jeg '
+  - blank_id: mina-form
+    options:
+    - blir med
+    - ble med
+    answer_index: 0
+  - text_md: ' til biblioteket.» På mandag sa Erik nei til arbeidsgruppen. Tirsdag
+      ombestemte han seg og '
+  - blank_id: erik-form
+    options:
+    - blir med
+    - ble med
+    answer_index: 1
+  - text_md: ' i arbeidsgruppen. Et barn spør om å få delta i leken. Moren svarer:
+      «Ja, du '
+  - blank_id: child-form
+    options:
+    - blir med
+    - ble med
+    answer_index: 0
+  - text_md: ' i leken.»'
+- handle: second_participation_check
+  op: recall_fill
+  objective: obj-bli-med-or-vaere-med-01
+  bloom: apply
+  prompt_md: Complete each statement with er med or var med. Each context reports
+    participation or inclusion without highlighting the moment of entry.
+  explanation_md: "Use er med for current inclusion and var med for participation in a completed past period."
+  derived_from:
+  - section_id: participation-inclusion-vaere-med
+  audio_target: "I vår deltar Noor på kurset. Noor er med på kurset. Jonas spilte på skolelaget i fjor. Han var med på laget den sesongen. Fatima deltok i et frivillig prosjekt i sommer. Hun var med i prosjektet. Vi sjekker gjestelista nå. Navnet til Emil er med på lista."
+  segments:
+  - text_md: 'I vår deltar Noor på kurset. Noor '
+  - blank_id: course-participation
+    options:
+    - er med
+    - var med
+    answer_index: 0
+  - text_md: ' på kurset. Jonas spilte på skolelaget i fjor. Han '
+  - blank_id: team-participation
+    options:
+    - er med
+    - var med
+    answer_index: 1
+  - text_md: ' på laget den sesongen. Fatima deltok i et frivillig prosjekt i sommer.
+      Hun '
+  - blank_id: project-participation
+    options:
+    - er med
+    - var med
+    answer_index: 1
+  - text_md: ' i prosjektet. Vi sjekker gjestelista nå. Navnet til Emil '
+  - blank_id: guest-list-inclusion
+    options:
+    - er med
+    - var med
+    answer_index: 0
+  - text_md: ' på lista.'
+- handle: contrast_before_after
+  op: choose
+  objective: obj-bli-med-or-vaere-med-01
+  bloom: apply
+  prompt_md: Choose the pair that follows Nora from deciding to join the choir rehearsal
+    to taking part in it.
+  derived_from:
+  - section_id: same-event-two-viewpoints
+  stem_md: Nora initially says no. Later she changes her mind and joins the rehearsal.
+    Once it begins, she participates with the choir. Which pair expresses that sequence?
+  options:
+  - id: entry-then-participation
+    text: Først blir Nora med på korøvelsen. Etterpå er Nora med på korøvelsen.
+    correct: true
+    why: Blir med marks Nora's entry; er med describes her participation afterwards.
+  - id: participation-then-entry
+    text: Først er Nora med på korøvelsen. Etterpå blir Nora med på korøvelsen.
+    correct: false
+    why: This puts established participation before the decision to join.
+  - id: entry-twice
+    text: Først blir Nora med på korøvelsen. Etterpå blir Nora med på korøvelsen.
+    correct: false
+    why: The second sentence should describe participation after entry, not a second
+      act of joining.
+- handle: viewpoint_overlap
+  op: recall_fill
+  objective: obj-bli-med-or-vaere-med-01
+  bloom: apply
+  prompt_md: 'Complete both exchanges with the expression that fits the speaker''s
+    viewpoint. The activities are future in time, so use the focus of each response
+    rather than time alone: the first response accepts an invitation, while the second
+    confirms participation as settled.'
+  explanation_md: "Use blir med when accepting the invitation as a new decision; use er med when confirming participation that is already settled."
+  derived_from:
+  - section_id: useful-overlap-invitations
+  audio_target: "— Vi skal på biblioteket etter jobb. Vil du være med? — Ja, jeg blir med til biblioteket. — Er du med på dugnaden på lørdag? — Ja, jeg er med; jeg står på deltakerlista."
+  segments:
+  - text_md: '— Vi skal på biblioteket etter jobb. Vil du være med? — Ja, jeg '
+  - blank_id: acceptance-viewpoint
+    options:
+    - blir med
+    - er med
+    answer_index: 0
+  - text_md: ' til biblioteket. — Er du med på dugnaden på lørdag? — Ja, jeg '
+  - blank_id: settled-viewpoint
+    options:
+    - blir med
+    - er med
+    answer_index: 1
+  - text_md: ; jeg står på deltakerlista.
+- handle: context_cabin_plan
+  op: write
+  objective: obj-bli-med-or-vaere-med-01
+  bloom: apply
+  prompt_md: 'Write a short, connected Norwegian sequence about the cabin trip. From
+    Friday''s viewpoint, state that Lea accepts the invitation to ride in Sara''s
+    car, Jonas is already included in the trip, Omar is already included but will
+    physically join on Saturday, and Lea accepts the request to help carry the food
+    and participates in that team. Then switch to the later viewpoint and report Omar''s
+    joining and participation. Use blir med and er med for Friday''s plan, and ble
+    med and var med when reporting the later Saturday result. Keep the viewpoint distinction
+    clear: use a form of bli med for acceptance or arrival and a form of være med
+    for established inclusion or participation in the food-carrying team.'
+  derived_from:
+  - section_id: back-at-cabin-trip
+  response_language: 'no'
+  min_words: 35
+  max_words: 75
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål wording around the required people and events, but require
+    the stated timeline and the required bli med/være med viewpoint contrast, including
+    the appropriate present and past forms.
+  criteria:
+  - id: cabin-roles
+    instruction: Identifies Lea as accepting the invitation and helping carry the
+      food, identifies Jonas and Omar as already included in the trip, and identifies
+      Omar as joining later.
+  - id: cabin-time-forms
+    instruction: Uses present forms for Friday's plan and past forms when reporting
+      Omar's later joining and participation.
+  - id: cabin-viewpoint-contrast
+    instruction: Uses a form of **bli med** for acceptance or later arrival and a
+      form of **være med** for established inclusion or participation in the food-carrying
+      team.
+- handle: final_retrieval_pairs
+  op: write
+  objective: obj-bli-med-or-vaere-med-01
+  bloom: apply
+  prompt_md: Write two short connected Norwegian pairs in new contexts using your own
+    wording. In pair one, describe a person accepting an invitation to a study group
+    using blir med, then describe that person's membership using er med. In pair two,
+    describe a person who participated in a concert last year using var med, then
+    describe a friend deciding to join this year's concert using blir med. Use new
+    names and lexical details.
+  derived_from:
+  - section_id: final-retrieval
+  response_language: 'no'
+  min_words: 20
+  max_words: 50
+  judge_prompt: 'Check the response against the task and report evidence for each
+    criterion. Accept natural names, connectors, and surrounding wording, but require
+    the specified forms and viewpoint contrast: blir med for entering or accepting,
+    er med for settled membership, and var med for past participation.'
+  criteria:
+  - id: study-group-viewpoints
+    instruction: Uses **blir med** for accepting the study-group invitation and **er
+      med** for the person's existing membership.
+  - id: concert-viewpoints
+    instruction: Uses **var med** for participation in the concert last year and **blir
+      med** for the friend's decision to join this year's concert.
+  - id: new-context-pairs
+    instruction: Creates two connected pairs in the requested study-group and concert
+      contexts with new names and lexical details.

@@ -1,0 +1,14 @@
+description: Evaluate the web-research catalog explorer prompt against labeled content cases.
+
+prompts:
+  - file://prompts.py:create_catalog_prompt
+
+providers:
+  - id: file://provider.py:call_api
+    label: configured-catalog-explorer
+    config:
+      job: catalog_explorer
+
+defaultTest: file://defaults/structured-response.yaml
+
+tests: file://cases/catalog_explorer.yaml

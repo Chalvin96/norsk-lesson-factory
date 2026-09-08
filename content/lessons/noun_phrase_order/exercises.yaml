@@ -1,0 +1,381 @@
+- handle: cabin_demonstrative_map
+  op: categorize
+  objective: obj-noun-phrase-order-01
+  bloom: analyze
+  prompt_md: Classify each supplied cabin phrase by its
+    demonstrative and by the noun's number and gender. Use one bucket per item; every
+    phrase has the sequence demonstrative + definite adjective + definite noun.
+  explanation_md: "A demonstrative requires definite adjective and noun forms; a possessive after the noun also requires the definite noun, while a possessive before it takes the indefinite noun."
+  derived_from:
+  - section_id: cabin-demonstrative-map
+  buckets:
+  - bucket_id: singular-masculine
+    label: Demonstrative + definite adjective + definite noun; singular masculine
+  - bucket_id: singular-neuter
+    label: Demonstrative + definite adjective + definite noun; singular neuter
+  - bucket_id: plural
+    label: Demonstrative + definite adjective + definite noun; plural
+  items:
+  - item_id: phrase-1
+    text: denne gamle sekken
+    bucket_id: singular-masculine
+  - item_id: phrase-2
+    text: dette tunge skjerfet
+    bucket_id: singular-neuter
+  - item_id: phrase-3
+    text: disse våte klærne
+    bucket_id: plural
+- handle: identify_cabin_objects
+  op: build
+  objective: obj-noun-phrase-order-01
+  bloom: apply
+  prompt_md: 'Build one natural Bokmål sentence in which Mina points to three nearby
+    cabin objects: an old backpack, a heavy scarf, and wet clothes. Use a demonstrative,
+    a definite adjective, and a definite noun for each phrase.'
+  derived_from:
+  - section_id: identify-cabin-objects
+  tokens:
+  - token_id: identify-1
+    text: Mina
+  - token_id: identify-2
+    text: peker
+  - token_id: identify-3
+    text: på
+  - token_id: identify-4
+    text: denne
+  - token_id: identify-5
+    text: gamle
+  - token_id: identify-6
+    text: sekken,
+  - token_id: identify-7
+    text: dette
+  - token_id: identify-8
+    text: tunge
+  - token_id: identify-9
+    text: skjerfet
+  - token_id: identify-10
+    text: og
+  - token_id: identify-11
+    text: disse
+  - token_id: identify-12
+    text: våte
+  - token_id: identify-13
+    text: klærne.
+  answer_order:
+  - identify-1
+  - identify-2
+  - identify-3
+  - identify-4
+  - identify-5
+  - identify-6
+  - identify-7
+  - identify-8
+  - identify-9
+  - identify-10
+  - identify-11
+  - identify-12
+  - identify-13
+- handle: match_owners_to_packed_objects
+  op: build
+  objective: obj-noun-phrase-order-01
+  bloom: apply
+  prompt_md: 'Build one natural Bokmål sentence in which Mina sorts three belongings:
+    the old backpack is mine, the heavy scarf is ours, and the wet clothes are theirs.
+    Put each possessive after the noun and use den/det/de + definite adjective + definite
+    noun + possessive.'
+  derived_from:
+  - section_id: match-owners-to-packed-objects
+  tokens:
+  - token_id: owners-1
+    text: Mina
+  - token_id: owners-2
+    text: sorterer
+  - token_id: owners-3
+    text: den
+  - token_id: owners-4
+    text: gamle
+  - token_id: owners-5
+    text: sekken
+  - token_id: owners-6
+    text: min,
+  - token_id: owners-7
+    text: det
+  - token_id: owners-8
+    text: tunge
+  - token_id: owners-9
+    text: skjerfet
+  - token_id: owners-10
+    text: vårt
+  - token_id: owners-11
+    text: og
+  - token_id: owners-12
+    text: de
+  - token_id: owners-13
+    text: våte
+  - token_id: owners-14
+    text: klærne
+  - token_id: owners-15
+    text: deres.
+  answer_order:
+  - owners-1
+  - owners-2
+  - owners-3
+  - owners-4
+  - owners-5
+  - owners-6
+  - owners-7
+  - owners-8
+  - owners-9
+  - owners-10
+  - owners-11
+  - owners-12
+  - owners-13
+  - owners-14
+  - owners-15
+- handle: repair_the_packing_labels
+  op: find_fix
+  objective: obj-noun-phrase-order-01
+  bloom: analyze
+  prompt_md: 'Select the one token that breaks the postposed-possessive pattern.'
+  derived_from:
+  - section_id: repair-the-packing-labels
+  tokens:
+  - token_id: repair-1
+    text: den
+  - token_id: repair-2
+    text: gamle
+  - token_id: repair-3
+    text: sekk
+  - token_id: repair-4
+    text: min
+  error_token_id: repair-3
+  feedback: Replace sekk with sekken. The noun must stay definite before the postposed
+    possessive min; keep den before the adjective.
+- handle: move_the_owner
+  op: build
+  objective: obj-noun-phrase-order-01
+  bloom: apply
+  prompt_md: Rewrite these three packing notes with the possessive first. The source
+    notes are den gamle sekken min, det tunge skjerfet vårt, and de våte klærne deres.
+    Build one natural Bokmål sentence containing all three transformed phrases. Preserve
+    each adjective, noun, owner, number, and meaning; use an indefinite noun after
+    each preposed possessive.
+  explanation_md: "After the noun, the possessive requires a definite noun; before the noun, it requires the indefinite noun form."
+  derived_from:
+  - section_id: move-the-owner
+  tokens:
+  - token_id: move-1
+    text: Mina
+  - token_id: move-2
+    text: viser
+  - token_id: move-3
+    text: fram
+  - token_id: move-4
+    text: min
+  - token_id: move-5
+    text: gamle
+  - token_id: move-6
+    text: sekk,
+  - token_id: move-7
+    text: vårt
+  - token_id: move-8
+    text: tunge
+  - token_id: move-9
+    text: skjerf
+  - token_id: move-10
+    text: og
+  - token_id: move-11
+    text: deres
+  - token_id: move-12
+    text: våte
+  - token_id: move-13
+    text: klær.
+  answer_order:
+  - move-1
+  - move-2
+  - move-3
+  - move-4
+  - move-5
+  - move-6
+  - move-7
+  - move-8
+  - move-9
+  - move-10
+  - move-11
+  - move-12
+  - move-13
+- handle: choose_and_complete_a_possessive_frame
+  op: recall_fill
+  objective: obj-noun-phrase-order-01
+  bloom: apply
+  prompt_md: Complete both cabin messages. In the first blank, the possessive is first;
+    in the second, it is last. Supply the correct adjective and noun forms without
+    mixing the two patterns.
+  derived_from:
+  - section_id: choose-and-complete-a-possessive-frame
+  audio_target: "Mitt grønne skjerf. Den store matboksen vår."
+  segments:
+  - text_md: 'First message — possessive first: '
+  - blank_id: preposed-scarf
+    options:
+    - mitt grønne skjerf
+    - mitt grønne skjerfet
+    answer_index: 0
+  - text_md: '. Second message — possessive last: '
+  - blank_id: postposed-lunchbox
+    options:
+    - den store matboksen vår
+    - den store matboks vår
+    answer_index: 0
+  - text_md: .
+- handle: point_out_the_correct_belongings
+  op: build
+  objective: obj-noun-phrase-order-01
+  bloom: apply
+  prompt_md: 'Build Mina''s sentence for pointing out one specific belonging among
+    similar objects. Use a demonstrative, a definite adjective, a definite noun, and
+    a postposed possessive. The meaning is: this old backpack of mine.'
+  derived_from:
+  - section_id: point-out-the-correct-belongings
+  tokens:
+  - token_id: point-1
+    text: Mina
+  - token_id: point-2
+    text: peker
+  - token_id: point-3
+    text: på
+  - token_id: point-4
+    text: denne
+  - token_id: point-5
+    text: gamle
+  - token_id: point-6
+    text: sekken
+  - token_id: point-7
+    text: min.
+  answer_order:
+  - point-1
+  - point-2
+  - point-3
+  - point-4
+  - point-5
+  - point-6
+  - point-7
+- handle: finish_packing_the_cabin
+  op: recall_fill
+  objective: obj-noun-phrase-order-01
+  bloom: apply
+  prompt_md: 'Complete four short packing dialogue turns. Use the frame required by
+    each context: demonstrative only for the old jacket, possessive first for the
+    black boots, possessive last for the heavy bags, and demonstrative plus postposed
+    possessive for the shared equipment.'
+  derived_from:
+  - section_id: finish-packing-the-cabin
+  audio_target: "Mina: Se på denne gamle jakken. Eirik: Ta med mine svarte støvler. Mina: Her er de tunge veskene våre. Eirik: Vi trenger dette felles utstyret vårt."
+  segments:
+  - text_md: 'Mina: Se på '
+  - blank_id: demonstrative-jacket
+    options:
+    - denne gamle jakken
+    - denne gamle jakke
+    answer_index: 0
+  - text_md: '. Eirik: Ta med '
+  - blank_id: preposed-boots
+    options:
+    - mine svarte støvler
+    - mine svarte støvlene
+    answer_index: 0
+  - text_md: '. Mina: Her er '
+  - blank_id: postposed-bags
+    options:
+    - de tunge veskene våre
+    - de tunge veske våre
+    answer_index: 0
+  - text_md: '. Eirik: Vi trenger '
+  - blank_id: combined-equipment
+    options:
+    - dette felles utstyret vårt
+    - dette felles utstyr vårt
+    answer_index: 0
+  - text_md: .
+- handle: find_the_station_luggage
+  op: write
+  objective: obj-noun-phrase-order-01
+  bloom: apply
+  prompt_md: At the station, produce four natural Bokmål noun phrases. First, point
+    out one small suitcase with a demonstrative. Second, identify several heavy bags
+    as yours with the possessive first. Third, identify the shared red backpack with
+    the possessive last. Fourth, point to that same shared red backpack among other
+    luggage with a demonstrative and a postposed possessive. Use koffert for suitcase,
+    veske for bag, and ryggsekk for backpack. Use the station meanings rather than
+    copying cabin expressions.
+  derived_from:
+  - section_id: find-the-station-luggage
+  response_language: 'no'
+  judge_prompt: Check all four requested meanings and report evidence for every criterion.
+    Require natural Bokmål agreement and the specified order. Accept ordinary Bokmål
+    inflection of the specified station nouns, but do not accept a cabin phrase that
+    ignores the new luggage meanings.
+  criteria:
+  - id: demonstrative-suitcase
+    instruction: Produces a phrase meaning one small suitcase with denne + definite
+      adjective + definite noun.
+  - id: preposed-heavy-bags
+    instruction: Produces a phrase meaning several heavy bags as the speaker's, with
+      the possessive first, followed by an adjective and an indefinite plural noun.
+  - id: postposed-shared-backpack
+    instruction: Produces a phrase meaning the shared red backpack, using den + definite
+      adjective + definite noun + postposed vår.
+  - id: combined-shared-backpack
+    instruction: Produces a phrase meaning this shared red backpack of ours, using
+      a demonstrative + definite adjective + definite noun + postposed possessive.
+  - id: station-transfer
+    instruction: Uses the specified station luggage vocabulary and applies the requested
+      noun-phrase frames to the changed situation rather than copying a cabin expression.
+- handle: short_retrieval_review
+  op: recall_fill
+  objective: obj-noun-phrase-order-01
+  bloom: remember
+  prompt_md: Complete the four Norwegian phrases from memory, then complete the two
+    noun-form rules. Choose one full phrase for each meaning and the correct Norwegian
+    grammar term with its English translation for each rule.
+  derived_from:
+  - section_id: short-retrieval-review
+  audio_target: "Denne gamle sekken. Mitt grønne skjerf. Den store matboksen vår. Disse våte hanskene mine."
+  segments:
+  - text_md: 'Meaning “this old backpack”: '
+  - blank_id: review-old-backpack
+    options:
+    - denne gamle sekken
+    - denne gamle sekk
+    answer_index: 0
+  - text_md: '. Meaning “my green scarf,” with the possessive first: '
+  - blank_id: review-green-scarf
+    options:
+    - mitt grønne skjerf
+    - mitt grønne skjerfet
+    answer_index: 0
+  - text_md: '. Meaning “our large lunch box,” with the possessive last: '
+  - blank_id: review-lunchbox
+    options:
+    - den store matboksen vår
+    - den store matboks vår
+    answer_index: 0
+  - text_md: '. Meaning “these wet gloves of mine”: '
+  - blank_id: review-wet-gloves
+    options:
+    - disse våte hanskene mine
+    - disse våte hansker mine
+    answer_index: 0
+  - text_md: '. After a preposed possessive, the noun is '
+  - blank_id: review-preposed-rule
+    options:
+    - ubestemt substantiv (indefinite noun)
+    - bestemt substantiv (definite noun)
+    answer_index: 0
+  - text_md: '; before a postposed possessive, the noun is '
+  - blank_id: review-postposed-rule
+    options:
+    - ubestemt substantiv (indefinite noun)
+    - bestemt substantiv (definite noun)
+    answer_index: 1
+  - text_md: .

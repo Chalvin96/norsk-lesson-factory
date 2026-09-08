@@ -1,0 +1,535 @@
+- handle: identify_role_zero_article
+  op: choose
+  objective: obj-zero-article-01
+  bloom: understand
+  prompt_md: Choose the set containing only sentences in which the noun names a person's
+    role without an article.
+  derived_from:
+  - section_id: roles-and-occupations
+  stem_md: Choose the set in which role nouns follow er, blir, or jobber som without
+    an article.
+  options:
+  - id: mixed-role-object
+    text: Sara er lege. Amir snakker med en lege. Nora er en student.
+    correct: false
+    why: The set includes a person being talked to and a role with an article.
+  - id: all-role-zero
+    text: Amir er lærer. Nora blir journalist. Hun jobber som kokk.
+    correct: true
+    why: All three nouns name roles and appear without an article.
+  - id: mixed-articles
+    text: Sara er en lege. Faren min er lege. Hun jobber som en kokk.
+    correct: false
+    why: Two role nouns incorrectly have articles.
+  - id: mixed-patterns
+    text: Jeg vil bli journalist. De snakker et tysk. Amir kjøper en fotball.
+    correct: false
+    why: The set includes a language with an article and a physical object.
+- handle: produce_common_role
+  op: recall_fill
+  objective: obj-zero-article-01
+  bloom: apply
+  prompt_md: Complete each Norwegian profile with the occupation in the appropriate
+    form. Use the basic role pattern, not an English-style article.
+  explanation_md: "Norwegian normally omits the article for roles after være, language names, unspecified mass nouns, transport with med, and indefinite plurals."
+  derived_from:
+  - section_id: roles-and-occupations
+  audio_target: "Amir er lærer. Nora vil bli journalist. Hun jobber som kokk."
+  segments:
+  - text_md: 'Amir er '
+  - blank_id: role-amir
+    options:
+    - lærer
+    - en lærer
+    answer_index: 0
+  - text_md: '. Nora vil bli '
+  - blank_id: role-nora
+    options:
+    - journalist
+    - en journalist
+    answer_index: 0
+  - text_md: '. Hun jobber som '
+  - blank_id: role-hun
+    options:
+    - kokk
+    - en kokk
+    answer_index: 0
+  - text_md: '. '
+- handle: complete_language_activity
+  op: recall_fill
+  objective: obj-zero-article-01
+  bloom: apply
+  prompt_md: Complete each statement with the supplied language name. Use no article
+    before language names.
+  explanation_md: "Language names normally appear without an article: hun lærer spansk."
+  derived_from:
+  - section_id: languages
+  audio_target: "Jeg snakker norsk. Amir forstår engelsk. Nora lærer spansk. Vi leser norsk på skolen. Skriver du arabisk?"
+  segments:
+  - text_md: 'Jeg snakker '
+  - blank_id: language-speak
+    options:
+    - norsk
+    - et tysk
+    answer_index: 0
+  - text_md: '. Amir forstår '
+  - blank_id: language-understand
+    options:
+    - engelsk
+    - et tysk
+    answer_index: 0
+  - text_md: '. Nora lærer '
+  - blank_id: language-learn
+    options:
+    - spansk
+    - et tysk
+    answer_index: 0
+  - text_md: '. Vi leser '
+  - blank_id: language-read
+    options:
+    - norsk
+    - et tysk
+    answer_index: 0
+  - text_md: ' på skolen. Skriver du '
+  - blank_id: language-write
+    options:
+    - arabisk
+    - et tysk
+    answer_index: 0
+  - text_md: '? '
+- handle: contrast_role_and_language
+  op: build
+  objective: obj-zero-article-01
+  bloom: apply
+  prompt_md: 'Build a two-sentence introduction from this profile: Nora is a student
+    and she is learning Spanish. Keep both zero-article patterns. Focus scoring on
+    the language noun; the role pattern provides context and review.'
+  derived_from:
+  - section_id: languages
+  tokens:
+  - token_id: tok-nora-1
+    text: Nora
+  - token_id: tok-nora-2
+    text: er
+  - token_id: tok-nora-3
+    text: student.
+  - token_id: tok-nora-4
+    text: Hun
+  - token_id: tok-nora-5
+    text: lærer
+  - token_id: tok-nora-6
+    text: spansk.
+  answer_order:
+  - tok-nora-1
+  - tok-nora-2
+  - tok-nora-3
+  - tok-nora-4
+  - tok-nora-5
+  - tok-nora-6
+- handle: distinguish_sport_from_object
+  op: choose
+  objective: obj-zero-article-01
+  bloom: understand
+  prompt_md: Choose the sentence in which the noun names a sport rather than one physical
+    object.
+  derived_from:
+  - section_id: sports-and-activities
+  stem_md: Which sentence uses no article because the noun names a sport?
+  options:
+  - id: sport
+    text: Barna spiller fotball.
+    correct: true
+    why: Fotball names the sport, so it has no article.
+  - id: object
+    text: Amir kjøper en fotball.
+    correct: false
+    why: En fotball refers to one physical ball.
+  - id: mass-noun
+    text: Nora drikker kaffe.
+    correct: false
+    why: Kaffe is a mass noun here, not a sport.
+- handle: describe_sport_habits
+  op: write
+  objective: obj-zero-article-01
+  bloom: apply
+  prompt_md: 'Write two short Norwegian profile sentences from these facts: Amir plays
+    chess with a neighbor after work; Nora practises karate after school. Use complete
+    sentences and no article before each sport or game name.'
+  derived_from:
+  - section_id: sports-and-activities
+  response_language: 'no'
+  min_words: 8
+  max_words: 20
+  judge_prompt: Check the Norwegian response against the supplied two profiles and
+    report evidence for each criterion.
+  criteria:
+  - id: sport-zero-article
+    instruction: Uses each supplied sport or game name, sjakk and karate, without
+      an article.
+  - id: complete-profiles
+    instruction: Writes two complete Norwegian sentences that express the supplied
+      profiles.
+- handle: recognize_mass_noun_meaning
+  op: choose
+  objective: obj-zero-article-01
+  bloom: understand
+  prompt_md: 'Choose the pair that shows both taught zero-article mass-noun meanings:
+    substance in general and an unspecified quantity.'
+  derived_from:
+  - section_id: mass-nouns-food-drink-and-other-substances
+  stem_md: Which pair uses a mass noun without an article in both meanings?
+  options:
+  - id: definite-and-serving
+    text: Kaffen er varm. Nora bestiller en kaffe.
+    correct: false
+    why: The first noun is definite and the second refers to one serving.
+  - id: generic-and-definite
+    text: Jeg liker kaffe. Kaffen er varm.
+    correct: false
+    why: Only the first noun has the generic zero-article meaning.
+  - id: both-zero-mass
+    text: Jeg liker kaffe. Vi har kaffe og te.
+    correct: true
+    why: The first sentence refers to coffee generally and the second to an unspecified
+      supply.
+  - id: substance-and-serving
+    text: Nora drikker kaffe. Nora bestiller en kaffe.
+    correct: false
+    why: The second noun refers to one serving with an article.
+- handle: complete_cafe_supplies
+  op: recall_fill
+  objective: obj-zero-article-01
+  bloom: apply
+  prompt_md: Complete Nora's café inventory with the supplied mass nouns. Use no article
+    for each unspecified substance.
+  explanation_md: "Unspecified mass nouns such as kaffe and sukker normally appear without an article."
+  derived_from:
+  - section_id: mass-nouns-food-drink-and-other-substances
+  audio_target: "Nora sjekker lageret: Vi har kaffe og te. Hun kjøper ost til kjøkkenet. De spiser brød til frokost. Amir lager ris til middagen."
+  segments:
+  - text_md: 'Nora sjekker lageret: Vi har '
+  - blank_id: supply-coffee
+    options:
+    - kaffe
+    - en kaffe
+    answer_index: 0
+  - text_md: ' og te. Hun kjøper '
+  - blank_id: supply-cheese
+    options:
+    - ost
+    - en kaffe
+    answer_index: 0
+  - text_md: ' til kjøkkenet. De spiser '
+  - blank_id: supply-bread
+    options:
+    - brød
+    - en kaffe
+    answer_index: 0
+  - text_md: ' til frokost. Amir lager '
+  - blank_id: supply-rice
+    options:
+    - ris
+    - en kaffe
+    answer_index: 0
+  - text_md: ' til middagen. '
+- handle: select_transport_mode_form
+  op: recall_fill
+  objective: obj-zero-article-01
+  bloom: apply
+  prompt_md: Complete each travel statement using these visible cues - take the bus, then the train, drive a car, fly by plane, and cycle by bike.
+  explanation_md: "After med for a means of transport, Norwegian normally uses the bare noun: med buss, med tog, med bil."
+  derived_from:
+  - section_id: taught-transport-expressions
+  audio_target: "Amir kommer med buss til kaféen. Vi reiser med tog til skolen. Hun drar til jobb med bil. De kommer med fly til kaféen. Nora kommer på sykkel til møtet."
+  segments:
+  - text_md: 'Amir kommer '
+  - blank_id: transport-bus
+    options:
+    - med buss
+    - med tog
+    answer_index: 0
+  - text_md: ' til kaféen. Vi reiser '
+  - blank_id: transport-train
+    options:
+    - med tog
+    - med bil
+    answer_index: 0
+  - text_md: ' til skolen. Hun drar til jobb '
+  - blank_id: transport-car
+    options:
+    - med bil
+    - med fly
+    answer_index: 0
+  - text_md: '. De kommer '
+  - blank_id: transport-plane
+    options:
+    - med fly
+    - med buss
+    answer_index: 0
+  - text_md: ' til kaféen. Nora kommer '
+  - blank_id: transport-bike
+    options:
+    - på sykkel
+    - med bil
+    answer_index: 0
+  - text_md: ' til møtet. '
+- handle: write_journey_plans
+  op: write
+  objective: obj-zero-article-01
+  bloom: apply
+  prompt_md: Write one complete Norwegian journey statement for each supplied fact.
+    Use the taught transport expression required by each plan. - Amir — work — med
+    buss - Nora — school — med tog - Sara — the station — med bil - Jonas — a social
+    event — med fly - Liv — the café — på sykkel
+  derived_from:
+  - section_id: taught-transport-expressions
+  response_language: 'no'
+  min_words: 20
+  max_words: 45
+  judge_prompt: Check the Norwegian response against the five supplied journey facts
+    and report evidence for each criterion.
+  criteria:
+  - id: taught-transport-forms
+    instruction: Uses med buss, med tog, med bil, med fly, and på sykkel with the
+      corresponding supplied facts.
+  - id: complete-journeys
+    instruction: Writes one complete Norwegian journey statement for each of the five
+      supplied facts.
+- handle: change_singular_to_indefinite_plural
+  op: build
+  objective: obj-zero-article-01
+  bloom: apply
+  prompt_md: Change the singular statement Jeg tar med en kopp. so that it refers
+    to several unspecified items. Build the complete Norwegian sentence.
+  explanation_md: "An indefinite plural has no article: en kopp becomes kopper when the number is unspecified and plural."
+  derived_from:
+  - section_id: indefinite-plural-nouns
+  tokens:
+  - token_id: tok-plural-1
+    text: Jeg
+  - token_id: tok-plural-2
+    text: tar
+  - token_id: tok-plural-3
+    text: med
+  - token_id: tok-plural-4
+    text: kopper.
+  answer_order:
+  - tok-plural-1
+  - tok-plural-2
+  - tok-plural-3
+  - tok-plural-4
+- handle: supply_indefinite_plural_items
+  op: recall_fill
+  objective: obj-zero-article-01
+  bloom: apply
+  prompt_md: Complete each statement with the supplied plural meaning. Use natural
+    indefinite plurals with no article, not an equivalent of some.
+  derived_from:
+  - section_id: indefinite-plural-nouns
+  audio_target: "Jeg kjøper bøker. Vi trenger kopper. Nora tar med tallerkener. Det kommer studenter på lørdag. Amir kjøper epler."
+  segments:
+  - text_md: 'Jeg kjøper '
+  - blank_id: plural-books
+    options:
+    - bøker
+    - en bok
+    answer_index: 0
+  - text_md: '. Vi trenger '
+  - blank_id: plural-cups
+    options:
+    - kopper
+    - en kopp
+    answer_index: 0
+  - text_md: '. Nora tar med '
+  - blank_id: plural-plates
+    options:
+    - tallerkener
+    - en kopp
+    answer_index: 0
+  - text_md: '. Det kommer '
+  - blank_id: plural-students
+    options:
+    - studenter
+    - en bok
+    answer_index: 0
+  - text_md: ' på lørdag. Amir kjøper '
+  - blank_id: plural-apples
+    options:
+    - epler
+    - en bok
+    answer_index: 0
+  - text_md: '. '
+- handle: classify_zero_article_context
+  op: categorize
+  objective: obj-zero-article-01
+  bloom: analyze
+  prompt_md: Classify each sentence by the single taught meaning that licenses its
+    zero article. Each item is intentionally disjoint; score context recognition,
+    not noun-form production.
+  derived_from:
+  - section_id: one-meaning-several-zero-article-patterns
+  buckets:
+  - bucket_id: role
+    label: Basic role or occupation
+  - bucket_id: language
+    label: Language
+  - bucket_id: sport
+    label: Sport or game
+  - bucket_id: mass
+    label: Mass noun
+  - bucket_id: transport
+    label: Taught transport expression
+  - bucket_id: plural
+    label: Indefinite plural
+  items:
+  - item_id: context-role
+    text: Nora er student.
+    bucket_id: role
+  - item_id: context-language
+    text: Hun lærer norsk.
+    bucket_id: language
+  - item_id: context-sport
+    text: Han spiller sjakk med naboen.
+    bucket_id: sport
+  - item_id: context-mass
+    text: Hun drikker te.
+    bucket_id: mass
+  - item_id: context-transport
+    text: Vi reiser med tog.
+    bucket_id: transport
+  - item_id: context-plural
+    text: Vi trenger kopper.
+    bucket_id: plural
+- handle: repair_unnecessary_articles
+  op: find_fix
+  objective: obj-zero-article-01
+  bloom: analyze
+  prompt_md: Select the one token that is wrong/needs changing.
+  derived_from:
+  - section_id: one-meaning-several-zero-article-patterns
+  tokens:
+  - token_id: repair-1
+    text: Amir
+  - token_id: repair-2
+    text: er
+  - token_id: repair-3
+    text: en
+  - token_id: repair-4
+    text: lærer,
+  - token_id: repair-5
+    text: men
+  - token_id: repair-6
+    text: han
+  - token_id: repair-7
+    text: kjøper
+  - token_id: repair-8
+    text: en
+  - token_id: repair-9
+    text: bok.
+  error_token_id: repair-3
+  feedback: Remove en before lærer because lærer names Amir's role after er; keep
+    en before bok because bok is one ordinary countable object.
+- handle: build_study_evening_message
+  op: write
+  objective: obj-zero-article-01
+  bloom: apply
+  prompt_md: Write a connected Norwegian planning message for a study evening at the
+    library using all six facts below. Use no article in the taught role, language,
+    sport or game, mass-noun, transport, and indefinite-plural patterns. - Mina works
+    as a teacher during the evening. - Amir writes Norwegian for the group. - The
+    students play chess during the break. - The group has coffee and bread. - They
+    come to the library by train, using med tog. - They need cups.
+  derived_from:
+  - section_id: cumulative-transfer-planning-a-study-evening
+  response_language: 'no'
+  min_words: 25
+  max_words: 60
+  judge_prompt: Check the Norwegian planning message against all supplied facts and
+    report evidence for each criterion.
+  criteria:
+  - id: six-zero-article-patterns
+    instruction: Uses no article with the supplied role, language, sport or game,
+      mass nouns, and indefinite plural, and uses med tog for transport.
+  - id: connected-study-message
+    instruction: Writes a connected Norwegian planning message using all six supplied
+      facts.
+- handle: contrast_one_item_and_general_category
+  op: build
+  objective: obj-zero-article-01
+  bloom: apply
+  prompt_md: Build the complete set of paired Norwegian statements. Show one countable
+    item versus several items, a sport versus its equipment, and a drink in general
+    versus one serving.
+  derived_from:
+  - section_id: cumulative-transfer-planning-a-study-evening
+  tokens:
+  - token_id: contrast-1
+    text: De
+  - token_id: contrast-2
+    text: tar
+  - token_id: contrast-3
+    text: med
+  - token_id: contrast-4
+    text: en
+  - token_id: contrast-5
+    text: kopp.
+  - token_id: contrast-6
+    text: De
+  - token_id: contrast-7
+    text: tar
+  - token_id: contrast-8
+    text: med
+  - token_id: contrast-9
+    text: kopper.
+  - token_id: contrast-10
+    text: Vi
+  - token_id: contrast-11
+    text: spiller
+  - token_id: contrast-12
+    text: håndball.
+  - token_id: contrast-13
+    text: Nora
+  - token_id: contrast-14
+    text: kjøper
+  - token_id: contrast-15
+    text: en
+  - token_id: contrast-16
+    text: fotball.
+  - token_id: contrast-17
+    text: Hun
+  - token_id: contrast-18
+    text: liker
+  - token_id: contrast-19
+    text: te.
+  - token_id: contrast-20
+    text: Amir
+  - token_id: contrast-21
+    text: bestiller
+  - token_id: contrast-22
+    text: en
+  - token_id: contrast-23
+    text: kaffe.
+  answer_order:
+  - contrast-1
+  - contrast-2
+  - contrast-3
+  - contrast-4
+  - contrast-5
+  - contrast-6
+  - contrast-7
+  - contrast-8
+  - contrast-9
+  - contrast-10
+  - contrast-11
+  - contrast-12
+  - contrast-13
+  - contrast-14
+  - contrast-15
+  - contrast-16
+  - contrast-17
+  - contrast-18
+  - contrast-19
+  - contrast-20
+  - contrast-21
+  - contrast-22
+  - contrast-23

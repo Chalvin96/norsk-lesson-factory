@@ -1,0 +1,331 @@
+- handle: notice_v2_in_the_cafe
+  op: recall_fill
+  objective: obj-fronting-and-v2-inversion-01
+  bloom: understand
+  prompt_md: Identify the fronted element, finite verb, and subject in each main clause.
+    Treat the multiword opening «På kjøkkenet» as one element, not as two positions.
+  explanation_md: "A fronted time, place, or negative expression occupies the first position, so only the finite verb moves before the subject; any infinitive stays later."
+  derived_from:
+  - section_id: central-pattern
+  audio_target: "I morgen åpner vi reparasjonskafeen. På kjøkkenet kan Elias lage kaffe."
+  segments:
+  - text_md: 'Clause 1: «I morgen åpner vi reparasjonskafeen.» Fronted element: '
+  - blank_id: clause-1-fronted
+    options:
+    - I morgen
+    - På kjøkkenet
+    - Først
+    answer_index: 0
+  - text_md: '; finite verb: '
+  - blank_id: clause-1-finite
+    options:
+    - åpner
+    - kan
+    - har
+    answer_index: 0
+  - text_md: '; subject: '
+  - blank_id: clause-1-subject
+    options:
+    - vi
+    - Elias
+    - Nora
+    answer_index: 0
+  - text_md: '. Clause 2: «På kjøkkenet kan Elias lage kaffe.» Fronted element: '
+  - blank_id: clause-2-fronted
+    options:
+    - På kjøkkenet
+    - I morgen
+    - Først
+    answer_index: 0
+  - text_md: '; finite verb: '
+  - blank_id: clause-2-finite
+    options:
+    - kan
+    - åpner
+    - har
+    answer_index: 0
+  - text_md: '; subject: '
+  - blank_id: clause-2-subject
+    options:
+    - Elias
+    - vi
+    - de
+    answer_index: 0
+- handle: front_a_time_or_place
+  op: build
+  objective: obj-fronting-and-v2-inversion-01
+  bloom: apply
+  prompt_md: Rewrite the neutral statement «Vi åpner reparasjonskafeen i morgen.»
+    by putting «I morgen» first. Build one complete Norwegian main clause with the
+    same meaning. Put the finite verb before the subject.
+  derived_from:
+  - section_id: changing-the-starting-point
+  tokens:
+  - token_id: ft-1
+    text: I
+  - token_id: ft-2
+    text: morgen
+  - token_id: ft-3
+    text: åpner
+  - token_id: ft-4
+    text: vi
+  - token_id: ft-5
+    text: reparasjonskafeen.
+  answer_order:
+  - ft-1
+  - ft-2
+  - ft-3
+  - ft-4
+  - ft-5
+- handle: move_only_the_finite_verb
+  op: build
+  objective: obj-fronting-and-v2-inversion-01
+  bloom: apply
+  prompt_md: Rewrite «Elias må ta en tidligere buss på lørdag.» by fronting «På lørdag».
+    Build the complete sentence. Put only the finite verb «må» before the subject;
+    keep the infinitive «ta» later in the clause.
+  derived_from:
+  - section_id: when-there-is-more-than-one-verb
+  tokens:
+  - token_id: mv-1
+    text: På
+  - token_id: mv-2
+    text: lørdag
+  - token_id: mv-3
+    text: må
+  - token_id: mv-4
+    text: Elias
+  - token_id: mv-5
+    text: ta
+  - token_id: mv-6
+    text: en
+  - token_id: mv-7
+    text: tidligere
+  - token_id: mv-8
+    text: buss.
+  answer_order:
+  - mv-1
+  - mv-2
+  - mv-3
+  - mv-4
+  - mv-5
+  - mv-6
+  - mv-7
+  - mv-8
+- handle: complete_emphatic_openings
+  op: recall_fill
+  objective: obj-fronting-and-v2-inversion-01
+  bloom: apply
+  prompt_md: Complete the emphatic main clause meaning “They use the large room only
+    on Saturdays.” The opening «Bare på lørdager» is one fronted element. Choose the
+    finite verb and then the subject.
+  derived_from:
+  - section_id: negative-and-restrictive-openings
+  audio_target: "Bare på lørdager bruker de det store rommet."
+  segments:
+  - text_md: 'Bare på lørdager '
+  - blank_id: emphatic-finite
+    options:
+    - bruker
+    - kommer
+    - har
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: emphatic-subject
+    options:
+    - de
+    - Elias
+    - Nora
+    answer_index: 0
+  - text_md: ' det store rommet.'
+- handle: neutral_or_emphatic_rewrite
+  op: build
+  objective: obj-fronting-and-v2-inversion-01
+  bloom: apply
+  prompt_md: Rewrite the neutral sentence «Bussen er aldri i rute.» by fronting the
+    existing negative expression «aldri». Keep the factual meaning unchanged and build
+    the emphatic main clause.
+  derived_from:
+  - section_id: negative-and-restrictive-openings
+  tokens:
+  - token_id: nr-1
+    text: Aldri
+  - token_id: nr-2
+    text: er
+  - token_id: nr-3
+    text: bussen
+  - token_id: nr-4
+    text: i
+  - token_id: nr-5
+    text: rute.
+  answer_order:
+  - nr-1
+  - nr-2
+  - nr-3
+  - nr-4
+  - nr-5
+- handle: keep_subordinate_order
+  op: find_fix
+  objective: obj-fronting-and-v2-inversion-01
+  bloom: analyze
+  prompt_md: Select the one token that is wrong/needs changing.
+  derived_from:
+  - section_id: crucial-boundary-subordinate-clauses
+  tokens:
+  - token_id: ko-1
+    text: Nora
+  - token_id: ko-2
+    text: vet
+  - token_id: ko-3
+    text: at
+  - token_id: ko-4
+    text: kan
+  - token_id: ko-5
+    text: Elias
+  - token_id: ko-6
+    text: ikke
+  - token_id: ko-7
+    text: komme
+  - token_id: ko-8
+    text: tidlig.
+  error_token_id: ko-4
+  feedback: 'Move kan after ikke: at Elias ikke kan komme tidlig keeps the subordinate
+    subject before the finite verb.'
+- handle: two_clause_boundary
+  op: build
+  objective: obj-fronting-and-v2-inversion-01
+  bloom: apply
+  prompt_md: Build the sentence «Only if the bus is on schedule does Elias arrive
+    on time.» Keep «Bare hvis bussen er i rute» in ordinary subordinate-clause order.
+    After the comma, put the main-clause finite verb before its subject.
+  derived_from:
+  - section_id: when-a-whole-subordinate-clause-comes-first
+  tokens:
+  - token_id: tc-1
+    text: Bare
+  - token_id: tc-2
+    text: hvis
+  - token_id: tc-3
+    text: bussen
+  - token_id: tc-4
+    text: er
+  - token_id: tc-5
+    text: i
+  - token_id: tc-6
+    text: rute,
+  - token_id: tc-7
+    text: kommer
+  - token_id: tc-8
+    text: Elias
+  - token_id: tc-9
+    text: til
+  - token_id: tc-10
+    text: tiden.
+  answer_order:
+  - tc-1
+  - tc-2
+  - tc-3
+  - tc-4
+  - tc-5
+  - tc-6
+  - tc-7
+  - tc-8
+  - tc-9
+  - tc-10
+- handle: repair_the_cafe_update
+  op: find_fix
+  objective: obj-fronting-and-v2-inversion-01
+  bloom: analyze
+  prompt_md: Select the one token that is wrong/needs changing.
+  derived_from:
+  - section_id: back-at-the-repair-cafe
+  tokens:
+  - token_id: rc-1
+    text: Når
+  - token_id: rc-2
+    text: jeg
+  - token_id: rc-3
+    text: har
+  - token_id: rc-4
+    text: drukket
+  - token_id: rc-5
+    text: en
+  - token_id: rc-6
+    text: kopp,
+  - token_id: rc-7
+    text: jeg
+  - token_id: rc-8
+    text: kan
+  - token_id: rc-9
+    text: sette
+  - token_id: rc-10
+    text: fram
+  - token_id: rc-11
+    text: verktøyet.
+  error_token_id: rc-7
+  feedback: 'Move the second jeg after kan: Når jeg har drukket en kopp, kan jeg sette
+    fram verktøyet. Keep the first jeg before har.'
+- handle: station_main_clause_transfer
+  op: build
+  objective: obj-fronting-and-v2-inversion-01
+  bloom: apply
+  prompt_md: At a railway station, Ingrid can take the train. Build the Norwegian
+    sentence beginning with the supplied place expression «På stasjonen». Keep the
+    finite verb before the subject in this new situation.
+  derived_from:
+  - section_id: cumulative-transfer-a-delayed-train
+  tokens:
+  - token_id: sm-1
+    text: På
+  - token_id: sm-2
+    text: stasjonen
+  - token_id: sm-3
+    text: kan
+  - token_id: sm-4
+    text: Ingrid
+  - token_id: sm-5
+    text: ta
+  - token_id: sm-6
+    text: toget.
+  answer_order:
+  - sm-1
+  - sm-2
+  - sm-3
+  - sm-4
+  - sm-5
+  - sm-6
+- handle: station_subordinate_transfer
+  op: build
+  objective: obj-fronting-and-v2-inversion-01
+  bloom: apply
+  prompt_md: In the delayed-train situation, build the sentence meaning “If the train
+    does not come, Ingrid takes a taxi.” Keep subject-first order inside the opening
+    subordinate clause, then place the main-clause finite verb before its subject.
+  derived_from:
+  - section_id: cumulative-transfer-a-delayed-train
+  tokens:
+  - token_id: st-1
+    text: Hvis
+  - token_id: st-2
+    text: toget
+  - token_id: st-3
+    text: ikke
+  - token_id: st-4
+    text: kommer,
+  - token_id: st-5
+    text: tar
+  - token_id: st-6
+    text: Ingrid
+  - token_id: st-7
+    text: en
+  - token_id: st-8
+    text: taxi.
+  answer_order:
+  - st-1
+  - st-2
+  - st-3
+  - st-4
+  - st-5
+  - st-6
+  - st-7
+  - st-8

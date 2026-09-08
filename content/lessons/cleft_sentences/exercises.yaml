@@ -1,0 +1,369 @@
+- handle: find_the_highlighted_information
+  op: choose
+  objective: obj-cleft-sentences-01
+  bloom: understand
+  prompt_md: Read four Bokmål clefts from the key search. Choose the complete mapping
+    that identifies the highlighted information in each sentence and gives the question
+    that information answers. Sentence formation is context; choose based on information
+    focus. 1. Det var Sigrid som hentet stolene i går. 2. Det var stolene Sigrid hentet
+    i går. 3. Det var i går Sigrid hentet stolene. 4. Det er Amir som har nøkkelen
+    nå.
+  derived_from:
+  - section_id: central-meaning-choice
+  stem_md: Which option gives the correct focus type, highlighted answer, and question
+    for all four sentences?
+  options:
+  - id: mapping-b
+    text: '1: ting — stolene (Hva hentet Sigrid? / What did Sigrid collect?); 2: person
+      — Sigrid (Hvem hentet stolene? / Who collected the chairs?); 3: sted — på kjøkkenet
+      (Hvor hentet Sigrid stolene? / Where did Sigrid collect the chairs?); 4: person
+      — Amir (Hvem har nøkkelen nå? / Who has the key now?).'
+    correct: false
+    why: The first sentence highlights Sigrid, and the third highlights i går, not
+      a place.
+  - id: mapping-a
+    text: '1: person — Sigrid (Hvem hentet stolene? / Who collected the chairs?);
+      2: ting — stolene (Hva hentet Sigrid? / What did Sigrid collect?); 3: tid —
+      i går (Når hentet Sigrid stolene? / When did Sigrid collect the chairs?); 4:
+      person — Amir (Hvem har nøkkelen nå? / Who has the key now?).'
+    correct: true
+    why: Each label matches the information immediately after det var or det er and
+      the question that information answers.
+  - id: mapping-c
+    text: '1: person — Sigrid (Hvem hentet stolene? / Who collected the chairs?);
+      2: ting — stolene (Hva hentet Sigrid? / What did Sigrid collect?); 3: tid —
+      i går (Når hentet Sigrid stolene? / When did Sigrid collect the chairs?); 4:
+      ting — nøkkelen (Hva har Amir nå? / What does Amir have now?).'
+    correct: false
+    why: The fourth sentence highlights Amir as the person, not nøkkelen as the highlighted
+      information.
+  - id: mapping-d
+    text: '1: person — Sigrid (Hvem hentet stolene? / Who collected the chairs?);
+      2: tid — i går (Når hentet Sigrid stolene? / When did Sigrid collect the chairs?);
+      3: ting — stolene (Hva hentet Sigrid? / What did Sigrid collect?); 4: sted —
+      på kjøkkenet (Hvor har Amir nøkkelen? / Where does Amir have the key?).'
+    correct: false
+    why: The second and third sentences have their focus types exchanged, and the
+      fourth sentence highlights Amir rather than a place.
+- handle: identify_the_responsible_person
+  op: write
+  objective: obj-cleft-sentences-01
+  bloom: apply
+  prompt_md: 'Birthday-dinner preparations contain two wrong attributions. Write one
+    Norwegian cleft sentence for each correction. Keep the action and time information,
+    and highlight the actual person. 1. Past: Lea says, Det var Amir som dekket bordet
+    i går. In fact, Sigrid did it. 2. Present: Morten says, Det er Sigrid som lager
+    maten nå. In fact, Amir is doing it.'
+  derived_from:
+  - section_id: highlighting-who
+  response_language: 'no'
+  min_words: 10
+  max_words: 35
+  judge_prompt: 'Check the response against the task and report evidence for each
+    criterion. Expected responses are: 1. Det var Sigrid som dekket bordet i går.
+    2. Det er Amir som lager maten nå. Accept natural equivalent wording only when
+    it keeps the stated actor, action, and time. Each highlighted person must be followed
+    by som. Score person focus primarily; the opening tense must fit the past or present
+    context.'
+  criteria:
+  - id: actual-person
+    instruction: Each correction places the actual person immediately after det var
+      or det er.
+  - id: som-link
+    instruction: Each highlighted person is followed by som before the action.
+  - id: time-fit
+    instruction: The completed past action uses det var, and the present action uses
+      det er.
+- handle: shift_focus_person_to_thing
+  op: write
+  objective: obj-cleft-sentences-01
+  bloom: apply
+  prompt_md: Each source sentence highlights a person. Rewrite the same event with
+    the relevant object highlighted instead. Write one object-focused Bokmål cleft
+    for each pair; do not repeat the source cleft. 1. Det var Amir som hentet stolene
+    til middagen. 2. Det er Sigrid som lager maten til middagen.
+  derived_from:
+  - section_id: highlighting-what
+  response_language: 'no'
+  min_words: 10
+  max_words: 35
+  judge_prompt: 'Check the response against the task and report evidence for each
+    criterion. Expected responses are: 1. Det var stolene Amir hentet til middagen.
+    2. Det er maten Sigrid lager til middagen. Accept natural equivalent wording when
+    the same person, action, and event are preserved. Score the object focus; do not
+    require a particular vocabulary change beyond preserving each event.'
+  criteria:
+  - id: object-position
+    instruction: Each response places the relevant object immediately after det var
+      or det er.
+  - id: event-preserved
+    instruction: Each object-focused response preserves the person and action from
+      its source event.
+- handle: correct_the_time
+  op: write
+  objective: obj-cleft-sentences-01
+  bloom: apply
+  prompt_md: 'Reply to each misunderstanding with one time-focused Bokmål cleft. Use
+    the corrected time given in each situation. 1. Someone thinks the guests come
+    on Thursday: Kommer gjestene på torsdag? The correct day is Friday. 2. Someone
+    thinks the meeting began at five: Begynte møtet klokka fem? The correct hour was
+    six. 3. Someone thinks Sigrid works best in the evening: Arbeider Sigrid best
+    om kvelden? The correct part of the day is the morning.'
+  derived_from:
+  - section_id: highlighting-when
+  response_language: 'no'
+  min_words: 15
+  max_words: 45
+  judge_prompt: 'Check the response against the task and report evidence for each
+    criterion. Expected responses are: 1. Det er på fredag gjestene kommer. 2. Det
+    var klokka seks møtet begynte. 3. Det er om morgenen Sigrid arbeider best. Accept
+    the taught optional at after a highlighted time expression. Accept equivalent
+    natural wording only when the corrected time remains immediately after det er
+    or det var. Score time focus, not the surrounding event wording.'
+  criteria:
+  - id: corrected-time-focus
+    instruction: Each reply places the corrected day, hour, or part of the day immediately
+      after det er or det var.
+  - id: time-correction
+    instruction: Each reply identifies the actual time rather than the mistaken time.
+  - id: opening-fit
+    instruction: Present or current situations use det er, and the completed past
+      situation uses det var.
+- handle: locate_the_missing_item
+  op: write
+  objective: obj-cleft-sentences-01
+  bloom: apply
+  prompt_md: 'The search continues. Correct each location misunderstanding with one
+    place-focused Bokmål cleft. Keep the stated item in the event, but make the actual
+    place the focus. 1. Current fact: Nøkkelen ligger på kjøkkenet. Someone guesses:
+    Nøkkelen ligger i gangen. 2. Past fact: Sigrid la den røde kofferten ved døra
+    i går. Someone guesses: Sigrid la den røde kofferten på kjøkkenet.'
+  derived_from:
+  - section_id: highlighting-where
+  response_language: 'no'
+  min_words: 12
+  max_words: 40
+  judge_prompt: 'Check the response against the task and report evidence for each
+    criterion. Expected responses are: 1. Det er på kjøkkenet nøkkelen ligger. 2.
+    Det var ved døra Sigrid la den røde kofferten i går. Accept the taught optional
+    at after a highlighted place expression. Accept natural equivalent wording when
+    the actual place and the stated item remain clear. Score place emphasis; the item
+    is supporting context.'
+  criteria:
+  - id: place-position
+    instruction: Each sentence places the actual location immediately after det er
+      or det var.
+  - id: location-correction
+    instruction: Each sentence corrects the wrong location while keeping the stated
+      item or event clear.
+- handle: place_the_focus_in_time
+  op: write
+  objective: obj-cleft-sentences-01
+  bloom: apply
+  prompt_md: 'Complete both full Bokmål cleft sentences. The two situations use the
+    same person and object but different time references. 1. Present: Amir has the
+    key now: [BLANK] Amir som har nøkkelen nå. 2. Past: Amir had the key yesterday:
+    [BLANK] Amir som hadde nøkkelen i går.'
+  derived_from:
+  - section_id: choosing-det-er-or-det-var
+  response_language: 'no'
+  min_words: 8
+  max_words: 25
+  judge_prompt: 'Check the response against the task and report evidence for each
+    criterion. Expected full sentences are: 1. Det er Amir som har nøkkelen nå. 2.
+    Det var Amir som hadde nøkkelen i går. Accept capitalization or punctuation variants.
+    Score only the opening form: the current situation requires det er, and the completed
+    past situation requires det var.'
+  criteria:
+  - id: present-opening
+    instruction: The current sentence begins with det er.
+  - id: past-opening
+    instruction: The completed past sentence begins with det var.
+- handle: match_the_cleft_to_the_question
+  op: write
+  objective: obj-cleft-sentences-01
+  bloom: apply
+  prompt_md: 'Use one familiar event and answer each information question with a separate
+    Bokmål cleft. Write four sentences in the listed order. Neutral event: Amir fant
+    nøkkelen på kjøkkenet i morges. 1. Who found the key? Hvem fant nøkkelen? 2. What
+    did Amir find? Hva fant Amir? 3. Where did Amir find it? Hvor fant Amir nøkkelen?
+    4. When did Amir find it? Når fant Amir nøkkelen?'
+  derived_from:
+  - section_id: one-event-four-possible-focuses
+  response_language: 'no'
+  min_words: 25
+  max_words: 65
+  judge_prompt: 'Check the response against the task and report evidence for each
+    criterion. Canonical answers are: 1. Det var Amir som fant nøkkelen på kjøkkenet
+    i morges. 2. Det var nøkkelen Amir fant på kjøkkenet i morges. 3. Det var på kjøkkenet
+    Amir fant nøkkelen i morges. 4. Det var i morges Amir fant nøkkelen på kjøkkenet.
+    Accept the taught optional at after the highlighted place or time. Accept natural
+    equivalent wording when each line preserves the event. Score each line only for
+    whether its highlighted element answers its specified question.'
+  criteria:
+  - id: who-focus
+    instruction: The first sentence highlights Amir as the answer to who.
+  - id: what-focus
+    instruction: The second sentence highlights nøkkelen as the answer to what.
+  - id: where-focus
+    instruction: The third sentence highlights på kjøkkenet as the answer to where.
+  - id: when-focus
+    instruction: The fourth sentence highlights i morges as the answer to when.
+- handle: reconstruct_the_key_search
+  op: write
+  objective: obj-cleft-sentences-01
+  bloom: apply
+  prompt_md: 'The following facts come from the key-search scene and are stated without
+    clefts. Write one separate Bokmål cleft for each question, in order. Make only
+    the requested information the focus in each line. Facts: - Sigrid kom på hvor
+    nøkkelen kunne være. - Amir fant nøkkelen i jakkelomma. - Jakka hang ved døra.
+    - Lea trenger stolene nå. 1. Who remembered where the key might be? Hvem kom på
+    hvor nøkkelen kunne være? 2. What did Amir find? Hva fant Amir? 3. Where was the
+    jacket hanging? Hvor hang jakka? 4. When does Lea need the chairs? Når trenger
+    Lea stolene?'
+  derived_from:
+  - section_id: back-at-the-flat
+  response_language: 'no'
+  min_words: 25
+  max_words: 65
+  judge_prompt: 'Check the response against the task and report evidence for each
+    criterion. Canonical answers are: 1. Det var Sigrid som kom på hvor nøkkelen kunne
+    være. 2. Det var nøkkelen Amir fant i jakkelomma. 3. Det var ved døra jakka hang.
+    4. Det er nå Lea trenger stolene. Accept the taught optional at after the highlighted
+    place or time. Accept natural equivalent wording when the stated fact is preserved.
+    Score each line only for its requested focus dimension, not for a different highlighted
+    element.'
+  criteria:
+  - id: who-focus
+    instruction: The first line highlights Sigrid as the answer to who.
+  - id: what-focus
+    instruction: The second line highlights nøkkelen as the answer to what.
+  - id: where-focus
+    instruction: The third line highlights ved døra as the answer to where.
+  - id: when-focus
+    instruction: The fourth line highlights nå as the answer to when.
+- handle: correct_the_travel_plan_person
+  op: write
+  objective: obj-cleft-sentences-01
+  bloom: apply
+  prompt_md: 'New travel-plan situation: Mari skal hente gjesten på stasjonen. Jonas
+    wrongly says, Det er Jonas som skal hente gjesten. Correct him with one Norwegian
+    person-focused cleft that highlights who will collect the visitor.'
+  derived_from:
+  - section_id: cumulative-transfer-delayed-train
+  response_language: 'no'
+  min_words: 5
+  max_words: 18
+  judge_prompt: 'Check the response against the task and report evidence for each
+    criterion. The canonical answer is: Det er Mari som skal hente gjesten på stasjonen.
+    Accept a natural equivalent only if Mari remains the highlighted collector and
+    the plan is preserved. The highlighted person must be followed by som.'
+  criteria:
+  - id: collector-focus
+    instruction: The sentence highlights Mari immediately after det er or det var.
+  - id: som-link
+    instruction: The highlighted person is followed by som before the collecting action.
+- handle: correct_the_travel_plan_item
+  op: write
+  objective: obj-cleft-sentences-01
+  bloom: apply
+  prompt_md: 'New travel-plan situation: Gjesten kommer med tog nummer åtte. Jonas
+    wrongly identifies train six: Det er tog nummer seks gjesten kommer med. Correct
+    him with one Norwegian thing-focused cleft that identifies the relevant train.'
+  derived_from:
+  - section_id: cumulative-transfer-delayed-train
+  response_language: 'no'
+  min_words: 6
+  max_words: 18
+  judge_prompt: 'Check the response against the task and report evidence for each
+    criterion. The canonical answer is: Det er tog nummer åtte gjesten kommer med.
+    Accept natural equivalent wording only if tog nummer åtte is immediately after
+    det er or det var and the surrounding event remains that the visitor comes with
+    that train. Do not require som for this thing-focused pattern.'
+  criteria:
+  - id: train-focus
+    instruction: The sentence places tog nummer åtte immediately after det er or det
+      var as the highlighted thing.
+  - id: event-preserved
+    instruction: The sentence preserves the event that the visitor comes with the
+      identified train.
+- handle: correct_the_travel_plan_time
+  op: write
+  objective: obj-cleft-sentences-01
+  bloom: apply
+  prompt_md: 'New travel-plan situation: Toget ankommer klokka seks. Someone wrongly
+    says that it arrives at five: Toget ankommer klokka fem. Correct the time with
+    one Norwegian time-focused cleft.'
+  derived_from:
+  - section_id: cumulative-transfer-delayed-train
+  response_language: 'no'
+  min_words: 5
+  max_words: 18
+  judge_prompt: 'Check the response against the task and report evidence for each
+    criterion. The canonical answer is: Det er klokka seks toget ankommer. Accept
+    the taught optional at after klokka seks. Accept natural equivalent wording only
+    if klokka seks is immediately after det er or det var and the arrival event is
+    preserved.'
+  criteria:
+  - id: arrival-time-focus
+    instruction: The sentence places klokka seks immediately after det er or det var
+      as the highlighted time.
+- handle: correct_the_travel_plan_place
+  op: write
+  objective: obj-cleft-sentences-01
+  bloom: apply
+  prompt_md: 'New travel-plan situation: Jonas og Mari møter gjesten på stasjonen.
+    Someone wrongly says that they meet at the airport: Jonas og Mari møter gjesten
+    på flyplassen. Correct the place with one Norwegian place-focused cleft.'
+  derived_from:
+  - section_id: cumulative-transfer-delayed-train
+  response_language: 'no'
+  min_words: 6
+  max_words: 20
+  judge_prompt: 'Check the response against the task and report evidence for each
+    criterion. The canonical answer is: Det er på stasjonen Jonas og Mari møter gjesten.
+    Accept the taught optional at after på stasjonen. Accept natural equivalent wording
+    only if på stasjonen is immediately after det er or det var and the meeting event
+    is preserved.'
+  criteria:
+  - id: meeting-place-focus
+    instruction: The sentence places på stasjonen immediately after det er or det
+      var as the highlighted place.
+- handle: short_retrieval_review
+  op: write
+  objective: obj-cleft-sentences-01
+  bloom: apply
+  prompt_md: 'Invent one simple everyday event. Write four separate Bokmål cleft sentences
+    about that same event, in this order:
+    highlight who in the first, what in the second, when in the third, and where in
+    the fourth. Put each highlighted element immediately after det er or det var.
+    In the first sentence, the highlighted person performs the action, so follow that
+    person with som. After writing, check the four focus positions and the som link.'
+  derived_from:
+  - section_id: short-retrieval-review
+  response_language: 'no'
+  min_words: 20
+  max_words: 70
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept any natural Bokmål event, as long as all four sentences describe one
+    coherent event. Accept det er or det var when
+    it fits the event, and accept the taught optional at after a highlighted time
+    or place. The first sentence must highlight the performing person immediately
+    after the opening and use som after that person. The second, third, and fourth
+    sentences must respectively highlight a thing, a time, and a place immediately
+    after the opening. No single fixed lexical answer is required.
+  criteria:
+  - id: same-event
+    instruction: All four sentences describe one coherent everyday event.
+  - id: who-focus
+    instruction: The first sentence highlights the performing person immediately after
+      det er or det var and follows that person with som.
+  - id: what-focus
+    instruction: The second sentence places the event’s highlighted thing immediately
+      after det er or det var.
+  - id: when-focus
+    instruction: The third sentence places the event’s highlighted time immediately
+      after det er or det var.
+  - id: where-focus
+    instruction: The fourth sentence places the event’s highlighted place immediately
+      after det er or det var.

@@ -1,0 +1,16 @@
+description: >-
+  Judge-calibration seed for the most reused semantic dimensions. The echo
+  provider returns each fixed candidate as the graded output, so only the
+  judge is called; positives and their matching negatives share one
+  single-dimension rubric, with negatives expressed as not-llm-rubric. These
+  labels are seed labels pending review by a qualified Norwegian
+  language/pedagogy reviewer; this is not a validated golden set.
+
+prompts:
+  - "{{candidate}}"
+
+providers:
+  - id: echo
+    label: fixed-candidate
+
+tests: file://cases/judge_calibration.yaml

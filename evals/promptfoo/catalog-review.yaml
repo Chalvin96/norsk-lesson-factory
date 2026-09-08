@@ -1,0 +1,14 @@
+description: Evaluate catalog review, resolution, scoring, and advice prompts.
+
+prompts:
+  - file://prompts.py:create_catalog_prompt
+
+providers:
+  - id: file://provider.py:call_api
+    label: configured-catalog-reviewer
+    config:
+      job: catalog_reviewer
+
+defaultTest: file://defaults/structured-response.yaml
+
+tests: file://cases/catalog_review.yaml

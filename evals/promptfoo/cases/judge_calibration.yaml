@@ -1,0 +1,327 @@
+# Calibration seed for the semantic judge dimensions reused by the live suites.
+#
+# Each case grades one fixed candidate with the same configured judge adapter
+# as the live suites. A positive expects the judge to pass it; its matching
+# negative is the same content with one obvious fault and uses the identical
+# rubric under `not-llm-rubric`, so the case passes only when the judge fails
+# the faulty candidate. Labels are `seed_pending_human_review`: until a
+# qualified Norwegian language/pedagogy reviewer confirms them, this file is a
+# calibration aid, not a golden set. Keep it small and high-signal; do not add
+# repetitive filler.
+
+- description: norwegian_correctness positive - committed ta med / ha med explanation
+  metadata:
+    split: dev
+    expected_label: pass
+    dimension: norwegian_correctness
+    source: content/lessons/ta_med_or_ha_med/lesson.md
+    label_provenance: seed_pending_human_review
+  vars:
+    candidate: |
+      Use ta med when a person causes an object or another person to come along from one place to another.
+      Jeg tar med kaffe til møtet. — I'm bringing coffee to the meeting.
+      Kan du ta med passet? — Can you bring your passport?
+
+      Use ha med when the sentence describes what someone has with them in the current situation or during a journey.
+      Jeg har med kaffe. — I have coffee with me.
+      Har du med passet? — Do you have your passport with you?
+
+      Ta med focuses on getting something or someone to accompany you. Ha med focuses on having that thing or person with you.
+  assert:
+    - type: llm-rubric
+      metric: norwegian_correctness
+      value: |
+        Every occurrence of ta med and ha med in the text must use ta med for
+        causing someone or something to come along and ha med for something
+        already with someone, in natural Bokmål with faithful English
+        translations. Return pass=true only when every occurrence and
+        translation matches that contrast; return pass=false when any occurrence
+        or translation swaps or blurs the two meanings.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: norwegian_correctness negative - swapped ta med / ha med meanings
+  metadata:
+    split: dev
+    expected_label: fail
+    dimension: norwegian_correctness
+    source: content/lessons/ta_med_or_ha_med/lesson.md (single-fault variant)
+    label_provenance: seed_pending_human_review
+  vars:
+    candidate: |
+      Use ta med when the sentence describes what someone has with them in the current situation or during a journey.
+      Jeg tar med kaffe til møtet. — I have coffee with me at the meeting.
+      Kan du ta med passet? — Do you have your passport with you?
+
+      Use ha med when a person causes an object or another person to come along from one place to another.
+      Jeg har med kaffe. — I'm bringing coffee.
+      Har du med passet? — Can you bring your passport?
+
+      Ta med focuses on having that thing or person with you. Ha med focuses on getting something or someone to accompany you.
+  assert:
+    - type: not-llm-rubric
+      metric: norwegian_correctness
+      value: |
+        Every occurrence of ta med and ha med in the text must use ta med for
+        causing someone or something to come along and ha med for something
+        already with someone, in natural Bokmål with faithful English
+        translations. Return pass=true only when every occurrence and
+        translation matches that contrast; return pass=false when any occurrence
+        or translation swaps or blurs the two meanings.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: objective_alignment positive - four approved question kinds
+  metadata:
+    split: dev
+    expected_label: pass
+    dimension: objective_alignment
+    source: content/lessons/question_word_order/lesson.md
+    label_provenance: seed_pending_human_review
+  vars:
+    candidate: |
+      The main decision is whether the question begins directly with the verb or begins with a question word followed by the verb.
+
+      Simple yes/no questions put the verb first:
+      Bor du i Bergen? — Do you live in Bergen?
+
+      Negative questions keep the verb first and place ikke after the subject:
+      Kommer han ikke i kveld? — Isn't he coming tonight?
+
+      Questions with a question word put the question word first and the verb second:
+      Hvor kjøper jeg billett? — Where do I buy a ticket?
+
+      Permission questions use the same verb-first pattern with kan jeg or får jeg:
+      Kan jeg betale med kort? — Can I pay by card?
+  assert:
+    - type: llm-rubric
+      metric: objective_alignment
+      value: |
+        The approved objective for this material is to ask and recognize simple
+        Norwegian yes/no, negative, wh-, and permission questions, with no
+        second learner outcome. Return pass=true only when the text teaches all
+        four approved question kinds and gives no other learner outcome its own
+        teaching; return pass=false when any of the four kinds is missing or a
+        second outcome is taught alongside them.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: objective_alignment negative - negative and permission kinds missing
+  metadata:
+    split: dev
+    expected_label: fail
+    dimension: objective_alignment
+    source: content/lessons/question_word_order/lesson.md (single-fault variant)
+    label_provenance: seed_pending_human_review
+  vars:
+    candidate: |
+      The main decision is whether the question begins directly with the verb or begins with a question word followed by the verb.
+
+      Simple yes/no questions put the verb first:
+      Bor du i Bergen? — Do you live in Bergen?
+
+      Questions with a question word put the question word first and the verb second:
+      Hvor kjøper jeg billett? — Where do I buy a ticket?
+  assert:
+    - type: not-llm-rubric
+      metric: objective_alignment
+      value: |
+        The approved objective for this material is to ask and recognize simple
+        Norwegian yes/no, negative, wh-, and permission questions, with no
+        second learner outcome. Return pass=true only when the text teaches all
+        four approved question kinds and gives no other learner outcome its own
+        teaching; return pass=false when any of the four kinds is missing or a
+        second outcome is taught alongside them.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: repair_scope positive - one bounded exact edit
+  metadata:
+    split: dev
+    expected_label: pass
+    dimension: repair_scope
+    source: seeded from content/lessons/ta_med_or_ha_med/lesson.md
+    label_provenance: seed_pending_human_review
+  vars:
+    candidate: |
+      {"edits": [{"finding_ref": "meaning_changing_translation:1", "old_text": "Use ha med when a person causes an object or another person to come along from one place to another.", "new_text": "Use ta med when a person causes an object or another person to come along from one place to another.", "reason": "Restores the taught meaning of ta med in the one glossed sentence the finding names."}]}
+  assert:
+    - type: llm-rubric
+      metric: repair_scope
+      value: |
+        A bounded repair must contain only literal old_text/new_text replacements
+        that address the reported finding while leaving every other part of the
+        source unchanged; it must not regenerate, extend, or restructure the
+        lesson. Return pass=true only when the response is such a bounded
+        exact-edit envelope for the single reported finding; return pass=false
+        when it rewrites content beyond that finding or adds unrequested
+        material.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: repair_scope negative - regenerated section with added content
+  metadata:
+    split: dev
+    expected_label: fail
+    dimension: repair_scope
+    source: seeded from content/lessons/ta_med_or_ha_med/lesson.md (single-fault variant)
+    label_provenance: seed_pending_human_review
+  vars:
+    candidate: |
+      {"edits": [{"finding_ref": "meaning_changing_translation:1", "old_text": "Use ha med when a person causes an object or another person to come along from one place to another. Jeg tar med kaffe til møtet. — I'm bringing coffee to the meeting. Kan du ta med passet? — Can you bring your passport? Use ha med when the sentence describes what someone has with them in the current situation or during a journey. Jeg har med kaffe. — I have coffee with me.", "new_text": "Bringing things along is a central part of Norwegian everyday speech, and learners meet it in many situations. To master ta med and ha med, first consider how Norwegians talk about movement and possession in general. Jeg tar med kaffe til møtet. — I'm bringing coffee to the meeting. Kan du ta med passet? — Can you bring your passport? Jeg har med kaffe. — I have coffee with me. Jeg har med paraplyen. — I have the umbrella with me. Notice also that Norwegian distinguishes between bringing a person and bringing a thing, a useful extra rule for everyday conversation.", "reason": "Rewrote the whole section so the meanings come out right and enriched it with an extra example and rule."}]}
+  assert:
+    - type: not-llm-rubric
+      metric: repair_scope
+      value: |
+        A bounded repair must contain only literal old_text/new_text replacements
+        that address the reported finding while leaving every other part of the
+        source unchanged; it must not regenerate, extend, or restructure the
+        lesson. Return pass=true only when the response is such a bounded
+        exact-edit envelope for the single reported finding; return pass=false
+        when it rewrites content beyond that finding or adds unrequested
+        material.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: decision_correctness positive - grounded rejection of reversed glosses
+  metadata:
+    split: dev
+    expected_label: pass
+    dimension: decision_correctness
+    source: seeded from content/lessons/ta_med_or_ha_med/lesson.md (adversarial variant)
+    label_provenance: seed_pending_human_review
+  vars:
+    candidate: |
+      {"verdict": "needs_repair", "findings": [{"code": "meaning_changing_translation", "severity": "blocking", "evidence": "The text glosses 'Jeg tar med kaffe til møtet.' as 'I have coffee with me at the meeting.' and 'Jeg har med kaffe.' as 'I'm bringing coffee.', which reverses the taught meanings of ta med and ha med.", "repair_instruction": "Restore the correct glosses: tar med is bringing along, ha med is having with you."}]}
+  assert:
+    - type: llm-rubric
+      metric: decision_correctness
+      value: |
+        The reviewed text reverses the meanings of ta med (bringing along) and
+        ha med (already having with you). Return pass=true only when the verdict
+        rejects the reviewed text and grounds that rejection in the reversed
+        glosses; return pass=false when the verdict accepts the reviewed text or
+        supports it with claims the text does not make.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: decision_correctness negative - unsupported pass verdict
+  metadata:
+    split: dev
+    expected_label: fail
+    dimension: decision_correctness
+    source: seeded from content/lessons/ta_med_or_ha_med/lesson.md (adversarial variant)
+    label_provenance: seed_pending_human_review
+  vars:
+    candidate: |
+      {"verdict": "pass", "findings": [], "summary": "The meanings of ta med and ha med are presented correctly and every translation is faithful."}
+  assert:
+    - type: not-llm-rubric
+      metric: decision_correctness
+      value: |
+        The reviewed text reverses the meanings of ta med (bringing along) and
+        ha med (already having with you). Return pass=true only when the verdict
+        rejects the reviewed text and grounds that rejection in the reversed
+        glosses; return pass=false when the verdict accepts the reviewed text or
+        supports it with claims the text does not make.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: norwegian_correctness holdout positive - preterite versus present perfect
+  metadata:
+    split: holdout
+    expected_label: pass
+    dimension: norwegian_correctness
+    source: content/lessons/preterite_vs_present_perfect/lesson.md
+    label_provenance: seed_pending_human_review
+  vars:
+    candidate: |
+      The past tense places the visit in a completed past time: Jeg var på Fjordhuset forrige fredag. — I was at Fjordhuset last Friday.
+      The present perfect presents it as part of the speaker's experience before now: Jeg har vært på Fjordhuset før. — I have been to Fjordhuset before.
+
+      Use the past tense when the event belongs to a specific, completed past time:
+      Jeg besøkte Tromsø i fjor. — I visited Tromsø last year.
+      Hun kjøpte bilen i mandags. — She bought the car last Monday.
+
+      Use the present perfect when the past is connected to now:
+      Jeg har bodd i dette området i tre år. — I have lived in this area for three years.
+      Jeg har aldri spist der. — I have never eaten there.
+  assert:
+    - type: llm-rubric
+      metric: norwegian_correctness
+      value: |
+        Every Norwegian sentence in the text must use the past tense
+        (preteritum) for events in completed past time and har with the past
+        participle for past-to-present connections, in natural Bokmål with
+        faithful English translations. Return pass=true only when every sentence
+        and translation follows that tense use; return pass=false when any
+        sentence uses the wrong tense, a wrong form, or is mistranslated.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: objective_alignment holdout negative - possessives added as second outcome
+  metadata:
+    split: holdout
+    expected_label: fail
+    dimension: objective_alignment
+    source: content/lessons/question_word_order/lesson.md (single-fault variant)
+    label_provenance: seed_pending_human_review
+  vars:
+    candidate: |
+      The main decision is whether the question begins directly with the verb or begins with a question word followed by the verb.
+
+      Simple yes/no questions put the verb first:
+      Bor du i Bergen? — Do you live in Bergen?
+
+      Negative questions keep the verb first and place ikke after the subject:
+      Kommer han ikke i kveld? — Isn't he coming tonight?
+
+      Questions with a question word put the question word first and the verb second:
+      Hvor kjøper jeg billett? — Where do I buy a ticket?
+
+      Permission questions use the same verb-first pattern with kan jeg or får jeg:
+      Kan jeg betale med kort? — Can I pay by card?
+
+      Possessive forms complete the pattern: min bil (my car), bilen din (your car), bilen sin (his/her car). Practice choosing the right possessive form for each owner and noun form.
+  assert:
+    - type: not-llm-rubric
+      metric: objective_alignment
+      value: |
+        The approved objective for this material is to ask and recognize simple
+        Norwegian yes/no, negative, wh-, and permission questions, with no
+        second learner outcome. Return pass=true only when the text teaches all
+        four approved question kinds and gives no other learner outcome its own
+        teaching; return pass=false when any of the four kinds is missing or a
+        second outcome is taught alongside them.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true

@@ -1,0 +1,422 @@
+# Exercise-author cases use compact synthetic handoffs that isolate the
+# exercise contract: the lesson is immutable grounding and the requests are the
+# exact evidence contract.
+
+- description: Closed meaning choice and sentence construction
+  metadata:
+    surface: exercise_author
+    cefr: A1
+    kind: phraseology
+    source_lesson: synthetic
+  vars:
+    surface: exercise_author
+    plan: |
+      ---
+      approved: true
+      objectives:
+        - id: obj-bring-have
+          statement: Distinguish bringing something along from already having it with you.
+      ---
+
+      # Plan
+
+      Teach the meaning contrast, then apply it in a new everyday situation.
+    lesson_md: |
+      # Ta med eller ha med
+
+      Use `ta med` when someone causes an item to accompany them: `Jeg tar med boka`
+      means “I am bringing the book.” Use `ha med` when the item is already with
+      someone: `Jeg har med boka` means “I have the book with me.”
+
+      In questions, the finite verb comes first: `Tar Kari med boka?`
+    exercise_requests_yaml: |
+      - handle: choose-meaning
+        objective_ref: obj-bring-have
+        bloom: understand
+        evidence_route: meaning_selection
+        evidence: Select the sentence that expresses bringing the book along.
+      - handle: build-question
+        objective_ref: obj-bring-have
+        bloom: apply
+        evidence_route: sentence_construction
+        evidence: Construct a question asking whether Kari is bringing the book.
+  assert:
+    - type: llm-rubric
+      metric: decision_correctness
+      value: |
+        The `choose-meaning` exercise must make the learner distinguish ta med
+        (bring along) from ha med (already have with them) by meaning, and the
+        `build-question` exercise must require constructing a verb-first
+        question asking whether Kari is bringing the book. Return pass=true only
+        when each exercise collects its requested evidence; return pass=false
+        when the choice task is decidable without the meaning contrast or the
+        construction task does not produce the requested question.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+    - type: llm-rubric
+      metric: standalone_answerability
+      value: |
+        Both exercises must be performable from their own visible payload with
+        one defensible answer each, without access to the lesson, and the
+        construction prompt must not reveal the finished sentence. Return
+        pass=true only when every needed word or phrase appears in the payload
+        and exactly one answer is defensible for each task; return pass=false
+        when a task refers to outside material, admits two equally valid
+        answers, or exposes its answer.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+    - type: llm-rubric
+      metric: norwegian_correctness
+      value: |
+        All Norwegian stems, options, and tokens must be natural Bokmål with
+        correct function words and punctuation, and English prompts must state
+        the task accurately. Return pass=true only when every Norwegian string
+        is natural and grammatical; return pass=false when any Norwegian string
+        is ungrammatical, unnatural, or mismatches its English prompt.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+    - type: llm-rubric
+      metric: instructional_feedback
+      value: |
+        Return pass=true only when the choice exercise has concise English
+        feedback explaining the ta med/ha med distinction and agreeing with
+        its keyed answer. Construction feedback is optional; if present, it
+        must correctly explain the question order without merely repeating
+        the key. Return pass=false for missing or generic choice feedback,
+        contradictions, duplicated rationales, or feedback copied into the learner prompt.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+    - type: llm-rubric
+      metric: distractor_quality
+      value: |
+        Return pass=true only when choice distractors represent plausible
+        ta med/ha med confusions with comparable specificity to the correct
+        answer. Return pass=false if irrelevant detail, obvious nonsense,
+        or answer length reveals the key without testing the target distinction.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: Repeated token sentence construction
+  metadata:
+    surface: exercise_author
+    cefr: A1
+    kind: grammar
+    source_lesson: synthetic
+  vars:
+    surface: exercise_author
+    plan: |
+      ---
+      approved: true
+      objectives:
+        - id: obj-question
+          statement: Form a yes/no question with the finite verb before the subject.
+      ---
+
+      # Plan
+
+      Teach finite-verb-first yes/no questions and require controlled production.
+    lesson_md: |
+      # A practical yes/no question
+
+      Norwegian yes/no questions put the finite verb before the subject. `Har du
+      det du trenger?` means “Do you have what you need?” Notice that `du` occurs
+      twice and has a different position each time.
+    exercise_requests_yaml: |
+      - handle: build-repeated-du
+        objective_ref: obj-question
+        bloom: apply
+        evidence_route: sentence_construction
+        evidence: Construct the taught question asking whether someone has what they need.
+  assert:
+    - type: llm-rubric
+      metric: standalone_answerability
+      value: |
+        The build exercise must allow both occurrences of `du` to be placed
+        independently: each occurrence is its own token with a distinct
+        identifier, the answer order assembles one complete grammatical target
+        sentence, and the prompt describes the communicative goal without
+        revealing the finished sentence. Return pass=true only when the token
+        pool and answer order satisfy all of this; return pass=false when the
+        two `du` occurrences share one identifier, the answer order is
+        incomplete or ambiguous, or the prompt gives away the sentence.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+    - type: llm-rubric
+      metric: norwegian_correctness
+      value: |
+        The assembled answer and every visible token must form the natural
+        taught Bokmål question with correct spelling, spacing, and punctuation.
+        Return pass=true only when assembling the answer order yields the
+        natural target sentence; return pass=false when the tokens assemble into
+        anything ungrammatical or unnatural.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: Open help request
+  metadata:
+    surface: exercise_author
+    cefr: A1
+    kind: communicative
+    source_lesson: synthetic
+  vars:
+    surface: exercise_author
+    plan: |
+      ---
+      approved: true
+      objectives:
+        - id: obj-help-request
+          statement: State an obstacle and ask politely for help.
+      ---
+
+      # Plan
+
+      Teach a concise help request for a blocked everyday task.
+    lesson_md: |
+      # Be om hjelp
+
+      First state the obstacle: `Jeg får ikke åpnet filen.` Then ask politely:
+      `Kan du hjelpe meg?` A complete request names what is wrong and asks another
+      person to help. Other natural obstacles and polite requests are valid.
+    exercise_requests_yaml: |
+      - handle: write-help-request
+        objective_ref: obj-help-request
+        bloom: apply
+        evidence_route: open_production
+        evidence: Write a short message that states a concrete obstacle and politely asks for help.
+  assert:
+    - type: llm-rubric
+      metric: objective_alignment
+      value: |
+        The write exercise must ask for a short Bokmål message that names a
+        concrete obstacle and politely asks for help, and every scoring criterion
+        must be explicitly requested by the visible prompt while still allowing
+        natural valid variants. Return pass=true only when the prompt states both
+        obligations and each criterion maps to a requested obligation; return
+        pass=false when a criterion is unrequested (for example a hidden word
+        count or format rule) or the prompt permits responses that meet no
+        criterion.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+    - type: llm-rubric
+      metric: standalone_answerability
+      value: |
+        The task must be performable and scoreable from the exercise payload
+        alone at attempt time, without reading the lesson. Return pass=true only
+        when the visible prompt and criteria fully define the task and the
+        acceptable response space; return pass=false when the task needs lesson
+        context or specific taught obstacle wording that the payload does not
+        supply.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: Open quantity change does not become an answer whitelist
+  metadata:
+    surface: exercise_author
+    cefr: A1
+    kind: communicative
+    split: dev
+    source_lesson: order_and_pay
+    source: dist/lessons/order_and_pay.json#changing_quantities
+    label_provenance: Agent static audit; reduced synthetic handoff derived from a hidden quantity restriction.
+  vars:
+    surface: exercise_author
+    plan: |
+      ---
+      approved: true
+      objectives:
+        - id: order-quantity
+          statement: Specify quantities when ordering drinks.
+      ---
+      Teach a short order, with quantities chosen by the learner.
+    lesson_md: |
+      # Ordering drinks
+      Jeg tar en kaffe og en flaske vann. — I'll have one coffee and one bottle of water.
+      Jeg tar to kaffer. — I'll have two coffees.
+      Jeg tar tre kaffer. — I'll have three coffees.
+      The customer can choose the quantity. These examples are not the only valid orders.
+    exercise_requests_yaml: |
+      - handle: change-quantity
+        objective_ref: order-quantity
+        bloom: apply
+        evidence_route: open_production
+        evidence: Write an order with Jeg tar for any plural number of coffees and one bottle of water, choosing the coffee quantity.
+  assert:
+    - type: llm-rubric
+      metric: rubric_consistency
+      value: |
+        Return pass=true only when the exercise preserves the learner's choice
+        of plural coffee quantity, explicitly states the requested frame and
+        items, and every criterion and judge_prompt accepts any valid plural
+        quantity and either item order. No scoring field may treat a sample
+        answer as exhaustive or add an obligation absent from the visible task.
+        Return pass=false if it secretly or visibly fixes the coffee quantity,
+        rejects an otherwise valid order, or omits a requested obligation.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: Explicit target form remains required in an open response
+  metadata:
+    surface: exercise_author
+    cefr: A1
+    kind: communicative
+    split: dev
+    label_provenance: Synthetic counterpart to the open-quantity case; explicit task requirements, not a human-validated language label.
+  vars:
+    surface: exercise_author
+    plan: |
+      ---
+      approved: true
+      objectives:
+        - id: order-quantity
+          statement: Specify quantities when ordering drinks.
+      ---
+      Practice ordering with the taught Jeg tar frame.
+    lesson_md: |
+      # Ordering drinks
+      Jeg tar to kaffer og en flaske vann. — I'll have two coffees and one bottle of water.
+      Jeg vil gjerne ha to kaffer. — I would like two coffees.
+      Both are natural orders, but this checkpoint practices Jeg tar.
+    exercise_requests_yaml: |
+      - handle: required-order-frame
+        objective_ref: order-quantity
+        bloom: apply
+        evidence_route: open_production
+        evidence: Write one order using Jeg tar for exactly two coffees and one bottle of water, in either item order.
+  assert:
+    - type: llm-rubric
+      metric: rubric_consistency
+      value: |
+        Return pass=true only when the visible task and grading contract require
+        Jeg tar, exactly two coffees, and one bottle of water, while accepting
+        either item order. A natural order using only Jeg vil gjerne ha or a
+        different coffee quantity must not pass this explicitly constrained task.
+        Return pass=false if natural equivalence excuses a missing required
+        feature, the grader rejects an allowed item order, or a grading requirement
+        is absent from the visible task. In particular, a criterion banning extra
+        items or details is a hidden restriction unless the visible task states
+        that restriction; do not infer it from the specified coffee quantity.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+
+- description: Bounded retrieval preserves the explicitly requested repair phrase
+  metadata:
+    surface: exercise_author
+    cefr: A1
+    kind: communicative
+    split: dev
+    label_provenance: Synthetic regression for forced novelty overriding a bounded retrieval request; not a human-validated language label.
+  vars:
+    surface: exercise_author
+    plan: |
+      ---
+      approved: true
+      objectives:
+        - id: ask-repeat
+          statement: Ask someone to repeat using a supplied repair phrase.
+      ---
+      Teach Kan du gjenta det? as a fixed expression before general question construction.
+    lesson_md: |
+      # Asking for repetition
+      Kan du gjenta det? means Can you repeat that?
+      Use this fixed phrase when you did not catch what someone said.
+      This checkpoint retrieves the supplied phrase; it does not ask for a new exchange.
+    exercise_requests_yaml: |
+      - handle: retrieve-repeat
+        objective_ref: ask-repeat
+        bloom: remember
+        evidence_route: bounded_retrieval
+        evidence: Retrieve gjenta in the taught phrase Kan du [BLANK] det?
+  assert:
+    - type: llm-rubric
+      metric: evidence_preservation
+      value: |
+        Return pass=true only when retrieve-repeat is a recall_fill exercise
+        whose completed sentence is Kan du gjenta det? and whose blank tests
+        gjenta, with enough visible sentence context to complete the task.
+        Return pass=false if novelty changes the target phrase, the blank tests
+        a different unit, or the task becomes new question construction or an
+        open exchange. Reusing the requested taught sentence is correct here.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+
+- description: Closed prompt context must govern the keyed answer
+  metadata:
+    surface: exercise_author
+    cefr: B1
+    kind: semantic_context
+    split: dev
+    label_provenance: Synthetic regression for a tasted-food versus jacket context mismatch.
+  vars:
+    surface: exercise_author
+    plan: |
+      ---
+      approved: true
+      objectives:
+        - id: stance-food
+          statement: Express an opinion about food after tasting it.
+      ---
+      Practice choosing the stance verb that fits a tasted-food context.
+    lesson_md: |
+      # Opinions after tasting
+      After tasting the soup, the speaker says the food is good.
+      A jacket is not food and cannot satisfy this context.
+    exercise_requests_yaml: |
+      - handle: tasted-food-choice
+        objective_ref: stance-food
+        bloom: understand
+        evidence_route: meaning_selection
+        evidence: Choose the option that expresses an opinion about the tasted food.
+  assert:
+    - type: llm-rubric
+      metric: closed_context_alignment
+      value: |
+        Return pass=true only when the exercise prompt, visible options, and keyed
+        answer all evaluate the stated tasted-food situation. If the prompt says
+        the speaker tasted food but the keyed answer or explanation evaluates a
+        jacket, return pass=false. Grammaticality or a valid answer shape cannot
+        waive this semantic context mismatch.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true

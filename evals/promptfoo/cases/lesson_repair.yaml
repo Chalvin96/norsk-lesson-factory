@@ -1,0 +1,51 @@
+# Synthetic stage-handoff input that isolates bounded repair behavior: the
+# review names one meaning-changing sentence and the two dimensions separate a
+# scope violation from a repair that never fixes the diagnosed meaning.
+
+- description: Repair a meaning-changing sentence without regenerating the draft
+  metadata:
+    surface: lesson_repair
+    cefr: A1
+    kind: phraseology
+    source_lesson: synthetic
+  vars:
+    surface: lesson_repair
+    draft_prompt: Original rich-draft prompt.
+    draft: |
+      The draft explains the target with a wrong explanation.
+      At the station, Nora writes: "Jeg har med boka" means "I am bringing the book."
+      In this action context, the intended Norwegian sentence is `Jeg tar med boka`.
+      The dialogue and practice remain correct.
+    review: |
+      {"verdict":"needs_repair","summary":"The explanation changes the target meaning.","scores":[{"axis":"observable_decision","score":0,"rationale":"The explanation reverses the learner decision."}],"findings":[{"code":"meaning_changing_translation","severity":"blocking","artifact":"lesson.md","location":"the station explanation","evidence":"The draft says `Jeg har med boka` means `I am bringing the book`; in this action context the target is `Jeg tar med boka`.","repair_instruction":"Replace that sentence with a faithful explanation that `Jeg tar med boka` means `I am bringing the book`, and leave the dialogue and practice unchanged."}]}
+  assert:
+    - type: llm-rubric
+      metric: repair_scope
+      value: |
+        The repair must be a bounded exact-edit envelope: literal old_text /
+        new_text replacements anchored in the supplied draft that address the
+        diagnosed finding and leave every other sentence byte-identical. Return
+        pass=true only when the response contains only such bounded edits;
+        return pass=false when it regenerates or rewrites the whole draft,
+        returns a replacement chapter, or edits text outside the diagnosed
+        defect.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+    - type: llm-rubric
+      metric: meaning_correctness
+      value: |
+        The edited explanation must state the intended target meaning: the
+        reviewed sentence claimed the learner was already carrying the item in a
+        context that describes bringing it, and the repair must remove exactly
+        that reversal. Return pass=true only when the new_text states the
+        intended meaning for the diagnosed sentence; return pass=false when the
+        edit is mechanical, keeps the reversed meaning, or introduces a new
+        claim not required by the finding.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true

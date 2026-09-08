@@ -1,0 +1,413 @@
+- handle: positive_question_response
+  op: write
+  objective: obj-answering-ja-nei-jo-01
+  bloom: apply
+  prompt_md: 'Answer all five positive yes/no questions in Norwegian. For each item,
+    give a short answer (Ja or Nei) and then a matching complete sentence. You may
+    combine them naturally, for example Ja, jeg kommer på filmkvelden. Use ikke in
+    every complete negative answer. Only response polarity is scored; ordinary vocabulary
+    variation is allowed. 1. Fact: You are coming to film night. Question: «Kommer
+    du på filmkvelden?» 2. Fact: You do not eat fish. Question: «Spiser du fisk?»
+    3. Fact: You work today. Question: «Jobber du i dag?» 4. Fact: You are not at
+    home. Question: «Er du hjemme?» 5. Fact: You do not like coffee. Question: «Liker
+    du kaffe?»'
+  response_language: 'no'
+  judge_prompt: Check all five answers and report evidence for each criterion. Items
+    1 and 3 require Ja with affirmative meaning. Items 2, 4, and 5 require Nei with
+    negative meaning, and their complete sentences must contain ikke. Accept natural
+    Norwegian wording variants and do not score vocabulary or formatting.
+  criteria:
+  - id: response-polarity
+    instruction: Uses Ja for items 1 and 3 and Nei for items 2, 4, and 5, matching
+      each supplied fact.
+  - id: negative-ikke
+    instruction: Includes ikke in the complete sentences for items 2, 4, and 5 and
+      preserves their negative meanings; accept natural wording variants.
+  derived_from:
+  - section_id: positive-question-response-practice
+- handle: negative_question_meaning
+  op: choose
+  objective: obj-answering-ja-nei-jo-01
+  bloom: understand
+  prompt_md: Choose the Norwegian response that shows whether the respondent confirms
+    or contradicts the negative idea.
+  stem_md: Kari has said that she is coming to film night. The question is «Kommer
+    Kari ikke på filmkvelden?» Choose the response that matches this fact.
+  options:
+  - id: contradicts-negative
+    text: Jo, Kari kommer på filmkvelden.
+    correct: true
+    why: Jo contradicts the negative question and confirms that Kari is coming.
+  - id: confirms-negative
+    text: Nei, Kari kommer ikke på filmkvelden.
+    correct: false
+    why: Nei confirms the negative idea, but the context says that Kari is coming.
+  derived_from:
+  - section_id: negative-question-meaning-practice
+- handle: negative_question_response_word
+  op: recall_fill
+  objective: obj-answering-ja-nei-jo-01
+  bloom: apply
+  prompt_md: Fill only the response word in each exchange. Choose Ja, Nei, or Jo.
+    Use Ja for an affirmative answer to a positive question, Nei for a negative answer
+    to a positive question, Jo for an affirmative answer to a negative question, and
+    Nei for a negative answer to a negative question. Do not construct full sentences;
+    only the response word is scored.
+  audio_target: "Kommer du på filmkvelden? Ja. Liker du kaffe? Nei. Kommer du ikke på filmkvelden? Jo. Jobber du ikke i morgen? Nei. Er du ikke hjemme? Jo. Spiser du fisk? Nei."
+  segments:
+  - text_md: 'Item 1: Fact: You are coming to film night. Question: «Kommer du på
+      filmkvelden?» Answer: '
+  - blank_id: response-1
+    options:
+    - Jo
+    - Ja
+    - Nei
+    answer_index: 1
+  - text_md: '. 2. Fact: You do not like coffee. Question: «Liker du kaffe?» Answer: '
+  - blank_id: response-2
+    options:
+    - Jo
+    - Ja
+    - Nei
+    answer_index: 2
+  - text_md: '. 3. Fact: You are coming to film night. Question: «Kommer du ikke på
+      filmkvelden?» Answer: '
+  - blank_id: response-3
+    options:
+    - Jo
+    - Ja
+    - Nei
+    answer_index: 0
+  - text_md: '. 4. Fact: You do not work tomorrow. Question: «Jobber du ikke i morgen?»
+      Answer: '
+  - blank_id: response-4
+    options:
+    - Ja
+    - Nei
+    - Jo
+    answer_index: 1
+  - text_md: '. 5. Fact: You are at home. Question: «Er du ikke hjemme?» Answer: '
+  - blank_id: response-5
+    options:
+    - Nei
+    - Ja
+    - Jo
+    answer_index: 2
+  - text_md: '. 6. Fact: You do not eat fish. Question: «Spiser du fisk?» Answer: '
+  - blank_id: response-6
+    options:
+    - Nei
+    - Jo
+    - Ja
+    answer_index: 0
+  - text_md: .
+  explanation_md: "Use jo to contradict a negative question, ja to affirm a positive question, and nei when the answer itself is negative."
+  derived_from:
+  - section_id: negative-question-response-word-practice
+- handle: negative_question_full_response
+  op: write
+  objective: obj-answering-ja-nei-jo-01
+  bloom: apply
+  prompt_md: 'Answer all four questions in Norwegian. Every question contains ikke,
+    and the supplied fact tells whether to contradict or confirm the negative idea.
+    Write a complete answer: use Jo plus an affirmative sentence when the fact is
+    true, and Nei plus a negative sentence containing ikke when the fact is false.
+    Natural wording variations are accepted. 1. Fact: You arrive at seven. Question:
+    «Kommer du ikke klokka sju?» 2. Fact: You do not bring drinks. Question: «Tar
+    du ikke med drikke?» 3. Fact: You eat pizza. Question: «Spiser du ikke pizza?»
+    4. Fact: You do not attend film night. Question: «Kommer du ikke på filmkvelden?»'
+  response_language: 'no'
+  judge_prompt: Check all four answers and report evidence for each criterion. The
+    key is item 1 Jo with an affirmative clause, item 2 Nei with a negative clause,
+    item 3 Jo with an affirmative clause, and item 4 Nei with a negative clause. Negative
+    clauses must contain ikke. Accept natural Norwegian wording variants and treat
+    ordinary vocabulary as supporting context.
+  criteria:
+  - id: negative-question-word
+    instruction: Uses Jo for the affirmative facts in items 1 and 3 and Nei for the
+      negative facts in items 2 and 4.
+  - id: following-clause-polarity
+    instruction: The complete clause after the response word matches the supplied
+      fact; negative clauses contain ikke, while positive clauses do not need it.
+      Accept natural wording variants.
+  derived_from:
+  - section_id: negative-question-full-response-practice
+- handle: correcting_an_assumption
+  op: write
+  objective: obj-answering-ja-nei-jo-01
+  bloom: apply
+  prompt_md: 'Correct each mistaken assumption in Norwegian. For a false positive
+    assumption, write Nei and then a complete sentence with the actual fact. For a
+    false negative assumption, write Jo and then a complete sentence with the actual
+    fact. The correction word is the primary scored evidence. 1. Assumption: «Maja
+    kommer på filmkvelden.» Actual fact: Maja does not come. 2. Assumption: «Jonas
+    kommer ikke på filmkvelden.» Actual fact: Jonas comes. 3. Assumption: «Sara tar
+    ikke med mat.» Actual fact: Sara brings food. 4. Assumption: «Emil er med på filmkvelden.»
+    Actual fact: Emil is not attending.'
+  response_language: 'no'
+  judge_prompt: Check all four corrections and report evidence for the criterion.
+    Items 1 and 4 must begin with Nei; items 2 and 3 must begin with Jo. The following
+    sentence must agree with the supplied actual fact so the correction is interpretable.
+    Accept natural Norwegian wording variants and do not score vocabulary details.
+  criteria:
+  - id: correction-word
+    instruction: Uses Nei for the false positive assumptions in items 1 and 4 and
+      Jo for the false negative assumptions in items 2 and 3; the following sentence
+      states the supplied actual fact, with natural wording accepted.
+  derived_from:
+  - section_id: correcting-an-assumption-practice
+- handle: affirmative_addition_with_ogsa
+  op: write
+  objective: obj-answering-ja-nei-jo-01
+  bloom: apply
+  prompt_md: Add yourself to each affirmative film-night statement in Norwegian. For
+    each item, write a short addition such as Jeg også. or a complete sentence such
+    as Jeg lager også popcorn. Make clear that you share the stated action or situation
+    and use også. Its placement may vary. 1. «Maja lager popcorn.» 2. «Jonas dekker
+    bordet.» 3. «Sara kjøper drikke.» 4. «Emil er hjemme.»
+  response_language: 'no'
+  judge_prompt: Check all four additions and report evidence for the criterion. Every
+    base statement is affirmative. Accept Jeg også. when the shared fact is clear,
+    or a natural complete clause such as Jeg lager også popcorn. Do not require a
+    fixed position for også and do not score ordinary wording.
+  criteria:
+  - id: affirmative-ogsa-addition
+    instruction: Each response adds jeg to the same affirmative fact and uses også;
+      accept the short form Jeg også. or a natural complete Norwegian clause with
+      også in a natural position.
+  derived_from:
+  - section_id: affirmative-addition-with-ogsa-practice
+- handle: negative_addition_with_heller
+  op: write
+  objective: obj-answering-ja-nei-jo-01
+  bloom: apply
+  prompt_md: Add yourself to each negative statement in Norwegian. You may write a
+    complete clause with ikke ... heller, such as Jeg spiser ikke fisk heller, or
+    the short reply Ikke jeg heller when the subject and fact are clear. Preserve
+    the negative meaning and use heller. 1. «Maja spiser ikke fisk.» 2. «Jonas tar
+    ikke buss.» 3. «Sara jobber ikke på lørdag.» 4. «Emil liker ikke te.»
+  response_language: 'no'
+  judge_prompt: Check all four additions and report evidence for the criterion. Each
+    response must retain the negative fact and use heller. Accept complete clauses
+    such as Jeg spiser ikke fisk heller and the short form Ikke jeg heller when the
+    context makes the shared fact clear. Do not score subject wording or heller placement
+    beyond natural Norwegian usage.
+  criteria:
+  - id: negative-heller-addition
+    instruction: Each response makes a natural negative addition with heller, retaining
+      ikke in a complete clause or using the accepted short reply Ikke jeg heller
+      when the subject is clear.
+  derived_from:
+  - section_id: negative-addition-with-heller-practice
+- handle: affirmative_or_negative_addition
+  op: recall_fill
+  objective: obj-answering-ja-nei-jo-01
+  bloom: apply
+  prompt_md: Fill only the addition word in each sentence. Use også after an affirmative
+    statement and heller when the statement contains ikke. Positive and negative items
+    alternate. The choice between the two words is the only scored evidence.
+  audio_target: "Maja lager popcorn. Jonas lager også popcorn. Sara spiser ikke fisk. Jeg spiser ikke fisk heller. Ola er hjemme. Nora er også hjemme. Kari liker ikke kaffe. Emil liker ikke kaffe heller. Lina jobber i dag. Jeg jobber også i dag. Jonas tar ikke buss. Jeg tar ikke buss heller."
+  segments:
+  - text_md: 'Item 1: Maja lager popcorn. Jonas lager '
+  - blank_id: addition-1
+    options:
+    - heller
+    - også
+    answer_index: 1
+  - text_md: ' popcorn. 2. Sara spiser ikke fisk. Jeg spiser ikke fisk '
+  - blank_id: addition-2
+    options:
+    - heller
+    - også
+    answer_index: 0
+  - text_md: '. 3. Ola er hjemme. Nora er '
+  - blank_id: addition-3
+    options:
+    - heller
+    - også
+    answer_index: 1
+  - text_md: ' hjemme. 4. Kari liker ikke kaffe. Emil liker ikke kaffe '
+  - blank_id: addition-4
+    options:
+    - heller
+    - også
+    answer_index: 0
+  - text_md: '. 5. Lina jobber i dag. Jeg jobber '
+  - blank_id: addition-5
+    options:
+    - heller
+    - også
+    answer_index: 1
+  - text_md: ' i dag. 6. Jonas tar ikke buss. Jeg tar ikke buss '
+  - blank_id: addition-6
+    options:
+    - heller
+    - også
+    answer_index: 0
+  - text_md: .
+  explanation_md: "Use også in an affirmative addition; with ikke, use heller for the corresponding negative addition."
+  derived_from:
+  - section_id: affirmative-or-negative-addition-practice
+- handle: response_then_addition
+  op: recall_fill
+  objective: obj-answering-ja-nei-jo-01
+  bloom: apply
+  prompt_md: In each two-part situation, fill only the initial response word. Use
+    Ja, Nei, or Jo according to the question or assumption and the stated fact. The
+    second-person addition is supplied as meaningful context; it is not an additional
+    blank. Only the initial choice among Ja, Nei, and Jo is scored.
+  audio_target: "Ja, Maja kommer også på filmkvelden. Nei, Jonas tar ikke med mat heller. Jo, Sara tar også med drikke. Nei, Mina kommer ikke på filmkvelden heller. Jo, Ola kommer også på filmkvelden."
+  segments:
+  - text_md: 'Item 1: Fact: You are coming to film night. Question: «Kommer du på
+      filmkvelden?» First response word: '
+  - blank_id: initial-1
+    options:
+    - Nei
+    - Ja
+    - Jo
+    answer_index: 1
+  - text_md: '. The supplied addition is «Maja kommer også på filmkvelden.» 2. Fact:
+      You do not bring food. Question: «Tar du med mat?» First response word: '
+  - blank_id: initial-2
+    options:
+    - Jo
+    - Ja
+    - Nei
+    answer_index: 2
+  - text_md: '. The supplied addition is «Jonas tar ikke med mat heller.» 3. Fact:
+      You bring drinks. Question: «Tar du ikke med drikke?» First response word: '
+  - blank_id: initial-3
+    options:
+    - Jo
+    - Ja
+    - Nei
+    answer_index: 0
+  - text_md: '. The supplied addition is «Sara tar også med drikke.» 4. Assumption:
+      «Du kommer på filmkvelden.» Actual fact: «Du kommer ikke på filmkvelden.» Correction
+      word: '
+  - blank_id: initial-4
+    options:
+    - Jo
+    - Nei
+    - Ja
+    answer_index: 1
+  - text_md: '. The supplied addition is «Mina kommer ikke på filmkvelden heller.»
+      5. Assumption: «Du kommer ikke på filmkvelden.» Actual fact: «Du kommer på filmkvelden.»
+      Correction word: '
+  - blank_id: initial-5
+    options:
+    - Nei
+    - Ja
+    - Jo
+    answer_index: 2
+  - text_md: . The supplied addition is «Ola kommer også på filmkvelden.»
+  derived_from:
+  - section_id: response-then-addition-practice
+- handle: addition_after_response
+  op: recall_fill
+  objective: obj-answering-ja-nei-jo-01
+  bloom: apply
+  prompt_md: The initial response is supplied. Fill only the missing addition word
+    in each Norwegian sentence. Use også with an affirmative response and heller with
+    a negative response that retains ikke. Only the choice between også and heller
+    is scored.
+  audio_target: "Lina kommer også på filmkvelden. Jonas kommer ikke heller på filmkvelden. Sara tar også med mat. Nora liker ikke kaffe heller. Emil jobber også i dag. Kari tar ikke buss heller."
+  segments:
+  - text_md: 'Item 1: Supplied response: «Ja, jeg kommer på filmkvelden.» Add-on:
+      «Lina kommer '
+  - blank_id: addition-after-1
+    options:
+    - også
+    - heller
+    answer_index: 0
+  - text_md: ' på filmkvelden.» 2. Supplied response: «Nei, jeg kommer ikke på filmkvelden.»
+      Add-on: «Jonas kommer ikke '
+  - blank_id: addition-after-2
+    options:
+    - også
+    - heller
+    answer_index: 1
+  - text_md: ' på filmkvelden.» 3. Supplied response: «Jo, jeg tar med mat.» Add-on:
+      «Sara tar '
+  - blank_id: addition-after-3
+    options:
+    - også
+    - heller
+    answer_index: 0
+  - text_md: ' med mat.» 4. Supplied response: «Nei, jeg liker ikke kaffe.» Add-on:
+      «Nora liker ikke kaffe '
+  - blank_id: addition-after-4
+    options:
+    - også
+    - heller
+    answer_index: 1
+  - text_md: '.» 5. Supplied response: «Jo, jeg jobber i dag.» Add-on: «Emil jobber '
+  - blank_id: addition-after-5
+    options:
+    - også
+    - heller
+    answer_index: 0
+  - text_md: ' i dag.» 6. Supplied response: «Nei, jeg tar ikke buss.» Add-on: «Kari
+      tar ikke buss '
+  - blank_id: addition-after-6
+    options:
+    - også
+    - heller
+    answer_index: 1
+  - text_md: .»
+  derived_from:
+  - section_id: addition-after-response-practice
+- handle: trip_plan_response_transfer
+  op: write
+  objective: obj-answering-ja-nei-jo-01
+  bloom: apply
+  prompt_md: 'Answer all six trip questions in Norwegian. The fact after each question
+    tells the intended meaning. Write a natural complete response beginning with Ja,
+    Nei, or Jo. For positive questions, use Ja for yes and Nei for no. For negative
+    questions containing ikke, use Jo when the fact is yes and Nei when the fact is
+    no. Include ikke in negative clauses. 1. Fact: You are going on a trip on Sunday.
+    Question: «Skal du på tur på søndag?» 2. Fact: You are not driving to the trip.
+    Question: «Kjører du til turen?» 3. Fact: You are bringing food. Question: «Tar
+    du ikke med mat?» 4. Fact: You are not arriving early. Question: «Kommer du ikke
+    tidlig?» 5. Fact: You are bringing coffee. Question: «Tar du med kaffe?» 6. Fact:
+    You are going on a trip on Sunday. Question: «Skal du ikke på tur på søndag?»'
+  response_language: 'no'
+  judge_prompt: Check all six trip answers and report evidence for each criterion.
+    The key is item 1 Ja with an affirmative clause, item 2 Nei with a negative clause,
+    item 3 Jo with an affirmative clause, item 4 Nei with a negative clause, item
+    5 Ja with an affirmative clause, and item 6 Jo with an affirmative clause. Negative
+    clauses must contain ikke. Accept natural Norwegian wording variants that preserve
+    each supplied fact.
+  criteria:
+  - id: trip-response-word
+    instruction: Begins item 1 with Ja, item 2 with Nei, item 3 with Jo, item 4 with
+      Nei, item 5 with Ja, and item 6 with Jo, matching question polarity and intended
+      fact.
+  - id: trip-complete-meaning
+    instruction: Each complete response preserves the supplied trip fact; negative
+      facts are expressed with ikke, and natural Norwegian wording variants are accepted.
+  derived_from:
+  - section_id: trip-plan-response-transfer-practice
+- handle: trip_plan_addition_transfer
+  op: write
+  objective: obj-answering-ja-nei-jo-01
+  bloom: apply
+  prompt_md: Respond to each traveler statement in Norwegian by adding yourself to
+    the same fact. With positive statements, use også. With negative statements, retain
+    ikke and use heller, or use the short personal reply Ikke jeg heller when it fits.
+    Use short and complete forms where natural. 1. «Mina skal på tur på søndag.» 2.
+    «Oskar tar med mat.» 3. «Lise kommer ikke tidlig.» 4. «Per kjører ikke til turen.»
+    5. «Nora tar med kaffe.» 6. «Jonas liker ikke kaffe.»
+  response_language: 'no'
+  judge_prompt: Check all six trip additions and report evidence for each criterion.
+    Items 1, 2, and 5 are positive and require a natural addition with også. Items
+    3, 4, and 6 are negative and require heller while retaining ikke, or the accepted
+    short reply Ikke jeg heller when adding the learner. Accept short and complete
+    forms and natural wording variants.
+  criteria:
+  - id: trip-addition-word
+    instruction: Uses også for the positive traveler statements in items 1, 2, and
+      5; uses heller with retained ikke, or Ikke jeg heller, for the negative statements
+      in items 3, 4, and 6. The added response preserves the same fact.
+  derived_from:
+  - section_id: trip-plan-addition-transfer-practice

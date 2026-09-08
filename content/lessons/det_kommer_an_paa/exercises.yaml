@@ -1,0 +1,162 @@
+- handle: identify_deciding_factor
+  op: choose
+  objective: obj-det-kommer-an-paa-01
+  bloom: understand
+  prompt_md: Nora and Amir discuss trip time, cabin temperature, and the meal. Choose
+    the interpretation that identifies each real deciding factor and explains why
+    the answers can vary.
+  stem_md: Which interpretation correctly connects all three answers with their deciding
+    factors?
+  options:
+  - id: vague-avoidance
+    text: Det kommer an på betyr at Nora og Amir ikke vil svare på spørsmålene.
+    correct: false
+    why: The expression points to real sources of variation rather than avoiding an
+      answer.
+  - id: correct-connections
+    text: Reisetiden kommer an på toget fordi ulike tog bruker ulik tid. Temperaturen
+      i hytta kommer an på været fordi været påvirker hvor varmt det blir. Maten kommer
+      an på hvem som kommer fordi ulike personer kan ha ulike behov.
+    correct: true
+    why: Each factor can genuinely change its corresponding answer.
+  - id: swapped-connections
+    text: Reisetiden kommer an på været, temperaturen i hytta kommer an på hvem som
+      kommer, og maten kommer an på toget.
+    correct: false
+    why: The factors are connected to the wrong questions.
+  derived_from:
+  - section_id: identify-deciding-factor
+- handle: complete_answer_with_named_noun
+  op: recall_fill
+  objective: obj-det-kommer-an-paa-01
+  bloom: apply
+  prompt_md: Complete each practical answer with the full expression and the relevant
+    noun from its context.
+  audio_target: "Det kommer an på toget. Det kommer an på været."
+  segments:
+  - text_md: 'Some trains stop at every station. Will the journey be quick? Answer: '
+  - blank_id: train-factor
+    options:
+    - Det kommer an på været.
+    - Det kommer an på toget.
+    answer_index: 1
+  - text_md: ' Rain is possible. Can we eat outside? Answer: '
+  - blank_id: weather-factor
+    options:
+    - Det kommer an på været.
+    - Det kommer an på toget.
+    answer_index: 0
+  derived_from:
+  - section_id: complete-answer-with-named-noun
+- handle: choose_enough_detail
+  op: choose
+  objective: obj-det-kommer-an-paa-01
+  bloom: analyze
+  prompt_md: Amir will take a walk only if it does not rain. Choose the answer that
+    gives enough detail and explains how the deciding condition changes the outcome.
+  stem_md: Which answer is most useful in this context?
+  options:
+  - id: precise-rain-condition
+    text: Det kommer an på om det regner. Hvis det regner, blir turen vanskelig; hvis
+      det ikke regner, kan turen bli hyggelig.
+    correct: true
+    why: The rain condition is precise enough and links its two values to different
+      outcomes.
+  - id: irrelevant-train-factor
+    text: Det kommer an på toget. Hvis toget er raskt, blir turen kort.
+    correct: false
+    why: This explains a train journey, not Amir's decision about walking in the rain.
+  - id: broad-weather-factor
+    text: Det kommer an på været. Været kan være forskjellig.
+    correct: false
+    why: Weather is relevant but too broad when Amir's decision specifically depends
+      on rain, and the answer does not explain the outcomes.
+  derived_from:
+  - section_id: choose-enough-detail
+- handle: explain_two_possible_outcomes
+  op: write
+  objective: obj-det-kommer-an-paa-01
+  bloom: apply
+  prompt_md: 'Answer in 25–45 Norwegian words: ‘Er restauranten dyr?’ Use the unchanged
+    expression Det kommer an på, name the deciding factor, and explain that the restaurant
+    can be affordable at lunchtime but expensive in the evening.'
+  response_language: 'no'
+  min_words: 25
+  max_words: 45
+  judge_prompt: Check the Norwegian response against every criterion. Accept natural
+    Bokmål wording and capitalization, but require the fixed sequence ‘kommer an på’,
+    a relevant factor, and both contrasting outcomes.
+  criteria:
+  - id: fixed-expression
+    instruction: Uses the fixed form ‘Det kommer an på’ without changing the sequence
+      ‘kommer an på’.
+  - id: deciding-factor
+    instruction: Names a relevant deciding factor, such as the time of day.
+  - id: two-conditions
+    instruction: Connects lunchtime and evening to different price outcomes.
+  derived_from:
+  - section_id: explain-two-possible-outcomes
+- handle: continue_planning_conversation
+  op: write
+  objective: obj-det-kommer-an-paa-01
+  bloom: apply
+  prompt_md: Continue the cabin-planning conversation with three useful Norwegian
+    answers. Answer ‘Rekker vi fram før mørket?’ with det kommer an på and a transport
+    noun. Answer ‘Kan vi spise ute?’ with det kommer an på om and the possible rain.
+    Answer ‘Hvor mye mat skal vi kjøpe?’ with det kommer an på hvem or hvor mange
+    and the guests.
+  response_language: 'no'
+  min_words: 30
+  max_words: 75
+  judge_prompt: Check all three answers. Accept natural Bokmål variants that preserve
+    ‘det kommer an på’, use the supplied factor in each situation, and provide the
+    requested noun or clause type. Each answer must help Nora and Amir make the cabin
+    plan.
+  criteria:
+  - id: expression-in-each-answer
+    instruction: Uses ‘det kommer an på’ in all three answers.
+  - id: transport-noun
+    instruction: Uses a relevant transport noun when answering whether they will arrive
+      before dark.
+  - id: rain-clause
+    instruction: Uses an ‘om’ clause about rain when answering whether they can eat
+      outside.
+  - id: guest-clause
+    instruction: Uses a ‘hvem’ or ‘hvor mange’ clause about the guests when answering
+      how much food to buy.
+  - id: useful-contributions
+    instruction: Makes each answer a coherent and useful contribution to the cabin-planning
+      conversation.
+  derived_from:
+  - section_id: continue-planning-conversation
+- handle: final_retrieval
+  op: write
+  objective: obj-det-kommer-an-paa-01
+  bloom: apply
+  prompt_md: 'Without looking back, write three complete Norwegian answers using det
+    kommer an på. Answer these new questions: (1) ‘Bør vi ta toget til konferansen?’
+    Prices differ. (2) ‘Kan vi ha bursdagen ute?’ Rain is uncertain. (3) ‘Hvor mye
+    kaffe skal vi lage til kurset?’ The attendance list is uncertain. Name a different
+    deciding factor each time, and make at least one factor precise with om, hva,
+    hvem, hvor, når, or hvordan.'
+  response_language: 'no'
+  min_words: 30
+  max_words: 75
+  judge_prompt: Check all three responses. Accept natural Bokmål wording and relevant
+    variants, including ‘prisen’ or ‘kostnaden’ for the conference journey, ‘om det
+    regner’ or ‘været’ for the outdoor birthday, and ‘hvem som kommer’ or ‘hvor mange
+    som kommer’ for the coffee. Require different factors, at least one specified
+    question-like clause, and genuine dependence in every answer.
+  criteria:
+  - id: complete-expression-three-times
+    instruction: Uses the complete expression ‘det kommer an på’ naturally in all
+      three answers.
+  - id: different-factors
+    instruction: Names a different relevant deciding factor for each question.
+  - id: precise-clause
+    instruction: Makes at least one factor precise with a clause introduced by ‘om’,
+      ‘hva’, ‘hvem’, ‘hvor’, ‘når’, or ‘hvordan’.
+  - id: genuine-variation
+    instruction: Shows that each answer genuinely varies with its named factor.
+  derived_from:
+  - section_id: final-retrieval

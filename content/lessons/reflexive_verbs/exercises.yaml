@@ -1,0 +1,271 @@
+- handle: notice_reflexive_reference
+  op: choose
+  objective: obj-reflexive-verbs-01
+  bloom: understand
+  derived_from:
+  - section_id: checkpoint-notice-reflexive-reference
+  prompt_md: Read the Norwegian sentences. Choose the interpretation that marks only
+    the sentences where the person acts on themselves and therefore needs a reflexive
+    pronoun.
+  stem_md: 'Item 1: Jeg vasker meg før skolen. 2. Jeg vasker bilen før skolen. 3.
+    Nora kler på seg før turen. 4. Nora kler på barnet før turen.'
+  options:
+  - id: sentences-1-and-4
+    text: Bare setning 1 og 4 trenger et refleksivt pronomen.
+    correct: false
+    why: Sentence 4 has barnet as an ordinary object, not a reflexive object.
+  - id: all-sentences
+    text: Alle fire setningene trenger et refleksivt pronomen.
+    correct: false
+    why: Sentences 2 and 4 affect an ordinary object or another person.
+  - id: sentences-1-and-3
+    text: Bare setning 1 og 3 trenger et refleksivt pronomen.
+    correct: true
+    why: In sentences 1 and 3, the subject and object refer to the same participant;
+      sentences 2 and 4 have ordinary objects.
+  - id: sentences-2-and-4
+    text: Bare setning 2 og 4 trenger et refleksivt pronomen.
+    correct: false
+    why: Sentences 2 and 4 use ordinary objects rather than actions directed back
+      at the subject.
+- handle: match_subject_and_reflexive_pronoun
+  op: recall_fill
+  objective: obj-reflexive-verbs-01
+  bloom: remember
+  prompt_md: Maja sends messages while everyone gets ready. Complete each message
+    with the reflexive pronoun matching the explicit subject.
+  derived_from:
+  - section_id: checkpoint-match-subject-and-reflexive-pronoun
+  audio_target: "Jeg vasker meg før skolen. Du kler på deg før jobb. Hun gjør seg klar til dagen. Vi setter oss ved døren. Dere skynder dere til bilen. De gjør seg klare."
+  segments:
+  - text_md: 'Jeg vasker '
+  - blank_id: subject-jeg
+    options:
+    - meg
+    - seg
+    answer_index: 0
+  - text_md: ' før skolen. Du kler på '
+  - blank_id: subject-du
+    options:
+    - deg
+    - seg
+    answer_index: 0
+  - text_md: ' før jobb. Hun gjør '
+  - blank_id: subject-hun
+    options:
+    - seg
+    - meg
+    answer_index: 0
+  - text_md: ' klar til dagen. Vi setter '
+  - blank_id: subject-vi
+    options:
+    - oss
+    - dere
+    answer_index: 0
+  - text_md: ' ved døren. Dere skynder '
+  - blank_id: subject-dere
+    options:
+    - dere
+    - oss
+    answer_index: 0
+  - text_md: ' til bilen. De gjør '
+  - blank_id: subject-de
+    options:
+    - seg
+    - dere
+    answer_index: 0
+  - text_md: ' klare.'
+- handle: complete_everyday_reflexive_actions
+  op: recall_fill
+  objective: obj-reflexive-verbs-01
+  bloom: apply
+  derived_from:
+  - section_id: checkpoint-complete-everyday-reflexive-actions
+  prompt_md: Complete these morning sentences with the reflexive pronoun that matches
+    the explicit subject. Preserve each taught everyday reflexive expression.
+  audio_target: "Jeg vasker meg før skolen. Du kler på deg før jobb. Hun gjør seg klar til dagen. Vi setter oss ved bordet."
+  segments:
+  - text_md: 'Jeg vasker '
+  - blank_id: wash-jeg
+    options:
+    - meg
+    - seg
+    answer_index: 0
+  - text_md: ' før skolen. Du kler på '
+  - blank_id: dress-du
+    options:
+    - deg
+    - dere
+    answer_index: 0
+  - text_md: ' før jobb. Hun gjør '
+  - blank_id: ready-hun
+    options:
+    - seg
+    - meg
+    answer_index: 0
+  - text_md: ' klar til dagen. Vi setter '
+  - blank_id: sit-vi
+    options:
+    - oss
+    - dere
+    answer_index: 0
+  - text_md: ' ved bordet.'
+- handle: maintain_required_reflexive_expression
+  op: recall_fill
+  objective: obj-reflexive-verbs-01
+  bloom: apply
+  derived_from:
+  - section_id: checkpoint-maintain-required-reflexive-expression
+  prompt_md: Complete each sentence with the matching reflexive pronoun. Keep the
+    pronoun in its natural position in the complete expressions å skynde seg and å
+    glede seg til.
+  audio_target: "Jeg skynder meg fordi toget går snart. Vi gleder oss til konserten. Du skynder deg til stasjonen. De gleder seg til turen."
+  segments:
+  - text_md: 'Jeg skynder '
+  - blank_id: hurry-jeg
+    options:
+    - meg
+    - oss
+    answer_index: 0
+  - text_md: ' fordi toget går snart. Vi gleder '
+  - blank_id: look-forward-vi
+    options:
+    - oss
+    - seg
+    answer_index: 0
+  - text_md: ' til konserten. Du skynder '
+  - blank_id: hurry-du
+    options:
+    - deg
+    - dere
+    answer_index: 0
+  - text_md: ' til stasjonen. De gleder '
+  - blank_id: look-forward-de
+    options:
+    - seg
+    - deg
+    answer_index: 0
+  - text_md: ' til turen.'
+- handle: choose_reflexive_or_ordinary_object
+  op: choose
+  objective: obj-reflexive-verbs-01
+  bloom: understand
+  derived_from:
+  - section_id: checkpoint-choose-reflexive-or-ordinary-object
+  prompt_md: Choose the one complete set of Norwegian sentences that uses a reflexive
+    pronoun when the subject receives the action and an ordinary object when someone
+    or something else receives it.
+  stem_md: 'Complete these six scenes: 1. I wash myself before departure. 2. I wash
+    the car before departure. 3. Nora dresses herself before the concert. 4. Nora
+    dresses the child before the concert. 5. We sit down on the bench. 6. We place
+    the chairs by the table.'
+  options:
+  - id: reflexive-for-all
+    text: 1. Jeg vasker meg før avreise. 2. Jeg vasker meg før avreise. 3. Nora kler
+      på seg før konserten. 4. Nora kler på seg før konserten. 5. Vi setter oss på
+      benken. 6. Vi setter oss ved bordet.
+    correct: false
+    why: The reflexive forms are incorrectly used for the car, the child, and the
+      chairs.
+  - id: correct-reference
+    text: 1. Jeg vasker meg før avreise. 2. Jeg vasker bilen før avreise. 3. Nora
+      kler på seg før konserten. 4. Nora kler på barnet før konserten. 5. Vi setter
+      oss på benken. 6. Vi setter stolene ved bordet.
+    correct: true
+    why: The reflexive forms are used when the subject and object are the same; bilen,
+      barnet, and stolene are ordinary objects.
+  - id: ordinary-object-for-all
+    text: 1. Jeg vasker bilen før avreise. 2. Jeg vasker bilen før avreise. 3. Nora
+      kler på barnet før konserten. 4. Nora kler på barnet før konserten. 5. Vi setter
+      stolene ved bordet. 6. Vi setter stolene ved bordet.
+    correct: false
+    why: The ordinary objects are incorrectly used where the subjects act on themselves.
+  - id: mixed-reference
+    text: 1. Jeg vasker meg før avreise. 2. Jeg vasker meg før avreise. 3. Nora kler
+      på seg før konserten. 4. Nora kler på barnet før konserten. 5. Vi setter stolene
+      på benken. 6. Vi setter oss ved bordet.
+    correct: false
+    why: Several sentences do not match the stated recipient of the action, including
+      the washing and placing scenes.
+- handle: prepare_for_a_new_departure
+  op: recall_fill
+  objective: obj-reflexive-verbs-01
+  bloom: apply
+  derived_from:
+  - section_id: prepare-for-a-new-departure
+  prompt_md: Complete this connected account about a family catching an early train.
+    Supply the reflexive pronouns required by the subjects. In the fifth blank, Nora
+    is washing the jacket, so use the ordinary object instead of a reflexive pronoun.
+  audio_target: "Familien skal ta et tidlig tog. Før avreise vasker jeg meg og Nora kler på seg. Vi gjør oss klare før vi går. Bestefar setter seg på benken et øyeblikk. Nora vasker jakken før hun tar den på. Så skynder dere dere til stasjonen, og alle gleder seg til reisen."
+  segments:
+  - text_md: 'Familien skal ta et tidlig tog. Før avreise vasker jeg '
+  - blank_id: departure-wash-jeg
+    options:
+    - meg
+    - seg
+    answer_index: 0
+  - text_md: ' og Nora kler på '
+  - blank_id: departure-dress-nora
+    options:
+    - seg
+    - deg
+    answer_index: 0
+  - text_md: '. Vi gjør '
+  - blank_id: departure-ready-vi
+    options:
+    - oss
+    - dere
+    answer_index: 0
+  - text_md: ' klare før vi går. Bestefar setter '
+  - blank_id: departure-sit-bestefar
+    options:
+    - seg
+    - meg
+    answer_index: 0
+  - text_md: ' på benken et øyeblikk. Nora vasker '
+  - blank_id: departure-object-nora
+    options:
+    - jakken
+    - seg
+    answer_index: 0
+  - text_md: ' før hun tar den på. Så skynder dere '
+  - blank_id: departure-hurry-dere
+    options:
+    - dere
+    - oss
+    answer_index: 0
+  - text_md: ' til stasjonen, og alle gleder '
+  - blank_id: departure-look-forward-all
+    options:
+    - seg
+    - dere
+    answer_index: 0
+  - text_md: ' til reisen.'
+- handle: recall_reflexive_forms
+  op: write
+  objective: obj-reflexive-verbs-01
+  bloom: apply
+  derived_from:
+  - section_id: short-retrieval-and-review
+  prompt_md: 'Write the matching reflexive pronoun after each
+    subject: jeg, du, hun, vi, dere, and de. Then write one short Norwegian sentence
+    about getting ready with «gjøre seg klar» or «kle på seg», and one short Norwegian
+    sentence about looking forward to an everyday event with «glede seg til». Inflect
+    each reflexive pronoun to match its subject.'
+  response_language: 'no'
+  min_words: 15
+  max_words: 35
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål variants with correct subject–pronoun agreement. For the
+    two sentences, accept natural wording that uses the required complete reflexive
+    expressions.
+  criteria:
+  - id: subject-pronoun-pattern
+    instruction: 'Gives the correct reflexive pronouns for all six subjects: jeg–meg,
+      du–deg, hun–seg, vi–oss, dere–dere, and de–seg.'
+  - id: getting-ready-sentence
+    instruction: Writes one short Norwegian sentence about getting ready using a complete
+      taught reflexive expression, such as gjøre seg klar or kle på seg.
+  - id: looking-forward-sentence
+    instruction: Writes one short Norwegian sentence about looking forward to an everyday
+      event using the complete expression glede seg til.

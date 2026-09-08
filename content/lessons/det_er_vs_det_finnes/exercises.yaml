@@ -1,0 +1,248 @@
+- handle: hotel-meaning-notice
+  op: choose
+  objective: obj-det-er-vs-det-finnes-01
+  bloom: understand
+  prompt_md: Choose the interpretation that correctly explains all three hotel messages.
+  derived_from:
+  - section_id: first-checkpoint-notice-speakers-purpose
+  stem_md: Which explanation correctly classifies the room, luggage-room, and restaurant
+    messages?
+  options:
+  - id: wrong-description
+    text: Det er rom 214 announces that any room exists; Det finnes et bagasjerom
+      ved resepsjonen describes a known luggage room; and Finnes det en restaurant
+      på hotellet? identifies a particular restaurant.
+    correct: false
+    why: 'The meanings are reversed: the room is identified, while the luggage room
+      and restaurant concern existence or availability.'
+  - id: wrong-location-rule
+    text: Every statement uses det finnes because each one mentions a hotel place;
+      det er cannot identify or describe a room.
+    correct: false
+    why: A location does not decide the expression; speaker purpose does.
+  - id: correct
+    text: Det er rom 214 identifies a particular room; Det finnes et bagasjerom ved
+      resepsjonen introduces a luggage room as existing; and Finnes det en restaurant
+      på hotellet? asks about restaurant existence or availability.
+    correct: true
+    why: Det er identifies a known thing, while det finnes and finnes det express
+      existence or availability.
+- handle: known-thing-description
+  op: recall_fill
+  objective: obj-det-er-vs-det-finnes-01
+  bloom: understand
+  prompt_md: Complete each hotel reply with the expression used to identify or describe
+    a known person, place, or object.
+  explanation_md: "Use «det finnes» to introduce that something exists or is available. Use «det er» to identify, locate, or describe something already established."
+  derived_from:
+  - section_id: identifying-and-describing-with-det-er
+  audio_target: "Gjesten spør: Hvordan er rom 214? Det er ganske lyst og stille. Gjesten spør: Hvor er nøkkelkortet? Det er på rommet. Gjesten spør: Hvilket rom er dette? Det er rommet ved heisen."
+  segments:
+  - text_md: 'Gjesten spør: Hvordan er rom 214? '
+  - blank_id: blank-known-room-description
+    options:
+    - Det er
+    - Det finnes
+    answer_index: 0
+  - text_md: ' ganske lyst og stille. Gjesten spør: Hvor er nøkkelkortet? '
+  - blank_id: blank-known-keycard-location
+    options:
+    - Det er
+    - Det finnes
+    answer_index: 0
+  - text_md: ' på rommet. Gjesten spør: Hvilket rom er dette? '
+  - blank_id: blank-known-room-identity
+    options:
+    - Det er
+    - Det finnes
+    answer_index: 0
+  - text_md: ' rommet ved heisen.'
+- handle: availability-question
+  op: build
+  objective: obj-det-er-vs-det-finnes-01
+  bloom: apply
+  prompt_md: Build the guest's question about whether a café is available at the hotel.
+  derived_from:
+  - section_id: questions-about-existence
+  tokens:
+  - token_id: availability-1
+    text: Finnes
+  - token_id: availability-2
+    text: det
+  - token_id: availability-3
+    text: en
+  - token_id: availability-4
+    text: kafé
+  - token_id: availability-5
+    text: på
+  - token_id: availability-6
+    text: hotellet?
+  answer_order:
+  - availability-1
+  - availability-2
+  - availability-3
+  - availability-4
+  - availability-5
+  - availability-6
+- handle: location-meaning-contrast
+  op: recall_fill
+  objective: obj-det-er-vs-det-finnes-01
+  bloom: apply
+  prompt_md: Complete each paired statement. Use the expression that matches whether
+    the place is newly introduced or already known; the location phrase alone is not
+    the deciding factor.
+  derived_from:
+  - section_id: same-place-two-different-messages
+  audio_target: "Det finnes en kafé ved torget. Det er kafeen ved torget. Det finnes et apotek ved busstasjonen. Det er apoteket ved busstasjonen."
+  segments:
+  - text_md: 'Ny informasjon ved torget: '
+  - blank_id: blank-cafe-existence
+    options:
+    - Det finnes
+    - Det er
+    answer_index: 0
+  - text_md: ' en kafé ved torget. Kafeen er allerede kjent: '
+  - blank_id: blank-cafe-known
+    options:
+    - Det er
+    - Det finnes
+    answer_index: 0
+  - text_md: ' kafeen ved torget. Ny informasjon ved busstasjonen: '
+  - blank_id: blank-pharmacy-existence
+    options:
+    - Det finnes
+    - Det er
+    answer_index: 0
+  - text_md: ' et apotek ved busstasjonen. Apoteket er allerede kjent: '
+  - blank_id: blank-pharmacy-known
+    options:
+    - Det er
+    - Det finnes
+    answer_index: 0
+  - text_md: ' apoteket ved busstasjonen.'
+- handle: misconception-repair
+  op: find_fix
+  objective: obj-det-er-vs-det-finnes-01
+  bloom: analyze
+  prompt_md: 'Select the one expression that does not fit a known-room description.'
+  derived_from:
+  - section_id: common-mistakes
+  tokens:
+  - token_id: repair-room-1
+    text: Rommet
+  - token_id: repair-room-2
+    text: finnes
+  - token_id: repair-room-3
+    text: stort
+  - token_id: repair-room-4
+    text: og
+  - token_id: repair-room-5
+    text: lyst.
+  error_token_id: repair-room-2
+  feedback: 'Replace finnes with er: the room is already known and described, so this
+    is not an existence statement.'
+- handle: hotel-dialogue-completion
+  op: recall_fill
+  objective: obj-det-er-vs-det-finnes-01
+  bloom: apply
+  prompt_md: Complete the reception conversation with the expression that fits each
+    speaker's purpose across the connected turns.
+  derived_from:
+  - section_id: returning-to-sara-and-jonas
+  audio_target: "Sara: Er rommet klart? Ingrid: Ja, det er ledig nå. Jonas: Finnes det en buss fra hotellet til sentrum? Ingrid: Ja, det finnes en buss fra hotellet til sentrum."
+  segments:
+  - text_md: 'Sara: Er rommet klart? Ingrid: Ja, '
+  - blank_id: blank-dialogue-known-room
+    options:
+    - det er
+    - det finnes
+    answer_index: 0
+  - text_md: ' ledig nå. Jonas: '
+  - blank_id: blank-dialogue-service-question
+    options:
+    - Finnes det
+    - Det er
+    answer_index: 0
+  - text_md: ' en buss fra hotellet til sentrum? Ingrid: Ja, '
+  - blank_id: blank-dialogue-availability-answer
+    options:
+    - det finnes
+    - det er
+    answer_index: 0
+  - text_md: ' en buss fra hotellet til sentrum.'
+- handle: new-to-known-sequence
+  op: write
+  objective: obj-det-er-vs-det-finnes-01
+  bloom: apply
+  prompt_md: Write a brief connected sequence in Norwegian about a hotel facility
+    for Jonas to send to Sara. First announce that a facility exists with det finnes;
+    then identify or describe the now-known facility with det er.
+  derived_from:
+  - section_id: controlled-choice-to-connected-use
+  response_language: 'no'
+  min_words: 8
+  max_words: 25
+  judge_prompt: Check the sequence against the task. Accept any natural Bokmål facility
+    and any natural identification or description, but require det finnes for the
+    new existence information and det er for the known referent that follows.
+  criteria:
+  - id: new-existence
+    instruction: The first sentence uses det finnes to announce a hotel facility as
+      existing or available.
+  - id: known-referent
+    instruction: A following sentence uses det er to identify or describe the facility
+      after it is known.
+- handle: neighbourhood-information-transfer
+  op: write
+  objective: obj-det-er-vs-det-finnes-01
+  bloom: apply
+  prompt_md: Write four short connected Norwegian sentences for visitors in a neighbourhood,
+    not a hotel. Announce two local services or facilities with det finnes; then identify
+    one now-known place with det er; then describe that known place with det er. Use
+    neighbourhood content rather than copying hotel dialogue.
+  derived_from:
+  - section_id: transfer-to-a-neighbourhood
+  response_language: 'no'
+  min_words: 16
+  max_words: 40
+  judge_prompt: Accept natural Bokmål variants for services, places, locations, and
+    descriptions. Require two existence or availability statements with det finnes,
+    followed by identification and description of a known place with det er. Confirm
+    that the content is neighbourhood-based and does not copy the hotel dialogue.
+  criteria:
+  - id: neighbourhood-existence
+    instruction: Announces two neighbourhood services or facilities with det finnes
+      for existence or availability.
+  - id: neighbourhood-identification
+    instruction: Uses det er to identify one place that has already been introduced.
+  - id: neighbourhood-description
+    instruction: Uses det er to describe a place that is already known.
+  - id: neighbourhood-transfer
+    instruction: Uses unfamiliar neighbourhood content rather than repeating the hotel
+      dialogue.
+- handle: existence-or-description-retrieval
+  op: write
+  objective: obj-det-er-vs-det-finnes-01
+  bloom: apply
+  prompt_md: Without looking back, write exactly three short Norwegian sentences about
+    a useful place or service nearby and another place or service. First say that
+    the useful place or service exists or is available nearby with det finnes; then
+    identify or describe that known place with det er; finally ask whether the other
+    place or service is available with Finnes det.
+  derived_from:
+  - section_id: short-retrieval-review
+  response_language: 'no'
+  min_words: 12
+  max_words: 35
+  judge_prompt: Accept any natural Bokmål places, services, and locations, including
+    lexical choices different from the lesson examples. Require exactly three sentences,
+    the requested existence statement with det finnes, the identification or description
+    with det er, and the existence question with Finnes det.
+  criteria:
+  - id: retrieval-existence
+    instruction: States that one useful nearby place or service exists or is available
+      with det finnes.
+  - id: retrieval-description
+    instruction: Identifies or describes that known place or service with det er.
+  - id: retrieval-question
+    instruction: Asks whether another place or service is available with Finnes det.

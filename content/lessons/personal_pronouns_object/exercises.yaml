@@ -1,0 +1,412 @@
+- handle: anchor_reference_notice
+  op: choose
+  objective: obj-personal-pronouns-object-01
+  bloom: understand
+  prompt_md: 'Sara and Jonas are outside the cinema. The dialogue contains «Ser du
+    meg?», «Nå ser jeg deg», «Kjenner du ham?», «Jeg kjenner ham», and «Emil venter
+    på henne». Choose the complete reference map for these object pronouns.'
+  derived_from:
+  - section_id: meeting-outside-cinema
+  stem_md: Which complete reference map is correct?
+  options:
+  - id: map-switched
+    text: meg → Jonas; deg → Sara; ham → Emil; ham → Emil; henne → Amina
+    correct: false
+    why: It switches the speaker and listener references.
+  - id: map-correct
+    text: meg → Sara; deg → Jonas; ham → Emil; ham → Emil; henne → Amina
+    correct: true
+    why: It maps every highlighted form to the person it refers to, including both
+      references to Emil.
+  - id: map-gender-switched
+    text: meg → Sara; deg → Jonas; ham → Amina; ham → Amina; henne → Emil
+    correct: false
+    why: It assigns the male and female object forms to the wrong people.
+- handle: speaker_object_form
+  op: recall_fill
+  objective: obj-personal-pronouns-object-01
+  bloom: apply
+  prompt_md: Complete each Bokmål sentence with the object form for the speaker. In
+    every line, the blank refers to the person speaking, not the person performing
+    the action.
+  derived_from:
+  - section_id: jeg-becomes-meg
+  audio_target: "Sara ser meg. Sara ringer meg. Emil kjenner meg. Amina hjelper meg."
+  segments:
+  - text_md: 'Sara ser '
+  - blank_id: speaker-meg-1
+    options:
+    - jeg
+    - meg
+    answer_index: 1
+  - text_md: '. Sara ringer '
+  - blank_id: speaker-meg-2
+    options:
+    - meg
+    - jeg
+    answer_index: 0
+  - text_md: '. Emil kjenner '
+  - blank_id: speaker-meg-3
+    options:
+    - jeg
+    - meg
+    answer_index: 1
+  - text_md: '. Amina hjelper '
+  - blank_id: speaker-meg-4
+    options:
+    - meg
+    - jeg
+    answer_index: 0
+  - text_md: .
+- handle: speaker_listener_role_switch
+  op: recall_fill
+  objective: obj-personal-pronouns-object-01
+  bloom: apply
+  prompt_md: At a busy public place, complete each exchange. Each line is spoken by
+    the named speaker to the named listener, and the object is the other person in
+    the exchange. Choose the object pronoun for the person affected by the action.
+  derived_from:
+  - section_id: du-becomes-deg
+  audio_target: "Du møter meg ved inngangen. Jeg ser deg ved kiosken. Du kjenner meg fra før. Jeg ringer deg etter kinoen."
+  segments:
+  - text_md: 'Item 1: Jonas to Sara: «Du møter '
+  - blank_id: role-switch-1
+    options:
+    - deg
+    - meg
+    answer_index: 1
+  - text_md: ' ved inngangen.» 2. Sara to Jonas: «Jeg ser '
+  - blank_id: role-switch-2
+    options:
+    - deg
+    - meg
+    answer_index: 0
+  - text_md: ' ved kiosken.» 3. Jonas to Sara: «Du kjenner '
+  - blank_id: role-switch-3
+    options:
+    - deg
+    - meg
+    answer_index: 1
+  - text_md: ' fra før.» 4. Sara to Jonas: «Jeg ringer '
+  - blank_id: role-switch-4
+    options:
+    - deg
+    - meg
+    answer_index: 0
+  - text_md: ' etter kinoen.»'
+- handle: male_reference_object_form
+  op: recall_fill
+  objective: obj-personal-pronouns-object-01
+  bloom: apply
+  prompt_md: Emil is the object in every sentence. Replace each repeated reference
+    to Emil with the correct object form, not the subject form.
+  derived_from:
+  - section_id: han-becomes-ham
+  audio_target: "Emil står ved inngangen. Sara ser ham. Amina ringer ham. Jonas kjenner ham fra jobben. Sara møter ham utenfor kinoen."
+  segments:
+  - text_md: 'Emil står ved inngangen. Sara ser '
+  - blank_id: male-ham-1
+    options:
+    - han
+    - ham
+    answer_index: 1
+  - text_md: '. Amina ringer '
+  - blank_id: male-ham-2
+    options:
+    - ham
+    - han
+    answer_index: 0
+  - text_md: '. Jonas kjenner '
+  - blank_id: male-ham-3
+    options:
+    - han
+    - ham
+    answer_index: 1
+  - text_md: ' fra jobben. Sara møter '
+  - blank_id: male-ham-4
+    options:
+    - ham
+    - han
+    answer_index: 0
+  - text_md: ' utenfor kinoen.'
+- handle: female_reference_object_form
+  op: recall_fill
+  objective: obj-personal-pronouns-object-01
+  bloom: apply
+  prompt_md: Amina is the object in every sentence. Replace each repeated reference
+    to Amina with the correct object form, not the subject form.
+  derived_from:
+  - section_id: hun-becomes-henne
+  audio_target: "Amina kjøper billetter. Emil venter på henne. Jonas ser henne ved billettautomaten. Sara kjenner henne godt. Emil ringer henne."
+  segments:
+  - text_md: 'Amina kjøper billetter. Emil venter på '
+  - blank_id: female-henne-1
+    options:
+    - hun
+    - henne
+    answer_index: 1
+  - text_md: '. Jonas ser '
+  - blank_id: female-henne-2
+    options:
+    - henne
+    - hun
+    answer_index: 0
+  - text_md: ' ved billettautomaten. Sara kjenner '
+  - blank_id: female-henne-3
+    options:
+    - hun
+    - henne
+    answer_index: 1
+  - text_md: ' godt. Emil ringer '
+  - blank_id: female-henne-4
+    options:
+    - henne
+    - hun
+    answer_index: 0
+  - text_md: .
+- handle: four_way_object_selection
+  op: recall_fill
+  objective: obj-personal-pronouns-object-01
+  bloom: apply
+  prompt_md: Complete each short message with one object pronoun. The context before
+    each message identifies who receives the action. The subject is not the answer
+    cue.
+  derived_from:
+  - section_id: choosing-all-four-forms
+  audio_target: "Sara ser meg før filmen. Amina hjelper deg før filmen. Jonas møter ham ved inngangen. Sara kjenner henne fra jobben."
+  segments:
+  - text_md: 'Jonas is speaking; Sara sees him: «Sara ser '
+  - blank_id: four-way-1
+    options:
+    - ham
+    - meg
+    - deg
+    - henne
+    answer_index: 1
+  - text_md: ' før filmen.» Sara is speaking to Jonas; Amina helps him: «Amina hjelper '
+  - blank_id: four-way-2
+    options:
+    - meg
+    - ham
+    - deg
+    - henne
+    answer_index: 2
+  - text_md: ' før filmen.» Sara is speaking; Jonas meets Emil: «Jonas møter '
+  - blank_id: four-way-3
+    options:
+    - meg
+    - henne
+    - deg
+    - ham
+    answer_index: 3
+  - text_md: ' ved inngangen.» Jonas is speaking; Sara knows Amina: «Sara kjenner '
+  - blank_id: four-way-4
+    options:
+    - henne
+    - meg
+    - ham
+    - deg
+    answer_index: 0
+  - text_md: ' fra jobben.»'
+- handle: object_not_subject_decision
+  op: recall_fill
+  objective: obj-personal-pronouns-object-01
+  bloom: apply
+  prompt_md: Complete each message with the Norwegian object pronoun. The English
+    cue identifies the person receiving the call. The subject is not the answer. The
+    first two messages keep Sara as subject while the object changes; the later messages
+    change the subject.
+  derived_from:
+  - section_id: avoid-choosing-from-subject-alone
+  audio_target: "Sara ringer meg før kinoen. Sara ringer henne før kinoen. Jonas ringer ham før kinoen. Amina ringer deg før kinoen."
+  segments:
+  - text_md: 'Item 1: Sara calls the speaker before the cinema: «Sara ringer '
+  - blank_id: object-not-subject-1
+    options:
+    - deg
+    - meg
+    - ham
+    - henne
+    answer_index: 1
+  - text_md: ' før kinoen.» 2. Sara calls Amina before the cinema: «Sara ringer '
+  - blank_id: object-not-subject-2
+    options:
+    - ham
+    - deg
+    - henne
+    - meg
+    answer_index: 2
+  - text_md: ' før kinoen.» 3. Jonas calls Emil before the cinema: «Jonas ringer '
+  - blank_id: object-not-subject-3
+    options:
+    - meg
+    - deg
+    - henne
+    - ham
+    answer_index: 3
+  - text_md: ' før kinoen.» 4. Amina calls the listener before the cinema: «Amina
+      ringer '
+  - blank_id: object-not-subject-4
+    options:
+    - deg
+    - ham
+    - meg
+    - henne
+    answer_index: 0
+  - text_md: ' før kinoen.»'
+- handle: subject_form_error_repair
+  op: find_fix
+  objective: obj-personal-pronouns-object-01
+  bloom: analyze
+  prompt_md: Select the one token that is wrong/needs changing.
+  derived_from:
+  - section_id: repairing-common-mistakes
+  tokens:
+  - token_id: tok-sara
+    text: Sara
+  - token_id: tok-ser
+    text: ser
+  - token_id: tok-jeg
+    text: jeg
+  - token_id: tok-period
+    text: .
+  error_token_id: tok-jeg
+  feedback: 'The object is the speaker: replace subject form «jeg» with object form
+    «meg».'
+- handle: cinema_scene_completion
+  op: recall_fill
+  objective: obj-personal-pronouns-object-01
+  bloom: apply
+  prompt_md: Complete this connected cinema exchange. Track who is speaking and which
+    named person each object pronoun replaces.
+  derived_from:
+  - section_id: back-at-the-cinema
+  audio_target: "Hei! Jonas, jeg så ikke deg først. Det var mange mennesker foran meg. Hvor er Emil? Jeg så ham ved inngangen. Han kjøper popcorn. Jeg venter på ham her. Amina har billettene. Spør henne."
+  segments:
+  - text_md: 'Hei! Jonas, jeg så ikke '
+  - blank_id: cinema-1
+    options:
+    - meg
+    - deg
+    - henne
+    - ham
+    answer_index: 1
+  - text_md: ' først. Det var mange mennesker foran '
+  - blank_id: cinema-2
+    options:
+    - ham
+    - henne
+    - meg
+    - deg
+    answer_index: 2
+  - text_md: '. Hvor er Emil? Jeg så '
+  - blank_id: cinema-3
+    options:
+    - henne
+    - deg
+    - meg
+    - ham
+    answer_index: 3
+  - text_md: ' ved inngangen. Han kjøper popcorn. Jeg venter på '
+  - blank_id: cinema-4
+    options:
+    - ham
+    - meg
+    - henne
+    - deg
+    answer_index: 0
+  - text_md: ' her. Amina har billettene. Spør '
+  - blank_id: cinema-5
+    options:
+    - deg
+    - henne
+    - ham
+    - meg
+    answer_index: 1
+  - text_md: .
+- handle: cafe_transfer_selection
+  op: recall_fill
+  objective: obj-personal-pronouns-object-01
+  bloom: apply
+  prompt_md: Complete this new café exchange. Use the speaker, listener, and named-person
+    clues to choose all four object pronouns in a changed setting.
+  derived_from:
+  - section_id: transfer-new-situation
+  audio_target: "Jonas: Ser du Emil ved kafeen? Sara: Ja, jeg møter ham ved bussholdeplassen. Jonas: Amina står ved disken. Kan du møte henne der? Sara: Ja. Vent på meg ved døren. Sara: Jeg finner deg etter kaffen."
+  segments:
+  - text_md: 'Jonas: Ser du Emil ved kafeen? Sara: Ja, jeg møter '
+  - blank_id: cafe-1
+    options:
+    - meg
+    - henne
+    - ham
+    - deg
+    answer_index: 2
+  - text_md: ' ved bussholdeplassen. Jonas: Amina står ved disken. Kan du møte '
+  - blank_id: cafe-2
+    options:
+    - deg
+    - meg
+    - ham
+    - henne
+    answer_index: 3
+  - text_md: ' der? Sara: Ja. Vent på '
+  - blank_id: cafe-3
+    options:
+    - meg
+    - henne
+    - deg
+    - ham
+    answer_index: 0
+  - text_md: ' ved døren. Sara: Jeg finner '
+  - blank_id: cafe-4
+    options:
+    - ham
+    - deg
+    - henne
+    - meg
+    answer_index: 1
+  - text_md: ' etter kaffen.'
+- handle: final_object_pronoun_retrieval
+  op: recall_fill
+  objective: obj-personal-pronouns-object-01
+  bloom: apply
+  prompt_md: Complete four fresh Bokmål sentences from memory. Each English note identifies
+    the person receiving the action.
+  derived_from:
+  - section_id: retrieval-and-review
+  audio_target: "Jonas ringer meg på vei hjem. Jeg møter deg etter filmen. Sara møter ham ved kafeen. Jonas hjelper henne etter møtet."
+  segments:
+  - text_md: 'The writer is the object: «Jonas ringer '
+  - blank_id: final-1
+    options:
+    - ham
+    - henne
+    - meg
+    - deg
+    answer_index: 2
+  - text_md: ' på vei hjem.» The listener is the object: «Jeg møter '
+  - blank_id: final-2
+    options:
+    - henne
+    - meg
+    - ham
+    - deg
+    answer_index: 3
+  - text_md: ' etter filmen.» Emil is the object: «Sara møter '
+  - blank_id: final-3
+    options:
+    - ham
+    - deg
+    - henne
+    - meg
+    answer_index: 0
+  - text_md: ' ved kafeen.» Amina is the object: «Jonas hjelper '
+  - blank_id: final-4
+    options:
+    - meg
+    - henne
+    - ham
+    - deg
+    answer_index: 1
+  - text_md: ' etter møtet.»'

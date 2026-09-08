@@ -1,0 +1,371 @@
+- handle: choose_the_known_object
+  op: choose
+  objective: obj-object-pronoun-position-01
+  bloom: understand
+  prompt_md: Choose the one complete object-pronoun set that fits all five meeting-room
+    exchanges.
+  derived_from:
+  - section_id: what-does-the-pronoun-replace
+  stem_md: Replace the repeated object in each line. The intended meanings are calling
+    Sara, helping Jonas, having the key, having the card, and having the cups. 1.
+    Jeg ringer Sara. 2. Maja hjelper Jonas. 3. Har du nøkkelen? – Ja, jeg har nøkkelen.
+    4. Har du kortet? – Ja, jeg har kortet. 5. Har du koppene? – Ja, jeg har koppene.
+  options:
+  - id: set-wrong-person
+    text: 1. Jeg ringer ham. 2. Maja hjelper henne. 3. Ja, jeg har den. 4. Ja, jeg
+      har det. 5. Ja, jeg har dem.
+    correct: false
+    why: ham and henne do not match the genders of Sara and Jonas in these lines.
+  - id: set-correct
+    text: 1. Jeg ringer henne. 2. Maja hjelper ham. 3. Ja, jeg har den. 4. Ja, jeg
+      har det. 5. Ja, jeg har dem.
+    correct: true
+    why: Sara is feminine, Jonas is masculine, nøkkelen is masculine, kortet is neuter,
+      and koppene is plural; the pronouns match each reference.
+  - id: set-wrong-gender
+    text: 1. Jeg ringer henne. 2. Maja hjelper ham. 3. Ja, jeg har det. 4. Ja, jeg
+      har den. 5. Ja, jeg har dem.
+    correct: false
+    why: den and det are reversed for nøkkelen and kortet.
+  - id: set-wrong-number
+    text: 1. Jeg ringer henne. 2. Maja hjelper ham. 3. Ja, jeg har den. 4. Ja, jeg
+      har det. 5. Ja, jeg har den.
+    correct: false
+    why: koppene is plural, so dem is required instead of den.
+- handle: replace_and_place_affirmative
+  op: build
+  objective: obj-object-pronoun-position-01
+  bloom: apply
+  prompt_md: 'Build the complete Norwegian rewrite of these meeting statements: Maja
+    finner nøkkelen. I dag hjelper Jonas Sara. Use the supplied pronouns den and henne,
+    and place each pronoun after its verb.'
+  explanation_md: "An unstressed object pronoun normally precedes ikke, while a full noun object normally follows it."
+  derived_from:
+  - section_id: position-in-an-affirmative-sentence
+  tokens:
+  - token_id: affirmative-subject-1
+    text: Maja
+  - token_id: affirmative-verb-1
+    text: finner
+  - token_id: affirmative-object-1
+    text: den.
+  - token_id: affirmative-time-1
+    text: I
+  - token_id: affirmative-time-2
+    text: dag
+  - token_id: affirmative-verb-2
+    text: hjelper
+  - token_id: affirmative-subject-2
+    text: Jonas
+  - token_id: affirmative-object-2
+    text: henne.
+  answer_order:
+  - affirmative-subject-1
+  - affirmative-verb-1
+  - affirmative-object-1
+  - affirmative-time-1
+  - affirmative-time-2
+  - affirmative-verb-2
+  - affirmative-subject-2
+  - affirmative-object-2
+- handle: move_before_ikke
+  op: build
+  objective: obj-object-pronoun-position-01
+  bloom: apply
+  prompt_md: Build the complete Norwegian rewrite of Jonas ringer ikke Sara. Use the
+    supplied object pronoun henne and keep the neutral one-verb meaning.
+  explanation_md: "The unstressed object pronoun henne comes before ikke; a full noun object would normally remain after ikke."
+  derived_from:
+  - section_id: object-pronouns-with-ikke-and-one-verb
+  tokens:
+  - token_id: move-subject
+    text: Jonas
+  - token_id: move-verb
+    text: ringer
+  - token_id: move-object
+    text: henne
+  - token_id: move-negation
+    text: ikke.
+  answer_order:
+  - move-subject
+  - move-verb
+  - move-object
+  - move-negation
+- handle: contrast_noun_and_pronoun
+  op: build
+  objective: obj-object-pronoun-position-01
+  bloom: apply
+  prompt_md: Build the aligned two-line comparison. Keep nøkkelen as a full noun in
+    the first line and replace it with den in the second. Show neutral placement around
+    ikke in both lines.
+  derived_from:
+  - section_id: object-pronouns-with-ikke-and-one-verb
+  tokens:
+  - token_id: contrast-subject-1
+    text: Jonas
+  - token_id: contrast-verb-1
+    text: har
+  - token_id: contrast-negation-1
+    text: ikke
+  - token_id: contrast-noun
+    text: nøkkelen.
+  - token_id: contrast-subject-2
+    text: Han
+  - token_id: contrast-verb-2
+    text: har
+  - token_id: contrast-pronoun
+    text: den
+  - token_id: contrast-negation-2
+    text: ikke.
+  answer_order:
+  - contrast-subject-1
+  - contrast-verb-1
+  - contrast-negation-1
+  - contrast-noun
+  - contrast-subject-2
+  - contrast-verb-2
+  - contrast-pronoun
+  - contrast-negation-2
+- handle: count_the_verbs_and_place
+  op: build
+  objective: obj-object-pronoun-position-01
+  bloom: apply
+  prompt_md: Build the four-sentence meeting-room update from the supplied tokens.
+    It covers finding the key, opening the room, calling Sara, and helping Jonas.
+    Use one-verb placement before ikke and two-verb placement after the main action.
+  derived_from:
+  - section_id: when-the-sentence-has-two-verbs
+  tokens:
+  - token_id: count-s1-subject
+    text: Jeg
+  - token_id: count-s1-verb
+    text: finner
+  - token_id: count-s1-object
+    text: den
+  - token_id: count-s1-negation
+    text: ikke.
+  - token_id: count-s2-subject
+    text: Jeg
+  - token_id: count-s2-modal
+    text: kan
+  - token_id: count-s2-negation
+    text: ikke
+  - token_id: count-s2-main
+    text: åpne
+  - token_id: count-s2-object
+    text: det.
+  - token_id: count-s3-subject
+    text: Jonas
+  - token_id: count-s3-verb
+    text: ringer
+  - token_id: count-s3-object
+    text: henne
+  - token_id: count-s3-negation
+    text: ikke.
+  - token_id: count-s4-subject
+    text: Jeg
+  - token_id: count-s4-modal
+    text: kan
+  - token_id: count-s4-negation
+    text: ikke
+  - token_id: count-s4-main
+    text: hjelpe
+  - token_id: count-s4-object
+    text: ham.
+  answer_order:
+  - count-s1-subject
+  - count-s1-verb
+  - count-s1-object
+  - count-s1-negation
+  - count-s2-subject
+  - count-s2-modal
+  - count-s2-negation
+  - count-s2-main
+  - count-s2-object
+  - count-s3-subject
+  - count-s3-verb
+  - count-s3-object
+  - count-s3-negation
+  - count-s4-subject
+  - count-s4-modal
+  - count-s4-negation
+  - count-s4-main
+  - count-s4-object
+- handle: repair_the_message
+  op: find_fix
+  objective: obj-object-pronoun-position-01
+  bloom: analyze
+  prompt_md: 'Select the misplaced object-pronoun token. Use neutral word order without
+    contrastive emphasis; the feedback gives the corrected order.'
+  derived_from:
+  - section_id: when-the-sentence-has-two-verbs
+  tokens:
+  - token_id: repair-s1-subject
+    text: Jeg
+  - token_id: repair-s1-verb
+    text: finner
+  - token_id: repair-s1-negation
+    text: ikke
+  - token_id: repair-henne-1
+    text: henne
+  - token_id: repair-s1-adverb
+    text: nå.
+  - token_id: repair-s2-subject
+    text: Jeg
+  - token_id: repair-s2-modal
+    text: kan
+  - token_id: repair-s2-negation
+    text: ikke
+  - token_id: repair-s2-main
+    text: hjelpe
+  - token_id: repair-henne-2
+    text: henne.
+  error_token_id: repair-henne-1
+  feedback: 'Move the marked henne before ikke: Jeg finner henne ikke nå. The second
+    sentence is already correct because henne follows the main action hjelpe.'
+- handle: birthday_pronoun_selection
+  op: recall_fill
+  objective: obj-object-pronoun-position-01
+  bloom: understand
+  prompt_md: Fill each blank with one object pronoun. In this birthday context, Nora
+    calls their male friend, Emil helps Nora, Emil has the present, and Nora has the
+    cakes. Sentence order is already correct; choose the pronoun identity.
+  derived_from:
+  - section_id: cumulative-transfer-preparing-for-a-birthday-visit
+  audio_target: "Nora ringer vennen deres. Nora ringer ham. Emil hjelper Nora. Emil hjelper henne. Emil har gaven. Emil har den. Nora har kakene. Nora har dem."
+  segments:
+  - text_md: 'Nora ringer vennen deres. Nora ringer '
+  - blank_id: birthday-friend
+    options:
+    - ham
+    - henne
+    - dem
+    answer_index: 0
+  - text_md: '. Emil hjelper Nora. Emil hjelper '
+  - blank_id: birthday-nora
+    options:
+    - henne
+    - ham
+    - dem
+    answer_index: 0
+  - text_md: '. Emil har gaven. Emil har '
+  - blank_id: birthday-present
+    options:
+    - den
+    - det
+    - dem
+    answer_index: 0
+  - text_md: '. Nora har kakene. Nora har '
+  - blank_id: birthday-cakes
+    options:
+    - dem
+    - den
+    - det
+    answer_index: 0
+  - text_md: .
+- handle: birthday_pronoun_placement
+  op: build
+  objective: obj-object-pronoun-position-01
+  bloom: apply
+  prompt_md: 'Build the complete three-sentence birthday-preparation update. The supplied
+    pronouns refer in order to gaven, vennen deres, and kakene: den, ham, and dem.
+    Include one affirmative clause, one neutral one-verb negative, and one two-verb
+    negative.'
+  derived_from:
+  - section_id: cumulative-transfer-preparing-for-a-birthday-visit
+  tokens:
+  - token_id: birthday-place-s1-subject
+    text: Nora
+  - token_id: birthday-place-s1-verb
+    text: finner
+  - token_id: birthday-place-s1-object
+    text: den.
+  - token_id: birthday-place-s2-subject
+    text: Emil
+  - token_id: birthday-place-s2-verb
+    text: ringer
+  - token_id: birthday-place-s2-object
+    text: ham
+  - token_id: birthday-place-s2-negation
+    text: ikke.
+  - token_id: birthday-place-s3-subject
+    text: Nora
+  - token_id: birthday-place-s3-modal
+    text: kan
+  - token_id: birthday-place-s3-negation
+    text: ikke
+  - token_id: birthday-place-s3-main
+    text: finne
+  - token_id: birthday-place-s3-object
+    text: dem.
+  answer_order:
+  - birthday-place-s1-subject
+  - birthday-place-s1-verb
+  - birthday-place-s1-object
+  - birthday-place-s2-subject
+  - birthday-place-s2-verb
+  - birthday-place-s2-object
+  - birthday-place-s2-negation
+  - birthday-place-s3-subject
+  - birthday-place-s3-modal
+  - birthday-place-s3-negation
+  - birthday-place-s3-main
+  - birthday-place-s3-object
+- handle: birthday_integrated_rewrite
+  op: build
+  objective: obj-object-pronoun-position-01
+  bloom: apply
+  prompt_md: 'Rewrite this Norwegian birthday account with object pronouns without
+    changing the events: Nora finner gaven. Emil ringer vennen deres. Nora har ikke
+    kakene. Nora kan ikke åpne gaven. Build the complete rewritten account from the
+    supplied tokens, preserving the affirmative, one-verb negative, and two-verb negative
+    structures.'
+  derived_from:
+  - section_id: cumulative-transfer-preparing-for-a-birthday-visit
+  tokens:
+  - token_id: integrated-s1-subject
+    text: Nora
+  - token_id: integrated-s1-verb
+    text: finner
+  - token_id: integrated-s1-object
+    text: den.
+  - token_id: integrated-s2-subject
+    text: Emil
+  - token_id: integrated-s2-verb
+    text: ringer
+  - token_id: integrated-s2-object
+    text: ham.
+  - token_id: integrated-s3-subject
+    text: Nora
+  - token_id: integrated-s3-verb
+    text: har
+  - token_id: integrated-s3-object
+    text: dem
+  - token_id: integrated-s3-negation
+    text: ikke.
+  - token_id: integrated-s4-subject
+    text: Nora
+  - token_id: integrated-s4-modal
+    text: kan
+  - token_id: integrated-s4-negation
+    text: ikke
+  - token_id: integrated-s4-main
+    text: åpne
+  - token_id: integrated-s4-object
+    text: den.
+  answer_order:
+  - integrated-s1-subject
+  - integrated-s1-verb
+  - integrated-s1-object
+  - integrated-s2-subject
+  - integrated-s2-verb
+  - integrated-s2-object
+  - integrated-s3-subject
+  - integrated-s3-verb
+  - integrated-s3-object
+  - integrated-s3-negation
+  - integrated-s4-subject
+  - integrated-s4-modal
+  - integrated-s4-negation
+  - integrated-s4-main
+  - integrated-s4-object

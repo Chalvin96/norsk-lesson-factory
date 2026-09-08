@@ -1,0 +1,479 @@
+- handle: identify_at_content_clause
+  op: choose
+  objective: obj-subordinating-conjunctions-01
+  bloom: understand
+  prompt_md: Read the weather, transport, and cabin messages. Select the option that
+    marks each complete dependent clause introduced by at and identifies the content
+    it supplies. Marking only at is incomplete.
+  derived_from:
+  - section_id: reporting-a-thought-or-statement-with-at
+  stem_md: Maja tror at bussen kommer snart. Jonas sier at han er klar. Vi vet at
+    veien er åpen. Which option is correct?
+  options:
+  - id: conjunction-only
+    text: '[at] bussen kommer snart; [at] han er klar; [at] veien er åpen.'
+    correct: false
+    why: Only the conjunction is marked, not the complete dependent clause.
+  - id: complete-content-clauses
+    text: '[at bussen kommer snart] — what Maja thinks; [at han er klar] — what Jonas
+      says; [at veien er åpen] — known information.'
+    correct: true
+    why: Each marked span includes at and the complete content clause.
+  - id: whole-sentences
+    text: '[Maja tror at bussen kommer snart]; [Jonas sier at han er klar]; [Vi vet
+      at veien er åpen].'
+    correct: false
+    why: The marked spans include the main clauses instead of isolating the at-clauses.
+- handle: choose_at_for_reported_content
+  op: recall_fill
+  objective: obj-subordinating-conjunctions-01
+  bloom: remember
+  prompt_md: Complete each sentence with the conjunction that introduces reported
+    content after saying, believing, or hoping.
+  explanation_md: "Choose the conjunction from the clause relation: content, reason, condition, time, concession, or an unresolved indirect question."
+  derived_from:
+  - section_id: reporting-a-thought-or-statement-with-at
+  audio_target: "Før turen sier Jonas at bussen kommer snart. Maja tror at det blir regn. Henrik håper at butikken ikke er stengt."
+  segments:
+  - text_md: 'Før turen sier Jonas '
+  - blank_id: report-content-1
+    options:
+    - at
+    - fordi
+    - hvis
+    - når
+    answer_index: 0
+  - text_md: ' bussen kommer snart. Maja tror '
+  - blank_id: report-content-2
+    options:
+    - at
+    - fordi
+    - hvis
+    - når
+    answer_index: 0
+  - text_md: ' det blir regn. Henrik håper '
+  - blank_id: report-content-3
+    options:
+    - at
+    - fordi
+    - hvis
+    - når
+    answer_index: 0
+  - text_md: ' butikken ikke er stengt.'
+- handle: match_reason_to_fordi_clause
+  op: match_pairs
+  objective: obj-subordinating-conjunctions-01
+  bloom: remember
+  prompt_md: Match each main event with the complete fordi-clause that explains why
+    it happens. Use every clause once.
+  derived_from:
+  - section_id: giving-a-reason-with-fordi
+  left:
+  - left_id: event-1
+    text: Maja tar med støvler.
+  - left_id: event-2
+    text: Jonas ringer.
+  - left_id: event-3
+    text: Vi blir inne.
+  - left_id: event-4
+    text: De vurderer å avlyse turen.
+  right:
+  - right_id: reason-1
+    text: fordi det har regnet.
+  - right_id: reason-2
+    text: fordi han har et spørsmål.
+  - right_id: reason-3
+    text: fordi det blåser mye.
+  - right_id: reason-4
+    text: fordi været blir dårlig.
+  pairs:
+  - left_id: event-1
+    right_id: reason-1
+  - left_id: event-2
+    right_id: reason-2
+  - left_id: event-3
+    right_id: reason-3
+  - left_id: event-4
+    right_id: reason-4
+- handle: complete_trip_reasons_with_fordi
+  op: recall_fill
+  objective: obj-subordinating-conjunctions-01
+  bloom: apply
+  prompt_md: Complete each practical travel sentence with the conjunction that gives
+    the stated reason for the action.
+  derived_from:
+  - section_id: giving-a-reason-with-fordi
+  audio_target: "Maja tar med støvler fordi det har regnet. Jonas ringer fordi han har et spørsmål. Vi blir inne fordi det blåser mye. De vurderer å avlyse turen fordi været blir dårlig."
+  segments:
+  - text_md: 'Maja tar med støvler '
+  - blank_id: trip-reason-1
+    options:
+    - fordi
+    - hvis
+    answer_index: 0
+  - text_md: ' det har regnet. Jonas ringer '
+  - blank_id: trip-reason-2
+    options:
+    - fordi
+    - hvis
+    answer_index: 0
+  - text_md: ' han har et spørsmål. Vi blir inne '
+  - blank_id: trip-reason-3
+    options:
+    - fordi
+    - hvis
+    answer_index: 0
+  - text_md: ' det blåser mye. De vurderer å avlyse turen '
+  - blank_id: trip-reason-4
+    options:
+    - fordi
+    - hvis
+    answer_index: 0
+  - text_md: ' været blir dårlig.'
+- handle: contrast_fordi_and_hvis
+  op: recall_fill
+  objective: obj-subordinating-conjunctions-01
+  bloom: understand
+  prompt_md: Complete each sentence with fordi for a stated reason or hvis for a possible
+    condition.
+  explanation_md: "Fordi supplies an actual reason; hvis introduces a condition whose outcome is not asserted."
+  derived_from:
+  - section_id: stating-a-condition-with-hvis
+  audio_target: "Vi blir inne fordi det blåser mye. Vi drar hvis veien er åpen. Jeg tar med mat hvis butikken ved hytta er stengt. Jonas ringer fordi han har et spørsmål."
+  segments:
+  - text_md: 'Vi blir inne '
+  - blank_id: reason-condition-1
+    options:
+    - fordi
+    - hvis
+    answer_index: 0
+  - text_md: ' det blåser mye. Vi drar '
+  - blank_id: reason-condition-2
+    options:
+    - fordi
+    - hvis
+    answer_index: 1
+  - text_md: ' veien er åpen. Jeg tar med mat '
+  - blank_id: reason-condition-3
+    options:
+    - fordi
+    - hvis
+    answer_index: 1
+  - text_md: ' butikken ved hytta er stengt. Jonas ringer '
+  - blank_id: reason-condition-4
+    options:
+    - fordi
+    - hvis
+    answer_index: 0
+  - text_md: ' han har et spørsmål.'
+- handle: locate_hvis_dependency
+  op: choose
+  objective: obj-subordinating-conjunctions-01
+  bloom: understand
+  prompt_md: Read the cabin plans. Select the option that marks every complete hvis-clause
+    and states which event or decision depends on each condition.
+  derived_from:
+  - section_id: stating-a-condition-with-hvis
+  stem_md: Hvis det blir kaldt, tar Jonas med ved. Hvis butikken ved hytta er stengt,
+    kan vi handle på veien. Hvis veien er åpen, drar vi. Which option is correct?
+  options:
+  - id: full-conditions-and-dependent-events
+    text: '[Hvis det blir kaldt] → tar Jonas med ved; [Hvis butikken ved hytta er
+      stengt] → kan vi handle på veien; [Hvis veien er åpen] → drar vi.'
+    correct: true
+    why: Each marked span contains the full hvis-clause, and each arrow identifies
+      the event that depends on its condition.
+  - id: conjunctions-only
+    text: '[Hvis] det blir kaldt, tar Jonas med ved; [Hvis] butikken ved hytta er
+      stengt, kan vi handle på veien; [Hvis] veien er åpen, drar vi.'
+    correct: false
+    why: Only Hvis is marked, so the dependent clauses are incomplete.
+  - id: whole-clauses
+    text: '[Hvis det blir kaldt, tar Jonas med ved]; [Hvis butikken ved hytta er stengt,
+      kan vi handle på veien]; [Hvis veien er åpen, drar vi].'
+    correct: false
+    why: Each marked span incorrectly includes the event that depends on the condition.
+- handle: recognize_time_clause_boundaries
+  op: choose
+  objective: obj-subordinating-conjunctions-01
+  bloom: understand
+  prompt_md: Read the Saturday preparation sequence. Select the option that marks
+    each complete dependent clause introduced by når, før, or mens and identifies
+    the main event it places in time.
+  derived_from:
+  - section_id: placing-events-in-time
+  stem_md: Når vi kommer fram, lager vi middag. Vi kjøper mat før vi kjører til hytta.
+    Mens Jonas pakker, sjekker Maja butikken. Which option is correct?
+  options:
+  - id: conjunctions-only
+    text: '[Når] vi kommer fram, lager vi middag; Vi kjøper mat [før] vi kjører til
+      hytta; [Mens] Jonas pakker, sjekker Maja butikken.'
+    correct: false
+    why: Only the conjunctions are marked, not the complete dependent clauses.
+  - id: whole-sentences
+    text: '[Når vi kommer fram, lager vi middag]; [Vi kjøper mat før vi kjører til
+      hytta]; [Mens Jonas pakker, sjekker Maja butikken].'
+    correct: false
+    why: The marked spans include the main events instead of isolating the time clauses.
+  - id: full-time-clauses-and-events
+    text: '[Når vi kommer fram] — lager vi middag; [før vi kjører til hytta] — Vi
+      kjøper mat; [Mens Jonas pakker] — sjekker Maja butikken.'
+    correct: true
+    why: Each marked span is a complete time clause, including clauses that come before
+      the main clause.
+- handle: choose_time_relationship_conjunction
+  op: recall_fill
+  objective: obj-subordinating-conjunctions-01
+  bloom: understand
+  prompt_md: Complete each sentence with the conjunction for earlier sequence, the
+    relevant time, or overlapping actions.
+  explanation_md: "Før marks earlier sequence, når identifies the relevant time, and mens presents overlapping events."
+  derived_from:
+  - section_id: placing-events-in-time
+  audio_target: "Vi kjøper mat før vi kjører til hytta. Vi lager middag når vi kommer fram. Maja sjekker butikken mens Jonas pakker."
+  segments:
+  - text_md: 'Vi kjøper mat '
+  - blank_id: time-relationship-1
+    options:
+    - før
+    - når
+    - mens
+    answer_index: 0
+  - text_md: ' vi kjører til hytta. Vi lager middag '
+  - blank_id: time-relationship-2
+    options:
+    - før
+    - når
+    - mens
+    answer_index: 1
+  - text_md: ' vi kommer fram. Maja sjekker butikken '
+  - blank_id: time-relationship-3
+    options:
+    - før
+    - når
+    - mens
+    answer_index: 2
+  - text_md: ' Jonas pakker.'
+- handle: distinguish_reason_and_unexpected_contrast
+  op: recall_fill
+  objective: obj-subordinating-conjunctions-01
+  bloom: understand
+  prompt_md: Complete each sentence with fordi when the weather explains the action
+    and selv om when the action happens despite the weather.
+  explanation_md: "Fordi explains why the action occurs; selv om marks an action that occurs despite the stated obstacle."
+  derived_from:
+  - section_id: expressing-an-unexpected-contrast-with-selv-om
+  audio_target: "Vi blir inne fordi det regner. De går en liten tur selv om det regner. Vi tar med støvler fordi det har regnet."
+  segments:
+  - text_md: 'Vi blir inne '
+  - blank_id: reason-contrast-1
+    options:
+    - fordi
+    - selv om
+    answer_index: 0
+  - text_md: ' det regner. De går en liten tur '
+  - blank_id: reason-contrast-2
+    options:
+    - fordi
+    - selv om
+    answer_index: 1
+  - text_md: ' det regner. Vi tar med støvler '
+  - blank_id: reason-contrast-3
+    options:
+    - fordi
+    - selv om
+    answer_index: 0
+  - text_md: ' det har regnet.'
+- handle: identify_selv_om_clause
+  op: choose
+  objective: obj-subordinating-conjunctions-01
+  bloom: understand
+  prompt_md: Read the plan descriptions. Select the option that marks each complete
+    dependent clause beginning with the two-word conjunction selv om. The whole expression
+    belongs together.
+  derived_from:
+  - section_id: expressing-an-unexpected-contrast-with-selv-om
+  stem_md: Jonas pakker regnjakka selv om han håper på sol. Selv om det regner, går
+    de en liten tur. Which option is correct?
+  options:
+  - id: conjunction-only
+    text: Jonas pakker regnjakka [selv om] han håper på sol; [Selv om] det regner,
+      går de en liten tur.
+    correct: false
+    why: The two-word conjunction is marked, but the rest of each dependent clause
+      is missing.
+  - id: first-word-only
+    text: Jonas pakker regnjakka [selv] om han håper på sol; [Selv] om det regner,
+      går de en liten tur.
+    correct: false
+    why: Only selv is marked, so the conjunction is split and the clauses are not
+      identified.
+  - id: complete-selv-om-clauses
+    text: Jonas pakker regnjakka [selv om han håper på sol]; [Selv om det regner],
+      går de en liten tur.
+    correct: true
+    why: Each marked span includes both words of selv om and the complete clause that
+      follows.
+- handle: contrast_at_and_om
+  op: recall_fill
+  objective: obj-subordinating-conjunctions-01
+  bloom: understand
+  prompt_md: Complete each sentence with at for reported information and om for an
+    unresolved indirect yes-or-no question.
+  explanation_md: "At introduces reported information; om introduces an unresolved indirect yes/no question."
+  derived_from:
+  - section_id: asking-indirectly-with-om
+  audio_target: "Jeg vet at butikken er åpen. Jeg vet ikke om butikken er åpen. Jonas spør om veien er åpen. Maja sier at bussen kommer snart."
+  segments:
+  - text_md: 'Jeg vet '
+  - blank_id: at-om-1
+    options:
+    - at
+    - om
+    answer_index: 0
+  - text_md: ' butikken er åpen. Jeg vet ikke '
+  - blank_id: at-om-2
+    options:
+    - at
+    - om
+    answer_index: 1
+  - text_md: ' butikken er åpen. Jonas spør '
+  - blank_id: at-om-3
+    options:
+    - at
+    - om
+    answer_index: 1
+  - text_md: ' veien er åpen. Maja sier '
+  - blank_id: at-om-4
+    options:
+    - at
+    - om
+    answer_index: 0
+  - text_md: ' bussen kommer snart.'
+- handle: build_bicycle_plan_connections
+  op: recall_fill
+  objective: obj-subordinating-conjunctions-01
+  bloom: apply
+  prompt_md: 'Complete each bicycle-plan sentence with the conjunction matching its
+    single meaning: reported content, reason, condition, time, overlap, unexpected
+    contrast, or an indirect yes-or-no question.'
+  derived_from:
+  - section_id: cumulative-transfer
+  audio_target: "Amina sier at de sykler på søndag. Henrik pakker regnjakka fordi det regner. De kan sykle til kafeen hvis veien er åpen. De starter turen når Amina kommer fram. De hører på radio mens de sykler. De sykler videre selv om det regner. Amina lurer på om kafeen er åpen."
+  segments:
+  - text_md: 'Amina sier '
+  - blank_id: bicycle-connection-1
+    options:
+    - at
+    - fordi
+    - hvis
+    - når
+    - mens
+    - selv om
+    - om
+    answer_index: 0
+  - text_md: ' de sykler på søndag. Henrik pakker regnjakka '
+  - blank_id: bicycle-connection-2
+    options:
+    - at
+    - fordi
+    - hvis
+    - når
+    - mens
+    - selv om
+    - om
+    answer_index: 1
+  - text_md: ' det regner. De kan sykle til kafeen '
+  - blank_id: bicycle-connection-3
+    options:
+    - at
+    - fordi
+    - hvis
+    - når
+    - mens
+    - selv om
+    - om
+    answer_index: 2
+  - text_md: ' veien er åpen. De starter turen '
+  - blank_id: bicycle-connection-4
+    options:
+    - at
+    - fordi
+    - hvis
+    - når
+    - mens
+    - selv om
+    - om
+    answer_index: 3
+  - text_md: ' Amina kommer fram. De hører på radio '
+  - blank_id: bicycle-connection-5
+    options:
+    - at
+    - fordi
+    - hvis
+    - når
+    - mens
+    - selv om
+    - om
+    answer_index: 4
+  - text_md: ' de sykler. De sykler videre '
+  - blank_id: bicycle-connection-6
+    options:
+    - at
+    - fordi
+    - hvis
+    - når
+    - mens
+    - selv om
+    - om
+    answer_index: 5
+  - text_md: ' det regner. Amina lurer på '
+  - blank_id: bicycle-connection-7
+    options:
+    - at
+    - fordi
+    - hvis
+    - når
+    - mens
+    - selv om
+    - om
+    answer_index: 6
+  - text_md: ' kafeen er åpen.'
+- handle: mark_dependent_clauses_in_bicycle_message
+  op: choose
+  objective: obj-subordinating-conjunctions-01
+  bloom: understand
+  prompt_md: Read Amina’s message. Select the option that marks every complete dependent
+    clause, including its introductory conjunction, and links each clause to the main
+    event or message part it completes or modifies. Clause-internal word order is
+    not scored.
+  derived_from:
+  - section_id: cumulative-transfer
+  stem_md: Amina sier at de sykler på søndag. Henrik tar med en regnjakke fordi værmeldingen
+    melder regn. Hvis kafeen er åpen, stopper de når de kommer fram. De hører på radio
+    mens de sykler, selv om det regner. Which option is correct?
+  options:
+  - id: conjunctions-only
+    text: Amina sier [at] de sykler på søndag. Henrik tar med en regnjakke [fordi]
+      værmeldingen melder regn. [Hvis] kafeen er åpen, stopper de [når] de kommer
+      fram. De hører på radio [mens] de sykler, [selv om] det regner.
+    correct: false
+    why: Only the conjunctions are marked, so none of the dependent clauses is complete.
+  - id: all-boundaries-and-functions
+    text: Amina sier [at de sykler på søndag] — reported content; Henrik tar med en
+      regnjakke [fordi værmeldingen melder regn] — reason; [Hvis kafeen er åpen] —
+      condition for stopping; stopper de [når de kommer fram] — time of stopping;
+      De hører på radio [mens de sykler] — overlapping actions; De hører på radio
+      [selv om det regner] — unexpected contrast.
+    correct: true
+    why: Every dependent clause is complete, and each clause is linked to the correct
+      main event and function.
+  - id: wrong-functions
+    text: Amina sier [at de sykler på søndag] — reason; Henrik tar med en regnjakke
+      [fordi værmeldingen melder regn] — reported content; [Hvis kafeen er åpen] —
+      time of stopping; stopper de [når de kommer fram] — condition; De hører på radio
+      [mens de sykler] — unexpected contrast; De hører på radio [selv om det regner]
+      — overlapping actions.
+    correct: false
+    why: Several clause boundaries are marked, but their functions and links to the
+      main events are incorrectly assigned.

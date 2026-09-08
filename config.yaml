@@ -1,0 +1,98 @@
+llm:
+  timeout_seconds: 1800
+  tiers:
+    cheap:
+      model: openai/gpt-5.6-luna
+      variant: xhigh
+    standard:
+      model: openai/gpt-5.6-sol
+      variant: low
+    deep:
+      model: openai/gpt-5.6-sol
+      variant: medium
+    deep_alt:
+      model: zai-coding-plan/glm-5.3
+      variant: max
+  jobs:
+    author:
+      tier: standard
+      agent_template: lesson-author
+    reviewer:
+      tier: deep_alt
+      agent_template: catalog-review
+    catalog_explorer:
+      tier: cheap
+      agent_template: catalog-research
+    catalog_reviewer:
+      tier: deep
+      agent_template: catalog-review
+    curriculum_reviewer:
+      tier: deep
+      agent_template: catalog-review
+    normalizer:
+      tier: cheap
+      agent_template: lesson-author
+    exercise_author:
+      tier: cheap
+      agent_template: exercise-author
+
+audio:
+  provider: google-cloud-text-to-speech
+  language: nb-NO
+  voice: nb-NO-Chirp3-HD-Zephyr
+  speaker_voice_pool:
+    - nb-NO-Chirp3-HD-Leda
+    - nb-NO-Chirp3-HD-Alnilam
+    - nb-NO-Chirp3-HD-Aoede
+    - nb-NO-Chirp3-HD-Charon
+    - nb-NO-Chirp3-HD-Fenrir
+    - nb-NO-Chirp3-HD-Despina
+    - nb-NO-Chirp3-HD-Algenib
+    - nb-NO-Chirp3-HD-Kore
+    - nb-NO-Chirp3-HD-Iapetus
+    - nb-NO-Chirp3-HD-Achird
+    - nb-NO-Chirp3-HD-Puck
+    - nb-NO-Chirp3-HD-Sadaltager
+  voice_profiles:
+    feminine:
+      - nb-NO-Chirp3-HD-Zephyr
+      - nb-NO-Chirp3-HD-Leda
+      - nb-NO-Chirp3-HD-Aoede
+      - nb-NO-Chirp3-HD-Despina
+      - nb-NO-Chirp3-HD-Kore
+      - nb-NO-Chirp3-HD-Gacrux
+    masculine:
+      - nb-NO-Chirp3-HD-Alnilam
+      - nb-NO-Chirp3-HD-Charon
+      - nb-NO-Chirp3-HD-Fenrir
+      - nb-NO-Chirp3-HD-Algenib
+      - nb-NO-Chirp3-HD-Iapetus
+      - nb-NO-Chirp3-HD-Achird
+      - nb-NO-Chirp3-HD-Puck
+      - nb-NO-Chirp3-HD-Sadaltager
+  speaker_voice_overrides:
+    teacher: nb-NO-Chirp3-HD-Gacrux
+  character_voice_overrides:
+    amina: nb-NO-Chirp3-HD-Despina
+    amir: nb-NO-Chirp3-HD-Charon
+    eirik: nb-NO-Chirp3-HD-Algenib
+    elias: nb-NO-Chirp3-HD-Iapetus
+    emil: nb-NO-Chirp3-HD-Algenib
+    erik: nb-NO-Chirp3-HD-Charon
+    henrik: nb-NO-Chirp3-HD-Fenrir
+    ingrid: nb-NO-Chirp3-HD-Gacrux
+    jonas: nb-NO-Chirp3-HD-Alnilam
+    lars: nb-NO-Chirp3-HD-Sadaltager
+    lea: nb-NO-Chirp3-HD-Leda
+    lina: nb-NO-Chirp3-HD-Kore
+    liv: nb-NO-Chirp3-HD-Gacrux
+    maja: nb-NO-Chirp3-HD-Despina
+    mari: nb-NO-Chirp3-HD-Aoede
+    marius: nb-NO-Chirp3-HD-Puck
+    maya: nb-NO-Chirp3-HD-Leda
+    mina: nb-NO-Chirp3-HD-Leda
+    nora: nb-NO-Chirp3-HD-Aoede
+    sara: nb-NO-Chirp3-HD-Kore
+    selma: nb-NO-Chirp3-HD-Aoede
+    sigrid: nb-NO-Chirp3-HD-Despina
+  synthesis_revision: recurring-cast-v3

@@ -1,0 +1,362 @@
+- handle: notice_sentence_structure
+  op: categorize
+  objective: obj-discourse-connectors-02
+  bloom: analyze
+  prompt_md: Classify each Norwegian excerpt by the structural pattern it demonstrates.
+    Identify the connector when one is present, the finite verb, and the subject from
+    the words shown. Items 2 and 3 are the two parts of one sentence; item 3 is the
+    main clause following item 2. Distinguish connector-initial V2,
+    subject-before-verb order inside an opening selv om clause, inversion in the
+    following main clause, and ordinary subject–verb order after men. Do not treat
+    men as a fronted adverbial connector.
+  explanation_md: "An opening connector occupies the first position of a Norwegian main clause, so the finite verb comes next. Inside a subordinate clause such as «selv om …», the subject stays before the verb."
+  derived_from:
+  - section_id: connectors-v2-rule
+  buckets:
+  - bucket_id: connector_initial_v2
+    label: Connector-initial main clause with finite verb before subject
+  - bucket_id: selv_om_subordinate_order
+    label: Subject–verb order inside an selv om clause
+  - bucket_id: selv_om_following_main_v2
+    label: Inversion in the main clause following an opening selv om clause
+  - bucket_id: men_subject_verb
+    label: Ordinary subject–verb order after men
+  items:
+  - item_id: structure-1
+    text: Først kom det bare seks frivillige.
+    bucket_id: connector_initial_v2
+  - item_id: structure-2
+    text: Selv om butikken lå langt unna
+    bucket_id: selv_om_subordinate_order
+  - item_id: structure-3
+    text: hentet Nora malingen.
+    bucket_id: selv_om_following_main_v2
+  - item_id: structure-4
+    text: men vi begynte som planlagt.
+    bucket_id: men_subject_verb
+- handle: build_clear_timeline
+  op: build
+  objective: obj-discourse-connectors-01
+  bloom: apply
+  prompt_md: Arrange all supplied tokens into the four-sentence garden-workday timeline.
+    Use every token exactly once. Begin each stage with its supplied sequence connector
+    and place the finite verb directly after that connector.
+  derived_from:
+  - section_id: showing-sequence
+  tokens:
+  - token_id: timeline-01
+    text: Først
+  - token_id: timeline-02
+    text: undersøkte
+  - token_id: timeline-03
+    text: vi
+  - token_id: timeline-04
+    text: gjerdet.
+  - token_id: timeline-05
+    text: Deretter
+  - token_id: timeline-06
+    text: kjøpte
+  - token_id: timeline-07
+    text: vi
+  - token_id: timeline-08
+    text: materialer.
+  - token_id: timeline-09
+    text: Så
+  - token_id: timeline-10
+    text: reparerte
+  - token_id: timeline-11
+    text: vi
+  - token_id: timeline-12
+    text: porten.
+  - token_id: timeline-13
+    text: Til
+  - token_id: timeline-14
+    text: slutt
+  - token_id: timeline-15
+    text: ryddet
+  - token_id: timeline-16
+    text: vi
+  - token_id: timeline-17
+    text: området.
+  answer_order:
+  - timeline-01
+  - timeline-02
+  - timeline-03
+  - timeline-04
+  - timeline-05
+  - timeline-06
+  - timeline-07
+  - timeline-08
+  - timeline-09
+  - timeline-10
+  - timeline-11
+  - timeline-12
+  - timeline-13
+  - timeline-14
+  - timeline-15
+  - timeline-16
+  - timeline-17
+- handle: strengthen_report
+  op: write
+  objective: obj-discourse-connectors-01
+  bloom: apply
+  prompt_md: Write 35–70 words in Norwegian for Ingrid and Samir's council report.
+    Add two coherent supporting facts, with one sentence beginning with I tillegg
+    and one beginning with Dessuten. Then respond to Skoleklassen kom. with a follow-up
+    about the teacher's tools. Choose i tillegg if the tools are extra information
+    or deretter if they are a later event, and explain in Norwegian how the alternative
+    would change the listener's interpretation from addition to sequence or from sequence
+    to addition. Use verb–subject order after every fronted adverbial connector.
+  derived_from:
+  - section_id: adding-another-point
+  response_language: 'no'
+  min_words: 35
+  max_words: 70
+  judge_prompt: Check the response against the task and report evidence for every
+    criterion. Accept natural Bokmål variants, but require both added facts, the requested
+    connector choices, the explanation of the alternative interpretation, and correct
+    verb–subject order after each fronted adverbial connector.
+  criteria:
+  - id: coherent-supporting-details
+    instruction: Adds coherent supporting details to the council report.
+  - id: i-tillegg-fact
+    instruction: Uses i tillegg to introduce one added fact.
+  - id: dessuten-fact
+    instruction: Uses dessuten to introduce one added fact.
+  - id: relationship-choice
+    instruction: Selects a connector that matches the intended addition or sequence
+      relationship.
+  - id: alternative-interpretation
+    instruction: Explains how the alternative connector changes the listener's interpretation.
+  - id: fronted-adverbial-order
+    instruction: Uses verb–subject order after each fronted adverbial connector.
+- handle: present_obstacle_response
+  op: write
+  objective: obj-discourse-connectors-02
+  bloom: apply
+  prompt_md: Write a brief Norwegian response about the volunteer day. Present the
+    rain as one problem and the distant shop as another. Use one likevel construction
+    beginning with fronted Likevel to connect a problem with its response. Write one
+    sentence beginning with an opening Selv om clause to connect the other problem
+    with its response. Add one direct contrast between two people, things, or situations
+    using men or derimot. Make every relationship clear and use inversion in the main
+    clauses after fronted Likevel and after the opening Selv om clause.
+  derived_from:
+  - section_id: expressing-contrast-concession
+  response_language: 'no'
+  min_words: 30
+  max_words: 65
+  judge_prompt: Check the response against the task and report evidence for every
+    criterion. Require a clear rain response, a clear distant-shop response, one direct
+    contrast, the requested likevel and selv om constructions, and correct inversion
+    in both relevant main clauses.
+  criteria:
+  - id: clear-relationships
+    instruction: Makes the rain response, distant-shop response, and direct contrast
+      clear.
+  - id: direct-contrast
+    instruction: Uses men or derimot for the direct contrast.
+  - id: likevel-concession
+    instruction: Uses likevel for one concession.
+  - id: opening-selv-om
+    instruction: Begins one sentence with a selv om clause.
+  - id: main-clause-inversion
+    instruction: Uses inversion in the main clauses after fronted likevel and an opening
+      selv om clause.
+- handle: distinguish_cause_contrast
+  op: build
+  objective: obj-discourse-connectors-02
+  bloom: apply
+  prompt_md: Arrange the supplied tokens into two linked versions of one bad-weather
+    cause-and-result relationship. First state the bad weather and introduce its consequence
+    with derfor. Then express the same relationship with fordi. Use every token exactly
+    once and preserve the modeled word order in both clauses.
+  derived_from:
+  - section_id: linking-cause-result
+  tokens:
+  - token_id: cause-01
+    text: Det
+  - token_id: cause-02
+    text: regnet
+  - token_id: cause-03
+    text: kraftig.
+  - token_id: cause-04
+    text: Derfor
+  - token_id: cause-05
+    text: arbeidet
+  - token_id: cause-06
+    text: vi
+  - token_id: cause-07
+    text: under
+  - token_id: cause-08
+    text: tak.
+  - token_id: cause-09
+    text: Vi
+  - token_id: cause-10
+    text: arbeidet
+  - token_id: cause-11
+    text: under
+  - token_id: cause-12
+    text: tak
+  - token_id: cause-13
+    text: fordi
+  - token_id: cause-14
+    text: det
+  - token_id: cause-15
+    text: regnet
+  - token_id: cause-16
+    text: kraftig.
+  answer_order:
+  - cause-01
+  - cause-02
+  - cause-03
+  - cause-04
+  - cause-05
+  - cause-06
+  - cause-07
+  - cause-08
+  - cause-09
+  - cause-10
+  - cause-11
+  - cause-12
+  - cause-13
+  - cause-14
+  - cause-15
+  - cause-16
+- handle: end_council_report
+  op: write
+  objective: obj-discourse-connectors-01
+  bloom: apply
+  prompt_md: Write 12–35 words in Norwegian to end the volunteer-day report. First
+    state a final event using Til slutt. Then add an overall evaluation using Alt
+    i alt or a conclusion containing altså. Use each connector for its intended purpose
+    and maintain correct word order.
+  derived_from:
+  - section_id: drawing-a-conclusion
+  response_language: 'no'
+  min_words: 12
+  max_words: 35
+  judge_prompt: Check the response against the task and report evidence for every
+    criterion. Accept either the taught overall-conclusion form with alt i alt or
+    a natural conclusion containing altså, provided the two connectors have distinct
+    chronological and evaluative functions.
+  criteria:
+  - id: final-event
+    instruction: Uses til slutt for the final event.
+  - id: overall-conclusion
+    instruction: Uses alt i alt or altså for the conclusion.
+  - id: connector-functions
+    instruction: Uses each connector for its intended chronological or evaluative
+      purpose.
+  - id: correct-word-order
+    instruction: Maintains correct word order.
+- handle: repair_fronted_connector
+  op: find_fix
+  objective: obj-discourse-connectors-01
+  bloom: analyze
+  prompt_md: 'Select the one token misplaced in the Norwegian sentence. The feedback explains the word-order repair and the connector meaning.'
+  derived_from:
+  - section_id: common-mistakes-to-avoid
+  tokens:
+  - token_id: repair-01
+    text: Deretter
+  - token_id: repair-02
+    text: elevene
+  - token_id: repair-03
+    text: reparerte
+  - token_id: repair-04
+    text: porten.
+  error_token_id: repair-02
+  feedback: Deretter marks a later step and fills the first position. The finite verb
+    reparerte must come before the subject elevene; identify this placement error
+    and rewrite the complete sentence.
+- handle: coherent_project_update
+  op: write
+  objective: obj-discourse-connectors-01
+  bloom: apply
+  prompt_md: Write an 80–130-word Norwegian council update as one coherent account
+    of the garden workday, without copying the dialogue line by line. Begin with the
+    initial situation, organize the work in sequence, add supporting information,
+    mention an obstacle and its response, explain a cause-and-result relationship,
+    and end with a final event and an overall conclusion. Use connectors for distinct
+    functions, including sequence, addition, cause, result, and conclusion. Include
+    a fronted adverbial connector with finite verb before subject; an opening selv
+    om clause followed by an inverted main clause; a fordi clause and the opening
+    selv om clause with subject before finite verb; one men clause whose first constituent
+    after men is the subject; and one men clause with a taught adverbial fronted after
+    men, so the finite verb comes before the subject. Do not count men itself as a
+    fronted adverbial.
+  derived_from:
+  - section_id: extended-practice
+  response_language: 'no'
+  min_words: 80
+  max_words: 130
+  judge_prompt: Check the response against the task and report evidence for every
+    criterion. Require one coherent garden-project report with distinct connector
+    functions, all requested subordinate and main-clause word orders, and both contrasting
+    men patterns. Accept natural Bokmål variants grounded in the lesson.
+  criteria:
+  - id: coherent-report
+    instruction: Reads as one coherent report rather than isolated sentences.
+  - id: distinct-connector-functions
+    instruction: Uses connectors for distinct functions.
+  - id: fronted-adverbial-v2
+    instruction: Places the finite verb before the subject after fronted adverbial
+      connectors.
+  - id: opening-selv-om-inversion
+    instruction: Uses inversion in the main clause following an opening selv om clause.
+  - id: subordinate-order
+    instruction: Retains subject-before-verb order inside the modeled fordi and selv
+      om clauses.
+  - id: men-subject-verb
+    instruction: Uses subject–verb order after men when the subject is the coordinated
+      clause's first constituent.
+  - id: men-fronted-adverbial-v2
+    instruction: Uses verb–subject order when a taught adverbial is fronted after
+      men.
+- handle: short_retrieval_review
+  op: write
+  objective: obj-discourse-connectors-02
+  bloom: apply
+  prompt_md: 'Without looking back, write six numbered sentences in Norwegian, one
+    for each relationship: sequence, addition, direct contrast, concession, cause,
+    and conclusion. Use fresh situations and lexical frames rather than copying complete
+    lesson sentences. Set the addition sentence outside the garden report in an everyday
+    grocery-shopping context, using i tillegg or dessuten. Use men or derimot for
+    direct contrast, likevel or selv om for concession, and fordi for cause with subject
+    before finite verb in its subordinate clause. Use a fronted adverbial connector
+    in at least four sentences. Before submitting, check second-position finite verbs
+    after each fronted adverbial connector. Do not treat men itself as a fronted adverbial.
+    If a taught adverbial follows men, apply the V2 check to that adverbial; if concession
+    uses selv om, do not apply the main-clause check inside its subordinate clause.'
+  derived_from:
+  - section_id: short-retrieval-review
+  response_language: 'no'
+  min_words: 35
+  max_words: 90
+  judge_prompt: Check the response against the task and report evidence for every
+    criterion. Verify six distinct relationship sentences, the grocery-shopping addition
+    context, the required connector choices, at least four fronted adverbials, and
+    the separate main-clause and subordinate-clause word-order rules. Reject copied
+    complete lesson sentences.
+  criteria:
+  - id: six-relationships
+    instruction: Produces one sentence for each of the six relationships.
+  - id: direct-contrast
+    instruction: Uses men or derimot for direct contrast.
+  - id: concession
+    instruction: Uses likevel or selv om for concession.
+  - id: fordi-order
+    instruction: Uses fordi with the modeled subordinate-clause word order.
+  - id: fronted-four
+    instruction: Uses a fronted adverbial connector in at least four sentences.
+  - id: grocery-addition
+    instruction: Sets the addition sentence in an everyday grocery-shopping context
+      outside the garden report.
+  - id: second-position-check
+    instruction: Keeps finite verbs in second position after fronted adverbial connectors.
+  - id: men-not-fronted
+    instruction: Does not treat men itself as a fronted adverbial connector.
+  - id: selv-om-boundary
+    instruction: Does not apply the main-clause V2 check inside a selv om subordinate
+      clause.

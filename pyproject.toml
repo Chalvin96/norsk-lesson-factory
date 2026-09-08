@@ -1,0 +1,102 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "norsk-lesson-data"
+version = "0.1.0"
+description = "Open Norwegian Bokmål lesson data and its agentic authoring pipeline"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "httpx==0.27.0",
+    "PyJWT[crypto]>=2.8,<3.0",
+    "PyYAML>=6.0,<7.0",
+    "json-repair>=0.61.0",
+    "pydantic>=2.0",
+    "python-dotenv>=1.2.2,<2.0",
+    "langgraph>=1.2,<2.0",
+    "langgraph-checkpoint-sqlite>=3.1.1,<4.0",
+    "langchain-core>=1.0,<2.0",
+    "panflute>=2.3.1",
+    "pypandoc-binary>=1.17",
+    "boto3>=1.35,<2.0",
+    "Jinja2>=3.1,<4.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/Chalvin96/norsk-lesson-factory"
+Repository = "https://github.com/Chalvin96/norsk-lesson-factory"
+Issues = "https://github.com/Chalvin96/norsk-lesson-factory/issues"
+
+[project.scripts]
+lesson-data = "lesson_builder.cli:main"
+
+[tool.setuptools.package-data]
+lesson_builder = ["formats/html/templates/*.html", "formats/html/static/*"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = [".", "src"]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.0",
+    "pytest>=9.0.3",
+    "ruff>=0.4",
+    "mypy>=1.10",
+    "pytest-xdist>=3.8.0",
+    "factory-boy>=3.3.3",
+    "vulture==2.16",
+]
+security = [
+    "pip-audit>=2.9,<3.0",
+]
+
+[tool.uv]
+constraint-dependencies = [
+    "idna>=3.15",
+    "langsmith>=0.8.18",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "W",
+    "I",
+    "UP",
+    "B",
+    "C4",
+    "SIM",
+    "C90",
+    "S101",
+    "ANN401",
+    "ANN201",
+    "PLR2004",
+    "TRY003",
+    "TRY004",
+]
+ignore = ["E501", "TRY003"]
+
+[tool.ruff.lint.per-file-ignores]
+# Assertions are the test oracle; production assertions remain prohibited.
+"tests/**" = ["S101", "ANN201", "PLR2004"]
+
+[tool.ruff.lint.isort]
+# Keep every imported name on its own line so diffs stay easy to review.
+force-single-line = true
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+ignore_missing_imports = true

@@ -1,0 +1,115 @@
+name: validate
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  governance:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+
+      - name: Validate knowledge
+        run: npm run knowledge:validate
+
+  lesson-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # The conventions gate diffs against the PR base SHA; a shallow clone
+          # does not contain it and `git diff <base>...HEAD` aborts with 128.
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+
+      - name: Install dependencies
+        run: uv sync --locked
+
+      - name: Check Python syntax
+        run: uv run python -m compileall src/lesson_builder
+
+      - name: Check Ruff formatting
+        run: uv run ruff format --check .
+
+      - name: Run lint
+        run: uv run ruff check .
+
+      - name: Check introduced repository conventions
+        env:
+          CONVENTIONS_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          if git merge-base --is-ancestor "$CONVENTIONS_BASE" HEAD; then
+            uv run python scripts/check_agent_conventions.py --changed-from "$CONVENTIONS_BASE"
+          else
+            echo "History was replaced; no comparable convention baseline exists."
+            uv run python scripts/check_agent_conventions.py --changed-from HEAD
+          fi
+
+      - name: Run type checks
+        run: uv run mypy src/
+
+      - name: Validate lesson metadata
+        run: uv run lesson-data lesson validate --require-files tests/fixtures/lessons/valid_minimal.json
+
+      - name: Verify exported lessons are current
+        run: |
+          uv run lesson-data regenerate-dist --repo-root .
+          git diff --exit-code -- dist/lessons dist/catalog.json dist/schema/lesson.schema.json
+          untracked_dist=$(git status --porcelain --untracked-files=all -- dist/lessons)
+          if [ -n "$untracked_dist" ]; then
+            echo "::error::regeneration created untracked dist/lessons files"
+            printf '%s\n' "$untracked_dist"
+            exit 1
+          fi
+          shopt -s nullglob
+          source_packages=(content/lessons/*)
+          dist_files=(dist/lessons/*.json)
+          expected_dist_names=""
+          actual_dist_names=""
+          if [ "${#source_packages[@]}" -gt 0 ]; then
+            expected_dist_names=$(for source_package in "${source_packages[@]}"; do basename "$source_package".json; done | sort)
+          fi
+          if [ "${#dist_files[@]}" -gt 0 ]; then
+            actual_dist_names=$(for dist_file in "${dist_files[@]}"; do basename "$dist_file"; done | sort)
+          fi
+          if [ "$expected_dist_names" != "$actual_dist_names" ]; then
+            echo "::error::dist/lessons filenames do not match content/lessons package directories"
+            printf 'Expected:\n%s\nActual:\n%s\n' "$expected_dist_names" "$actual_dist_names"
+            exit 1
+          fi
+          for dist_file in "${dist_files[@]}"; do
+            if ! jq -e '.schema_version == "4.0"' "$dist_file" >/dev/null; then
+              echo "::error::Retired or missing lesson schema version in $dist_file"
+              exit 1
+            fi
+          done
+
+      - name: Check workspace state
+        run: uv run lesson-data check --workspace-root . --format json
+
+      - name: Run complete offline test suite
+        run: uv run pytest -q

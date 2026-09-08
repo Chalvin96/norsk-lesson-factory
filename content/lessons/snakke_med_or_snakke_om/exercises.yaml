@@ -1,0 +1,184 @@
+- handle: first_checkpoint_identify_role
+  op: categorize
+  objective: obj-snakke-med-or-snakke-om-01
+  bloom: analyze
+  prompt_md: Classify each Norwegian sentence as naming a conversation partner or
+    a topic. Use the role introduced by med or om.
+  explanation_md: "Snakke med names the conversation partner; snakke om names the topic."
+  derived_from:
+  - section_id: first-checkpoint-identify-role
+  buckets:
+  - bucket_id: conversation-partner
+    label: Conversation partner
+  - bucket_id: topic
+    label: Topic
+  items:
+  - item_id: item-1
+    text: Mina snakker med Ingrid.
+    bucket_id: conversation-partner
+  - item_id: item-2
+    text: Jonas snakker om rommet.
+    bucket_id: topic
+  - item_id: item-3
+    text: Mina snakker om Jonas.
+    bucket_id: topic
+  - item_id: item-4
+    text: Vi snakker med frivillige.
+    bucket_id: conversation-partner
+  - item_id: item-5
+    text: Vi snakker om maten.
+    bucket_id: topic
+  - item_id: item-6
+    text: Jonas snakker med Ingrid.
+    bucket_id: conversation-partner
+- handle: second_checkpoint_complete_meaning
+  op: recall_fill
+  objective: obj-snakke-med-or-snakke-om-01
+  bloom: apply
+  prompt_md: Complete each event-planning sentence by choosing med or om in every
+    blank. Use the role in the sentence, not the type of noun.
+  derived_from:
+  - section_id: second-checkpoint-complete-the-meaning
+  audio_target: "Mina snakker med Ingrid. Jonas snakker om rommet. Mina snakker om Jonas. Vi snakker med frivillige om maten."
+  segments:
+  - text_md: 'Mina snakker '
+  - blank_id: partner-ingrid
+    options:
+    - med
+    - om
+    answer_index: 0
+  - text_md: ' Ingrid. Jonas snakker '
+  - blank_id: topic-room
+    options:
+    - med
+    - om
+    answer_index: 1
+  - text_md: ' rommet. Mina snakker '
+  - blank_id: topic-jonas
+    options:
+    - med
+    - om
+    answer_index: 1
+  - text_md: ' Jonas. Vi snakker '
+  - blank_id: partner-volunteers
+    options:
+    - med
+    - om
+    answer_index: 0
+  - text_md: ' frivillige '
+  - blank_id: topic-food
+    options:
+    - med
+    - om
+    answer_index: 1
+  - text_md: ' maten.'
+- handle: third_checkpoint_ask_right_question
+  op: write
+  objective: obj-snakke-med-or-snakke-om-01
+  bloom: apply
+  prompt_md: 'Write two questions in Norwegian. First, Mina is speaking, but the conversation
+    partner is unknown: ask who she is speaking with. Second, Jonas is speaking, but
+    the topic is unknown: ask what or whom he is speaking about. Use natural Bokmål
+    and the taught question patterns.'
+  derived_from:
+  - section_id: third-checkpoint-ask-the-right-question
+  response_language: 'no'
+  min_words: 6
+  max_words: 20
+  judge_prompt: Check for two natural Bokmål questions and report evidence for each
+    criterion. Accept natural word order and inflection. The first question must ask
+    for a partner with hvem ... med? The second may ask for a thing with hva ... om?
+    or a person with hvem ... om?.
+  criteria:
+  - id: partner-question
+    instruction: Uses hvem ... med? to ask for Mina's missing conversation partner.
+  - id: topic-question
+    instruction: Uses hva ... om? or hvem ... om? to ask for Jonas's missing topic.
+- handle: fourth_checkpoint_correct_intended_meaning
+  op: find_fix
+  objective: obj-snakke-med-or-snakke-om-01
+  bloom: analyze
+  prompt_md: Select the one token that is wrong/needs changing.
+  derived_from:
+  - section_id: fourth-checkpoint-correct-the-intended-meaning
+  tokens:
+  - token_id: tok-1
+    text: Mina
+  - token_id: tok-2
+    text: snakker
+  - token_id: tok-3
+    text: med
+  - token_id: tok-4
+    text: Jonas
+  - token_id: tok-5
+    text: med
+  - token_id: tok-6
+    text: Ingrid.
+  error_token_id: tok-5
+  feedback: 'Replace the second med with om. Correct sentence: Mina snakker med Jonas
+    om Ingrid.'
+- handle: final_practice_build_complete_messages
+  op: write
+  objective: obj-snakke-med-or-snakke-om-01
+  bloom: apply
+  prompt_md: Write three short Norwegian messages for these new situations. First,
+    arrange a meeting and say that you need to speak with Ingrid. Second, contact
+    a teacher about the schedule and identify the topic with snakke om. Third, ask
+    a colleague for information about a household problem and show both roles with
+    snakke med ... om .... Keep each message focused on its situation.
+  derived_from:
+  - section_id: final-practice-build-complete-messages
+  response_language: 'no'
+  min_words: 18
+  max_words: 50
+  judge_prompt: Check all three Norwegian messages against the situations and report
+    evidence for each criterion. Accept natural Bokmål wording and equivalent inflection,
+    but require the requested partner and topic roles to remain clear.
+  criteria:
+  - id: message-one-partner
+    instruction: Message 1 clearly identifies Ingrid as the conversation partner with
+      snakke med.
+  - id: message-two-topic
+    instruction: Message 2 clearly identifies timeplanen as the topic with snakke
+      om.
+  - id: message-three-both
+    instruction: Message 3 clearly identifies a colleague as partner and a household
+      problem as topic with snakke med ... om ....
+  - id: role-clarity
+    instruction: Across the messages, clearly shows who participates, what the conversation
+      concerns, or both, without confusing med and om.
+- handle: retrieval_and_review
+  op: write
+  objective: obj-snakke-med-or-snakke-om-01
+  bloom: apply
+  prompt_md: 'Write five short Norwegian lines: one sentence
+    naming only a conversation partner with snakke med; one sentence naming only a
+    topic with snakke om; one sentence combining both roles with snakke med ... om
+    ..., using a person as both partner and topic; one question asking who someone
+    is speaking with; and one question asking what or whom someone is speaking about.
+    Keep partner and topic distinct.'
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  min_words: 15
+  max_words: 50
+  judge_prompt: Check for five separate Norwegian lines and report evidence for each
+    criterion. Accept natural Bokmål wording and equivalent names or topics. Require
+    med to introduce the partner and om to introduce the topic, including when both
+    are people.
+  criteria:
+  - id: partner-only-sentence
+    instruction: Line 1 names only a conversation partner with snakke med.
+  - id: topic-only-sentence
+    instruction: Line 2 names only a topic with snakke om.
+  - id: combined-sentence
+    instruction: Line 3 combines a conversation partner and a person as topic with
+      snakke med ... om ....
+  - id: partner-question
+    instruction: Line 4 asks who someone is speaking with using hvem ... med?.
+  - id: topic-question
+    instruction: Line 5 asks what or whom someone is speaking about using hva ...
+      om? or hvem ... om?.
+  - id: role-distinction
+    instruction: Across all five lines, keeps partner and topic distinct even when
+      both roles are people.

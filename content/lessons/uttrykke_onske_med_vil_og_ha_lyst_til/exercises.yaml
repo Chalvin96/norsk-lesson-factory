@@ -1,0 +1,212 @@
+- handle: identify_clear_decisions
+  op: build
+  objective: obj-uttrykke-onske-med-vil-og-ha-lyst-til-01
+  bloom: apply
+  prompt_md: Emma, Jonas, and Nora make definite choices for their Bergen morning.
+    Build one complete sentence saying that Emma intends to take the bus, Jonas intends
+    to eat breakfast, and Nora wants a souvenir.
+  explanation_md: "Vil + bare infinitive presents a decision or direct wish; ha lyst til å + infinitive and ha lyst på + noun express inclination."
+  derived_from:
+  - section_id: checkpoint-identify-clear-decisions
+  tokens:
+  - token_id: tok-vil-1
+    text: vil
+  - token_id: tok-ta
+    text: ta
+  - token_id: tok-bussen
+    text: bussen,
+  - token_id: tok-jonas
+    text: Jonas
+  - token_id: tok-vil-2
+    text: vil
+  - token_id: tok-spise
+    text: spise
+  - token_id: tok-frokost
+    text: frokost,
+  - token_id: tok-og
+    text: og
+  - token_id: tok-nora
+    text: Nora
+  - token_id: tok-vil-3
+    text: vil
+  - token_id: tok-ha
+    text: ha
+  - token_id: tok-suvenir
+    text: en suvenir.
+  - token_id: tok-emma
+    text: Emma
+  answer_order:
+  - tok-emma
+  - tok-vil-1
+  - tok-ta
+  - tok-bussen
+  - tok-jonas
+  - tok-vil-2
+  - tok-spise
+  - tok-frokost
+  - tok-og
+  - tok-nora
+  - tok-vil-3
+  - tok-ha
+  - tok-suvenir
+- handle: interpret_speakers_perspective
+  op: choose
+  objective: obj-uttrykke-onske-med-vil-og-ha-lyst-til-01
+  bloom: analyze
+  prompt_md: 'Compare A: «Jeg vil lage middag i kveld.» and B: «Jeg har lyst til å
+    lage middag i kveld.» Choose the interpretation that correctly distinguishes the
+    speaker’s perspective and translates both statements naturally.'
+  derived_from:
+  - section_id: checkpoint-interpret-speakers-perspective
+  stem_md: Which interpretation correctly explains and translates A and B?
+  options:
+  - id: direct-then-inclination
+    text: 'A presents a direct choice or intention: ‘I want to cook dinner tonight.’
+      B presents an activity that currently appeals to the speaker: ‘I feel like cooking
+      dinner tonight.’'
+    correct: true
+    why: Vil expresses direct desire or intention, while har lyst til å expresses
+      inclination toward an activity.
+  - id: both-inclination
+    text: 'Both A and B present current inclination: ‘I feel like cooking dinner tonight.’'
+    correct: false
+    why: A uses vil, which presents direct desire or intention.
+  - id: inclination-then-direct
+    text: 'A presents an activity that currently appeals to the speaker: ‘I feel like
+      cooking dinner tonight.’ B presents a direct choice or intention: ‘I want to
+      cook dinner tonight.’'
+    correct: false
+    why: This reverses the perspectives expressed by vil and har lyst til å.
+  - id: both-direct
+    text: 'Both A and B present the same direct choice: ‘I want to cook dinner tonight.’'
+    correct: false
+    why: B uses har lyst til å, which highlights current inclination rather than a
+      definite choice.
+- handle: choose_correct_lyst_frame
+  op: recall_fill
+  objective: obj-uttrykke-onske-med-vil-og-ha-lyst-til-01
+  bloom: apply
+  prompt_md: Complete each Bergen statement with the correct lyst frame. Use til å
+    before an activity and på before a thing.
+  explanation_md: "Use lyst til å before an activity, but lyst på before a desired thing."
+  derived_from:
+  - section_id: checkpoint-choose-correct-lyst-frame
+  audio_target: "Emma har lyst til å besøke museet. Jonas har lyst på en kaffe. Nora har lyst til å ta en tur. Etterpå har hun lyst på en liten suvenir."
+  segments:
+  - text_md: 'Emma har lyst '
+  - blank_id: visit-activity
+    options:
+    - på
+    - til å
+    answer_index: 1
+  - text_md: ' besøke museet. Jonas har lyst '
+  - blank_id: coffee-thing
+    options:
+    - på
+    - til å
+    answer_index: 0
+  - text_md: ' en kaffe. Nora har lyst '
+  - blank_id: walk-activity
+    options:
+    - på
+    - til å
+    answer_index: 1
+  - text_md: ' ta en tur. Etterpå har hun lyst '
+  - blank_id: souvenir-thing
+    options:
+    - på
+    - til å
+    answer_index: 0
+  - text_md: ' en liten suvenir.'
+- handle: changing_plans
+  op: write
+  objective: obj-uttrykke-onske-med-vil-og-ha-lyst-til-01
+  bloom: apply
+  prompt_md: 'Rain changes Emma, Jonas, and Nora’s plans in Bergen. Write three short
+    Norwegian responses: give one friend a definite decision with vil, one friend
+    an appealing activity with har lyst til å, and one friend an appealing food or
+    object with har lyst på. Use an infinitive directly after vil, an infinitive after
+    til å, and a noun after på.'
+  derived_from:
+  - section_id: guided-practice-changing-plans
+  response_language: 'no'
+  min_words: 18
+  max_words: 50
+  judge_prompt: Check the three responses against the rainy Bergen situation. Report
+    evidence for every criterion. Accept natural lexical variants when each frame
+    has the requested meaning and grammar.
+  criteria:
+  - id: definite-decision
+    instruction: Expresses one friend’s definite decision with vil followed directly
+      by an infinitive, without å.
+  - id: appealing-activity
+    instruction: Expresses one friend’s appealing activity with har lyst til å followed
+      by an infinitive.
+  - id: appealing-thing
+    instruction: Expresses one friend’s appealing food or object with har lyst på
+      followed by a noun.
+  - id: contextual-responses
+    instruction: Provides three natural responses connected to revised plans on a
+      rainy day in Bergen.
+- handle: personalised_bounded_practice
+  op: write
+  objective: obj-uttrykke-onske-med-vil-og-ha-lyst-til-01
+  bloom: apply
+  prompt_md: Write a short Norwegian plan for an ordinary free afternoon. Include
+    one specific direct intention with vil, one specific activity you feel inclined
+    to do with har lyst til å, and one specific food, drink, or thing that appeals
+    to you with har lyst på.
+  derived_from:
+  - section_id: personalised-but-bounded-practice
+  response_language: 'no'
+  min_words: 18
+  max_words: 45
+  judge_prompt: Check whether the plan naturally demonstrates all three requested
+    meanings and frames. Report evidence for every criterion. Accept any natural personal
+    details that make the contrasts clear.
+  criteria:
+  - id: direct-intention
+    instruction: Includes one specific direct intention expressed with vil and the
+      correct following form.
+  - id: inclined-activity
+    instruction: Includes one specific activity expressed with har lyst til å followed
+      by an infinitive.
+  - id: appealing-thing
+    instruction: Includes one specific food, drink, or thing expressed with har lyst
+      på followed by a noun.
+  - id: clear-contrast
+    instruction: Makes each statement specific enough to distinguish intention, inclination
+      toward an activity, and inclination toward a thing.
+- handle: retrieval_and_review
+  op: write
+  objective: obj-uttrykke-onske-med-vil-og-ha-lyst-til-01
+  bloom: apply
+  prompt_md: 'Without looking back, write three connected Norwegian sentences about
+    tomorrow: one with vil plus an infinitive or vil ha, one with har lyst til å plus
+    an infinitive, and one with har lyst på plus a noun. After each sentence, briefly
+    explain in Norwegian why that form fits the intended meaning.'
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  min_words: 30
+  max_words: 75
+  judge_prompt: Check the three Norwegian sentences and their Norwegian explanations.
+    Report evidence for every criterion. Accept natural topics and wording when the
+    three frames are grammatical, connected to tomorrow, and accurately explained.
+  criteria:
+  - id: vil-retrieval
+    instruction: Produces one correct sentence about tomorrow with vil followed directly
+      by an infinitive, or with vil ha for a desired thing.
+  - id: lyst-activity-retrieval
+    instruction: Produces one correct sentence about tomorrow with har lyst til å
+      followed by an infinitive.
+  - id: lyst-thing-retrieval
+    instruction: Produces one correct sentence about tomorrow with har lyst på followed
+      by a noun.
+  - id: form-explanations
+    instruction: Explains in Norwegian that vil marks direct desire or intention, har
+      lyst til å marks inclination toward an activity, and har lyst på marks inclination
+      toward a thing.
+  - id: connected-tomorrow-context
+    instruction: Makes all three Norwegian sentences connected parts of a plan for
+      tomorrow.

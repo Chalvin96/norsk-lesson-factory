@@ -1,0 +1,267 @@
+- handle: notice_embedded_question_order
+  op: choose
+  objective: obj-embedded-questions-01
+  bloom: understand
+  prompt_md: Choose the sentence that correctly embeds the question. The question
+    word is not the subject.
+  derived_from:
+  - section_id: direct-and-embedded-questions
+  stem_md: Which sentence uses question word + subject + finite verb inside the embedded
+    question?
+  options:
+  - id: correct
+    text: Vet du hvor spor 12 er?
+    correct: true
+    why: 'The embedded question has question word + subject + finite verb: hvor +
+      spor 12 + er.'
+  - id: inverted-platform
+    text: Vet du hvor er spor 12?
+    correct: false
+    why: The finite verb comes before the subject, copying direct-question order.
+  - id: inverted-departure
+    text: Jeg lurer på hvorfor er avgangen endret.
+    correct: false
+    why: The finite verb comes before the subject inside the embedded question.
+- handle: change_direct_to_embedded_question
+  op: build
+  objective: obj-embedded-questions-01
+  bloom: apply
+  prompt_md: 'Build one complete station-scene question from the supplied tokens.
+    Preserve both meanings: when the train arrives and which train stops at Hamar.'
+  explanation_md: "An embedded question uses subordinate order: question word/om + subject + sentence adverb + finite verb. Subject questions add «som», as in «hva som skjedde»."
+  derived_from:
+  - section_id: common-mistake-direct-question-inversion
+  tokens:
+  - token_id: tok-1
+    text: Vet
+  - token_id: tok-2
+    text: du
+  - token_id: tok-3
+    text: når
+  - token_id: tok-4
+    text: toget
+  - token_id: tok-5
+    text: kommer
+  - token_id: tok-6
+    text: og
+  - token_id: tok-7
+    text: hvilket
+  - token_id: tok-8
+    text: tog
+  - token_id: tok-9
+    text: som
+  - token_id: tok-10
+    text: stopper
+  - token_id: tok-11
+    text: på
+  - token_id: tok-12
+    text: Hamar?
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+  - tok-11
+  - tok-12
+- handle: select_question_word_or_om
+  op: choose
+  objective: obj-embedded-questions-01
+  bloom: understand
+  prompt_md: Choose the pair in which the first sentence asks where the hotel is and
+    the second asks whether it is far away.
+  derived_from:
+  - section_id: questions-answered-with-yes-or-no-use-om
+  stem_md: Which pair uses the correct introducer for each meaning?
+  options:
+  - id: correct
+    text: Vet du hvor hotellet er? / Kan du sjekke om hotellet er langt unna?
+    correct: true
+    why: Hvor introduces specific location information; om introduces a yes-or-no
+      question.
+  - id: swapped-introducers
+    text: Vet du om hotellet er langt unna? / Kan du sjekke hvor hotellet er?
+    correct: false
+    why: 'The meanings appear in the opposite order: om asks whether, while hvor asks
+      for a location.'
+- handle: place_negation_in_embedded_question
+  op: build
+  objective: obj-embedded-questions-01
+  bloom: apply
+  prompt_md: 'Build one complete question containing two negative embedded questions:
+    one introduced by a question word and one by om. Put ikke before each finite verb.'
+  derived_from:
+  - section_id: negation-inside-an-embedded-question
+  tokens:
+  - token_id: tok-1
+    text: Kan
+  - token_id: tok-2
+    text: du
+  - token_id: tok-3
+    text: sjekke
+  - token_id: tok-4
+    text: hvorfor
+  - token_id: tok-5
+    text: toget
+  - token_id: tok-6
+    text: ikke
+  - token_id: tok-7
+    text: stopper
+  - token_id: tok-8
+    text: på
+  - token_id: tok-9
+    text: Hamar
+  - token_id: tok-10
+    text: og
+  - token_id: tok-11
+    text: om
+  - token_id: tok-12
+    text: hotellet
+  - token_id: tok-13
+    text: ikke
+  - token_id: tok-14
+    text: serverer
+  - token_id: tok-15
+    text: frokost
+  - token_id: tok-16
+    text: på
+  - token_id: tok-17
+    text: søndager?
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+  - tok-11
+  - tok-12
+  - tok-13
+  - tok-14
+  - tok-15
+  - tok-16
+  - tok-17
+- handle: complete_embedded_information_statement
+  op: recall_fill
+  objective: obj-embedded-questions-01
+  bloom: apply
+  prompt_md: Complete each statement by selecting the taught embedded clause with
+    subordinate-clause word order.
+  derived_from:
+  - section_id: statements-that-contain-questions
+  audio_target: "Mina er usikker på om de har bestilt lunsj. Jonas husker ikke hvilket rom møtet er i. Vi må finne ut når resepsjonen stenger."
+  segments:
+  - text_md: 'Mina er usikker på '
+  - blank_id: mina-clause
+    options:
+    - om de har bestilt lunsj
+    - de har om bestilt lunsj
+    answer_index: 0
+  - text_md: '. Jonas husker ikke '
+  - blank_id: jonas-clause
+    options:
+    - hvilket rom møtet er i
+    - hvilket rom er møtet i
+    answer_index: 0
+  - text_md: '. Vi må finne ut '
+  - blank_id: reception-clause
+    options:
+    - når resepsjonen stenger
+    - når stenger resepsjonen
+    answer_index: 0
+  - text_md: .
+- handle: repair_embedded_question_word_order
+  op: find_fix
+  objective: obj-embedded-questions-01
+  bloom: analyze
+  prompt_md: 'Jonas''s message contains one local word-order error in an embedded
+    question about the bus and hotel. Select the only token group that must be corrected.
+    The intended meaning is: “Do you know whether the bus does not go to the hotel?”
+    Keep the question meaning and punctuation unchanged.'
+  derived_from:
+  - section_id: a-practical-editing-check
+  tokens:
+  - token_id: tok-1
+    text: Vet
+  - token_id: tok-2
+    text: du
+  - token_id: tok-3
+    text: om
+  - token_id: tok-4
+    text: bussen
+  - token_id: tok-5
+    text: går ikke
+  - token_id: tok-6
+    text: til
+  - token_id: tok-7
+    text: hotellet?
+  error_token_id: tok-5
+  feedback: 'Replace går ikke with ikke går: Vet du om bussen ikke går til hotellet?'
+- handle: use_embedded_questions_at_hotel_reception
+  op: write
+  objective: obj-embedded-questions-01
+  bloom: apply
+  prompt_md: 'Write four natural Norwegian sentences addressed to hotel reception,
+    one for each need: ask when breakfast ends; ask whether you can leave your suitcase
+    here; ask where the airport bus stops; and ask why the key card does not work.
+    Use a question word for specific information and om for the yes-or-no question.
+    Put the subject before the finite verb in every embedded question, and put internal
+    ikke before its finite verb in at least one sentence. Use your own wording rather
+    than copying a complete lesson example.'
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+  response_language: 'no'
+  min_words: 20
+  max_words: 60
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+  criteria:
+  - id: complete-reception-set
+    instruction: Produces four complete, natural Bokmål sentences addressed to hotel
+      reception, preserving the four requested information needs.
+  - id: question-word-and-om
+    instruction: Uses a question word for specific information and om for the yes-or-no
+      need.
+  - id: subordinate-order
+    instruction: Places the subject before the finite verb in each embedded question.
+  - id: internal-negation
+    instruction: Places internal ikke before the finite verb in at least one embedded
+      question.
+- handle: retrieve_embedded_question_pattern
+  op: write
+  objective: obj-embedded-questions-01
+  bloom: apply
+  prompt_md: Write in Norwegian a plain-language explanation of the embedded-question
+    pattern and exactly two original sentences set in a hotel, workplace, or travel
+    situation. One sentence must be a larger question introduced by a question word.
+    The other must be a statement introduced by om. In the explanation, include
+    subject-before-finite-verb order, the placement of internal ikke, and the subject-question
+    pattern with som.
+  derived_from:
+  - section_id: short-retrieval-review
+  response_language: 'no'
+  min_words: 35
+  max_words: 75
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+  criteria:
+  - id: pattern-explanation
+    instruction: States in plain Norwegian that embedded questions use a question
+      word or om, place the subject before the finite verb, place internal ikke before
+      that verb, and use subject question phrase + som + finite verb when appropriate.
+  - id: question-word-sentence
+    instruction: Produces one new larger question introduced by a question word with
+      subordinate-clause word order.
+  - id: om-statement
+    instruction: Produces one new statement introduced by om with subordinate-clause
+      word order.
+  - id: new-wording
+    instruction: Uses a new everyday situation and wording instead of copying a complete
+      lesson sentence.

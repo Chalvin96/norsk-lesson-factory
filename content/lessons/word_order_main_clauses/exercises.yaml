@@ -1,0 +1,263 @@
+- handle: build_subject_first_statements
+  op: build
+  objective: obj-word-order-main-clauses-01
+  bloom: apply
+  prompt_md: At the café, Maja describes people and activities. Build the subject-first
+    statement meaning “Sara is coming at ten.” Reorder all supplied tokens so the
+    subject comes first and the present-tense verb comes immediately after it.
+  derived_from:
+  - section_id: subject-first-statements
+  tokens:
+  - token_id: subject-first-1
+    text: Sara
+  - token_id: subject-first-2
+    text: kommer
+  - token_id: subject-first-3
+    text: klokka
+  - token_id: subject-first-4
+    text: ti.
+  answer_order:
+  - subject-first-1
+  - subject-first-2
+  - subject-first-3
+  - subject-first-4
+- handle: notice_fronted_phrase_inversion
+  op: recall_fill
+  objective: obj-word-order-main-clauses-01
+  bloom: understand
+  prompt_md: Identify the opening phrase, present-tense verb, and subject in each
+    Norwegian statement. Fill the three slots in that order. Treat each multiword
+    opening phrase as one sentence element; use the English meaning cue to select
+    the intended taught forms.
+  explanation_md: "A Norwegian main clause keeps the finite verb in second position, including after a fronted phrase; yes/no questions put it first."
+  derived_from:
+  - section_id: beginning-with-time-or-place-phrase
+  audio_target: "På den lille kafeen møter Jonas Maja. Hver lørdagsmorgen møtes gruppen her. Ved vinduet sitter gruppen."
+  segments:
+  - text_md: 'Statement 1 — At the little café, Jonas meets Maja: « '
+  - blank_id: fronted-1-opening
+    options:
+    - På den lille kafeen
+    - Hver lørdagsmorgen
+    - Ved vinduet
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: fronted-1-verb
+    options:
+    - sitter
+    - møter
+    - drikker
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: fronted-1-subject
+    options:
+    - Maja
+    - Jonas
+    - gruppen
+    answer_index: 1
+  - text_md: ' Maja.» Statement 2 — Every Saturday morning, the group meets here:
+      « '
+  - blank_id: fronted-2-opening
+    options:
+    - Ved vinduet
+    - På den lille kafeen
+    - Hver lørdagsmorgen
+    answer_index: 2
+  - text_md: ' '
+  - blank_id: fronted-2-verb
+    options:
+    - drikker
+    - møtes
+    - sitter
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: fronted-2-subject
+    options:
+    - studiegruppen
+    - gruppen
+    - Jonas
+    answer_index: 1
+  - text_md: ' her.» Statement 3 — By the window, the group sits: « '
+  - blank_id: fronted-3-opening
+    options:
+    - Hver lørdagsmorgen
+    - Ved vinduet
+    - På den lille kafeen
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: fronted-3-verb
+    options:
+    - møtes
+    - begynner
+    - sitter
+    answer_index: 2
+  - text_md: ' '
+  - blank_id: fronted-3-subject
+    options:
+    - Maja
+    - gruppen
+    - vi
+    answer_index: 1
+  - text_md: .»
+- handle: reframe_statements_with_time_first
+  op: build
+  objective: obj-word-order-main-clauses-01
+  bloom: apply
+  prompt_md: At the café, restate the subject-first statement «Vi begynner klokka
+    ti.» so the supplied time phrase comes first. Reorder all tokens, preserve the
+    meaning, and keep the present-tense verb immediately after the fronted phrase.
+  derived_from:
+  - section_id: beginning-with-time-or-place-phrase
+  tokens:
+  - token_id: time-first-1
+    text: Klokka
+  - token_id: time-first-2
+    text: ti
+  - token_id: time-first-3
+    text: begynner
+  - token_id: time-first-4
+    text: vi.
+  answer_order:
+  - time-first-1
+  - time-first-2
+  - time-first-3
+  - time-first-4
+- handle: place_sentence_adverbs_in_statements
+  op: recall_fill
+  objective: obj-word-order-main-clauses-01
+  bloom: apply
+  prompt_md: 'Complete both Norwegian statements with the supplied sentence adverb.
+    Keep the neutral order in each frame: subject + verb + adverb, or fronted phrase
+    + verb + subject + adverb.'
+  explanation_md: "In a neutral main clause, the sentence adverb comes after the finite verb."
+  derived_from:
+  - section_id: placing-common-sentence-adverbs
+  audio_target: "Hun kommer ikke i dag. På lørdager sitter de vanligvis ved vinduet."
+  segments:
+  - text_md: 'Subject-first, meaning “She isn’t coming today”: «Hun kommer '
+  - blank_id: adverb-subject-first
+    options:
+    - ikke
+    - alltid
+    - ofte
+    - vanligvis
+    answer_index: 0
+  - text_md: ' i dag.» Fronted, meaning “On Saturdays they usually sit by the window”:
+      «På lørdager sitter de '
+  - blank_id: adverb-fronted
+    options:
+    - ikke
+    - alltid
+    - ofte
+    - vanligvis
+    answer_index: 3
+  - text_md: ' ved vinduet.»'
+- handle: turn_statements_into_yes_no_questions
+  op: build
+  objective: obj-word-order-main-clauses-01
+  bloom: apply
+  prompt_md: Turn the statement «Hun kommer ikke i dag.» into a neutral yes/no question.
+    Reorder all supplied tokens and keep the sentence-adverb information natural.
+  explanation_md: "A neutral yes/no question moves the finite verb to first position while ikke remains after the subject."
+  derived_from:
+  - section_id: yes-no-questions-begin-with-the-verb
+  tokens:
+  - token_id: yes-no-1
+    text: Kommer
+  - token_id: yes-no-2
+    text: hun
+  - token_id: yes-no-3
+    text: ikke
+  - token_id: yes-no-4
+    text: i
+  - token_id: yes-no-5
+    text: dag?
+  answer_order:
+  - yes-no-1
+  - yes-no-2
+  - yes-no-3
+  - yes-no-4
+  - yes-no-5
+- handle: form_wh_questions_from_missing_information
+  op: build
+  objective: obj-word-order-main-clauses-01
+  bloom: apply
+  prompt_md: Maja needs to ask where the study group is sitting. Build the Norwegian
+    wh-question from the supplied tokens, starting with the supplied question word.
+    Put the present-tense verb before the subject.
+  explanation_md: "A wh-question uses question word + finite verb + subject."
+  derived_from:
+  - section_id: wh-questions-keep-the-verb-in-the-second-slot
+  tokens:
+  - token_id: wh-question-1
+    text: Hvor
+  - token_id: wh-question-2
+    text: sitter
+  - token_id: wh-question-3
+    text: studiegruppen?
+  answer_order:
+  - wh-question-1
+  - wh-question-2
+  - wh-question-3
+- handle: transfer_word_order_to_library_plans
+  op: write
+  objective: obj-word-order-main-clauses-01
+  bloom: apply
+  prompt_md: Write four short Norwegian main clauses about Maja and a classmate arranging
+    a weekday meeting at the library. Include one subject-first statement, one statement
+    beginning with a time or place phrase, one yes/no question, and one wh-question.
+    Include one of the common sentence adverbs ikke, alltid, ofte, or vanligvis naturally.
+    Keep all clauses in the simple present tense and use original library/weekday
+    wording throughout.
+  derived_from:
+  - section_id: cumulative-transfer-weekday-appointment
+  response_language: 'no'
+  min_words: 20
+  max_words: 45
+  judge_prompt: Check the response against the task and report evidence for every
+    criterion. Accept natural Bokmål wording, lexical choices, and punctuation variants
+    when they preserve the requested library/weekday meanings and clause types. Do
+    not require any sentence from the lesson verbatim.
+  criteria:
+  - id: four-clause-sequence
+    instruction: 'Produces four simple present-tense Norwegian main clauses about
+      a weekday meeting at the library: one subject-first statement, one statement
+      beginning with a time or place phrase, one neutral yes/no question, and one
+      wh-question.'
+  - id: clause-specific-order
+    instruction: 'Uses the required order in each clause: subject + verb; fronted
+      phrase + verb + subject; verb + subject; and question word or phrase + verb
+      + subject.'
+  - id: adverb-and-transfer
+    instruction: Uses one of ikke, alltid, ofte, or vanligvis naturally and keeps
+      content in the new weekday-library situation without copying a complete café
+      sentence.
+- handle: retrieve_main_clause_frames
+  op: write
+  objective: obj-word-order-main-clauses-01
+  bloom: apply
+  prompt_md: 'Without looking back, write four short Norwegian examples, one for each
+    of these frames: subject-first statement, fronted time/place statement, yes/no
+    question, and wh-question. Use a familiar present-tense verb in each example.
+    If you include a sentence adverb, place it naturally.'
+  derived_from:
+  - section_id: final-retrieval-request
+  response_language: 'no'
+  min_words: 12
+  max_words: 35
+  judge_prompt: Check evidence for every criterion. Accept natural Bokmål examples
+    and different familiar present-tense verbs when each frame and intended meaning
+    are clear. Treat sentence adverbs as optional; when present, require natural placement.
+  criteria:
+  - id: four-word-order-frames
+    instruction: 'Provides one short Norwegian example for each frame: subject-first
+      statement, fronted time/place statement, yes/no question, and wh-question.'
+  - id: frame-specific-verb-order
+    instruction: 'Places the present-tense verb correctly: after the subject in a
+      subject-first statement; after the fronted phrase and before the subject in
+      a fronted statement; first in a yes/no question; and after the question word
+      or phrase and before the subject in a wh-question.'
+  - id: natural-adverb-placement
+    instruction: 'Places any included sentence adverb naturally: after the present-tense
+      verb in subject-first statements, and after the subject in fronted statements
+      or questions.'

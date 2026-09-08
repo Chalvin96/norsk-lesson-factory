@@ -1,0 +1,212 @@
+- handle: identify_ta_med_ha_med
+  op: categorize
+  objective: obj-ta-med-or-ha-med-01
+  bloom: analyze
+  prompt_md: Classify every listed use below. Put each use that
+    arranges for something to come along in arranging-accompaniment; put each use
+    that checks what is already with someone in already-present. Use the situation,
+    not a translation of both expressions as bring.
+  explanation_md: "Ta med views bringing as an action or preparation; ha med views the item as already accompanying the person."
+  derived_from:
+  - section_id: first-checkpoint-identify-action-and-situation
+  buckets:
+  - bucket_id: arranging-accompaniment
+    label: Arranging for something to come along
+  - bucket_id: already-present
+    label: Checking what is already with someone
+  items:
+  - item_id: emil-ta-med
+    text: 'Emil: ta med'
+    bucket_id: arranging-accompaniment
+  - item_id: nora-ha-med
+    text: 'Nora: ha med'
+    bucket_id: already-present
+- handle: complete_travel_sequence
+  op: recall_fill
+  objective: obj-ta-med-or-ha-med-01
+  bloom: understand
+  prompt_md: Complete the travel sequence by choosing one appropriate Norwegian expression
+    in each gap. The same passport is first made part of the journey, then checked
+    and confirmed at the airport.
+  derived_from:
+  - section_id: second-checkpoint-complete-the-travel-sequence
+  audio_target: "Før Lea går til flyplassen, må hun ta med passet. På flyplassen spør venninnen: «Har du med passet?» Lea åpner veska og sier at hun har med passet."
+  segments:
+  - text_md: 'Før Lea går til flyplassen, må hun '
+  - blank_id: preparation-expression
+    options:
+    - ta med
+    - ha med
+    answer_index: 0
+  - text_md: ' passet. På flyplassen spør venninnen: '
+  - blank_id: airport-question
+    options:
+    - Har du med
+    - Tar du med
+    answer_index: 0
+  - text_md: ' passet? Lea åpner veska og sier at hun '
+  - blank_id: confirmed-expression
+    options:
+    - har med
+    - tar med
+    answer_index: 0
+  - text_md: ' passet.'
+- handle: change_the_viewpoint
+  op: build
+  objective: obj-ta-med-or-ha-med-01
+  bloom: apply
+  prompt_md: 'Build six complete Norwegian sentences from the tokens. First build
+    a later check or report for each preparation or movement sentence: Sander tar
+    med dokumentene til kontoret; Vi tar med håndklær til stranda; Mina tar med søsteren
+    sin på konserten. Then build the earlier preparation or movement sentence for
+    each corresponding report: Sander har med dokumentene; Vi har med håndklær; Mina
+    har med søsteren sin. Keep people and objects unchanged.'
+  derived_from:
+  - section_id: third-checkpoint-change-the-viewpoint
+  tokens:
+  - token_id: s1-1
+    text: Sander
+  - token_id: s1-2
+    text: har
+  - token_id: s1-3
+    text: med
+  - token_id: s1-4
+    text: dokumentene.
+  - token_id: s2-1
+    text: Vi
+  - token_id: s2-2
+    text: har
+  - token_id: s2-3
+    text: med
+  - token_id: s2-4
+    text: håndklær.
+  - token_id: s3-1
+    text: Mina
+  - token_id: s3-2
+    text: har
+  - token_id: s3-3
+    text: med
+  - token_id: s3-4
+    text: søsteren
+  - token_id: s3-5
+    text: sin.
+  - token_id: s4-1
+    text: Sander
+  - token_id: s4-2
+    text: tar
+  - token_id: s4-3
+    text: med
+  - token_id: s4-4
+    text: dokumentene
+  - token_id: s4-5
+    text: til
+  - token_id: s4-6
+    text: kontoret.
+  - token_id: s5-1
+    text: Vi
+  - token_id: s5-2
+    text: tar
+  - token_id: s5-3
+    text: med
+  - token_id: s5-4
+    text: håndklær
+  - token_id: s5-5
+    text: til
+  - token_id: s5-6
+    text: stranda.
+  - token_id: s6-1
+    text: Mina
+  - token_id: s6-2
+    text: tar
+  - token_id: s6-3
+    text: med
+  - token_id: s6-4
+    text: søsteren
+  - token_id: s6-5
+    text: sin
+  - token_id: s6-6
+    text: på
+  - token_id: s6-7
+    text: konserten.
+  answer_order:
+  - s1-1
+  - s1-2
+  - s1-3
+  - s1-4
+  - s2-1
+  - s2-2
+  - s2-3
+  - s2-4
+  - s3-1
+  - s3-2
+  - s3-3
+  - s3-4
+  - s3-5
+  - s4-1
+  - s4-2
+  - s4-3
+  - s4-4
+  - s4-5
+  - s4-6
+  - s5-1
+  - s5-2
+  - s5-3
+  - s5-4
+  - s5-5
+  - s5-6
+  - s6-1
+  - s6-2
+  - s6-3
+  - s6-4
+  - s6-5
+  - s6-6
+  - s6-7
+- handle: guided_context_practice
+  op: write
+  objective: obj-ta-med-or-ha-med-01
+  bloom: apply
+  prompt_md: 'Write four short Norwegian sentences for these moments: before departure,
+    state that one person will bring food; at the bus stop, ask whether another person
+    has a blanket with them; at the park, report that someone has two friends with
+    them; while discussing the next picnic, ask someone to bring a ball. Use ta med
+    when arranging accompaniment and ha med when describing existing presence.'
+  derived_from:
+  - section_id: guided-context-practice
+  response_language: 'no'
+  judge_prompt: Check the response against every criterion and report evidence for
+    each. Accept natural equivalent Norwegian wording and suitable names, but require
+    the requested meanings and the distinction between ta med and ha med.
+  criteria:
+  - id: four-sentences
+    instruction: Provides four short Norwegian sentences, one for each requested moment.
+  - id: food-before-departure
+    instruction: States before departure that one person will bring food, using a
+      natural ta med expression.
+  - id: blanket-bus-stop
+    instruction: At the bus stop, asks whether another person has a blanket with them,
+      using a natural ha med expression.
+  - id: friends-at-park
+    instruction: At the park, reports that someone has two friends with them, using
+      a natural ha med expression.
+  - id: ball-next-picnic
+    instruction: During discussion of the next picnic, asks someone to bring a ball,
+      using a natural ta med expression.
+  - id: consistent-distinction
+    instruction: Applies the distinction consistently across all four sentences.
+- handle: retrieval_and_review
+  op: write
+  objective: obj-ta-med-or-ha-med-01
+  bloom: apply
+  prompt_md: Write two connected Norwegian sentences about
+    one object. In the first, arrange for it to accompany someone; in the second,
+    confirm that the person has it with them.
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  judge_prompt: Check the response against the two connected Norwegian-sentence criteria and report evidence for each. Accept natural equivalent wording with the requested change from arranging accompaniment to confirming presence.
+  criteria:
+  - id: connected-norwegian-sentences
+    instruction: Writes two connected Norwegian sentences about one object.
+  - id: viewpoint-change
+    instruction: Uses a Norwegian ta med expression for arranging accompaniment first
+      and a Norwegian ha med expression for confirming presence second.

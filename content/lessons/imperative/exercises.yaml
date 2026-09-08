@@ -1,0 +1,314 @@
+- handle: notice_imperatives_in_party_setup
+  op: choose
+  objective: obj-imperative-01
+  bloom: understand
+  prompt_md: Identify which lines directly instruct Sara and what actions she should
+    perform.
+  derived_from:
+  - section_id: imperative-meaning
+  stem_md: 'Mina says: 1. Du kommer inn. 2. Ta denne esken! 3. Sett glassene her!
+    Choose the correct interpretation.'
+  options:
+  - id: instruction-one-only
+    text: 'Only line 1 is an instruction: come inside. Lines 2 and 3 describe actions.'
+    correct: false
+    why: Lines 2 and 3 begin with imperative verbs and directly instruct the listener.
+  - id: instructions-one-two
+    text: 'Lines 1 and 2 are instructions: come inside, then take this box. Line 3
+      is a statement.'
+    correct: false
+    why: Du kommer inn is a statement, while Sett glassene her! is an instruction.
+  - id: instructions-two-three
+    text: 'Lines 2 and 3 are instructions: take this box, then put the glasses here.
+      Line 1 is a statement.'
+    correct: true
+    why: The imperative verbs Ta and Sett directly tell Sara what to do.
+- handle: form_regular_imperatives_for_room_setup
+  op: recall_fill
+  objective: obj-imperative-01
+  bloom: apply
+  prompt_md: Complete each room-setup instruction with the imperative of the verb
+    in parentheses.
+  explanation_md: "The imperative addresses the listener directly and normally omits the subject. Regular infinitives in -e usually drop -e, while frequent short and irregular verbs must be learned as whole forms."
+  derived_from:
+  - section_id: remove-unstressed-e
+  audio_target: "Flytt bordet! Finn serviettene! Lukk døra! Legg glassene på bordet! Kom hit!"
+  segments:
+  - text_md: 'Item 1: '
+  - blank_id: move-table
+    options:
+    - Finn
+    - Flytt
+    answer_index: 1
+  - text_md: ' bordet! (å flytte) 2. '
+  - blank_id: find-objects
+    options:
+    - Finn
+    - Flytt
+    answer_index: 0
+  - text_md: ' serviettene! (å finne) 3. '
+  - blank_id: close-door
+    options:
+    - Legg
+    - Lukk
+    answer_index: 1
+  - text_md: ' døra! (å lukke) 4. '
+  - blank_id: place-glasses
+    options:
+    - Legg
+    - Lukk
+    answer_index: 0
+  - text_md: ' glassene på bordet! (å legge) 5. '
+  - blank_id: come-here
+    options:
+    - Finn
+    - Kom
+    answer_index: 1
+  - text_md: ' hit! (å komme)'
+- handle: distinguish_present_and_imperative_forms
+  op: categorize
+  objective: obj-imperative-01
+  bloom: analyze
+  prompt_md: Classify each line by whether the verb describes an action or directly
+    tells someone to perform it.
+  derived_from:
+  - section_id: remove-unstressed-e
+  buckets:
+  - bucket_id: present-description
+    label: Present-tense description
+  - bucket_id: direct-instruction
+    label: Direct instruction
+  items:
+  - item_id: sara-waits
+    text: Sara venter her.
+    bucket_id: present-description
+  - item_id: wait-here
+    text: Vent her!
+    bucket_id: direct-instruction
+  - item_id: jonas-comes
+    text: Jonas kommer inn.
+    bucket_id: present-description
+  - item_id: come-inside
+    text: Kom inn!
+    bucket_id: direct-instruction
+  - item_id: mina-moves
+    text: Mina flytter bordet.
+    bucket_id: present-description
+  - item_id: move-table
+    text: Flytt bordet, Mina!
+    bucket_id: direct-instruction
+- handle: choose_unchanged_common_imperatives
+  op: recall_fill
+  objective: obj-imperative-01
+  bloom: apply
+  prompt_md: Complete each everyday direction with the imperative of the verb in parentheses.
+    Keep unchanged verbs complete.
+  derived_from:
+  - section_id: unchanged-imperatives
+  audio_target: "Gå inn! Ta denne esken! Se på bildet! Stå her! Bli her!"
+  segments:
+  - text_md: 'Item 1: '
+  - blank_id: go-inside
+    options:
+    - Gå
+    - Stå
+    answer_index: 0
+  - text_md: ' inn! (å gå) 2. '
+  - blank_id: take-box
+    options:
+    - Bli
+    - Ta
+    answer_index: 1
+  - text_md: ' denne esken! (å ta) 3. '
+  - blank_id: look-picture
+    options:
+    - Se
+    - S
+    answer_index: 0
+  - text_md: ' på bildet! (å se) 4. '
+  - blank_id: stand-here
+    options:
+    - Bli
+    - Stå
+    answer_index: 1
+  - text_md: ' her! (å stå) 5. '
+  - blank_id: stay-here
+    options:
+    - Bli
+    - Stå
+    answer_index: 0
+  - text_md: ' her! (å bli)'
+- handle: retrieve_frequent_imperative_forms
+  op: recall_fill
+  objective: obj-imperative-01
+  bloom: apply
+  prompt_md: Complete each instruction with the imperative of the verb in parentheses.
+  derived_from:
+  - section_id: frequent-forms-boundaries
+  audio_target: "Vær forsiktig! Gjør dette først! Sett koppen på bordet! Sitt på stolen! Åpne døra!"
+  segments:
+  - text_md: 'Item 1: '
+  - blank_id: be-careful
+    options:
+    - Gjør
+    - Vær
+    answer_index: 1
+  - text_md: ' forsiktig! (å være) 2. '
+  - blank_id: do-first
+    options:
+    - Gjør
+    - Vær
+    answer_index: 0
+  - text_md: ' dette først! (å gjøre) 3. '
+  - blank_id: put-cup
+    options:
+    - Sitt
+    - Sett
+    answer_index: 1
+  - text_md: ' koppen på bordet! (å sette) 4. '
+  - blank_id: sit-chair
+    options:
+    - Sitt
+    - Sett
+    answer_index: 0
+  - text_md: ' på stolen! (å sitte) 5. '
+  - blank_id: open-door
+    options:
+    - Vær
+    - Åpne
+    answer_index: 1
+  - text_md: ' døra! (å åpne)'
+- handle: understand_complete_everyday_instructions
+  op: choose
+  objective: obj-imperative-01
+  bloom: understand
+  prompt_md: Determine the action, object, and destination expressed by the two instructions.
+  derived_from:
+  - section_id: useful-instructions
+  stem_md: 'Item 1: Ta glassene! 2. Sett glassene her! Choose the correct interpretation.'
+  options:
+  - id: take-then-put
+    text: First take the glasses. Then put the glasses here.
+    correct: true
+    why: Ta means take, while Sett means put and her supplies the destination.
+  - id: take-twice
+    text: Both instructions tell the listener to take the glasses.
+    correct: false
+    why: The second instruction uses Sett and specifies where to put the glasses.
+  - id: put-then-take
+    text: First put the glasses here. Then take the glasses.
+    correct: false
+    why: This reverses the actions expressed by Ta and Sett.
+- handle: build_two_step_instructions
+  op: build
+  objective: obj-imperative-01
+  bloom: apply
+  prompt_md: Build a sensible two-step party-setup instruction. Move the chair, then
+    open the door. Join the actions with og.
+  derived_from:
+  - section_id: useful-instructions
+  tokens:
+  - token_id: chair
+    text: stolen
+  - token_id: and
+    text: og
+  - token_id: open
+    text: åpne
+  - token_id: door
+    text: døra!
+  - token_id: move
+    text: Flytt
+  answer_order:
+  - move
+  - chair
+  - and
+  - open
+  - door
+- handle: repair_common_imperative_errors
+  op: find_fix
+  objective: obj-imperative-01
+  bloom: analyze
+  prompt_md: 'Select the single incorrect verb form in this instruction. The feedback explains the natural command form.'
+  derived_from:
+  - section_id: common-imperative-errors
+  tokens:
+  - token_id: incorrect-verb
+    text: Setter
+  - token_id: object
+    text: glasset
+  - token_id: location
+    text: her!
+  error_token_id: incorrect-verb
+  feedback: Replace Setter with Sett. Sett glasset her! preserves the intended meaning
+    while removing the present-tense ending.
+- handle: transfer_imperatives_to_kitchen_preparation
+  op: build
+  objective: obj-imperative-01
+  bloom: apply
+  prompt_md: Build a coherent kitchen-preparation sequence. Open the cupboard, take
+    the large plates, and put them on the table.
+  derived_from:
+  - section_id: kitchen-transfer
+  tokens:
+  - token_id: cupboard
+    text: skapet,
+  - token_id: take
+    text: ta
+  - token_id: determiner
+    text: de
+  - token_id: adjective
+    text: store
+  - token_id: plates
+    text: tallerkenene
+  - token_id: and
+    text: og
+  - token_id: put
+    text: sett
+  - token_id: them
+    text: dem
+  - token_id: 'true'
+    text: på
+  - token_id: table
+    text: bordet!
+  - token_id: open
+    text: Åpne
+  answer_order:
+  - open
+  - cupboard
+  - take
+  - determiner
+  - adjective
+  - plates
+  - and
+  - put
+  - them
+  - 'true'
+  - table
+- handle: final_imperative_retrieval
+  op: write
+  objective: obj-imperative-01
+  bloom: apply
+  prompt_md: Write exactly three short Norwegian instructions for a fresh room-preparation
+    situation. Tell a helper to move an object, look at something, and put something
+    in a particular place. Use correctly formed imperative verbs without present-tense
+    -r endings.
+  derived_from:
+  - section_id: short-review
+  response_language: 'no'
+  judge_prompt: Check that the response contains exactly three clear room-preparation
+    instructions in natural Norwegian. Report direct evidence for every criterion,
+    accepting natural choices of familiar objects and locations when each required
+    action is explicit.
+  criteria:
+  - id: clear-actions
+    instruction: Each of the three lines communicates a clear instruction with a correctly
+      formed imperative verb.
+  - id: no-present-endings
+    instruction: Imperative verbs have no unnecessary present-tense -r endings.
+  - id: move-object
+    instruction: One instruction tells the helper to move an object.
+  - id: look-at-something
+    instruction: One instruction tells the helper to look at something.
+  - id: put-in-place
+    instruction: One instruction tells the helper to put something in a particular
+      place.

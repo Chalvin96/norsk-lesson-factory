@@ -1,0 +1,14 @@
+description: Evaluate dependency second-opinion prompts against labeled edge decisions.
+
+prompts:
+  - file://prompts.py:create_catalog_prompt
+
+providers:
+  - id: file://provider.py:call_api
+    label: configured-curriculum-reviewer
+    config:
+      job: curriculum_reviewer
+
+defaultTest: file://defaults/structured-response.yaml
+
+tests: file://cases/catalog_dependency_review.yaml

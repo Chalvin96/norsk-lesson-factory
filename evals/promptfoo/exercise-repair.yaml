@@ -1,0 +1,14 @@
+description: Evaluate failed-handle-only exercise repairs and content restoration.
+
+prompts:
+  - file://prompts.py:create_exercise_repair_prompt
+
+providers:
+  - id: file://provider.py:call_api
+    label: configured-exercise-repair
+    config:
+      job: author
+
+defaultTest: file://defaults/structured-response.yaml
+
+tests: file://cases/exercise_repair.yaml

@@ -1,0 +1,235 @@
+- handle: frequency_after_the_verb
+  op: find_fix
+  objective: obj-adverbs-time-frequency-degree-manner-place-01
+  bloom: analyze
+  prompt_md: Select the one token that is wrong/needs changing.
+  derived_from:
+  - section_id: frequency-after-finite-verb
+  tokens:
+  - token_id: subject
+    text: Maja
+  - token_id: frequency
+    text: alltid
+  - token_id: finite-verb
+    text: snakker
+  - token_id: manner
+    text: fort.
+  error_token_id: frequency
+  feedback: 'Move alltid immediately after finite verb snakker: subject + finite verb
+    + frequency adverb.'
+- handle: keep_degree_together
+  op: recall_fill
+  objective: obj-adverbs-time-frequency-degree-manner-place-01
+  bloom: apply
+  prompt_md: Complete each Norwegian sentence with the degree adverb matching the
+    English cue. Put the degree adverb directly before the word it strengthens. Sentences
+    1 and 3 need the equivalent of “very”; sentence 2 needs the equivalent of “quite”.
+  explanation_md: "Veldig means very and ganske means quite; place either directly before the adjective or adverb it strengthens."
+  derived_from:
+  - section_id: degree-close-to-target
+  audio_target: "Maja snakker veldig tydelig på møter. Kaffen er ganske varm. Prosjektlederen sykler veldig fort."
+  segments:
+  - text_md: 'Maja snakker '
+  - blank_id: degree-1
+    options:
+    - veldig
+    - ganske
+    answer_index: 0
+  - text_md: ' tydelig på møter. Kaffen er '
+  - blank_id: degree-2
+    options:
+    - veldig
+    - ganske
+    answer_index: 1
+  - text_md: ' varm. Prosjektlederen sykler '
+  - blank_id: degree-3
+    options:
+    - veldig
+    - ganske
+    answer_index: 0
+  - text_md: ' fort.'
+- handle: describe_how_it_happens
+  op: build
+  objective: obj-adverbs-time-frequency-degree-manner-place-01
+  bloom: apply
+  prompt_md: Build one complete Norwegian sentence from all the tokens. Put the object
+    before the manner expression, and keep the degree adverb directly before the manner
+    adverb.
+  explanation_md: "In a neutral clause, put the object before the manner phrase and keep the degree word next to the manner adverb: notatene veldig tydelig."
+  derived_from:
+  - section_id: manner-after-action-or-object
+  tokens:
+  - token_id: finite-verb
+    text: skriver
+  - token_id: object
+    text: notatene
+  - token_id: degree
+    text: veldig
+  - token_id: manner
+    text: tydelig.
+  - token_id: subject
+    text: Maja
+  answer_order:
+  - subject
+  - finite-verb
+  - object
+  - degree
+  - manner
+- handle: build_the_sentence_end
+  op: build
+  objective: obj-adverbs-time-frequency-degree-manner-place-01
+  bloom: apply
+  prompt_md: Build one neutral Norwegian main clause from all the tokens. Place the
+    object before the end information, then arrange the end information as manner,
+    place, and time.
+  explanation_md: "In this neutral model, keep the object first, then give manner, place, and time: tydelig hjemme om kvelden."
+  derived_from:
+  - section_id: place-and-time-at-end
+  tokens:
+  - token_id: finite-verb
+    text: skriver
+  - token_id: object
+    text: notatene
+  - token_id: manner
+    text: tydelig
+  - token_id: place
+    text: hjemme
+  - token_id: time
+    text: om kvelden.
+  - token_id: subject
+    text: Maja
+  answer_order:
+  - subject
+  - finite-verb
+  - object
+  - manner
+  - place
+  - time
+- handle: start_with_time_or_place
+  op: build
+  objective: obj-adverbs-time-frequency-degree-manner-place-01
+  bloom: apply
+  prompt_md: Rebuild the Norwegian sentence from all the chunks. Make I dag the opening
+    setting. Put the finite verb immediately after it and the subject after the verb.
+  explanation_md: "When I dag opens the clause, the finite verb still occupies second position, so the subject follows it: I dag møter jeg."
+  derived_from:
+  - section_id: fronted-time-or-place
+  tokens:
+  - token_id: finite-verb
+    text: møter
+  - token_id: subject
+    text: jeg
+  - token_id: object
+    text: Erik
+  - token_id: place
+    text: på kafeen.
+  - token_id: fronted-setting
+    text: I dag
+  answer_order:
+  - fronted-setting
+  - finite-verb
+  - subject
+  - object
+  - place
+- handle: restore_the_cafe_details
+  op: write
+  objective: obj-adverbs-time-frequency-degree-manner-place-01
+  bloom: apply
+  prompt_md: 'Use this café fact bank: Nora usually arrives early; today her bus
+    travelled very slowly; Maja is practising calmly at the café now; at meetings
+    Maja always speaks clearly. Write four complete Norwegian main clauses. 1. Write
+    a subject-first routine using a frequency adverb. 2. Write a travel or speaking
+    clause with a degree adverb directly before an adjective or manner adverb. 3.
+    Write a clause with an object, manner, place, and time, in that neutral end order.
+    4. Begin one clause with a supplied time or place setting such as «I dag», «på
+    kafeen», or «på møtet». Put the finite verb second and the subject after it. Use
+    natural Bokmål and your own wording.'
+  derived_from:
+  - section_id: returning-to-maja-and-erik
+  response_language: 'no'
+  min_words: 20
+  max_words: 60
+  judge_prompt: Check the response against every criterion and report evidence for
+    each one. Accept natural Norwegian variants that preserve the required meanings
+    and placement patterns.
+  criteria:
+  - id: cafe-frequency-position
+    instruction: In a subject-first routine clause, places the frequency adverb immediately
+      after the finite verb.
+  - id: cafe-degree-attachment
+    instruction: Places each degree adverb directly before the adjective or manner
+      adverb it modifies.
+  - id: cafe-end-sequence
+    instruction: Places the object before the end information and orders manner before
+      place before time in the requested clause.
+  - id: cafe-fronted-setting
+    instruction: Begins one clause with a time or place setting, then places the finite
+      verb second and the subject after it.
+- handle: prepare_at_the_library
+  op: write
+  objective: obj-adverbs-time-frequency-degree-manner-place-01
+  bloom: apply
+  prompt_md: 'Write four complete Norwegian main clauses about Maja and Nora preparing
+    for a meeting at the library. Use new lexical combinations rather than copying
+    any complete sentence from the lesson. 1. Include a neutral subject-first routine
+    with a frequency adverb. 2. Include an action with a degree adverb directly before
+    an adjective or manner adverb. 3. Include an action with an object followed by
+    manner, place, and time. 4. Begin one clause with one of these settings: I dag,
+    På biblioteket, or Om ettermiddagen. Use both subject-first and fronted clauses.
+    In clause 4, put the finite verb second and the subject after it. Keep the target
+    adverbs in natural Bokmål.'
+  derived_from:
+  - section_id: transfer-to-library
+  response_language: 'no'
+  min_words: 20
+  max_words: 60
+  judge_prompt: Check the response against every criterion and report evidence for
+    each one. Accept natural variants that describe the library situation and meet
+    the stated placement requirements.
+  criteria:
+  - id: library-situation
+    instruction: Uses complete Norwegian clauses about Maja and Nora preparing at
+      the library.
+  - id: library-frequency-position
+    instruction: In a subject-first routine clause, places the frequency adverb immediately
+      after the finite verb.
+  - id: library-degree-attachment
+    instruction: Places a degree adverb directly before the adjective or manner adverb
+      it modifies.
+  - id: library-end-sequence
+    instruction: Places an object before manner, place, and time information, with
+      manner before place before time.
+  - id: library-fronted-setting
+    instruction: Begins one clause with a specified time or place setting, then places
+      the finite verb second and the subject after it.
+- handle: final_adverb_retrieval
+  op: write
+  objective: obj-adverbs-time-frequency-degree-manner-place-01
+  bloom: apply
+  prompt_md: 'Choose one setting: Maja, Erik, and Nora meeting at a café, or Maja
+    and Nora preparing for a meeting at a library. Write three connected complete
+    Norwegian main clauses about that setting. 1. Use a subject-first routine with
+    a frequency adverb. 2. Use an action with a degree adverb directly before an
+    adjective or manner adverb. 3. Use manner, place, and time at the end of a clause.
+    Then rewrite clause 3 so that its time or place expression comes first. In the
+    rewritten clause, put the finite verb second and the subject after it. Use natural
+    Bokmål.'
+  derived_from:
+  - section_id: short-retrieval-review
+  response_language: 'no'
+  min_words: 18
+  max_words: 55
+  judge_prompt: Check the response against every criterion and report evidence for
+    each one. Accept natural variants from either permitted situation when the placement
+    patterns are correct.
+  criteria:
+  - id: retrieval-complete-clauses
+    instruction: Produces three connected complete Norwegian main clauses about either
+      the café meeting or the library preparation.
+  - id: retrieval-placement-patterns
+    instruction: Places frequency after the finite verb in a subject-first clause,
+      keeps the degree expression beside its target, and orders manner, place, and
+      time clearly at the end.
+  - id: retrieval-fronted-rewrite
+    instruction: Rewrites one clause with a time or place expression first, followed
+      immediately by the finite verb and then the subject.

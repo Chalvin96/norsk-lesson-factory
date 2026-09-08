@@ -1,0 +1,144 @@
+- handle: choose_route_question
+  op: write
+  objective: obj-ask-for-and-give-directions-01
+  bloom: apply
+  prompt_md: You are visiting a town and need directions to the hotel. A person nearby
+    can help. Write one complete question beginning with Unnskyld. Use either Hvordan
+    kommer jeg meg til …? or Kan du forklare veien til …?
+  derived_from:
+  - section_id: asking-for-the-way
+  response_language: 'no'
+  min_words: 7
+  max_words: 12
+  judge_prompt: Check that the response is one natural Bokmål question which begins
+    with Unnskyld, politely identifies the hotel as the destination, and clearly asks
+    for a route. Accept either taught question pattern.
+  criteria:
+  - id: polite-destination
+    instruction: Begins with "Unnskyld" and identifies the hotel as the destination.
+  - id: route-request
+    instruction: Uses either "Hvordan kommer jeg meg til …?" or "Kan du forklare veien
+      til …?" to request directions.
+- handle: build_clear_step
+  op: build
+  objective: obj-ask-for-and-give-directions-01
+  bloom: apply
+  prompt_md: You are giving directions near a hotel, traffic lights, a bank, and a
+    station. Build one complete command telling the listener to turn right at the
+    bank.
+  explanation_md: "Use ta til høyre for turn right and ved plus the landmark for where the turn happens."
+  derived_from:
+  - section_id: giving-short-direction-steps
+  tokens:
+  - token_id: tok-2
+    text: til
+  - token_id: tok-3
+    text: høyre
+  - token_id: tok-4
+    text: ved
+  - token_id: tok-5
+    text: banken.
+  - token_id: tok-1
+    text: Ta
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+- handle: expand_route
+  op: write
+  objective: obj-ask-for-and-give-directions-01
+  bloom: apply
+  prompt_md: You are at the station. The traffic lights are straight ahead, the bank
+    is beyond them, and the pharmacy is on the right-hand side just after the bank.
+    Write three short direction steps in logical order. Use først, så, or deretter
+    where useful, and finish by locating the pharmacy.
+  derived_from:
+  - section_id: movement-and-final-location
+  response_language: 'no'
+  min_words: 15
+  max_words: 40
+  judge_prompt: Check that the response gives exactly three short, natural Bokmål
+    route steps matching the described map. Verify their order, landmark use, and
+    final statement locating the pharmacy.
+  criteria:
+  - id: logical-order
+    instruction: Presents three route actions in a logical order from the station.
+  - id: accurate-landmarks
+    instruction: Uses the traffic lights and bank consistently with the map description.
+  - id: destination-location
+    instruction: Finishes by locating the pharmacy on the right-hand side after the
+      bank.
+- handle: confirm_uncertain_detail
+  op: write
+  objective: obj-ask-for-and-give-directions-01
+  bloom: apply
+  prompt_md: 'You hear: Gå rett fram til banken. Ta til høyre etter banken. You are
+    unsure where to turn. Write one natural confirmation question that repeats only
+    that turn and landmark detail.'
+  derived_from:
+  - section_id: checking-one-detail
+  response_language: 'no'
+  min_words: 4
+  max_words: 10
+  judge_prompt: Check that the response is one natural Bokmål confirmation question
+    isolating the instruction to turn right after the bank. Accept a shortened confirmation
+    or a full question.
+  criteria:
+  - id: isolated-detail
+    instruction: Repeats only the uncertain right-turn and bank detail.
+  - id: confirmation-question
+    instruction: Expresses the detail as a natural confirmation question.
+- handle: complete_exchange
+  op: write
+  objective: obj-ask-for-and-give-directions-01
+  bloom: apply
+  prompt_md: Create a short Bokmål dialogue about reaching the museum. The visitor
+    starts at the station. The route goes straight to the traffic lights, left at
+    the kiosk, and past the hotel; the museum is then on the right-hand side. Include
+    a clear route request, two or three ordered direction steps, a listener check
+    beginning with Så …, and an explicit confirmation or one brief correction.
+  derived_from:
+  - section_id: repeating-route-back
+  response_language: 'no'
+  min_words: 35
+  max_words: 75
+  judge_prompt: Check the dialogue against the stated route. Report evidence for the
+    request, ordered directions, listener repetition beginning with Så, and final
+    confirmation or correction. Dialogue labels may be present but are not required.
+  criteria:
+  - id: clear-request
+    instruction: Includes a clear request for directions to the museum.
+  - id: ordered-route
+    instruction: Gives two or three ordered steps consistent with the traffic lights,
+      kiosk, hotel, and museum description.
+  - id: listener-check
+    instruction: Includes a listener repetition of the route beginning with "Så …".
+  - id: explicit-ending
+    instruction: Ends with an explicit confirmation or one brief correction.
+- handle: final_retrieval
+  op: write
+  objective: obj-ask-for-and-give-directions-01
+  bloom: apply
+  prompt_md: From memory, write a brief Bokmål direction exchange about reaching the
+    bus terminal. Ask politely for the route, give three short direction steps that
+    include a turn and a landmark, repeat the route beginning with Så …, and finish
+    with Det stemmer or Helt riktig.
+  derived_from:
+  - section_id: final-retrieval
+  response_language: 'no'
+  min_words: 35
+  max_words: 75
+  judge_prompt: Check that the response forms one coherent direction exchange and
+    report evidence for every requested part. The final words must be Det stemmer
+    or Helt riktig, allowing terminal punctuation.
+  criteria:
+  - id: polite-route-request
+    instruction: Includes a polite request for directions to the bus terminal.
+  - id: three-direction-steps
+    instruction: Includes three short direction steps containing a turn and a landmark.
+  - id: route-repetition
+    instruction: Includes a repetition of the route beginning with "Så …".
+  - id: required-confirmation
+    instruction: Ends with "Det stemmer" or "Helt riktig".

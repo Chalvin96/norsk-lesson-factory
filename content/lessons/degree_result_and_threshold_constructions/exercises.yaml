@@ -1,0 +1,479 @@
+- handle: notice_actual_consequence
+  op: choose
+  objective: obj-degree-result-and-threshold-constructions-01
+  bloom: understand
+  prompt_md: 'Context: Mina and Jonas are outside the cabin in darkness. Choose the
+    Norwegian sentence that presents the darkness as leading to this result: Mina
+    cannot see the numbers. Use a complete clause after at.'
+  derived_from:
+  - section_id: sec-consequence-saa-at
+  stem_md: Which sentence presents the specified consequence with så … at?
+  options:
+  - id: option-excess
+    text: Det er for mørkt til å lese koden uten lys.
+    correct: false
+    why: This presents an action as blocked by excess degree, not a stated consequence.
+  - id: option-different-result
+    text: Det er så kaldt at vannet fryser.
+    correct: false
+    why: This has the consequence pattern but describes a different condition and
+      result.
+  - id: option-consequence
+    text: Det er så mørkt at Mina ikke kan se tallene.
+    correct: true
+    why: This presents a consequence and uses a complete clause after at.
+- handle: distinguish_result_from_excess
+  op: choose
+  objective: obj-degree-result-and-threshold-constructions-01
+  bloom: analyze
+  prompt_md: 'Context: After entering the cabin, Mina and Jonas face hot soup from
+    the stove and a heavy suitcase. Choose the Norwegian pair that expresses these
+    messages in order: the heat leads Mina to wait, and the suitcase is too heavy
+    for Jonas to lift. The first message is a consequence; the second is a blocked
+    action.'
+  derived_from:
+  - section_id: sec-limit-for-til-aa
+  stem_md: Which pair maps the consequence to så … at and the blocked action to for
+    … til å?
+  options:
+  - id: option-reversed-mapping
+    text: 1. Suppa er for varm til å spise nå. 2. Kofferten er så tung at Jonas ikke
+      klarer å løfte den.
+    correct: false
+    why: The first sentence presents a blocked action and the second presents a consequence,
+      reversing the requested mapping.
+  - id: option-correct-mapping
+    text: 1. Suppa er så varm at Mina må vente. 2. Kofferten er for tung til å løfte.
+    correct: true
+    why: The first sentence presents a consequence; the second evaluates lifting against
+      a limit.
+  - id: option-two-consequences
+    text: 1. Suppa er så varm at Mina må vente. 2. Kofferten er så tung at Jonas ikke
+      klarer å løfte den.
+    correct: false
+    why: Both sentences present consequences; the second does not use the excess pattern.
+- handle: place_nok_at_threshold
+  op: build
+  objective: obj-degree-result-and-threshold-constructions-01
+  bloom: apply
+  prompt_md: 'Context: Mina and Jonas check the cabin battery for their evening plans.
+    Build the Norwegian sentence meaning: The battery is full enough to last all evening.
+    Put nok after the adjective and use til å with the infinitive.'
+  explanation_md: "Place nok after the adjective and use til å before the infinitive: fullt nok til å vare."
+  derived_from:
+  - section_id: sec-nok-til-aa
+  tokens:
+  - token_id: tok-1
+    text: Batteriet
+  - token_id: tok-2
+    text: er
+  - token_id: tok-3
+    text: fullt
+  - token_id: tok-4
+    text: nok
+  - token_id: tok-5
+    text: til
+  - token_id: tok-6
+    text: å
+  - token_id: tok-7
+    text: vare
+  - token_id: tok-8
+    text: hele
+  - token_id: tok-9
+    text: kvelden.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+- handle: contrast_excess_and_insufficiency
+  op: build
+  objective: obj-degree-result-and-threshold-constructions-01
+  bloom: apply
+  prompt_md: 'Context: At the cabin, failed tasks involve water temperature, shelf
+    height, sound level, and available light. Build one connected Norwegian sentence
+    that gives both descriptions for each failed action: use for … til å and ikke
+    … nok til å for the same action in each pair.'
+  explanation_md: "«for + adjective + til å» marks an excess that blocks the action; «ikke + opposite adjective + nok til å» describes the same failed threshold from the other side."
+  derived_from:
+  - section_id: sec-nok-til-aa
+  tokens:
+  - token_id: tok-01
+    text: Vannet
+  - token_id: tok-02
+    text: er
+  - token_id: tok-03
+    text: for
+  - token_id: tok-04
+    text: kaldt
+  - token_id: tok-05
+    text: til
+  - token_id: tok-06
+    text: å
+  - token_id: tok-07
+    text: bade
+  - token_id: tok-08
+    text: i,
+  - token_id: tok-09
+    text: og
+  - token_id: tok-10
+    text: det
+  - token_id: tok-11
+    text: er
+  - token_id: tok-12
+    text: ikke
+  - token_id: tok-13
+    text: varmt
+  - token_id: tok-14
+    text: nok
+  - token_id: tok-15
+    text: til
+  - token_id: tok-16
+    text: å
+  - token_id: tok-17
+    text: bade
+  - token_id: tok-18
+    text: i;
+  - token_id: tok-19
+    text: hylla
+  - token_id: tok-20
+    text: er
+  - token_id: tok-21
+    text: for
+  - token_id: tok-22
+    text: høy
+  - token_id: tok-23
+    text: til
+  - token_id: tok-24
+    text: å
+  - token_id: tok-25
+    text: nå
+  - token_id: tok-26
+    text: fra
+  - token_id: tok-27
+    text: gulvet,
+  - token_id: tok-28
+    text: og
+  - token_id: tok-29
+    text: den
+  - token_id: tok-30
+    text: er
+  - token_id: tok-31
+    text: ikke
+  - token_id: tok-32
+    text: lav
+  - token_id: tok-33
+    text: nok
+  - token_id: tok-34
+    text: til
+  - token_id: tok-35
+    text: å
+  - token_id: tok-36
+    text: nå
+  - token_id: tok-37
+    text: fra
+  - token_id: tok-38
+    text: gulvet;
+  - token_id: tok-39
+    text: musikken
+  - token_id: tok-40
+    text: er
+  - token_id: tok-41
+    text: for
+  - token_id: tok-42
+    text: lav
+  - token_id: tok-43
+    text: til
+  - token_id: tok-44
+    text: å
+  - token_id: tok-45
+    text: høre
+  - token_id: tok-46
+    text: fra
+  - token_id: tok-47
+    text: kjøkkenet,
+  - token_id: tok-48
+    text: og
+  - token_id: tok-49
+    text: den
+  - token_id: tok-50
+    text: er
+  - token_id: tok-51
+    text: ikke
+  - token_id: tok-52
+    text: høy
+  - token_id: tok-53
+    text: nok
+  - token_id: tok-54
+    text: til
+  - token_id: tok-55
+    text: å
+  - token_id: tok-56
+    text: høre
+  - token_id: tok-57
+    text: fra
+  - token_id: tok-58
+    text: kjøkkenet;
+  - token_id: tok-59
+    text: lyset
+  - token_id: tok-60
+    text: er
+  - token_id: tok-61
+    text: for
+  - token_id: tok-62
+    text: svakt
+  - token_id: tok-63
+    text: til
+  - token_id: tok-64
+    text: å
+  - token_id: tok-65
+    text: lese
+  - token_id: tok-66
+    text: den
+  - token_id: tok-67
+    text: lille
+  - token_id: tok-68
+    text: teksten,
+  - token_id: tok-69
+    text: og
+  - token_id: tok-70
+    text: det
+  - token_id: tok-71
+    text: er
+  - token_id: tok-72
+    text: ikke
+  - token_id: tok-73
+    text: sterkt
+  - token_id: tok-74
+    text: nok
+  - token_id: tok-75
+    text: til
+  - token_id: tok-76
+    text: å
+  - token_id: tok-77
+    text: lese
+  - token_id: tok-78
+    text: den
+  - token_id: tok-79
+    text: lille
+  - token_id: tok-80
+    text: teksten.
+  answer_order:
+  - tok-01
+  - tok-02
+  - tok-03
+  - tok-04
+  - tok-05
+  - tok-06
+  - tok-07
+  - tok-08
+  - tok-09
+  - tok-10
+  - tok-11
+  - tok-12
+  - tok-13
+  - tok-14
+  - tok-15
+  - tok-16
+  - tok-17
+  - tok-18
+  - tok-19
+  - tok-20
+  - tok-21
+  - tok-22
+  - tok-23
+  - tok-24
+  - tok-25
+  - tok-26
+  - tok-27
+  - tok-28
+  - tok-29
+  - tok-30
+  - tok-31
+  - tok-32
+  - tok-33
+  - tok-34
+  - tok-35
+  - tok-36
+  - tok-37
+  - tok-38
+  - tok-39
+  - tok-40
+  - tok-41
+  - tok-42
+  - tok-43
+  - tok-44
+  - tok-45
+  - tok-46
+  - tok-47
+  - tok-48
+  - tok-49
+  - tok-50
+  - tok-51
+  - tok-52
+  - tok-53
+  - tok-54
+  - tok-55
+  - tok-56
+  - tok-57
+  - tok-58
+  - tok-59
+  - tok-60
+  - tok-61
+  - tok-62
+  - tok-63
+  - tok-64
+  - tok-65
+  - tok-66
+  - tok-67
+  - tok-68
+  - tok-69
+  - tok-70
+  - tok-71
+  - tok-72
+  - tok-73
+  - tok-74
+  - tok-75
+  - tok-76
+  - tok-77
+  - tok-78
+  - tok-79
+  - tok-80
+- handle: select_pattern_from_intended_message
+  op: write
+  objective: obj-degree-result-and-threshold-constructions-01
+  bloom: apply
+  prompt_md: 'Context: Short everyday situations involve missing transport, preparing
+    food, hearing announcements, carrying luggage, and finding a place to work. In
+    new everyday situations, write three short Norwegian sentences: one for a stated
+    or presented consequence, one for a blocked action, and one for a reached threshold.
+    Match them with så … at, for … til å, and … nok til å respectively. A consequence
+    may be factual, modal, or hypothetical.'
+  derived_from:
+  - section_id: sec-common-mistakes-connected-sentences
+  response_language: 'no'
+  min_words: 18
+  max_words: 45
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål variants when they preserve the requested meaning and construction.
+  criteria:
+  - id: consequence-pattern
+    instruction: Uses **så … at** for a stated or presented consequence, with a complete
+      clause after **at**.
+  - id: excess-pattern
+    instruction: Uses **for … til å** for a blocked action, with an infinitive after
+      **til å**.
+  - id: sufficiency-pattern
+    instruction: Uses **… nok til å** for a reached threshold, with **nok** after
+      the adjective or adverb.
+  - id: new-lexical-frame
+    instruction: Uses new everyday situations rather than copying a complete taught
+      sentence.
+- handle: repair_complement_mismatch
+  op: find_fix
+  objective: obj-degree-result-and-threshold-constructions-01
+  bloom: analyze
+  prompt_md: Select the one token that is wrong/needs changing.
+  derived_from:
+  - section_id: sec-common-mistakes-connected-sentences
+  tokens:
+  - token_id: tok-1
+    text: Sekken
+  - token_id: tok-2
+    text: er
+  - token_id: tok-3
+    text: for
+  - token_id: tok-4
+    text: tung
+  - token_id: tok-5
+    text: til
+  - token_id: tok-6
+    text: å
+  - token_id: tok-7
+    text: bære
+  - token_id: tok-8
+    text: alene,
+  - token_id: tok-9
+    text: men
+  - token_id: tok-10
+    text: toget
+  - token_id: tok-11
+    text: kom
+  - token_id: tok-12
+    text: så
+  - token_id: tok-13
+    text: sent
+  - token_id: tok-14
+    text: til
+  - token_id: tok-15
+    text: billettkontoret
+  - token_id: tok-16
+    text: var
+  - token_id: tok-17
+    text: stengt.
+  error_token_id: tok-14
+  feedback: Replace til with at. A complete clause follows, so the corrected consequence
+    is så sent at billettkontoret var stengt; the earlier for tung til å bære pattern
+    is already correct.
+- handle: transfer_threshold_choices_to_departure
+  op: write
+  objective: obj-degree-result-and-threshold-constructions-01
+  bloom: apply
+  prompt_md: 'Context: Mina and Jonas must pack, carry their luggage, show mobile
+    tickets, and reach the bus before it leaves. Write a short connected Norwegian
+    account with one stated or presented consequence using så … at, one blocked action
+    using for … til å, and one reached or unreached threshold using … nok til å or
+    ikke … nok til å. Use a complete clause after at and an infinitive after til å.
+    Each sentence should help explain whether they are ready to leave.'
+  derived_from:
+  - section_id: sec-transfer-getting-ready-for-a-train
+  response_language: 'no'
+  min_words: 25
+  max_words: 55
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål variants when they preserve the requested meanings and constructions.
+  criteria:
+  - id: departure-consequence
+    instruction: Includes a stated or presented departure-related consequence with
+      **så … at** and a complete clause after **at**.
+  - id: departure-excess
+    instruction: Includes a blocked departure-related action with **for … til å**
+      and an infinitive after **til å**.
+  - id: departure-threshold
+    instruction: Includes a reached or unreached threshold with **… nok til å** or
+      **ikke … nok til å**.
+  - id: connected-departure-account
+    instruction: Connects the three sentences to Mina and Jonas being ready or not
+      ready to leave.
+- handle: retrieve_three_degree_patterns
+  op: write
+  objective: obj-degree-result-and-threshold-constructions-01
+  bloom: apply
+  prompt_md: 'Context: Without looking back, use a new everyday setting such as cooking,
+    studying, traveling, or working at home. Write one brief Norwegian sentence for
+    each meaning: a degree followed by a stated or presented consequence, a degree
+    beyond the limit for an action, and a degree that reaches the threshold for an
+    action. Use så … at, for … til å, and … nok til å respectively. Put a complete
+    clause after at and an infinitive after til å.'
+  derived_from:
+  - section_id: sec-short-retrieval-and-review
+  response_language: 'no'
+  min_words: 18
+  max_words: 45
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål variants when they preserve the requested meanings and constructions.
+  criteria:
+  - id: three-patterns
+    instruction: Provides three distinct Norwegian sentences using **så … at**, **for
+      … til å**, and **… nok til å** in the requested order.
+  - id: meaning-alignment
+    instruction: Matches consequence, beyond-limit, and threshold meanings to the
+      three constructions.
+  - id: complement-forms
+    instruction: Uses a complete clause after **at** and an infinitive after **til
+      å**.

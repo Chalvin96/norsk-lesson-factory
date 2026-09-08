@@ -1,0 +1,110 @@
+- handle: recognize_proposal
+  op: choose
+  objective: obj-agree-on-informal-plans-01
+  bloom: understand
+  prompt_md: 'Read this exchange between two friends: Mina: Skal vi gå en tur etter
+    jobb? (Shall we go for a walk after work?) Jonas: Ja, det passer fint. (Yes, that
+    works well.)'
+  derived_from:
+  - section_id: proposing-an-activity
+  stem_md: Choose the complete interpretation that identifies the proposal, activity,
+    and scheduling information.
+  options:
+  - id: correct
+    text: 'Forslaget er: «Skal vi gå en tur etter jobb?» Aktiviteten er å gå en tur,
+      og tidspunktet er etter jobb.'
+    correct: true
+    why: This identifies the proposal, activity, and time expression correctly.
+  - id: wrong-sentence
+    text: 'Forslaget er: «Ja, det passer fint.» Aktiviteten er å gå en tur, og tidspunktet
+      er etter jobb.'
+    correct: false
+    why: This sentence responds to the proposal; it does not propose the activity.
+  - id: wrong-activity
+    text: 'Forslaget er: «Skal vi gå en tur etter jobb?» Aktiviteten er å ta en kaffe,
+      og ingen dag eller tid er nevnt.'
+    correct: false
+    why: The exchange proposes going for a walk, and etter jobb gives a time.
+  - id: wrong-time
+    text: 'Forslaget er: «Skal vi gå en tur etter jobb?» Aktiviteten er å gå en tur,
+      og ingen dag eller tid er nevnt.'
+    correct: false
+    why: Etter jobb indicates that a time has been mentioned.
+- handle: respond_to_availability
+  op: write
+  objective: obj-agree-on-informal-plans-01
+  bloom: apply
+  prompt_md: "Write one natural Norwegian utterance that accepts the coffee plan, says two o'clock is not possible, and keeps the intended informal-plan meaning."
+  derived_from:
+  - section_id: saying-when-you-are-available
+  response_language: 'no'
+  min_words: 3
+  max_words: 60
+  judge_prompt: Check the Norwegian response against the task and report evidence for each criterion.
+  criteria:
+  - id: criterion-1
+    instruction: 'accepts the coffee plan'
+  - id: criterion-2
+    instruction: "says that meeting at two o'clock is not possible"
+- handle: offer_one_alternative
+  op: write
+  objective: obj-agree-on-informal-plans-01
+  bloom: apply
+  prompt_md: 'Write one natural Norwegian utterance that accepts the walk, says Saturday morning is unavailable, and offers exactly one alternative time.'
+  derived_from:
+  - section_id: offering-one-alternative
+  response_language: 'no'
+  min_words: 3
+  max_words: 60
+  judge_prompt: Check the Norwegian response against the task and report evidence for each criterion.
+  criteria:
+  - id: criterion-1
+    instruction: 'accepts the walk'
+  - id: criterion-2
+    instruction: 'says Saturday morning is unavailable'
+  - id: criterion-3
+    instruction: 'offers exactly one alternative time'
+- handle: build_complete_exchange
+  op: write
+  objective: obj-agree-on-informal-plans-01
+  bloom: apply
+  prompt_md: Write a short message exchange in Norwegian between two named friends.
+    One friend proposes an informal activity and a time. The other wants to join but
+    is unavailable at that time and offers one alternative time. The first friend
+    accepts and states the final activity and time.
+  derived_from:
+  - section_id: back-to-mina-and-jonas
+  response_language: 'no'
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+  criteria:
+  - id: coherent-plan
+    instruction: Contains one coherent informal activity-and-time plan.
+  - id: availability-problem
+    instruction: Shows that one person wants to join but is unavailable at the initially
+      proposed time.
+  - id: one-alternative
+    instruction: Offers exactly one alternative time.
+  - id: final-confirmation
+    instruction: Ends with an unambiguous confirmation of the final activity and time.
+- handle: final_retrieval_review
+  op: write
+  objective: obj-agree-on-informal-plans-01
+  bloom: apply
+  prompt_md: Write a four-part informal planning exchange in Norwegian. Choose an
+    activity such as taking a walk, having coffee, seeing a film, or visiting a museum.
+    Propose the activity with a time, respond that the suggested time does not work,
+    offer exactly one alternative, and state the final agreed activity and time clearly.
+  derived_from:
+  - section_id: final-retrieval-and-review
+  response_language: 'no'
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+  criteria:
+  - id: proposes-activity
+    instruction: Proposes an activity in the exchange.
+  - id: responds-to-time
+    instruction: Responds to the suggested time.
+  - id: offers-alternative
+    instruction: Offers exactly one alternative.
+  - id: states-agreed-plan
+    instruction: States the agreed plan clearly enough that both people know what
+      they are doing and when.

@@ -1,0 +1,153 @@
+- handle: separate_words_from_inference
+  op: choose
+  objective: obj-advanced-pragmatics-01
+  bloom: understand
+  prompt_md: 'Lea says: «Vi kan kanskje bruke det store møterommet, men jeg har
+    ikke spurt ennå.» Jonas replies: «Flott, da skriver jeg i invitasjonen at vi skal
+    være der.»'
+  stem_md: What did Jonas infer beyond what Lea actually said?
+  options:
+  - id: confirmed-room
+    text: He inferred that the meeting room was confirmed and could be announced.
+    correct: true
+    why: Lea presented the room as a possibility and explicitly said that she had
+      not asked yet.
+  - id: possible-room
+    text: He inferred only that the meeting room might be available.
+    correct: false
+    why: That possibility was stated directly by Lea; it is not the unsupported
+      part of Jonas's response.
+  - id: no-workshop
+    text: He inferred that Lea wanted to cancel the workshop.
+    correct: false
+    why: Nothing in Lea's turn suggests cancellation.
+- handle: compare_response_consequences
+  op: choose
+  objective: obj-advanced-pragmatics-01
+  bloom: analyze
+  prompt_md: 'Lea has said that the large meeting room might be available but that
+    she has not asked yet. Jonas answers: «Flott, da skriver jeg i invitasjonen at
+    vi skal være der.»'
+  stem_md: Which reply best prevents Jonas from acting on an unconfirmed arrangement?
+  options:
+  - id: clarify-and-check
+    text: «Vent litt, rommet er ikke bekreftet ennå. Jeg spør i dag og gir deg beskjed
+      før du sender invitasjonen.»
+    correct: true
+    why: It corrects the status and establishes when Jonas can continue.
+  - id: allow-inference
+    text: «Ja, det blir sikkert bra.»
+    correct: false
+    why: It leaves Jonas's mistaken assumption uncorrected.
+  - id: change-topic
+    text: «Forresten, hvem bestiller kaffe?»
+    correct: false
+    why: It marks a side topic but does not repair the room misunderstanding.
+- handle: repair_room_plan
+  op: write
+  objective: obj-advanced-pragmatics-01
+  bloom: apply
+  prompt_md: 'Lea says: «Vi kan kanskje bruke det store møterommet, men jeg har
+    ikke spurt ennå.» Jonas replies: «Flott, da skriver jeg i invitasjonen at vi skal
+    være der.» Write Lea''s reply in Norwegian. Acknowledge why the room would be
+    useful, clarify that it is not confirmed, and establish what Lea or Jonas should
+    do before the invitation is sent. Markers such as egentlig or altså are optional.'
+  derived_from:
+  - section_id: acknowledge-clarify-continue
+  response_language: 'no'
+  min_words: 18
+  max_words: 55
+  judge_prompt: Check whether the response addresses Jonas's actual inference, preserves
+    the room's unconfirmed status, and establishes a workable action before the invitation
+    is sent. Do not require any particular discourse marker. Apply the 18–55 word
+    bound.
+  criteria:
+  - id: cooperative-acknowledgement
+    instruction: Acknowledges that using the large room would be useful or otherwise
+      responds cooperatively to Jonas's goal.
+  - id: accurate-clarification
+    instruction: Clearly states that the meeting room is possible but not yet confirmed.
+  - id: protected-next-step
+    instruction: Establishes who will check the room or when Jonas may send the invitation.
+  - id: room-repair-word-bounds
+    instruction: Uses 18 to 55 Norwegian words.
+- handle: identify_three_repair_jobs
+  op: choose
+  objective: obj-advanced-pragmatics-01
+  bloom: understand
+  prompt_md: 'Amina says: «Kunden er interessert i tirsdag, men hun må snakke med
+    lederen sin først.» Erik replies: «Da bestiller jeg billetter til alle på tirsdag.»'
+  stem_md: Which response acknowledges the plan, preserves the uncertainty, and establishes
+    an appropriate next step?
+  options:
+  - id: wait-for-answer
+    text: «Tirsdag hadde vært praktisk, men kunden har ikke bekreftet dagen. La oss
+      vente med billettene til hun har svart.»
+    correct: true
+    why: It recognizes the practical preference, corrects the commitment, and protects
+      the booking decision.
+  - id: invent-rejection
+    text: «Kunden kan ikke på tirsdag, så vi må velge torsdag.»
+    correct: false
+    why: It replaces the original uncertainty with a rejection that Amina did not
+      report.
+  - id: acknowledge-only
+    text: «Ja, tirsdag passer fint for oss.»
+    correct: false
+    why: It acknowledges the proposed day but does not address the client's missing
+      confirmation or the ticket purchase.
+- handle: answer_supplied_clarification
+  op: write
+  objective: obj-advanced-pragmatics-01
+  bloom: apply
+  prompt_md: 'Nora says: «Jeg tenkte at vi kunne sende utkastet i dag.» Jonas replies:
+    «Greit, da sender jeg det til kunden nå.» Nora stops him, and Jonas asks: «Mener
+    du at det ikke er klart?» Write Nora''s answer in Norwegian. Explain that the
+    text is complete but still needs Fatima''s approval, and agree what Jonas should
+    do next.'
+  derived_from:
+  - section_id: adapt-after-clarification
+  response_language: 'no'
+  min_words: 16
+  max_words: 48
+  judge_prompt: Check that Nora answers Jonas's supplied question directly, distinguishes
+    a complete draft from an approved draft, and gives Jonas an appropriate next action.
+    Do not require a named marker. Apply the 16–48 word bound.
+  criteria:
+  - id: direct-status-answer
+    instruction: Explains that the draft text is complete but not yet approved by
+      Fatima.
+  - id: revised-action
+    instruction: Tells Jonas to wait, seek Fatima's approval, or take another next
+      step consistent with the stated status.
+  - id: clarification-word-bounds
+    instruction: Uses 16 to 48 Norwegian words.
+- handle: repair_travel_assumption
+  op: write
+  objective: obj-advanced-pragmatics-01
+  bloom: apply
+  prompt_md: 'Kari says: «Hotellet kan kanskje holde av tre rom til fredag, men de
+    sender bekreftelse i morgen.» Erik replies: «Supert, da kjøper jeg flybilletter
+    til alle nå.» Write Kari''s reply in Norwegian. Make clear what is still uncertain
+    and establish a safe next step for the flight purchase. Do not rely on a required
+    marker or particle.'
+  derived_from:
+  - section_id: protect-arrangement-transfer
+  response_language: 'no'
+  min_words: 18
+  max_words: 55
+  judge_prompt: 'Evaluate whether the response repairs the assumption created by the
+    supplied exchange: the rooms are not confirmed until tomorrow, and buying flights
+    now may be premature. Accept natural marker-based or plain alternatives. Apply
+    the 18–55 word bound.'
+  criteria:
+  - id: addresses-flight-assumption
+    instruction: Directly responds to the proposed immediate flight purchase rather
+      than changing topic.
+  - id: preserves-hotel-status
+    instruction: Keeps the hotel rooms unconfirmed until the promised reply tomorrow.
+  - id: safe-travel-next-step
+    instruction: Establishes a sensible next step, such as waiting for confirmation
+      or checking flexible tickets before buying.
+  - id: transfer-word-bounds
+    instruction: Uses 18 to 55 Norwegian words.

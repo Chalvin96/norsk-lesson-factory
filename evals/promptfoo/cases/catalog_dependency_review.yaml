@@ -1,0 +1,333 @@
+# Labeled second-opinion edge decisions. Each case supplies the exact proposal
+# batch the production second-opinion node sees and asserts only the edge
+# recommendation. Judge job: reviewer, independent from the live target job.
+
+- description: Second opinion downgrades a nonessential prerequisite
+  metadata:
+    surface: dependency_second_opinion
+    cefr: A1
+    kind: communicative
+    source_lesson: synthetic
+  vars:
+    surface: dependency_second_opinion
+    request: |
+      {
+        "owners": [
+          {
+            "id": "greetings",
+            "catalog_kind": "communicative",
+            "family_id": "social",
+            "title": "Basic greetings",
+            "learner_outcome": "Greet someone and close a short exchange.",
+            "cefr_tags": ["A1"]
+          },
+          {
+            "id": "ask-for-help",
+            "catalog_kind": "communicative",
+            "family_id": "help",
+            "title": "Ask for help",
+            "learner_outcome": "Name a blocked task and ask someone to help.",
+            "cefr_tags": ["A1"]
+          }
+        ],
+        "assessments": [
+          {
+            "owner_id": "greetings",
+            "required_prerequisites": [],
+            "helpful_prerequisites": [],
+            "status": "reviewed"
+          },
+          {
+            "owner_id": "ask-for-help",
+            "required_prerequisites": ["greetings"],
+            "helpful_prerequisites": [],
+            "status": "reviewed"
+          }
+        ],
+        "proposed_edges": [
+          {
+            "prerequisite_id": "greetings",
+            "dependent_id": "ask-for-help",
+            "kind": "required",
+            "confidence": 0.65,
+            "rationale": "A greeting may provide useful context before a help request."
+          }
+        ],
+        "validation_errors": []
+      }
+  assert:
+    - type: llm-rubric
+      metric: decision_correctness
+      value: |
+        Greeting knowledge is useful context before a help request, but the help
+        outcome does not require prior greeting mastery. Return pass=true only
+        when the response returns one finding for greetings -> ask-for-help
+        recommending a downgrade to helpful; return pass=false when it keeps the
+        edge required or rejects it entirely.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: Second opinion keeps a direct form prerequisite
+  metadata:
+    surface: dependency_second_opinion
+    cefr: A2
+    kind: grammar
+    source_lesson: synthetic
+  vars:
+    surface: dependency_second_opinion
+    request: |
+      {
+        "owners": [
+          {
+            "id": "noun-gender",
+            "catalog_kind": "grammar",
+            "family_id": "nouns",
+            "title": "Noun gender",
+            "learner_outcome": "Classify common nouns by grammatical gender.",
+            "cefr_tags": ["A1"]
+          },
+          {
+            "id": "definite-noun-forms",
+            "catalog_kind": "grammar",
+            "family_id": "nouns",
+            "title": "Definite noun forms",
+            "learner_outcome": "Form a definite singular noun by applying established gender to choose the ending.",
+            "cefr_tags": ["A2"]
+          }
+        ],
+        "assessments": [
+          {
+            "owner_id": "present-tense-verbs",
+            "required_prerequisites": [],
+            "helpful_prerequisites": [],
+            "status": "reviewed"
+          },
+          {
+            "owner_id": "definite-noun-forms",
+            "required_prerequisites": ["noun-gender"],
+            "helpful_prerequisites": [],
+            "status": "reviewed"
+          }
+        ],
+        "proposed_edges": [
+          {
+            "prerequisite_id": "noun-gender",
+            "dependent_id": "definite-noun-forms",
+            "kind": "required",
+            "confidence": 0.9,
+            "rationale": "The later form task applies the noun gender to choose its definite ending."
+          }
+        ],
+        "validation_errors": []
+      }
+  assert:
+    - type: llm-rubric
+      metric: decision_correctness
+      value: |
+        Forming the definite singular noun form requires applying the established
+        noun gender, so noun-gender -> definite-noun-forms is a genuine required
+        prerequisite. Return pass=true only when the response returns one keep
+        finding for that edge with a rationale grounded in the two form outcomes;
+        return pass=false when it downgrades or rejects the edge, including merely
+        because both owners share a family.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: Second opinion rejects a convenient but unsupported edge
+  metadata:
+    surface: dependency_second_opinion
+    cefr: A2
+    kind: grammar
+    source_lesson: synthetic
+  vars:
+    surface: dependency_second_opinion
+    request: |
+      {
+        "owners": [
+          {
+            "id": "greetings",
+            "catalog_kind": "communicative",
+            "family_id": "social",
+            "title": "Basic greetings",
+            "learner_outcome": "Greet someone and close a short exchange.",
+            "cefr_tags": ["A1"]
+          },
+          {
+            "id": "past-tense-story",
+            "catalog_kind": "grammar",
+            "family_id": "verb-basics",
+            "title": "Tell a short past-tense story",
+            "learner_outcome": "Describe a completed sequence with past-tense verbs.",
+            "cefr_tags": ["A2"]
+          }
+        ],
+        "assessments": [],
+        "proposed_edges": [
+          {
+            "prerequisite_id": "greetings",
+            "dependent_id": "past-tense-story",
+            "kind": "helpful",
+            "confidence": 0.4,
+            "rationale": "Both lessons are useful for conversation."
+          }
+        ],
+        "validation_errors": []
+      }
+  assert:
+    - type: llm-rubric
+      metric: decision_correctness
+      value: |
+        The proposed edge rests only on both lessons being useful for
+        conversation; neither outcome depends on the other. Return pass=true
+        only when the response returns one reject finding for greetings ->
+        past-tense-story explaining that unrelated relationship; return
+        pass=false when the edge is kept as helpful or required.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: Second opinion upgrades a direct form prerequisite
+  metadata:
+    surface: dependency_second_opinion
+    cefr: A2
+    kind: grammar
+    source_lesson: synthetic
+  vars:
+    surface: dependency_second_opinion
+    request: |
+      {
+        "owners": [
+          {
+            "id": "noun-gender",
+            "catalog_kind": "grammar",
+            "family_id": "nouns",
+            "title": "Noun gender",
+            "learner_outcome": "Classify common nouns by grammatical gender.",
+            "cefr_tags": ["A1"]
+          },
+          {
+            "id": "definite-noun-forms",
+            "catalog_kind": "grammar",
+            "family_id": "nouns",
+            "title": "Definite noun forms",
+            "learner_outcome": "Form a definite singular noun by applying established gender to choose the ending.",
+            "cefr_tags": ["A2"]
+          }
+        ],
+        "assessments": [],
+        "proposed_edges": [
+          {
+            "prerequisite_id": "noun-gender",
+            "dependent_id": "definite-noun-forms",
+            "kind": "helpful",
+            "confidence": 0.6,
+            "rationale": "Gender knowledge may help with the later definite-form task."
+          }
+        ],
+        "validation_errors": []
+      }
+  assert:
+    - type: llm-rubric
+      metric: decision_correctness
+      value: |
+        The definite-form task cannot be completed reliably without applying the
+        established noun gender, so the proposed helpful edge understates a
+        required dependency. Return pass=true only when the response returns one
+        finding for noun-gender -> definite-noun-forms recommending an upgrade to
+        required; return pass=false when it leaves the edge helpful or rejects it.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: Second opinion keeps a plausible helpful edge
+  metadata:
+    surface: dependency_second_opinion
+    cefr: B2
+    kind: pragmatics
+    source_lesson: synthetic
+  vars:
+    surface: dependency_second_opinion
+    request: |
+      {
+        "owners": [
+          {
+            "id": "basic-social-language",
+            "catalog_kind": "communicative",
+            "family_id": "social",
+            "title": "Basic social language",
+            "learner_outcome": "Handle a short everyday social exchange.",
+            "cefr_tags": ["A1"]
+          },
+          {
+            "id": "advanced-pragmatics",
+            "catalog_kind": "pragmatics",
+            "family_id": "social",
+            "title": "Advanced pragmatic nuance",
+            "learner_outcome": "Choose a context-sensitive response when several social readings are possible.",
+            "cefr_tags": ["B2"]
+          }
+        ],
+        "assessments": [],
+        "proposed_edges": [
+          {
+            "prerequisite_id": "basic-social-language",
+            "dependent_id": "advanced-pragmatics",
+            "kind": "helpful",
+            "confidence": 0.5,
+            "rationale": "The outcomes suggest a progression but do not define a hard prerequisite."
+          }
+        ],
+        "validation_errors": []
+      }
+  assert:
+    - type: llm-rubric
+      metric: decision_correctness
+      value: |
+        The progression between the two outcomes is plausible and basic social
+        language is useful context, but the evidence does not establish a hard
+        prerequisite. Return pass=true only when the response returns one finding
+        for basic-social-language -> advanced-pragmatics keeping the supplied
+        helpful edge and explaining why it is not required. Return pass=false when
+        it upgrades, rejects, or marks the edge for human review instead of keeping
+        the supplied helpful relationship.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: Supplied repair phrase does not require independent question formation
+  metadata:
+    surface: dependency_proposal
+    kind: communicative
+    cefr: A1
+    label_provenance: Synthetic prerequisite necessity case with explicit scaffolding.
+  vars:
+    surface: dependency_proposal
+    request: |
+      {"owners":[{"id":"question-order","learner_outcome":"Independently form Norwegian yes/no questions by placing the finite verb first."},{"id":"request-repetition","learner_outcome":"Use the supplied fixed phrase Kan du gjenta? to request repetition. The assessment supplies the complete phrase and does not assess independent question formation."}]}
+  assert:
+    - type: llm-rubric
+      metric: prerequisite_necessity
+      value: |
+        Return pass=true only when both owners receive an assessment and
+        question-order is not a required prerequisite of request-repetition.
+        The complete supplied phrase removes the need for independent question
+        formation. A helpful edge or no edge is acceptable.
+        Return pass=false if topical overlap or usual teaching order is used
+        to require question-order, or either owner is omitted.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true

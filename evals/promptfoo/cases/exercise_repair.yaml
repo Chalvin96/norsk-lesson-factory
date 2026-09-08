@@ -1,0 +1,74 @@
+- description: Replace one failed exercise while preserving the other
+  metadata:
+    surface: exercise_repair
+    cefr: A1
+    kind: grammar
+    source_lesson: synthetic
+  vars:
+    surface: exercise_repair
+    plan: |
+      ---
+      approved: true
+      objectives:
+        - id: obj-repair
+          statement: Use the taught reply `Ja, jeg tar med passet.` when someone asks `Kan du ta med passet?`.
+      ---
+
+      # Plan
+
+      Teach one concrete reply and keep the greeting as a separate exercise.
+    lesson_md: |
+      ## Reply {#reply role=model objectives=obj-repair}
+
+      The lesson teaches the reply `Ja, jeg tar med passet.` to the request
+      `Kan du ta med passet?` (Can you bring the passport?) and a separate
+      unchanged greeting `Hei.`
+    exercise_requests_yaml: |
+      - handle: keep
+        objective_ref: obj-repair
+        bloom: understand
+        evidence_route: meaning_selection
+        evidence: Select the unchanged greeting.
+      - handle: repair
+        objective_ref: obj-repair
+        bloom: understand
+        evidence_route: meaning_selection
+        evidence: Select the taught reply `Ja, jeg tar med passet.` to `Kan du ta med passet?`.
+    failed_handles: '["repair"]'
+    verification: |
+      {"mismatches":[{"id":"repair","reason":"the authored answer is `Jeg har med passet`, but the taught reply is `Ja, jeg tar med passet.`"}]}
+    learner_visible_payload: |
+      [{"id":"repair","operation":"choose","prompt":"Select the reply.","options":[{"option_id":"a","text":"..."},{"option_id":"b","text":"..."}]}]
+  assert:
+    - type: llm-rubric
+      metric: repair_scope
+      value: |
+        Only the failed handle `repair` may be replaced, and its replacement
+        must preserve the request identity: same handle, objective_ref, bloom,
+        and evidence goal (select `Ja, jeg tar med passet.` for
+        `Kan du ta med passet?`). The unaffected handle `keep` must not be
+        returned.
+        Return pass=true only when the response contains exactly the failed
+        handle with its identity and evidence goal preserved; return pass=false
+        when another handle is returned, a handle is renamed or retagged, or the
+        evidence goal is silently changed.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+    - type: llm-rubric
+      metric: standalone_answerability
+      value: |
+        The replacement exercise must be answerable from its own visible payload
+        with exactly one defensible answer that selects the corrected reply the
+        request names, and the prompt must not expose the answer. Return
+        pass=true only when the payload alone determines one defensible
+        corrected-reply answer `Ja, jeg tar med passet.`; return pass=false when
+        the task needs outside context, admits two equally defensible answers,
+        or leaks the answer in the prompt.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true

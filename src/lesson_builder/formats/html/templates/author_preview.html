@@ -1,0 +1,63 @@
+{% from "macros.html" import spans, blocks, payload, finding %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ title }} · norsk lesson factory</title>
+  <style>{{ static_asset("author_preview.css") }}</style>
+</head>
+<body>
+<header class="topbar">
+  <div><div class="brand">norsk lesson factory</div><div class="eyebrow">Authoring preview · read-only local workspace</div></div>
+  <div class="header-actions">
+    <span class="badge badge-violet">Authoring preview</span>
+    <span class="badge">{{ lesson.get("cefr_level", "—") }}</span>
+    <span class="badge">{{ kind_label }}</span>
+  </div>
+</header>
+<a class="skip-link" href="#lesson-preview">Skip to lesson content</a>
+<main class="workspace">
+  <aside class="panel outline" aria-label="Lesson outline">
+    <div class="panel-heading"><span class="kicker">Outline</span><span class="muted">{{ sections|length }} sections · {{ lesson.get("exercises", [])|length }} exercises</span></div>
+    <p class="goal" lang="en">{{ lesson.get("goal", "") }}</p>
+    <details class="outline-details" open><summary>Lesson outline</summary>
+      <ol class="outline-list">
+      {% for item in elements %}
+        {% if item.get("kind") == "section" %}
+        <li><a href="#{{ item.get("anchor_id", "section") }}"><span class="outline-index" aria-hidden="true">§</span>{{ item.get("title", "Untitled") }}</a></li>
+        {% else %}
+        <li class="exercise-link"><a href="#{{ item.get("anchor_id", "exercise") }}"><span class="outline-index" aria-hidden="true">↳</span>{{ humanize_identifier(item.get("id", "exercise")) }}</a><span>{{ humanize_identifier(item.get("operation", "")) }}</span></li>
+        {% endif %}
+      {% endfor %}
+      </ol>
+    </details>
+    <div class="outline-footer"><span class="status-dot" aria-hidden="true"></span> Source preview · no writes</div>
+  </aside>
+  <section class="panel lesson-column" id="lesson-preview" tabindex="-1" aria-label="Authored lesson preview">
+    <div class="lesson-toolbar"><div><span class="kicker">Authored lesson</span><h1>{{ title }}</h1></div><nav class="section-nav" aria-label="Jump to preview sections"><a class="section-link" href="#lesson-preview">Preview</a><a class="section-link" href="#source-view">Source evidence</a></nav></div>
+    <div class="notice"><span class="notice-icon" aria-hidden="true">◌</span><span><strong>Author view</strong> Answers, explanations, criteria, and source evidence are visible for review. Learner session state and scoring are not included.</span></div>
+    {% if elements %}
+      {% for item in elements %}
+      {% if item.get("kind") == "section" %}
+      <article class="section-card" id="{{ item.get("anchor_id", "section") }}"><div class="section-meta"><span class="section-role">{{ humanize_identifier(item.get("role", "section")) }}</span><span class="muted">Authored section</span></div><h2 lang="en">{{ item.get("title", "") }}</h2>{{ blocks(item.get("blocks", [])) }}</article>
+      {% else %}
+      <article class="exercise-card" id="{{ item.get("anchor_id", "exercise") }}"><div class="exercise-meta"><span class="exercise-tag">{{ item.get("operation", "exercise") }}</span><span class="muted">{{ humanize_identifier(item.get("objective_id", "")) }}</span></div><h2 lang="en">{{ spans(item.get("prompt", [])) }}</h2>{{ payload(item.get("operation", "exercise"), item.get("payload", {})) }}{% if item.get("explanation") %}<details class="author-details" open><summary>Author explanation</summary><div>{{ spans(item.get("explanation", [])) }}</div></details>{% endif %}</article>
+      {% endif %}
+      {% endfor %}
+    {% else %}
+      <div class="empty-state"><strong>Preview could not compile this package.</strong><p>{{ errors|join(" ") or "Source is incomplete." }}</p></div>
+    {% endif %}
+  </section>
+  <aside class="panel inspector" aria-label="Review inspector">
+    <div class="panel-heading"><span class="kicker">Review inspector</span><span class="{{ finding_count_class }}">{{ finding_count }} finding{% if finding_count != 1 %}s{% endif %}</span></div>
+    {% if findings or errors %}<div class="finding-list">{% for item in findings %}{{ finding(item) }}{% endfor %}{% for error in errors %}<div class="finding finding-blocking"><strong>compile-preview-error</strong><p>{{ error }}</p></div>{% endfor %}</div>{% else %}<div class="clean-state"><span aria-hidden="true">✓</span><div><strong>Deterministic source audit · clean</strong><p>Language review not run. No deterministic findings were returned for this authored source.</p></div></div>{% endif %}
+    <div class="inspector-section"><div class="kicker">Audio</div><div class="audio-status" data-disabled="true"><span class="audio-status-icon" aria-hidden="true">♪</span><span><strong>Audio unavailable</strong><span class="audio-status-copy">No source-bound audio loaded. Provider-free preview does not synthesize or attach distribution media.</span></span></div></div>
+    <div class="inspector-section" id="source-view" tabindex="-1"><div class="kicker">Source view</div><details><summary>lesson.md</summary><pre class="source">{{ lesson_source }}</pre></details><details><summary>exercises.yaml</summary><pre class="source">{{ exercise_source }}</pre></details><details><summary>plan.md</summary><pre class="source">{{ plan_source }}</pre></details></div>
+    <div class="inspector-section"><div class="kicker">Export projection</div><p class="muted">Production parser and export projection loaded successfully: {{ "yes" if export_available else "no" }}.</p><details><summary>Public packet JSON</summary><pre class="source">{{ packet_json }}</pre></details></div>
+  </aside>
+</main>
+<footer class="footer">norsk lesson factory · local authoring tool · provider-free · source remains unchanged</footer>
+<script>{{ static_asset("author_preview.js") }}</script>
+</body>
+</html>

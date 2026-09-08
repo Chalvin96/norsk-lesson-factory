@@ -1,0 +1,189 @@
+- handle: recognizing-hearing-problem
+  op: choose
+  objective: obj-ask-for-repetition-or-clarification-01
+  bloom: understand
+  prompt_md: In a noisy café exchange, Jonas gives Mina an instruction, but surrounding
+    noise hides the whole message. Choose the complete interpretation and polite repair
+    request.
+  derived_from:
+  - section_id: recognizing-hearing-problem
+  stem_md: Choose the response that identifies the communication problem and uses
+    the appropriate repair.
+  options:
+  - id: whole-message-repetition
+    text: Jeg fikk ikke med meg hele beskjeden. «Kan du gjenta?» — Can you repeat
+      that?
+    correct: true
+    why: The whole message was missed, so a repetition request is appropriate.
+  - id: single-word-meaning
+    text: Jeg forstår resten, men ett ord er uklart. «Hva betyr …?» — What does …
+      mean?
+    correct: false
+    why: This asks about one word, but the problem is a missing whole message.
+- handle: choosing-help-that-matches-the-problem
+  op: choose
+  objective: obj-ask-for-repetition-or-clarification-01
+  bloom: understand
+  prompt_md: 'Mina faces three situations: a noisy room, a speaker who talks too quickly,
+    and a message she missed because she was looking away. Choose the complete set
+    that names each problem and matches it with a clear, polite Norwegian request.'
+  derived_from:
+  - section_id: choosing-help-that-matches-the-problem
+  stem_md: Which complete set matches all three communication obstacles with suitable
+    requests?
+  options:
+  - id: mismatched-repair-set
+    text: 1. Det er bråk, men jeg spør «Hva betyr …?» — What does … mean? 2. Taleren
+      snakker for fort, så jeg spør «Kan du gjenta?» — Can you repeat that? 3. Jeg
+      så bort, men jeg spør «Mener du …?» — Do you mean …?
+    correct: false
+    why: The set uses a word-meaning question or interpretation check where repetition
+      or slower speech is needed.
+  - id: matched-repair-set
+    text: 1. Det er bråk, så jeg hørte ikke hele beskjeden. «Kan du gjenta?» — Can
+      you repeat that? 2. Taleren snakker for fort. «Kan du snakke saktere?» — Can
+      you speak more slowly? 3. Jeg så bort og fikk ikke med meg beskjeden. «Kan du
+      gjenta?» — Can you repeat that?
+    correct: true
+    why: Each request matches the specific communication obstacle.
+- handle: isolating-an-unfamiliar-word
+  op: write
+  objective: obj-ask-for-repetition-or-clarification-01
+  bloom: apply
+  prompt_md: 'Jonas tells Mina: «Ta koppen til bord 3.» Mina understands the instruction
+    except for the word koppen. Jonas then explains: «Koppen er en liten drikkebeholder
+    med hank.» Write Mina’s two short Norwegian contributions: first ask what koppen
+    means; after this explanation, confirm in Norwegian that koppen is a small drinking
+    container with a handle and show that she now understands.'
+  derived_from:
+  - section_id: isolating-an-unfamiliar-word
+  response_language: 'no'
+  judge_prompt: Check for both stages. Accept natural Bokmål variants of «Hva betyr
+    …?» (What does … mean?) for the focused question. After an explanation, require
+    a Norwegian confirmation of the explained meaning and an indication that Mina
+    now understands, such as «Å, nå forstår jeg» (Oh, now I understand).
+  criteria:
+  - id: focused-question
+    instruction: Asks what the unfamiliar word means with a focused Norwegian question.
+  - id: meaning-confirmed
+    instruction: Confirms in Norwegian that koppen is a small drinking container with a handle after receiving the explanation.
+  - id: understanding-shown
+    instruction: Indicates in Norwegian that Mina now understands.
+- handle: confirming-place-time-or-object
+  op: write
+  objective: obj-ask-for-repetition-or-clarification-01
+  bloom: apply
+  prompt_md: 'At a bus stop, Jonas says: «Ta vesken til plattform 3.» Mina is unsure
+    whether he means platform 2 or platform 3. Write Mina’s two short Norwegian contributions:
+    ask «Mener du …?» — Do you mean …? with her best interpretation; then use one of
+    these supplied replies from Jonas — «Ja, plattform 3.» or «Nei, plattform 2.» — and
+    repeat the final platform and continue the task.'
+  derived_from:
+  - section_id: confirming-place-time-or-object
+  response_language: 'no'
+  judge_prompt: Accept either a confirmation or correction branch. Require the first
+    contribution to ask a focused Norwegian «Mener du …?» (Do you mean …?) question
+    about one ambiguous detail. Require the second contribution to repeat the confirmed
+    or corrected final detail and continue the task. Accept natural Bokmål variants.
+  criteria:
+  - id: uncertain-detail-check
+    instruction: Uses a focused Norwegian check with Mener du …? about one ambiguous
+      detail.
+  - id: final-detail-repeated
+    instruction: Repeats the confirmed or corrected final place, time, or object in
+      Norwegian.
+  - id: exchange-continued
+    instruction: Continues the exchange with a relevant next step based on the final
+      detail.
+- handle: completing-repair-cycle
+  op: write
+  objective: obj-ask-for-repetition-or-clarification-01
+  bloom: apply
+  prompt_md: 'At the café, Jonas tells Mina to bring two cups of coffee to table 4,
+    but she misses the whole order. Write Mina’s three short Norwegian contributions:
+    request repetition; after Jonas repeats «Ta to kopper kaffe til bord 4.», confirm
+    the order; and continue with the café task.'
+  derived_from:
+  - section_id: completing-repair-cycle
+  response_language: 'no'
+  judge_prompt: Check the three-stage repair cycle. Accept natural Bokmål variants,
+    including «Kan du gjenta?» (Can you repeat that?) for the missed whole order,
+    a confirmation that repeats or clearly acknowledges two cups of coffee for table
+    4, and a relevant continuation such as «Greit, jeg gjør det nå» (All right, I’ll
+    do it now).
+  criteria:
+  - id: matched-repair-move
+    instruction: Uses a repetition request because Mina missed the whole café order.
+  - id: corrected-message-acknowledged
+    instruction: Repeats or acknowledges the complete repeated order in Norwegian.
+  - id: café-task-continued
+    instruction: Adds a natural Norwegian next step for the café task.
+- handle: integrated-practice-repairing-complete-exchange
+  op: write
+  objective: obj-ask-for-repetition-or-clarification-01
+  bloom: apply
+  prompt_md: 'Choose one of these four everyday situations and write three short Norwegian
+    contributions: (1) Jonas says «Ta to kopper kaffe til bord 4.», but noise hides the
+    whole message; after Mina asks for repetition, Jonas repeats that sentence. (2) Jonas
+    says «Sett kaken på bord 2.» too quickly; after Mina asks him to speak more slowly,
+    he repeats that sentence. (3) Jonas says «Ta koppen til bord 3.» and koppen is unfamiliar;
+    after Mina asks what it means, Jonas explains «Koppen er en liten drikkebeholder med hank.» (4) Jonas says
+    «Ta vesken til plattform 3.» and Mina is unsure whether he means platform 2 or 3; after
+    Mina asks «Mener du …?», Jonas replies «Ja, plattform 3.» or «Nei, plattform 2.». Use
+    the matching taught move: «Kan du gjenta?» — Can you repeat that?; «Kan du snakke
+    saktere?» — Can you speak more slowly?; «Hva betyr …?» — What does … mean?; or
+    «Mener du …?» — Do you mean …?. After the supplied repair reply, confirm the important
+    information and continue the selected situation. Make the selected problem visible through the
+    request and end with a relevant next step.'
+  derived_from:
+  - section_id: integrated-practice-repairing-complete-exchange
+  response_language: 'no'
+  judge_prompt: 'Accept one of the four routes only when the Norwegian repair request
+    matches the selected problem: «Kan du gjenta?» (Can you repeat that?) for a missed
+    message, «Kan du snakke saktere?» (Can you speak more slowly?) for speech that
+    is too fast, «Hva betyr …?» (What does … mean?) for an unfamiliar word, or «Mener
+    du …?» (Do you mean …?) for an uncertain detail. Require a confirmation or acknowledgment
+    of the important information after repair and a relevant continuation in the selected situation. The
+    response must not stop after the repair request.'
+  criteria:
+  - id: problem-visible
+    instruction: Makes one selected communication problem visible through the matching
+      Norwegian repair request.
+  - id: understanding-confirmed
+    instruction: Confirms or acknowledges the important corrected information in Norwegian
+      after repair.
+  - id: task-continued
+    instruction: Ends with a relevant Norwegian continuation of the selected situation.
+- handle: short-retrieval-review
+  op: write
+  objective: obj-ask-for-repetition-or-clarification-01
+  bloom: apply
+  prompt_md: 'Write one natural Norwegian request for each situation: you did not hear
+    the message; the speaker is too fast; one word is unfamiliar; or one detail may be
+    wrong. Then choose one situation and write a complete Norwegian repair sequence:
+    briefly identify the problem, request help, acknowledge the corrected message, and
+    return naturally to the conversation or task. Use a new everyday context such as a
+    bus stop or short telephone call.'
+  derived_from:
+  - section_id: short-retrieval-review
+  response_language: 'no'
+  judge_prompt: Check all four retrieval items and one complete sequence. Accept natural
+    Bokmål variants, but require the canonical meanings «Kan du gjenta?» (Can you
+    repeat that?) for a missed message, «Kan du snakke saktere?» (Can you speak more
+    slowly?) for speech that is too fast, «Hva betyr …?» (What does … mean?) for an
+    unfamiliar word, and «Mener du …?» (Do you mean …?) for an uncertain detail. In
+    the selected sequence, require a matching request, a clear Norwegian acknowledgment
+    or repetition of the final information, and a natural continuation such as «Å,
+    nå forstår jeg» (Oh, now I understand) and «Greit, jeg gjør det nå» (All right,
+    I’ll do it now).
+  criteria:
+  - id: four-matched-repair-requests
+    instruction: Provides one distinct Norwegian request for each listed communication
+      problem, with every request matched to its problem.
+  - id: chosen-problem-repaired
+    instruction: Identifies one chosen problem and uses the matching repair request
+      in a complete sequence.
+  - id: final-information-acknowledged
+    instruction: Clearly acknowledges or repeats the final information in Norwegian.
+  - id: natural-continuation
+    instruction: Returns naturally to the conversation or task in Norwegian.

@@ -1,0 +1,257 @@
+- handle: recognize_hypothetical_distance
+  op: choose
+  objective: obj-irrealis-constructions-01
+  bloom: analyze
+  prompt_md: Read the three Norwegian conditions. Choose the classification set that
+    distinguishes an open possibility from a more distant or unreal situation. Use
+    the taught contrast between an ordinary condition and past tense + ville. 1. Hvis
+    jeg får fri på fredag, reiser jeg med toget. 2. Hvis jeg hadde mer tid, ville
+    jeg jobbe hjemme. 3. Hvis vi finner en større leilighet, flytter vi i høst.
+  derived_from:
+  - section_id: checkpoint-recognize-hypothetical-distance
+  stem_md: Choose the classification set that correctly labels conditions 1, 2, and
+    3.
+  options:
+  - id: distant-open-open
+    text: '1: en mer fjern eller uvirkelig situasjon; 2: en åpen mulighet; 3: en åpen
+      mulighet'
+    correct: false
+    why: Condition 1 is an ordinary open condition, not the past tense + ville pattern.
+  - id: open-open-distant
+    text: '1: en åpen mulighet; 2: en åpen mulighet; 3: en mer fjern eller uvirkelig
+      situasjon'
+    correct: false
+    why: Condition 2 contains the taught distant or unreal pattern.
+  - id: open-distant-open
+    text: '1: en åpen mulighet; 2: en mer fjern eller uvirkelig situasjon; 3: en åpen
+      mulighet'
+    correct: true
+    why: Conditions 1 and 3 use ordinary present conditions for open possibilities;
+      condition 2 uses past tense + ville for an imagined situation.
+- handle: build_present_hypothetical_condition
+  op: build
+  objective: obj-irrealis-constructions-01
+  bloom: apply
+  prompt_md: 'Someone lives far from Oslo now. Build the Norwegian sentence for this
+    imagined alternative: If she lived closer to Oslo, she would take the train.'
+  explanation_md: "A present counterfactual uses past tense in the hvis-clause and «ville + infinitive» in the result: «Hvis hun bodde …, ville hun ta …»."
+  derived_from:
+  - section_id: checkpoint-build-present-hypothetical-condition
+  tokens:
+  - token_id: tok-1
+    text: Hvis
+  - token_id: tok-2
+    text: hun
+  - token_id: tok-3
+    text: bodde
+  - token_id: tok-4
+    text: nærmere
+  - token_id: tok-5
+    text: Oslo,
+  - token_id: tok-6
+    text: ville
+  - token_id: tok-7
+    text: hun
+  - token_id: tok-8
+    text: ta
+  - token_id: tok-9
+    text: toget.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+- handle: select_would_or_could_result
+  op: recall_fill
+  objective: obj-irrealis-constructions-01
+  bloom: understand
+  prompt_md: Complete both hypothetical conditions. The result clauses already supply
+    ville or kunne; choose the past-tense form that presents an imagined present or
+    future. Do not change the supplied result meaning.
+  derived_from:
+  - section_id: checkpoint-select-would-or-could-result
+  audio_target: "Jeg har lite tid. Hvis jeg hadde mer tid, ville jeg lese boka. Jeg bor langt unna. Hvis jeg bodde nærmere, kunne jeg komme oftere."
+  segments:
+  - text_md: 'Jeg har lite tid. Hvis jeg '
+  - blank_id: time-condition
+    options:
+    - hadde
+    - har
+    answer_index: 0
+  - text_md: ' mer tid, ville jeg lese boka. Jeg bor langt unna. Hvis jeg '
+  - blank_id: distance-condition
+    options:
+    - bodde
+    - bor
+    answer_index: 0
+  - text_md: ' nærmere, kunne jeg komme oftere.'
+- handle: distinguish_hypothetical_time_reference
+  op: choose
+  objective: obj-irrealis-constructions-01
+  bloom: analyze
+  prompt_md: 'Read the two facts. Case 1: Nora has little free time now and imagines
+    having more time. Case 2: Nora did not buy the ticket yesterday and the trip is
+    over. Choose the pair of Norwegian sentences that uses the required hypothetical
+    time frame in each case.'
+  derived_from:
+  - section_id: checkpoint-distinguish-hypothetical-time-reference
+  stem_md: Choose the pair that matches the present/future hypothesis and the contrary-to-fact
+    past.
+  options:
+  - id: present-past
+    text: 'Nå: Hvis Nora hadde mer tid, ville hun lese boka. Tidligere: Hvis Nora
+      hadde kjøpt billetten, ville hun ha reist.'
+    correct: true
+    why: The first sentence imagines a different present; the second uses hadde +
+      past participle and ville ha + past participle for the completed past.
+  - id: ordinary-past
+    text: 'Nå: Hvis Nora har mer tid, ville hun lese boka. Tidligere: Hvis Nora kjøpte
+      billetten, ville hun ha reist.'
+    correct: false
+    why: The condition forms do not use the taught patterns for the two time frames.
+  - id: present-mixed-result
+    text: 'Nå: Hvis Nora hadde mer tid, ville hun lese boka. Tidligere: Hvis Nora
+      hadde kjøpt billetten, ville hun reise.'
+    correct: false
+    why: The completed past case needs the past result form ville ha reist.
+- handle: build_past_counterfactual_condition
+  op: build
+  objective: obj-irrealis-constructions-01
+  bloom: apply
+  prompt_md: 'The train has already left. You missed it because you left home late.
+    Build the clear full contrary-to-fact past sentence: If you had left earlier,
+    you would have caught the train.'
+  explanation_md: "An unreal present or future condition uses a past form; a past counterfactual uses hadde + past participle in the if-clause and ville ha + past participle in the result."
+  derived_from:
+  - section_id: checkpoint-build-past-counterfactual-condition
+  tokens:
+  - token_id: tok-1
+    text: Hvis
+  - token_id: tok-2
+    text: du
+  - token_id: tok-3
+    text: hadde
+  - token_id: tok-4
+    text: dratt
+  - token_id: tok-5
+    text: tidligere,
+  - token_id: tok-6
+    text: ville
+  - token_id: tok-7
+    text: du
+  - token_id: tok-8
+    text: ha
+  - token_id: tok-9
+    text: rukket
+  - token_id: tok-10
+    text: toget.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+- handle: repair_irrealis_construction_errors
+  op: find_fix
+  objective: obj-irrealis-constructions-01
+  bloom: analyze
+  prompt_md: I did not buy the ticket yesterday. The sentence should express a contrary-to-fact
+    past condition. Find the one incorrect token. Finite modal complementation, general
+    inversion, and omission of overt ha are not errors in this activity.
+  derived_from:
+  - section_id: checkpoint-repair-irrealis-construction-errors
+  tokens:
+  - token_id: tok-1
+    text: Hvis
+  - token_id: tok-2
+    text: jeg
+  - token_id: tok-3
+    text: hadde
+  - token_id: tok-4
+    text: kjøpte
+  - token_id: tok-5
+    text: billetten
+  - token_id: tok-6
+    text: i
+  - token_id: tok-7
+    text: går,
+  - token_id: tok-8
+    text: ville
+  - token_id: tok-9
+    text: jeg
+  - token_id: tok-10
+    text: ha
+  - token_id: tok-11
+    text: reist.
+  error_token_id: tok-4
+  feedback: 'Change kjøpte to kjøpt: hadde must be followed by the past participle
+    in this contrary-to-fact past condition.'
+- handle: interpret_conditions_in_return_scene
+  op: choose
+  objective: obj-irrealis-constructions-01
+  bloom: analyze
+  prompt_md: In the return scene, Maja and Eirik have not yet confirmed Friday off,
+    they do not have a car, and they did not book the train yesterday. Read the three
+    lines and choose the complete English interpretation that matches the cabin trip.
+    1. Hvis Maja får fri på fredag, drar vi til hytta. 2. Hvis vi hadde bil, ville
+    vi kjøre til hytta. 3. Hvis vi hadde bestilt toget i går, ville vi ha fått billigere
+    billetter.
+  derived_from:
+  - section_id: checkpoint-interpret-conditions-in-return-scene
+  stem_md: Choose the interpretation that explains what each conditional implies.
+  options:
+  - id: imagined-now-possible-now-unchangeable-past
+    text: Sentence 1 is only imagined now; sentence 2 remains genuinely possible;
+      sentence 3 describes a missed past opportunity that cannot be changed now.
+    correct: false
+    why: Sentence 1 presents an open Friday possibility, while sentence 2 uses past
+      tense + ville.
+  - id: possible-now-imagined-now-unchangeable-past
+    text: Sentence 1 remains genuinely possible; sentence 2 imagines having a car
+      now; sentence 3 describes a missed past opportunity that cannot be changed now.
+    correct: true
+    why: The first condition is open, the second contradicts a current fact, and the
+      third refers to an unchangeable missed event yesterday.
+  - id: possible-now-unchangeable-past-imagined-now
+    text: Sentence 1 remains genuinely possible; sentence 2 describes an unchangeable
+      past opportunity; sentence 3 imagines a different present.
+    correct: false
+    why: Sentence 2 concerns the current absence of a car, and sentence 3 concerns
+      yesterday.
+- handle: transfer_irrealis_to_new_situation
+  op: write
+  objective: obj-irrealis-constructions-01
+  bloom: apply
+  prompt_md: Write a short exchange in Norwegian between two friends discussing a
+    concert. One friend does not currently live near the venue, and both friends bought
+    their tickets too late to get an earlier discount. Include one hypothesis about
+    the present or future and one contrary-to-fact condition about the past. Make
+    the time reference clear from these stated facts and use your own wording.
+  derived_from:
+  - section_id: retrieval-and-transfer
+  response_language: 'no'
+  judge_prompt: Check the Norwegian exchange against the task and report evidence
+    for each criterion. Accept natural Bokmål ville + past participle without overt
+    ha as an equivalent result form for the contrary-to-fact past criterion.
+  criteria:
+  - id: concert-context
+    instruction: 'Uses the concert situation: one friend currently lives away from
+      the venue, and both friends missed the earlier discount because they bought
+      tickets late.'
+  - id: present-future-hypothesis
+    instruction: Includes a present or future hypothesis with a past-tense hvis-clause
+      and ville + infinitive.
+  - id: past-counterfactual
+    instruction: Includes a contrary-to-fact past condition with hadde + past participle
+      and the full result form ville ha + past participle; natural Bokmål ville +
+      past participle without overt ha is also accepted for the result.

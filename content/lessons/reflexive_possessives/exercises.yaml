@@ -1,0 +1,484 @@
+- handle: anchor_ownership_map
+  op: choose
+  objective: obj-reflexive-possessives-01
+  bloom: understand
+  prompt_md: Read the cabin sentence and choose the complete interpretation that identifies
+    the subject, the possessed item, and whether the item belongs to the subject.
+    Do not score agreement yet.
+  derived_from:
+  - section_id: sec-checkpoint-anchor-ownership-map
+  stem_md: 'Interpret this cabin sentence: Jonas tar på seg jakka si.'
+  options:
+  - id: subject-owns-item
+    text: Subjektet er Jonas, tingen er jakka, og Jonas eier den selv — The subject
+      is Jonas, the item is the jacket, and Jonas owns it himself.
+    correct: true
+    why: The subject Jonas owns the jacket, so the sentence expresses his own jacket.
+  - id: other-person-owns-item
+    text: Subjektet er Jonas, tingen er jakka, og Nora eier den — The subject is Jonas,
+      the item is the jacket, and Nora owns it.
+    correct: false
+    why: The sentence does not make Nora the owner.
+  - id: wrong-subject
+    text: Subjektet er Nora, tingen er jakka, og Nora eier den selv — The subject
+      is Nora, the item is the jacket, and Nora owns it herself.
+    correct: false
+    why: The subject in the sentence is Jonas, not Nora.
+  - id: wrong-item
+    text: Subjektet er Jonas, tingen er passet, og Jonas eier den selv — The subject
+      is Jonas, the item is the passport, and Jonas owns it himself.
+    correct: false
+    why: The possessed item in the sentence is the jacket, not the passport.
+- handle: possessed_noun_agreement
+  op: recall_fill
+  objective: obj-reflexive-possessives-01
+  bloom: apply
+  prompt_md: Every item belongs to the sentence subject. Fill each blank with the
+    correct member of sin–si–sitt–sine. Choose from the possessed noun gender and
+    number; the owner gender is irrelevant.
+  derived_from:
+  - section_id: sec-checkpoint-possessed-noun-agreement
+  audio_target: "Jonas finner nøkkelen sin. Jonas tar på seg jakka si. Jonas finner passet sitt. Jonas finner billettene sine."
+  segments:
+  - text_md: 'Jonas finner nøkkelen '
+  - blank_id: agreement-masculine
+    options:
+    - sin
+    - si
+    - sitt
+    - sine
+    answer_index: 0
+  - text_md: '. Jonas tar på seg jakka '
+  - blank_id: agreement-feminine
+    options:
+    - sin
+    - si
+    - sitt
+    - sine
+    answer_index: 1
+  - text_md: '. Jonas finner passet '
+  - blank_id: agreement-neuter
+    options:
+    - sin
+    - si
+    - sitt
+    - sine
+    answer_index: 2
+  - text_md: '. Jonas finner billettene '
+  - blank_id: agreement-plural
+    options:
+    - sin
+    - si
+    - sitt
+    - sine
+    answer_index: 3
+  - text_md: .
+- handle: same_owner_or_other_owner
+  op: recall_fill
+  objective: obj-reflexive-possessives-01
+  bloom: apply
+  prompt_md: Complete each cabin sentence. Use a reflexive form when the subject owns
+    the item; use hans, hennes, or deres when a named other person owns it. Agreement
+    is secondary in this activity.
+  explanation_md: "Sin/si/sitt/sine refers back to the clause subject and agrees with the possessed noun; hans/hennes/deres identifies another owner."
+  derived_from:
+  - section_id: sec-checkpoint-same-owner-or-other-owner
+  audio_target: "Jonas pakker jakka hennes for Nora. Nora pakker jakka si. Nora legger passet hans i sekken for Jonas. Jonas finner passet sitt. Oskar legger billettene deres i sekken for Jonas og Nora. Jonas og Nora finner billettene sine."
+  segments:
+  - text_md: 'Jonas pakker jakka '
+  - blank_id: contrast-jonas-nora
+    options:
+    - si
+    - hennes
+    answer_index: 1
+  - text_md: ' for Nora. Nora pakker jakka '
+  - blank_id: contrast-nora-own
+    options:
+    - hennes
+    - si
+    answer_index: 1
+  - text_md: '. Nora legger passet '
+  - blank_id: contrast-nora-jonas
+    options:
+    - sitt
+    - hans
+    answer_index: 1
+  - text_md: ' i sekken for Jonas. Jonas finner passet '
+  - blank_id: contrast-jonas-own
+    options:
+    - hans
+    - sitt
+    answer_index: 1
+  - text_md: '. Oskar legger billettene '
+  - blank_id: contrast-oskar-group
+    options:
+    - sine
+    - deres
+    answer_index: 1
+  - text_md: ' i sekken for Jonas og Nora. Jonas og Nora finner billettene '
+  - blank_id: contrast-group-own
+    options:
+    - deres
+    - sine
+    answer_index: 1
+  - text_md: .
+- handle: agreement_misconception_check
+  op: recall_fill
+  objective: obj-reflexive-possessives-01
+  bloom: apply
+  prompt_md: Fill each sentence with the possessive and then choose a brief basis
+    for each choice. Use the gender or plural number of the possessed noun as your
+    basis, never the gender or number of the owner.
+  explanation_md: "Choose sin/si/sitt/sine by the possessed noun, then verify that the owner is the clause subject."
+  derived_from:
+  - section_id: sec-common-mistake-matching-the-owner
+  audio_target: "Jonas tar på seg jakka si. Nora tar på seg jakka si. Nora og Emil tar på seg jakka si. Nora finner nøkkelen sin. Nora finner jakka si. Nora finner passet sitt. Nora finner billettene sine."
+  segments:
+  - text_md: 'Jonas tar på seg jakka '
+  - blank_id: misconception-jonas-form
+    options:
+    - sin
+    - si
+    - sitt
+    - sine
+    answer_index: 1
+  - text_md: '. Basis: '
+  - blank_id: misconception-jonas-basis
+    options:
+    - substantivet er et hankjønnsord i entall — the noun is masculine singular
+    - substantivet er et hunkjønnsord i entall — the noun is feminine singular
+    - substantivet er et intetkjønnsord i entall — the noun is neuter singular
+    - substantivet står i flertall — the noun is plural
+    answer_index: 1
+  - text_md: '. Nora tar på seg jakka '
+  - blank_id: misconception-nora-form
+    options:
+    - sin
+    - si
+    - sitt
+    - sine
+    answer_index: 1
+  - text_md: '. Basis: '
+  - blank_id: misconception-nora-basis
+    options:
+    - substantivet er et hankjønnsord i entall — the noun is masculine singular
+    - substantivet er et hunkjønnsord i entall — the noun is feminine singular
+    - substantivet er et intetkjønnsord i entall — the noun is neuter singular
+    - substantivet står i flertall — the noun is plural
+    answer_index: 1
+  - text_md: '. Nora og Emil tar på seg jakka '
+  - blank_id: misconception-plural-owner-form
+    options:
+    - sin
+    - si
+    - sitt
+    - sine
+    answer_index: 1
+  - text_md: '. Basis: '
+  - blank_id: misconception-plural-owner-basis
+    options:
+    - substantivet er et hankjønnsord i entall — the noun is masculine singular
+    - substantivet er et hunkjønnsord i entall — the noun is feminine singular
+    - substantivet er et intetkjønnsord i entall — the noun is neuter singular
+    - substantivet står i flertall — the noun is plural
+    answer_index: 1
+  - text_md: '. Nora finner nøkkelen '
+  - blank_id: misconception-masculine-form
+    options:
+    - sin
+    - si
+    - sitt
+    - sine
+    answer_index: 0
+  - text_md: '. Basis: '
+  - blank_id: misconception-masculine-basis
+    options:
+    - substantivet er et hankjønnsord i entall — the noun is masculine singular
+    - substantivet er et hunkjønnsord i entall — the noun is feminine singular
+    - substantivet er et intetkjønnsord i entall — the noun is neuter singular
+    - substantivet står i flertall — the noun is plural
+    answer_index: 0
+  - text_md: '. Nora finner jakka '
+  - blank_id: misconception-feminine-form
+    options:
+    - sin
+    - si
+    - sitt
+    - sine
+    answer_index: 1
+  - text_md: '. Basis: '
+  - blank_id: misconception-feminine-basis
+    options:
+    - substantivet er et hankjønnsord i entall — the noun is masculine singular
+    - substantivet er et hunkjønnsord i entall — the noun is feminine singular
+    - substantivet er et intetkjønnsord i entall — the noun is neuter singular
+    - substantivet står i flertall — the noun is plural
+    answer_index: 1
+  - text_md: '. Nora finner passet '
+  - blank_id: misconception-neuter-form
+    options:
+    - sin
+    - si
+    - sitt
+    - sine
+    answer_index: 2
+  - text_md: '. Basis: '
+  - blank_id: misconception-neuter-basis
+    options:
+    - substantivet er et hankjønnsord i entall — the noun is masculine singular
+    - substantivet er et hunkjønnsord i entall — the noun is feminine singular
+    - substantivet er et intetkjønnsord i entall — the noun is neuter singular
+    - substantivet står i flertall — the noun is plural
+    answer_index: 2
+  - text_md: '. Nora finner billettene '
+  - blank_id: misconception-plural-form
+    options:
+    - sin
+    - si
+    - sitt
+    - sine
+    answer_index: 3
+  - text_md: '. Basis: '
+  - blank_id: misconception-plural-basis
+    options:
+    - substantivet er et hankjønnsord i entall — the noun is masculine singular
+    - substantivet er et hunkjønnsord i entall — the noun is feminine singular
+    - substantivet er et intetkjønnsord i entall — the noun is neuter singular
+    - substantivet står i flertall — the noun is plural
+    answer_index: 3
+  - text_md: .
+- handle: complete_own_belonging_phrases
+  op: build
+  objective: obj-reflexive-possessives-01
+  bloom: apply
+  prompt_md: Build one complete Norwegian sentence from the supplied tokens. Nora
+    owns all four items; use the definite noun form and the matching reflexive possessive
+    after each noun. Use every token exactly once.
+  derived_from:
+  - section_id: sec-checkpoint-complete-own-belonging-phrases
+  tokens:
+  - token_id: phrase-nora
+    text: Nora
+  - token_id: phrase-finner
+    text: finner
+  - token_id: phrase-nokkelen
+    text: nøkkelen
+  - token_id: phrase-sin
+    text: sin,
+  - token_id: phrase-jakka
+    text: jakka
+  - token_id: phrase-si
+    text: si,
+  - token_id: phrase-passet
+    text: passet
+  - token_id: phrase-sitt
+    text: sitt
+  - token_id: phrase-og
+    text: og
+  - token_id: phrase-billettene
+    text: billettene
+  - token_id: phrase-sine
+    text: sine.
+  answer_order:
+  - phrase-nora
+  - phrase-finner
+  - phrase-nokkelen
+  - phrase-sin
+  - phrase-jakka
+  - phrase-si
+  - phrase-passet
+  - phrase-sitt
+  - phrase-og
+  - phrase-billettene
+  - phrase-sine
+- handle: changing_subject_same_belonging
+  op: recall_fill
+  objective: obj-reflexive-possessives-01
+  bloom: apply
+  prompt_md: Complete each paired cabin example. In each pair, the first subject handles
+    an item owned by named other people, and the second subject is the owner. Use
+    hans, hennes, or deres in the first sentence and sin, si, sitt, or sine in the
+    second.
+  derived_from:
+  - section_id: sec-practice-changing-subject-same-belonging
+  audio_target: "Jonas bærer nøkkelen hennes for Nora. Nora bærer nøkkelen sin til bilen. Nora legger jakka hans på stolen for Jonas. Jonas tar på seg jakka si. Oskar holder passet deres for Jonas og Nora. Jonas og Nora finner passet sitt. Jonas bærer billettene hennes for Nora. Nora finner billettene sine."
+  segments:
+  - text_md: 'Jonas bærer nøkkelen '
+  - blank_id: changing-nora-key-other
+    options:
+    - sin
+    - hennes
+    answer_index: 1
+  - text_md: ' for Nora. Nora bærer nøkkelen '
+  - blank_id: changing-nora-key-own
+    options:
+    - hennes
+    - sin
+    answer_index: 1
+  - text_md: ' til bilen. Nora legger jakka '
+  - blank_id: changing-jonas-jacket-other
+    options:
+    - si
+    - hans
+    answer_index: 1
+  - text_md: ' på stolen for Jonas. Jonas tar på seg jakka '
+  - blank_id: changing-jonas-jacket-own
+    options:
+    - hans
+    - si
+    answer_index: 1
+  - text_md: '. Oskar holder passet '
+  - blank_id: changing-group-passport-other
+    options:
+    - sitt
+    - deres
+    answer_index: 1
+  - text_md: ' for Jonas og Nora. Jonas og Nora finner passet '
+  - blank_id: changing-group-passport-own
+    options:
+    - deres
+    - sitt
+    answer_index: 1
+  - text_md: '. Jonas bærer billettene '
+  - blank_id: changing-nora-tickets-other
+    options:
+    - sine
+    - hennes
+    answer_index: 1
+  - text_md: ' for Nora. Nora finner billettene '
+  - blank_id: changing-nora-tickets-own
+    options:
+    - hennes
+    - sine
+    answer_index: 1
+  - text_md: .
+- handle: cabin_departure_sentence_building
+  op: build
+  objective: obj-reflexive-possessives-01
+  bloom: apply
+  prompt_md: 'Build one complete Norwegian sentence from the supplied tokens. The
+    sentence should state these four facts: Jonas finds his own key, Nora puts on
+    her own jacket, Oskar finds his own passport, and Nora and Emil find their own
+    tickets. Use every token exactly once.'
+  derived_from:
+  - section_id: sec-practice-cabin-departure-sentence-building
+  tokens:
+  - token_id: cabin-jonas
+    text: Jonas
+  - token_id: cabin-finner-1
+    text: finner
+  - token_id: cabin-nokkelen
+    text: nøkkelen
+  - token_id: cabin-sin
+    text: sin,
+  - token_id: cabin-nora-1
+    text: Nora
+  - token_id: cabin-tar
+    text: tar
+  - token_id: cabin-pa
+    text: på
+  - token_id: cabin-seg
+    text: seg
+  - token_id: cabin-jakka
+    text: jakka
+  - token_id: cabin-si
+    text: si,
+  - token_id: cabin-oskar
+    text: Oskar
+  - token_id: cabin-finner-2
+    text: finner
+  - token_id: cabin-passet
+    text: passet
+  - token_id: cabin-sitt
+    text: sitt,
+  - token_id: cabin-og-1
+    text: og
+  - token_id: cabin-nora-2
+    text: Nora
+  - token_id: cabin-og-2
+    text: og
+  - token_id: cabin-emil
+    text: Emil
+  - token_id: cabin-finner-3
+    text: finner
+  - token_id: cabin-billettene
+    text: billettene
+  - token_id: cabin-sine
+    text: sine.
+  answer_order:
+  - cabin-jonas
+  - cabin-finner-1
+  - cabin-nokkelen
+  - cabin-sin
+  - cabin-nora-1
+  - cabin-tar
+  - cabin-pa
+  - cabin-seg
+  - cabin-jakka
+  - cabin-si
+  - cabin-oskar
+  - cabin-finner-2
+  - cabin-passet
+  - cabin-sitt
+  - cabin-og-1
+  - cabin-nora-2
+  - cabin-og-2
+  - cabin-emil
+  - cabin-finner-3
+  - cabin-billettene
+  - cabin-sine
+- handle: office_ownership_transfer
+  op: write
+  objective: obj-reflexive-possessives-01
+  bloom: apply
+  prompt_md: Write five short Norwegian sentences about colleagues closing an office
+    and collecting personal belongings. Include one sentence with each of sin, si,
+    sitt, and sine for an item owned by its subject, and at least one sentence where
+    a colleague handles another colleague's item, using hans, hennes, or deres. Use
+    original office wording.
+  derived_from:
+  - section_id: sec-cumulative-office-ownership-transfer
+  response_language: 'no'
+  min_words: 30
+  max_words: 55
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Norwegian wording and equivalent possessive forms that preserve
+    the required ownership relationships.
+  criteria:
+  - id: office-context
+    instruction: Describes colleagues closing an office and collecting personal belongings
+      in five original Norwegian sentences.
+  - id: ownership-contrast
+    instruction: Uses sin, si, sitt, or sine when the subject owns the item, and hans,
+      hennes, or deres when another colleague owns the item.
+  - id: noun-agreement
+    instruction: Matches sin with masculine singular, si with feminine singular, sitt
+      with neuter singular, and sine with plural possessed nouns.
+- handle: two_question_review
+  op: write
+  objective: obj-reflexive-possessives-01
+  bloom: apply
+  prompt_md: 'First state in Norwegian the two questions you use when choosing a
+    possessive. Then write four short Norwegian sentences about people leaving a shared
+    place: use sin in one sentence, si in one, sitt in one, and sine in one. In every
+    sentence, the subject must own the possessed noun.'
+  derived_from:
+  - section_id: sec-final-retrieval-review
+  response_language: 'no'
+  min_words: 25
+  max_words: 60
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Norwegian paraphrases of the two questions and natural sentences
+    that preserve the required subject–owner relationship.
+  criteria:
+  - id: ownership-question
+    instruction: States that the first question checks whether the subject owns the
+      possessed noun.
+  - id: noun-question
+    instruction: States that the second question checks the gender or number of the
+      possessed noun.
+  - id: four-reflexive-forms
+    instruction: Writes four short Norwegian sentences with sin, si, sitt, and sine,
+      one form per sentence.
+  - id: subject-owner
+    instruction: Makes the subject the owner of the possessed noun in all four sentences.

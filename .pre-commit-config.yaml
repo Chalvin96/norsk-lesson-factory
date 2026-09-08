@@ -1,0 +1,25 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-merge-conflict
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+      - id: check-yaml
+      - id: check-json
+      - id: check-toml
+      - id: check-shebang-scripts-are-executable
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.13
+    hooks:
+      - id: ruff-check
+      - id: ruff-format
+        args: [--check]
+  - repo: https://github.com/rohaquinlop/complexipy-pre-commit
+    rev: v7.0.1
+    hooks:
+      - id: complexipy
+        # Check staged cognitive-complexity regressions without reopening the legacy backlog.
+        types_or: [python, pyi]
+        args: [--max-complexity-allowed, "15", --staged, --ignore-complexity]

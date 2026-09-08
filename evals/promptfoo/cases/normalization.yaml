@@ -1,0 +1,159 @@
+# Synthetic stage-handoff input that isolates normalization behavior: the
+# protected draft and frozen checkpoint intents are handed to the real
+# production normalization prompt, and the two dimensions separate a lost
+# teaching unit from a broken handoff.
+
+- description: Preserve a meaning contrast and checkpoint marker
+  metadata:
+    surface: normalization
+    cefr: A1
+    kind: phraseology
+    source_lesson: synthetic
+  vars:
+    surface: normalization
+    plan: |
+      ---
+      package_version: 0.1-prompt-eval
+      lesson_id: prompt-eval-normalization
+      kind: phraseology
+      title: Ta med eller ha med
+      cefr_level: A1
+      approved: true
+      learner_outcome: Distinguish bringing something along from already having it with you.
+      objectives:
+        - id: obj-bring-have
+          statement: Distinguish bringing something along from already having it with you.
+      ---
+
+      # Plan
+
+      Teach the contrast between bringing something along and already having it with you.
+    draft: |
+      ## A bag at the station
+
+      Nora is leaving for work. She says, “Jeg tar med boka,” when she is bringing the book along.
+      When the book is already in her bag, she says, “Jeg har med boka.” The first expression
+      describes an action; the second describes what is already with her.
+
+      **Meaning first**
+
+      The English meaning decides the choice before the form: bringing is a change, while already
+      having something with you is a current situation.
+
+      ::: examples
+      - no: Jeg tar med boka.
+      - en: I am bringing the book.
+      - no: Jeg har med boka.
+      - en: I have the book with me.
+      :::
+
+      {{checkpoint
+      handle: choose-meaning
+      objective_ref: obj-bring-have
+      bloom: understand
+      evidence: Distinguish bringing an item from already having it with you.
+      }}
+
+      {{exercise: choose-meaning}}
+
+      End by choosing the expression in a new travel situation.
+    checkpoint_intents_yaml: |
+      - handle: choose-meaning
+        objective_ref: obj-bring-have
+        bloom: understand
+        evidence_route: meaning_selection
+        evidence: Distinguish bringing an item from already having it with you.
+  assert:
+    - type: llm-rubric
+      metric: content_preservation
+      value: |
+        The normalization output must retain the complete protected teaching
+        content of the draft: the ta med / ha med meaning contrast, both Bokmål
+        example sentences with their English translations, the meaning-first
+        explanation, and the closing transfer sentence, in the authored order.
+        Return pass=true only when every protected teaching unit survives with
+        its meaning intact; return pass=false when any unit is dropped,
+        compressed into a summary, or semantically changed.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+    - type: llm-rubric
+      metric: handoff_integrity
+      value: |
+        The exercise handoff must keep every supplied checkpoint intent
+        unchanged: same handle, objective_ref, bloom, and evidence, in the same
+        order, with only one legal evidence_route added, and the exercise marker
+        must stay at its authored position in the lesson prose with no request
+        metadata copied into learner-facing text. Return pass=true only when all
+        of that holds and no operation payload appears in the handoff; return
+        pass=false when a request field is altered, dropped, or reordered, the
+        marker moves, or operation details leak into the requests or prose.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+
+- description: Encode discouraged examples inline without grouping YAML pairs
+  metadata:
+    surface: normalization
+    cefr: A1
+    kind: negative_example_audio
+    split: dev
+    label_provenance: Regression for negative examples hidden behind surrounding prose labels.
+  vars:
+    surface: normalization
+    plan: |
+      ---
+      package_version: 0.1-prompt-eval
+      lesson_id: prompt-eval-negative-example
+      kind: phraseology
+      title: Polite requests
+      cefr_level: A1
+      approved: true
+      learner_outcome: Distinguish a discouraged direct request from a polite request.
+      objectives:
+        - id: obj-request
+          statement: Distinguish a discouraged direct request from a polite request.
+      ---
+
+      # Plan
+
+      Teach the polite request frame and contrast it with one discouraged form.
+    draft: |
+      ## Requests {#requests role=model objectives=obj-request}
+
+      A direct request is less useful in this setting.
+
+      ::: examples
+      - no: Gi meg en kaffe.
+      - en: Incorrect: Give me a coffee.
+      - no: Kan jeg få en kaffe?
+      - en: Can I have a coffee?
+      :::
+
+      {{exercise: request-choice}}
+    checkpoint_intents_yaml: |
+      - handle: request-choice
+        objective_ref: obj-request
+        bloom: understand
+        evidence_route: meaning_selection
+        evidence: Distinguish the discouraged direct request from the polite request.
+  assert:
+    - type: llm-rubric
+      metric: negative_example_encoding
+      value: |
+        Return pass=true only when every examples block uses immediate no/en pairs,
+        with each `- no:` directly followed by its matching `- en:` line, and the
+        discouraged sentence is marked inline as `Incorrect:` (or `Not:`/`✗`) in
+        that same English value. A preceding phrase such as “less useful” does not
+        encode negative status and cannot replace the inline marker. Return pass=false
+        for grouped no values, a missing marker, or a marker moved into prose.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true

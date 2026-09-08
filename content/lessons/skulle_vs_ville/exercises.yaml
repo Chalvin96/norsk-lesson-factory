@@ -1,0 +1,412 @@
+- handle: notice-earlier-plans
+  op: choose
+  objective: obj-skulle-vs-ville-01
+  bloom: understand
+  prompt_md: Revisit the market preparation examples. Choose the complete interpretation
+    that identifies what each use of skulle points back to and whether completion
+    is asserted.
+  derived_from:
+  - section_id: skulle-for-an-earlier-plan
+  stem_md: 'Read these statements: 1. Emil skulle hente bordene. — Emil was going
+    to collect the tables. 2. Vi skulle spise sammen på fredag. — We were supposed
+    to eat together on Friday. 3. Bussen skulle komme klokka halv ti. — The bus was
+    due to arrive at half past nine.'
+  options:
+  - id: willingness
+    text: 'All three statements present willingness to act: Emil was willing to collect
+      the tables, the group was willing to eat, and the bus was willing to arrive.'
+    correct: false
+    why: The contexts describe arrangements or expectations, not people’s willingness.
+  - id: hypothetical-results
+    text: All three statements describe imagined results that depend on an unstated
+      condition.
+    correct: false
+    why: Imagined results are taught with ville; these statements refer to earlier
+      plans or expectations.
+  - id: earlier-plans-expectation
+    text: Emil’s job was previously arranged, the meal was an earlier arrangement,
+      and the bus arrival was an earlier expectation or schedule. None of the three
+      statements guarantees that the action happened.
+    correct: true
+    why: Skulle presents a recoverable earlier plan, arrangement, or expectation,
+      not the final result.
+  - id: completed-actions
+    text: All three statements say that the actions definitely happened as planned.
+    correct: false
+    why: The lesson states that skulle describes the plan or expectation, whether
+      or not the action was completed.
+- handle: complete-planned-actions
+  op: recall_fill
+  objective: obj-skulle-vs-ville-01
+  bloom: apply
+  prompt_md: Fill every blank. Use the form and infinitive that express an earlier
+    plan or expectation rather than personal willingness.
+  derived_from:
+  - section_id: skulle-for-an-earlier-plan
+  audio_target: "Jeg skulle ringe legen etter lunsj. Bussen skulle komme klokka halv ti. Emil skulle hente bordene. Vi skulle spise sammen på fredag."
+  segments:
+  - text_md: 'For an appointment arranged earlier: Jeg '
+  - blank_id: appointment-modal
+    options:
+    - skulle
+    - ville
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: appointment-infinitive
+    options:
+    - ringe
+    - hente
+    answer_index: 0
+  - text_md: ' legen etter lunsj.'
+  - text_md: " For a scheduled bus: Bussen "
+  - blank_id: bus-modal
+    options:
+    - skulle
+    - ville
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: bus-infinitive
+    options:
+    - komme
+    - gå
+    answer_index: 0
+  - text_md: ' klokka halv ti.'
+  - text_md: " For a household job arranged earlier: Emil "
+  - blank_id: tables-modal
+    options:
+    - skulle
+    - ville
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: tables-infinitive
+    options:
+    - hente
+    - ringe
+    answer_index: 0
+  - text_md: ' bordene.'
+  - text_md: " For an earlier shared arrangement: Vi "
+  - blank_id: meal-modal
+    options:
+    - skulle
+    - ville
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: meal-infinitive
+    options:
+    - spise
+    - hjelpe
+    answer_index: 0
+  - text_md: ' sammen på fredag.'
+- handle: report-future-from-past
+  op: write
+  objective: obj-skulle-vs-ville-01
+  bloom: apply
+  prompt_md: 'Write four short Norwegian past reports, one for each earlier statement
+    below. Preserve the explicit earlier skal-type plan, schedule, promise, or announcement
+    with skulle + infinitive. 1. Emil earlier said: Jeg skal hente bordene. Report
+    this later. 2. The timetable earlier stated: Bussen skal komme klokka halv ti.
+    Report this later. 3. Jonas earlier promised: Jeg skal sende dokumentet samme
+    kveld. Report the promise later. 4. The teacher earlier announced: Prøven skal
+    begynne klokka ti. Report the announcement later.'
+  derived_from:
+  - section_id: skulle-for-future-viewed-from-the-past
+  response_language: 'no'
+  min_words: 24
+  max_words: 70
+  judge_prompt: Check all four Norwegian reports against the task and report evidence
+    for each criterion. Accept natural variations in reporting verb, subject reference,
+    and word order when the earlier plan, schedule, promise, or announcement remains
+    clear. Require skulle followed by an infinitive for these explicit earlier skal
+    contexts. If a supplied report genuinely leaves skulle and future-in-the- past
+    ville equally natural, accept either modal when the surrounding wording supports
+    that reading.
+  criteria:
+  - id: preserves-earlier-skal
+    instruction: Preserves the earlier plan, schedule, promise, or announcement in
+      all four reports.
+  - id: uses-skulle-infinitive
+    instruction: Uses *skulle* followed by an infinitive in each report of the explicit
+      earlier *skal* meaning.
+- handle: recognize-willingness
+  op: recall_fill
+  objective: obj-skulle-vs-ville-01
+  bloom: apply
+  prompt_md: Fill every blank. Each past context describes a request, need, or voluntary
+    offer, so supply ville with the relevant infinitive for willingness.
+  derived_from:
+  - section_id: ville-for-past-willingness
+  audio_target: "Sara ville lage kaffe. Ingen andre hadde tid, men Amir ville hjelpe. Bestefar ville gjerne kjøre oss til stasjonen. Nora ville kjøre Emil."
+  segments:
+  - text_md: 'When the group needed someone to prepare drinks: Sara '
+  - blank_id: coffee-modal
+    options:
+    - ville
+    - skulle
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: coffee-infinitive
+    options:
+    - lage
+    - hjelpe
+    answer_index: 0
+  - text_md: ' kaffe.'
+  - text_md: " When nobody else had time: Ingen andre hadde tid, men Amir "
+  - blank_id: help-modal
+    options:
+    - ville
+    - skulle
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: help-infinitive
+    options:
+    - hjelpe
+    - kjøre
+    answer_index: 0
+  - text_md: .
+  - text_md: " When the family needed a driver: Bestefar "
+  - blank_id: grandfather-modal
+    options:
+    - ville
+    - skulle
+    answer_index: 0
+  - text_md: ' gjerne '
+  - blank_id: grandfather-infinitive
+    options:
+    - kjøre
+    - hjelpe
+    answer_index: 0
+  - text_md: ' oss til stasjonen.'
+  - text_md: " When Emil needed a driver and Nora offered to help: Nora "
+  - blank_id: nora-modal
+    options:
+    - ville
+    - skulle
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: nora-infinitive
+    options:
+    - kjøre
+    - lage
+    answer_index: 0
+  - text_md: ' Emil.'
+- handle: contrast-plan-and-willingness
+  op: write
+  objective: obj-skulle-vs-ville-01
+  bloom: apply
+  prompt_md: Write two Norwegian sentences about Nora and Emil. In the first, present
+    an earlier arrangement that Nora would drive Emil. In the second, present a different
+    past situation where Emil needed a driver and Nora was ready to help. Then add
+    one short Norwegian statement explaining the meaning difference between skulle
+    and ville in your two sentences.
+  derived_from:
+  - section_id: ville-for-past-willingness
+  response_language: 'no'
+  min_words: 15
+  max_words: 45
+  judge_prompt: Check the two sentences and the brief Norwegian explanation. Accept
+    natural wording with the same person and action. The first sentence must frame
+    an earlier arrangement with skulle + infinitive; the second must frame contextually
+    established willingness with ville + infinitive after a stated need or request.
+  criteria:
+  - id: arrangement-with-skulle
+    instruction: Presents Nora’s action as an earlier arrangement using *skulle* +
+      infinitive.
+  - id: willingness-with-ville
+    instruction: Presents Nora’s readiness to act in response to Emil’s need using
+      *ville* + infinitive.
+  - id: explains-meaning-contrast
+    instruction: States in Norwegian that *skulle* marks the arrangement while *ville*
+      marks contextual past willingness.
+- handle: build-hypothetical-results
+  op: recall_fill
+  objective: obj-skulle-vs-ville-01
+  bloom: apply
+  prompt_md: Fill the modal blank in each result clause. The stated condition is imagined,
+    so use ville for the hypothetical result.
+  derived_from:
+  - section_id: ville-for-hypothetical-results
+  audio_target: "Hvis det regnet, ville vi flytte bordene inn. Hvis jeg hadde mer tid, ville jeg lære samisk. Jeg ville gå mer på ski hvis jeg bodde nærmere fjellet. Med bedre vær ville flere mennesker komme."
+  segments:
+  - text_md: 'Hvis det regnet, '
+  - blank_id: rain-result-modal
+    options:
+    - ville
+    - skulle
+    answer_index: 0
+  - text_md: ' vi flytte bordene inn.'
+  - text_md: " Hvis jeg hadde mer tid, "
+  - blank_id: time-result-modal
+    options:
+    - ville
+    - skulle
+    answer_index: 0
+  - text_md: ' jeg lære samisk.'
+  - text_md: " Jeg "
+  - blank_id: ski-result-modal
+    options:
+    - ville
+    - skulle
+    answer_index: 0
+  - text_md: ' gå mer på ski hvis jeg bodde nærmere fjellet.'
+  - text_md: " Med bedre vær "
+  - blank_id: weather-result-modal
+    options:
+    - ville
+    - skulle
+    answer_index: 0
+  - text_md: ' flere mennesker komme.'
+- handle: distinguish-reported-and-hypothetical-would
+  op: write
+  objective: obj-skulle-vs-ville-01
+  bloom: apply
+  prompt_md: 'Write four natural Norwegian sentences, one for each situation. Use
+    skulle when reporting the explicit earlier skal plan or promise, and ville for
+    the imagined result of a condition. 1. Maja earlier said: Jeg skal bli med. Report
+    her statement later. 2. Jonas earlier promised: Jeg skal sende dokumentet samme
+    kveld. Report the promise later. 3. Imagine that the flat were cheaper. State
+    the result of renting it. 4. Imagine that she lived closer. State the result of
+    visiting her more often.'
+  derived_from:
+  - section_id: ville-for-hypothetical-results
+  response_language: 'no'
+  min_words: 24
+  max_words: 65
+  judge_prompt: Check the four Norwegian sentences against their supplied meanings.
+    Require skulle + infinitive in the two reports of explicit earlier skal statements,
+    and ville + infinitive in the two imagined results with conditional meaning. Accept
+    natural variations in subjects and reporting verbs. If a report genuinely leaves
+    both modals natural, accept either only when the learner’s wording supports that
+    reading.
+  criteria:
+  - id: reported-modal-selection
+    instruction: Selects *skulle* for both reports that preserve explicit earlier
+      *skal* meanings.
+  - id: hypothetical-modal-selection
+    instruction: Selects *ville* + infinitive for both results that depend on imagined
+      conditions.
+  - id: separates-meanings
+    instruction: Keeps reported earlier plans or promises distinct from hypothetical
+      results across all four sentences.
+- handle: interpret-market-follow-up
+  op: choose
+  objective: obj-skulle-vs-ville-01
+  bloom: understand
+  prompt_md: Choose the complete interpretation of every modal occurrence in this
+    continuation of the market scene.
+  derived_from:
+  - section_id: back-at-the-market
+  stem_md: 'Read the dialogue: 1. Vi trodde at du skulle komme senere. — We thought
+    that you would come later. 2. Det trodde jeg også, men naboen min ville kjøre
+    meg. — I thought so too, but my neighbour was willing to drive me. 3. Flott! Du
+    sa tidligere at du ville lage kaffe. Har du fortsatt lyst til det? — Great! You
+    said earlier that you were willing to make coffee. Do you still want to? 4. Ja.
+    Hvis dere fant en stor termos, ville jeg lage kaffe til alle. — Yes. If you found
+    a large thermos, I would make coffee for everyone. 5. Termosen skulle stå på kjøkkenet,
+    men jeg finner den ikke. — The thermos was supposed to be in the kitchen, but
+    I cannot find it. 6. Jakob sa at han skulle ta den med. Jeg ringer ham. — Jakob
+    said that he would bring it. I will call him.'
+  options:
+  - id: willingness-map
+    text: 1. skulle komme senere reports willingness. 2. ville kjøre meg reports an
+      earlier arrangement. 3. ville lage kaffe is a hypothetical result. 4. ville
+      jeg lage kaffe reports willingness. 5. skulle stå på kjøkkenet expresses willingness.
+      6. skulle ta den med is a hypothetical result.
+    correct: false
+    why: The dialogue explicitly marks 2 and 3 as willingness, but 1, 4, 5, and 6
+      have different meanings.
+  - id: connected-meaning-map
+    text: 1. skulle komme senere reports an expected event and preserves an earlier
+      skal-type meaning. 2. ville kjøre meg expresses the neighbour’s willingness.
+      3. ville lage kaffe reports Sara’s earlier willingness. 4. ville jeg lage kaffe
+      is a hypothetical result dependent on finding a thermos. 5. skulle stå på kjøkkenet
+      expresses an expectation about the thermos’s location. 6. skulle ta den med
+      reports Jakob’s earlier plan or commitment.
+    correct: true
+    why: The connected context distinguishes reported expectation or commitment, willingness,
+      and hypothetical result.
+  - id: all-reported-plan
+    text: All six occurrences report earlier plans or expectations, including the
+      two occurrences of ville.
+    correct: false
+    why: The conditional result in 4 and the willingness readings in 2 and 3 are not
+      earlier arrangements.
+  - id: all-hypothetical
+    text: All six occurrences describe imagined results, because every English translation
+      contains a form of would.
+    correct: false
+    why: English would does not determine one Norwegian modal; only 4 has hypothetical
+      result meaning here.
+- handle: transfer-cabin-plans
+  op: write
+  objective: obj-skulle-vs-ville-01
+  bloom: apply
+  prompt_md: 'Write a short connected Norwegian account of a delayed cabin trip, followed
+    by a short follow-up message. Use the new cabin situation and include all four
+    meanings in the connected text: - one earlier
+    arrangement for the trip, expressed with skulle + infinitive; - one later report
+    preserving a friend’s explicit earlier skal-type plan or commitment, expressed
+    with skulle + infinitive; - one earlier response to a stated request or need for
+    help, expressed with ville + infinitive; - one imagined bad-weather result that
+    depends on a condition, expressed with ville + infinitive. Make the account and
+    follow-up message show why each modal is chosen.'
+  derived_from:
+  - section_id: cumulative-transfer-a-delayed-cabin-trip
+  response_language: 'no'
+  min_words: 45
+  max_words: 100
+  judge_prompt: Check the connected cabin account and follow-up message against every
+    criterion. Accept natural cabin vocabulary, infinitives, subjects, and sentence
+    order when each required meaning is clear. Accept either modal for a reported
+    context only when the learner’s supplied wording genuinely leaves skulle and future-in-the-past
+    ville equally natural. Do not require copied lesson sentences.
+  criteria:
+  - id: cabin-arrangement
+    instruction: Includes an earlier cabin arrangement expressed with *skulle* + infinitive.
+  - id: cabin-reported-plan
+    instruction: Includes a later report preserving an explicit earlier *skal*-type
+      plan or commitment with *skulle* + infinitive.
+  - id: cabin-willingness
+    instruction: Includes an earlier response to a stated request or need for help
+      using *ville* + infinitive for willingness.
+  - id: cabin-hypothetical
+    instruction: Includes an imagined bad-weather result dependent on a condition
+      using *ville* + infinitive.
+  - id: integrated-transfer
+    instruction: Connects all four meanings in a new cabin account and follow-up message.
+- handle: retrieve-skulle-versus-ville
+  op: write
+  objective: obj-skulle-vs-ville-01
+  bloom: apply
+  prompt_md: Produce four natural Norwegian sentences, one for each new situation
+    below. After each sentence, add a few Norwegian words explaining the modal choice.
+    1. Yesterday, Nora arranged to call the doctor after lunch. 2. Later, Kari reports
+    Jonas’s explicit earlier promise to send the document that same evening. 3. Earlier,
+    Sara volunteered to help when neighbours needed help carrying tables. 4. Imagine
+    that the weather at the cabin were better and more people would come. Select skulle
+    for the earlier arrangement or reported earlier skal promise, and ville for past
+    willingness or the hypothetical result.
+  derived_from:
+  - section_id: final-retrieval
+  response_language: 'no'
+  min_words: 35
+  max_words: 90
+  judge_prompt: Check four Norwegian sentences and their short Norwegian explanations.
+    Accept natural lexical and structural variants that preserve each situation. Require
+    skulle for the appointment arrangement and explicit earlier promise, and ville
+    for the stated past willingness and imagined result. If a reported prompt genuinely
+    leaves both modals natural, accept either when the learner’s context supports
+    that reading.
+  criteria:
+  - id: retrieves-earlier-plan
+    instruction: Uses *skulle* to present the appointment as an earlier arrangement.
+  - id: retrieves-reported-promise
+    instruction: Uses *skulle* to report the explicit earlier *skal* promise.
+  - id: retrieves-willingness
+    instruction: Uses *ville* to present Sara’s contextually established past willingness
+      to help.
+  - id: retrieves-hypothetical
+    instruction: Uses *ville* + infinitive for the result of the imagined weather
+      condition.
+  - id: explains-modal-choices
+    instruction: Adds a few Norwegian words explaining the meaning choice after each
+      Norwegian sentence.

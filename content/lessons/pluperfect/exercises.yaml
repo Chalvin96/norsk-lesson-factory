@@ -1,0 +1,191 @@
+- handle: notice_the_earlier_event
+  op: choose
+  objective: obj-pluperfect-01
+  bloom: understand
+  prompt_md: 'In the café scene, read these two statements: «Da Mari kom, hadde vi
+    bestilt mat.» «Da Mari kom, hadde servitøren satt maten på bordet.» Choose the
+    complete interpretation of both timelines.'
+  stem_md: Which option identifies the action completed first and Mari’s later arrival
+    in both statements?
+  options:
+  - id: reversed-events
+    text: I begge setningene kom Mari først; vi bestilte mat og servitøren satte maten
+      på bordet etterpå.
+    correct: false
+    why: This reverses the earlier and later events marked by the past perfect.
+  - id: earlier-events
+    text: I setningen «Da Mari kom, hadde vi bestilt mat» viser «hadde bestilt» at
+      vi bestilte mat før Mari kom. I setningen «Da Mari kom, hadde servitøren satt
+      maten på bordet» viser «hadde satt» at servitøren satte maten på bordet før
+      Mari kom.
+    correct: true
+    why: Both hadde phrases mark actions completed before Mari’s arrival.
+  derived_from:
+  - section_id: late-arrival
+- handle: contrast_the_timeline
+  op: build
+  objective: obj-pluperfect-01
+  bloom: apply
+  prompt_md: We cleaned the kitchen before the guests arrived. Build the Norwegian
+    sentence with the later event first.
+  tokens:
+  - token_id: tok-1
+    text: Da
+  - token_id: tok-2
+    text: gjestene
+  - token_id: tok-3
+    text: kom,
+  - token_id: tok-4
+    text: hadde
+  - token_id: tok-5
+    text: vi
+  - token_id: tok-6
+    text: ryddet
+  - token_id: tok-7
+    text: kjøkkenet.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  explanation_md: "Hadde + past participle places one completed event before another past reference point."
+  derived_from:
+  - section_id: what-happened-first
+- handle: build_hadde_plus_participle
+  op: recall_fill
+  objective: obj-pluperfect-01
+  bloom: apply
+  prompt_md: Choose the correct past participle after hadde. The context is guests
+    arriving after breakfast.
+  audio_target: "Da gjestene kom, hadde vi allerede spist frokost."
+  segments:
+  - text_md: 'Da gjestene kom, hadde vi allerede '
+  - blank_id: eat-participle
+    options:
+    - spist
+    - spise
+    - spiste
+    answer_index: 0
+  - text_md: ' frokost.'
+  derived_from:
+  - section_id: building-the-form
+- handle: link_completion_to_past_point
+  op: recall_fill
+  objective: obj-pluperfect-01
+  bloom: apply
+  prompt_md: Complete the second sentence with the past participle of bestille. The
+    first sentence supplies the past reference point; no før phrase is provided.
+  audio_target: "Møtet startet klokka ni. Vi hadde allerede bestilt mat."
+  segments:
+  - text_md: 'Møtet startet klokka ni. Vi hadde allerede '
+  - blank_id: order-participle
+    options:
+    - bestilt
+    - bestille
+    - bestilte
+    answer_index: 0
+  - text_md: ' mat.'
+  derived_from:
+  - section_id: making-the-earlier-completion-clear
+- handle: reconstruct_maris_delay
+  op: write
+  objective: obj-pluperfect-01
+  bloom: apply
+  prompt_md: 'Write a short guided account in Norwegian about Mari’s delay. State
+    that she went to the wrong bus stop because she followed the old bus route to
+    the café, discovered the mistake, and waited for the next bus. Also include these
+    earlier facts: she checked the new bus route, she saved the old route on her phone,
+    and the bus on the new route left the correct stop. Keep the main events in the
+    simple past and mark each earlier completed fact with hadde plus a past participle.
+    Write 4–6 sentences.'
+  response_language: 'no'
+  min_words: 35
+  max_words: 70
+  judge_prompt: Check the Norwegian account against the task and report concrete evidence
+    for each criterion. Do not award a criterion without explicit language evidence.
+  criteria:
+  - id: main-sequence
+    instruction: States that Mari followed the old bus route to the wrong stop, discovered
+      the mistake, and waited for the next bus in simple past.
+  - id: prior-completions
+    instruction: 'Uses hadde followed by an accurate past participle for each supplied
+      earlier fact: checking the new route, saving the old route, and the bus leaving
+      the correct stop.'
+  derived_from:
+  - section_id: returning-to-mari-jonas-and-amina
+- handle: repair_the_reversed_timeline
+  op: find_fix
+  objective: obj-pluperfect-01
+  bloom: analyze
+  prompt_md: 'The guests arrived first, and only afterward did we clean the kitchen.
+    Select the one token that is wrong/needs changing in this timeline.'
+  tokens:
+  - token_id: tok-1
+    text: Da
+  - token_id: tok-2
+    text: gjestene
+  - token_id: tok-3
+    text: hadde
+  - token_id: tok-4
+    text: kommet,
+  - token_id: tok-5
+    text: hadde
+  - token_id: tok-6
+    text: vi
+  - token_id: tok-7
+    text: ryddet
+  - token_id: tok-8
+    text: kjøkkenet.
+  error_token_id: tok-5
+  feedback: 'Remove the second «hadde». The arrival is earlier, so keep «hadde kommet»
+    and use simple past for later cleaning: «Da gjestene hadde kommet, ryddet vi kjøkkenet.»'
+  derived_from:
+  - section_id: likely-misconception-not-every-earlier-event-needs-hadde
+- handle: cabin_arrival_transfer
+  op: write
+  objective: obj-pluperfect-01
+  bloom: apply
+  prompt_md: Write four short affirmative Norwegian statements about the holiday cabin.
+    Henrik and Lea arrived late on Friday evening. Before they arrived, their friends
+    lit the fire, bought food, made the beds, and found the key. Show each completed
+    preparation with hadde plus a past participle.
+  response_language: 'no'
+  judge_prompt: Check the Norwegian statements against the task and report evidence
+    for each criterion. Accept natural Bokmål variants for the supplied facts.
+  criteria:
+  - id: cabin-facts
+    instruction: Writes four affirmative Norwegian statements covering lighting the
+      fire, buying food, making the beds, and finding the key.
+  - id: cabin-form
+    instruction: Uses hadde followed by an accurate past participle for each preparation.
+  - id: cabin-timeline
+    instruction: Places each preparation clearly before Henrik and Lea arrived.
+  derived_from:
+  - section_id: transfer-arriving-at-a-holiday-cabin
+- handle: what_had_already_happened
+  op: write
+  objective: obj-pluperfect-01
+  bloom: apply
+  prompt_md: At a railway station, Sara arrived late. Write exactly two Norwegian
+    sentences stating two natural things that had already happened before she arrived.
+    Choose your own actions rather than copying a complete lesson sentence. Use hadde
+    plus a past participle in each sentence.
+  response_language: 'no'
+  min_words: 12
+  max_words: 35
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål variants that fit the station context, but not a complete
+    sentence copied verbatim from the lesson.
+  criteria:
+  - id: two-earlier-actions
+    instruction: Writes exactly two Norwegian sentences with two distinct completed
+      actions before Sara arrived.
+  - id: past-perfect-forms
+    instruction: Uses hadde followed by an accurate past participle in each sentence.
+  - id: earlier-reference
+    instruction: Makes both actions clearly earlier than Sara’s arrival.
+  derived_from:
+  - section_id: final-retrieval

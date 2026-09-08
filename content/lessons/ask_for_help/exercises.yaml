@@ -1,0 +1,275 @@
+- handle: checkpoint_identify_situation
+  op: choose
+  objective: obj-ask-for-help-01
+  bloom: understand
+  prompt_md: Mina is at a train station and cannot find platform four. Choose the
+    complete interpretation that identifies this obstacle in English and the Norwegian
+    sentence that states it.
+  derived_from:
+  - section_id: at-the-train-station
+  stem_md: Which option correctly identifies both the obstacle and the sentence?
+  options:
+  - id: missing-platform
+    text: 'Obstacle: Mina cannot find platform four. The sentence is “Unnskyld, jeg
+      finner ikke spor fire.” It means “Excuse me, I can’t find platform four.”'
+    correct: true
+    why: This identifies the missing platform as the obstacle and names the Norwegian
+      sentence that states it.
+  - id: help-request
+    text: 'Obstacle: Mina asks for help. The sentence is “Kan du hjelpe meg?” It means
+      “Can you help me?”'
+    correct: false
+    why: This is Mina's request for help, not her obstacle statement.
+  - id: train-departure
+    text: 'Obstacle: the train leaves in ten minutes. The sentence is “Toget går om
+      ti minutter.” It means “The train leaves in ten minutes.”'
+    correct: false
+    why: This gives timing information, not the missing platform obstacle.
+- handle: checkpoint_choose_obstacle
+  op: recall_fill
+  objective: obj-ask-for-help-01
+  bloom: apply
+  prompt_md: Complete one short Norwegian sentence for Mina's missing ticket.
+  derived_from:
+  - section_id: stating-the-obstacle
+  audio_target: "Jeg finner ikke billetten her."
+  segments:
+  - text_md: 'Mina cannot find her ticket here. Complete the Norwegian statement: '
+  - blank_id: missing-ticket
+    options:
+    - Jeg finner ikke billetten her.
+    - Jeg finner ikke hotellet her.
+    - Jeg finner ikke nøkkelen her.
+    answer_index: 0
+- handle: checkpoint_build_approach
+  op: write
+  objective: obj-ask-for-help-01
+  bloom: apply
+  prompt_md: Address a nearby employee in Norwegian. Write one short approach that
+    uses “Unnskyld”, states “Jeg forstår ikke beskjeden.”, and asks the question “Kan
+    du hjelpe meg?”.
+  derived_from:
+  - section_id: asking-directly-for-help
+  response_language: 'no'
+  min_words: 7
+  max_words: 15
+  judge_prompt: Check the Norwegian response against the task and report evidence
+    for each criterion. Accept natural capitalization and punctuation variants, but
+    require all three communicative parts.
+  criteria:
+  - id: approach-attention
+    instruction: Uses the attention-getter “Unnskyld”.
+  - id: approach-obstacle
+    instruction: States that the message is not understood with the taught pattern
+      “Jeg forstår ikke …”, such as “Jeg forstår ikke beskjeden.”
+  - id: approach-request
+    instruction: Uses the direct help request “Kan du hjelpe meg?”.
+- handle: checkpoint_listen_next_action
+  op: choose
+  objective: obj-ask-for-help-01
+  bloom: understand
+  prompt_md: Read the three complete helpful responses and choose the interpretation
+    that gives the learner's next action for all three.
+  derived_from:
+  - section_id: understanding-a-helpful-response
+  stem_md: 'Item 1: “Ja, vent litt.” (“Yes, wait a moment.”) 2. “Klart det. Trykk
+    her.” (“Of course. Press here.”) 3. “Ja, selvfølgelig. Bli med meg.” (“Yes, of
+    course. Come with me.”) Which option correctly states what the learner should
+    do next in each case?'
+  options:
+  - id: swapped-first-two
+    text: '1: press here; 2: wait a moment; 3: come with the helper.'
+    correct: false
+    why: The first two actions are reversed.
+  - id: correct-actions
+    text: '1: wait a moment; 2: press here; 3: come with the helper.'
+    correct: true
+    why: Each action matches the corresponding Norwegian response.
+  - id: wrong-third
+    text: '1: wait a moment; 2: press here; 3: go to the information desk.'
+    correct: false
+    why: The third response tells the learner to come with the helper.
+- handle: checkpoint_complete_sequence
+  op: write
+  objective: obj-ask-for-help-01
+  bloom: apply
+  prompt_md: 'The employee''s reply is “Ja, selvfølgelig. Prøv igjen nå.” Write your
+    Norwegian line before it: state that you cannot open the door using «Jeg får ikke
+    åpnet døra.» and ask “Kan du hjelpe meg?”. Then write a short Norwegian acceptance after the reply that shows
+    you accept trying again.'
+  derived_from:
+  - section_id: accepting-the-next-action
+  response_language: 'no'
+  min_words: 8
+  max_words: 20
+  judge_prompt: Check the learner's lines before and after the quoted employee reply.
+    Report evidence for every criterion and verify that the acceptance follows the
+    reply.
+  criteria:
+  - id: door-obstacle
+    instruction: States the door problem with the taught expression “Jeg får ikke
+      åpnet døra.”
+  - id: complete-request
+    instruction: Uses “Kan du hjelpe meg?”.
+  - id: retry-acceptance
+    instruction: Adds after “Prøv igjen nå.” a short taught acceptance that fits accepting
+      another attempt, such as “Ok.” or “Greit, takk.”
+- handle: practice_1_obstacle_or_request
+  op: categorize
+  objective: obj-ask-for-help-01
+  bloom: analyze
+  prompt_md: Classify each Norwegian sentence by its communicative job. Choose the
+    bucket whose label explains whether the sentence gives obstacle context or requests
+    help.
+  explanation_md: "Jeg finner eller forstår ikke states the obstacle; Kan du hjelpe meg? turns that context into a help request."
+  derived_from:
+  - section_id: practising-in-new-situations
+  buckets:
+  - bucket_id: obstacle-statement
+    label: Obstacle statement — gives context about what is stopping progress
+  - bucket_id: help-request
+    label: Help request — asks the other person for help
+  items:
+  - item_id: finding-platform
+    text: Jeg finner ikke spor fire.
+    bucket_id: obstacle-statement
+  - item_id: understanding-message
+    text: Jeg forstår ikke beskjeden.
+    bucket_id: obstacle-statement
+  - item_id: asking-for-help
+    text: Kan du hjelpe meg?
+    bucket_id: help-request
+- handle: practice_2_state_different_obstacles
+  op: recall_fill
+  objective: obj-ask-for-help-01
+  bloom: apply
+  prompt_md: Complete three short Norwegian obstacle statements. Choose the taught
+    form that matches each English situation.
+  derived_from:
+  - section_id: practising-in-new-situations
+  audio_target: "Jeg finner ikke nøkkelen her. Jeg forstår ikke dette spørsmålet. Jeg får ikke startet maskinen nå."
+  segments:
+  - text_md: 'Item 1: You cannot find a key here. Complete the Norwegian statement: '
+  - blank_id: missing-key-statement
+    options:
+    - Jeg finner ikke nøkkelen her.
+    - Jeg finner ikke billetten her.
+    - Jeg finner ikke hotellet her.
+    answer_index: 0
+  - text_md: ' Item 2: You do not understand this question. Complete the Norwegian
+      statement: '
+  - blank_id: unclear-question-statement
+    options:
+    - Jeg forstår ikke dette spørsmålet.
+    - Jeg forstår ikke beskjeden.
+    - Jeg forstår ikke dette ordet.
+    answer_index: 0
+  - text_md: ' Item 3: You cannot get the machine started now. Complete the Norwegian
+      statement: '
+  - blank_id: machine-start-statement
+    options:
+    - Jeg får ikke startet maskinen nå.
+    - Jeg får ikke åpnet døra.
+    - Jeg får ikke kjøpt billett.
+    answer_index: 0
+- handle: practice_3_add_request
+  op: write
+  objective: obj-ask-for-help-01
+  bloom: apply
+  prompt_md: 'Write three short Norwegian requests to a stranger: one for a missing
+    key, one for an unclear question, and one for a machine that cannot be started.
+    For each request, use “Unnskyld”, state the obstacle with a taught pattern, and
+    add “Kan du hjelpe meg?”. Keep the requests brief.'
+  derived_from:
+  - section_id: practising-in-new-situations
+  response_language: 'no'
+  min_words: 18
+  max_words: 45
+  judge_prompt: Check all three requests separately and report evidence for each criterion.
+    Accept natural punctuation and capitalization variants, but require the obstacle
+    and help request to match each situation.
+  criteria:
+  - id: matched-obstacle-patterns
+    instruction: Uses “Jeg finner ikke …” for the missing key, “Jeg forstår ikke …”
+      for the unclear question, and “Jeg får ikke …” for the machine that cannot start.
+  - id: linked-help-requests
+    instruction: Links each obstacle naturally to “Kan du hjelpe meg?”.
+  - id: stranger-attention
+    instruction: Uses “Unnskyld” in each request when addressing a stranger.
+  - id: brief-controlled-form
+    instruction: Keeps each request short and controlled without extra information.
+- handle: practice_4_understand_and_accept
+  op: write
+  objective: obj-ask-for-help-01
+  bloom: apply
+  prompt_md: 'For each helper message, explain in Norwegian what the learner should do
+    next and give a short Norwegian acceptance: 1. «Ja, vent litt.» 2. «Se på skjermen.»
+    3. «Bli med meg.» Use taught acceptance forms such as «Ok.», «Ja, takk.», or «Greit,
+    takk.»'
+  derived_from:
+  - section_id: practising-in-new-situations
+  response_language: 'no'
+  min_words: 12
+  max_words: 45
+  judge_prompt: Check the three Norwegian action meanings and the three Norwegian acceptances
+    separately. Report evidence for every criterion.
+  criteria:
+  - id: waiting-meaning
+    instruction: Explains in Norwegian that «Ja, vent litt.» means the learner should wait a moment.
+  - id: screen-meaning
+    instruction: Explains in Norwegian that «Se på skjermen.» means the learner should look at the screen.
+  - id: following-meaning
+    instruction: Explains in Norwegian that «Bli med meg.» means the learner should come with or follow the helper.
+  - id: short-acceptances
+    instruction: Gives one short, natural Norwegian acceptance after each action,
+      using taught forms such as “Ok.”, “Ja, takk.”, or “Greit, takk.”
+- handle: practice_5_follow_whole_exchange
+  op: write
+  objective: obj-ask-for-help-01
+  bloom: apply
+  prompt_md: Write a short Norwegian exchange at a station information desk. You cannot
+    understand a message about your train. Include, in order, an attention-getter,
+    the obstacle, “Kan du hjelpe meg?”, a brief positive employee response with one
+    taught next action, and a final short acceptance.
+  derived_from:
+  - section_id: practising-in-new-situations
+  response_language: 'no'
+  min_words: 15
+  max_words: 45
+  judge_prompt: Check the exchange in sequence and report evidence for every criterion.
+    Accept natural taught variants for the positive response, next action, and acceptance.
+  criteria:
+  - id: sequence-start
+    instruction: Includes “Unnskyld”, an obstacle using “Jeg forstår ikke …”, and
+      “Kan du hjelpe meg?” in that order.
+  - id: positive-response-action
+    instruction: Includes a brief positive employee response and one taught next action,
+      such as “Ja, selvfølgelig.” followed by “Se på skjermen der borte.”
+  - id: final-acceptance
+    instruction: Ends with a short taught acceptance such as “Ok.”, “Ja, takk.”, or
+      “Greit, takk.”
+  - id: short-practical-exchange
+    instruction: Keeps the exchange short and practical.
+- handle: retrieval_review_help_sequence
+  op: write
+  objective: obj-ask-for-help-01
+  bloom: apply
+  prompt_md: 'Write one short Norwegian exchange in a new setting: at a museum entrance,
+    you cannot find the information desk. Use your own wording. Include attention,
+    the obstacle, a help request, a positive response, one next action, and a final
+    acceptance.'
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  min_words: 15
+  max_words: 40
+  judge_prompt: Check the exchange for the complete help-seeking sequence, natural
+    Norwegian, and original wording. Report evidence for every criterion.
+  criteria:
+  - id: full-help-seeking-sequence
+    instruction: Shows attention, an obstacle, a request for help, a positive response,
+      one next action, and acceptance in clear order.
+  - id: new-situation-wording
+    instruction: Uses the museum and information-desk situation with original wording.
+  - id: natural-concise-exchange
+    instruction: Produces one short, clear, and natural Norwegian exchange.

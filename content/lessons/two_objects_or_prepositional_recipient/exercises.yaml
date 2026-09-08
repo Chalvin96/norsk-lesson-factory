@@ -1,0 +1,254 @@
+- handle: notice_recipient_before_theme
+  op: choose
+  objective: obj-two-objects-or-prepositional-recipient-01
+  bloom: understand
+  prompt_md: Read these Norwegian office sentences and choose the interpretation that
+    correctly identifies the recipient and the theme. The recipient is the person
+    who receives something; the theme is the thing given or sent. Jonas gir Nora nøkkelen.
+    (Jonas gives Nora the key.) Jeg sender henne boka. (I send her the book.)
+  derived_from:
+  - section_id: two-participants-after-the-verb
+  stem_md: Which option correctly identifies the recipient and the theme in both sentences?
+  options:
+  - id: roles-reversed
+    text: Nøkkelen and boka are recipients; Nora and henne are themes.
+    correct: false
+    why: The objects are themes, not recipients, in these sentences.
+  - id: mixed-roles
+    text: Nora is a recipient and nøkkelen is a recipient; henne and boka are themes.
+    correct: false
+    why: Nøkkelen is the theme in the first sentence, and henne is the recipient in
+      the second.
+  - id: no-recipient
+    text: The elements after gi and sende are both themes, so no recipient is identified.
+    correct: false
+    why: The first element after the verb identifies the recipient.
+  - id: roles-correct
+    text: Nora and henne are recipients; nøkkelen and boka are themes.
+    correct: true
+    why: Nora and henne are the first elements after gir or sender; nøkkelen and boka
+      follow as themes.
+- handle: match_roles_across_frames
+  op: match_pairs
+  objective: obj-two-objects-or-prepositional-recipient-01
+  bloom: remember
+  prompt_md: Match each Norwegian sentence with the sentence describing the same transfer
+    in the other frame. Track both the recipient and the theme.
+  explanation_md: "The two-object frame places recipient before theme; the til frame places the theme before til + recipient."
+  derived_from:
+  - section_id: frame-2-theme-before-til-recipient
+  left:
+  - left_id: left-1
+    text: Jonas gir Nora nøkkelen.
+  - left_id: left-2
+    text: Mari sender Jonas adressen.
+  right:
+  - right_id: right-1
+    text: Jonas gir nøkkelen til Nora.
+  - right_id: right-2
+    text: Mari sender adressen til Jonas.
+  pairs:
+  - left_id: left-1
+    right_id: right-1
+  - left_id: left-2
+    right_id: right-2
+- handle: choose_licensed_recipient_frame
+  op: choose
+  objective: obj-two-objects-or-prepositional-recipient-01
+  bloom: understand
+  prompt_md: Choose one complete Norwegian sentence. Its first clause must use verb
+    + recipient + theme without til, and its second clause must use verb + theme +
+    til + recipient. Keep both clauses correctly ordered.
+  derived_from:
+  - section_id: choosing-the-frame
+  stem_md: Which complete sentence uses both licensed frames in the required order?
+  options:
+  - id: til-before-theme
+    text: Gi til Nora nøkkelen, og send bildet til meg.
+    correct: false
+    why: The first clause incorrectly puts til + recipient before the theme.
+  - id: recipient-first-twice
+    text: Gi Nora nøkkelen, og send meg bildet.
+    correct: false
+    why: The second clause uses recipient before theme instead of theme before til
+      + recipient.
+  - id: both-licensed
+    text: Gi Nora nøkkelen, og send bildet til meg.
+    correct: true
+    why: The first clause puts the recipient before the theme without til; the second
+      puts the theme before til + recipient.
+  - id: mixed-second-frame
+    text: Gi Nora nøkkelen, og send til meg bildet.
+    correct: false
+    why: The second clause mixes til + recipient with the wrong element order.
+- handle: transform_to_til_recipient
+  op: build
+  objective: obj-two-objects-or-prepositional-recipient-01
+  bloom: apply
+  prompt_md: 'Rewrite the Norwegian sentence as a til-recipient sentence. Keep Mari,
+    Jonas, the address, and the sending event unchanged. Use theme + til + recipient
+    order. Source: Mari sender Jonas adressen. (Mari sends Jonas the address.)'
+  derived_from:
+  - section_id: changing-from-one-frame-to-the-other
+  tokens:
+  - token_id: tok-mari
+    text: Mari
+  - token_id: tok-sender
+    text: sender
+  - token_id: tok-adressen
+    text: adressen
+  - token_id: tok-til
+    text: til
+  - token_id: tok-jonas
+    text: Jonas.
+  answer_order:
+  - tok-mari
+  - tok-sender
+  - tok-adressen
+  - tok-til
+  - tok-jonas
+- handle: transform_to_two_object_frame
+  op: build
+  objective: obj-two-objects-or-prepositional-recipient-01
+  bloom: apply
+  prompt_md: 'Rewrite the Norwegian sentence without til. Keep Jonas, henne, the key,
+    and the giving event unchanged. Put the recipient before the theme. Source: Jonas
+    gir nøkkelen til henne. (Jonas gives the key to her.)'
+  derived_from:
+  - section_id: changing-from-one-frame-to-the-other
+  tokens:
+  - token_id: tok-jonas
+    text: Jonas
+  - token_id: tok-gir
+    text: gir
+  - token_id: tok-henne
+    text: henne
+  - token_id: tok-nokkelen
+    text: nøkkelen.
+  answer_order:
+  - tok-jonas
+  - tok-gir
+  - tok-henne
+  - tok-nokkelen
+- handle: complete_office_transfers
+  op: build
+  objective: obj-two-objects-or-prepositional-recipient-01
+  bloom: apply
+  prompt_md: 'Complete Mari''s reply in the office exchange. Nora says: Tusen takk.
+    Kan du sende Jonas en melding også? Mari answers: Ja, jeg ... med en gang. Build
+    the complete reply using theme + til + recipient order, and use ham for Jonas.'
+  derived_from:
+  - section_id: returning-to-the-office
+  tokens:
+  - token_id: tok-ja
+    text: Ja,
+  - token_id: tok-jeg
+    text: jeg
+  - token_id: tok-sender
+    text: sender
+  - token_id: tok-en-1
+    text: en
+  - token_id: tok-melding
+    text: melding
+  - token_id: tok-til
+    text: til
+  - token_id: tok-ham
+    text: ham
+  - token_id: tok-med
+    text: med
+  - token_id: tok-en-2
+    text: en
+  - token_id: tok-gang
+    text: gang.
+  answer_order:
+  - tok-ja
+  - tok-jeg
+  - tok-sender
+  - tok-en-1
+  - tok-melding
+  - tok-til
+  - tok-ham
+  - tok-med
+  - tok-en-2
+  - tok-gang
+- handle: build_frame_from_transfer_context
+  op: build
+  objective: obj-two-objects-or-prepositional-recipient-01
+  bloom: apply
+  prompt_md: 'At a hotel, the receptionist gives the guest the receipt. Build one
+    complete Norwegian sentence using the two-object frame: verb + recipient + theme,
+    without til.'
+  derived_from:
+  - section_id: using-the-same-patterns-elsewhere
+  tokens:
+  - token_id: tok-resepsjonisten
+    text: Resepsjonisten
+  - token_id: tok-gir
+    text: gir
+  - token_id: tok-gjesten
+    text: gjesten
+  - token_id: tok-kvitteringen
+    text: kvitteringen.
+  answer_order:
+  - tok-resepsjonisten
+  - tok-gir
+  - tok-gjesten
+  - tok-kvitteringen
+- handle: transfer_recipient_patterns_to_cafe_scene
+  op: write
+  objective: obj-two-objects-or-prepositional-recipient-01
+  bloom: apply
+  prompt_md: 'In Norwegian, write four short sentences about Lea finding Emil''s backpack
+    at a café and contacting him. Mention the backpack, a message, the number, and
+    the receipt. Alternate the frames exactly: sentences 1 and 3 use verb + recipient
+    + theme without til; sentences 2 and 4 use verb + theme + til + recipient. Make
+    clear who receives each item, and use original café wording throughout.'
+  derived_from:
+  - section_id: cumulative-transfer-a-forgotten-backpack
+  response_language: 'no'
+  min_words: 20
+  max_words: 50
+  judge_prompt: Check exactly four Norwegian sentences against the task and report
+    evidence for each criterion. Accept natural Bokmål wording and inflection for
+    the listed items, including ryggsekken or sekken for the backpack and nummeret
+    for the number. Require clear recipients and themes, the specified alternating
+    frame order, and a new café context rather than copied office wording.
+  criteria:
+  - id: cafe-who-receives-what
+    instruction: Makes it clear who receives each of the backpack, message, number,
+      and receipt.
+  - id: cafe-alternating-order
+    instruction: Uses recipient before theme without til in sentences 1 and 3, and
+      theme before til + recipient in sentences 2 and 4.
+  - id: cafe-transfer-accuracy
+    instruction: Uses accurate recipient–theme frame choice and ordering in the new
+      café context.
+- handle: recall_two_recipient_frames
+  op: write
+  objective: obj-two-objects-or-prepositional-recipient-01
+  bloom: apply
+  prompt_md: 'Without looking back, write in Norwegian the two ordering patterns for
+    gi and sende. Then write two new Norwegian sentences about one transfer, such
+    as sending the address to the customer: first put the recipient before the theme
+    without til; then put the theme before til + recipient. Keep the same recipient
+    and theme in both sentences.'
+  derived_from:
+  - section_id: short-review
+  response_language: 'no'
+  min_words: 15
+  max_words: 45
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept equivalent Norwegian wording for the labels recipient and theme, but require
+    both structural orders and the Norwegian function words uten til and til. The
+    two example sentences must describe the same new transfer and must not copy a
+    complete sentence from the lesson.
+  criteria:
+  - id: two-object-pattern
+    instruction: States in Norwegian the pattern verb + mottaker + tema, uten til,
+      or an equivalent Norwegian formulation.
+  - id: til-pattern
+    instruction: States in Norwegian the pattern verb + tema + til + mottaker, or
+      an equivalent Norwegian formulation.
+  - id: same-transfer-two-frames
+    instruction: Produces two Norwegian sentences about the same transfer, with recipient
+      before theme in the first and theme before til + recipient in the second.

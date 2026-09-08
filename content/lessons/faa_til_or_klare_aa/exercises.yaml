@@ -1,0 +1,180 @@
+- handle: successful_result_identification
+  op: choose
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: understand
+  prompt_md: Choose the complete interpretation that identifies the successful practical
+    result rather than only a person's ability.
+  derived_from:
+  - section_id: successful-result-checkpoint
+  stem_md: Mina tried several times to open a document. Choose the option that reports
+    what eventually worked and states the result.
+  options:
+  - id: unsuccessful-attempt
+    text: 'Mina klarte å finne dokumentet, men fikk ikke til å åpne det. Resultat:
+      Dokumentet ble ikke åpnet.'
+    correct: false
+    why: This reports an unsuccessful practical outcome, not a completed successful
+      result.
+  - id: successful-result
+    text: 'Til slutt fikk Mina til å åpne dokumentet. Resultat: Dokumentet ble åpnet.'
+    correct: true
+    why: This reports that the practical task eventually worked and states the achieved
+      result.
+- handle: ability_effort_completion
+  op: recall_fill
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: apply
+  prompt_md: Complete each sentence with the form that connects a difficult task to
+    the person's capacity or effort. Use klare å with the infinitive.
+  explanation_md: "«klare å» frames success in terms of a person’s capacity or effort; «få til» frames whether the practical task or result works."
+  derived_from:
+  - section_id: task-to-person-checkpoint
+  audio_target: "Selma sov nesten ikke, men hun tror at hun klarer å montere hyllen alene. Emil har bare ti minutter igjen, men han klarer å finne riktig adresse. Det er høy musikk rundt Lea, men hun klarer å lese instruksjonene."
+  segments:
+  - text_md: 'Selma sov nesten ikke, men hun tror at hun '
+  - blank_id: ability-form-1
+    options:
+    - klarer
+    - får til
+    answer_index: 0
+  - text_md: ' å montere hyllen alene. Emil har bare ti minutter igjen, men han '
+  - blank_id: ability-form-2
+    options:
+    - klarer
+    - får til
+    answer_index: 0
+  - text_md: ' å finne riktig adresse. Det er høy musikk rundt Lea, men hun '
+  - blank_id: ability-form-3
+    options:
+    - klarer
+    - får til
+    answer_index: 0
+  - text_md: ' å lese instruksjonene.'
+- handle: perspective_change
+  op: write
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: apply
+  prompt_md: Choose one new action, such as fixing a bicycle, finishing a report before
+    a deadline, or cooking with unfamiliar equipment. Write two Norwegian sentences
+    about the same action. In the first, use få til to highlight the working result.
+    In the second, use klare å to highlight personal effort or capacity. Keep the
+    event similar while changing the perspective.
+  derived_from:
+  - section_id: change-perspective-checkpoint
+  response_language: 'no'
+  min_words: 12
+  max_words: 35
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural inflection of få til and klare å when the requested focus is preserved.
+  criteria:
+  - id: same-action-perspective
+    instruction: Keeps the same action or event across both sentences while changing
+      the perspective.
+  - id: successful-result-frame
+    instruction: Uses a natural form of få til in the first sentence to highlight
+      a successful result.
+  - id: capacity-effort-frame
+    instruction: Uses klare å with an infinitive in the second sentence to highlight
+      personal effort or capacity.
+- handle: difficulty_diagnosis
+  op: categorize
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: analyze
+  prompt_md: Classify each unsuccessful attempt by its primary problem. Choose the
+    personal capacity or effort bucket when the person's limitation is central, and
+    the practical result bucket when the task does not work. Bucket labels specify
+    the frame for a meaning-preserving reformulation.
+  derived_from:
+  - section_id: diagnose-difficulty-checkpoint
+  buckets:
+  - bucket_id: capacity-effort
+    label: Personal capacity or effort — reformulate with klare å
+  - bucket_id: practical-result
+    label: Unsuccessful practical result — reformulate with få til
+  items:
+  - item_id: difficulty-1
+    text: Selma sov nesten ikke og hadde ikke krefter til å montere hyllen.
+    bucket_id: capacity-effort
+  - item_id: difficulty-2
+    text: Jeg prøvde å koble høyttaleren, men den virket ikke.
+    bucket_id: practical-result
+  - item_id: difficulty-3
+    text: Jeg hadde bare ti minutter, så jeg rakk ikke å skrive ferdig rapporten.
+    bucket_id: capacity-effort
+  - item_id: difficulty-4
+    text: Jeg forsøkte å åpne filen, men den åpnet seg ikke.
+    bucket_id: practical-result
+- handle: expression_repair
+  op: find_fix
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: analyze
+  prompt_md: 'Select the single incorrect token in the frame. The feedback explains the repaired form and the meaning distinction.'
+  derived_from:
+  - section_id: expression-repair-checkpoint
+  tokens:
+  - token_id: tok-1
+    text: Mina
+  - token_id: tok-2
+    text: klarte
+  - token_id: tok-3
+    text: å
+  - token_id: tok-4
+    text: få
+  - token_id: tok-5
+    text: å
+  - token_id: tok-6
+    text: koblingen.
+  error_token_id: tok-5
+  feedback: 'Replace å after få with til: Mina klarte å få til koblingen. The repaired
+    sentence focuses on a successful result, not capacity or effort.'
+- handle: meeting_problem_continuation
+  op: write
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: apply
+  prompt_md: Mina and Jonas are preparing a meeting together. Write four to six short
+    Norwegian exchanges in which they encounter a practical problem. Include an attempt
+    to solve it and a question about whether
+    one person can cope with a difficult action, and a final successful result. Use
+    klare å for ability or effort and få til for something that eventually works or
+    succeeds.
+  derived_from:
+  - section_id: integrated-practice
+  response_language: 'no'
+  min_words: 35
+  max_words: 70
+  judge_prompt: Check the dialogue against the task and report evidence for each criterion.
+    Accept natural inflected forms of klare å and få til when their perspectives remain
+    distinct.
+  criteria:
+  - id: meeting-progression
+    instruction: Includes a new practical problem, an attempt to solve it, a capacity
+      question, and a final successful result.
+  - id: meeting-capacity-frame
+    instruction: Uses klare å for ability or effort.
+  - id: meeting-result-frame
+    instruction: Uses få til for something that eventually works or succeeds.
+- handle: final_contrast_retrieval
+  op: write
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: apply
+  prompt_md: Write two short Norwegian sentences about a new situation and lexical frame. In the first sentence, use klare å to emphasize someone’s ability or effort. In the second, use få til to emphasize a successful result. Add one brief Norwegian sentence identifying the difference in focus.
+  derived_from:
+  - section_id: final-retrieval-and-review
+  response_language: 'no'
+  min_words: 20
+  max_words: 55
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural inflected forms of klare å and få til with the requested contrast
+    in focus.
+  criteria:
+  - id: final-ability-sentence
+    instruction: Uses klare å in the first Norwegian sentence to emphasize ability
+      or effort.
+  - id: final-result-sentence
+    instruction: Uses få til in the second Norwegian sentence to emphasize a successful
+      result.
+  - id: final-translations
+    instruction: Keeps the requested sentences and explanation in Norwegian.
+  - id: final-focus-distinction
+    instruction: Briefly identifies the difference between ability or effort and successful
+      result in Norwegian.

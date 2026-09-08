@@ -1,0 +1,150 @@
+- handle: identify_anticipation
+  op: choose
+  objective: obj-glede-seg-til-or-vaere-glad-for-01
+  bloom: understand
+  prompt_md: Read the situation and choose the Norwegian sentence that identifies
+    the anticipated experience.
+  derived_from:
+  - section_id: sec-checkpoint-identify-anticipation
+  stem_md: Jonas plans to drink coffee on the train tomorrow and is excited about
+    that future experience. Choose the sentence that uses the correct expression and
+    reflexive pronoun for Jonas.
+  options:
+  - id: anticipated-experience
+    text: Jonas gleder seg til å drikke kaffe på toget i morgen.
+    correct: true
+    why: It identifies the anticipated experience, uses gleder seg til, and matches
+      Jonas with seg.
+  - id: appreciation-instead
+    text: Jonas er glad for at han skal drikke kaffe på toget i morgen.
+    correct: false
+    why: It expresses appreciation for an arrangement rather than anticipation.
+  - id: wrong-subject
+    text: Jeg gleder meg til å drikke kaffe på toget i morgen.
+    correct: false
+    why: It uses first-person jeg and meg instead of Jonas and seg.
+- handle: connect_feelings_to_existing_facts
+  op: recall_fill
+  objective: obj-glede-seg-til-or-vaere-glad-for-01
+  bloom: apply
+  prompt_md: Complete both Norwegian sentences. Choose the expression that presents
+    each noun or at-clause as an existing fact.
+  explanation_md: "Use «være glad for» for something treated as an existing fact; «glede seg til» looks forward to a future event."
+  derived_from:
+  - section_id: sec-checkpoint-connect-feelings-to-existing-facts
+  audio_target: "Jonas er glad for varme klær. Sara er glad for at hun har bestilt reisen."
+  segments:
+  - text_md: 'Jonas '
+  - blank_id: noun-expression
+    options:
+    - er glad for
+    - gleder seg til
+    answer_index: 0
+  - text_md: ' varme klær. Sara '
+  - blank_id: clause-expression
+    options:
+    - er glad for
+    - gleder seg til
+    answer_index: 0
+  - text_md: ' at hun har bestilt reisen.'
+- handle: choose_by_time_perspective
+  op: choose
+  objective: obj-glede-seg-til-or-vaere-glad-for-01
+  bloom: analyze
+  prompt_md: Compare the two contexts and choose the Norwegian pair that matches both
+    intended stances.
+  derived_from:
+  - section_id: sec-checkpoint-choose-by-time-perspective
+  stem_md: Sara anticipates skiing tomorrow and appreciates having warm clothes now.
+    Choose the pair that uses the correct expression for each perspective.
+  options:
+  - id: correct-perspectives
+    text: Sara gleder seg til å gå på ski i morgen. Hun er glad for at hun har varme
+      klær.
+    correct: true
+    why: The first sentence expresses anticipation, and the second appreciates an
+      existing fact.
+  - id: reversed-perspectives
+    text: Sara er glad for at hun skal gå på ski i morgen. Hun gleder seg til å ha
+      varme klær.
+    correct: false
+    why: It uses appreciation for the future skiing plan and anticipation for clothing
+      that is already available.
+- handle: complete_a_short_exchange
+  op: write
+  objective: obj-glede-seg-til-or-vaere-glad-for-01
+  bloom: apply
+  prompt_md: Answer both questions in Norwegian. 1. Du skal reise videre og drikke
+    kaffe på toget. Hva gleder du deg til? 2. Sara har fått hjelp, og reisen er bestilt.
+    Hva er Sara glad for? Add a plausible reason or detail to each answer.
+  derived_from:
+  - section_id: sec-checkpoint-complete-a-short-exchange
+  response_language: 'no'
+  min_words: 20
+  max_words: 45
+  judge_prompt: Check both answers against the task and report evidence for each criterion.
+    Accept natural variants of the reasons or details, but require the requested expressions,
+    perspective, and pronoun agreement.
+  criteria:
+  - id: time-perspective
+    instruction: Preserves anticipation for the travel plan and appreciation for the
+      completed help or arrangement.
+  - id: expression-and-pronoun
+    instruction: Uses glede seg til for anticipation and være glad for for appreciation,
+      with the reflexive pronoun matching the subject where needed.
+  - id: plausible-detail
+    instruction: Adds a plausible reason or detail to each answer without changing
+      its intended time perspective.
+- handle: final_contextual_practice
+  op: write
+  objective: obj-glede-seg-til-or-vaere-glad-for-01
+  bloom: apply
+  prompt_md: 'Retell this station situation in Norwegian from Sara or Jonas perspective:
+    the train is delayed, they have available time, the kiosk is open, coffee is available
+    on the train, and skiing is tomorrow. Mention what still lies ahead and the existing
+    facts that help the journey go well. Use glede seg til for what still lies ahead
+    and være glad for for what is already true.'
+  derived_from:
+  - section_id: sec-final-contextual-practice
+  response_language: 'no'
+  min_words: 30
+  max_words: 55
+  judge_prompt: Check the retelling against the task and report evidence for each
+    criterion. Accept either Sara or Jonas perspective and natural Norwegian wording,
+    but require both meanings and the specified expression-to-meaning mapping.
+  criteria:
+  - id: both-meanings
+    instruction: Expresses both anticipation and appreciation in the station retelling.
+  - id: anticipation-expression
+    instruction: Consistently uses glede seg til for what still lies ahead, such as
+      skiing tomorrow or coffee on the train.
+  - id: appreciation-expression
+    instruction: Consistently uses være glad for for what is already true, such as
+      the open kiosk or available time.
+- handle: retrieval_and_review
+  op: write
+  objective: obj-glede-seg-til-or-vaere-glad-for-01
+  bloom: apply
+  prompt_md: Answer in Norwegian. Explain the difference between glede seg til and være
+    glad for. Then write one Norwegian sentence about something
+    you anticipate and one Norwegian sentence about an existing fact you appreciate.
+    Use the correct preposition in each expression and the reflexive pronoun that
+    matches the subject in the anticipation sentence.
+  derived_from:
+  - section_id: sec-retrieval-and-review
+  response_language: 'no'
+  min_words: 20
+  max_words: 50
+  judge_prompt: Check the explanation and both sentences against the task and report
+    evidence for each criterion. Accept natural Norwegian topics and wording, but
+    require the stated distinction, prepositions, and subject-matching reflexive pronoun.
+  criteria:
+  - id: expression-distinction
+    instruction: Explains the difference between glede seg til for anticipation and
+      være glad for for appreciation of an existing fact.
+  - id: anticipation-sentence
+    instruction: Writes a Norwegian anticipation sentence using glede seg til with
+      the correct reflexive pronoun.
+  - id: appreciation-sentence
+    instruction: Writes a Norwegian appreciation sentence using være glad for with
+      the correct preposition.

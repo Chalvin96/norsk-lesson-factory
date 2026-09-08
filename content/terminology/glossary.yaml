@@ -1,0 +1,561 @@
+# Canonical terminology registry for Norwegian Bokmal lessons.
+#
+# This YAML file is the authoritative machine-readable terminology source. It
+# uses concept-oriented fields inspired by SKOS/TBX terminology management:
+# each concept has one preferred label (prefLabel), zero or more alternative
+# labels (altLabel), and zero or more forbidden phrases (forbiddenTerm). A
+# stable machine identifier (id) anchors brief references and prompt context.
+#
+# The markdown style guide (knowledge/quality/terminology.md) is
+# rationale and usage documentation for humans; it is no longer the
+# authoritative table. CLI list/audit/ban/unban read and write this YAML file.
+#
+# scope:
+#   "active"    = injected into authoring/reviewer prompts for every lesson
+#   "reference" = resolved on demand when a brief or plan references the id;
+#                 not injected by default
+#
+# forbidden_phrases carry a human-authored rationale so the ban is auditable.
+
+schema_version: "1"
+
+prose_tells:
+  - phrase: "In this lesson, you will"
+    rationale: "Formulaic generated opener; address the learner directly instead."
+  - phrase: "finite verb, the tense-carrying verb"
+    rationale: "Stacked apposition that repeats a banned coinage alongside the pinned term."
+
+prose_tell_density:
+  threshold: 2
+  patterns:
+    - ", meaning"
+    - ", which means"
+
+concepts:
+  # ── Active concepts (injected into prompts) ───────────────────────────
+
+  - id: noun-gender
+    preferred_label: gender
+    norwegian_label: kjønn
+    alternative_labels:
+      - noun gender
+      - masculine
+      - feminine
+      - neuter
+      - common gender
+    scope: active
+    cefr_note: A1
+    guidance: Do not silently mix the 3-gender and common-gender systems in one lesson.
+    rationale: >
+      External learner sources use both systems; mixing them accidentally in one
+      lesson confuses learners about which paradigm applies.
+
+  - id: indefinite-form
+    preferred_label: indefinite form
+    norwegian_label: ubestemt form
+    scope: active
+    cefr_note: A1
+    guidance: Avoid "base form" for nouns where it can collide with verb/adjective base form.
+
+  - id: definite-form
+    preferred_label: definite form
+    norwegian_label: bestemt form
+    scope: active
+    cefr_note: A1
+    guidance: Not the same as the suffix or determiner.
+
+  - id: definite-suffix
+    preferred_label: definite suffix
+    norwegian_label: bestemt suffiks
+    alternative_labels:
+      - definite ending
+    scope: active
+    cefr_note: A1
+    guidance: >
+      "definite ending" is allowed in A1/A2 explanations; avoid calling the noun
+      suffix "definite article" when contrasting suffix vs determiner.
+
+  - id: definite-article
+    preferred_label: definite article
+    norwegian_label: bestemt artikkel
+    alternative_labels:
+      - definite determiner
+    scope: active
+    cefr_note: A2
+    guidance: >
+      Use "definite determiner" when contrasting word class; do not use
+      "definite article" for the noun suffix in lessons that contrast the two.
+
+  - id: infinitive
+    preferred_label: infinitive
+    norwegian_label: infinitiv
+    alternative_labels:
+      - å-form
+    scope: active
+    cefr_note: A1
+    guidance: Do not call it "bare infinitive"; that is a different concept. The å-form is "å snakke".
+
+  - id: infinitive-marker
+    preferred_label: infinitive marker
+    norwegian_label: infinitivsmerke
+    alternative_labels:
+      - å
+    scope: active
+    cefr_note: A1
+    guidance: Avoid "to-word" as the formal term.
+
+  - id: bare-infinitive
+    preferred_label: bare infinitive
+    norwegian_label: infinitiv uten å
+    alternative_labels:
+      - infinitive without å
+    scope: active
+    cefr_note: A2
+    guidance: >
+      "plain verb form without å" or "infinitive without å" in A1/A2; do not
+      call it just "infinitive" where the å/no-å contrast matters. The å-LESS
+      form is "snakke" after "kan".
+
+  - id: finite-verb
+    preferred_label: finite verb
+    norwegian_label: finitt verb
+    scaffold: verb that shows tense
+    forbidden_phrases:
+      - phrase: tense-carrying verb
+        rationale: >
+          Coined variant found 38 times in the corpus for the same concept; a
+          learner thinks it is a different thing from "finite verb". Pin one
+          term and ban the coinage.
+    scope: active
+    cefr_note: "A1/A2 may define once, then use finite verb; introduce term B1+"
+    guidance: >
+      Avoid "conjugated verb"; do not repeat the scaffold as the lesson's main
+      label after "finite verb" is introduced.
+    rationale: >
+      Corpus audit found "finite verb" (354x), "tense-carrying verb" (38x),
+      and "verb that shows tense" (4x) used for the same concept. Pin one term;
+      scaffold with the plain phrase once at A1/A2; ban the coinage.
+
+  - id: present-tense
+    preferred_label: present tense
+    norwegian_label: presens
+    scope: active
+    cefr_note: A1
+    guidance: Avoid unexplained "presens" in English prose; avoid bare "present" as a noun.
+
+  - id: past-tense
+    preferred_label: past tense
+    norwegian_label: preteritum
+    alternative_labels:
+      - preterite
+    scope: active
+    cefr_note: A2
+    guidance: Avoid unexplained "preteritum" in English prose.
+
+  - id: present-perfect
+    preferred_label: present perfect
+    norwegian_label: presens perfektum
+    scope: active
+    cefr_note: "A2/B1"
+    guidance: Avoid "perfect tense".
+
+  - id: future-forms
+    preferred_label: future forms
+    norwegian_label: futurum
+    alternative_labels:
+      - future expressions
+      - future marker
+      - future tense
+    scope: active
+    cefr_note: A2
+    guidance: >
+      Use "future tense" only after explaining Norwegian uses modal/periphrastic
+      future forms; avoid implying Norwegian has a single inflected future tense.
+
+  - id: main-clause
+    preferred_label: main clause
+    norwegian_label: helsetning
+    alternative_labels:
+      - independent clause
+    scope: active
+    cefr_note: A2
+    guidance: Avoid drifting to "independent clause" unless the contrast helps.
+
+  - id: subordinate-clause
+    preferred_label: subordinate clause
+    norwegian_label: leddsetning
+    alternative_labels:
+      - dependent clause
+    scope: active
+    cefr_note: A2
+    guidance: Avoid "sub-clause" / "subclause".
+
+  - id: subordinating-conjunction
+    preferred_label: subordinating conjunction
+    norwegian_label: subjunksjon
+    alternative_labels:
+      - subordinating connector
+      - subordinator
+    forbidden_phrases:
+      - phrase: subjunction
+        rationale: >
+          Genuinely-wrong label that fragments concept identity; the standard
+          learner term is "subordinating conjunction".
+    scope: active
+    cefr_note: "A2+"
+    guidance: >
+      Avoid bare "connector" when ambiguous with coordinating "og/men". Use
+      "subordinator" only at B2+.
+    rationale: >
+      External learner sources use "subordinating conjunction"; the earlier
+      house term "subordinating connector" is allowed; only the genuinely-wrong
+      "subjunction" is banned.
+
+  - id: v2-rule
+    preferred_label: V2 rule
+    norwegian_label: V2-regelen
+    alternative_labels:
+      - verb-second rule
+      - position 2
+      - second position
+    scope: active
+    cefr_note: A2
+    guidance: Avoid "inversion rule" as the main label.
+
+  - id: first-position
+    preferred_label: first position
+    norwegian_label: forfelt
+    alternative_labels:
+      - position 1
+      - front field
+    scope: active
+    cefr_note: "A1/A2 use scaffold; introduce front field B1+"
+    guidance: Avoid "topic position" in learner prose.
+
+  - id: sentence-adverb
+    preferred_label: sentence adverb
+    norwegian_label: setningsadverb
+    alternative_labels:
+      - sentence adverbial
+      - clausal adverb
+    scope: active
+    cefr_note: A2
+    guidance: Avoid "middle adverb".
+
+  - id: noun-phrase
+    preferred_label: noun phrase
+    norwegian_label: substantivfrase
+    alternative_labels:
+      - noun group
+      - NP
+    forbidden_phrases:
+      - phrase: noun group
+        rationale: >
+          The corpus drifted to "noun group"; external learner grammar and the
+          existing guide favor "noun phrase". Keep "noun group" out of formal
+          lesson text and deterministic review.
+    scope: active
+    cefr_note: "A2/B1"
+    guidance: >
+      "noun group" only as A1/A2 scaffold; "NP" only in compact B-level tables.
+      Avoid "noun group" as the formal term in objectives, titles, and grammar
+      rule labels.
+    rationale: >
+      "Noun phrase" is the standard term in external learner grammar; the
+      corpus had drifted to "noun group".
+
+  - id: connector
+    preferred_label: connector
+    alternative_labels:
+      - discourse connector
+      - linking word
+    scope: active
+    cefr_note: "A2+; discourse/cohesion scope"
+    guidance: >
+      Use "conjunction", "coordinating conjunction", or "subordinating
+      conjunction" when teaching word class or clause word order.
+
+  - id: reflexive-pronoun
+    preferred_label: reflexive pronoun
+    norwegian_label: refleksivt pronomen
+    alternative_labels:
+      - reflexive
+    scope: active
+    cefr_note: A2
+    guidance: Do not use for "sin", "si", "sitt", "sine"; use "reflexive possessive".
+
+  - id: reflexive-possessive
+    preferred_label: reflexive possessive
+    norwegian_label: refleksivt possessiv
+    alternative_labels:
+      - sin
+      - si
+      - sitt
+      - sine
+    scope: active
+    cefr_note: "A2/B1"
+    guidance: Avoid calling it only a "reflexive pronoun".
+
+  - id: adjective-agreement
+    preferred_label: adjective agreement
+    norwegian_label: adjektivsamsvar
+    alternative_labels:
+      - adjective endings
+    scope: active
+    cefr_note: "A1/A2"
+    guidance: >
+      Avoid using only "endings" when gender/number/definiteness agreement is
+      the point.
+
+  # ── Reference concepts (resolved on demand) ───────────────────────────
+
+  - id: noun
+    preferred_label: noun
+    norwegian_label: substantiv
+    scope: reference
+    cefr_note: A1
+    guidance: Avoid "name word" as a term.
+
+  - id: verb
+    preferred_label: verb
+    norwegian_label: verb
+    scope: reference
+    cefr_note: A1
+    guidance: Avoid "action word" as a term.
+
+  - id: adjective
+    preferred_label: adjective
+    norwegian_label: adjektiv
+    scope: reference
+    cefr_note: A1
+    guidance: Avoid "describing word" as a term.
+
+  - id: adverb
+    preferred_label: adverb
+    norwegian_label: adverb
+    scope: reference
+    cefr_note: A1
+    guidance: Do not confuse with "sentence adverb".
+
+  - id: preposition
+    preferred_label: preposition
+    norwegian_label: preposisjon
+    alternative_labels:
+      - prep
+    scope: reference
+    cefr_note: A1
+    guidance: Avoid "particle" unless teaching particle verbs; "prep" only in compact tables.
+
+  - id: pronoun
+    preferred_label: pronoun
+    norwegian_label: pronomen
+    scope: reference
+    cefr_note: A1
+
+  - id: conjunction
+    preferred_label: conjunction
+    norwegian_label: konjunksjon
+    alternative_labels:
+      - coordinating conjunction
+      - joining word
+    scope: reference
+    cefr_note: A2
+    guidance: >
+      Avoid bare "connector" when the contrast with subordinating terms matters.
+
+  - id: auxiliary-verb
+    preferred_label: auxiliary verb
+    norwegian_label: hjelpeverb
+    scope: reference
+    cefr_note: A2
+    guidance: >
+      Use "modal verb" when teaching "kan", "må", "vil", "skal", "bør" as
+      modals; avoid "helping verb" as the formal term.
+
+  - id: modal-verb
+    preferred_label: modal verb
+    norwegian_label: modalverb
+    alternative_labels:
+      - modal auxiliary
+    scope: reference
+    cefr_note: A2
+    guidance: >
+      Avoid using "auxiliary verb" if the lesson specifically contrasts modals
+      with non-modal auxiliaries.
+
+  - id: genitive
+    preferred_label: genitive
+    norwegian_label: genitiv
+    alternative_labels:
+      - possessive -s
+    scope: reference
+    cefr_note: A2
+    guidance: Avoid "apostrophe-s" for Norwegian.
+
+  - id: compound-noun
+    preferred_label: compound noun
+    norwegian_label: sammensatt substantiv
+    alternative_labels:
+      - compound
+      - sammensatt ord
+    scope: reference
+    cefr_note: "A2/B1"
+    guidance: Avoid "word combo" as a term.
+
+  - id: past-perfect
+    preferred_label: past perfect
+    norwegian_label: preteritum perfektum
+    alternative_labels:
+      - pluperfect
+    scope: reference
+    cefr_note: B1
+    guidance: Avoid "had + verb" as the term.
+
+  - id: future-perfect
+    preferred_label: future perfect
+    norwegian_label: futurum perfektum
+    alternative_labels:
+      - future marker + ha + past participle
+    scope: reference
+    cefr_note: "B1/B2"
+    guidance: Avoid treating "future marker" as a tense by itself.
+
+  - id: past-participle
+    preferred_label: past participle
+    norwegian_label: perfektum partisipp
+    scope: reference
+    cefr_note: A2
+    guidance: Avoid "perfect participle", "pp", "-t form" in learner prose.
+
+  - id: present-participle
+    preferred_label: present participle
+    norwegian_label: presens partisipp
+    scope: reference
+    cefr_note: B1
+    guidance: Avoid "-ing form" for Norwegian "-ende".
+
+  - id: imperative
+    preferred_label: imperative
+    norwegian_label: imperativ
+    alternative_labels:
+      - command form
+    scope: reference
+    cefr_note: A2
+    guidance: Avoid "bare stem" as the learner-facing label.
+
+  - id: passive
+    preferred_label: passive
+    norwegian_label: passiv
+    alternative_labels:
+      - passive voice
+    scope: reference
+    cefr_note: B1
+    guidance: Specify "bli-passive" or "s-passive" when relevant.
+
+  - id: passive-subtype
+    preferred_label: bli-passive
+    norwegian_label: bli-passiv
+    alternative_labels:
+      - bli-passive form
+      - s-passive
+      - s-passive form
+    scope: reference
+    cefr_note: B1
+    guidance: >
+      Lowercase and hyphenate in prose; do not replace the broad term "passive"
+      when both subtypes are meant.
+
+  - id: subject
+    preferred_label: subject
+    norwegian_label: subjekt
+    scope: reference
+    cefr_note: A1
+    guidance: Avoid "doer" as a term.
+
+  - id: object
+    preferred_label: object
+    norwegian_label: objekt
+    alternative_labels:
+      - direct object
+      - indirect object
+    scope: reference
+    cefr_note: A1
+    guidance: Avoid "thing-word".
+
+  - id: adverbial
+    preferred_label: adverbial
+    norwegian_label: adverbial
+    alternative_labels:
+      - adverbial phrase
+    scope: reference
+    cefr_note: A2
+    guidance: Do not use "adverb" when the function, not the word class, is meant.
+
+  - id: predicative
+    preferred_label: predicative
+    norwegian_label: predikativ
+    alternative_labels:
+      - subject complement
+      - predicative expression
+    scope: reference
+    cefr_note: A2
+    guidance: Avoid "object of be".
+
+  - id: relative-clause
+    preferred_label: relative clause
+    norwegian_label: relativsetning
+    scope: reference
+    cefr_note: B1
+    guidance: Avoid "who/which clause" as the formal term.
+
+  - id: possessive
+    preferred_label: possessive
+    norwegian_label: possessivt pronomen
+    alternative_labels:
+      - possessive pronoun
+      - possessive determiner
+    scope: reference
+    cefr_note: "A1/A2; refine determiner vs pronoun at B1 if needed"
+    guidance: Avoid "owner word" as the formal term.
+
+  - id: demonstrative
+    preferred_label: demonstrative
+    norwegian_label: demonstrativ
+    alternative_labels:
+      - demonstrative pronoun
+      - demonstrative determiner
+    scope: reference
+    cefr_note: A2
+    guidance: >
+      Avoid "pointing word" as the formal term. "demonstrative pronoun" is an
+      acceptable alternative where the word-class distinction matters, but the
+      broad concept label is "demonstrative" with Norwegian label
+      "demonstrativ".
+    rationale: >
+      The broad concept "demonstrative" covers both pronoun and determiner use;
+      pinning "demonstrative" with Norwegian "demonstrativ" aligns with standard
+      Norwegian grammar while "demonstrative pronoun" remains an admitted
+      alternative where context requires the word-class distinction.
+
+  - id: adjective-base-form
+    preferred_label: base form
+    norwegian_label: positiv
+    alternative_labels:
+      - positive form
+    scope: reference
+    cefr_note: A1
+    guidance: Avoid bare "positive" where learners may read it as sentiment.
+
+  - id: comparative
+    preferred_label: comparative
+    norwegian_label: komparativ
+    scope: reference
+    cefr_note: A2
+    guidance: Avoid "more form" as the formal term.
+
+  - id: superlative
+    preferred_label: superlative
+    norwegian_label: superlativ
+    scope: reference
+    cefr_note: A2
+    guidance: Avoid "most form" as the formal term.

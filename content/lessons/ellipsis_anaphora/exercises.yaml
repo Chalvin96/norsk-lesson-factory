@@ -1,0 +1,229 @@
+- handle: recover_omitted_meaning
+  op: recall_fill
+  objective: obj-ellipsis-anaphora-01
+  bloom: apply
+  prompt_md: Complete both blanks. Keep the necessary modal or auxiliary verb and
+    negation in the shortened response, then identify only the verb phrase left unspoken.
+  explanation_md: "Keep the modal, auxiliary, tense, and negation that carry the contrast, and omit only the repeated action. Use «det» for a fact, «gjøre det» for an action, and «slik» for a method."
+  derived_from:
+  - section_id: omission
+  audio_target: "Nora kan ta imot gjestene, men Lars kan ikke."
+  segments:
+  - text_md: 'Nora kan ta imot gjestene, men Lars '
+  - blank_id: modal-response
+    options:
+    - kan ikke
+    - skal ikke
+    - ville ikke
+    answer_index: 0
+  - text_md: '. The omitted verb phrase is '
+  - blank_id: omitted-phrase
+    options:
+    - ta imot gjestene
+    - bestille maten
+    - rydde kjøkkenet
+    answer_index: 0
+  - text_md: .
+- handle: package_fact_with_det
+  op: recall_fill
+  objective: obj-ellipsis-anaphora-01
+  bloom: apply
+  prompt_md: Complete the blank with a reaction expressing surprise. Use det to refer
+    to the preceding fact without restating it.
+  derived_from:
+  - section_id: det-reference
+  audio_target: "Alle gjestene kom i tide, og det overrasket meg."
+  segments:
+  - text_md: 'Alle gjestene kom i tide, og '
+  - blank_id: surprise-reaction
+    options:
+    - det overrasket meg
+    - jeg tror også det
+    - jeg skal snakke med vaktmesteren om det
+    answer_index: 0
+  - text_md: .
+- handle: choose_det_or_gjore_det
+  op: recall_fill
+  objective: obj-ellipsis-anaphora-01
+  bloom: apply
+  prompt_md: Complete four blanks. Use det for the fact, then use present, past, and
+    perfect forms of gjøre det for the three actions in sequence.
+  derived_from:
+  - section_id: gjore-det
+  audio_target: "Arrangementet er avlyst. Jeg vet det. Kan du avlyse arrangementet? Jeg gjør det nå. Hvem flyttet bordene? Nora gjorde det. Har noen ringt vaktmesteren? Jeg har gjort det."
+  segments:
+  - text_md: 'Arrangementet er avlyst. Jeg vet '
+  - blank_id: fact-reference
+    options:
+    - det
+    - gjorde det
+    - gjør det
+    answer_index: 0
+  - text_md: '. Kan du avlyse arrangementet? Jeg '
+  - blank_id: present-action
+    options:
+    - gjør det nå
+    - vet det
+    - har gjort det
+    answer_index: 0
+  - text_md: '. Hvem flyttet bordene? Nora '
+  - blank_id: past-action
+    options:
+    - gjorde det
+    - gjør det nå
+    - har gjort det
+    answer_index: 0
+  - text_md: '. Har noen ringt vaktmesteren? Jeg har '
+  - blank_id: perfect-action
+    options:
+    - gjort det
+    - det
+    - gjorde det
+    answer_index: 0
+  - text_md: .
+- handle: accept_with_gjerne
+  op: recall_fill
+  objective: obj-ellipsis-anaphora-01
+  bloom: apply
+  prompt_md: Complete both responses. Use gjerne for willing acceptance of a suggestion,
+    and do not use it as a general substitute for agreement with a fact.
+  derived_from:
+  - section_id: gjerne
+  audio_target: "Skal vi gå gjennom planen én gang til? Gjerne. Det blir mange gjester i kveld. Ja, det tror jeg også."
+  segments:
+  - text_md: 'Skal vi gå gjennom planen én gang til? '
+  - blank_id: accepting-suggestion
+    options:
+    - Gjerne.
+    - Ja, det tror jeg også.
+    - Samme her.
+    answer_index: 0
+  - text_md: ' Det blir mange gjester i kveld. '
+  - blank_id: agreeing-with-fact
+    options:
+    - Ja, det tror jeg også.
+    - Ja, gjerne.
+    - Gjerne.
+    answer_index: 0
+  - text_md: ''
+- handle: share_reaction_with_samme_her
+  op: recall_fill
+  objective: obj-ellipsis-anaphora-01
+  bloom: apply
+  prompt_md: Complete both responses. Use samme her to share the first speaker's preference,
+    and use an accepting response for the request.
+  derived_from:
+  - section_id: samme-her
+  audio_target: "Jeg foretrekker små arrangementer. Samme her. Kan du skjære brødet? Ja, gjerne."
+  segments:
+  - text_md: 'Jeg foretrekker små arrangementer. '
+  - blank_id: shared-preference
+    options:
+    - Samme her.
+    - Ja, gjerne.
+    - Jeg gjør det nå.
+    answer_index: 0
+  - text_md: ' Kan du skjære brødet? '
+  - blank_id: accepted-request
+    options:
+    - Ja, gjerne.
+    - Samme her.
+    - Ja, det tror jeg også.
+    answer_index: 0
+  - text_md: ''
+- handle: refer_to_method_with_slik
+  op: recall_fill
+  objective: obj-ellipsis-anaphora-01
+  bloom: apply
+  prompt_md: Complete both sentences. In each, use slik to point to the method or
+    arrangement, rather than det for a fact or gjerne for acceptance.
+  derived_from:
+  - section_id: slik
+  audio_target: "Vi satte bordene langs veggene. Vi bør gjøre det slik igjen. Først teller vi gjestene, og deretter bestiller vi maten. Slik unngår vi å bestille for mye."
+  segments:
+  - text_md: 'Vi satte bordene langs veggene. Vi bør gjøre det '
+  - blank_id: arrangement-method
+    options:
+    - slik
+    - det
+    - gjerne
+    answer_index: 0
+  - text_md: ' igjen. Først teller vi gjestene, og deretter bestiller vi maten. '
+  - blank_id: procedure-method
+    options:
+    - Slik
+    - Det
+    - Gjerne
+    answer_index: 0
+  - text_md: ' unngår vi å bestille for mye.'
+- handle: integrated_cohesive_conversation
+  op: write
+  objective: obj-ellipsis-anaphora-01
+  bloom: apply
+  prompt_md: 'Rewrite the following short planning conversation in natural Norwegian.
+    For each repeated part, replace only unnecessary repetition with the appropriate
+    choice among omission, det, gjøre det, gjerne, samme her, and slik. Keep enough
+    detail for every reference to remain clear. Make the result sound connected and
+    economical. Source conversation: - Mina: Jeg skal sette ut koppene hvis ingen
+    andre skal sette ut koppene. - Eirik: Møtet er flyttet til lørdag. Jeg vet at
+    møtet er flyttet til lørdag. - Mina: Kan du sende invitasjonene? Jeg skal sende
+    invitasjonene etter lunsj. - Eirik: Skal vi invitere Kari til dugnaden? Ja, jeg
+    vil gjerne invitere Kari til dugnaden. - Mina: Jeg er litt stresset før dugnaden.
+    Jeg er også litt stresset før dugnaden. - Eirik: Vi setter stolene langs veggen
+    og bordene ved vinduet. Vi bør sette stolene langs veggen og bordene ved vinduet
+    på samme måte igjen.'
+  response_language: 'no'
+  judge_prompt: Check the rewritten dialogue against the task and report evidence
+    for each criterion. Accept natural Bokmål variants when they preserve the requested
+    functions and clear references; do not require exact lexical wording. Verify that
+    repetition is reduced only when the omitted or pointed-to meaning is recoverable,
+    and that each target form fits its discourse function.
+  criteria:
+  - id: economical-target-use
+    instruction: Replaces unnecessary repeated material with an appropriate target
+      device from the task so the conversation sounds connected and economical.
+  - id: clear-references
+    instruction: Keeps enough context for every omitted or backward-pointing meaning
+      to remain immediately understandable.
+  derived_from:
+  - section_id: back-at-community-centre
+- handle: retrieval_and_review
+  op: write
+  objective: obj-ellipsis-anaphora-01
+  bloom: apply
+  prompt_md: 'Write in natural Norwegian. Part 1: Briefly explain what each target
+    form points to: an omitted action, shared information, a repeated action, willing
+    acceptance, a shared reaction, or a manner of doing something. Part 2: Continue
+    each of the six new volunteer-event exchanges in Norwegian. Use omission, standalone
+    det, gjøre det, gjerne, samme her, and slik exactly once each across the six replies.
+    Count standalone det separately from the det inside gjøre det. Make every reference
+    clear and each reply natural. 1. A volunteer says: Jeg kan bære kassene hvis du
+    ikke kan bære kassene. Reply with omission when the second volunteer cannot carry
+    the boxes. 2. A volunteer says: Leveransen til frivilligsentralen kommer på tirsdag.
+    Reply with standalone det to show relief or knowledge. 3. A volunteer asks: Kan
+    du ringe de nye frivillige? Reply with an inflected form of gjøre det to say you
+    will do it now. 4. A volunteer asks: Skal vi spørre Liv om å registrere gjestene?
+    Reply with gjerne to accept willingly. 5. A volunteer says: Jeg blir litt nervøs
+    før dugnaden. Reply with samme her to share the feeling. 6. A volunteer says:
+    Vi skriver fargene på kassene og setter dem ved døren. Reply with slik to point
+    to this method.'
+  response_language: 'no'
+  judge_prompt: Check both parts against the task and report evidence for each criterion.
+    For the six replies, count standalone det separately from the fixed construction
+    gjøre det. Accept natural Bokmål variants when they preserve the requested reference
+    and discourse function. Verify that omission keeps the necessary modal or auxiliary
+    and leaves only the shared action unspoken, and verify that each other target
+    construction has its requested function and occurs once across the six replies.
+  criteria:
+  - id: function-explanations
+    instruction: Explains in Norwegian what omission, det, gjøre det, gjerne, samme
+      her, and slik point to, covering omitted action, shared information, repeated
+      action, willing acceptance, shared reaction, and method.
+  - id: six-natural-replies
+    instruction: Uses omission, standalone det, gjøre det, gjerne, samme her, and
+      slik exactly once in six natural replies about the new volunteer event.
+  - id: clear-references
+    instruction: Makes each omitted action, shared fact or reaction, repeated action,
+      and method recoverable from its exchange.
+  derived_from:
+  - section_id: retrieval-review

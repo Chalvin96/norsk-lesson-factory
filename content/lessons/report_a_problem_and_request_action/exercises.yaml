@@ -1,0 +1,177 @@
+- handle: find_factual_core
+  op: write
+  objective: obj-report-a-problem-and-request-action-01
+  bloom: apply
+  prompt_md: 'Nora says «Det drypper fra røret under kjøkkenvasken.» Erik asks «Har
+    det kommet mye vann?» Quote the sentence stating the observable problem and Erik’s
+    question about its extent. Then write one short factual Norwegian sentence saying
+    that a hotel-room window cannot be closed. Describe only the window, without blame
+    or a guessed cause.'
+  response_language: 'no'
+  judge_prompt: Check all three requested parts. The first two must accurately identify
+    the problem statement and extent question from the source exchange. The hotel
+    sentence must naturally describe the window itself as impossible to close, without
+    blame or speculation. Accept natural Bokmål variants.
+  criteria:
+  - id: observable-problem
+    instruction: Identifies the sentence from the exchange that states the observable
+      problem.
+  - id: extent-question
+    instruction: Identifies Erik’s question establishing the extent of the problem.
+  - id: factual-window-report
+    instruction: Describes the hotel-room window itself as impossible to close, without
+      blame or a guessed cause.
+  derived_from:
+  - section_id: observable-facts
+- handle: connect_problem_to_effect
+  op: write
+  objective: obj-report-a-problem-and-request-action-01
+  bloom: apply
+  prompt_md: A delivered box contains one broken bottle, and liquid has damaged the
+    other items. Write two short Norwegian sentences. First state only an observable
+    fact. Then state one practical effect, keeping the fact and effect distinct and
+    clearly connected.
+  response_language: 'no'
+  judge_prompt: Check that the response contains two distinct, natural Bokmål sentences
+    in the requested order. The first must report an observable condition without
+    speculation. The second must state a practical consequence connected to that condition.
+    Accept equivalent factual descriptions and plausible practical effects.
+  criteria:
+  - id: observable-fact-first
+    instruction: States only an observable fact about the broken bottle or liquid
+      damage in the first sentence.
+  - id: practical-effect-second
+    instruction: Describes one practical effect in the second sentence.
+  - id: distinct-clear-connection
+    instruction: Keeps fact and effect distinct while making their connection clear.
+  derived_from:
+  - section_id: explain-effect
+- handle: add_suitable_request
+  op: write
+  objective: obj-report-a-problem-and-request-action-01
+  bloom: apply
+  prompt_md: A hotel-room window cannot be closed, and the room is becoming cold.
+    Write one Norwegian request asking hotel staff for one clear, practical remedy
+    that directly addresses this problem. Do not add unrelated demands.
+  response_language: 'no'
+  judge_prompt: Check for one natural Bokmål request naming one proportionate action
+    that addresses the window or cold room. Accept requests to inspect or repair the
+    window or provide another room. Reject vague, unrelated, or disproportionate demands.
+  criteria:
+  - id: one-clear-action
+    instruction: Requests one clear action from hotel staff.
+  - id: direct-remedy
+    instruction: Requests a practical remedy that responds directly to the window
+      problem and cold room.
+  - id: no-unrelated-demands
+    instruction: Adds no unrelated demands.
+  derived_from:
+  - section_id: request-remedy
+- handle: confirm_agreement
+  op: write
+  objective: obj-report-a-problem-and-request-action-01
+  bloom: apply
+  prompt_md: A delivery company has agreed to collect a damaged parcel tomorrow morning.
+    Write one Norwegian confirmation sentence that restates the promised collection
+    and checks the time. Then ask in Norwegian whether you need to print a return
+    label.
+  response_language: 'no'
+  judge_prompt: Check that the response confirms both collection of the damaged parcel
+    and tomorrow morning, then asks whether the customer must print a return label.
+    Accept natural Bokmål wording and either a separate label question or a clearly
+    separated question in the same message.
+  criteria:
+  - id: promised-collection
+    instruction: Restates that the delivery company will collect the damaged parcel.
+  - id: tomorrow-morning
+    instruction: Checks that the collection will happen tomorrow morning.
+  - id: return-label
+    instruction: Asks whether the customer needs to print a return label.
+  derived_from:
+  - section_id: confirm-next-step
+- handle: build_radiator_report
+  op: write
+  objective: obj-report-a-problem-and-request-action-01
+  bloom: apply
+  prompt_md: 'Write a focused Norwegian message to a landlord. State that a bedroom
+    radiator remains cold when switched on, explain one practical effect, and request
+    one appropriate action. The landlord replies: «En tekniker kommer i morgen mellom
+    klokka ti og tolv.» Confirm that agreed action and time. Keep every sentence relevant
+    to resolving the radiator problem.'
+  response_language: 'no'
+  judge_prompt: 'Check for all four communicative parts: observable radiator fact,
+    practical effect, appropriate request, and confirmation of the technician’s visit
+    tomorrow between ten and twelve. Accept natural Bokmål variants, but require every
+    sentence to remain relevant to resolving the radiator problem.'
+  criteria:
+  - id: radiator-fact
+    instruction: States that the bedroom radiator remains cold when it is switched
+      on.
+  - id: practical-effect
+    instruction: Explains one practical effect of the cold radiator.
+  - id: appropriate-action
+    instruction: Requests one appropriate action to resolve or inspect the radiator
+      problem.
+  - id: technician-confirmation
+    instruction: Confirms that a technician will come tomorrow between ten and twelve.
+  - id: focused-message
+    instruction: Keeps every sentence relevant to resolving the radiator problem.
+  derived_from:
+  - section_id: controlled-practice
+- handle: build_lamp_report
+  op: write
+  objective: obj-report-a-problem-and-request-action-01
+  bloom: apply
+  prompt_md: 'Write a Norwegian report to a shop using four communicative steps. State
+    that the order confirmation lists three lamps but only two arrived. Explain that
+    one room still has no light. Ask the shop to send the missing lamp. The shop replies:
+    «Vi sender den manglende lampen i morgen.» Confirm what the shop will send and
+    when. Use delivery-related language, not housing-specific language.'
+  response_language: 'no'
+  judge_prompt: 'Check for the four requested steps in natural Bokmål: the two-of-three
+    delivery fact, the room without light, a request to send the missing lamp, and
+    confirmation that the missing lamp will be sent tomorrow. Reject housing-specific
+    wording that changes the shop-delivery situation.'
+  criteria:
+  - id: lamp-delivery-fact
+    instruction: States that only two of the three lamps arrived.
+  - id: room-effect
+    instruction: Explains that one room still has no light.
+  - id: missing-lamp-request
+    instruction: Asks the shop to send the missing lamp.
+  - id: shipment-confirmation
+    instruction: Confirms that the missing lamp will be sent tomorrow.
+  - id: delivery-context
+    instruction: Uses all four communicative steps without housing-specific language.
+  derived_from:
+  - section_id: controlled-practice
+- handle: final_washing_machine_report
+  op: write
+  objective: obj-report-a-problem-and-request-action-01
+  bloom: apply
+  prompt_md: 'Write a short Norwegian exchange about a washing machine that stops
+    during every wash. Include one observable fact, one practical effect, and one
+    proportionate request. Then use this service-provider response: «Vi sender en
+    tekniker på tirsdag mellom klokka to og fire.» Add a sentence confirming the agreed
+    action and time. Label your four sentences as Fact, Effect, Request, and Confirmation.'
+  response_language: 'no'
+  judge_prompt: Check that four labeled Norwegian sentences perform the four requested
+    jobs. Require an observable fact that the washing machine stops during every wash,
+    a practical effect, a proportionate request, and confirmation that a technician
+    will come on Tuesday between two and four. Accept natural Bokmål variants and
+    equivalent clear labels for the four jobs.
+  criteria:
+  - id: washing-machine-fact
+    instruction: Includes an observable fact that the washing machine stops during
+      every wash.
+  - id: practical-effect
+    instruction: Includes one practical effect of the washing-machine problem.
+  - id: proportionate-request
+    instruction: Includes one proportionate request addressing the washing-machine
+      problem.
+  - id: technician-confirmation
+    instruction: Confirms that a technician will come on Tuesday between two and four.
+  - id: communicative-labels
+    instruction: Labels which sentence is the Fact, Effect, Request, and Confirmation.
+  derived_from:
+  - section_id: final-retrieval-review
