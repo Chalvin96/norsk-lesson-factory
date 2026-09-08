@@ -1,0 +1,280 @@
+- handle: notice_infinitive_marker_in_context
+  op: choose
+  objective: obj-infinitive-marker-01
+  bloom: understand
+  prompt_md: Choose one group of Norwegian statements.
+  derived_from:
+  - section_id: infinitive-and-marker
+  stem_md: Which group has å introducing each second verb after a non-modal first
+    verb?
+  options:
+  - id: group-modal
+    text: Maja kan spise. Elias skal reise.
+    correct: false
+    why: These modal verbs take bare infinitives, so this group does not show å plus
+      an infinitive.
+  - id: group-missing
+    text: Maja liker spise. Elias håper komme.
+    correct: false
+    why: The non-modal verbs liker and håper require å before the infinitives.
+  - id: group-correct
+    text: Maja liker å spise. Elias håper å reise.
+    correct: true
+    why: Both non-modal first verbs are followed by å and the unchanged infinitive.
+- handle: choose_marker_after_first_verb
+  op: recall_fill
+  objective: obj-infinitive-marker-01
+  bloom: apply
+  prompt_md: Complete each Norwegian sentence by choosing the form required after
+    the first verb.
+  explanation_md: "Modal verbs take a bare infinitive, while verbs such as «håpe» and «prøve» take «å + infinitive». The infinitive itself does not change."
+  derived_from:
+  - section_id: after-modal-verbs
+  audio_target: "På mandag håper jeg å besøke Bergen. I kveld må jeg lage middag. På lørdag vil vi møte Anna. Etter jobb prøver hun å lese på norsk."
+  segments:
+  - text_md: 'På mandag håper jeg '
+  - blank_id: visit-form
+    options:
+    - besøke
+    - å besøke
+    answer_index: 1
+  - text_md: ' Bergen.'
+  - text_md: ' I kveld må jeg '
+  - blank_id: dinner-form
+    options:
+    - lage
+    - å lage
+    answer_index: 0
+  - text_md: ' middag.'
+  - text_md: ' På lørdag vil vi '
+  - blank_id: meet-form
+    options:
+    - å møte
+    - møte
+    answer_index: 1
+  - text_md: ' Anna.'
+  - text_md: ' Etter jobb prøver hun '
+  - blank_id: read-form
+    options:
+    - å lese
+    - lese
+    answer_index: 0
+  - text_md: ' på norsk.'
+- handle: contrast_same_infinitive_patterns
+  op: build
+  objective: obj-infinitive-marker-01
+  bloom: apply
+  prompt_md: 'Build the paired Norwegian statement. Keep møte unchanged: use å after
+    prøver and no å after kan.'
+  derived_from:
+  - section_id: one-decision-at-a-time
+  tokens:
+  - token_id: tok-2
+    text: prøver
+  - token_id: tok-3
+    text: å
+  - token_id: tok-4
+    text: møte
+  - token_id: tok-5
+    text: Anna,
+  - token_id: tok-6
+    text: men
+  - token_id: tok-7
+    text: hun
+  - token_id: tok-8
+    text: kan
+  - token_id: tok-9
+    text: møte
+  - token_id: tok-10
+    text: Anna.
+  - token_id: tok-1
+    text: Maja
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+- handle: repair_infinitive_marker_errors
+  op: find_fix
+  objective: obj-infinitive-marker-01
+  bloom: analyze
+  prompt_md: Select the one token that is wrong/needs changing.
+  derived_from:
+  - section_id: common-mistake
+  tokens:
+  - token_id: tok-1
+    text: Maja
+  - token_id: tok-2
+    text: kan
+  - token_id: tok-3
+    text: å
+  - token_id: tok-4
+    text: møte
+  - token_id: tok-5
+    text: Elias,
+  - token_id: tok-6
+    text: men
+  - token_id: tok-7
+    text: hun
+  - token_id: tok-8
+    text: håper
+  - token_id: tok-9
+    text: å
+  - token_id: tok-10
+    text: møte
+  - token_id: tok-11
+    text: Elias.
+  error_token_id: tok-3
+  feedback: 'Remove the extra å after modal kan. Keep å before møte after non-modal
+    håper. Correct message: Maja kan møte Elias, men hun håper å møte Elias.'
+- handle: complete_contextual_two_verb_messages
+  op: recall_fill
+  objective: obj-infinitive-marker-01
+  bloom: apply
+  prompt_md: Complete each museum message by choosing the full Norwegian infinitive
+    form required after the first verb.
+  derived_from:
+  - section_id: back-to-maja-and-elias
+  audio_target: "Maja kan møte Elias ved museet. Elias håper å kjøpe billetter ved inngangen. Vi bør gå inn etterpå. Etter besøket har Elias lyst til å spise noe."
+  segments:
+  - text_md: 'Maja kan '
+  - blank_id: museum-meet-form
+    options:
+    - å møte
+    - møte
+    answer_index: 1
+  - text_md: ' Elias ved museet.'
+  - text_md: ' Elias håper '
+  - blank_id: ticket-form
+    options:
+    - å kjøpe
+    - kjøpe
+    answer_index: 0
+  - text_md: ' billetter ved inngangen.'
+  - text_md: ' Vi bør '
+  - blank_id: enter-form
+    options:
+    - å gå
+    - gå
+    answer_index: 1
+  - text_md: ' inn etterpå.'
+  - text_md: ' Etter besøket har Elias lyst til '
+  - blank_id: eat-form
+    options:
+    - å spise
+    - spise
+    answer_index: 0
+  - text_md: ' noe.'
+- handle: produce_bounded_everyday_sentences
+  op: build
+  objective: obj-infinitive-marker-01
+  bloom: apply
+  prompt_md: 'Build the short Norwegian sentence for: I am trying to read in Norwegian
+    tonight.'
+  derived_from:
+  - section_id: building-short-personal-statements
+  tokens:
+  - token_id: tok-2
+    text: prøver
+  - token_id: tok-3
+    text: å
+  - token_id: tok-4
+    text: lese
+  - token_id: tok-5
+    text: på
+  - token_id: tok-6
+    text: norsk
+  - token_id: tok-7
+    text: i
+  - token_id: tok-8
+    text: kveld.
+  - token_id: tok-1
+    text: Jeg
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+- handle: transfer_infinitive_marker_to_evening_plan
+  op: build
+  objective: obj-infinitive-marker-01
+  bloom: apply
+  prompt_md: Build Nora's connected Norwegian evening plan from the supplied tokens.
+    Keep å before infinitives after non-modal verbs and omit it after modal verbs.
+  derived_from:
+  - section_id: cumulative-transfer
+  tokens:
+  - token_id: tok-2
+    text: skal
+  - token_id: tok-3
+    text: lage
+  - token_id: tok-4
+    text: middag.
+  - token_id: tok-5
+    text: Hun
+  - token_id: tok-6
+    text: vil
+  - token_id: tok-7
+    text: snakke
+  - token_id: tok-8
+    text: med
+  - token_id: tok-9
+    text: en
+  - token_id: tok-10
+    text: venn.
+  - token_id: tok-11
+    text: Hun
+  - token_id: tok-12
+    text: håper
+  - token_id: tok-13
+    text: å
+  - token_id: tok-14
+    text: lese
+  - token_id: tok-15
+    text: på
+  - token_id: tok-16
+    text: norsk.
+  - token_id: tok-17
+    text: Hun
+  - token_id: tok-18
+    text: må
+  - token_id: tok-19
+    text: komme
+  - token_id: tok-20
+    text: hjem
+  - token_id: tok-21
+    text: tidlig.
+  - token_id: tok-1
+    text: Nora
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+  - tok-11
+  - tok-12
+  - tok-13
+  - tok-14
+  - tok-15
+  - tok-16
+  - tok-17
+  - tok-18
+  - tok-19
+  - tok-20
+  - tok-21

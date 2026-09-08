@@ -1,0 +1,14 @@
+description: Evaluate the exercise-author generation job against handoff cases.
+
+prompts:
+  - file://prompts.py:create_exercise_author_prompt
+
+providers:
+  - id: file://provider.py:call_api
+    label: configured-exercise-author
+    config:
+      job: exercise_author
+
+defaultTest: file://defaults/structured-response.yaml
+
+tests: file://cases/exercise_author.yaml

@@ -1,0 +1,359 @@
+- handle: notice_indefinite_and_definite_groups
+  op: choose
+  objective: obj-noun-plurals-01
+  bloom: understand
+  prompt_md: Nora is listing cups needed for the meeting room. No particular cups
+    have been introduced in the first situation; in the second, Amir refers to cups
+    already brought into the room. Choose the pair that expresses both meanings.
+  derived_from:
+  - section_id: the-most-common-pattern-er-and-ene
+  stem_md: Choose the pair with the correct plural meaning in both situations.
+  options:
+  - id: both_definite
+    text: 'Først: koppene (the cups). Senere: koppene (the cups).'
+    correct: false
+    why: The first situation does not identify a particular group.
+  - id: reversed
+    text: 'Først: koppene (the cups). Senere: kopper (cups).'
+    correct: false
+    why: The meanings are reversed.
+  - id: correct
+    text: 'Først: kopper (cups). Senere: koppene (the cups).'
+    correct: true
+    why: kopper introduces an unspecified quantity; koppene refers to an identifiable
+      group.
+  - id: both_indefinite
+    text: 'Først: kopper (cups). Senere: kopper (cups).'
+    correct: false
+    why: The second reference needs to identify the known group.
+- handle: form_regular_indefinite_plurals
+  op: recall_fill
+  objective: obj-noun-plurals-01
+  bloom: apply
+  prompt_md: Complete each meeting-room inventory statement with the indefinite plural
+    of the visible singular noun. The quantity is not an identified group.
+  explanation_md: "Plural endings depend on gender and noun pattern; short neuter nouns often have zero ending, while common irregular nouns change their stem."
+  derived_from:
+  - section_id: nouns-ending-in-an-unstressed-e
+  audio_target: "Til møtet trenger vi flere stoler. Nora kjøper flere poser. Det står flere lamper i vinduet. Vi trenger flere kopper."
+  segments:
+  - text_md: 'Singular: en stol. Til møtet trenger vi flere '
+  - blank_id: stol-indef
+    options:
+    - stolene
+    - stoler
+    answer_index: 1
+  - text_md: .
+  - text_md: ' Singular: en pose. Nora kjøper flere '
+  - blank_id: pose-indef
+    options:
+    - poser
+    - posene
+    answer_index: 0
+  - text_md: .
+  - text_md: ' Singular: en lampe. Det står flere '
+  - blank_id: lampe-indef
+    options:
+    - lampene
+    - lamper
+    answer_index: 1
+  - text_md: ' i vinduet.'
+  - text_md: ' Singular: en kopp. Vi trenger flere '
+  - blank_id: kopp-indef
+    options:
+    - kopper
+    - koppene
+    answer_index: 0
+  - text_md: .
+- handle: form_regular_definite_plurals
+  op: recall_fill
+  objective: obj-noun-plurals-01
+  bloom: apply
+  prompt_md: Nora is checking groups Amir has already brought into the room. Complete
+    each sentence with the definite plural of the visible singular noun. Form it from
+    the singular noun, not from a completed indefinite plural.
+  explanation_md: "A definite plural names the whole known group and adds the definite plural ending, unlike an indefinite quantity."
+  derived_from:
+  - section_id: nouns-ending-in-an-unstressed-e
+  audio_target: "Nora finner stolene i rommet. Posene ligger på bordet. Lampene er nye. Koppene er rene."
+  segments:
+  - text_md: 'Singular: en stol. Nora finner '
+  - blank_id: stol-def
+    options:
+    - stolerene
+    - stolene
+    answer_index: 1
+  - text_md: ' i rommet.'
+  - text_md: ' Singular: en pose. '
+  - blank_id: pose-def
+    options:
+    - Posene
+    - poser
+    answer_index: 0
+  - text_md: ' ligger på bordet.'
+  - text_md: ' Singular: en lampe. '
+  - blank_id: lampe-def
+    options:
+    - lamper
+    - Lampene
+    answer_index: 1
+  - text_md: ' er nye.'
+  - text_md: ' Singular: en kopp. '
+  - blank_id: kopp-def
+    options:
+    - Koppene
+    - kopper
+    answer_index: 0
+  - text_md: ' er rene.'
+- handle: recognize_zero_ending_neuter_plurals
+  op: choose
+  objective: obj-noun-plurals-01
+  bloom: understand
+  prompt_md: Read the sentence and choose the complete interpretation of the unchanged
+    noun.
+  derived_from:
+  - section_id: short-neuter-nouns-with-no-indefinite-plural-ending
+  stem_md: Det står tre bord i rommet.
+  options:
+  - id: regular_plural
+    text: tre border — three tables; indefinite plural with -er
+    correct: false
+    why: border is the incorrect overextended -er form for this noun.
+  - id: definite_plural
+    text: bordene — the tables; definite plural
+    correct: false
+    why: The sentence uses the unchanged indefinite plural bord.
+  - id: singular
+    text: et bord — one table; singular
+    correct: false
+    why: The sentence contains tre, not one.
+  - id: correct
+    text: tre bord — three tables; indefinite plural with zero ending
+    correct: true
+    why: The number tre shows that bord is plural, even though the noun has no visible
+      ending.
+- handle: produce_zero_ending_neuter_plurals
+  op: recall_fill
+  objective: obj-noun-plurals-01
+  bloom: apply
+  prompt_md: Complete Amir’s quantity report with the common indefinite plural forms
+    of the short neuter nouns. Leave the noun unchanged where the pattern requires
+    a zero ending.
+  explanation_md: "Short neuter nouns commonly take no ending in the indefinite plural: ett hus, flere hus."
+  derived_from:
+  - section_id: short-neuter-nouns-with-no-indefinite-plural-ending
+  audio_target: "Amir rapporterer: Det står tre bord og fem glass i rommet."
+  segments:
+  - text_md: 'Amir rapporterer: Det står tre '
+  - blank_id: bord-zero
+    options:
+    - bord
+    - border
+    answer_index: 0
+  - text_md: ' og fem '
+  - blank_id: glass-zero
+    options:
+    - glasser
+    - glass
+    answer_index: 1
+  - text_md: ' i rommet.'
+- handle: recognize_common_irregular_plurals
+  op: match_pairs
+  objective: obj-noun-plurals-01
+  bloom: remember
+  prompt_md: Match each singular noun and requested plural status with the taught
+    irregular plural form. This tests recognition, not independent spelling recall.
+  explanation_md: "These plurals change inside the stem: bok–bøker, mann–menn, and fot–føtter."
+  derived_from:
+  - section_id: some-common-nouns-change-inside-the-word
+  left:
+  - left_id: book-indefinite
+    text: ei/en bok → indefinite plural
+  - left_id: book-definite
+    text: ei/en bok → definite plural
+  - left_id: man-indefinite
+    text: en mann → indefinite plural
+  - left_id: man-definite
+    text: en mann → definite plural
+  - left_id: foot-indefinite
+    text: en fot → indefinite plural
+  - left_id: foot-definite
+    text: en fot → definite plural
+  right:
+  - right_id: books-indefinite
+    text: bøker — books
+  - right_id: books-definite
+    text: bøkene — the books
+  - right_id: men-indefinite
+    text: menn — men
+  - right_id: men-definite
+    text: mennene — the men
+  - right_id: feet-indefinite
+    text: føtter — feet
+  - right_id: feet-definite
+    text: føttene — the feet
+  pairs:
+  - left_id: book-indefinite
+    right_id: books-indefinite
+  - left_id: book-definite
+    right_id: books-definite
+  - left_id: man-indefinite
+    right_id: men-indefinite
+  - left_id: man-definite
+    right_id: men-definite
+  - left_id: foot-indefinite
+    right_id: feet-indefinite
+  - left_id: foot-definite
+    right_id: feet-definite
+- handle: track_plural_reference_in_context
+  op: choose
+  objective: obj-noun-plurals-01
+  bloom: understand
+  prompt_md: Nora and Amir are arranging the meeting room. The first sentence introduces
+    four cups; the second refers to that same group. Choose the exchange with the
+    correct plural definiteness.
+  derived_from:
+  - section_id: following-a-noun-through-a-conversation
+  stem_md: Choose the exchange that tracks the introduced group correctly.
+  options:
+  - id: correct
+    text: Nora finner fire kopper. Koppene står ved døra.
+    correct: true
+    why: kopper introduces the group; koppene refers back to the same identifiable
+      cups.
+  - id: reversed
+    text: Nora finner koppene. Fire kopper står ved døra.
+    correct: false
+    why: The first sentence treats the group as already known, while the second makes
+      it indefinite.
+  - id: first_definite
+    text: Nora finner koppene. Koppene står ved døra.
+    correct: false
+    why: The first sentence is introducing the group, not referring back to an earlier
+      group.
+  - id: second_indefinite
+    text: Nora finner fire kopper. Kopper står ved døra.
+    correct: false
+    why: The second sentence should identify the group introduced in the first sentence.
+- handle: repair_plural_form_errors
+  op: find_fix
+  objective: obj-noun-plurals-01
+  bloom: analyze
+  prompt_md: Select the one token that is wrong/needs changing.
+  derived_from:
+  - section_id: common-mistakes-to-avoid
+  tokens:
+  - token_id: tok-1
+    text: Nora
+  - token_id: tok-2
+    text: finner
+  - token_id: tok-3
+    text: stolerene
+  - token_id: tok-4
+    text: .
+  error_token_id: tok-3
+  feedback: Replace stolerene with stolene. The definite plural ending attaches to
+    singular stem stol, not to indefinite plural stoler.
+- handle: choose_plural_forms_for_picnic
+  op: choose
+  objective: obj-noun-plurals-01
+  bloom: understand
+  prompt_md: Two family members are packing a picnic. In each option, the first list
+    introduces items and the second list refers to the same items. Choose the list
+    pair with correct plural definiteness across regular, unstressed-e, zero-ending,
+    and irregular nouns.
+  derived_from:
+  - section_id: cumulative-transfer-preparing-for-a-picnic
+  stem_md: Choose the connected picnic exchange with the correct indefinite and definite
+    plural choices.
+  options:
+  - id: reversed
+    text: 'A: Vi pakker posene, koppene, eplene, glassene og bøkene. B: Nå ligger
+      poser, kopper, epler, glass og bøker i sekken.'
+    correct: false
+    why: The first list uses definite forms before the items are introduced, and the
+      second loses the known reference.
+  - id: correct
+    text: 'A: Vi pakker poser, kopper, epler, glass og bøker. B: Nå ligger posene,
+      koppene, eplene, glassene og bøkene i sekken.'
+    correct: true
+    why: The first list introduces unspecified quantities; the second list refers
+      to the known items.
+  - id: no_reference
+    text: 'A: Vi pakker poser, kopper, epler, glass og bøker. B: Nå ligger poser,
+      kopper, epler, glass og bøker i sekken.'
+    correct: false
+    why: The second list does not mark the items as the known group from the first
+      list.
+  - id: mixed_first
+    text: 'A: Vi pakker poser, koppene, epler, glass og bøker. B: Nå ligger posene,
+      koppene, eplene, glassene og bøkene i sekken.'
+    correct: false
+    why: koppene is definite even though the first list introduces the cups.
+- handle: form_plurals_in_picnic_inventory
+  op: recall_fill
+  objective: obj-noun-plurals-01
+  bloom: apply
+  prompt_md: Complete the picnic inventory. The visible singular noun is supplied
+    on each line; use the context to choose the required indefinite or definite plural.
+    This tests regular, unstressed-e, zero-ending, and irregular forms.
+  derived_from:
+  - section_id: cumulative-transfer-preparing-for-a-picnic
+  audio_target: "Til pikniken pakker vi flere poser. De samme posene ligger i sekken. Vi tar med flere kopper. De samme koppene ligger ved maten. Vi pakker fem glass. De samme glassene er rene. Til pikniken tar vi med flere bøker. De samme bøkene ligger i sekken."
+  segments:
+  - text_md: 'Singular: en pose. Til pikniken pakker vi flere '
+  - blank_id: picnic-pose-indef
+    options:
+    - poser
+    - posene
+    answer_index: 0
+  - text_md: .
+  - text_md: ' De samme '
+  - blank_id: picnic-pose-def
+    options:
+    - poser
+    - posene
+    answer_index: 1
+  - text_md: ' ligger i sekken.'
+  - text_md: ' Singular: en kopp. Vi tar med flere '
+  - blank_id: picnic-kopp-indef
+    options:
+    - kopper
+    - koppene
+    answer_index: 0
+  - text_md: .
+  - text_md: ' De samme '
+  - blank_id: picnic-kopp-def
+    options:
+    - kopper
+    - koppene
+    answer_index: 1
+  - text_md: ' ligger ved maten.'
+  - text_md: ' Singular: et glass. Vi pakker fem '
+  - blank_id: picnic-glass-indef
+    options:
+    - glass
+    - glassene
+    answer_index: 0
+  - text_md: .
+  - text_md: ' De samme '
+  - blank_id: picnic-glass-def
+    options:
+    - glass
+    - glassene
+    answer_index: 1
+  - text_md: ' er rene.'
+  - text_md: ' Singular: ei/en bok. Til pikniken tar vi med flere '
+  - blank_id: picnic-book-indef
+    options:
+    - bøker
+    - bøkene
+    answer_index: 0
+  - text_md: .
+  - text_md: ' De samme '
+  - blank_id: picnic-book-def
+    options:
+    - bøker
+    - bøkene
+    answer_index: 1
+  - text_md: ' ligger i sekken.'

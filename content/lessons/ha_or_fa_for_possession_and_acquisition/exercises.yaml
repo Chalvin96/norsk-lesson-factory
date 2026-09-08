@@ -1,0 +1,230 @@
+- handle: checkpoint_identify_current_situation
+  op: recall_fill
+  objective: obj-ha-or-fa-for-possession-and-acquisition-01
+  bloom: apply
+  prompt_md: Use the office facts to complete the Norwegian restatements. Nora possesses
+    the key, Henrik does not possess the key, and Fatima possesses the access card.
+    Choose the supplied form that matches each current situation.
+  derived_from:
+  - section_id: checkpoint-identify-current-situation
+  audio_target: "Nora har nøkkelen. Henrik har ikke nøkkelen. Fatima har adgangskortet."
+  segments:
+  - text_md: 'Nora '
+  - blank_id: nora-key-state
+    options:
+    - har
+    - har ikke
+    answer_index: 0
+  - text_md: ' nøkkelen. Henrik '
+  - blank_id: henrik-key-state
+    options:
+    - har
+    - har ikke
+    answer_index: 1
+  - text_md: ' nøkkelen. Fatima '
+  - blank_id: fatima-card-state
+    options:
+    - har
+    - har ikke
+    answer_index: 0
+  - text_md: ' adgangskortet.'
+- handle: checkpoint_notice_transfer
+  op: recall_fill
+  objective: obj-ha-or-fa-for-possession-and-acquisition-01
+  bloom: apply
+  prompt_md: Complete each Norwegian sentence about an office transfer. Fatima hands
+    Nora a key, a colleague hands Nora a document, and an employee delivers a new
+    chair. Use the form that describes receiving rather than resulting possession.
+  explanation_md: "«få» presents the moment of receiving or obtaining something; «ha» presents the resulting state of possession."
+  derived_from:
+  - section_id: checkpoint-notice-transfer
+  audio_target: "Nora får en nøkkel. Nora får et dokument. Nora får en ny stol."
+  segments:
+  - text_md: 'Nora '
+  - blank_id: key-transfer
+    options:
+    - får
+    - har
+    answer_index: 0
+  - text_md: ' en nøkkel. Nora '
+  - blank_id: document-transfer
+    options:
+    - får
+    - har
+    answer_index: 0
+  - text_md: ' et dokument. Nora '
+  - blank_id: chair-transfer
+    options:
+    - får
+    - har
+    answer_index: 0
+  - text_md: ' en ny stol.'
+- handle: checkpoint_switch_viewpoint
+  op: recall_fill
+  objective: obj-ha-or-fa-for-possession-and-acquisition-01
+  bloom: apply
+  prompt_md: For each situation, complete the first receiving frame and the second
+    resulting-possession frame. Keep each object and basic fact unchanged while shifting
+    viewpoint from receiving to possession.
+  derived_from:
+  - section_id: checkpoint-switch-viewpoint
+  audio_target: "Nora får penger. Etterpå har hun penger. Nora får et hotellrom. Etterpå har hun et hotellrom. Nora får rapporten. Etterpå har hun rapporten. Nora får en gave. Etterpå har hun en gave. Nora får en sitteplass. Etterpå har hun en sitteplass."
+  segments:
+  - text_md: 'Nora '
+  - blank_id: money-receiving
+    options:
+    - får
+    - har
+    answer_index: 0
+  - text_md: ' penger. Etterpå '
+  - blank_id: money-possession
+    options:
+    - har
+    - får
+    answer_index: 0
+  - text_md: ' hun penger. Nora '
+  - blank_id: room-receiving
+    options:
+    - får
+    - har
+    answer_index: 0
+  - text_md: ' et hotellrom. Etterpå '
+  - blank_id: room-possession
+    options:
+    - har
+    - får
+    answer_index: 0
+  - text_md: ' hun et hotellrom. Nora '
+  - blank_id: report-receiving
+    options:
+    - får
+    - har
+    answer_index: 0
+  - text_md: ' rapporten. Etterpå '
+  - blank_id: report-possession
+    options:
+    - har
+    - får
+    answer_index: 0
+  - text_md: ' hun rapporten. Nora '
+  - blank_id: gift-receiving
+    options:
+    - får
+    - har
+    answer_index: 0
+  - text_md: ' en gave. Etterpå '
+  - blank_id: gift-possession
+    options:
+    - har
+    - får
+    answer_index: 0
+  - text_md: ' hun en gave. Nora '
+  - blank_id: seat-receiving
+    options:
+    - får
+    - har
+    answer_index: 0
+  - text_md: ' en sitteplass. Etterpå '
+  - blank_id: seat-possession
+    options:
+    - har
+    - får
+    answer_index: 0
+  - text_md: ' hun en sitteplass.'
+- handle: practice_follow_object_through_a_day
+  op: write
+  objective: obj-ha-or-fa-for-possession-and-acquisition-01
+  bloom: apply
+  prompt_md: 'Write a 4–5 sentence present-tense sequence in Norwegian about Elias
+    and one hotel room key. Include these stages: in the morning Elias does not have
+    the key; at reception he receives it; later the key is in his jacket pocket; in
+    the evening state whether his travel companion has the key. Use har ikke or har
+    for possession and får for the receiving event. Keep the same key and situation
+    throughout.'
+  derived_from:
+  - section_id: practice-follow-object-through-a-day
+  response_language: 'no'
+  min_words: 25
+  max_words: 55
+  judge_prompt: Check the Norwegian sequence against the task and report evidence
+    for each criterion. Accept natural Bokmål wording when it preserves the required
+    forms, meaning, and timeline.
+  criteria:
+  - id: possession-states
+    instruction: Uses har or har ikke for Elias's possession or non-possession at
+      the required stages.
+  - id: receiving-event
+    instruction: Uses får for the moment when Elias receives the room key at reception.
+  - id: consistent-object
+    instruction: Keeps the same room key, people, and timeline consistent throughout.
+- handle: practice_ask_the_useful_question
+  op: write
+  objective: obj-ha-or-fa-for-possession-and-acquisition-01
+  bloom: apply
+  prompt_md: Write three short question-and-reply pairs in Norwegian about Nora's
+    computer, parking permit, and copy of the contract. Use all three items. Include
+    a pair about current possession and a pair about receiving or acquiring an item.
+    Start the possession question with Har Nora ...? and the receiving question with
+    Får Nora ...?; give a short reply to each question that keeps the same viewpoint.
+  derived_from:
+  - section_id: practice-ask-the-useful-question
+  response_language: 'no'
+  min_words: 20
+  max_words: 60
+  judge_prompt: Check the questions and replies against the task and report evidence
+    for each criterion. Accept natural Bokmål wording and equivalent item phrases
+    when the required viewpoint and verb distinction remain clear.
+  criteria:
+  - id: possession-question
+    instruction: Includes a question beginning exactly with Har Nora ...? that asks
+      about current possession.
+  - id: receiving-question
+    instruction: Includes a question beginning exactly with Får Nora ...? that asks
+      about receiving or acquiring an item.
+  - id: viewpoint-replies
+    instruction: Gives a short reply to each question while preserving the distinction
+      between possession and receiving.
+- handle: practice_repair_unclear_messages
+  op: find_fix
+  objective: obj-ha-or-fa-for-possession-and-acquisition-01
+  bloom: analyze
+  prompt_md: 'Select the verb that does not fit the receiving situation.'
+  derived_from:
+  - section_id: practice-repair-unclear-messages
+  tokens:
+  - token_id: tok-nora
+    text: Nora
+  - token_id: tok-verb
+    text: har
+  - token_id: tok-document
+    text: dokumentet
+  - token_id: tok-period
+    text: .
+  error_token_id: tok-verb
+  feedback: Replace har with får. Henrik is handing Nora the document now, so the
+    corrected sentence describes acquisition rather than possession.
+- handle: retrieval_and_review
+  op: write
+  objective: obj-ha-or-fa-for-possession-and-acquisition-01
+  bloom: apply
+  prompt_md: First write one or two Norwegian sentences explaining the difference between
+    ha and få. Then write a short present-tense sequence in Norwegian about one new
+    everyday object in one consistent situation. Use the exact viewpoint order har
+    ikke, then får, then har. Keep the object and situation unchanged.
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  min_words: 25
+  max_words: 60
+  judge_prompt: Check the Norwegian explanation and the Norwegian sequence separately.
+    Report evidence for each criterion. Accept natural wording and equivalent new
+    objects when the meaning and required verb order are preserved.
+  criteria:
+  - id: meaning-explanation
+    instruction: The Norwegian explanation distinguishes possession from receiving or
+      acquiring.
+  - id: consistent-sequence
+    instruction: The Norwegian sequence keeps one object and situation consistent.
+  - id: viewpoint-order
+    instruction: The Norwegian sequence uses har ikke first, får next, and har finally,
+      with each verb matching its situation.

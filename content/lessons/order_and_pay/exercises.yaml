@@ -1,0 +1,221 @@
+- handle: making_first_request
+  op: write
+  objective: obj-order-and-pay-01
+  bloom: apply
+  prompt_md: 'Choose two different café items from «et rundstykke med ost», «en kopp
+    te», and «en flaske vann». Write two complete Norwegian requests that order both
+    chosen items. Begin the first request with «Jeg vil gjerne ha» and the second with
+    «Kan jeg få».'
+  derived_from:
+  - section_id: choosing-an-item
+  response_language: 'no'
+  judge_prompt: Accept any two distinct items from «et rundstykke med ost», «en kopp
+    te», and «en flaske vann». Require complete orders, the exact expressions «Jeg
+    vil gjerne ha» and «Kan jeg få», and the same two items in both sentences. Reject
+    bare item names or untaught substitutions.
+  criteria:
+  - id: first-order
+    instruction: Uses «Jeg vil gjerne ha» in a complete order naming two different
+      taught café items.
+  - id: second-order
+    instruction: Uses «Kan jeg få» in a complete order naming the same two items as
+      the first order.
+- handle: responding_to_choice
+  op: write
+  objective: obj-order-and-pay-01
+  bloom: apply
+  prompt_md: Write three Norwegian responses in this café sequence. Nora asks «Vil
+    du ha liten eller stor kaffe?»; Sara chooses one size. Nora then asks «Vil du
+    ha melk i kaffen?»; Sara chooses yes or no. Give a short response to each question,
+    then write one complete order that combines both choices.
+  derived_from:
+  - section_id: choosing-between-options
+  response_language: 'no'
+  judge_prompt: Accept either «Liten, takk.» or «Stor, takk.» for the size, and either
+    «Ja takk.» or «Nei takk.» for the milk choice. Bare «Liten», «Stor», «Ja», or
+    «Nei» is acceptable only when the choice is unambiguous and the complete order
+    is natural. The final order must use the selected size and «med melk» or «uten
+    melk»; accept «Jeg vil gjerne ha», «Kan jeg få», or «Jeg tar». Reject any order
+    that contradicts either earlier choice.
+  criteria:
+  - id: size-response
+    instruction: Gives a short response selecting exactly one size.
+  - id: milk-response
+    instruction: Gives a short response selecting exactly one milk option.
+  - id: combined-order
+    instruction: Gives a complete ordering phrase that preserves both earlier choices
+      with «med melk» or «uten melk».
+- handle: changing_quantities
+  op: write
+  objective: obj-order-and-pay-01
+  bloom: apply
+  prompt_md: 'Use Emil’s starting order: «Jeg tar en kaffe og to flasker vann.»
+    Write one new complete Norwegian order beginning with «Jeg tar». Change the order
+    to two coffees and one bottle of water, adjusting the noun forms. You may name
+    either item first.'
+  derived_from:
+  - section_id: saying-how-many
+  response_language: 'no'
+  judge_prompt: Require «Jeg tar» with both taught items. The coffee must change to
+    a taught plural form, either «to kaffer» or «to kopper kaffe», and the water must
+    change to «en flaske vann». Accept either item order if both quantities and noun
+    forms are clear. Reject «en kaffe» or «to flasker vann», since those quantities
+    were not changed.
+  criteria:
+  - id: order-frame
+    instruction: Uses «Jeg tar» in one complete order containing coffee and water
+      bottles.
+  - id: quantity-forms
+    instruction: Specifies exactly two coffees and one bottle of water, using «to kaffer»
+      or «to kopper kaffe» and «en flaske vann».
+- handle: item_price_or_total
+  op: write
+  objective: obj-order-and-pay-01
+  bloom: apply
+  prompt_md: 'Write two Norwegian price questions for this sequence: Sara first asks
+    the price of one cinnamon bun; after Emil adds food, she asks for the whole order.
+    Name the item in the first question and ask for the total in the second.'
+  derived_from:
+  - section_id: checking-the-price
+  response_language: 'no'
+  judge_prompt: Accept «Hva koster en kanelbolle?» as the first question, and also
+    accept the natural definite form «Hva koster kanelbollen?». Accept «Hvor mye koster
+    det?» «Hvor mye koster det til sammen?» or «Hva blir det til sammen?» as the second
+    question. Require the named cinnamon bun first and a whole-order reference with
+    «det» or «til sammen» second.
+  criteria:
+  - id: named-item-price
+    instruction: Names the cinnamon bun in the first price question.
+  - id: whole-order-total
+    instruction: Uses «det» or «til sammen» in the second question to ask about the
+      whole order.
+- handle: confirming_payment
+  op: write
+  objective: obj-order-and-pay-01
+  bloom: apply
+  prompt_md: Write three Norwegian lines for this sequence. Nora asks «Hvordan vil du betale?». First, answer Nora’s question
+    about payment with a short reply. Next, expand the same method into a complete
+    sentence. Finally, ask whether the two people can pay together. Choose card or
+    cash.
+  derived_from:
+  - section_id: checking-how-to-pay
+  response_language: 'no'
+  judge_prompt: Accept «Med kort, takk.» followed by «Jeg betaler med kort.» or «Kontant,
+    takk.» followed by «Jeg betaler kontant.». The complete sentence must preserve
+    the selected method, and the final question must be «Kan vi betale sammen?». Do
+    not accept «av kort» or a response that changes payment method between lines.
+  criteria:
+  - id: short-payment-reply
+    instruction: Gives a short reply naming either «med kort» or «kontant».
+  - id: complete-payment-sentence
+    instruction: Expands the same payment method into a complete sentence.
+  - id: shared-payment-question
+    instruction: Asks whether they can pay together with the appropriate shared-payment
+      question.
+- handle: guided_transaction
+  op: write
+  objective: obj-order-and-pay-01
+  bloom: apply
+  prompt_md: 'Complete the customer''s five lines in this guided café exchange. Write
+    only the customer''s lines, in order, after each supplied server line. 1. Server:
+    «Hei! Hva vil du ha?» Order two coffees and one cinnamon bun with «Jeg tar».
+    2. Server: «Vil du ha melk i kaffen?» Choose no milk. 3. Server: «Er det alt?»
+    Say that it is everything and ask for the total. 4. Server: «Det blir 96 kroner.
+    Hvordan vil du betale?» Answer that you will pay by card. 5. Server: «Vil du ha
+    kvitteringen?» Accept the receipt and close politely.'
+  derived_from:
+  - section_id: guided-transaction
+  response_language: 'no'
+  min_words: 17
+  max_words: 45
+  judge_prompt: Check the five customer turns separately and verify that they remain
+    in the supplied order. Accept natural punctuation and capitalization variants,
+    but require the taught meanings and forms for each turn.
+  criteria:
+  - id: guided-order
+    instruction: Orders exactly two coffees and one cinnamon bun with «Jeg tar», using
+      a taught form such as «to kopper kaffe» or «to kaffer».
+  - id: guided-choice
+    instruction: Chooses no milk with a taught form such as «Nei takk» or «uten melk».
+  - id: guided-total
+    instruction: Says that the order is complete and asks for the total after «Er det
+      alt?».
+  - id: guided-payment
+    instruction: Answers the supplied price question by saying that the payment will
+      be by card, using «Med kort, takk» or «Jeg betaler med kort».
+  - id: guided-close
+    instruction: Accepts the receipt and closes politely after the payment turn, using
+      taught forms such as «Ja takk» and «Takk, ha det».
+- handle: integrated_transaction
+  op: write
+  objective: obj-order-and-pay-01
+  bloom: apply
+  prompt_md: 'Create an original short Norwegian café exchange between a customer
+    and a server. Follow this sequence: order a drink and a food item, make one choice
+    about size, type, or an addition, include a clear quantity, ask for the total,
+    check or state the payment method, and close the transaction politely. You may
+    order kaffe or te plus a kanelbolle or et rundstykke; use «liten» or «stor», «med
+    melk» or «uten melk», or «med eller uten kullsyre» for the choice. Use an original
+    combination and wording.'
+  derived_from:
+  - section_id: integrated-practice
+  response_language: 'no'
+  judge_prompt: Require an identifiable customer-server exchange in the requested
+    sequence. The order must contain one taught drink, one taught food item, a clear
+    quantity for each, and at least one taught choice such as «liten» or «stor», «kaffe»
+    or «te», «med melk» or «uten melk», or «med eller uten kullsyre». Accept taught
+    ordering frames «Jeg vil gjerne ha», «Kan jeg få», or «Jeg tar». After the order,
+    require a total question such as «Hvor mye koster det til sammen?» or «Hva blir
+    det til sammen?» and a taught payment form such as «Kan jeg betale med kort?»,
+    «Kan jeg betale kontant?», «Jeg betaler med kort.», «Jeg betaler kontant.», «Med
+    kort, takk.», or «Kontant, takk.». Require a polite closing with taught «Takk»
+    after payment, not an ending immediately after the price. Reject a complete copied
+    example sentence used as the whole transaction.
+  criteria:
+  - id: order-choice-quantity
+    instruction: Orders a drink and a food item, makes one taught size, type, or addition
+      choice, and makes quantity clear.
+  - id: total-and-payment
+    instruction: Asks for the total and checks or states how to pay after the order.
+  - id: polite-close
+    instruction: Ends the exchange clearly and politely after payment rather than
+      stopping after the price.
+- handle: quick_retrieval_review
+  op: write
+  objective: obj-order-and-pay-01
+  bloom: apply
+  prompt_md: 'Write one Norwegian expression for each stage: ordering an item with
+    «Jeg vil gjerne ha», «Kan jeg få», or «Jeg tar»; specifying more than one with
+    a number and a plural item; asking for the total; asking to pay by card; and closing
+    politely with «Takk» after payment. Then use all five expressions in one original
+    short café transaction. For the order, choose among kanelboller, rundstykker,
+    flasker vann, kopper kaffe, and kaffe.'
+  derived_from:
+  - section_id: quick-retrieval-review
+  response_language: 'no'
+  judge_prompt: Accept «Jeg vil gjerne ha», «Kan jeg få», or «Jeg tar» applied to
+    a taught item for ordering. Accept a taught plural quantity expression such as
+    «to kanelboller», «tre rundstykker», «to flasker vann», «to kopper kaffe», or
+    «to kaffer». Accept «Hvor mye koster det?», «Hvor mye koster det til sammen?»,
+    or «Hva blir det til sammen?» for the total, and «Kan jeg betale med kort?» for
+    card payment. For completion, accept the taught polite closing «Takk» used after
+    payment; do not require an untaught phrase such as «Det var alt». The final transaction
+    must use all five retrieved expressions coherently, in stage order, with a new
+    combination of taught items and quantities rather than a copied complete lesson
+    example.
+  criteria:
+  - id: ordering-expression
+    instruction: Provides one taught Norwegian expression for ordering an item.
+  - id: plural-quantity-expression
+    instruction: Provides one taught Norwegian expression specifying more than one
+      with a clear plural form.
+  - id: total-expression
+    instruction: Provides one taught Norwegian expression asking for the total.
+  - id: card-payment-expression
+    instruction: Provides the taught expression asking to pay by card.
+  - id: completion-expression
+    instruction: Provides a taught polite closing signal for a complete order, using
+      «Takk» after payment.
+  - id: transaction-use
+    instruction: Uses all five expressions in one coherent short transaction with
+      a new taught-item combination.

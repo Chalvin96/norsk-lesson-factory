@@ -1,0 +1,181 @@
+- handle: noun_focus_in_the_cabin
+  op: recall_fill
+  objective: obj-exclamatives-with-for-and-sa-01
+  bloom: understand
+  prompt_md: Complete each cabin reaction. Choose the marker that makes each reaction
+    noun-focused, with the reaction organized around a person, place, or thing.
+  explanation_md: "Use «for en/et/noen» when the noun phrase is the focus. Use «så + adjective/adverb» for degree, and keep subject-before-verb statement order in a full exclamation."
+  derived_from:
+  - section_id: noun-focused-exclamations-with-for
+  audio_target: "For en fin leilighet! For et stort kjøkken! For noen vakre blomster!"
+  segments:
+  - text_md: 'Item 1: '
+  - blank_id: cabin-noun-marker-1
+    options:
+    - For
+    - Så
+    answer_index: 0
+  - text_md: ' en fin leilighet! 2. '
+  - blank_id: cabin-noun-marker-2
+    options:
+    - Så
+    - For
+    answer_index: 1
+  - text_md: ' et stort kjøkken! 3. '
+  - blank_id: cabin-noun-marker-3
+    options:
+    - For
+    - Så
+    answer_index: 0
+  - text_md: ' noen vakre blomster!'
+- handle: shift_the_focus
+  op: recall_fill
+  objective: obj-exclamatives-with-for-and-sa-01
+  bloom: apply
+  prompt_md: Complete two reactions to the same evening. Focus on the named evening
+    first, then on the degree of its quality. Choose the marker that matches each
+    focus.
+  derived_from:
+  - section_id: for-sa-focus-contrast
+  audio_target: "For en vakker kveld! Så vakker kvelden er!"
+  segments:
+  - text_md: 'Same quiet evening — noun focus: '
+  - blank_id: shift-noun-marker
+    options:
+    - Så
+    - For
+    answer_index: 1
+  - text_md: ' en vakker kveld! Same evening — degree focus: '
+  - blank_id: shift-degree-marker
+    options:
+    - Så
+    - For
+    answer_index: 0
+  - text_md: ' vakker kvelden er!'
+- handle: exclamation_not_question
+  op: build
+  objective: obj-exclamatives-with-for-and-sa-01
+  bloom: apply
+  prompt_md: Build the complete Norwegian så exclamation. Keep the subject before
+    the verb so the response is an exclamation, not a question.
+  derived_from:
+  - section_id: exclamations-keep-statement-word-order
+  tokens:
+  - token_id: tok-2
+    text: vakker
+  - token_id: tok-3
+    text: utsikten
+  - token_id: tok-4
+    text: er!
+  - token_id: tok-1
+    text: Så
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+- handle: repair_mixed_reactions
+  op: find_fix
+  objective: obj-exclamatives-with-for-and-sa-01
+  bloom: analyze
+  prompt_md: Select the one token that is wrong/needs changing.
+  derived_from:
+  - section_id: avoid-mixing-the-two-patterns
+  tokens:
+  - token_id: tok-marker
+    text: Så
+  - token_id: tok-article
+    text: en
+  - token_id: tok-adjective
+    text: søt
+  - token_id: tok-noun
+    text: hund!
+  error_token_id: tok-marker
+  feedback: Replace Så with For; the repaired reaction is For en søt hund!.
+- handle: complete_the_cabin_conversation
+  op: recall_fill
+  objective: obj-exclamatives-with-for-and-sa-01
+  bloom: apply
+  prompt_md: Complete two new turns in Ingrid’s cabin conversation. Maja admires a
+    named view; Elias emphasizes the degree of its beauty. Select the complete Norwegian
+    exclamation with the intended marker and statement word order.
+  derived_from:
+  - section_id: back-at-the-cabin
+  audio_target: "For en vakker utsikt vi hadde! Så fin utsikten er!"
+  segments:
+  - text_md: 'Maja: '
+  - blank_id: cabin-turn-maja
+    options:
+    - Så vakker utsikten er!
+    - For en vakker utsikt hadde vi!
+    - For en vakker utsikt vi hadde!
+    answer_index: 2
+  - text_md: ' Then Elias: '
+  - blank_id: cabin-turn-elias
+    options:
+    - Så fin utsikten er!
+    - Så fin er utsikten!
+    - For en fin utsikt!
+    answer_index: 0
+- handle: birthday_party_reactions
+  op: recall_fill
+  objective: obj-exclamatives-with-for-and-sa-01
+  bloom: apply
+  prompt_md: Complete controlled reactions for Amir and Nora at a birthday party.
+    For each meaning cue, select the complete Norwegian exclamation. Use for for noun
+    focus and så for degree focus, while keeping the subject before the verb in full
+    clauses.
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+  audio_target: "For en vakker sang de synger! Så vakkert de synger! For et godt måltid vi har laget! Så glade de er!"
+  segments:
+  - text_md: 'Noun focus — a named song at the party: '
+  - blank_id: party-song-noun
+    options:
+    - Så vakker sangen er!
+    - For en vakker sang de synger!
+    - Så vakker er sangen!
+    answer_index: 1
+  - text_md: ' Degree focus — how beautifully they sing: '
+  - blank_id: party-song-degree
+    options:
+    - For en vakker sang de synger!
+    - Så vakkert synger de!
+    - Så vakkert de synger!
+    answer_index: 2
+  - text_md: ' Noun focus — a good meal at the party: '
+  - blank_id: party-meal-noun
+    options:
+    - For et godt måltid vi har laget!
+    - Så godt måltidet er!
+    - For et godt måltid har vi laget!
+    answer_index: 0
+  - text_md: ' Degree focus — how happy the guests are: '
+  - blank_id: party-guests-degree
+    options:
+    - For noen glade gjester!
+    - Så glade de er!
+    - Så glade er de!
+    answer_index: 1
+- handle: two_ways_to_react
+  op: write
+  objective: obj-exclamatives-with-for-and-sa-01
+  bloom: apply
+  prompt_md: 'Choose an everyday scene at a workplace, shop, or bus stop. Write exactly
+    two Norwegian exclamations about it: one
+    noun-focused reaction about a person or thing using for, and one degree-focused
+    reaction using så. In any full clause, keep the subject before the verb; do not
+    use question inversion.'
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Treat any question inversion as failing the word-order criterion.
+  criteria:
+  - id: noun-focused-for
+    instruction: Uses one noun-focused exclamation with for for a person or thing.
+  - id: degree-focused-sa
+    instruction: Uses one degree-focused exclamation with så.
+  - id: no-question-inversion
+    instruction: Keeps the subject before the verb in any full clause and does not
+      use question inversion.

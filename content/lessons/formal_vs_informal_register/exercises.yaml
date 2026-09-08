@@ -1,0 +1,230 @@
+- handle: notice_relationship
+  op: write
+  objective: obj-formal-vs-informal-register-01
+  bloom: apply
+  derived_from:
+  - section_id: register-situation
+  prompt_md: 'Read these source excerpts from the professional room-reservation situation.
+    Draft excerpt: Hei Eirik! Vi må bytte rom! Send meg en oversikt over ledige rom
+    i morgen. Revised excerpt: Hei Eirik, vi ser ut til å ha behov for et større rom.
+    Kunne du sendt meg en oversikt over eventuelle større rom som er ledige? In Norwegian,
+    identify exact expressions that reveal the relationship between Nora and Eirik,
+    the inconvenience involved, and the purpose of the message. Then explain which
+    changes make the revised version sound cooperative rather than commanding.'
+  response_language: 'no'
+  judge_prompt: Evaluate each criterion separately. Accept natural Bokmål wording
+    and well-supported equivalent expressions, but require references to the supplied
+    excerpts rather than only general claims about formal language. The explanation
+    must connect the revisions to a cooperative rather than commanding tone.
+  criteria:
+  - id: relationship-inconvenience-purpose
+    instruction: Identifies expressions showing the professional relationship, the
+      inconvenience involved, and the purpose of the message.
+  - id: cooperative-revision-explanation
+    instruction: Explains how the revised greeting, wording, and request form make
+      the message cooperative rather than commanding.
+- handle: match_greeting_to_context
+  op: write
+  objective: obj-formal-vs-informal-register-01
+  bloom: apply
+  derived_from:
+  - section_id: greetings-relationship
+  prompt_md: 'Write three short Norwegian openings for the same practical message:
+    1. to a close colleague 2. to an unfamiliar administrative contact 3. to a group
+    attending a professional event Keep the core purpose identical in all three: the
+    meeting on Thursday needs a larger room. Suitable forms include «Hei Eirik»,
+    «Hei alle sammen», and «Til kundeservice». Make the relationship
+    and genre clear without making the professional versions unnaturally ceremonial.'
+  response_language: 'no'
+  judge_prompt: Evaluate each opening and the set as a whole. Accept natural Bokmål
+    variants and different suitable greetings when the audience, genre, and unchanged
+    core purpose are clear. Do not require ceremonial wording for the administrative
+    contact.
+  criteria:
+  - id: natural-bokmal-openings
+    instruction: Uses natural Bokmål in all three openings.
+  - id: differentiated-relationships
+    instruction: Signals the different relationships and genres through the openings.
+  - id: unchanged-purpose
+    instruction: Keeps the practical purpose of the Thursday room issue unchanged
+      in all three versions.
+  - id: non-ceremonial-professional-tone
+    instruction: Avoids making the professional versions unnaturally ceremonial.
+- handle: keep_du_adjust_tone
+  op: write
+  objective: obj-formal-vs-informal-register-01
+  bloom: apply
+  derived_from:
+  - section_id: du-professional
+  prompt_md: 'Revise this overly direct workplace message as a short professional
+    message in Norwegian: Hei! Kan du sende meg den nyeste versjonen nå! Keep the
+    pronoun du and do not replace it with De. Change the request form and sentence
+    structure, and add only the context needed to make the message professional. The
+    version is needed before the meeting.'
+  response_language: 'no'
+  judge_prompt: Accept any natural Bokmål revision that retains du, does not replace
+    it with De, makes the request less abrupt, and adds only relevant necessary context.
+    Do not require one exact modal expression, but require a visible improvement in
+    request form, explanation, and sentence structure.
+  criteria:
+  - id: retains-du
+    instruction: Retains the Norwegian pronoun du.
+  - id: improves-request-tone
+    instruction: Improves the tone through a suitable request form, explanation, and
+      sentence structure.
+  - id: necessary-context-only
+    instruction: Adds only context needed to make the workplace message professional.
+- handle: build_professional_request
+  op: write
+  objective: obj-formal-vs-informal-register-01
+  bloom: apply
+  derived_from:
+  - section_id: directness-requests
+  prompt_md: 'Write one concise professional request in Norwegian to Eirik. Situation:
+    Several more people have registered than expected for Thursday''s meeting. The
+    current room is too small. Ask Eirik to check or send available larger-room options.
+    You need an answer by klokka fire because access cards must be ordered before
+    then. Make the action unmistakable, include the deadline and its reason, and use
+    a cooperative request form rather than a command. Formulate your own wording instead
+    of copying a complete lesson sentence.'
+  response_language: 'no'
+  judge_prompt: Accept natural Bokmål variants and different request forms when the
+    action, deadline, and reason are explicit. Require a concise message with a cooperative
+    tone that is neither commanding nor excessively hesitant.
+  criteria:
+  - id: unmistakable-action
+    instruction: Makes the requested room-related action unmistakable.
+  - id: realistic-deadline
+    instruction: Includes a realistic deadline.
+  - id: deadline-reason
+    instruction: Explains why the deadline matters.
+  - id: cooperative-tone
+    instruction: Presents Nora as cooperative rather than hesitant or forceful.
+  - id: concise-message
+    instruction: Keeps the professional request concise.
+- handle: change_genre_not_meaning
+  op: write
+  objective: obj-formal-vs-informal-register-01
+  bloom: apply
+  derived_from:
+  - section_id: sentence-style-flow
+  prompt_md: 'Write two Norwegian texts about the same room-change situation. First,
+    write a brief internal chat message to a close colleague who already knows about
+    the meeting. Then write a complete email request to an unfamiliar external building
+    coordinator. Preserve these facts and the same deadline in both texts: more people
+    registered than expected, the room booked for Thursday is too small, a larger
+    available room is needed, and an answer is needed by klokka fire so access cards
+    can be ordered. Make the chat efficient and conversational. Make the email self-contained,
+    courteous, and clear.'
+  response_language: 'no'
+  judge_prompt: Evaluate the two texts together. Accept natural Bokmål variants and
+    different wording when all facts and the deadline are preserved. The chat may
+    rely on shared context, while the email must provide enough context to stand alone
+    and must remain courteous and clear.
+  criteria:
+  - id: preserved-facts-and-deadline
+    instruction: Preserves the same room-change facts and deadline in both texts.
+  - id: efficient-conversational-chat
+    instruction: Makes the internal chat brief, efficient, and conversational.
+  - id: self-contained-courteous-email
+    instruction: Makes the external email self-contained, courteous, and clear.
+- handle: control_conversational_markers
+  op: write
+  objective: obj-formal-vs-informal-register-01
+  bloom: apply
+  derived_from:
+  - section_id: conversational-markers
+  prompt_md: 'Read this short exchange. Nora: Du kan bare flytte møtet til et annet
+    rom. Jonas: Vi trenger jo plass til alle deltakerne. Nora: Det blir vel litt trangt
+    med førti personer. Jonas: Vi har fått flere påmeldinger enn forventet. Vi må
+    altså bytte rom. Nora: Det største rommet er faktisk ledig. In Norwegian, explain
+    the interpersonal effect of bare, jo, vel, altså, and faktisk in this exchange.
+    Then rewrite the essential information as a neutral professional update to Eirik.
+    Preserve the essential facts and remove or retain markers according to the new
+    audience and purpose.'
+  response_language: 'no'
+  judge_prompt: 'Evaluate each marker explanation and the professional update separately.
+    Accept reasonable contextual nuances when they are tied to the supplied lines:
+    bare may sound casual or minimizing, jo may signal shared understanding or reproach,
+    vel may make a statement tentative, altså may mark a conclusion, and faktisk may
+    highlight a contrast or unexpected fact. Require the update to preserve the essential
+    facts and use a neutral professional register.'
+  criteria:
+  - id: five-marker-effects
+    instruction: Identifies the interpersonal effect of bare, jo, vel, altså, and
+      faktisk in the exchange.
+  - id: preserved-essential-facts
+    instruction: Preserves the essential facts in the rewritten update.
+  - id: audience-based-marker-control
+    instruction: Removes or retains conversational markers according to the new audience
+      and purpose.
+  - id: neutral-professional-update
+    instruction: Produces a neutral professional update to Eirik.
+- handle: integrated_three_tones
+  op: write
+  objective: obj-formal-vs-informal-register-01
+  bloom: apply
+  derived_from:
+  - section_id: integrated-practice
+  prompt_md: 'Write three separate Norwegian texts about one event: The Thursday meeting
+    has attracted more participants than expected. The original room is too small,
+    a larger room is needed, and the room has been changed. 1. Write a concise internal
+    chat message to a close colleague who already knows about the meeting. 2. Write
+    a complete email request to an unfamiliar building coordinator about the room
+    change. 3. Write a neutral update for all meeting participants after the room
+    has been changed. Preserve the same event facts. Make each version appropriate
+    to its audience, genre, and purpose. Control the greeting, pronouns, directness,
+    sentence completeness, conversational markers, and closing deliberately; include
+    a greeting or closing when that genre calls for one. Let the chat depend appropriately
+    on shared context, keep the professional request clear without sounding commanding,
+    and avoid unnecessary conversational detail in the participant update.'
+  response_language: 'no'
+  judge_prompt: Evaluate all three texts against every criterion. Accept natural Bokmål
+    variants and deliberate omission of conversational markers where appropriate.
+    Require clear differences in audience, genre, purpose, sentence style, directness,
+    and level of shared context while preserving the event facts.
+  criteria:
+  - id: preserved-event-facts
+    instruction: Preserves the same event facts across the three versions.
+  - id: audience-genre-purpose
+    instruction: Makes each version clearly appropriate to its audience, genre, and
+      purpose.
+  - id: integrated-register-control
+    instruction: Uses appropriate greetings, pronouns, directness, sentence style,
+      conversational markers, and closings.
+  - id: shared-context-chat
+    instruction: Makes the internal chat appropriately dependent on shared context.
+  - id: clear-professional-request
+    instruction: Makes the building-coordinator request clear without sounding commanding.
+  - id: neutral-participant-update
+    instruction: Avoids unnecessary conversational detail in the participant update.
+- handle: short_retrieval_review
+  op: write
+  objective: obj-formal-vs-informal-register-01
+  bloom: apply
+  derived_from:
+  - section_id: short-retrieval-review
+  prompt_md: 'Revise this blunt message to an unfamiliar professional contact: Hei!
+    Kan du sende meg deltakerlisten i løpet av dagen! Det haster! Write the revised
+    message in Norwegian. Keep du, choose a suitable greeting and closing, state the
+    reason and deadline, and use a request form that is clear but not abrupt. The
+    participant list is needed so access cards can be ordered before klokka fire.
+    After the message, briefly note in Norwegian which language choices make it suitable
+    for its audience, genre, and purpose.'
+  response_language: 'no'
+  judge_prompt: Accept natural Bokmål variants for the greeting, closing, request
+    form, reason, and deadline. Require du to remain, the message to be clear rather
+    than abrupt, and the short explanation to identify concrete language choices connected
+    to audience, genre, and purpose.
+  criteria:
+  - id: retains-du
+    instruction: Keeps the pronoun du.
+  - id: suitable-greeting-closing
+    instruction: Uses a suitable greeting and closing for an unfamiliar professional
+      contact.
+  - id: reason-and-deadline
+    instruction: States the reason and deadline clearly.
+  - id: clear-non-abrupt-request
+    instruction: Uses a request form that is clear but not abrupt.
+  - id: register-choice-explanation
+    instruction: Notes which language choices suit the audience, genre, and purpose.

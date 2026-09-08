@@ -1,0 +1,20 @@
+{
+  "name": "norsk-lesson-factory",
+  "version": "0.1.0",
+  "description": "Open Norwegian Bokmål lesson data plus the agentic QA pipeline used to build and maintain it.",
+  "scripts": {
+    "test": "uv run pytest -q",
+    "eval:prompt": "for config in evals/promptfoo/*.yaml; do npm run eval:promptfoo -- -c \"$config\" || exit $?; done",
+    "eval:promptfoo": "PROMPTFOO_PYTHON=$(uv run which python) npx --yes promptfoo@0.122.2 eval --no-cache --no-write --max-concurrency 1",
+    "eval:exercise-quality": "uv run python scripts/eval_exercise_quality.py --mode mechanical --strict",
+    "format": "uv run ruff format .",
+    "format:check": "uv run ruff format --check .",
+    "check": "npm run conventions:check && npm run format:check && uv run ruff check . && uv run mypy src/ && npm test && npm run eval:exercise-quality && uv run lesson-data regenerate-dist --repo-root . && git diff --exit-code -- dist/lessons dist/catalog.json dist/schema/lesson.schema.json && uv run lesson-data check --workspace-root . --format json && npm run knowledge:validate",
+    "conventions:check": "uv run python scripts/check_agent_conventions.py",
+    "dead-code:audit": "uv run python scripts/dead_code_audit.py",
+    "knowledge:validate": "uv run python scripts/okf_validate.py knowledge --strict --check-links"
+  },
+  "private": true,
+  "license": "MIT",
+  "devDependencies": {}
+}

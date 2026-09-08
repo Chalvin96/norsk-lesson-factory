@@ -1,0 +1,329 @@
+- handle: recognize_yes_no_question_order
+  op: categorize
+  objective: obj-question-word-order-01
+  bloom: analyze
+  prompt_md: In this cinema-plan context, sort each line into the correct group. Put
+    ordinary neutral yes/no questions in the first group. Put subject-first
+    lines, including a subject-first checking line, in the second group. Use verb-before-subject
+    order, not the question mark alone, as evidence.
+  explanation_md: "Questions place the finite verb before the subject; in wh-questions the question word comes first, and ikke follows the subject."
+  derived_from:
+  - section_id: sec-simple-yes-no-questions
+  buckets:
+  - bucket_id: verb-first-question
+    label: 'Ordinary neutral yes/no question: verb before subject'
+  - bucket_id: subject-first-not-target
+    label: 'Not an ordinary neutral yes/no question: subject before verb'
+  items:
+  - item_id: line-1
+    text: Kommer du i kveld?
+    bucket_id: verb-first-question
+  - item_id: line-2
+    text: Du kommer i kveld?
+    bucket_id: subject-first-not-target
+  - item_id: line-3
+    text: Har hun en billett?
+    bucket_id: verb-first-question
+  - item_id: line-4
+    text: Du har ikke billett.
+    bucket_id: subject-first-not-target
+- handle: form_yes_no_questions
+  op: build
+  objective: obj-question-word-order-01
+  bloom: apply
+  prompt_md: In the cinema-plan context, change the statement Du betaler med kort.
+    into an ordinary yes/no question with the same meaning. Build the Norwegian question;
+    this is not a permission request.
+  derived_from:
+  - section_id: sec-simple-yes-no-questions
+  tokens:
+  - token_id: yn-1
+    text: Betaler
+  - token_id: yn-2
+    text: du
+  - token_id: yn-3
+    text: med
+  - token_id: yn-4
+    text: kort?
+  answer_order:
+  - yn-1
+  - yn-2
+  - yn-3
+  - yn-4
+- handle: place_ikke_in_negative_questions
+  op: build
+  objective: obj-question-word-order-01
+  bloom: apply
+  prompt_md: Sara is checking the ticket assumption. Start from the positive question
+    Har hun en billett? and add the negative meaning. Keep the other words unchanged
+    and build the resulting Norwegian question.
+  explanation_md: "In a negative yes/no question, the finite verb comes first and ikke follows the subject."
+  derived_from:
+  - section_id: sec-negative-questions
+  tokens:
+  - token_id: neg-1
+    text: Har
+  - token_id: neg-2
+    text: hun
+  - token_id: neg-3
+    text: ikke
+  - token_id: neg-4
+    text: en
+  - token_id: neg-5
+    text: billett?
+  answer_order:
+  - neg-1
+  - neg-2
+  - neg-3
+  - neg-4
+  - neg-5
+- handle: recognize_negative_question_meaning
+  op: choose
+  objective: obj-question-word-order-01
+  bloom: understand
+  prompt_md: In the cinema-plan exchange, Sara expects Emil to come. Jonas asks Kommer
+    han ikke?, and Sara replies Jo, han kommer. Choose the interpretation that matches
+    this exchange.
+  derived_from:
+  - section_id: sec-negative-questions
+  stem_md: What is Jonas checking with Kommer han ikke??
+  options:
+  - id: negative-confirmed
+    text: Kommer han ikke? means Isn’t he coming?; Jonas checks whether Emil is not
+      coming, and Sara confirms that idea with nei.
+    correct: false
+    why: The lesson uses jo when the speaker rejects a negative idea; nei would support
+      the negative answer.
+  - id: negative-expectation
+    text: Kommer han ikke? means Isn’t he coming?; Jonas checks whether Emil is not
+      coming, and Sara rejects that idea with Jo, han kommer.
+    correct: true
+    why: A negative question checks the negative idea here, and jo rejects that idea.
+  - id: location-question
+    text: Kommer han ikke? asks where Emil is, so Sara should answer with a place.
+    correct: false
+    why: The question asks about Emil coming, not about his location.
+- handle: distinguish_question_openings
+  op: choose
+  objective: obj-question-word-order-01
+  bloom: understand
+  prompt_md: 'In Sara and Jonas''s cinema conversation, choose the pair that matches
+    both intentions: first ask whether someone is coming tonight, then ask where to
+    buy a ticket.'
+  derived_from:
+  - section_id: sec-questions-with-a-question-word
+  stem_md: Which pair has the correct opening for each intention?
+  options:
+  - id: correct-pair
+    text: Kommer du i kveld? — Are you coming tonight?; Hvor kjøper du billett? —
+      Where do you buy a ticket?
+    correct: true
+    why: The yes/no question starts with the verb, while the place question starts
+      with a question word followed by the verb.
+  - id: subject-first-pair
+    text: Du kommer i kveld? — Are you coming tonight?; Hvor du kjøper billett? —
+      Where do you buy a ticket?
+    correct: false
+    why: The first line keeps subject-first order, and the second puts the subject
+      before the verb after the question word.
+  - id: two-yes-no-questions
+    text: Kommer du i kveld? — Are you coming tonight?; Kjøper du billett inne? —
+      Do you buy a ticket inside?
+    correct: false
+    why: Both lines are verb-first yes/no questions; the second does not ask for place
+      information with a question word.
+- handle: form_question_word_questions
+  op: build
+  objective: obj-question-word-order-01
+  bloom: apply
+  prompt_md: In the cinema context, the statement is Dere kommer til kinoen med buss.
+    Ask how they travel by replacing med buss. Build the complete Norwegian question.
+  explanation_md: "A wh-question begins with the question word, followed by the finite verb and then the subject."
+  derived_from:
+  - section_id: sec-questions-with-a-question-word
+  tokens:
+  - token_id: wh-1
+    text: Hvordan
+  - token_id: wh-2
+    text: kommer
+  - token_id: wh-3
+    text: dere
+  - token_id: wh-4
+    text: til
+  - token_id: wh-5
+    text: kinoen?
+  answer_order:
+  - wh-1
+  - wh-2
+  - wh-3
+  - wh-4
+  - wh-5
+- handle: add_negation_to_question_word_questions
+  op: build
+  objective: obj-question-word-order-01
+  bloom: apply
+  prompt_md: In the cinema context, the ticket has not been bought. Ask why, using
+    the cue du and the action kjøpt billett. Build the complete negative question-word
+    question in Norwegian.
+  derived_from:
+  - section_id: sec-questions-with-a-question-word
+  tokens:
+  - token_id: nwh-1
+    text: Hvorfor
+  - token_id: nwh-2
+    text: har
+  - token_id: nwh-3
+    text: du
+  - token_id: nwh-4
+    text: ikke
+  - token_id: nwh-5
+    text: kjøpt
+  - token_id: nwh-6
+    text: billett?
+  answer_order:
+  - nwh-1
+  - nwh-2
+  - nwh-3
+  - nwh-4
+  - nwh-5
+  - nwh-6
+- handle: form_permission_questions
+  op: build
+  objective: obj-question-word-order-01
+  bloom: apply
+  prompt_md: In the ticket-buying context, the cue requires får jeg. Ask permission
+    to buy a ticket here. Build the complete Norwegian permission question, not a
+    question about what another person does.
+  derived_from:
+  - section_id: sec-asking-for-permission
+  tokens:
+  - token_id: perm-1
+    text: Får
+  - token_id: perm-2
+    text: jeg
+  - token_id: perm-3
+    text: kjøpe
+  - token_id: perm-4
+    text: billett
+  - token_id: perm-5
+    text: her?
+  answer_order:
+  - perm-1
+  - perm-2
+  - perm-3
+  - perm-4
+  - perm-5
+- handle: transfer_question_word_order_to_cafe
+  op: build
+  objective: obj-question-word-order-01
+  bloom: apply
+  prompt_md: 'In Nora and David''s new café exchange, build four Norwegian questions
+    in this order: ask whether the café is open; check the expectation that Nora is
+    not here; ask where Nora is; ask permission to sit here. Build one complete question
+    for each intention and keep the café setting rather than the cinema wording.'
+  derived_from:
+  - section_id: sec-cumulative-transfer-at-a-cafe
+  tokens:
+  - token_id: cafe-1
+    text: Er
+  - token_id: cafe-2
+    text: kafeen
+  - token_id: cafe-3
+    text: åpen?
+  - token_id: cafe-4
+    text: Er
+  - token_id: cafe-5
+    text: Nora
+  - token_id: cafe-6
+    text: ikke
+  - token_id: cafe-7
+    text: her?
+  - token_id: cafe-8
+    text: Hvor
+  - token_id: cafe-9
+    text: er
+  - token_id: cafe-10
+    text: Nora?
+  - token_id: cafe-11
+    text: Får
+  - token_id: cafe-12
+    text: jeg
+  - token_id: cafe-13
+    text: sitte
+  - token_id: cafe-14
+    text: her?
+  answer_order:
+  - cafe-1
+  - cafe-2
+  - cafe-3
+  - cafe-4
+  - cafe-5
+  - cafe-6
+  - cafe-7
+  - cafe-8
+  - cafe-9
+  - cafe-10
+  - cafe-11
+  - cafe-12
+  - cafe-13
+  - cafe-14
+- handle: retrieve_core_question_patterns
+  op: build
+  objective: obj-question-word-order-01
+  bloom: apply
+  prompt_md: 'Build four Norwegian questions in this order: ask whether Nora is coming
+    tomorrow; check the negative expectation
+    that Nora is not coming tomorrow; ask where the café is; ask permission to use
+    the phone. Build one complete question for each intention.'
+  derived_from:
+  - section_id: sec-short-retrieval-review
+  tokens:
+  - token_id: review-1
+    text: Kommer
+  - token_id: review-2
+    text: Nora
+  - token_id: review-3
+    text: i
+  - token_id: review-4
+    text: morgen?
+  - token_id: review-5
+    text: Kommer
+  - token_id: review-6
+    text: Nora
+  - token_id: review-7
+    text: ikke
+  - token_id: review-8
+    text: i
+  - token_id: review-9
+    text: morgen?
+  - token_id: review-10
+    text: Hvor
+  - token_id: review-11
+    text: er
+  - token_id: review-12
+    text: kafeen?
+  - token_id: review-13
+    text: Får
+  - token_id: review-14
+    text: jeg
+  - token_id: review-15
+    text: bruke
+  - token_id: review-16
+    text: telefonen?
+  answer_order:
+  - review-1
+  - review-2
+  - review-3
+  - review-4
+  - review-5
+  - review-6
+  - review-7
+  - review-8
+  - review-9
+  - review-10
+  - review-11
+  - review-12
+  - review-13
+  - review-14
+  - review-15
+  - review-16

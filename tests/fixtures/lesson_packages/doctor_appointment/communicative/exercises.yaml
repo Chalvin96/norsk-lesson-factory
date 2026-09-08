@@ -1,0 +1,161 @@
+- handle: identify-reason
+  op: choose
+  objective: obj-appointment-call
+  bloom: understand
+  prompt_md: Choose the most natural reason for calling the doctor's office.
+  stem_md: "Jeg ringer fordi ..."
+  options:
+    - id: reason_sore_throat
+      text: jeg har vondt i halsen.
+      correct: true
+      why: This gives a clear, ordinary reason for the appointment request.
+    - id: reason_wrong_form
+      text: jeg er vondt i halsen.
+      correct: false
+      why: "The symptom is expressed with `har vondt`, not `er vondt`."
+    - id: reason_missing_noun
+      text: jeg vil time legen.
+      correct: false
+      why: This does not form a natural Norwegian reason for calling.
+  derived_from:
+    - section_id: sec-orient
+
+- handle: recall-request
+  op: recall_fill
+  objective: obj-appointment-call
+  bloom: understand
+  prompt_md: Complete the polite appointment request.
+  audio_target: "Jeg vil gjerne bestille en time hos legen."
+  segments:
+    - text_md: "Jeg vil gjerne bestille "
+    - blank_id: appointment
+      options:
+        - en time
+        - et time
+        - en timen
+      answer_index: 0
+    - text_md: " hos legen."
+  explanation_md: "`Jeg vil gjerne bestille en time` is a useful request for this call."
+  derived_from:
+    - section_id: sec-model
+
+- handle: match-responses
+  op: match_pairs
+  objective: obj-appointment-call
+  bloom: understand
+  prompt_md: Match each situation with a useful Norwegian response.
+  left:
+    - left_id: response_reason
+      text: Explain why you are calling
+    - left_id: response_request
+      text: Ask for an appointment
+    - left_id: response_unavailable
+      text: Say the suggested time does not work
+    - left_id: response_clarify
+      text: Ask which day was offered
+    - left_id: response_confirm
+      text: Confirm the arrangement
+  right:
+    - right_id: phrase_reason
+      text: Jeg ringer fordi jeg har vondt i halsen.
+    - right_id: phrase_request
+      text: Jeg vil gjerne bestille en time.
+    - right_id: phrase_unavailable
+      text: Torsdag passer ikke for meg.
+    - right_id: phrase_clarify
+      text: Unnskyld, hvilken dag sa du?
+    - right_id: phrase_confirm
+      text: Da ses vi på fredag klokka ni.
+  pairs:
+    - left_id: response_reason
+      right_id: phrase_reason
+    - left_id: response_request
+      right_id: phrase_request
+    - left_id: response_unavailable
+      right_id: phrase_unavailable
+    - left_id: response_clarify
+      right_id: phrase_clarify
+    - left_id: response_confirm
+      right_id: phrase_confirm
+  derived_from:
+    - section_id: sec-model
+
+- handle: choose-alternative
+  op: choose
+  objective: obj-appointment-call
+  bloom: apply
+  prompt_md: The receptionist offers Thursday, but Thursday does not work for you. Choose a natural reply.
+  stem_md: "Resepsjonisten sier: `Vi har en ledig time på torsdag.`"
+  options:
+    - id: alternative_friday
+      text: Torsdag passer ikke for meg. Har dere en time på fredag?
+      correct: true
+      why: It says the offered time is unavailable and proposes a specific alternative.
+    - id: alternative_contradiction
+      text: Ja, torsdag passer ikke.
+      correct: false
+      why: "`Ja` contradicts the statement that Thursday does not work."
+    - id: alternative_word_order
+      text: Jeg fredag har en time?
+      correct: false
+      why: This does not form the intended reply.
+  derived_from:
+    - section_id: sec-contrast
+
+- handle: build-request
+  op: build
+  objective: obj-appointment-call
+  bloom: apply
+  prompt_md: Build a polite request for an appointment with the doctor.
+  tokens:
+    - token_id: br_time
+      text: time
+    - token_id: br_jeg
+      text: Jeg
+    - token_id: br_legen
+      text: legen.
+    - token_id: br_gjerne
+      text: gjerne
+    - token_id: br_en
+      text: en
+    - token_id: br_hos
+      text: hos
+    - token_id: br_vil
+      text: vil
+    - token_id: br_bestille
+      text: bestille
+  answer_order: [br_jeg, br_vil, br_gjerne, br_bestille, br_en, br_time, br_hos, br_legen]
+  derived_from:
+    - section_id: sec-contrast
+
+- handle: final-transfer
+  op: build
+  objective: obj-appointment-call
+  bloom: apply
+  prompt_md: "The office offers Thursday, but Thursday does not work for you. Build a reply that proposes Friday and asks whether there is an appointment available."
+  tokens:
+    - token_id: ft_fredag
+      text: fredag?
+    - token_id: ft_har
+      text: Har
+    - token_id: ft_meg
+      text: meg.
+    - token_id: ft_en
+      text: en
+    - token_id: ft_torsdag
+      text: Torsdag
+    - token_id: ft_passer
+      text: passer
+    - token_id: ft_dere
+      text: dere
+    - token_id: ft_for
+      text: for
+    - token_id: ft_ikke
+      text: ikke
+    - token_id: ft_time
+      text: time
+    - token_id: ft_pa
+      text: på
+  answer_order: [ft_torsdag, ft_passer, ft_ikke, ft_for, ft_meg, ft_har, ft_dere, ft_en, ft_time, ft_pa, ft_fredag]
+  derived_from:
+    - section_id: sec-contrast

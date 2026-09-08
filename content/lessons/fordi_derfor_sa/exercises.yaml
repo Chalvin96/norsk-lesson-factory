@@ -1,0 +1,437 @@
+- handle: find_the_cause
+  op: choose
+  objective: obj-fordi-derfor-sa-01
+  bloom: understand
+  prompt_md: Read three everyday cause-and-result situations. Choose the set that
+    puts each result first, places the information answering why after fordi, and
+    begins each reason clause at fordi. The scored evidence is cause-and-result meaning
+    and connector choice; word order is context only.
+  derived_from:
+  - section_id: giving-the-reason-with-fordi
+  stem_md: Which set correctly expresses these three relationships in Norwegian? 1.
+    Mina took a taxi because the bus did not come. 2. We stayed home because it was
+    raining. 3. Nora left early because she did not feel well.
+  options:
+  - id: therefore-set
+    text: 'Mina tok taxi. Derfor kom ikke bussen. Det regnet. Derfor ble vi hjemme.
+      Nora følte seg ikke bra. Derfor dro hun tidlig. '
+    correct: false
+    why: This set uses derfor instead of a postposed fordi clause and reverses the
+      first cause-and-result relation.
+  - id: correct-cause-set
+    text: 'Mina tok taxi fordi bussen ikke kom. Vi ble hjemme fordi det regnet. Nora
+      dro tidlig fordi hun ikke følte seg bra. '
+    correct: true
+    why: Each line puts the result first, then uses fordi to begin the reason that
+      answers why.
+  - id: so-set
+    text: 'Mina tok taxi, så bussen ikke kom. Det regnet, så vi ble hjemme. Nora følte
+      seg ikke bra, så hun dro tidlig. '
+    correct: false
+    why: This set uses så with cause-first order instead of the requested result-first
+      fordi pattern.
+- handle: fordi_word_order
+  op: recall_fill
+  objective: obj-fordi-derfor-sa-01
+  bloom: remember
+  prompt_md: 'Complete each Norwegian sentence. The meanings are: I took a taxi because
+    the bus did not come; We ate at home because the restaurant was not open. Choose
+    the subordinate clause after fordi. The scored form is fordi + subject + ikke
+    + finite verb.'
+  explanation_md: "After «fordi», use subordinate order with «ikke» before the finite verb. Sentence-initial «derfor» triggers verb–subject inversion, while result-linking «så» is followed by ordinary subject–verb order."
+  derived_from:
+  - section_id: giving-the-reason-with-fordi
+  audio_target: "Jeg tok taxi fordi bussen ikke kom. Vi spiste hjemme fordi restauranten ikke var åpen."
+  segments:
+  - text_md: 'Jeg tok taxi fordi '
+  - blank_id: because-bus-clause
+    options:
+    - bussen ikke kom
+    - bussen kom ikke
+    answer_index: 0
+  - text_md: '. Vi spiste hjemme fordi '
+  - blank_id: because-restaurant-clause
+    options:
+    - restauranten ikke var åpen
+    - restauranten var ikke åpen
+    answer_index: 0
+  - text_md: .
+- handle: derfor_inversion
+  op: recall_fill
+  objective: obj-fordi-derfor-sa-01
+  bloom: apply
+  prompt_md: 'Complete each result sentence. The meanings are: The road was closed;
+    therefore Mina took a taxi. The hotel was full; therefore we booked another room.
+    After initial derfor, place the finite verb before the subject.'
+  derived_from:
+  - section_id: pointing-to-the-result-with-derfor
+  audio_target: "Veien var stengt. Derfor tok Mina taxi. Hotellet var fullt. Derfor bestilte vi et annet rom."
+  segments:
+  - text_md: 'Veien var stengt. Derfor '
+  - blank_id: therefore-taxi-result
+    options:
+    - tok Mina taxi
+    - Mina tok taxi
+    answer_index: 0
+  - text_md: '. Hotellet var fullt. Derfor '
+  - blank_id: therefore-room-result
+    options:
+    - bestilte vi et annet rom
+    - vi bestilte et annet rom
+    answer_index: 0
+  - text_md: .
+- handle: sa_result_order
+  op: recall_fill
+  objective: obj-fordi-derfor-sa-01
+  bloom: apply
+  prompt_md: 'Complete each cause-and-result sentence. The meanings are: It was raining,
+    so we took the bus. He could not find the keys, so he could not lock the door.
+    After result-linking så, keep the subject before the finite verb and keep the
+    finite verb before ikke in the result clause.'
+  derived_from:
+  - section_id: connecting-a-cause-and-result-with-sa
+  audio_target: "Det regnet, så vi tok bussen. Han fant ikke nøklene, så han kunne ikke låse døra."
+  segments:
+  - text_md: 'Det regnet, så '
+  - blank_id: so-bus-result
+    options:
+    - vi tok bussen
+    - tok vi bussen
+    answer_index: 0
+  - text_md: '. Han fant ikke nøklene, så '
+  - blank_id: so-key-result
+    options:
+    - han kunne ikke låse døra
+    - han ikke kunne låse døra
+    answer_index: 0
+  - text_md: .
+- handle: connector_meaning_choice
+  op: choose
+  objective: obj-fordi-derfor-sa-01
+  bloom: understand
+  prompt_md: 'Choose the set that matches each information order: result plus reason
+    with fordi; cause plus a separate result beginning with Derfor; cause plus a directly
+    linked result with så. Score connector meaning and information order; the verb
+    positions are shown but are not the primary evidence.'
+  derived_from:
+  - section_id: three-ways-to-describe-the-same-relationship
+  stem_md: Which set correctly expresses these three relationships in Norwegian? 1.
+    We canceled the trip because the weather was bad. 2. The weather was bad. Therefore,
+    we canceled the trip. 3. The weather was bad, so we canceled the trip.
+  options:
+  - id: correct-three-connectors
+    text: 'Vi avlyste turen fordi været var dårlig. Været var dårlig. Derfor avlyste
+      vi turen. Været var dårlig, så vi avlyste turen. '
+    correct: true
+    why: The three lines use fordi for a following reason, derfor for a separate consequence,
+      and så for a directly linked result.
+  - id: swapped-result-connectors
+    text: 'Vi avlyste turen fordi været var dårlig. Været var dårlig, så vi avlyste
+      turen. Været var dårlig. Derfor avlyste vi turen. '
+    correct: false
+    why: The second and third lines assign så and derfor to the wrong information
+      orders.
+  - id: reversed-reason
+    text: 'Været var dårlig fordi vi avlyste turen. Været var dårlig. Derfor avlyste
+      vi turen. Været var dårlig, så vi avlyste turen. '
+    correct: false
+    why: The first line reverses the intended result-and-reason relationship instead
+      of placing the result before its fordi-clause.
+- handle: connector_and_verb_position
+  op: build
+  objective: obj-fordi-derfor-sa-01
+  bloom: apply
+  prompt_md: Build the Norwegian sentence meaning I went home because I did not feel
+    well. Use every token exactly once. Show the postposed reason with fordi and subordinate
+    order with ikke before the finite verb.
+  derived_from:
+  - section_id: connector-and-word-order-must-work-together
+  tokens:
+  - token_id: c-1
+    text: Jeg
+  - token_id: c-2
+    text: gikk
+  - token_id: c-3
+    text: hjem
+  - token_id: c-4
+    text: fordi
+  - token_id: c-5
+    text: jeg
+  - token_id: c-6
+    text: ikke
+  - token_id: c-7
+    text: følte
+  - token_id: c-8
+    text: meg
+  - token_id: c-9
+    text: bra.
+  answer_order:
+  - c-1
+  - c-2
+  - c-3
+  - c-4
+  - c-5
+  - c-6
+  - c-7
+  - c-8
+  - c-9
+- handle: dialogue_reconstruction
+  op: build
+  objective: obj-fordi-derfor-sa-01
+  bloom: apply
+  prompt_md: 'Reconstruct four Norwegian utterances from Mina and Jonas''s follow-up
+    exchange in this order: Mina gives a reason for being nervous; Jonas links a clear
+    explanation to its result; Mina states that the client asked questions; Mina highlights
+    the consequence with a sentence-initial result marker. Use every token exactly
+    once. Preserve the appropriate connector and verb position in each utterance.
+    Punctuation is attached to tokens.'
+  derived_from:
+  - section_id: returning-to-mina-and-jonas
+  tokens:
+  - token_id: d-1
+    text: Ja,
+  - token_id: d-2
+    text: men
+  - token_id: d-3
+    text: jeg
+  - token_id: d-4
+    text: var
+  - token_id: d-5
+    text: nervøs
+  - token_id: d-6
+    text: fordi
+  - token_id: d-7
+    text: jeg
+  - token_id: d-8
+    text: ikke
+  - token_id: d-9
+    text: hadde
+  - token_id: d-10
+    text: lest
+  - token_id: d-11
+    text: den
+  - token_id: d-12
+    text: siste
+  - token_id: d-13
+    text: rapporten.
+  - token_id: d-14
+    text: Du
+  - token_id: d-15
+    text: forklarte
+  - token_id: d-16
+    text: prosjektet
+  - token_id: d-17
+    text: tydelig,
+  - token_id: d-18
+    text: så
+  - token_id: d-19
+    text: alle
+  - token_id: d-20
+    text: forsto
+  - token_id: d-21
+    text: planen.
+  - token_id: d-22
+    text: Kunden
+  - token_id: d-23
+    text: stilte
+  - token_id: d-24
+    text: mange
+  - token_id: d-25
+    text: spørsmål.
+  - token_id: d-26
+    text: Derfor
+  - token_id: d-27
+    text: varte
+  - token_id: d-28
+    text: møtet
+  - token_id: d-29
+    text: lenger
+  - token_id: d-30
+    text: enn
+  - token_id: d-31
+    text: planlagt.
+  answer_order:
+  - d-1
+  - d-2
+  - d-3
+  - d-4
+  - d-5
+  - d-6
+  - d-7
+  - d-8
+  - d-9
+  - d-10
+  - d-11
+  - d-12
+  - d-13
+  - d-14
+  - d-15
+  - d-16
+  - d-17
+  - d-18
+  - d-19
+  - d-20
+  - d-21
+  - d-22
+  - d-23
+  - d-24
+  - d-25
+  - d-26
+  - d-27
+  - d-28
+  - d-29
+  - d-30
+  - d-31
+- handle: dinner_plan_transfer
+  op: build
+  objective: obj-fordi-derfor-sa-01
+  bloom: apply
+  prompt_md: Build three connected Norwegian sentences about Emil's changed dinner
+    plan. Express that he changed the recipe because the supermarket was not open,
+    therefore he served dinner later, and dinner was not ready so the guests had to
+    wait. Use every token exactly once. Preserve postposed fordi with subordinate-clause
+    order, sentence-initial Derfor with inversion, and så with a subject-first result
+    clause. Punctuation is attached to tokens.
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+  tokens:
+  - token_id: e-1
+    text: Emil
+  - token_id: e-2
+    text: endret
+  - token_id: e-3
+    text: oppskriften
+  - token_id: e-4
+    text: fordi
+  - token_id: e-5
+    text: supermarkedet
+  - token_id: e-6
+    text: ikke
+  - token_id: e-7
+    text: var
+  - token_id: e-8
+    text: åpent.
+  - token_id: e-9
+    text: Derfor
+  - token_id: e-10
+    text: serverte
+  - token_id: e-11
+    text: han
+  - token_id: e-12
+    text: middagen
+  - token_id: e-13
+    text: senere.
+  - token_id: e-14
+    text: Middagen
+  - token_id: e-15
+    text: var
+  - token_id: e-16
+    text: ikke
+  - token_id: e-17
+    text: ferdig,
+  - token_id: e-18
+    text: så
+  - token_id: e-19
+    text: gjestene
+  - token_id: e-20
+    text: måtte
+  - token_id: e-21
+    text: vente.
+  answer_order:
+  - e-1
+  - e-2
+  - e-3
+  - e-4
+  - e-5
+  - e-6
+  - e-7
+  - e-8
+  - e-9
+  - e-10
+  - e-11
+  - e-12
+  - e-13
+  - e-14
+  - e-15
+  - e-16
+  - e-17
+  - e-18
+  - e-19
+  - e-20
+  - e-21
+- handle: final_three_form_retrieval
+  op: build
+  objective: obj-fordi-derfor-sa-01
+  bloom: apply
+  prompt_md: 'Build one Norwegian retrieval response expressing the same transport
+    relationship in three forms: first Jonas arrived late because the train was delayed;
+    next state the cause and consequence with a separate sentence followed by sentence-initial
+    Derfor; finally connect the cause and result with så. Use every token exactly
+    once and preserve each word-order pattern. Punctuation is attached to tokens.'
+  derived_from:
+  - section_id: quick-retrieval-and-review
+  tokens:
+  - token_id: f-1
+    text: Jonas
+  - token_id: f-2
+    text: kom
+  - token_id: f-3
+    text: sent
+  - token_id: f-4
+    text: fordi
+  - token_id: f-5
+    text: toget
+  - token_id: f-6
+    text: var
+  - token_id: f-7
+    text: forsinket.
+  - token_id: f-8
+    text: Toget
+  - token_id: f-9
+    text: var
+  - token_id: f-10
+    text: forsinket.
+  - token_id: f-11
+    text: Derfor
+  - token_id: f-12
+    text: kom
+  - token_id: f-13
+    text: Jonas
+  - token_id: f-14
+    text: sent.
+  - token_id: f-15
+    text: Toget
+  - token_id: f-16
+    text: var
+  - token_id: f-17
+    text: forsinket,
+  - token_id: f-18
+    text: så
+  - token_id: f-19
+    text: Jonas
+  - token_id: f-20
+    text: kom
+  - token_id: f-21
+    text: sent.
+  answer_order:
+  - f-1
+  - f-2
+  - f-3
+  - f-4
+  - f-5
+  - f-6
+  - f-7
+  - f-8
+  - f-9
+  - f-10
+  - f-11
+  - f-12
+  - f-13
+  - f-14
+  - f-15
+  - f-16
+  - f-17
+  - f-18
+  - f-19
+  - f-20
+  - f-21

@@ -1,0 +1,273 @@
+- handle: identify_thing_and_connection
+  op: choose
+  objective: obj-genitive-01
+  bloom: understand
+  prompt_md: During Nora's move, identify the thing described and the person or thing
+    connected to it in each phrase.
+  derived_from:
+  - section_id: sec-first-notice-who-or-what-is-connected-to-whom
+  stem_md: 'Choose the complete interpretation that is correct for all four phrases:
+    Noras bøker, bøkene til Nora, nøkkelen til leiligheten, and Noras bror.'
+  options:
+  - id: reversed-roles
+    text: 'Noras bøker: thing = Nora; connection = bøker. bøkene til Nora: thing =
+      Nora; connection = bøkene. nøkkelen til leiligheten: thing = leiligheten; connection
+      = nøkkelen. Noras bror: thing = Nora; connection = bror.'
+    correct: false
+    why: This reverses the identified thing and the connected person or thing.
+  - id: mixed-roles
+    text: 'Noras bøker: thing = bøker; connection = Nora. bøkene til Nora: thing =
+      bøkene; connection = Nora. nøkkelen til leiligheten: thing = leiligheten; connection
+      = nøkkelen. Noras bror: thing = bror; connection = Nora.'
+    correct: false
+    why: The interpretation of nøkkelen til leiligheten reverses the two roles.
+  - id: correct
+    text: 'Noras bøker (“Nora’s books”): thing = bøker; connection = Nora. bøkene
+      til Nora (“Nora’s books”): thing = bøkene; connection = Nora. nøkkelen til leiligheten
+      (“the key to the apartment”): thing = nøkkelen; connection = leiligheten. Noras
+      bror (“Nora’s brother”): thing = bror; connection = Nora.'
+    correct: true
+    why: Each interpretation separates the identified thing from its owner or connection.
+- handle: build_s_pattern
+  op: choose
+  objective: obj-genitive-01
+  bloom: apply
+  prompt_md: Choose the natural Norwegian label for Nora's books.
+  derived_from:
+  - section_id: sec-the-s-pattern
+  stem_md: Nora and Emil label moving boxes. One box contains books that belong to
+    Nora. Which label uses the -s pattern correctly?
+  options:
+  - id: correct-s
+    text: Noras bøker
+    correct: true
+    why: The owner takes -s directly, and the following noun has no definite ending.
+  - id: definite-head
+    text: Noras bøkene
+    correct: false
+    why: The noun after an -s owner is bøker, not definite bøkene.
+  - id: english-apostrophe
+    text: Nora's bøker
+    correct: false
+    why: Norwegian attaches -s without an apostrophe.
+- handle: repair_s_pattern_errors
+  op: find_fix
+  objective: obj-genitive-01
+  bloom: analyze
+  prompt_md: 'Nora writes the phrase `Nora’s bok` with an English-style apostrophe. Select
+    the one token that is wrong/needs changing.'
+  derived_from:
+  - section_id: sec-the-s-pattern
+  tokens:
+  - token_id: repair-owner
+    text: Nora’s
+  - token_id: repair-thing
+    text: bok.
+  error_token_id: repair-owner
+  feedback: 'Replace the English-style apostrophe with direct Norwegian -s: Noras.
+    Keep the unmarked thing bok. The corrected label is Noras bok.'
+- handle: build_til_pattern
+  op: choose
+  objective: obj-genitive-01
+  bloom: apply
+  prompt_md: Choose the til-pattern version of «Emils sykkel».
+  derived_from:
+  - section_id: sec-the-til-pattern
+  stem_md: Emil asks which bicycle is his while the car is being unloaded. Which phrase
+    keeps the meaning of «Emils sykkel» and uses the til pattern?
+  options:
+  - id: indefinite-object
+    text: sykkel til Emil
+    correct: false
+    why: The ownership reading needs the definite object sykkelen before til.
+  - id: correct-til
+    text: sykkelen til Emil
+    correct: true
+    why: The til pattern puts the definite object first and the owner after til.
+  - id: reversed-order
+    text: Emil til sykkelen
+    correct: false
+    why: The identified object comes before til, and the owner comes after it.
+- handle: contrast_noun_form_by_pattern
+  op: recall_fill
+  objective: obj-genitive-01
+  bloom: apply
+  prompt_md: Complete both labels for the same bicycle connection. The pattern is
+    supplied; retrieve only the correct noun form in each slot.
+  explanation_md: "The -s pattern is owner + s + indefinite noun; the «til» pattern reverses the order and uses the definite noun: «Emils sykkel» / «sykkelen til Emil»."
+  derived_from:
+  - section_id: sec-the-til-pattern
+  audio_target: "Emils sykkel. Sykkelen til Emil."
+  segments:
+  - text_md: '-s label: Emils '
+  - blank_id: s-thing-form
+    options:
+    - sykkel
+    - sykkelen
+    answer_index: 0
+  - text_md: '. til label: '
+  - blank_id: til-thing-form
+    options:
+    - sykkelen
+    - sykkel
+    answer_index: 0
+  - text_md: ' til Emil.'
+- handle: choose_s_or_til_for_context
+  op: build
+  objective: obj-genitive-01
+  bloom: apply
+  prompt_md: During the move, build one complete Norwegian sentence for an exchange
+    that starts from the owner and then starts from the identified object. Say that
+    Emil's phone is the phone connected to Emil. Use -s in the first phrase and definite
+    thing + til in the second phrase. Include terminal punctuation.
+  derived_from:
+  - section_id: sec-choosing-between-s-and-til
+  tokens:
+  - token_id: context-owner-form
+    text: Emils
+  - token_id: context-owner-thing
+    text: telefon
+  - token_id: context-link
+    text: er
+  - token_id: context-til-thing
+    text: telefonen
+  - token_id: context-til-word
+    text: til
+  - token_id: context-til-owner
+    text: Emil.
+  answer_order:
+  - context-owner-form
+  - context-owner-thing
+  - context-link
+  - context-til-thing
+  - context-til-word
+  - context-til-owner
+- handle: extend_ownership_to_connections
+  op: build
+  objective: obj-genitive-01
+  bloom: apply
+  prompt_md: At the apartment, express a school-address connection rather than literal
+    possession. Build one complete Norwegian sentence showing the same relationship
+    first with -s and then with til. Include terminal punctuation.
+  derived_from:
+  - section_id: sec-more-than-personal-possessions
+  tokens:
+  - token_id: connection-s-form
+    text: Skolens
+  - token_id: connection-s-thing
+    text: adresse
+  - token_id: connection-link
+    text: er
+  - token_id: connection-til-thing
+    text: adressen
+  - token_id: connection-til-word
+    text: til
+  - token_id: connection-til-owner
+    text: skolen.
+  answer_order:
+  - connection-s-form
+  - connection-s-thing
+  - connection-link
+  - connection-til-thing
+  - connection-til-word
+  - connection-til-owner
+- handle: transform_between_patterns
+  op: build
+  objective: obj-genitive-01
+  bloom: apply
+  prompt_md: Back at Nora's apartment, transform the taught -s phrase Emils lampe
+    into its til counterpart. Build one complete Norwegian statement showing both
+    forms and preserving the same relationship. Include terminal punctuation.
+  derived_from:
+  - section_id: sec-back-at-noras-apartment
+  tokens:
+  - token_id: transform-s-owner
+    text: Emils
+  - token_id: transform-s-thing
+    text: lampe
+  - token_id: transform-link
+    text: er
+  - token_id: transform-til-thing
+    text: lampa
+  - token_id: transform-til-word
+    text: til
+  - token_id: transform-til-owner
+    text: Emil.
+  answer_order:
+  - transform-s-owner
+  - transform-s-thing
+  - transform-link
+  - transform-til-thing
+  - transform-til-word
+  - transform-til-owner
+- handle: diagnose_pattern_mistake
+  op: find_fix
+  objective: obj-genitive-01
+  bloom: analyze
+  prompt_md: 'Nora owns the specific book named in the phrase `bok til Nora`. Select the
+    one token that is wrong/needs changing for this ownership reading.'
+  derived_from:
+  - section_id: sec-common-mistakes-to-avoid
+  tokens:
+  - token_id: diagnose-thing
+    text: bok
+  - token_id: diagnose-til
+    text: til
+  - token_id: diagnose-owner
+    text: Nora.
+  error_token_id: diagnose-thing
+  feedback: The identified thing before til must be definite for this ownership or
+    connection reading. Replace bok with boka; the corrected phrase is boka til Nora.
+- handle: transfer_patterns_to_community_center
+  op: write
+  objective: obj-genitive-01
+  bloom: apply
+  prompt_md: 'At a community center, write four short Norwegian statements for staff
+    sorting keys, signs, bags, room information, and equipment. Write: (1) a group''s
+    key with the connection first and -s, (2)
+    the same key relationship with the object first and til, (3) a building''s name
+    with the connection first and -s, and (4) the same name relationship with the
+    object first and til. Keep each pair''s meaning unchanged.'
+  derived_from:
+  - section_id: sec-cumulative-transfer-at-a-community-center
+  response_language: 'no'
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål variants that preserve the requested relationships and patterns.
+    Reject English-style apostrophes, wrong order, or wrong noun definiteness.
+  criteria:
+  - id: community-s-pattern
+    instruction: Writes a natural community-center statement with the connection first,
+      direct Norwegian -s, and an unmarked identified thing.
+  - id: community-til-pattern
+    instruction: Writes the same key relationship with the definite identified thing
+      first, followed by til and the connection.
+  - id: community-meaning-pair
+    instruction: Writes the building-name pair with -s and til while preserving the
+      same connection and meaning.
+- handle: final_retrieval_s_and_til
+  op: write
+  objective: obj-genitive-01
+  bloom: apply
+  prompt_md: Create four short Norwegian phrases about new everyday belongings and
+    connections. Use a book connected to Emil with owner-first -s, the same book relationship
+    with object-first
+    til, a house-and-balcony connection with connection-first -s, and the same balcony
+    relationship with object-first til.
+  derived_from:
+  - section_id: sec-retrieval-and-review
+  response_language: 'no'
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål variants using taught forms when they match each cue. Require
+    the same intended relationship within each pair.
+  criteria:
+  - id: final-person-s
+    instruction: Uses owner + direct Norwegian -s + unmarked thing for the person-and-book
+      relationship.
+  - id: final-person-til
+    instruction: Uses definite thing + til + owner for the same person-and-book relationship.
+  - id: final-connection-s
+    instruction: Uses connection + direct Norwegian -s + unmarked thing for the house-and-balcony
+      relationship.
+  - id: final-connection-til
+    instruction: Uses definite thing + til + connection for the same house-and-balcony
+      relationship.

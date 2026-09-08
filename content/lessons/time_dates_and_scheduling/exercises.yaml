@@ -1,0 +1,429 @@
+- handle: understand_course_plan
+  op: choose
+  objective: obj-time-dates-and-scheduling-01
+  bloom: understand
+  derived_from:
+  - section_id: practice-understand-the-course-plan
+  prompt_md: Choose the complete interpretation of the course-start schedule.
+  stem_md: Which statement correctly identifies the date, course start time, meeting
+    time, and meaning of halv seks?
+  options:
+  - id: wrong_date
+    text: Kurset begynner 15. mai klokka halv seks (17.30), og Nora og Amir møtes
+      klokka kvart over fem (17.15).
+    correct: false
+    why: The course date is incorrect.
+  - id: correct
+    text: Kurset begynner 14. mai klokka halv seks (17.30), og Nora og Amir møtes
+      klokka kvart over fem (17.15).
+    correct: true
+    why: This identifies the correct date and both times, and interprets halv seks
+      as 17.30.
+  - id: wrong_meeting_time
+    text: Kurset begynner 14. mai klokka halv seks (17.30), og Nora og Amir møtes
+      klokka kvart på seks (17.45).
+    correct: false
+    why: The meeting time is incorrect.
+  - id: wrong_course_time
+    text: Kurset begynner 14. mai klokka halv fem (16.30), og Nora og Amir møtes klokka
+      kvart over fem (17.15).
+    correct: false
+    why: Halv seks means 17.30, not 16.30.
+- handle: locate_time_around_the_hour
+  op: categorize
+  objective: obj-time-dates-and-scheduling-01
+  bloom: analyze
+  prompt_md: 'Classify each Norwegian schedule sentence by direction around the named
+    hour: after the hour with over, or before the hour with på.'
+  buckets:
+  - bucket_id: after-hour
+    label: After the named hour — over
+  - bucket_id: before-hour
+    label: Before the named hour — på
+  items:
+  - item_id: after-1
+    text: 17.10 — Bussen går klokka ti over fem.
+    bucket_id: after-hour
+  - item_id: after-2
+    text: 17.15 — Møtet starter klokka kvart over fem.
+    bucket_id: after-hour
+  - item_id: before-1
+    text: 17.50 — Timen begynner klokka ti på seks.
+    bucket_id: before-hour
+  - item_id: before-2
+    text: 17.45 — Bussen går klokka kvart på seks.
+    bucket_id: before-hour
+  explanation_md: "Clock expressions are calculated around the coming hour: halv seks is 17:30, and over/på/før place minutes relative to the named hour."
+  derived_from:
+  - section_id: practice-locate-time-around-the-hour
+- handle: interpret_half_hour_expressions
+  op: choose
+  objective: obj-time-dates-and-scheduling-01
+  bloom: understand
+  prompt_md: Choose the single mapping that correctly interprets all three digital
+    times. Focus on the hour named in halv expressions.
+  options:
+  - id: half-mapping-correct
+    text: 17.20 = ti på halv seks; 17.30 = halv seks; 17.40 = ti over halv seks.
+    correct: true
+    why: The midpoint is halv seks at 17.30; ti på halv seks is 17.20 and ti over
+      halv seks is 17.40.
+  - id: half-mapping-reversed
+    text: 17.20 = ti over halv seks; 17.30 = halv seks; 17.40 = ti på halv seks.
+    correct: false
+    why: The before-and-after directions are reversed around the midpoint.
+  - id: half-mapping-shifted
+    text: 17.20 = ti på halv seks; 17.30 = ti over halv seks; 17.40 = halv seks.
+    correct: false
+    why: Halv seks names the midpoint at 17.30, not 17.40.
+  - id: half-mapping-mixed
+    text: 17.20 = halv seks; 17.30 = ti på halv seks; 17.40 = ti over halv seks.
+    correct: false
+    why: The midpoint and the two surrounding expressions are assigned to the wrong
+      times.
+  derived_from:
+  - section_id: practice-interpret-half-hour-expressions
+- handle: express_a_given_clock_time
+  op: recall_fill
+  objective: obj-time-dates-and-scheduling-01
+  bloom: apply
+  prompt_md: Complete each Norwegian sentence with the everyday clock expression for
+    the given digital time.
+  audio_target: "Bussen går klokka ti over fem. Timen begynner klokka kvart over fem. Kurset begynner klokka halv seks. Møtet starter klokka kvart på seks."
+  segments:
+  - text_md: '17.10 — Bussen går klokka '
+  - blank_id: bus-time
+    options:
+    - ti over fem
+    - ti på fem
+    answer_index: 0
+  - text_md: '. 17.15 — Timen begynner klokka '
+  - blank_id: lesson-time
+    options:
+    - kvart over fem
+    - kvart på fem
+    answer_index: 0
+  - text_md: '. 17.30 — Kurset begynner klokka '
+  - blank_id: course-time
+    options:
+    - halv seks
+    - halv fem
+    answer_index: 0
+  - text_md: '. 17.45 — Møtet starter klokka '
+  - blank_id: meeting-time
+    options:
+    - kvart på seks
+    - kvart over fem
+    answer_index: 0
+  - text_md: .
+  explanation_md: "Everyday clock phrases count around the next hour: 17:30 is halv seks, not halv fem."
+  derived_from:
+  - section_id: practice-express-a-given-clock-time
+- handle: read_written_dates
+  op: recall_fill
+  objective: obj-time-dates-and-scheduling-01
+  bloom: apply
+  prompt_md: Complete the Norwegian sentence with the spoken form of the written date.
+    Use the ordinal day and keep the month in its normal form.
+  audio_target: "Kurset starter fjortende mai."
+  segments:
+  - text_md: 'Item 14: mai — Kurset starter '
+  - blank_id: spoken-date
+    options:
+    - fjortende mai
+    - fjorten mai
+    answer_index: 0
+  - text_md: .
+  explanation_md: "Dates use an ordinal day followed by the month: 14. mai is fjortende mai."
+  derived_from:
+  - section_id: practice-read-written-dates
+- handle: complete_a_simple_arrangement
+  op: build
+  objective: obj-time-dates-and-scheduling-01
+  bloom: apply
+  prompt_md: Build the complete Norwegian exchange. The calendar date is 14. mai and
+    the available time is 17.30. Nora suggests the plan, Amir asks whether it suits
+    him, and Nora confirms the same final arrangement.
+  tokens:
+  - token_id: tok-01
+    text: 'Nora:'
+  - token_id: tok-02
+    text: Vi
+  - token_id: tok-03
+    text: kan
+  - token_id: tok-04
+    text: møtes
+  - token_id: tok-05
+    text: fjortende
+  - token_id: tok-06
+    text: mai
+  - token_id: tok-07
+    text: klokka
+  - token_id: tok-08
+    text: halv
+  - token_id: tok-09
+    text: seks.
+  - token_id: tok-10
+    text: 'Amir:'
+  - token_id: tok-11
+    text: Passer
+  - token_id: tok-12
+    text: det?
+  - token_id: tok-13
+    text: 'Nora:'
+  - token_id: tok-14
+    text: Ja,
+  - token_id: tok-15
+    text: da
+  - token_id: tok-16
+    text: møtes
+  - token_id: tok-17
+    text: vi
+  - token_id: tok-18
+    text: fjortende
+  - token_id: tok-19
+    text: mai
+  - token_id: tok-20
+    text: klokka
+  - token_id: tok-21
+    text: halv
+  - token_id: tok-22
+    text: seks.
+  answer_order:
+  - tok-01
+  - tok-02
+  - tok-03
+  - tok-04
+  - tok-05
+  - tok-06
+  - tok-07
+  - tok-08
+  - tok-09
+  - tok-10
+  - tok-11
+  - tok-12
+  - tok-13
+  - tok-14
+  - tok-15
+  - tok-16
+  - tok-17
+  - tok-18
+  - tok-19
+  - tok-20
+  - tok-21
+  - tok-22
+  derived_from:
+  - section_id: practice-complete-a-simple-arrangement
+- handle: transfer_the_schedule_to_a_new_situation
+  op: build
+  objective: obj-time-dates-and-scheduling-01
+  bloom: apply
+  prompt_md: Build the complete Norwegian dialogue for arranging to meet before a
+    film. The film is on 14. mai at 17.40, and the permitted earlier meeting time
+    is 17.20. Ask when the film begins, state the date and event time, suggest the
+    meeting, and confirm one clear final plan using original film-meeting wording.
+  tokens:
+  - token_id: b-01
+    text: 'Lina:'
+  - token_id: b-02
+    text: Når
+  - token_id: b-03
+    text: begynner
+  - token_id: b-04
+    text: filmen?
+  - token_id: b-05
+    text: 'Oskar:'
+  - token_id: b-06
+    text: Filmen
+  - token_id: b-07
+    text: begynner
+  - token_id: b-08
+    text: fjortende
+  - token_id: b-09
+    text: mai
+  - token_id: b-10
+    text: klokka
+  - token_id: b-11
+    text: ti
+  - token_id: b-12
+    text: over
+  - token_id: b-13
+    text: halv
+  - token_id: b-14
+    text: seks.
+  - token_id: b-15
+    text: 'Lina:'
+  - token_id: b-16
+    text: Vi
+  - token_id: b-17
+    text: kan
+  - token_id: b-18
+    text: møtes
+  - token_id: b-19
+    text: klokka
+  - token_id: b-20
+    text: ti
+  - token_id: b-21
+    text: på
+  - token_id: b-22
+    text: halv
+  - token_id: b-23
+    text: seks.
+  - token_id: b-24
+    text: Passer
+  - token_id: b-25
+    text: det?
+  - token_id: b-26
+    text: 'Oskar:'
+  - token_id: b-27
+    text: Ja,
+  - token_id: b-28
+    text: da
+  - token_id: b-29
+    text: møtes
+  - token_id: b-30
+    text: vi
+  - token_id: b-31
+    text: fjortende
+  - token_id: b-32
+    text: mai
+  - token_id: b-33
+    text: klokka
+  - token_id: b-34
+    text: ti
+  - token_id: b-35
+    text: på
+  - token_id: b-36
+    text: halv
+  - token_id: b-37
+    text: seks.
+  answer_order:
+  - b-01
+  - b-02
+  - b-03
+  - b-04
+  - b-05
+  - b-06
+  - b-07
+  - b-08
+  - b-09
+  - b-10
+  - b-11
+  - b-12
+  - b-13
+  - b-14
+  - b-15
+  - b-16
+  - b-17
+  - b-18
+  - b-19
+  - b-20
+  - b-21
+  - b-22
+  - b-23
+  - b-24
+  - b-25
+  - b-26
+  - b-27
+  - b-28
+  - b-29
+  - b-30
+  - b-31
+  - b-32
+  - b-33
+  - b-34
+  - b-35
+  - b-36
+  - b-37
+  derived_from:
+  - section_id: practice-transfer-the-schedule-to-a-new-situation
+- handle: remember_the_plan
+  op: build
+  objective: obj-time-dates-and-scheduling-01
+  bloom: apply
+  prompt_md: Build the short Norwegian arrangement for a train journey. The train
+    leaves at 17.15 on 14. mai, and the permitted earlier meeting time is 17.00. State
+    the date in spoken form, give the event time in everyday Norwegian, suggest the
+    earlier meeting, and confirm the final plan.
+  tokens:
+  - token_id: c-01
+    text: 'Sara:'
+  - token_id: c-02
+    text: Toget
+  - token_id: c-03
+    text: går
+  - token_id: c-04
+    text: fjortende
+  - token_id: c-05
+    text: mai
+  - token_id: c-06
+    text: klokka
+  - token_id: c-07
+    text: kvart
+  - token_id: c-08
+    text: over
+  - token_id: c-09
+    text: fem.
+  - token_id: c-10
+    text: 'Jon:'
+  - token_id: c-11
+    text: Vi
+  - token_id: c-12
+    text: kan
+  - token_id: c-13
+    text: møtes
+  - token_id: c-14
+    text: klokka
+  - token_id: c-15
+    text: fem.
+  - token_id: c-16
+    text: Passer
+  - token_id: c-17
+    text: det?
+  - token_id: c-18
+    text: 'Sara:'
+  - token_id: c-19
+    text: Ja,
+  - token_id: c-20
+    text: da
+  - token_id: c-21
+    text: møtes
+  - token_id: c-22
+    text: vi
+  - token_id: c-23
+    text: fjortende
+  - token_id: c-24
+    text: mai
+  - token_id: c-25
+    text: klokka
+  - token_id: c-26
+    text: fem.
+  answer_order:
+  - c-01
+  - c-02
+  - c-03
+  - c-04
+  - c-05
+  - c-06
+  - c-07
+  - c-08
+  - c-09
+  - c-10
+  - c-11
+  - c-12
+  - c-13
+  - c-14
+  - c-15
+  - c-16
+  - c-17
+  - c-18
+  - c-19
+  - c-20
+  - c-21
+  - c-22
+  - c-23
+  - c-24
+  - c-25
+  - c-26
+  derived_from:
+  - section_id: final-retrieval-request-remember-the-plan

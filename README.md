@@ -1,254 +1,125 @@
 # norsk-lesson-factory
 
-Open Norwegian Bokmål lesson data plus the agentic QA pipeline used to build and maintain it.
+Open Norwegian Bokmål lesson data and the tools used to author, review, and
+export it.
 
-This repository has two audiences:
+The repository contains structured grammar, phraseology, communication,
+pronunciation, and writing lessons. Each lesson combines explanations, examples,
+and exercises around a learning objective. Markdown and YAML are the editable
+source; ready-to-consume JSON packets live in `dist/`.
 
-- **Learners, teachers, and app builders** who want structured Bokmål lesson artifacts they can
-  inspect, transform, or use in a learning product.
-- **Contributors and pipeline builders** who want to improve the lessons or study how the data is
-  generated, reviewed, repaired, and exported.
+## Use the lesson data
 
-The project currently contains **104 validated lessons** across CEFR A1-B2. For stable data, prefer a
-tagged version or GitHub release when one is available; the default branch may include in-progress
-lesson and pipeline changes.
+Applications can consume the checked-in distribution without installing the
+authoring toolchain:
 
-```bash
-git clone --depth 1 https://github.com/Chalvin96/norsk-lesson-factory.git
-```
+- [`dist/catalog.json`](dist/catalog.json) lists lessons in curriculum order and
+  includes family metadata.
+- [`dist/lessons/`](dist/lessons/) contains one self-contained packet per lesson.
+- [`dist/schema/lesson.schema.json`](dist/schema/lesson.schema.json) defines the
+  public lesson-packet contract.
 
-In a checkout, the exported lesson artifacts live in [`dist/lessons`](dist/lessons), with
-a machine-readable index in [`dist/manifest.json`](dist/manifest.json).
-
-## What Is In The Data?
-
-Each exported lesson is a JSON document with:
-
-- lesson metadata: slug, title, CEFR level, concept slug
-- teaching sections: orientation, model, contrast, recap
-- exercises: recall, matching, choose, categorize, build, judge, find/fix
-- review pools for downstream assessment or app rendering
-
-Useful files in a tagged checkout:
-
-```text
-dist/manifest.json          # list of all exported lessons
-dist/schema/lesson.schema.json
-dist/lessons/*.json         # learner-facing exported lesson artifacts
-data/lessons/*.json         # internal source-of-truth lesson aggregates
-```
-
-Example:
+Pin a release tag or commit so data updates are deliberate. For example, with
+`jq` installed:
 
 ```bash
-jq '.lessons[] | select(.cefr_level == "A1") | {slug, title, path}' dist/manifest.json
-jq '{title, cefr_level, goal, elements: (.elements | length)}' dist/lessons/modal_verbs_basic.json
+jq -r '.lessons[] | [.position, .lesson_id, .family_id] | @tsv' dist/catalog.json
+jq '{id, title, cefr_level, goal}' dist/lessons/modal_verbs_basic.json
 ```
 
-If you only want the data, start with a tagged checkout and read `dist/manifest.json` +
-`dist/lessons/*.json`. You do not need to run the pipeline.
+A packet contains lesson metadata, objectives, teaching sections, exercises, and
+an ordered `content` list. Exercises cover choices, matching, categorization,
+sentence building, error identification, gap filling, and written or spoken
+responses.
 
-`data/lessons` is the source of truth used to regenerate exports.
+This repository defines authored content and assessment criteria. A consuming
+application owns presentation, playback, answer reveal, learner progress, and
+scoring behavior. See [Authoring and Release
+Boundaries](knowledge/project/boundaries.md) for the complete contract boundary.
 
-## Why This Is Interesting
+## Edit a lesson
 
-The interesting part is not "call an LLM to write a lesson." It is treating the LLM as an
-**unreliable component** and engineering around its failure modes: a reviewer that over-reports
-defects, a repair loop that might not converge, and a model backend that can silently go down.
-
-```text
-                 ┌── deterministic gate (schema, anchors, coverage) ──┐
-   lesson ──►    │                                                    │ ──► human gate ──► export
-                 └── LLM judge panel (pedagogy · alignment · answer) ──┘        ▲
-                            │ blocking issue                                    │ park / resume
-                            ▼                                                    │
-                      fix / regenerate ──► re-judge ──► converged? ─────────────┘
-                       bounded budget,    rubric        else escalate to human
-                       no-progress guard  floors
-```
-
-Notable engineering choices:
-
-- **Calibrated LLM judge.** The reviewer issue lists are advisory, while rubric scores are calibrated
-  against golden lessons and promoted deliberately. See [docs/CALIBRATION.md](docs/CALIBRATION.md).
-- **Generate-then-verify.** An answer reviewer solves exercises with the answer key hidden, then
-  compares its answer to the authored key.
-- **Bounded repair.** Fix/regenerate loops use budgets plus `lesson_hash` and
-  `blocking_fingerprint` guards to escalate no-progress loops to a human.
-- **Failure-aware state.** LLM backend status is first-class, so outages do not read as clean reviews.
-- **Strict dependency injection.** Graph nodes are pure `(state, deps)` functions; IO and LLM calls
-  live behind injected collaborators, which keeps the suite fast and offline-testable.
-
-See [PIPELINE.md](PIPELINE.md) for the architecture wiki and
-[docs/TERMINOLOGY_MAINTENANCE.md](docs/TERMINOLOGY_MAINTENANCE.md) for the terminology/data
-maintenance workflow.
-
-## Quickstart
-
-Requirements:
-
-- Python 3.12+
-- [`uv`](https://docs.astral.sh/uv/)
+Local development requires Python 3.12+ and
+[`uv`](https://docs.astral.sh/uv/). Set up a checkout and run the offline checks:
 
 ```bash
-uv sync
-uv run pytest -q
-uv run ruff check .
-```
-
-Work with the data:
-
-```bash
-# list lessons
-jq -r '.lessons[] | [.cefr_level, .slug, .title] | @tsv' dist/manifest.json
-
-# validate source/export stability
+git clone https://github.com/Chalvin96/norsk-lesson-factory.git
+cd norsk-lesson-factory
+uv sync --locked
+uv run lesson-data doctor
+uv run lesson-data exercise lint content/lessons/adjective_agreement
 uv run lesson-data regenerate-dist --repo-root .
-
-# run the terminology audit
-uv run lesson-data terminology audit data/lessons/*.json dist/lessons/*.json --summary
+uv run lesson-data check --workspace-root . --format json
 ```
 
-Run the pipeline if you want to inspect or improve the generation/QA system:
+Edit a lesson's `lesson.md`, `exercises.yaml`, and related source under
+[`content/lessons/`](content/lessons/), then commit the regenerated `dist/` files
+with the source change. Keep prompts, answers, feedback, grading criteria, and
+surrounding lesson prose consistent, and include the context needed to answer each
+exercise.
+
+Use the local authoring preview to inspect one package in a browser:
 
 ```bash
-uv run lesson-data graph run adjective_agreement  # QA graph; scratch by default
-uv run lesson-data chat                           # conversational operator REPL
-uv run langgraph dev                              # visual graph inspection in Studio
+uv run lesson-data preview content/lessons/greet_and_introduce_yourself
 ```
 
-Live LLM journeys need backend credentials (Codex CLI / OpenRouter depending on the selected
-surface). The test suite, schema validation, export regeneration, and deterministic checks run
-offline.
+The preview binds to loopback, performs no provider calls, and does not modify
+source or distribution files. Use `--no-browser` in a headless environment or
+`--port 0` to choose an available port.
 
-## Repository Layout
+Adding a lesson also changes the approved catalog and curriculum plan. Read
+[Authoring Decisions](knowledge/pipeline/authoring.md) before changing that
+inventory. Engineering contributions must follow [AGENTS.md](AGENTS.md).
+
+## Validate a change
+
+Run the complete deterministic check suite with:
+
+```bash
+npm run check
+```
+
+This checks conventions, formatting, linting, types, behavior tests, mechanical
+exercise quality, regenerated distribution drift, repository consistency, and
+knowledge links. These checks validate structure and consistency; they do not by
+themselves establish linguistic or pedagogical quality.
+
+Model-dependent evaluations require Node.js 22.22.0+ and authenticated access to
+the provider configured in [`config.yaml`](config.yaml):
+
+```bash
+npm run eval:promptfoo -- -c evals/promptfoo/reviews.yaml
+```
+
+Provider-backed generation, audio, and evaluation are optional for reading,
+editing, validating, and regenerating the lesson data. Run `uv run lesson-data
+doctor --capability all` to inspect their local prerequisites without making a
+provider call.
+
+## Repository layout
 
 ```text
-src/lesson_builder/
-  pipeline/
-    lesson_qa_graph.py       # Lesson-QA StateGraph topology and routing
-    judges.py  fixers.py     # injected LLM collaborators
-    graph_runner.py state.py # run/show/resume threads; state, routing, budgets
-    checks/                  # deterministic gate + advisory check folding
-    cold_author/             # cold lesson authoring
-    calibration/             # rubric-floor calibration
-  chat/                      # terminal operator REPL
-  schema/                    # Pydantic lesson + export contracts
-
-data/lessons/                # 104 internal lesson aggregates; source of truth
-data/concept_requirements/   # lesson requirements cards
-dist/lessons/                # exported lesson artifacts for consumers
-dist/schema/                 # exported JSON Schema
-goldens/                     # calibration anchors
-docs/                        # calibration, terminology, and system notes
-PIPELINE.md                  # architecture wiki
+content/                         editable catalog, curriculum, and lesson source
+dist/catalog.json                exported curriculum order and family metadata
+dist/lessons/<lesson-id>.json    exported lesson packets
+dist/schema/lesson.schema.json   public packet schema
+src/lesson_builder/              authoring, review, export, and release tooling
+tests/                           deterministic behavior tests
+evals/promptfoo/                 model-dependent quality evaluations
+knowledge/                       current domain and architecture decisions
+store/                           ignored drafts, checkpoints, and caches
 ```
 
-## How To Contribute
-
-Contributions are welcome in three lanes.
-
-### 1. Improve Lesson Data
-
-Best for teachers, Norwegian learners, linguists, and people testing the data in an app.
-
-1. Pick a lesson in [`data/lessons`](data/lessons); this is the source of truth.
-2. Use the matching file in [`dist/lessons`](dist/lessons) as the learner-facing preview.
-3. Keep terminology aligned with [docs/terminology-style-guide.md](docs/terminology-style-guide.md).
-4. Run regeneration and confirm the exported lesson matches the accepted source text.
-5. Run:
-
-```bash
-uv run lesson-data regenerate-dist --repo-root .
-uv run lesson-data terminology audit data/lessons/*.json dist/lessons/*.json --summary
-uv run pytest -q
-```
-
-`regenerate-dist` should report `104 unchanged` when the committed source and exported data are
-already in sync. A dist-only lesson fix is not enough; it can be overwritten by the next
-regeneration.
-
-### 2. Add Or Improve Pipeline Behavior
-
-Best for engineering contributions.
-
-1. Read [PIPELINE.md](PIPELINE.md) for the graph/node model.
-2. Keep graph nodes pure and put IO/LLM behavior behind injected dependencies.
-3. Add behavior tests with fakes instead of hitting live CLIs or APIs.
-4. Follow the local test naming rules in `AGENTS.md`.
-5. Run:
-
-```bash
-uv run pytest
-uv run ruff check .
-```
-
-### 3. Improve Terminology
-
-Best for grammar reviewers and curriculum contributors.
-
-1. Update [docs/terminology-style-guide.md](docs/terminology-style-guide.md) first.
-2. Keep hard bans small; most choices should be reviewer guidance, not regex rules.
-3. Use `dist/lessons` as the exported preview, but land accepted lesson text in `data/lessons`.
-4. See [docs/TERMINOLOGY_MAINTENANCE.md](docs/TERMINOLOGY_MAINTENANCE.md) for the current workflow.
-
-Good first contributions:
-
-- Fix unclear learner-facing explanations.
-- Improve A1/A2 naturalness without removing standard textbook terms.
-- Add missing examples to an existing lesson.
-- Report a terminology drift with the lesson slug and exact phrase.
-- Add tests for a deterministic check or CLI behavior.
-
-## Data Use Notes
-
-In a tagged checkout:
-
-- Start from `dist/manifest.json`.
-- Load individual lessons from `dist/lessons/<slug>.json`.
-- Validate against `dist/schema/lesson.schema.json`.
-- Treat the schema as the public contract; internal `data/lessons` includes fields used by the QA
-  pipeline and may be less convenient for app rendering.
-
-If you build on the data, please preserve attribution to this repository and note that the lessons
-are generated and QA-reviewed, not a substitute for professional language instruction.
-
-## Tests
-
-```bash
-uv run pytest                  # full offline suite
-uv run ruff check .            # lint
-uv run mypy src/               # types
-```
-
-Current baseline: **603 passed, 7 skipped**.
-
-## Documentation
-
-- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — system design and the three flows
-- [PIPELINE.md](PIPELINE.md) — node-by-node pipeline wiki
-- [docs/CALIBRATION.md](docs/CALIBRATION.md) — judge calibration story
-- [docs/TERMINOLOGY_MAINTENANCE.md](docs/TERMINOLOGY_MAINTENANCE.md) — terminology maintenance workflow
-- [docs/terminology-style-guide.md](docs/terminology-style-guide.md) — prescriptive terminology guide
-- [docs/SCHEMA.md](docs/SCHEMA.md) — exported lesson contract
-- [dist/schema/lesson.schema.json](dist/schema/lesson.schema.json) — exported lesson schema
-- [docs/research/](docs/research/) — design findings and retrospectives
-- [docs/adr/](docs/adr/) — architecture decision records
+Human-edited source under `content/` is authoritative, and `dist/` is its derived
+distribution. Generated drafts remain in ignored scratch storage until a human
+accepts them. Exporting data does not approve a draft or redefine the curriculum.
+The [knowledge index](knowledge/index.md) is the starting point for the repository's
+current design decisions.
 
 ## License
 
-Dual-licensed by artifact type:
-
-- **Generated lesson data** (`dist/lessons/`, `dist/manifest.json`, `data/lessons/`,
-  `data/concept_requirements/`, `curriculum/`, `goldens/`) — CC BY 4.0. See
-  [LICENSE-DATA.md](LICENSE-DATA.md).
-- **Everything else** (source code, `dist/schema/`, docs, config) — MIT. See
-  [LICENSE](LICENSE).
-
-Shipped lessons are LLM-generated and QA-reviewed (`grounding_mode:
-"fallback_no_wiki"`); they contain no verbatim third-party corpus sentences.
-
-## Status
-
-This is an active data and pipeline project. The data and pipeline are usable
-but evolving; pin a tag before building on them.
+Lesson data under `content/`, `dist/lessons/`, and `dist/catalog.json` is licensed
+under [CC BY 4.0](LICENSE-DATA.md). Source code and other repository materials,
+including the exported schema, are licensed under [MIT](LICENSE). See those files
+for exact scope and attribution terms.

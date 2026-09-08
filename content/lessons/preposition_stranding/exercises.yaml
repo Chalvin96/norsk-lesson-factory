@@ -1,0 +1,305 @@
+- handle: notice_question_links
+  op: choose
+  objective: obj-preposition-stranding-01
+  bloom: understand
+  prompt_md: Read the everyday question and choose the analysis that identifies the
+    linked question word and preposition and distinguishes it from a subject question.
+  derived_from:
+  - section_id: formal-everyday-placement
+  stem_md: Which analysis correctly identifies the question word and the preposition
+    connected to it?
+  options:
+  - id: isolated-preposition
+    text: Hvem snakket du med? (Who did you speak with?) — med is an isolated final
+      word and has no connection to hvem.
+    correct: false
+    why: Med belongs to the question phrase represented by hvem.
+  - id: linked-preposition
+    text: Hvem snakket du med? (Who did you speak with?) — hvem is linked to med;
+      med remains later, unlike a subject question with no stranded preposition.
+    correct: true
+    why: The taught everyday pattern moves hvem to the beginning and keeps med after
+      the verb.
+  - id: subject-analysis
+    text: Hvem snakket du med? (Who did you speak with?) — hvem is the subject and
+      med is linked to du.
+    correct: false
+    why: The sentence asks about the person connected to med, not the subject.
+- handle: complete_stranded_prepositions_in_questions
+  op: recall_fill
+  objective: obj-preposition-stranding-01
+  bloom: apply
+  prompt_md: Complete each party-planning question with the preposition required by
+    the expression. Keep the question word or phrase at the beginning.
+  explanation_md: "The preposition belongs to the verb or expression and stays at the end when its complement is questioned or represented by som."
+  derived_from:
+  - section_id: asking-natural-questions
+  audio_target: "Maja spør: Hvem snakker du med? Jonas spør: Hva snakker dere om? Maja spør: Hvem venter hun på? Jonas spør: Hvilket hus bor de i?"
+  segments:
+  - text_md: 'Maja spør: Hvem snakker du '
+  - blank_id: question-med
+    options:
+    - med
+    - om
+    answer_index: 0
+  - text_md: '? Jonas spør: Hva snakker dere '
+  - blank_id: question-om
+    options:
+    - med
+    - om
+    answer_index: 1
+  - text_md: '? Maja spør: Hvem venter hun '
+  - blank_id: question-pa
+    options:
+    - på
+    - i
+    answer_index: 0
+  - text_md: '? Jonas spør: Hvilket hus bor de '
+  - blank_id: question-i
+    options:
+    - i
+    - på
+    answer_index: 0
+  - text_md: '?'
+- handle: form_everyday_questions
+  op: build
+  objective: obj-preposition-stranding-01
+  bloom: apply
+  prompt_md: The guests will be in an unknown room. Build one complete natural Bokmål
+    question asking which room they will be in, using everyday word order.
+  derived_from:
+  - section_id: formal-everyday-placement
+  tokens:
+  - token_id: room-hvilket
+    text: Hvilket
+  - token_id: room-rom
+    text: rom
+  - token_id: room-skal
+    text: skal
+  - token_id: room-gjestene
+    text: gjestene
+  - token_id: room-vaere
+    text: være
+  - token_id: room-i
+    text: i?
+  answer_order:
+  - room-hvilket
+  - room-rom
+  - room-skal
+  - room-gjestene
+  - room-vaere
+  - room-i
+- handle: trace_relative_clause_connections
+  op: match_pairs
+  objective: obj-preposition-stranding-01
+  bloom: remember
+  prompt_md: Match each described noun with the preposition later in its relative
+    clause. The correct links show why the preposition remains inside the clause.
+  explanation_md: "Som represents the earlier noun, while the verb keeps its required preposition later in the relative clause."
+  derived_from:
+  - section_id: relative-clauses
+  left:
+  - left_id: noun-naboen
+    text: Naboen som jeg snakket med
+  - left_id: noun-hoyttaleren
+    text: Høyttaleren som vi hørte på
+  - left_id: noun-rommet
+    text: Rommet som gjestene skal være i
+  - left_id: noun-sangen
+    text: Sangen som folk liker å danse til
+  right:
+  - right_id: prep-med
+    text: med — with
+  - right_id: prep-pa
+    text: på — to
+  - right_id: prep-i
+    text: i — in
+  - right_id: prep-til
+    text: til — to
+  pairs:
+  - left_id: noun-naboen
+    right_id: prep-med
+  - left_id: noun-hoyttaleren
+    right_id: prep-pa
+  - left_id: noun-rommet
+    right_id: prep-i
+  - left_id: noun-sangen
+    right_id: prep-til
+- handle: complete_relative_clauses_with_prepositions
+  op: recall_fill
+  objective: obj-preposition-stranding-01
+  bloom: apply
+  prompt_md: Complete each relative clause with the preposition required by the verb
+    or expression. Keep the preposition in its natural later position.
+  derived_from:
+  - section_id: relative-clauses
+  audio_target: "Maja forklarer: Dette er naboen som jeg snakket med. Dette er høyttaleren som vi hørte på. Dette er rommet som gjestene skal være i. Dette er sangen som folk liker å danse til."
+  segments:
+  - text_md: 'Maja forklarer: Dette er naboen som jeg snakket '
+  - blank_id: relative-med
+    options:
+    - med
+    - om
+    answer_index: 0
+  - text_md: '. Dette er høyttaleren som vi hørte '
+  - blank_id: relative-pa
+    options:
+    - til
+    - på
+    answer_index: 1
+  - text_md: '. Dette er rommet som gjestene skal være '
+  - blank_id: relative-i
+    options:
+    - i
+    - med
+    answer_index: 0
+  - text_md: '. Dette er sangen som folk liker å danse '
+  - blank_id: relative-til
+    options:
+    - om
+    - til
+    answer_index: 1
+  - text_md: .
+- handle: combine_statements_as_relative_clauses
+  op: build
+  objective: obj-preposition-stranding-01
+  bloom: apply
+  prompt_md: 'Combine the two statements into one natural Bokmål sentence. Put the
+    shared noun before som and keep the preposition inside the relative clause. Statements:
+    Jeg snakket med naboen. Naboen har en høyttaler. (I spoke with the neighbour.
+    The neighbour has a speaker.)'
+  derived_from:
+  - section_id: relative-clauses
+  tokens:
+  - token_id: combine-naboen
+    text: Naboen
+  - token_id: combine-som
+    text: som
+  - token_id: combine-jeg
+    text: jeg
+  - token_id: combine-snakket
+    text: snakket
+  - token_id: combine-med
+    text: med,
+  - token_id: combine-har
+    text: har
+  - token_id: combine-en
+    text: en
+  - token_id: combine-hoyttaler
+    text: høyttaler.
+  answer_order:
+  - combine-naboen
+  - combine-som
+  - combine-jeg
+  - combine-snakket
+  - combine-med
+  - combine-har
+  - combine-en
+  - combine-hoyttaler
+- handle: repair_preposition_stranding_errors
+  op: find_fix
+  objective: obj-preposition-stranding-01
+  bloom: analyze
+  prompt_md: Select the one token that is wrong/needs changing.
+  derived_from:
+  - section_id: common-mistakes
+  tokens:
+  - token_id: repair-hvem
+    text: Hvem
+  - token_id: repair-snakket
+    text: snakket
+  - token_id: repair-du
+    text: du
+  - token_id: repair-med
+    text: med
+  - token_id: repair-ham
+    text: ham?
+  error_token_id: repair-ham
+  feedback: Remove the repeated pronoun ham. The natural Bokmål repair is Hvem snakket
+    du med?; the initial question word already supplies the person linked to med.
+- handle: transfer_questions_to_work_trip
+  op: build
+  objective: obj-preposition-stranding-01
+  bloom: apply
+  prompt_md: A colleague needs to identify the train the travelers are waiting for.
+    Build one complete natural Bokmål question with the question phrase first and
+    the associated preposition later.
+  derived_from:
+  - section_id: transfer-new-situation
+  tokens:
+  - token_id: trip-hvilket
+    text: Hvilket
+  - token_id: trip-tog
+    text: tog
+  - token_id: trip-venter
+    text: venter
+  - token_id: trip-vi
+    text: vi
+  - token_id: trip-pa
+    text: på?
+  answer_order:
+  - trip-hvilket
+  - trip-tog
+  - trip-venter
+  - trip-vi
+  - trip-pa
+- handle: transfer_relative_clauses_to_work_trip
+  op: build
+  objective: obj-preposition-stranding-01
+  bloom: apply
+  prompt_md: 'Combine these new work-trip statements into one natural Bokmål sentence
+    with a relative clause: Vi snakket om møtet. Dette er møtet. (We talked about
+    the meeting. This is the meeting.) Keep the preposition inside the clause.'
+  derived_from:
+  - section_id: transfer-new-situation
+  tokens:
+  - token_id: meeting-dette
+    text: Dette
+  - token_id: meeting-er
+    text: er
+  - token_id: meeting-motet
+    text: møtet
+  - token_id: meeting-som
+    text: som
+  - token_id: meeting-vi
+    text: vi
+  - token_id: meeting-snakket
+    text: snakket
+  - token_id: meeting-om
+    text: om.
+  answer_order:
+  - meeting-dette
+  - meeting-er
+  - meeting-motet
+  - meeting-som
+  - meeting-vi
+  - meeting-snakket
+  - meeting-om
+- handle: retrieve_end_position_pattern
+  op: write
+  objective: obj-preposition-stranding-01
+  bloom: apply
+  prompt_md: 'Without looking back, write in natural Bokmål: one question and one
+    sentence with a relative clause. Use different prepositions in the two sentences.
+    After each sentence, briefly state which earlier question word or noun the preposition
+    connects to.'
+  derived_from:
+  - section_id: short-review
+  response_language: 'no'
+  judge_prompt: Check the response against the task and report evidence for every
+    criterion. Accept different natural Bokmål wording and any taught prepositions,
+    provided the two prepositions differ and their connections and positions are clear.
+  criteria:
+  - id: question-stranding
+    instruction: Writes one natural Bokmål question with the question word or phrase
+      early and its required preposition later.
+  - id: relative-stranding
+    instruction: Writes one natural Bokmål sentence with a relative clause, with the
+      described noun before the clause and the required preposition retained inside
+      it.
+  - id: different-prepositions
+    instruction: Uses different prepositions in the question and the relative-clause
+      sentence.
+  - id: connection-notes
+    instruction: Briefly states in Norwegian which earlier question word or noun each
+      preposition connects to.

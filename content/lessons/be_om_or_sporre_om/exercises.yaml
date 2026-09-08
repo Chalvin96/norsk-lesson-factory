@@ -1,0 +1,230 @@
+- handle: first_checkpoint_intended_result
+  op: choose
+  objective: obj-be-om-or-sporre-om-01
+  bloom: understand
+  prompt_md: 'Classify these four uses: asking about breakfast times, asking about taxi
+    prices, requesting a towel, and asking someone to book a taxi. The first two use
+    spørre om; the last two use be om. Choose the complete Bokmål mapping of each
+    intended result.'
+  derived_from:
+  - section_id: first-checkpoint-intended-result
+  stem_md: Which mapping correctly labels the expected result for all four uses?
+  options:
+  - id: wrong-one
+    text: frokosttidene – en ting; taxiprisene – en handling; håndkleet – en ting;
+      å bestille taxi – informasjon.
+    correct: false
+    why: Breakfast times and taxi prices are information, while booking a taxi is
+      an action.
+  - id: wrong-two
+    text: frokosttidene – informasjon; taxiprisene – en ting; håndkleet – en handling;
+      å bestille taxi – informasjon.
+    correct: false
+    why: Taxi prices are information, the towel is an item, and booking a taxi is
+      an action.
+  - id: correct
+    text: frokosttidene – informasjon; taxiprisene – informasjon; håndkleet – en ting;
+      å bestille taxi – en handling.
+    correct: true
+    why: This maps breakfast times and taxi prices to information, the towel to an
+      item, and booking the taxi to an action.
+- handle: controlled_practice_requesting_things_and_actions
+  op: write
+  objective: obj-be-om-or-sporre-om-01
+  bloom: apply
+  prompt_md: Write five numbered Norwegian requests, one for each situation. Use be
+    om in every sentence. When another person must perform the action, put that person
+    before om å. 1. At a café, request the bill. 2. At a hotel, request another pillow.
+    3. Ask a colleague to send an email. 4. Ask a taxi driver to wait outside. 5.
+    At an office, request a copy of a document.
+  derived_from:
+  - section_id: controlled-practice-requesting-things-and-actions
+  response_language: 'no'
+  judge_prompt: Check all five Norwegian requests against every criterion. Accept
+    natural Bokmål variants that preserve the requested meaning and the required be
+    om pattern. Do not require the example wording; report evidence for each criterion.
+  criteria:
+  - id: cafe-bill
+    instruction: Requests the bill at a café with be om, placing the requested item
+      after om; for example, Jeg vil be om regningen.
+  - id: hotel-pillow
+    instruction: Requests another pillow at a hotel with be om, placing en ekstra
+      pute after om; for example, Jeg vil be om en ekstra pute.
+  - id: colleague-email
+    instruction: Asks a colleague to send an email with the colleague before om å;
+      for example, Jeg vil be kollegaen om å sende en e-post.
+  - id: taxi-wait
+    instruction: Asks a taxi driver to wait outside with the driver before om å; for
+      example, Jeg vil be taxisjåføren om å vente utenfor.
+  - id: document-copy
+    instruction: Requests a copy of a document at an office with the requested item
+      after om; for example, Jeg vil be om en kopi av et dokument.
+- handle: second_checkpoint_formulate_information_questions
+  op: write
+  objective: obj-be-om-or-sporre-om-01
+  bloom: apply
+  prompt_md: 'For each item, write only the missing first sentence. Use spørre om
+    to introduce the topic. The supplied direct question is the unchanged second sentence
+    and is shown below. Do not rewrite the supplied question; direct-question construction
+    is not assessed. 1. Breakfast at a hotel — supplied second sentence: Når begynner
+    frokosten? / When does breakfast start? 2. The price of a train ticket — supplied
+    second sentence: Hvor mye koster en togbillett? / How much does a train ticket
+    cost? 3. Opening hours at a museum — supplied second sentence: Når åpner museet?
+    / When does the museum open? 4. A course at a language school — supplied second
+    sentence: Når begynner kurset? / When does the course start?'
+  derived_from:
+  - section_id: second-checkpoint-formulate-information-questions
+  response_language: 'no'
+  judge_prompt: Check one Norwegian first sentence for each of the four supplied questions.
+    Accept natural variants that use spørre om and identify the supplied information
+    topic. Do not score the construction of the supplied direct questions.
+  criteria:
+  - id: breakfast-topic
+    instruction: Uses spørre om to introduce the breakfast-start topic; a natural
+      answer such as Jeg vil spørre om frokosttidene is accepted.
+  - id: train-price-topic
+    instruction: Uses spørre om to introduce the price of a train ticket; a natural
+      answer such as Jeg vil spørre om prisen på en togbillett is accepted.
+  - id: museum-hours-topic
+    instruction: Uses spørre om to introduce the museum opening-time topic; a natural
+      answer such as Jeg vil spørre om museets åpningstid is accepted.
+  - id: course-start-topic
+    instruction: Uses spørre om to introduce the course-start topic; a natural answer
+      such as Jeg vil spørre om kursstarten is accepted.
+  - id: four-topic-introductions
+    instruction: Provides one first-sentence topic introduction for each of the four
+      supplied questions and leaves those supplied questions unchanged; score topic
+      framing, not direct-question construction.
+- handle: contrast_practice_change_intended_result
+  op: write
+  objective: obj-be-om-or-sporre-om-01
+  bloom: apply
+  prompt_md: For each setting, write two Norwegian sentences. In the first sentence,
+    request an item or action with be om. In the second sentence, ask for related
+    information with spørre om. Keep the two intended results distinct. - A menu in
+    a restaurant - A ticket at a station - A room in a hotel - A document at work
+  derived_from:
+  - section_id: contrast-practice-change-intended-result
+  response_language: 'no'
+  judge_prompt: Check all four ordered pairs against every criterion. Accept natural
+    Bokmål variants that clearly distinguish the requested item or action from the
+    related information topic. Report evidence for each criterion.
+  criteria:
+  - id: restaurant-menu-pair
+    instruction: 'Writes an ordered restaurant-menu pair: the first sentence uses
+      be om to request the menu as an item, and the second uses spørre om for related
+      menu information; for example, Jeg vil be om menyen. Jeg vil spørre om dagens
+      meny.'
+  - id: station-ticket-pair
+    instruction: 'Writes an ordered station-ticket pair: the first sentence uses be
+      om to request a ticket, and the second uses spørre om for ticket information;
+      for example, Jeg vil be om en billett. Jeg vil spørre om billettprisen.'
+  - id: hotel-room-pair
+    instruction: 'Writes an ordered hotel-room pair: the first sentence uses be om
+      to request a room, and the second uses spørre om for room information; for example,
+      Jeg vil be om et rom. Jeg vil spørre om prisen på rommet.'
+  - id: work-document-pair
+    instruction: 'Writes an ordered work-document pair: the first sentence uses be
+      om to request a document or copy, and the second uses spørre om for document
+      information; for example, Jeg vil be om en kopi av dokumentet. Jeg vil spørre
+      om når dokumentet er klart.'
+- handle: guided_correction_activity
+  op: write
+  objective: obj-be-om-or-sporre-om-01
+  bloom: apply
+  prompt_md: Rewrite each intended message as one natural Norwegian sentence. 1. You
+    want a receptionist to give you a key. 2. You want information about breakfast.
+    3. You want a colleague to print a document. 4. You want information about a meeting.
+    5. You want a waiter to bring water. 6. You want information about the water.
+  derived_from:
+  - section_id: guided-correction-activity
+  response_language: 'no'
+  judge_prompt: Check all six Norwegian sentences against every criterion. Accept
+    natural variants that preserve the intended meaning and the be om or spørre om
+    distinction. Do not require the example wording; report evidence for each criterion.
+  criteria:
+  - id: receptionist-key
+    instruction: Uses be om for the receptionist's giving a key, with a natural construction
+      such as Jeg vil be resepsjonisten om å gi meg en nøkkel.
+  - id: breakfast-information
+    instruction: Uses spørre om to frame breakfast as the information topic, with
+      a natural construction such as Jeg vil spørre om frokosttidene.
+  - id: colleague-printing
+    instruction: Uses be om for the colleague's printing a document, placing the colleague
+      before om å; for example, Jeg vil be kollegaen om å skrive ut et dokument.
+  - id: meeting-information
+    instruction: Uses spørre om to frame the meeting as the information topic, with
+      a natural construction such as Jeg vil spørre om møtet.
+  - id: waiter-water
+    instruction: Uses be om for the waiter to bring water, placing the waiter before
+      om å; for example, Jeg vil be servitøren om å ta med vann.
+  - id: water-information
+    instruction: Uses spørre om to frame the water as the information topic, with
+      a natural construction such as Jeg vil spørre om vannet.
+- handle: final_contextual_practice
+  op: write
+  objective: obj-be-om-or-sporre-om-01
+  bloom: apply
+  prompt_md: 'Write a short Norwegian hotel-reception dialogue with two guests and
+    one receptionist. Label the speakers clearly. Put one Norwegian topic-introduction
+    sentence using spørre om immediately before this supplied exchange, and copy both
+    supplied turns exactly: Guest — Når begynner frokosten? Receptionist — Frokosten
+    begynner klokka halv sju. The supplied Guest line counts as one guest; add a second
+    guest. Include one request for an item with be om and one request for a person
+    to perform an action with be [person] om å [verb]. Keep the situation specific
+    and make every use of be om or spørre om clear. Direct-question construction is
+    not assessed.'
+  derived_from:
+  - section_id: final-contextual-practice
+  response_language: 'no'
+  judge_prompt: Check the dialogue against every criterion. Accept natural Bokmål
+    variants for the two requests, but require the supplied turns and their punctuation
+    to remain unchanged. Report evidence for each criterion.
+  criteria:
+  - id: hotel-roles
+    instruction: Contains a specific hotel-reception dialogue with two distinct guests
+      and one receptionist.
+  - id: breakfast-topic-exchange
+    instruction: 'Places a sentence using spørre om that introduces breakfast as a
+      topic immediately before these unchanged consecutive turns: Guest — Når begynner
+      frokosten? Receptionist — Frokosten begynner klokka halv sju.'
+  - id: item-request
+    instruction: Includes a clear be om request for an item; for example, Guest 2
+      — Jeg vil be om et ekstra håndkle.
+  - id: action-request
+    instruction: Includes a clear be om request for a person to perform an action,
+      placing the person before om å; for example, Guest 2 — Jeg vil be deg om å bestille
+      en taxi.
+  - id: clear-intended-results
+    instruction: Makes the intended result of every use of be om or spørre om understandable
+      from the hotel context.
+- handle: retrieval_and_review
+  op: write
+  objective: obj-be-om-or-sporre-om-01
+  bloom: apply
+  prompt_md: Complete all three tasks in Norwegian using your own wording and a new
+    communicative situation and lexical frame for the Norwegian production. 1. In one
+    sentence, explain how be om frames a requested item or action while spørre om
+    frames something as a topic. 2. Write one Norwegian sentence requesting an item
+    and one requesting an action. 3. Write one Norwegian sentence using spørre om to
+    ask about a price or opening time as a topic.
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  judge_prompt: Check the four requested Norwegian outputs against every criterion.
+    Accept natural variants that preserve the taught distinction and use a new situation
+    and lexical frame. Report evidence for each criterion.
+  criteria:
+  - id: distinction-explanation
+    instruction: Explains in one Norwegian sentence that be om is used for a requested
+      item or action, while spørre om frames information as a topic; for example,
+      Be om brukes for en ting eller handling, mens spørre om brukes for informasjon.
+  - id: item-request
+    instruction: Writes one Norwegian sentence using be om to request a concrete item
+      in a new situation and lexical frame.
+  - id: action-request
+    instruction: Writes one Norwegian sentence using be om to request an action, placing
+      the requested person before om å.
+  - id: information-topic
+    instruction: Writes one Norwegian sentence using spørre om to ask about a price
+      or opening time as an information topic in a new situation and lexical frame.

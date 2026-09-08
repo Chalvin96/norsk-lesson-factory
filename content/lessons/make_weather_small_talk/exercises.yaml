@@ -1,0 +1,94 @@
+- handle: first_checkpoint_opening
+  op: write
+  objective: obj-make-weather-small-talk-01
+  bloom: apply
+  prompt_md: 'Write one short Norwegian weather observation for the situation where you and Nora are waiting outside a rainy cafe and it is raining heavily.'
+  derived_from:
+  - section_id: first-checkpoint-make-opening
+  response_language: 'no'
+  min_words: 3
+  max_words: 60
+  judge_prompt: Check the Norwegian response against the task and report evidence for each criterion.
+  criteria:
+  - id: criterion-1
+    instruction: 'opens the exchange with a natural Norwegian observation about the heavy rain'
+- handle: second_checkpoint_acknowledge_contrast
+  op: write
+  objective: obj-make-weather-small-talk-01
+  bloom: apply
+  prompt_md: 'Write a brief Norwegian response that acknowledges the rain and adds the contrast that it is not very cold.'
+  derived_from:
+  - section_id: second-checkpoint-acknowledge-add-detail
+  response_language: 'no'
+  min_words: 3
+  max_words: 60
+  judge_prompt: Check the Norwegian response against the task and report evidence for each criterion.
+  criteria:
+  - id: criterion-1
+    instruction: 'acknowledges the rain'
+  - id: criterion-2
+    instruction: 'adds the contrast that it is not very cold'
+- handle: third_checkpoint_middle_exchange
+  op: write
+  objective: obj-make-weather-small-talk-01
+  bloom: apply
+  prompt_md: 'Write one connected Norwegian response to the strong wind with an acknowledgement, a short contrast, and a relevant follow-up question about the ferry.'
+  derived_from:
+  - section_id: third-checkpoint-build-middle
+  response_language: 'no'
+  min_words: 3
+  max_words: 60
+  judge_prompt: Check the Norwegian response against the task and report evidence for each criterion.
+  criteria:
+  - id: criterion-1
+    instruction: 'acknowledges the strong wind'
+  - id: criterion-2
+    instruction: 'adds a short weather contrast'
+  - id: criterion-3
+    instruction: 'asks a relevant follow-up question about the ferry'
+- handle: final_guided_exchange
+  op: write
+  objective: obj-make-weather-small-talk-01
+  bloom: apply
+  prompt_md: Write a short Norwegian exchange between Nora and Amir outside a grocery
+    shop on a hot afternoon. One person should open with a weather observation. The
+    other should acknowledge or gently contrast it and ask one related follow-up.
+    End by either closing politely or adding one sentence that clearly continues the
+    exchange.
+  response_language: 'no'
+  judge_prompt: Check the Norwegian exchange against the task and report evidence
+    for each criterion. Accept natural Bokmål variants that preserve the requested
+    meaning and conversational sequence.
+  criteria:
+  - id: brief-exchange
+    instruction: Keeps the exchange brief.
+  - id: connected-turns
+    instruction: Uses connected turns.
+  - id: clear-direction
+    instruction: Makes the conversation direction clear from opening to close or continuation.
+  derived_from:
+  - section_id: final-guided-practice
+- handle: retrieval_review_weather_exchange
+  op: write
+  objective: obj-make-weather-small-talk-01
+  bloom: apply
+  prompt_md: 'Write exactly four connected Norwegian lines about one weather situation:
+    one weather opening, one natural acknowledgement or contrast, one follow-up question,
+    and one closing sentence.'
+  response_language: 'no'
+  judge_prompt: Check the four Norwegian lines against the task and report evidence
+    for each criterion. Accept natural Bokmål variants that preserve the requested
+    meaning and sequence.
+  criteria:
+  - id: weather-opening
+    instruction: Includes a weather opening.
+  - id: acknowledgement-or-contrast
+    instruction: Includes a natural acknowledgement or contrast.
+  - id: follow-up-question
+    instruction: Includes a follow-up question.
+  - id: closing-sentence
+    instruction: Includes a closing sentence.
+  - id: same-weather-situation
+    instruction: Keeps all four lines connected to the same weather situation.
+  derived_from:
+  - section_id: retrieval-and-review

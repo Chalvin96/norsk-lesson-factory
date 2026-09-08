@@ -1,0 +1,55 @@
+{% macro spans(values) -%}
+{%- if values is mapping -%}{{ values }}
+{%- elif values is string -%}{{ values }}
+{%- elif values is iterable -%}
+  {%- for span in values -%}
+    {%- if span is mapping and span.get("kind") == "sentence" -%}{{ spans(span.get("children", [])) }}
+    {%- elif span is mapping -%}
+      {%- set value = span.get("value", "") -%}
+      {%- if span.get("kind") == "emphasis" -%}<em>{{ value }}</em>
+      {%- elif span.get("kind") == "strong" -%}<strong>{{ value }}</strong>
+      {%- elif span.get("kind") == "code" -%}<code>{{ value }}</code>
+      {%- elif span.get("kind") == "foreign_term" -%}<span class="foreign-term" lang="{{ span.get("lang", "en") }}">{{ value }}</span>
+      {%- else -%}{{ value }}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- else -%}{{ values or "" }}{%- endif -%}
+{%- endmacro %}
+
+{% macro blocks(items) -%}
+{%- for block in items -%}
+  {%- set kind = block.get("kind") -%}
+  {%- if kind == "heading" -%}<{{ "h3" if block.get("level") == 3 else "h4" }} class="content-heading" lang="en">{{ spans(block.get("spans", [])) }}</{{ "h3" if block.get("level") == 3 else "h4" }}>
+  {%- elif kind == "paragraph" -%}<p lang="en">{{ spans(block.get("spans", [])) }}</p>
+  {%- elif kind == "reading" -%}<div class="reading-block">{% if block.get("speaker_name") %}<span class="speaker">{{ block.get("speaker_name") }}</span>{% endif %}<div class="reading-text" lang="nb">{{ spans(block.get("spans", [])) }}</div><div class="translation" lang="en">{{ block.get("translation", "") }}</div><span class="audio-label">Audio unavailable · provider-free preview</span></div>
+  {%- elif kind == "list" -%}<{{ "ol" if block.get("ordered") else "ul" }} lang="en">{% for item in block.get("items", []) %}<li lang="en">{{ spans(item) }}</li>{% endfor %}</{{ "ol" if block.get("ordered") else "ul" }}>
+  {%- elif kind == "rule" -%}<div class="rule" lang="en"><span>Rule</span>{{ spans(block.get("statement", [])) }}</div>
+  {%- elif kind == "example" -%}<div class="example"><div lang="nb">{{ spans(block.get("no", [])) }}</div><div class="translation" lang="en">{{ spans(block.get("en", [])) }}</div></div>
+  {%- elif kind == "examples" -%}<div class="examples">{% for item in block.get("items", []) %}<div class="example"><div lang="nb">{{ spans(item.get("no", [])) }}</div><div class="translation" lang="en">{{ spans(item.get("en", [])) }}</div></div>{% endfor %}</div>
+  {%- elif kind == "word_list" -%}<dl class="word-list">{% for item in block.get("items", []) %}<dt lang="nb">{{ item.get("term", "") }}</dt><dd lang="en">{{ item.get("form", "") }}</dd>{% endfor %}</dl>
+  {%- elif kind == "table" -%}<div class="table-wrap"><span class="muted table-caption">Table · {{ block.get("col_langs", [])|join(" · ") }}</span><table><thead><tr>{% for cell in block.get("headers", []) %}<th scope="col" lang="{{ block.get("col_langs", [])[loop.index0] if loop.index0 < block.get("col_langs", [])|length else "en" }}">{{ spans(cell) }}</th>{% endfor %}</tr></thead><tbody>{% for row in block.get("rows", []) %}<tr>{% for cell in row %}<td lang="{{ block.get("col_langs", [])[loop.index0] if loop.index0 < block.get("col_langs", [])|length else "en" }}">{{ spans(cell) }}</td>{% endfor %}</tr>{% endfor %}</tbody></table></div>
+  {%- elif kind == "callout" -%}<aside class="callout callout-{{ block.get("level", "note") }}" lang="en"><strong>{{ block.get("level", "note") }}</strong>{{ blocks(block.get("blocks", [])) }}</aside>
+  {%- else -%}<div class="unknown">Unsupported block kind: {{ block.get("kind") }}</div>
+  {%- endif -%}
+{%- endfor -%}
+{%- endmacro %}
+
+{% macro payload(operation, data) -%}
+{# Choose option.text is mixed authored content under the public schema; the schema has no per-fragment language field, so the preview deliberately leaves it untagged instead of inferring language from vocabulary. #}
+{%- if operation == "choose" -%}<div class="answer-panel"><strong>Author answer</strong>{% if data.get("stem") %}<div class="exercise-stem" lang="en"><span class="field-label">Question stem</span>{{ spans(data.get("stem", [])) }}</div>{% endif %}<ul>{% for option in data.get("options", []) %}<li class="{{ "answer" if option.get("option_id") == data.get("answer_id") else "" }}">{{ option.get("text", "") }}{% if option.get("option_id") == data.get("answer_id") %} · Answer{% endif %}{% if option.get("why") %}<small lang="en">Why: {{ option.get("why") }}</small>{% endif %}</li>{% endfor %}</ul></div>
+{%- elif operation == "recall_fill" -%}<div class="answer-panel"><strong>Author answer · fill order</strong><p class="recall-line">{% for item in data.get("segments", []) %}{% if item.get("kind") == "span" %}{{ spans(item.get("spans", [])) }}{% else %}{% set options = item.get("options", []) %}{% set index = item.get("answer_index", 0) %}<mark lang="nb">{{ item.get("blank_id", "blank") }} = {{ options[index] if options and index is number and index >= 0 and index < options|length else "" }}</mark><small lang="nb">Options: {{ options|join(" · ") }}</small>{% endif %}{% endfor %}</p></div>
+{%- elif operation == "match_pairs" -%}<div class="answer-panel"><strong>Author answer · pairs</strong><ul>{% for pair in data.get("pairs", []) %}<li>{{ (data.get("left", [])|selectattr("left_id", "equalto", pair.get("left_id"))|map(attribute="text")|first) or pair.get("left_id") }} <span>→</span> {{ (data.get("right", [])|selectattr("right_id", "equalto", pair.get("right_id"))|map(attribute="text")|first) or pair.get("right_id") }}</li>{% endfor %}</ul><details><summary>All authored sides</summary><div class="muted">Left</div><ul>{% for item in data.get("left", []) %}<li>{{ item.get("text", "") }}</li>{% endfor %}</ul><div class="muted">Right</div><ul>{% for item in data.get("right", []) %}<li>{{ item.get("text", "") }}</li>{% endfor %}</ul></details></div>
+{%- elif operation == "judge" -%}<div class="answer-panel"><strong>Author judgment · {{ "correct" if data.get("is_correct") else "incorrect" }}</strong><p lang="nb">{{ spans(data.get("sentence", [])) }}</p><p lang="en">{{ data.get("feedback") or "No feedback authored" }}</p></div>
+{%- elif operation == "categorize" -%}<div class="answer-panel"><strong>Author answer · categories</strong><ul>{% for item in data.get("items", []) %}<li>{{ item.get("text", "") }} <span>→ {% for bucket in data.get("buckets", []) if bucket.get("bucket_id") == item.get("bucket_id") %}{{ bucket.get("label") }}{% else %}{{ item.get("bucket_id") }}{% endfor %}</span></li>{% endfor %}</ul></div>
+{%- elif operation == "build" -%}<div class="answer-panel"><strong>Author answer · build order</strong><p lang="nb">{% for token_id in data.get("answer_order", []) %}{% for token in data.get("tokens", []) if token.get("token_id") == token_id %}{{ token.get("text") }}{% else %}{{ token_id }}{% endfor %}{{ " " if not loop.last else "" }}{% endfor %}</p><details><summary>Authored token bank</summary><p lang="nb">{% for token in data.get("tokens", []) %}{{ token.get("text", "") }}{% if token.get("fixed") %} [fixed]{% endif %}{{ " " if not loop.last else "" }}{% endfor %}</p></details></div>
+{%- elif operation == "find_fix" -%}<div class="answer-panel"><strong>Original sentence · error marked</strong><p lang="nb">{% for token in data.get("tokens", []) %}{{ token.get("text", "") }}{% if token.get("token_id") == data.get("error_token_id") %} [error]{% endif %}{{ " " if not loop.last else "" }}{% endfor %}</p><p lang="en"><strong>Authored feedback</strong><br>{{ data.get("feedback", "") }}</p></div>
+{%- elif operation == "speak" -%}<div class="answer-panel"><strong>Author target</strong><p lang="nb">{{ data.get("target", "") }}</p></div>
+{%- elif operation == "write" -%}<div class="answer-panel"><strong>Author rubric</strong><p>{% for key in ("response_language", "min_words", "max_words") if data.get(key) is not none %}{{ key|replace("_", " ") }}: {{ data.get(key) }}{{ " · " if not loop.last else "" }}{% endfor %}</p><p lang="en">{{ data.get("judge_prompt", "") }}</p><ul>{% for item in data.get("criteria", []) %}<li><strong>{{ item.get("id", "") }}</strong> {{ item.get("instruction", "") }}</li>{% endfor %}</ul></div>
+{%- else -%}<div class="answer-panel"><strong>Author payload</strong><pre class="source">{{ data|tojson(indent=2) }}</pre></div>
+{%- endif -%}
+{%- endmacro %}
+
+{% macro finding(item) -%}
+<div class="finding finding-{{ item.get("severity", "minor") }}"><div><strong>{{ item.get("code", "finding") }}</strong><span class="muted">{{ item.get("artifact", "source") }} · {{ item.get("location", "") }}</span></div><p>{{ item.get("explanation", item.get("evidence", "")) }}</p></div>
+{%- endmacro %}

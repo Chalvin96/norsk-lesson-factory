@@ -1,0 +1,215 @@
+- handle: identify_removed_requirement
+  op: choose
+  objective: obj-slippe-aa-or-la-vaere-aa-01
+  bloom: understand
+  prompt_md: Use the Saturday-event context. The three relevant tasks are meeting
+    early, collecting the cakes, and baking the cakes. Choose the complete interpretation
+    that connects each task to the caretaker, the delivery, or the bakery order. The
+    interpretation must show that slippe å removes a requirement, not that the task
+    is necessarily not performed.
+  derived_from:
+  - section_id: when-a-requirement-disappears
+  stem_md: Which interpretation correctly connects the three uses of slippe å to the
+    arrangements?
+  options:
+  - id: correct
+    text: Vaktmesterens hjelp gjør at vi slipper å møte tidlig; leveringen gjør at
+      Nora slipper å hente kakene; bestillingen hos bakeriet gjør at Nora slipper
+      å bake kakene. Kravene er fjernet, men setningene sier ikke at oppgavene ikke
+      blir gjort.
+    correct: true
+    why: The caretaker removes the need to meet early, the delivery removes the need
+      to collect the cakes, and the bakery order removes the need to bake them. None
+      of this proves that the actions do not happen.
+  - id: swapped-arrangements
+    text: Vaktmesterens hjelp gjør at vi slipper å bake kakene; leveringen gjør at
+      Nora slipper å møte tidlig; bestillingen hos bakeriet gjør at Nora slipper å
+      hente kakene. Ordningene er eksterne, men koblingene er feil.
+    correct: false
+    why: The arrangements are assigned to the wrong tasks.
+  - id: personal-choice
+    text: Vaktmesterens hjelp gjør at vi lar være å møte tidlig; leveringen gjør at
+      Nora lar være å hente kakene; bestillingen hos bakeriet gjør at Nora lar være
+      å bake kakene. Alle tre oppgavene er fortsatt mulige, men dette er personlige
+      valg.
+    correct: false
+    why: The context describes requirements removed by arrangements, not deliberate
+      personal decisions.
+- handle: identify_deliberate_non_action
+  op: choose
+  objective: obj-slippe-aa-or-la-vaere-aa-01
+  bloom: understand
+  prompt_md: Use the examples about Emil cycling and Nora buying more coffee. Choose
+    the interpretation that explains both decisions, including that each action remains
+    possible and is deliberately rejected.
+  derived_from:
+  - section_id: when-someone-intentionally-does-nothing
+  stem_md: Which interpretation correctly explains Emil's and Nora's deliberate non-action?
+  options:
+  - id: absent-necessity
+    text: Emil slipper å sykle fordi veien er glatt, og Nora slipper å kjøpe mer kaffe.
+      Handlingene er derfor bare unødvendige, ikke bevisste valg.
+    correct: false
+    why: This treats both situations as absent necessity instead of deliberate non-action.
+  - id: impossible-actions
+    text: Emil kunne sykle, men veien gjør sykling umulig; Nora kunne kjøpe mer kaffe,
+      men en regel gjør kjøpet umulig. De lar være å handle fordi handlingene ikke
+      lenger er mulige.
+    correct: false
+    why: The lesson says the actions remain available; the people choose not to do
+      them.
+  - id: correct
+    text: Emil kunne sykle, men han lar være å sykle fordi veien er glatt. Nora kunne
+      kjøpe mer kaffe, men hun lar være å kjøpe mer kaffe fordi hun bestemmer seg
+      for ikke å gjøre det.
+    correct: true
+    why: Both actions remain possible, and each person deliberately chooses not to
+      perform the action.
+- handle: complete_fixed_need_or_choice_frames
+  op: recall_fill
+  objective: obj-slippe-aa-or-la-vaere-aa-01
+  bloom: apply
+  prompt_md: Complete each fixed present frame. Choose slipper å for an action that
+    is no longer required and lar være å for a deliberate decision not to act.
+  derived_from:
+  - section_id: form-and-placement
+  audio_target: "Bakeriet leverer kakene, så Nora slipper å hente dem. Emil synes veien er glatt, men han lar være å sykle. Lokalet er klart, så vi slipper å komme tidlig. Nora har bestemt seg for ikke å kjøpe mer kaffe, så hun lar være å kjøpe mer kaffe."
+  segments:
+  - text_md: 'Bakeriet leverer kakene, så Nora '
+  - blank_id: frame-need-1
+    options:
+    - slipper å
+    - lar være å
+    answer_index: 0
+  - text_md: ' hente dem.'
+  - text_md: ' Emil synes veien er glatt, men han '
+  - blank_id: frame-choice-1
+    options:
+    - slipper å
+    - lar være å
+    answer_index: 1
+  - text_md: ' sykle.'
+  - text_md: ' Lokalet er klart, så vi '
+  - blank_id: frame-need-2
+    options:
+    - slipper å
+    - lar være å
+    answer_index: 0
+  - text_md: ' komme tidlig.'
+  - text_md: ' Nora har bestemt seg for ikke å kjøpe mer kaffe, så hun '
+  - blank_id: frame-choice-2
+    options:
+    - slipper å
+    - lar være å
+    answer_index: 1
+  - text_md: ' kjøpe mer kaffe.'
+- handle: explain_external_requirement_or_intentional_non_action
+  op: write
+  objective: obj-slippe-aa-or-la-vaere-aa-01
+  bloom: apply
+  prompt_md: Read the paired situations below. In Norwegian, explain which sentence
+    expresses absent necessity caused by an external arrangement and which expresses
+    deliberate non-action. Add one plausible reason for each interpretation. Do not
+    translate both expressions as a general negative. - Arrangøren dekker gebyret
+    for Ida. Ida slipper å betale gebyret. - Jonas kan svare på meldingen, men han
+    lar være å svare på meldingen.
+  derived_from:
+  - section_id: practice-explain-the-difference
+  response_language: 'no'
+  min_words: 35
+  max_words: 70
+  judge_prompt: Check the Norwegian response against the task and report evidence
+    for each criterion. Accept natural Bokmål paraphrases, but require a clear contrast
+    between externally removed necessity and deliberate choice.
+  criteria:
+  - id: external-arrangement
+    instruction: Links the sentence with slippe å to the organizer's external arrangement
+      and explains that payment is not required from Ida.
+  - id: intentional-choice
+    instruction: Links the sentence with la være å to Jonas's deliberate non-action
+      while replying remains possible.
+  - id: plausible-reasons
+    instruction: Gives one plausible reason for each interpretation.
+- handle: build_cause_before_choosing_phrase
+  op: write
+  objective: obj-slippe-aa-or-la-vaere-aa-01
+  bloom: apply
+  prompt_md: Write two separate two-sentence situations in Norwegian. In the first,
+    sentence 1 must establish that a colleague takes over a work task, and sentence
+    2 must summarize the result with slipper å. In the second, sentence 1 must establish
+    that you decide not to send an angry message, and sentence 2 must summarize the
+    result with lar være å. Put each cause or decision before its phrase, and do not
+    use either target expression until sentence 2 of its situation.
+  derived_from:
+  - section_id: practice-build-a-cause-before-choosing-the-phrase
+  response_language: 'no'
+  min_words: 25
+  max_words: 55
+  judge_prompt: Check the Norwegian response against the two assigned situations and
+    report evidence for each criterion. Accept natural present-tense Bokmål forms
+    of the required expressions.
+  criteria:
+  - id: external-cause-before-phrase
+    instruction: Establishes the colleague's takeover in sentence 1 and uses slipper
+      å in sentence 2 to express absent necessity.
+  - id: personal-decision-before-phrase
+    instruction: Establishes the decision not to send an angry message in sentence
+      1 and uses lar være å in sentence 2 to express deliberate non-action.
+  - id: cause-precedes-expression
+    instruction: Places each assigned cause or personal decision before the corresponding
+      phrase, rather than choosing the phrase before the context is clear.
+- handle: continue_saturday_preparations
+  op: write
+  objective: obj-slippe-aa-or-la-vaere-aa-01
+  bloom: apply
+  prompt_md: 'Continue this Saturday preparation exchange in Norwegian with 3–5 short
+    updates involving Sigrid, Nora, and Emil. Do not copy the given lines. Sigrid:
+    Lokalet er allerede pyntet, så dere slipper å komme tidlig. Emil: Flott. Da lar
+    jeg være å sette alarmen på seks. Nora: Jeg slipper også å hente kakene. Bakeriet
+    kjører dem ut. Include at least one new task that is no longer required because
+    of Sigrid, a delivery service, the weather, or another arrangement. Use slippe
+    å and state the arrangement that explains it. Also include at least one action
+    that Nora or Emil deliberately chooses not to perform, using la være å.'
+  derived_from:
+  - section_id: back-to-saturdays-event
+  response_language: 'no'
+  min_words: 35
+  max_words: 70
+  judge_prompt: Check the Norwegian continuation against the task and report evidence
+    for each criterion. Accept natural Bokmål wording and inflection when the two
+    meanings remain clear.
+  criteria:
+  - id: new-removed-requirement
+    instruction: Uses a natural form of slippe å for a newly described task that is
+      no longer required and explicitly includes the arrangement that removed the
+      need.
+  - id: intentional-non-action
+    instruction: Uses a natural form of la være å for an action Nora or Emil intentionally
+      chooses not to perform.
+- handle: retrieve_need_or_choice_contrast
+  op: write
+  objective: obj-slippe-aa-or-la-vaere-aa-01
+  bloom: apply
+  prompt_md: Write both final-review ideas in Norwegian and
+    briefly explain the difference. For the first idea, describe a changed situation
+    that removes the need to do a task and use the present frame slipper å. For the
+    second, describe a task that remains possible but is deliberately not done and
+    use the present frame lar være å. Use your own tasks rather than copying a complete
+    prompt sentence, then add one brief Norwegian explanation of the contrast.
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  min_words: 25
+  max_words: 55
+  judge_prompt: Check the Norwegian review against the task and report evidence for
+    each criterion. Accept natural Bokmål paraphrases that preserve the two meanings.
+  criteria:
+  - id: need-meaning
+    instruction: Uses slipper å for the first idea, where a changed situation removes
+      the need to perform the task.
+  - id: choice-meaning
+    instruction: Uses lar være å for the second idea, where the task remains possible
+      but is deliberately not performed.
+  - id: contrast-explained
+    instruction: Briefly explains in Norwegian the difference between absent necessity
+      and intentional non-action.

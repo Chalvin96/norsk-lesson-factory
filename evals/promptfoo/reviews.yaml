@@ -1,0 +1,14 @@
+description: Evaluate reviewer and judge prompts against labeled content cases.
+
+prompts:
+  - file://prompts.py:create_review_prompt
+
+providers:
+  - id: file://provider.py:call_api
+    label: configured-reviewer
+    config:
+      job: reviewer
+
+defaultTest: file://defaults/structured-response.yaml
+
+tests: file://cases/reviews.yaml

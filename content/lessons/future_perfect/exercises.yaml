@@ -1,0 +1,466 @@
+- handle: future_completion_timeline
+  op: choose
+  objective: obj-future-perfect-01
+  bloom: understand
+  prompt_md: 'Two workplace situations: Maja has not finished the report yet, and
+    the meeting is later. Eirik has not sent the plan yet, and lunch is later. Choose
+    the complete interpretation for both situations: the action is unfinished now
+    and will be complete before the stated later point.'
+  derived_from:
+  - section_id: first-checkpoint-finding-time-points
+  stem_md: Choose the interpretation that expresses future completion in both situations.
+  options:
+  - id: present-completion
+    text: 1. Maja har skrevet rapporten nå. / Maja has written the report now. 2.
+      Eirik har sendt planen allerede. / Eirik has already sent the plan.
+    correct: false
+    why: Both statements present the actions as complete now, not unfinished until
+      a later point.
+  - id: ordinary-future
+    text: 1. Maja skal skrive rapporten etter møtet. / Maja will write the report
+      after the meeting. 2. Eirik skal sende planen ved lunsj. / Eirik will send the
+      plan at lunch.
+    correct: false
+    why: These statements describe future activities, not completion before the later
+      points.
+  - id: future-completion
+    text: 1. Maja er ikke ferdig med rapporten ennå, men hun skal ha skrevet den før
+      møtet. / Maja has not finished the report yet, but she will have written it
+      before the meeting. 2. Eirik har ikke sendt planen ennå, men han vil ha sendt
+      den før lunsj. / Eirik has not sent the plan yet, but he will have sent it before
+      lunch.
+    correct: true
+    why: Both statements identify an unfinished action and completion before a later
+      point.
+  - id: after-deadline
+    text: 1. Maja skal ha skrevet rapporten etter møtet. / Maja will have written
+      the report after the meeting. 2. Eirik vil ha sendt planen etter lunsj. / Eirik
+      will have sent the plan after lunch.
+    correct: false
+    why: Both actions are completed after the stated later points rather than before
+      them.
+- handle: future_completion_form
+  op: recall_fill
+  objective: obj-future-perfect-01
+  bloom: apply
+  prompt_md: Complete each Norwegian sentence with the correct future-perfect unit.
+    Each future marker is already supplied.
+  explanation_md: "Future perfect uses a future marker + «ha» + past participle to show completion before a later deadline or reference point."
+  derived_from:
+  - section_id: form-checkpoint
+  audio_target: "Før møtet skal jeg ha skrevet rapporten. Ved lunsj vil Eirik ha sendt planen. Før fredag kommer vi til å ha gjort ferdig oppgaven. Når kurset er slutt, vil jeg ha lest den siste teksten."
+  segments:
+  - text_md: 'Før møtet skal jeg '
+  - blank_id: form-written
+    options:
+    - ha skrevet
+    - skrive
+    answer_index: 0
+  - text_md: ' rapporten. Ved lunsj vil Eirik '
+  - blank_id: form-sent
+    options:
+    - ha sendt
+    - sende
+    answer_index: 0
+  - text_md: ' planen. Før fredag kommer vi til å '
+  - blank_id: form-done
+    options:
+    - ha gjort ferdig
+    - gjøre ferdig
+    answer_index: 0
+  - text_md: ' oppgaven. Når kurset er slutt, vil jeg '
+  - blank_id: form-read
+    options:
+    - ha lest
+    - lese
+    answer_index: 0
+  - text_md: ' den siste teksten.'
+- handle: skal_ha_deadline_commitment
+  op: build
+  objective: obj-future-perfect-01
+  bloom: apply
+  prompt_md: 'Build the Norwegian sentence meaning: I will have sent the application
+    by Monday.'
+  derived_from:
+  - section_id: plan-and-deadline-checkpoint
+  tokens:
+  - token_id: tok-skal-1
+    text: Jeg
+  - token_id: tok-skal-2
+    text: skal
+  - token_id: tok-skal-3
+    text: ha
+  - token_id: tok-skal-4
+    text: sendt
+  - token_id: tok-skal-5
+    text: søknaden
+  - token_id: tok-skal-6
+    text: innen
+  - token_id: tok-skal-7
+    text: mandag.
+  answer_order:
+  - tok-skal-1
+  - tok-skal-2
+  - tok-skal-3
+  - tok-skal-4
+  - tok-skal-5
+  - tok-skal-6
+  - tok-skal-7
+- handle: vil_ha_future_viewpoint
+  op: build
+  objective: obj-future-perfect-01
+  bloom: apply
+  prompt_md: 'Build the Norwegian sentence meaning: When the film begins, Sara will
+    have read the text.'
+  derived_from:
+  - section_id: prediction-checkpoint
+  tokens:
+  - token_id: tok-vil-1
+    text: Når
+  - token_id: tok-vil-2
+    text: filmen
+  - token_id: tok-vil-3
+    text: begynner,
+  - token_id: tok-vil-4
+    text: vil
+  - token_id: tok-vil-5
+    text: Sara
+  - token_id: tok-vil-6
+    text: ha
+  - token_id: tok-vil-7
+    text: lest
+  - token_id: tok-vil-8
+    text: teksten.
+  answer_order:
+  - tok-vil-1
+  - tok-vil-2
+  - tok-vil-3
+  - tok-vil-4
+  - tok-vil-5
+  - tok-vil-6
+  - tok-vil-7
+  - tok-vil-8
+- handle: kommer_til_aa_ha_expected_result
+  op: build
+  objective: obj-future-perfect-01
+  bloom: apply
+  prompt_md: 'Build the Norwegian sentence expressing this evidence-based expectation:
+    The car is charging quickly, so it will have finished charging before we leave.'
+  derived_from:
+  - section_id: evidence-based-expectation-checkpoint
+  tokens:
+  - token_id: tok-kommer-1
+    text: Bilen
+  - token_id: tok-kommer-2
+    text: lader
+  - token_id: tok-kommer-3
+    text: raskt,
+  - token_id: tok-kommer-4
+    text: så
+  - token_id: tok-kommer-5
+    text: den
+  - token_id: tok-kommer-6
+    text: kommer
+  - token_id: tok-kommer-7
+    text: til
+  - token_id: tok-kommer-8
+    text: å
+  - token_id: tok-kommer-9
+    text: ha
+  - token_id: tok-kommer-10
+    text: ladet
+  - token_id: tok-kommer-11
+    text: ferdig
+  - token_id: tok-kommer-12
+    text: før
+  - token_id: tok-kommer-13
+    text: vi
+  - token_id: tok-kommer-14
+    text: drar.
+  answer_order:
+  - tok-kommer-1
+  - tok-kommer-2
+  - tok-kommer-3
+  - tok-kommer-4
+  - tok-kommer-5
+  - tok-kommer-6
+  - tok-kommer-7
+  - tok-kommer-8
+  - tok-kommer-9
+  - tok-kommer-10
+  - tok-kommer-11
+  - tok-kommer-12
+  - tok-kommer-13
+  - tok-kommer-14
+- handle: future_completion_viewpoint_choice
+  op: build
+  objective: obj-future-perfect-01
+  bloom: apply
+  prompt_md: 'Build one Norwegian sentence with three clauses in this order: a commitment
+    to send the application by Monday, a prediction that the report will be read before
+    the meeting, and an evidence-based expectation that the car will have finished
+    charging before we leave.'
+  derived_from:
+  - section_id: meaning-choice-checkpoint
+  tokens:
+  - token_id: tok-view-1
+    text: Jeg
+  - token_id: tok-view-2
+    text: skal
+  - token_id: tok-view-3
+    text: ha
+  - token_id: tok-view-4
+    text: sendt
+  - token_id: tok-view-5
+    text: søknaden
+  - token_id: tok-view-6
+    text: innen
+  - token_id: tok-view-7
+    text: mandag, og
+  - token_id: tok-view-8
+    text: du
+  - token_id: tok-view-9
+    text: vil
+  - token_id: tok-view-10
+    text: ha
+  - token_id: tok-view-11
+    text: lest
+  - token_id: tok-view-12
+    text: rapporten
+  - token_id: tok-view-13
+    text: før
+  - token_id: tok-view-14
+    text: møtet,
+  - token_id: tok-view-15
+    text: og
+  - token_id: tok-view-16
+    text: bilen
+  - token_id: tok-view-17
+    text: kommer
+  - token_id: tok-view-18
+    text: til
+  - token_id: tok-view-19
+    text: å
+  - token_id: tok-view-20
+    text: ha
+  - token_id: tok-view-21
+    text: ladet
+  - token_id: tok-view-22
+    text: ferdig
+  - token_id: tok-view-23
+    text: før
+  - token_id: tok-view-24
+    text: vi
+  - token_id: tok-view-25
+    text: drar.
+  answer_order:
+  - tok-view-1
+  - tok-view-2
+  - tok-view-3
+  - tok-view-4
+  - tok-view-5
+  - tok-view-6
+  - tok-view-7
+  - tok-view-8
+  - tok-view-9
+  - tok-view-10
+  - tok-view-11
+  - tok-view-12
+  - tok-view-13
+  - tok-view-14
+  - tok-view-15
+  - tok-view-16
+  - tok-view-17
+  - tok-view-18
+  - tok-view-19
+  - tok-view-20
+  - tok-view-21
+  - tok-view-22
+  - tok-view-23
+  - tok-view-24
+  - tok-view-25
+- handle: project_deadline_future_completion
+  op: build
+  objective: obj-future-perfect-01
+  bloom: apply
+  prompt_md: 'Build one Norwegian project sentence with three clauses in this order:
+    Maja''s commitment to write the report by Friday, Eirik''s prediction that the
+    plan will be read before the meeting, and the team''s evidence-based expectation
+    that the presentation will be finished before the project ends. Do not add another
+    ha.'
+  derived_from:
+  - section_id: integrated-project-checkpoint
+  tokens:
+  - token_id: tok-project-1
+    text: Maja
+  - token_id: tok-project-2
+    text: skal
+  - token_id: tok-project-3
+    text: ha
+  - token_id: tok-project-4
+    text: skrevet
+  - token_id: tok-project-5
+    text: rapporten
+  - token_id: tok-project-6
+    text: innen
+  - token_id: tok-project-7
+    text: fredag, og
+  - token_id: tok-project-8
+    text: Eirik
+  - token_id: tok-project-9
+    text: vil
+  - token_id: tok-project-10
+    text: ha
+  - token_id: tok-project-11
+    text: lest
+  - token_id: tok-project-12
+    text: planen
+  - token_id: tok-project-13
+    text: før
+  - token_id: tok-project-14
+    text: møtet,
+  - token_id: tok-project-15
+    text: og
+  - token_id: tok-project-16
+    text: teamet
+  - token_id: tok-project-17
+    text: kommer
+  - token_id: tok-project-18
+    text: til
+  - token_id: tok-project-19
+    text: å
+  - token_id: tok-project-20
+    text: ha
+  - token_id: tok-project-21
+    text: gjort
+  - token_id: tok-project-22
+    text: presentasjonen
+  - token_id: tok-project-23
+    text: ferdig
+  - token_id: tok-project-24
+    text: før
+  - token_id: tok-project-25
+    text: prosjektet
+  - token_id: tok-project-26
+    text: er
+  - token_id: tok-project-27
+    text: slutt.
+  answer_order:
+  - tok-project-1
+  - tok-project-2
+  - tok-project-3
+  - tok-project-4
+  - tok-project-5
+  - tok-project-6
+  - tok-project-7
+  - tok-project-8
+  - tok-project-9
+  - tok-project-10
+  - tok-project-11
+  - tok-project-12
+  - tok-project-13
+  - tok-project-14
+  - tok-project-15
+  - tok-project-16
+  - tok-project-17
+  - tok-project-18
+  - tok-project-19
+  - tok-project-20
+  - tok-project-21
+  - tok-project-22
+  - tok-project-23
+  - tok-project-24
+  - tok-project-25
+  - tok-project-26
+  - tok-project-27
+- handle: present_future_and_future_completion_contrast
+  op: categorize
+  objective: obj-future-perfect-01
+  bloom: analyze
+  prompt_md: Place each Norwegian sentence in the bucket that describes its time relationship.
+    Focus on whether the action is happening now, already complete now, an ordinary
+    future activity, or complete before a later point.
+  derived_from:
+  - section_id: contrast-checkpoint
+  buckets:
+  - bucket_id: happening-now
+    label: Activity happening now
+  - bucket_id: complete-now
+    label: Completed now
+  - bucket_id: ordinary-future
+    label: Ordinary future activity
+  - bucket_id: future-completion
+    label: Complete before a later point
+  items:
+  - item_id: contrast-1
+    text: Jeg skriver rapporten nå.
+    bucket_id: happening-now
+  - item_id: contrast-2
+    text: Jeg har skrevet rapporten.
+    bucket_id: complete-now
+  - item_id: contrast-3
+    text: Jeg skal skrive rapporten på fredag.
+    bucket_id: ordinary-future
+  - item_id: contrast-4
+    text: Jeg skal ha skrevet rapporten innen fredag.
+    bucket_id: future-completion
+- handle: weekend_trip_future_completion_transfer
+  op: write
+  objective: obj-future-perfect-01
+  bloom: apply
+  prompt_md: You are preparing for a family cabin trip. The family leaves at ten o'clock
+    on Saturday. Write three short Norwegian messages about packing food, charging
+    the car, checking the weather forecast, and giving a key to a neighbor. Use one
+    planned completion with skal ha, one prediction with vil ha, and one evidence-based
+    expected result with kommer til å ha. Make each message refer to completion before
+    departure.
+  derived_from:
+  - section_id: transfer-preparing-for-a-weekend-trip
+  response_language: 'no'
+  min_words: 20
+  max_words: 55
+  judge_prompt: Check the response against the task and report evidence for every
+    criterion.
+  criteria:
+  - id: planned-completion
+    instruction: Includes one planned cabin-trip responsibility with skal ha and an
+      appropriate past participle.
+  - id: future-prediction
+    instruction: Includes one prediction with vil ha and an appropriate past participle,
+      viewed from departure time.
+  - id: evidence-based-expectation
+    instruction: Includes present evidence and uses the complete form kommer til å
+      ha, including til å, with an appropriate past participle.
+  - id: later-reference-points
+    instruction: Makes each message include or clearly depend on a later reference
+      point before departure.
+  - id: shared-completion-meaning
+    instruction: Uses all three constructions accurately to express completion before
+      the family leaves.
+- handle: future_completion_final_retrieval
+  op: write
+  objective: obj-future-perfect-01
+  bloom: apply
+  prompt_md: 'A community event takes place on Friday. Write three brief Norwegian
+    sentences about preparing for it: one with skal ha, one with vil ha, and one with
+    kommer til å ha. Each sentence must contain ha, an appropriate past participle,
+    and a clear later reference point, and must present the preparation as finished
+    before that point.'
+  derived_from:
+  - section_id: short-retrieval-review
+  response_language: 'no'
+  min_words: 18
+  max_words: 45
+  judge_prompt: Check the response against the task and report evidence for every
+    criterion.
+  criteria:
+  - id: three-target-forms
+    instruction: Provides three Norwegian sentences, including one with skal ha, one
+      with vil ha, and one with kommer til å ha.
+  - id: complete-verb-patterns
+    instruction: Each sentence contains ha followed by an appropriate past participle.
+  - id: future-reference
+    instruction: Each sentence contains a clear future reference point.
+  - id: future-completion-meaning
+    instruction: Each sentence presents something as finished before its later reference
+      point.

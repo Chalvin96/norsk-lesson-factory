@@ -1,0 +1,516 @@
+- handle: future_anchor_noticing
+  op: choose
+  objective: obj-future-expressions-01
+  bloom: understand
+  prompt_md: 'Read this Maja and Jonas weekend-plan exchange: Maja: Jeg skal kjøpe
+    billetter i kveld. Jonas: Toget går klokka ni i morgen. Maja: Jeg tror Jonas vil
+    like Lillehammer. Jonas: Se på de mørke skyene! Det kommer til å regne. Choose
+    the single option that assigns the correct role to all four future references.'
+  derived_from:
+  - section_id: first-checkpoint-speaker-perspective
+  stem_md: Choose the complete role mapping for the exchange.
+  options:
+  - id: correct
+    text: skal = personal commitment; går = timetable or settled arrangement; vil
+      = prediction presented as an opinion; kommer til å = expected result supported
+      by available information.
+    correct: true
+    why: The four forms frame future events through four different perspectives.
+  - id: wrong-1
+    text: skal = personal commitment; går = timetable or settled arrangement; vil
+      = desire or willingness; kommer til å = expected result supported by available
+      information.
+    correct: false
+    why: The context Jeg tror presents vil as a prediction, not desire or willingness.
+  - id: wrong-2
+    text: skal = timetable or settled arrangement; går = personal commitment; vil
+      = prediction presented as an opinion; kommer til å = expected result supported
+      by available information.
+    correct: false
+    why: The personal commitment uses skal, while the timetable uses present tense
+      går.
+  - id: wrong-3
+    text: skal = personal commitment; går = timetable or settled arrangement; vil
+      = expected result supported by available information; kommer til å = prediction
+      presented as an opinion.
+    correct: false
+    why: The opinion cue Jeg tror supports vil, while the visible clouds support kommer
+      til å.
+- handle: skal_plan_formation
+  op: recall_fill
+  objective: obj-future-expressions-01
+  bloom: apply
+  prompt_md: Complete Maja and Jonas’s controlled planning exchange. Use skal with
+    the supplied infinitive, never å after skal, and keep skal in its normal question
+    position.
+  explanation_md: "Use «skal» for a commitment, present tense for a fixed timetable, «vil» for an assessment, and «kommer til å» for an expectation supported by present evidence."
+  derived_from:
+  - section_id: likely-misconception-skal
+  audio_target: "Maja: Jeg skal kjøpe billetter i kveld. Jonas: Skal vi pakke maten? Maja: Jeg skal ikke kontakte søsteren din i kveld."
+  segments:
+  - text_md: 'Maja: Jeg '
+  - blank_id: plan-modal-1
+    options:
+    - skal
+    - vil
+    answer_index: 0
+  - text_md: ' kjøpe billetter i kveld. Jonas: '
+  - blank_id: plan-modal-2
+    options:
+    - Skal
+    - Vil
+    answer_index: 0
+  - text_md: ' vi '
+  - blank_id: plan-infinitive-1
+    options:
+    - pakke
+    - å pakke
+    answer_index: 0
+  - text_md: ' maten? Maja: Jeg '
+  - blank_id: plan-modal-3
+    options:
+    - skal
+    - vil
+    answer_index: 0
+  - text_md: ' ikke '
+  - blank_id: plan-infinitive-2
+    options:
+    - kontakte
+    - å kontakte
+    answer_index: 0
+  - text_md: ' søsteren din i kveld.'
+- handle: plan_or_arrangement_choice
+  op: build
+  objective: obj-future-expressions-01
+  bloom: apply
+  prompt_md: The itinerary gives a settled train departure from Oslo at nine tomorrow.
+    Build the complete Norwegian sentence. Treat it as a timetable or arrangement,
+    not a personal commitment.
+  derived_from:
+  - section_id: common-mistake-present-context
+  tokens:
+  - token_id: plan-01
+    text: Toget
+  - token_id: plan-02
+    text: går
+  - token_id: plan-03
+    text: fra
+  - token_id: plan-04
+    text: Oslo
+  - token_id: plan-05
+    text: klokka
+  - token_id: plan-06
+    text: ni
+  - token_id: plan-07
+    text: i
+  - token_id: plan-08
+    text: morgen.
+  answer_order:
+  - plan-01
+  - plan-02
+  - plan-03
+  - plan-04
+  - plan-05
+  - plan-06
+  - plan-07
+  - plan-08
+- handle: vil_prediction_interpretation
+  op: choose
+  objective: obj-future-expressions-01
+  bloom: analyze
+  prompt_md: 'Read these statements about the journey, wishes, and plans: - Jeg tror
+    Maja vil like Lillehammer. - Jeg vil hjelpe deg. - Decided plan: I will pick you
+    up at six. Choose the complete interpretation and reformulation that preserves
+    the intended meanings.'
+  derived_from:
+  - section_id: two-meanings-of-vil
+  stem_md: Choose the correct interpretation of vil and the decided-plan reformulation.
+  options:
+  - id: wrong-1
+    text: Jeg tror Maja vil like Lillehammer expresses desire; Jeg vil hjelpe deg
+      expresses a prediction; for the decided plan, use Jeg vil hente deg klokka seks.
+    correct: false
+    why: The contexts are reversed, and vil is less clear than skal for the decided
+      plan.
+  - id: correct
+    text: Jeg tror Maja vil like Lillehammer expresses a prediction; Jeg vil hjelpe
+      deg expresses desire or willingness; for the decided plan, use Jeg skal hente
+      deg klokka seks.
+    correct: true
+    why: Context makes vil predictive in the first sentence, desire or willingness
+      in the second, and skal clearer for the decided plan.
+  - id: wrong-2
+    text: Jeg tror Maja vil like Lillehammer expresses a prediction; Jeg vil hjelpe
+      deg expresses desire or willingness; for the decided plan, use Jeg vil hente
+      deg klokka seks.
+    correct: false
+    why: The first two interpretations fit, but a decided plan is more clearly expressed
+      with skal.
+  - id: wrong-3
+    text: Jeg tror Maja vil like Lillehammer expresses a prediction; Jeg vil hjelpe
+      deg expresses a decided plan; for the decided plan, use Jeg skal hente deg klokka
+      seks.
+    correct: false
+    why: Jeg vil hjelpe deg expresses desire or willingness in this context, not a
+      stated decided plan.
+- handle: prediction_basis_choice
+  op: recall_fill
+  objective: obj-future-expressions-01
+  bloom: apply
+  prompt_md: Complete each Norwegian prediction. Use vil for an opinion or assessment,
+    and kommer til å when visible circumstances support the expected result.
+  derived_from:
+  - section_id: vil-or-kommer-til-a
+  audio_target: "Jeg tror gjestene vil komme i kveld. Se på de mørke skyene! Det kommer til å regne. Ekspertene tror prisene vil stige. Se på den lange køen! Toget kommer til å bli fullt."
+  segments:
+  - text_md: 'Jeg tror gjestene '
+  - blank_id: prediction-opinion-1
+    options:
+    - vil
+    - kommer til å
+    answer_index: 0
+  - text_md: ' komme i kveld. Se på de mørke skyene! Det '
+  - blank_id: prediction-sign-1
+    options:
+    - vil
+    - kommer til å
+    answer_index: 1
+  - text_md: ' regne. Ekspertene tror prisene '
+  - blank_id: prediction-opinion-2
+    options:
+    - vil
+    - kommer til å
+    answer_index: 0
+  - text_md: ' stige. Se på den lange køen! Toget '
+  - blank_id: prediction-sign-2
+    options:
+    - vil
+    - kommer til å
+    answer_index: 1
+  - text_md: ' bli fullt.'
+- handle: future_form_repair
+  op: find_fix
+  objective: obj-future-expressions-01
+  bloom: analyze
+  prompt_md: Maja’s hurried note contains one local form error. Find the incorrect
+    token. The note also shows the other three target constructions in correct form;
+    score grammatical formation, not the finer prediction contrast.
+  derived_from:
+  - section_id: common-form-errors
+  tokens:
+  - token_id: repair-01
+    text: 'Maja:'
+  - token_id: repair-02
+    text: Jeg
+  - token_id: repair-03
+    text: skal
+  - token_id: repair-04
+    text: å
+  - token_id: repair-05
+    text: kjøpe
+  - token_id: repair-06
+    text: billetter
+  - token_id: repair-07
+    text: og
+  - token_id: repair-08
+    text: pakke
+  - token_id: repair-09
+    text: maten.
+  - token_id: repair-10
+    text: Toget
+  - token_id: repair-11
+    text: går
+  - token_id: repair-12
+    text: klokka
+  - token_id: repair-13
+    text: ni
+  - token_id: repair-14
+    text: i
+  - token_id: repair-15
+    text: morgen.
+  - token_id: repair-16
+    text: Jeg
+  - token_id: repair-17
+    text: tror
+  - token_id: repair-18
+    text: toget
+  - token_id: repair-19
+    text: vil
+  - token_id: repair-20
+    text: være
+  - token_id: repair-21
+    text: fullt.
+  - token_id: repair-22
+    text: Det
+  - token_id: repair-23
+    text: kommer
+  - token_id: repair-24
+    text: til
+  - token_id: repair-25
+    text: å
+  - token_id: repair-26
+    text: regne.
+  error_token_id: repair-04
+  feedback: Remove unnecessary å after skal. Norwegian uses skal plus the infinitive
+    without å.
+- handle: trip_message_completion
+  op: build
+  objective: obj-future-expressions-01
+  bloom: apply
+  prompt_md: Build one coherent Norwegian update from the supplied tokens. It contains
+    a sister’s commitment, a timetable, an assessment, and an expected weather result.
+    Use each future expression according to its context.
+  derived_from:
+  - section_id: back-to-maja-and-jonas
+  tokens:
+  - token_id: trip-01
+    text: Søsteren
+  - token_id: trip-02
+    text: min
+  - token_id: trip-03
+    text: skal
+  - token_id: trip-04
+    text: møte
+  - token_id: trip-05
+    text: oss
+  - token_id: trip-06
+    text: på
+  - token_id: trip-07
+    text: stasjonen
+  - token_id: trip-08
+    text: i
+  - token_id: trip-09
+    text: Lillehammer.
+  - token_id: trip-10
+    text: Toget
+  - token_id: trip-11
+    text: kommer
+  - token_id: trip-12
+    text: fram
+  - token_id: trip-13
+    text: klokka
+  - token_id: trip-14
+    text: 10.26.
+  - token_id: trip-15
+    text: Jeg
+  - token_id: trip-16
+    text: tror
+  - token_id: trip-17
+    text: hun
+  - token_id: trip-18
+    text: vil
+  - token_id: trip-19
+    text: vente
+  - token_id: trip-20
+    text: ved
+  - token_id: trip-21
+    text: hovedinngangen.
+  - token_id: trip-22
+    text: Det
+  - token_id: trip-23
+    text: kommer
+  - token_id: trip-24
+    text: til
+  - token_id: trip-25
+    text: å
+  - token_id: trip-26
+    text: bli
+  - token_id: trip-27
+    text: kaldt
+  - token_id: trip-28
+    text: om
+  - token_id: trip-29
+    text: kvelden.
+  answer_order:
+  - trip-01
+  - trip-02
+  - trip-03
+  - trip-04
+  - trip-05
+  - trip-06
+  - trip-07
+  - trip-08
+  - trip-09
+  - trip-10
+  - trip-11
+  - trip-12
+  - trip-13
+  - trip-14
+  - trip-15
+  - trip-16
+  - trip-17
+  - trip-18
+  - trip-19
+  - trip-20
+  - trip-21
+  - trip-22
+  - trip-23
+  - trip-24
+  - trip-25
+  - trip-26
+  - trip-27
+  - trip-28
+  - trip-29
+- handle: birthday_future_transfer
+  op: build
+  objective: obj-future-expressions-01
+  bloom: apply
+  prompt_md: In the new birthday-dinner situation, build four connected Norwegian
+    messages from the supplied tokens. Use one commitment, one fixed restaurant arrangement,
+    one opinion about the guests, and one expectation supported by visible storm clouds.
+    Use each target future expression once.
+  derived_from:
+  - section_id: cumulative-transfer-birthday-dinner
+  tokens:
+  - token_id: birthday-01
+    text: Sara
+  - token_id: birthday-02
+    text: skal
+  - token_id: birthday-03
+    text: hente
+  - token_id: birthday-04
+    text: kaken.
+  - token_id: birthday-05
+    text: Restauranten
+  - token_id: birthday-06
+    text: åpner
+  - token_id: birthday-07
+    text: klokka
+  - token_id: birthday-08
+    text: sju
+  - token_id: birthday-09
+    text: i
+  - token_id: birthday-10
+    text: kveld.
+  - token_id: birthday-11
+    text: Emil
+  - token_id: birthday-12
+    text: tror
+  - token_id: birthday-13
+    text: gjestene
+  - token_id: birthday-14
+    text: vil
+  - token_id: birthday-15
+    text: komme.
+  - token_id: birthday-16
+    text: Se
+  - token_id: birthday-17
+    text: på
+  - token_id: birthday-18
+    text: de
+  - token_id: birthday-19
+    text: mørke
+  - token_id: birthday-20
+    text: skyene!
+  - token_id: birthday-21
+    text: Det
+  - token_id: birthday-22
+    text: kommer
+  - token_id: birthday-23
+    text: til
+  - token_id: birthday-24
+    text: å
+  - token_id: birthday-25
+    text: regne
+  - token_id: birthday-26
+    text: i
+  - token_id: birthday-27
+    text: kveld.
+  answer_order:
+  - birthday-01
+  - birthday-02
+  - birthday-03
+  - birthday-04
+  - birthday-05
+  - birthday-06
+  - birthday-07
+  - birthday-08
+  - birthday-09
+  - birthday-10
+  - birthday-11
+  - birthday-12
+  - birthday-13
+  - birthday-14
+  - birthday-15
+  - birthday-16
+  - birthday-17
+  - birthday-18
+  - birthday-19
+  - birthday-20
+  - birthday-21
+  - birthday-22
+  - birthday-23
+  - birthday-24
+  - birthday-25
+  - birthday-26
+  - birthday-27
+- handle: future_expression_review
+  op: recall_fill
+  objective: obj-future-expressions-01
+  bloom: understand
+  prompt_md: Complete four Norwegian future statements. Then label the meaning
+    expressed by each form in English.
+  derived_from:
+  - section_id: final-retrieval
+  audio_target: "Jeg skal sende deg en melding i kveld. Toget går klokka 10.26. Jeg tror toget vil være fullt. Se på den lange køen! Toget kommer til å bli fullt."
+  segments:
+  - text_md: 'Jeg '
+  - blank_id: review-form-1
+    options:
+    - skal sende
+    - vil sende
+    - kommer til å sende
+    answer_index: 0
+  - text_md: ' deg en melding i kveld. Meaning: '
+  - blank_id: review-label-1
+    options:
+    - personal commitment
+    - fixed arrangement
+    - assessment
+    - expected result based on available information
+    answer_index: 0
+  - text_md: ' Toget '
+  - blank_id: review-form-2
+    options:
+    - går
+    - vil gå
+    - kommer til å gå
+    answer_index: 0
+  - text_md: ' klokka 10.26. Meaning: '
+  - blank_id: review-label-2
+    options:
+    - personal commitment
+    - fixed arrangement
+    - assessment
+    - expected result based on available information
+    answer_index: 1
+  - text_md: ' Jeg tror toget '
+  - blank_id: review-form-3
+    options:
+    - vil være
+    - skal være
+    - kommer til å være
+    answer_index: 0
+  - text_md: ' fullt. Meaning: '
+  - blank_id: review-label-3
+    options:
+    - personal commitment
+    - fixed arrangement
+    - assessment
+    - expected result based on available information
+    answer_index: 2
+  - text_md: ' Se på den lange køen! Toget '
+  - blank_id: review-form-4
+    options:
+    - kommer til å bli
+    - vil bli
+    - skal bli
+    answer_index: 0
+  - text_md: ' fullt. Meaning: '
+  - blank_id: review-label-4
+    options:
+    - personal commitment
+    - fixed arrangement
+    - assessment
+    - expected result based on available information
+    answer_index: 3

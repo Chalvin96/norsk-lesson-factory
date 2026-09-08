@@ -1,0 +1,500 @@
+- handle: main_clause_placement
+  op: recall_fill
+  objective: obj-sentence-adverbs-01
+  bloom: apply
+  prompt_md: Select the correctly ordered verb group in each main clause. Each blank
+    contains the finite verb, any other verb, and one sentence adverb. Choose the
+    option that places the adverb after the finite verb.
+  explanation_md: "In main clauses the sentence adverb follows the finite verb; in subordinate clauses it precedes the finite verb."
+  derived_from:
+  - section_id: sentence-adverbs-in-ordinary-main-clauses
+  audio_target: "Maja kommer ikke klokka ti. Henrik vil kanskje vente på henne. Sara har aldri gått denne veien før. Det regner vanligvis."
+  segments:
+  - text_md: 'Maja '
+  - blank_id: main-maja
+    options:
+    - kommer ikke
+    - ikke kommer
+    answer_index: 0
+  - text_md: ' klokka ti. Henrik '
+  - blank_id: main-henrik
+    options:
+    - vil kanskje vente
+    - kanskje vil vente
+    answer_index: 0
+  - text_md: ' på henne. Sara '
+  - blank_id: main-sara
+    options:
+    - har aldri gått
+    - aldri har gått
+    answer_index: 0
+  - text_md: ' denne veien før. Det '
+  - blank_id: main-weather
+    options:
+    - regner vanligvis
+    - vanligvis regner
+    answer_index: 0
+  - text_md: .
+- handle: main_or_subordinate_clause
+  op: recall_fill
+  objective: obj-sentence-adverbs-01
+  bloom: apply
+  prompt_md: In each pair, choose the correctly ordered verb group. The first sentence
+    is an independent main clause; the second is inside a subordinate clause. Place
+    the sentence adverb after the finite verb in the main clause and before it in
+    the subordinate clause.
+  explanation_md: "Ikke follows the finite verb in the main clause but precedes it in the subordinate clause."
+  derived_from:
+  - section_id: sentence-adverbs-in-subordinate-clauses
+  audio_target: "Sara kommer ikke tidlig. Maja vet at Sara ikke kommer tidlig. Henrik vil kanskje vente på henne. Henrik tror at han kanskje vil vente på henne. Sara tar aldri bussen. Maja spør om Sara aldri tar bussen."
+  segments:
+  - text_md: 'Sara '
+  - blank_id: contrast-one-main
+    options:
+    - kommer ikke
+    - ikke kommer
+    answer_index: 0
+  - text_md: ' tidlig. Maja vet at Sara '
+  - blank_id: contrast-one-sub
+    options:
+    - ikke kommer
+    - kommer ikke
+    answer_index: 0
+  - text_md: ' tidlig. Henrik '
+  - blank_id: contrast-two-main
+    options:
+    - vil kanskje vente
+    - kanskje vil vente
+    answer_index: 0
+  - text_md: ' på henne. Henrik tror at han '
+  - blank_id: contrast-two-sub
+    options:
+    - kanskje vil vente
+    - vil kanskje vente
+    answer_index: 0
+  - text_md: ' på henne. Sara '
+  - blank_id: contrast-three-main
+    options:
+    - tar aldri
+    - aldri tar
+    answer_index: 0
+  - text_md: ' bussen. Maja spør om Sara '
+  - blank_id: contrast-three-sub
+    options:
+    - aldri tar
+    - tar aldri
+    answer_index: 0
+  - text_md: ' bussen.'
+- handle: finite_verb_with_two_verbs
+  op: recall_fill
+  objective: obj-sentence-adverbs-01
+  bloom: apply
+  prompt_md: Choose the correctly ordered complete verb group in each statement or
+    report. For main clauses, place the adverb after the finite verb. For subordinate
+    clauses, place it before the finite verb. The placement is relative to kan, må,
+    or har.
+  derived_from:
+  - section_id: sentence-adverbs-in-subordinate-clauses
+  audio_target: "Sara kan ikke komme tidlig. Maja vet at Sara ikke kan komme tidlig. Henrik må kanskje vente på henne. Henrik tror at de kanskje må vente. Maja har aldri svart med en gang. Sara sier at hun aldri har svart med en gang."
+  segments:
+  - text_md: 'Sara '
+  - blank_id: two-verbs-kan-main
+    options:
+    - kan ikke komme
+    - ikke kan komme
+    answer_index: 0
+  - text_md: ' tidlig. Maja vet at Sara '
+  - blank_id: two-verbs-kan-sub
+    options:
+    - ikke kan komme
+    - kan ikke komme
+    answer_index: 0
+  - text_md: ' tidlig. Henrik '
+  - blank_id: two-verbs-ma-main
+    options:
+    - må kanskje vente
+    - kanskje må vente
+    answer_index: 0
+  - text_md: ' på henne. Henrik tror at de '
+  - blank_id: two-verbs-ma-sub
+    options:
+    - kanskje må vente
+    - må kanskje vente
+    answer_index: 0
+  - text_md: '. Maja '
+  - blank_id: two-verbs-har-main
+    options:
+    - har aldri svart
+    - aldri har svart
+    answer_index: 0
+  - text_md: ' med en gang. Sara sier at hun '
+  - blank_id: two-verbs-har-sub
+    options:
+    - aldri har svart
+    - har aldri svart
+    answer_index: 0
+  - text_md: ' med en gang.'
+- handle: clause_by_clause_placement
+  op: recall_fill
+  objective: obj-sentence-adverbs-01
+  bloom: apply
+  prompt_md: 'Complete each two-clause sentence by choosing the correctly ordered
+    verb group in every blank. Treat each clause independently: use main-clause order
+    after og or men, and subordinate-clause order after fordi.'
+  derived_from:
+  - section_id: compound-sentences-check-each-clause-separately
+  audio_target: "Sara kommer ikke klokka ti, men hun kommer kanskje klokka tolv. Vi tar ikke bussen, og Henrik kjører kanskje. Det regner kanskje, men vi går ikke langs elva. Sara kommer ikke fordi hun ikke har tid."
+  segments:
+  - text_md: 'Sara '
+  - blank_id: multi-plan-one
+    options:
+    - kommer ikke
+    - ikke kommer
+    answer_index: 0
+  - text_md: ' klokka ti, men hun '
+  - blank_id: multi-plan-two
+    options:
+    - kommer kanskje
+    - kanskje kommer
+    answer_index: 0
+  - text_md: ' klokka tolv. Vi '
+  - blank_id: multi-transport-one
+    options:
+    - tar ikke
+    - ikke tar
+    answer_index: 0
+  - text_md: ' bussen, og Henrik '
+  - blank_id: multi-transport-two
+    options:
+    - kjører kanskje
+    - kanskje kjører
+    answer_index: 0
+  - text_md: '. Det '
+  - blank_id: multi-weather-one
+    options:
+    - regner kanskje
+    - kanskje regner
+    answer_index: 0
+  - text_md: ', men vi '
+  - blank_id: multi-weather-two
+    options:
+    - går ikke
+    - ikke går
+    answer_index: 0
+  - text_md: ' langs elva. Sara kommer ikke fordi hun '
+  - blank_id: multi-because
+    options:
+    - ikke har tid
+    - har ikke tid
+    answer_index: 0
+  - text_md: .
+- handle: fronted_main_clauses
+  op: build
+  objective: obj-sentence-adverbs-01
+  bloom: apply
+  prompt_md: Build the fronted main clause from all supplied tokens. Express the meaning
+    Today she is not coming at ten, using the sequence fronted element, finite verb,
+    pronoun subject, sentence adverb, and rest.
+  derived_from:
+  - section_id: fronted-elements-in-main-clauses
+  tokens:
+  - token_id: fmc-1
+    text: I
+  - token_id: fmc-2
+    text: dag
+  - token_id: fmc-3
+    text: kommer
+  - token_id: fmc-4
+    text: hun
+  - token_id: fmc-5
+    text: ikke
+  - token_id: fmc-6
+    text: klokka
+  - token_id: fmc-7
+    text: ti.
+  answer_order:
+  - fmc-1
+  - fmc-2
+  - fmc-3
+  - fmc-4
+  - fmc-5
+  - fmc-6
+  - fmc-7
+- handle: fronted_subordinate_clause_frame
+  op: recall_fill
+  objective: obj-sentence-adverbs-01
+  bloom: apply
+  prompt_md: Choose the correctly ordered verb group inside each opening subordinate
+    clause. Keep the following main clause unchanged. The sentence adverb must remain
+    before the finite verb inside the fronted subordinate clause.
+  derived_from:
+  - section_id: fronted-subordinate-clauses
+  audio_target: "Hvis det ikke regner klokka tolv, kan vi møte Sara ved stasjonen. Fordi Henrik ikke liker regnet, blir han hjemme. Når Sara endelig svarer, vet vi kanskje mer."
+  segments:
+  - text_md: 'Hvis det '
+  - blank_id: fronted-sub-if
+    options:
+    - ikke regner
+    - regner ikke
+    answer_index: 0
+  - text_md: ' klokka tolv, kan vi møte Sara ved stasjonen. Fordi Henrik '
+  - blank_id: fronted-sub-because
+    options:
+    - ikke liker
+    - liker ikke
+    answer_index: 0
+  - text_md: ' regnet, blir han hjemme. Når Sara '
+  - blank_id: fronted-sub-when
+    options:
+    - endelig svarer
+    - svarer endelig
+    answer_index: 0
+  - text_md: ', vet vi kanskje mer.'
+- handle: following_main_clause_placement
+  op: recall_fill
+  objective: obj-sentence-adverbs-01
+  bloom: apply
+  prompt_md: Complete each main clause after the fronted subordinate clause. Choose
+    the verb group with the sequence finite verb, unstressed pronoun subject, sentence
+    adverb, and remaining verb or rest.
+  derived_from:
+  - section_id: fronted-subordinate-clauses
+  audio_target: "Hvis det ikke regner, kan vi kanskje gå langs elva. Når Sara endelig svarer, vet vi kanskje mer. Når de ikke tar bussen, går de vanligvis fra stasjonen."
+  segments:
+  - text_md: 'Hvis det ikke regner, '
+  - blank_id: following-main-one
+    options:
+    - kan vi kanskje gå
+    - kan kanskje vi gå
+    answer_index: 0
+  - text_md: ' langs elva. Når Sara endelig svarer, '
+  - blank_id: following-main-two
+    options:
+    - vet vi kanskje mer
+    - vet kanskje vi mer
+    answer_index: 0
+  - text_md: '. Når de ikke tar bussen, '
+  - blank_id: following-main-three
+    options:
+    - går de vanligvis
+    - går vanligvis de
+    answer_index: 0
+  - text_md: ' fra stasjonen.'
+- handle: dinner_plan_clause_choices
+  op: recall_fill
+  objective: obj-sentence-adverbs-01
+  bloom: apply
+  prompt_md: Complete this new dinner-planning exchange by choosing the correctly
+    ordered verb group in each blank. Use main-clause order in ordinary statements
+    and subordinate-clause order after at, fordi, hvis, and om.
+  derived_from:
+  - section_id: cumulative-transfer-planning-a-weekday-dinner
+  audio_target: "Nora: Emil kommer kanskje etter jobb. Jonas: Jeg tror at Emil kanskje kommer etter jobb. Nora: Vi spiser hjemme fordi Emil ikke kan komme i kveld. Jonas: Vi spiser hjemme hvis Emil ikke kommer. Nora: Vet du om Jonas aldri har gått til restauranten?"
+  segments:
+  - text_md: 'Nora: Emil '
+  - blank_id: dinner-choice-main
+    options:
+    - kommer kanskje
+    - kanskje kommer
+    answer_index: 0
+  - text_md: ' etter jobb. Jonas: Jeg tror at Emil '
+  - blank_id: dinner-choice-at
+    options:
+    - kanskje kommer
+    - kommer kanskje
+    answer_index: 0
+  - text_md: ' etter jobb. Nora: Vi spiser hjemme fordi Emil '
+  - blank_id: dinner-choice-because
+    options:
+    - ikke kan komme
+    - kan ikke komme
+    answer_index: 0
+  - text_md: ' i kveld. Jonas: Vi spiser hjemme hvis Emil '
+  - blank_id: dinner-choice-if
+    options:
+    - ikke kommer
+    - kommer ikke
+    answer_index: 0
+  - text_md: '. Nora: Vet du om Jonas '
+  - blank_id: dinner-choice-om
+    options:
+    - aldri har gått
+    - har aldri gått
+    answer_index: 0
+  - text_md: ' til restauranten?'
+- handle: dinner_plan_multi_clause_sentences
+  op: build
+  objective: obj-sentence-adverbs-01
+  bloom: apply
+  prompt_md: Build one complete longer dinner-plan sentence from all supplied tokens.
+    It must combine Emil's arrival, the restaurant, and the group's decision with
+    men and fordi. Keep sentence-adverb placement correct in every clause.
+  derived_from:
+  - section_id: cumulative-transfer-planning-a-weekday-dinner
+  tokens:
+  - token_id: dmc-1
+    text: Emil
+  - token_id: dmc-2
+    text: kommer
+  - token_id: dmc-3
+    text: kanskje
+  - token_id: dmc-4
+    text: etter
+  - token_id: dmc-5
+    text: jobb,
+  - token_id: dmc-6
+    text: men
+  - token_id: dmc-7
+    text: vi
+  - token_id: dmc-8
+    text: går
+  - token_id: dmc-9
+    text: ikke
+  - token_id: dmc-10
+    text: til
+  - token_id: dmc-11
+    text: restauranten
+  - token_id: dmc-12
+    text: fordi
+  - token_id: dmc-13
+    text: Nora
+  - token_id: dmc-14
+    text: vanligvis
+  - token_id: dmc-15
+    text: spiser
+  - token_id: dmc-16
+    text: hjemme.
+  answer_order:
+  - dmc-1
+  - dmc-2
+  - dmc-3
+  - dmc-4
+  - dmc-5
+  - dmc-6
+  - dmc-7
+  - dmc-8
+  - dmc-9
+  - dmc-10
+  - dmc-11
+  - dmc-12
+  - dmc-13
+  - dmc-14
+  - dmc-15
+  - dmc-16
+- handle: dinner_plan_fronting
+  op: build
+  objective: obj-sentence-adverbs-01
+  bloom: apply
+  prompt_md: Build the dinner-plan sentence from all supplied tokens so that the subordinate
+    clause comes first. Keep ikke before the finite verb in that clause and place
+    kanskje after the pronoun subject in the following main clause.
+  derived_from:
+  - section_id: cumulative-transfer-planning-a-weekday-dinner
+  tokens:
+  - token_id: dfront-1
+    text: Hvis
+  - token_id: dfront-2
+    text: Emil
+  - token_id: dfront-3
+    text: ikke
+  - token_id: dfront-4
+    text: kommer
+  - token_id: dfront-5
+    text: etter
+  - token_id: dfront-6
+    text: jobb,
+  - token_id: dfront-7
+    text: går
+  - token_id: dfront-8
+    text: vi
+  - token_id: dfront-9
+    text: kanskje
+  - token_id: dfront-10
+    text: til
+  - token_id: dfront-11
+    text: restauranten.
+  answer_order:
+  - dfront-1
+  - dfront-2
+  - dfront-3
+  - dfront-4
+  - dfront-5
+  - dfront-6
+  - dfront-7
+  - dfront-8
+  - dfront-9
+  - dfront-10
+  - dfront-11
+- handle: short_contextual_completion
+  op: write
+  objective: obj-sentence-adverbs-01
+  bloom: apply
+  prompt_md: Write four short, natural Norwegian messages about Nora, Jonas, and Emil
+    planning dinner. Use full clauses, not isolated fragments, and use each of ikke,
+    aldri, vanligvis, and kanskje exactly once. Message 1 must be an ordinary subject-first
+    main clause saying that Emil may arrive after work, with kanskje. Message 2 must
+    be a complete sentence containing a fordi subordinate clause saying that Emil
+    is not coming, with ikke in that subordinate clause. Message 3 must be an ordinary
+    subject-first main clause saying that Nora never eats after nine, with aldri.
+    Message 4 must be a complete sentence containing an om subordinate clause asking
+    whether Jonas usually wants to eat at the restaurant, with vanligvis in that subordinate
+    clause. Keep the intended practical meanings.
+  derived_from:
+  - section_id: cumulative-transfer-planning-a-weekday-dinner
+  response_language: 'no'
+  min_words: 20
+  max_words: 60
+  judge_prompt: Check the four requested messages and report evidence for every criterion.
+    Mark a criterion unmet when the required meaning, clause type, or adverb placement
+    is not observable.
+  criteria:
+  - id: four-messages
+    instruction: Provides four complete natural Norwegian messages matching the four
+      requested dinner meanings, not isolated fragments.
+  - id: target-adverbs
+    instruction: Uses ikke, aldri, vanligvis, and kanskje exactly once each.
+  - id: main-placement
+    instruction: Places the adverb after the finite verb in the ordinary subject-first
+      main clauses in messages 1 and 3.
+  - id: subordinate-placement
+    instruction: Places the adverb before the finite verb in the fordi subordinate
+      clause in message 2 and the om subordinate clause in message 4.
+- handle: final_retrieval
+  op: write
+  objective: obj-sentence-adverbs-01
+  bloom: apply
+  prompt_md: Write exactly four short Norwegian sentences about
+    a changed plan, using your own details. Sentence
+    1 must be an ordinary subject-first main clause with a target sentence adverb.
+    Sentence 2 must be a complete sentence with a target sentence adverb inside an
+    unfronted subordinate clause introduced by at, fordi, hvis, or om. Sentence 3
+    must be a compound sentence with a target sentence adverb in each coordinated
+    main clause. Sentence 4 must begin with a fronted subordinate clause containing
+    one target sentence adverb and must have another target sentence adverb in the
+    following main clause. Use at least three of ikke, aldri, vanligvis, and kanskje.
+    In sentence 4, use an unstressed pronoun subject in the following main clause.
+  derived_from:
+  - section_id: final-retrieval-request
+  response_language: 'no'
+  min_words: 20
+  max_words: 70
+  judge_prompt: Check exactly four sentences against the task and report evidence
+    for every criterion. Mark a criterion unmet when the required clause structure
+    or sentence-adverb placement is missing or ambiguous.
+  criteria:
+  - id: ordinary-main
+    instruction: Sentence 1 is an ordinary subject-first main clause with the target
+      adverb after the finite verb.
+  - id: unfronted-subordinate
+    instruction: Sentence 2 contains an unfronted subordinate clause introduced by
+      an approved connector with the target adverb before its finite verb.
+  - id: compound-main-clauses
+    instruction: Sentence 3 has two coordinated main clauses and places a target adverb
+      after the finite verb in each clause.
+  - id: fronted-subordinate-and-main
+    instruction: Sentence 4 has a fronted subordinate clause with its adverb before
+      the finite verb and a following main clause with the sequence finite verb, unstressed
+      pronoun subject, and adverb.
+  - id: retrieval-variety
+    instruction: Uses at least three distinct target adverbs and gives original changed-plan
+      content rather than copying a lesson example.

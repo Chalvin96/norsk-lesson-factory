@@ -1,0 +1,172 @@
+- handle: notice_action_and_position
+  op: categorize
+  objective: obj-sette-vs-sitte-vs-sta-01
+  bloom: analyze
+  prompt_md: 'In the meeting-room examples below, classify each Norwegian
+    sentence by physical role: placing action, seated position, or upright position.
+    Classify the meaning rather than translating the verb mechanically.'
+  explanation_md: "Sette describes causing something to enter a position; sitte and stå describe the position itself."
+  derived_from:
+  - section_id: first-checkpoint-notice-action-and-position
+  buckets:
+  - bucket_id: placing-action
+    label: Placing action
+  - bucket_id: seated-position
+    label: Seated position
+  - bucket_id: upright-position
+    label: Upright position
+  items:
+  - item_id: action-vase
+    text: Amina setter en vase midt på bordet.
+    bucket_id: placing-action
+  - item_id: action-chair
+    text: Marius setter en stol nær vinduet.
+    bucket_id: placing-action
+  - item_id: seated-nora
+    text: Nora sitter ved døren.
+    bucket_id: seated-position
+  - item_id: seated-guest
+    text: Gjesten sitter ved siden av Nora.
+    bucket_id: seated-position
+  - item_id: upright-chair
+    text: En stol står nær vinduet.
+    bucket_id: upright-position
+  - item_id: upright-vase
+    text: Vasen står midt på bordet.
+    bucket_id: upright-position
+- handle: follow_the_change
+  op: write
+  objective: obj-sette-vs-sitte-vs-sta-01
+  bloom: apply
+  prompt_md: 'In Norwegian, write two sentences for each of four meeting-room situations.
+    In each pair, first describe the initial action and then the resulting position:
+    Amina places a vase in the middle of the table; Marius places a chair near the
+    window; the organizers seat a guest beside Nora; Nora sits down by the door. Use
+    a sette-form for each initial placing or seating action. Use stå-forms for the
+    vase and chair after placement, and sitte-forms for the seated people. Keep the
+    sentences natural in Bokmål.'
+  derived_from:
+  - section_id: controlled-practice-follow-the-change
+  response_language: 'no'
+  judge_prompt: Check that the response contains two Norwegian sentences for each
+    of the four situations. In every pair, the first sentence describes the action
+    and the second describes the resulting position. Check that vase and chair results
+    use a stå-form, while the guest and Nora results use a sitte-form. Accept natural
+    Bokmål inflections, including setter seg for Nora's sitting-down action, and natural
+    word-order variants when the action-result roles remain clear. Report evidence
+    for each criterion.
+  criteria:
+  - id: action-result-pairs
+    instruction: Uses a sette-form for each initial placing or seating action and
+      supplies a second sentence describing the resulting position.
+  - id: position-contrast
+    instruction: Uses a stå-form for the vase and chair positions and a sitte-form
+      for the seated guest and Nora.
+- handle: reconstruct_the_room
+  op: write
+  objective: obj-sette-vs-sitte-vs-sta-01
+  bloom: apply
+  prompt_md: In this meeting-room scene, write a short, connected
+    Norwegian description of the room immediately before the guests arrive. State
+    where Nora is seated and where the chair, table, cups, coffee pots, and vase are
+    standing. Then add exactly two Norwegian sentences describing actions Amina or
+    Marius performs to put objects in place. Use sitter for Nora's seated position,
+    står for the upright furniture and objects, and setter only for active placing
+    actions.
+  derived_from:
+  - section_id: checkpoint-reconstruct-the-room
+  response_language: 'no'
+  judge_prompt: Check that the response describes Nora's seated location, the locations
+    of the chair, table, cups, coffee pots, and vase, and two actions by Amina or
+    Marius. Check that Nora's position uses a sitte-form, the listed upright items
+    use stå-forms, and sette-forms occur only for active placement. Accept natural
+    Bokmål inflections and word-order variants, but not sitte for upright items or
+    stå for Nora's seated position. Report evidence for each criterion.
+  criteria:
+  - id: nora-position
+    instruction: States where Nora is seated and uses a sitte-form for her position.
+  - id: upright-room-items
+    instruction: States where the chair, table, cups, coffee pots, and vase are standing
+      and uses stå-forms for those positions.
+  - id: placing-actions
+    instruction: Adds two actions by Amina or Marius and uses sette-forms only for
+      active placing.
+- handle: before_during_and_after
+  op: write
+  objective: obj-sette-vs-sitte-vs-sta-01
+  bloom: apply
+  prompt_md: 'Write five connected Norwegian sentences about the meeting room. Use
+    Marius as the guest and Nora as the other named person. In the first sentence,
+    Marius is standing near the door. In the second, an organizer seats Marius at
+    a table. In the third, Marius is seated beside Nora. Then add two sentences about
+    a bottle: an organizer places it on a table, and the bottle is upright there.
+    Keep the roles clear: sette names the placing event, while sitte or stå names
+    a resulting position.'
+  derived_from:
+  - section_id: guided-practice-before-during-and-after
+  response_language: 'no'
+  judge_prompt: Check that the response has three connected guest sentences in the
+    required sequence and two connected bottle sentences. Check that the guest first
+    stands near the door, is then seated by an organizer, and is finally seated beside
+    Nora. Check that the bottle is placed on a table and then described as upright.
+    Accept natural Bokmål inflections and word-order variants when sette marks the
+    placing event and sitte or stå marks the resulting position. Report evidence for
+    each criterion.
+  criteria:
+  - id: guest-sequence
+    instruction: Writes three connected sentences in which Marius stands near the
+      door, an organizer seats him at a table, and he is seated beside Nora.
+  - id: bottle-sequence
+    instruction: Adds two sentences in which an organizer places a bottle on a table
+      and the bottle is upright there.
+  - id: temporal-verb-roles
+    instruction: Uses a sette-form for the placing event and sitte or stå-forms for
+      the resulting positions.
+- handle: final_new_setting
+  op: write
+  objective: obj-sette-vs-sitte-vs-sta-01
+  bloom: apply
+  prompt_md: Write a connected Norwegian paragraph about a small café opening in the
+    morning. Describe an employee placing cups and a vase on tables, the resulting
+    positions of those objects, one customer standing near the counter, and two customers
+    seated by a window. Use sette only for placing actions, sitte for the seated customers,
+    and stå for the standing customer and upright objects. Use the café setting and
+    phrase the paragraph in your own words.
+  derived_from:
+  - section_id: final-practice-a-new-setting
+  response_language: 'no'
+  judge_prompt: Check that the response is one connected Norwegian café paragraph
+    containing the employee's placement of cups and a vase, the objects' resulting
+    upright positions, one customer standing near the counter, and two customers seated
+    by a window. Check that sette-forms are limited to placing actions, sitte- forms
+    describe the two seated customers, and stå-forms describe the standing customer
+    and upright objects. Accept natural Bokmål inflections and word-order variants,
+    but require the café transfer and an independently phrased paragraph. Report evidence
+    for each criterion.
+  criteria:
+  - id: cafe-placing
+    instruction: Describes an employee placing cups and a vase on tables and uses
+      sette-forms only for those placing actions.
+  - id: cafe-upright-positions
+    instruction: Describes the resulting upright positions of the cups and vase and
+      the customer standing near the counter with stå-forms.
+  - id: cafe-seated-customers
+    instruction: Describes two customers seated by a window with sitte-forms.
+- handle: retrieval_and_review
+  op: write
+  objective: obj-sette-vs-sitte-vs-sta-01
+  bloom: apply
+  prompt_md: 'Create one new Norwegian scene outside the meeting room and café. Write
+    three Norwegian sentences in the same scene: one sentence with a form of sette
+    for a placing action, one with a form of sitte for a seated person, and one with
+    a form of stå for an upright person or object. Make each physical role clear in Norwegian. Use original wording rather than copying a prompt
+    sentence.'
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  judge_prompt: Check for three Norwegian sentences in one new scene, with sette used for placing, sitte for being seated, and stå for being upright. Accept natural Bokmål inflections and a different setting and lexical frame; report evidence for the criterion.
+  criteria:
+  - id: independent-verb-retrieval
+    instruction: 'Writes three Norwegian sentences in one new scene: one using sette
+      for placing, one using sitte for a seated person, and one using stå for an upright
+      person or object.'

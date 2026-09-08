@@ -1,0 +1,296 @@
+- handle: notice_fixed_det_in_the_cafe_call
+  op: choose
+  objective: obj-dummy-det-weather-ambient-clauses-01
+  bloom: understand
+  prompt_md: Choose the interpretation that correctly covers Mina's weather and ambient
+    statements in the café call. What does repeated «det» do, and what conditions
+    do the statements report?
+  derived_from:
+  - section_id: a-change-of-plans
+  stem_md: Which interpretation is correct?
+  options:
+  - id: named-object
+    text: In each sentence, «det» names the weather or another object that is raining,
+      windy, cold, dark, warm, or pleasant.
+    correct: false
+    why: In these statements, «det» does not refer to a named object.
+  - id: limited-det
+    text: Only «det regner» and «det blåser ganske mye» use fixed «det». In the other
+      sentences, «det» refers to a particular cold, dark, warm, or pleasant thing.
+    correct: false
+    why: The ambient sentences with «det er» and «det begynner å bli» also use fixed
+      «det» without a named semantic subject.
+  - id: fixed-ambient
+    text: «Det regner» (It's raining), «det blåser ganske mye» (It's quite windy),
+      «det er kaldt» (It's cold), «det begynner å bli mørkt» (It's starting to get
+      dark), and «det er varmt og hyggelig der inne» (It's warm and pleasant inside)
+      all use fixed «det» as the grammatical subject. «Det» does not name an object.
+    correct: true
+    why: Norwegian uses fixed «det» when no person or thing is the semantic subject;
+      the sentences report the listed weather and ambient conditions.
+- handle: complete_weather_verb_reports
+  op: recall_fill
+  objective: obj-dummy-det-weather-ambient-clauses-01
+  bloom: apply
+  prompt_md: Complete the three Norwegian reports. The meanings are rain in Bergen
+    today, snow in Oslo today, and wind by the sea today, in that order. Select the
+    full weather expression; keep «det» and do not put «er» before the weather verb.
+  explanation_md: "Weather and ambient clauses use fixed «det». Weather verbs are direct («det regner»), while adjective conditions use neuter singular after «er/blir» («det er varmt», «det blir mørkt»)."
+  derived_from:
+  - section_id: weather-verbs-with-det
+  audio_target: "Det regner i Bergen i dag. Det snør i Oslo i dag. Det blåser ved sjøen i dag."
+  segments:
+  - text_md: 'I Bergen i dag: '
+  - blank_id: bergen-rain
+    options:
+    - det er regner
+    - det regner
+    - regner
+    answer_index: 1
+  - text_md: '. I Oslo i dag: '
+  - blank_id: oslo-snow
+    options:
+    - det er blåser
+    - snør
+    - det snør
+    answer_index: 2
+  - text_md: '. Ved sjøen i dag: '
+  - blank_id: sea-wind
+    options:
+    - det blåser
+    - blåser
+    - det er blåser
+    answer_index: 0
+  - text_md: .
+- handle: distinguish_named_subject_from_ambient_det
+  op: categorize
+  objective: obj-dummy-det-weather-ambient-clauses-01
+  bloom: analyze
+  prompt_md: 'Classify each Norwegian sentence by what it describes: a named thing
+    as subject, or a general ambient condition with fixed «det». Judge only whether
+    the sentence has a named semantic subject; adjective agreement is not the focus.'
+  derived_from:
+  - section_id: named-subject-and-ambient-det
+  buckets:
+  - bucket_id: named-subject
+    label: 'Named subject: a particular thing is described.'
+  - bucket_id: ambient-det
+    label: 'Ambient condition: no named semantic subject; fixed «det» is used.'
+  items:
+  - item_id: coffee-named
+    text: Kaffen er kald. — The coffee is cold.
+    bucket_id: named-subject
+  - item_id: weather-cold
+    text: Det er kaldt. — It’s cold.
+    bucket_id: ambient-det
+  - item_id: room-named
+    text: Rommet er mørkt. — The room is dark.
+    bucket_id: named-subject
+  - item_id: ambient-dark
+    text: Det er mørkt. — It’s dark.
+    bucket_id: ambient-det
+  - item_id: oven-named
+    text: Ovnen er varm. — The oven is hot.
+    bucket_id: named-subject
+  - item_id: ambient-warm
+    text: Det er varmt. — It’s warm.
+    bucket_id: ambient-det
+- handle: build_ambient_condition_statements
+  op: build
+  objective: obj-dummy-det-weather-ambient-clauses-01
+  bloom: apply
+  prompt_md: Build the complete Norwegian sentence meaning “It is warm and pleasant
+    inside.” Use every supplied token exactly once.
+  derived_from:
+  - section_id: named-subject-and-ambient-det
+  tokens:
+  - token_id: tok-2
+    text: er
+  - token_id: tok-3
+    text: varmt
+  - token_id: tok-4
+    text: og
+  - token_id: tok-5
+    text: hyggelig
+  - token_id: tok-6
+    text: der
+  - token_id: tok-7
+    text: inne.
+  - token_id: tok-1
+    text: Det
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+- handle: choose_current_or_changing_condition
+  op: recall_fill
+  objective: obj-dummy-det-weather-ambient-clauses-01
+  bloom: apply
+  prompt_md: Complete two Norwegian observations. Use «er» for the current condition
+    and «blir» for the developing condition. Keep fixed «det» in both meanings.
+  derived_from:
+  - section_id: reporting-a-change-with-blir
+  audio_target: "Det er lyst ute nå. Det blir mørkt i kveld."
+  segments:
+  - text_md: 'Current condition now: '
+  - blank_id: current-condition
+    options:
+    - Det er lyst ute nå
+    - Det er mørkt ute nå
+    - Det blir mørkt ute nå
+    - Lyst ute nå
+    answer_index: 0
+  - text_md: '. Developing condition this evening: '
+  - blank_id: changing-condition
+    options:
+    - Det blir kaldt i kveld
+    - Det blir mørkt i kveld
+    - Det er mørkt i kveld
+    - Blir mørkt i kveld
+    answer_index: 1
+  - text_md: .
+- handle: respond_to_local_weather_questions
+  op: write
+  objective: obj-dummy-det-weather-ambient-clauses-01
+  bloom: apply
+  prompt_md: Answer these three questions in Norwegian. Write one complete weather
+    or ambient statement for each. Include the requested place or time information,
+    and use rain for the first answer, cold for the second, and wind for the third.
+    Include Bergen and i dag in the first answer, hytta and om morgenen in the second,
+    and sjøen and i dag in the third. 1. «Hvordan er været i Bergen i dag?» — What
+    is the weather like in Bergen today? 2. «Hvordan er det på hytta om morgenen?»
+    — What is it like at the cabin in the morning? 3. «Hvordan er det ved sjøen i
+    dag?» — What is it like by the sea today?
+  derived_from:
+  - section_id: adding-place-and-time
+  response_language: 'no'
+  min_words: 12
+  max_words: 40
+  judge_prompt: Check the three answers separately and report evidence for every required
+    weather, place, time, and fixed-«det» criterion. Accept natural Bokmål variants when
+    the requested numbered answer remains clear.
+  criteria:
+  - id: three-complete-answers
+    instruction: Gives one complete Norwegian weather or ambient statement for each
+      of the three questions.
+  - id: fixed-det-each-answer
+    instruction: Uses fixed «det» as the grammatical subject in every statement instead
+      of omitting it.
+  - id: requested-settings
+    instruction: Includes Bergen and i dag in the first answer, hytta and om morgenen
+      in the second, and sjøen and i dag in the third.
+  - id: first-rain-answer
+    instruction: Makes answer 1 a complete rain statement about Bergen i dag with fixed «det».
+  - id: second-cold-answer
+    instruction: Makes answer 2 a complete cold ambient statement about hytta om morgenen with fixed «det».
+  - id: third-wind-answer
+    instruction: Makes answer 3 a complete wind statement about sjøen i dag with fixed «det».
+- handle: restore_det_in_minas_updates
+  op: find_fix
+  objective: obj-dummy-det-weather-ambient-clauses-01
+  bloom: analyze
+  prompt_md: Select the one token that is wrong/needs changing.
+  derived_from:
+  - section_id: returning-to-mina-and-jonas
+  tokens:
+  - token_id: tok-1
+    text: Ja,
+  - token_id: tok-2
+    text: det
+  - token_id: tok-3
+    text: regner
+  - token_id: tok-4
+    text: fortsatt,
+  - token_id: tok-5
+    text: og
+  - token_id: tok-6
+    text: blåser
+  - token_id: tok-7
+    text: mer
+  - token_id: tok-8
+    text: enn
+  - token_id: tok-9
+    text: før.
+  error_token_id: tok-6
+  feedback: 'The second clause needs fixed «det» before «blåser»: «Ja, det regner
+    fortsatt, og det blåser mer enn før.»'
+- handle: repair_incomplete_weather_messages
+  op: find_fix
+  objective: obj-dummy-det-weather-ambient-clauses-01
+  bloom: analyze
+  prompt_md: Select the one token that is wrong/needs changing.
+  derived_from:
+  - section_id: common-mistakes-to-avoid
+  tokens:
+  - token_id: tok-1
+    text: Regner
+  - token_id: tok-2
+    text: på
+  - token_id: tok-3
+    text: fjellet.
+  error_token_id: tok-1
+  feedback: 'The weather verb needs fixed «det» as its grammatical subject. Add «det»
+    before «regner»: «Det regner på fjellet.»'
+- handle: report_conditions_from_the_cabin
+  op: write
+  objective: obj-dummy-det-weather-ambient-clauses-01
+  bloom: apply
+  prompt_md: 'You are at a mountain cabin before deciding whether to go for a walk.
+    Write a short connected report in Norwegian with four complete statements: report
+    snow outside, cold outdoors, warmth inside, and darkness that is increasing. Use
+    fixed «det» in every weather or ambient statement because no particular person
+    or thing is the semantic subject. Use your own natural Bokmål wording and do not
+    copy a lesson sentence verbatim.'
+  derived_from:
+  - section_id: transfer-a-morning-at-the-cabin
+  response_language: 'no'
+  min_words: 12
+  max_words: 40
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål variants that express the four requested conditions and
+    use fixed «det» appropriately.
+  criteria:
+  - id: reports-snow
+    instruction: Reports snow outside with a complete Norwegian weather statement.
+  - id: reports-outdoor-cold
+    instruction: Reports that it is cold outdoors with a complete ambient statement.
+  - id: reports-indoor-warmth
+    instruction: Reports that it is warm inside with a complete ambient statement.
+  - id: reports-increasing-darkness
+    instruction: Reports increasing darkness with a complete statement using the change
+      pattern.
+  - id: fixed-det-all-statements
+    instruction: Uses fixed «det» as the grammatical subject in all four statements.
+- handle: retrieve_fixed_det_weather_rule
+  op: write
+  objective: obj-dummy-det-weather-ambient-clauses-01
+  bloom: apply
+  prompt_md: 'Forklar regelen om fast «det» på norsk. Gi deretter tre egne Bokmål-eksempler:
+    ett med et værverb, ett med «det er» for en omgivelsestilstand, og ett med «det blir»
+    for en omgivelsestilstand som endrer seg. Ikke kopier hele eksempelsetninger fra
+    leksjonen.'
+  derived_from:
+  - section_id: final-retrieval
+  response_language: 'no'
+  min_words: 20
+  max_words: 65
+  judge_prompt: Check the Norwegian rule explanation and the three original Bokmål examples
+    against every criterion. Accept natural Norwegian wording and do not require sentences
+    from the lesson verbatim.
+  criteria:
+  - id: explains-fixed-det-rule
+    instruction: Explains in Norwegian that fixed «det» is used when weather or an ambient
+      condition has no semantic subject.
+  - id: weather-verb-example
+    instruction: Gives one original complete Bokmål sentence with fixed «det» directly
+      followed by regner, snør, or blåser, without «er» before the weather verb.
+  - id: det-er-example
+    instruction: Gives one original complete Bokmål sentence using fixed «det» plus
+      «er» for an ambient condition.
+  - id: det-blir-example
+    instruction: Gives one original complete Bokmål sentence using fixed «det» plus
+      «blir» for a changing ambient condition.

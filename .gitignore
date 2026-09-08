@@ -24,6 +24,9 @@ wheels/
 
 # Virtual environments
 .venv
+node_modules/
+# Local runtime may expose node_modules as a symlink.
+node_modules
 
 # IDE
 .vscode/
@@ -45,6 +48,7 @@ generated/
 
 # dist/ contains final lesson JSON payloads -- track them, ignore everything else
 dist/*
+!dist/catalog.json
 !dist/manifest.json
 !dist/lessons/
 !dist/lessons/**
@@ -80,12 +84,14 @@ reports/
 .playwright-mcp/
 
 # Generated curriculum audit artifact
-curriculum/structure_audit.json
+content/curriculum/structure_audit.json
 
 # Design docs / implementation plans (kept local, not published)
 docs/superpowers/plans/
 docs/superpowers/specs/
 plans/
+
+# Historical local planning artifacts; current behavior belongs in knowledge/.
 
 # Internal working docs (process logs, WIP roadmaps, raw design Q&A) — kept local
 docs/TODO.md
@@ -108,5 +114,8 @@ data/lexicon/
 # Local Claude Code agent state
 .claude/
 
-# LangGraph dev/Studio local runtime state
+# LangGraph local runtime state
 .langgraph_api/
+
+# Exported Promptfoo results (opt-in local artifacts, never committed)
+evals/promptfoo/results/

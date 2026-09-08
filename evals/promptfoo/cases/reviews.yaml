@@ -1,0 +1,771 @@
+# Labeled reviewer and judge cases. Each case supplies the exact inputs a
+# production reviewer sees and asserts only the material decision (and, where a
+# wrong-but-right-looking verdict is a distinct failure, the grounding of that
+# decision). Judge job: curriculum_reviewer, independent from the live target job.
+
+- description: Lesson review catches a meaning-changing explanation
+  metadata:
+    surface: lesson_review
+    cefr: A1
+    kind: phraseology
+    source_lesson: synthetic
+  vars:
+    surface: lesson_review
+    plan: |
+      ---
+      kind: phraseology
+      approved: true
+      learner_outcome: Distinguish bringing an item from already having it with you.
+      objectives:
+        - id: obj-bring-have
+          statement: Distinguish bringing an item from already having it with you.
+      ---
+
+      # Plan
+
+      Teach the meaning contrast between bringing an item and already having it with you.
+    draft: |
+      # Ta med eller ha med
+
+      `Jeg tar med boka` means the book is already with me. `Jeg har med boka` means I am
+      bringing the book. The learner must choose the expression from the intended meaning.
+  assert:
+    - type: llm-rubric
+      metric: decision_correctness
+      value: |
+        The draft under review reverses the two Norwegian expressions (tar med
+        is glossed as already having, har med as bringing). Return pass=true
+        only when the review verdict is needs_repair and it reports a grounded
+        meaning-changing translation finding for this reversal. Accept the
+        production-supported category names `meaning_changing_translation` or
+        `incorrect_claim`; return
+        pass=false when the review passes the draft or misses the reversal.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: curriculum_reviewer
+          json_response: true
+    - type: llm-rubric
+      metric: reasoning_quality
+      value: |
+        The reported finding must be grounded in the reviewed draft: it quotes
+        or locates the reversed glosses, and its repair instruction replaces the
+        reversed meanings with the correct ones without inventing unrelated
+        defects. Return pass=true only when the evidence and repair instruction
+        do exactly that; return pass=false when the finding cites text not in
+        the draft or the repair instruction is ungrounded or overbroad.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: curriculum_reviewer
+          json_response: true
+
+- description: Preservation review catches a dropped protected example
+  metadata:
+    surface: preservation_review
+    cefr: A1
+    kind: phraseology
+    source_lesson: synthetic
+  vars:
+    surface: preservation_review
+    plan: |
+      ---
+      kind: phraseology
+      approved: true
+      learner_outcome: Distinguish bringing an item from already having it with you.
+      ---
+
+      # Plan
+
+      Preserve the meaning contrast and its examples.
+    draft: |
+      ## At the station
+
+      `Jeg tar med boka` means I am bringing the book. `Jeg har med boka` means I already
+      have the book with me.
+
+    lesson_md: |
+      ---
+      type: Lesson
+      slug: preserve-review
+      title: Ta med eller ha med
+      cefr_level: A1
+      goal: Preserve the meaning contrast.
+      default_lang: nb
+      grounding_mode: grounded
+      requirements_ref: plan.md
+      bloom_targets: [understand]
+      objectives:
+        - id: obj-bring-have
+          statement: Distinguish bringing an item from already having it with you.
+          bloom_targets: [understand]
+      ---
+
+      ## At the station
+
+      `Jeg har med boka` means I already have the book with me.
+
+    exercise_requests_yaml: |
+      - handle: choose-meaning
+        objective_ref: obj-bring-have
+        bloom: understand
+        evidence_route: meaning_selection
+        evidence: Distinguish bringing an item from already having it with you.
+  assert:
+    - type: llm-rubric
+      metric: decision_correctness
+      value: |
+        The normalized source dropped the `Jeg tar med boka` example and its
+        bringing meaning that the protected draft contains. Return pass=true
+        only when the review verdict is needs_repair and at least one grounded
+        finding uses a production-supported preservation category such as
+        `dropped_example` or `dropped_contrast`, with a repair instruction that
+        restores that exact content. Additional grounded preservation findings
+        are valid; return pass=false when the review passes the normalized
+        source or fails to identify the dropped sentence and its meaning.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: curriculum_reviewer
+          json_response: true
+
+- description: Review and edit reports real defects in a lesson package
+  metadata:
+    surface: review_edit
+    cefr: A1
+    kind: grammar
+    source_lesson: synthetic
+  vars:
+    surface: review_edit
+    lesson_md: |
+      # Counting
+
+      ::: examples
+      - no: ✗ Jeg trenger ett pose.
+      - en: Intended: I need one bag.
+      - no: ✗ Hun kjøper en brød.
+      - en: Intended: She is buying one loaf of bread.
+      :::
+
+      {% raw %}{{exercise: label-first}}{% endraw %}
+      {% raw %}{{exercise: label-second}}{% endraw %}
+
+    exercises_yaml: |
+      - handle: label-first
+        op: choose
+        objective: count-quantity
+        bloom: understand
+        prompt_md: Choose the correct quantity phrase.
+        stem_md: Jeg trenger ___ pose.
+        options:
+          - id: en
+            text: en
+            correct: true
+            why: Pose is masculine, so use en for one.
+          - id: ett
+            text: ett
+            correct: false
+            why: Ett is for neuter nouns, but pose is masculine.
+      - handle: label-second
+        op: choose
+        objective: count-quantity
+        bloom: understand
+        prompt_md: Choose the correct quantity phrase.
+        stem_md: Hun kjøper ___ brød.
+        options:
+          - id: ett
+            text: ett
+            correct: true
+            why: Brød is neuter, so use ett for one.
+          - id: en
+            text: en
+            correct: false
+            why: En is for masculine nouns, but brød is neuter.
+    mechanical_audit: |
+      {
+        "status": "clean",
+        "exercise_handles": ["label-first", "label-second"],
+        "marker_handles": ["label-first", "label-second"],
+        "built_answers": [],
+        "findings": []
+      }
+  assert:
+    - type: llm-rubric
+      metric: source_language_labels
+      value: |
+        The prepared package exposes two intentionally wrong Norwegian examples
+        in a typed examples block. Their English glosses use `Intended:`, which
+        is not a recognized negative-example marker, so the bad Norwegian could
+        become model audio. Return pass=true only when the review is needs_edit,
+        identifies both examples, and proposes a bounded source-grounded fix
+        that prevents that audio while preserving the negative teaching intent.
+        Either relabeling both glosses to `Intended meaning:` or moving the
+        examples into a supported warning callout is valid. Do not pass a broad
+        rewrite, an unrelated style preference, or an edit that erases the
+        original negative examples.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: curriculum_reviewer
+          json_response: true
+    - type: python
+      value: file://assertions.py:validate_review_edit_handle_coverage
+      metric: audited_handles
+    - type: python
+      value: file://assertions.py:validate_review_edit_replacements
+      metric: grounded_edits
+
+- description: Review and edit leaves a clean package unchanged
+  metadata:
+    surface: review_edit
+    cefr: A1
+    kind: phraseology
+    source_lesson: synthetic
+  vars:
+    surface: review_edit
+    lesson_md: |
+      # At the station
+
+      ::: examples
+      - no: Jeg tar med boka.
+      - en: I am bringing the book.
+      :::
+
+      {% raw %}{{exercise: clear-choice}}{% endraw %}
+
+    exercises_yaml: |
+      - handle: clear-choice
+        op: choose
+        objective: bring-have
+        bloom: understand
+        prompt_md: Choose the phrase for bringing the book.
+        options:
+          - id: tar-med
+            text: tar med
+            correct: true
+            why: Tar med means bringing something.
+          - id: har-med
+            text: har med
+            correct: false
+            why: Har med means already having something with you.
+    mechanical_audit: |
+      {
+        "status": "clean",
+        "exercise_handles": ["clear-choice"],
+        "marker_handles": ["clear-choice"],
+        "built_answers": [],
+        "findings": []
+      }
+  assert:
+    - type: llm-rubric
+      metric: review_edit_conservatism
+      value: |
+        The supplied package contains natural Norwegian and no concrete defect.
+        Return pass=true only when the review returns verdict `pass`, audits the
+        `clear-choice` handle, returns no findings, and returns no edits. Do not
+        invent a style preference or rewrite valid content. Return pass=false
+        when the review proposes a correction without a grounded defect.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: curriculum_reviewer
+          json_response: true
+    - type: python
+      value: file://assertions.py:validate_review_edit_handle_coverage
+      metric: audited_handles
+    - type: python
+      value: file://assertions.py:validate_review_edit_replacements
+      metric: grounded_edits
+
+- description: Standalone review distinguishes local and missing context
+  metadata:
+    surface: standalone_review
+    cefr: A1
+    kind: phraseology
+    source_lesson: synthetic
+  vars:
+    surface: standalone_review
+    payload: |
+      [
+        {
+          "id": "clear",
+          "operation": "choose",
+          "prompt": "Choose the Norwegian phrase for bringing the book.",
+          "stem": "You are bringing the book.",
+          "options": [
+            {"option_id": "bring", "text": "Jeg tar med boka."},
+            {"option_id": "have", "text": "Jeg har med boka."}
+          ]
+        },
+        {
+          "id": "missing",
+          "operation": "choose",
+          "prompt": "Return to the dialogue above and choose the reply.",
+          "stem": null,
+          "options": [
+            {"option_id": "a", "text": "Ja."},
+            {"option_id": "b", "text": "Nei."}
+          ]
+        }
+      ]
+  assert:
+    - type: llm-rubric
+      metric: decision_correctness
+      value: |
+        The payload contains exercise `clear`, which carries its complete task,
+        and exercise `missing`, whose prompt refers to a dialogue that is not
+        present. Return pass=true only when the review marks `clear` standalone
+        and `missing` context-dependent, with exactly one status per id and no
+        correctness or naturalness claims; return pass=false when either id gets
+        the other status, a status is missing, or the review judges answer
+        correctness instead of standalone context.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: curriculum_reviewer
+          json_response: true
+
+- description: Pedagogy review identifies a concrete wrong Bokmål form
+  metadata:
+    surface: pedagogy
+    cefr: A1
+    kind: grammar
+    source_lesson: synthetic
+  vars:
+    surface: pedagogy
+    lesson: |
+      {
+        "title": "Comparing things",
+        "cefr_level": "A1",
+        "goal": "Compare two things with better.",
+        "objectives": [{"id":"o1","statement":"Compare two things."}],
+        "elements": [{
+          "element_kind":"section","id":"s1","role":"model","title":"Comparison",
+          "blocks":[{"kind":"paragraph","spans":[{"kind":"text","value":"Godere is the Norwegian form for better."}]}]
+        }]
+      }
+  assert:
+    - type: llm-rubric
+      metric: decision_correctness
+      value: |
+        The lesson text presents `godere` as the Norwegian form for better, but
+        the correct Bokmål comparative is `bedre`. Return pass=true only when the
+        review reports a grounded issue that identifies this wrong form and
+        names `bedre`; return pass=false when the review passes the lesson or
+        invents additional defects that the text does not contain.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: curriculum_reviewer
+          json_response: true
+
+- description: Objective review catches an exercise serving the wrong objective
+  metadata:
+    surface: objective_alignment
+    cefr: A1
+    kind: phraseology
+    source_lesson: synthetic
+  vars:
+    surface: objective_alignment
+    lesson: |
+      {
+        "title": "Bring or have",
+        "cefr_level": "A1",
+        "goal": "Distinguish bringing an item from already having it with you.",
+        "objectives":[{"id":"o-bring","statement":"Distinguish bringing an item from already having it with you."}],
+        "elements":[{
+          "element_kind":"exercise","id":"wrong-objective","objective_ids":["o-bring"],
+          "objective_id":"o-bring","operation":"choose","prompt":[{"kind":"text","value":"Choose the number."}],
+          "payload":{"stem":[{"kind":"text","value":"How many?"}],"options":[{"option_id":"one","text":"en"}]}
+        }]
+      }
+  assert:
+    - type: llm-rubric
+      metric: decision_correctness
+      value: |
+        The exercise `wrong-objective` asks the learner to count, while the only
+        approved objective is the bringing-versus-having contrast. Return
+        pass=true only when the alignment review fails this exercise and
+        identifies it by id with evidence that its task is counting; return
+        pass=false when the review accepts the exercise or justifies it against
+        an objective that is not in the lesson.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: curriculum_reviewer
+          json_response: true
+
+- description: Blinded answer review solves one closed exercise
+  metadata:
+    surface: answer
+    cefr: A1
+    kind: phraseology
+    source_lesson: synthetic
+  vars:
+    surface: answer
+    lesson: |
+      {
+        "title":"Bring or have",
+        "cefr_level":"A1",
+        "goal":"Distinguish bringing and already having.",
+        "objectives":[{"id":"o1","statement":"Distinguish bringing and already having."}],
+        "elements":[
+          {"element_kind":"section","id":"s1","role":"model","title":"Meaning","blocks":[{"kind":"paragraph","spans":[{"kind":"text","value":"Use Jeg tar med boka for bringing."}]}]},
+          {"element_kind":"exercise","id":"meaning","operation":"choose","prompt":[{"kind":"text","value":"Choose the phrase for bringing the book."}],"payload":{"stem":[{"kind":"text","value":"You are bringing the book."}],"options":[{"option_id":"bring","text":"Jeg tar med boka."},{"option_id":"have","text":"Jeg har med boka."}],"answer_id":"bring"},"derived_from":[{"section_id":"s1"}]}
+        ]
+      }
+  assert:
+    - type: llm-rubric
+      metric: decision_correctness
+      value: |
+        The keyless exercise `meaning` asks which phrase expresses bringing the
+        book; the defensible option is `bring` (Jeg tar med boka). Return
+        pass=true only when the review solves this exercise with the `bring`
+        answer; return pass=false when it selects the other option, refuses to
+        decide, or bases its answer on a hidden answer field rather than the
+        visible task.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: curriculum_reviewer
+          json_response: true
+
+- description: Attempt review detects a backward reference
+  metadata:
+    surface: attempt
+    cefr: A1
+    kind: phraseology
+    source_lesson: synthetic
+  vars:
+    surface: attempt
+    lesson: |
+      {
+        "title":"Bring or have",
+        "cefr_level":"A1",
+        "goal":"Distinguish bringing and already having.",
+        "objectives":[{"id":"o1","statement":"Distinguish bringing and already having."}],
+        "elements":[
+          {"element_kind":"exercise","id":"clear","operation":"choose","prompt":[{"kind":"text","value":"Choose the phrase for bringing the book."}],"payload":{"stem":[{"kind":"text","value":"You are bringing the book."}],"options":[{"option_id":"bring","text":"Jeg tar med boka."},{"option_id":"have","text":"Jeg har med boka."}]}},
+          {"element_kind":"exercise","id":"missing","operation":"choose","prompt":[{"kind":"text","value":"Return to the dialogue above and choose the reply."}],"payload":{"options":[{"option_id":"a","text":"Ja."},{"option_id":"b","text":"Nei."}]}}
+        ]
+      }
+  assert:
+    - type: llm-rubric
+      metric: decision_correctness
+      value: |
+        At attempt time `clear` is locally understandable and answerable, while
+        `missing` refers to a dialogue that is absent from its payload. Return
+        pass=true only when the review returns exactly one status per id
+        marking `clear` as understandable and `missing` as not; return
+        pass=false when either exercise is misclassified or a status is
+        missing.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: curriculum_reviewer
+          json_response: true
+
+- description: Open-rubric review checks both directions of a write task
+  metadata:
+    surface: open_rubric
+    cefr: A1
+    kind: communicative
+    source_lesson: synthetic
+  vars:
+    surface: open_rubric
+    lesson: |
+      {
+        "title":"Ask for help",
+        "cefr_level":"A1",
+        "goal":"State an obstacle and ask for help.",
+        "objectives":[{"id":"o1","statement":"State an obstacle and ask for help."}],
+        "elements":[{"element_kind":"exercise","id":"write-note","operation":"write","prompt":[{"kind":"text","value":"Write a short Norwegian message that states a blocked task and asks politely for help."}],"payload":{"response_language":"no","min_words":3,"max_words":20,"criteria":[{"id":"obstacle","instruction":"Names a concrete obstacle."},{"id":"request","instruction":"Asks politely for help."}],"judge_prompt":"Check the two requested criteria."}}]
+      }
+  assert:
+    - type: llm-rubric
+      metric: decision_correctness
+      value: |
+        The write task `write-note` names both obligations (state the blocked
+        task, ask politely for help) and each obligation has exactly one
+        directly requested criterion. Return pass=true only when the review
+        marks `write-note` clear because prompt and rubric state the same
+        obligations in both directions; return pass=false when the review marks
+        it unclear or invents an obligation mismatch the payload does not show.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: curriculum_reviewer
+          json_response: true
+
+- description: Naturalness review identifies an invented comparative
+  metadata:
+    surface: naturalness
+    cefr: A1
+    kind: grammar
+    source_lesson: synthetic
+  vars:
+    surface: naturalness
+    lesson: |
+      {
+        "title":"Comparing things",
+        "cefr_level":"A1",
+        "goal":"Use the Norwegian comparative for good.",
+        "objectives":[{"id":"o1","statement":"Use the comparative for good."}],
+        "elements":[{"element_kind":"section","id":"s1","role":"model","title":"Comparison","blocks":[{"kind":"paragraph","spans":[{"kind":"text","value":"The form godere is natural Bokmål for better."}]}]}]
+      }
+  assert:
+    - type: llm-rubric
+      metric: decision_correctness
+      value: |
+        `godere` is not a natural or existing Bokmål comparative; the natural
+        form is `bedre`. Return pass=true only when the naturalness review
+        reports a grounded issue quoting `godere` and naming `bedre` as the
+        natural alternative; return pass=false when the review accepts the form
+        or reports a mere style preference instead of the non-existent form.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: curriculum_reviewer
+          json_response: true
+
+# Regression excerpts from PR #222; labels are manually reviewed, not calibrated.
+- description: 'PR222 regression: feedback contradicts the keyed word order'
+  metadata:
+    surface: review_edit
+    cefr: A2
+    kind: grammar
+    source_lesson: PR222 curated excerpt
+  vars:
+    surface: review_edit
+    lesson_md: '# Proportional change
+
+      Use jo + comparative + subject + verb, followed by desto + comparative + verb + subject. For
+      example: Jo mer du øver, desto tryggere blir du.
+
+
+      {% raw %}{{exercise: complete_the_proportional_frame}}{% endraw %}
+
+      '
+    exercises_yaml: "- handle: complete_the_proportional_frame\n  op: build\n  objective: obj-jo-desto-correlatives-01\n\
+      \  bloom: apply\n  prompt_md: 'Build one complete Norwegian sentence for exam preparation:\
+      \ more practice\n    leads to greater confidence. Use jo ... desto and all supplied tokens.'\n\
+      \  explanation_md: Each half has comparative wording, and the finite verb follows the\n   \
+      \ subject inside both jo/desto clauses.\n  tokens:\n  - token_id: tok-1\n    text: Jo\n  -\
+      \ token_id: tok-2\n    text: mer\n  - token_id: tok-3\n    text: du\n  - token_id: tok-4\n\
+      \    text: øver,\n  - token_id: tok-5\n    text: desto\n  - token_id: tok-6\n    text: tryggere\n\
+      \  - token_id: tok-7\n    text: blir\n  - token_id: tok-8\n    text: du.\n  answer_order:\n\
+      \  - tok-1\n  - tok-2\n  - tok-3\n  - tok-4\n  - tok-5\n  - tok-6\n  - tok-7\n  - tok-8\n"
+    mechanical_audit: '{"status": "clean", "exercise_handles": ["complete_the_proportional_frame"],
+      "marker_handles": ["complete_the_proportional_frame"], "built_answers": [], "findings": []}'
+  assert:
+  - type: llm-rubric
+    metric: decision_correctness
+    value: Return pass=true only if the review requests an edit to the explanation that incorrectly
+      puts the verb after the subject in both clauses. It must preserve the correct answer Jo mer
+      du øver, desto tryggere blir du and explain subject-before-verb in the jo clause versus verb-before-subject
+      in the desto clause. Return pass=false if it passes the bad explanation or changes the answer
+      to match the false rule.
+    provider: &id001
+      id: file://provider.py:call_api
+      config:
+        job: curriculum_reviewer
+        json_response: true
+  - type: python
+    value: file://assertions.py:validate_review_edit_handle_coverage
+    metric: audited_handles
+  - type: python
+    value: file://assertions.py:validate_review_edit_replacements
+    metric: grounded_edits
+- description: 'PR222 regression: correct feedback is left unchanged'
+  metadata:
+    surface: review_edit
+    cefr: A2
+    kind: grammar
+    source_lesson: PR222 curated excerpt
+  vars:
+    surface: review_edit
+    lesson_md: '# Proportional change
+
+      Use jo + comparative + subject + verb, followed by desto + comparative + verb + subject. For
+      example: Jo mer du øver, desto tryggere blir du.
+
+
+      {% raw %}{{exercise: complete_the_proportional_frame}}{% endraw %}
+
+      '
+    exercises_yaml: "- handle: complete_the_proportional_frame\n  op: build\n  objective: obj-jo-desto-correlatives-01\n\
+      \  bloom: apply\n  prompt_md: 'Build one complete Norwegian sentence for exam preparation:\
+      \ more practice\n    leads to greater confidence. Use jo ... desto and all supplied tokens.'\n\
+      \  explanation_md: 'Each half has comparative wording. In the jo-clause, the finite\n    verb\
+      \ follows the subject; in the desto-clause, the finite verb comes before the\n    subject:\
+      \ jo mer du øver, desto tryggere blir du.'\n  tokens:\n  - token_id: tok-1\n    text: Jo\n\
+      \  - token_id: tok-2\n    text: mer\n  - token_id: tok-3\n    text: du\n  - token_id: tok-4\n\
+      \    text: øver,\n  - token_id: tok-5\n    text: desto\n  - token_id: tok-6\n    text: tryggere\n\
+      \  - token_id: tok-7\n    text: blir\n  - token_id: tok-8\n    text: du.\n  answer_order:\n\
+      \  - tok-1\n  - tok-2\n  - tok-3\n  - tok-4\n  - tok-5\n  - tok-6\n  - tok-7\n  - tok-8\n"
+    mechanical_audit: '{"status": "clean", "exercise_handles": ["complete_the_proportional_frame"],
+      "marker_handles": ["complete_the_proportional_frame"], "built_answers": [], "findings": []}'
+  assert:
+  - type: llm-rubric
+    metric: decision_correctness
+    value: Return pass=true only if the review passes this correct package with no findings or edits.
+      The explanation and keyed answer agree on jo subject-verb and desto verb-subject order. Do
+      not penalize the reviewer for leaving concise useful feedback intact. Return pass=false for
+      an invented defect or unnecessary rewrite.
+    provider: *id001
+  - type: python
+    value: file://assertions.py:validate_review_edit_handle_coverage
+    metric: audited_handles
+  - type: python
+    value: file://assertions.py:validate_review_edit_replacements
+    metric: grounded_edits
+- description: 'PR222 regression: rubric silently requires English'
+  metadata:
+    surface: review_edit
+    cefr: A2
+    kind: grammar
+    source_lesson: PR222 curated excerpt
+  vars:
+    surface: review_edit
+    lesson_md: '# Destination
+
+      Use til for travel to a destination, for example Jeg reiser til Bergen. Write only in Norwegian.
+
+
+      {% raw %}{{exercise: destination}}{% endraw %}
+
+      '
+    exercises_yaml: "- handle: destination\n  op: write\n  objective: obj-destination\n  bloom: apply\n\
+      \  prompt_md: Write one short Norwegian sentence about travelling to a destination.\n    Keep\
+      \ the entire response in Norwegian.\n  response_language: 'no'\n  judge_prompt: Check the destination\
+      \ criterion.\n  criteria:\n  - id: destination\n    instruction: Gives a destination example\
+      \ using til and an accurate English translation.\n"
+    mechanical_audit: '{"status": "clean", "exercise_handles": ["destination"], "marker_handles":
+      ["destination"], "built_answers": [], "findings": []}'
+  assert:
+  - type: llm-rubric
+    metric: decision_correctness
+    value: Return pass=true only if the review requests a bounded edit removing the English-translation
+      requirement from the criterion while retaining til and Norwegian-only production. Return pass=false
+      if it passes the mismatch, changes the task to require English, or drops the destination grammar
+      requirement.
+    provider: *id001
+  - type: python
+    value: file://assertions.py:validate_review_edit_handle_coverage
+    metric: audited_handles
+  - type: python
+    value: file://assertions.py:validate_review_edit_replacements
+    metric: grounded_edits
+- description: 'PR222 regression: rubric loses the required tense'
+  metadata:
+    surface: review_edit
+    cefr: A2
+    kind: grammar
+    source_lesson: PR222 curated excerpt
+  vars:
+    surface: review_edit
+    lesson_md: '# Present perfect
+
+      Use present perfect for an earlier action with a result now: Jeg har låst døra. The retrieval
+      exercise must demonstrate present perfect, not merely describe a current state.
+
+
+      {% raw %}{{exercise: result}}{% endraw %}
+
+      '
+    exercises_yaml: "- handle: result\n  op: write\n  objective: obj-result\n  bloom: apply\n  prompt_md:\
+      \ Write one Norwegian sentence using present perfect for an earlier action\n    whose result\
+      \ matters now.\n  response_language: 'no'\n  judge_prompt: Check the criterion.\n  criteria:\n\
+      \  - id: present-result\n    instruction: Gives a natural Norwegian sentence about a result\
+      \ that matters now.\n"
+    mechanical_audit: '{"status": "clean", "exercise_handles": ["result"], "marker_handles": ["result"],
+      "built_answers": [], "findings": []}'
+  assert:
+  - type: llm-rubric
+    metric: decision_correctness
+    value: Return pass=true only if the review requests an edit restoring explicit present-perfect
+      use to the criterion, preserving the earlier-action/result-now meaning. A current-state sentence
+      alone must not satisfy it. Return pass=false if the weak criterion is passed or the repair
+      removes the grammar requirement from the prompt.
+    provider: *id001
+  - type: python
+    value: file://assertions.py:validate_review_edit_handle_coverage
+    metric: audited_handles
+  - type: python
+    value: file://assertions.py:validate_review_edit_replacements
+    metric: grounded_edits
+
+# Semantic minimal pairs; seed labels are not calibrated quality metrics.
+- description: Open rubric distinguishes hidden tense restriction
+  metadata:
+    surface: open_rubric
+    cefr: A2
+    kind: grammar
+    source_lesson: synthetic minimal pair; uncalibrated
+  vars:
+    surface: open_rubric
+    lesson: '{"title": "Completed actions", "cefr_level": "A2", "goal": "Describe a completed action.",
+      "objectives": [{"id": "o1", "statement": "Describe a completed action."}], "elements": [{"element_kind":
+      "exercise", "id": "completed", "operation": "write", "prompt": [{"kind": "text", "value": "Write
+      one Norwegian sentence about a completed action."}], "payload": {"response_language": "no", "min_words":
+      3, "max_words": 20, "criteria": [{"id": "action", "instruction": "Describes a completed action using
+      present perfect."}], "judge_prompt": "Require present perfect; reject simple past."}}]}'
+  assert:
+  - type: llm-rubric
+    metric: decision_correctness
+    value: The visible task permits a completed-action sentence in simple past, but criteria and judge_prompt
+      secretly require present perfect. Pass only if completed is not clear and the reason identifies
+      this hidden tense restriction; do not invent an explicit tense requirement in the prompt.
+    provider:
+      id: file://provider.py:call_api
+      config:
+        job: curriculum_reviewer
+        json_response: true
+- description: Open rubric distinguishes explicit requested tense
+  metadata:
+    surface: open_rubric
+    cefr: A2
+    kind: grammar
+    source_lesson: synthetic minimal pair; uncalibrated
+  vars:
+    surface: open_rubric
+    lesson: '{"title": "Completed actions", "cefr_level": "A2", "goal": "Describe a completed action.",
+      "objectives": [{"id": "o1", "statement": "Describe a completed action."}], "elements": [{"element_kind":
+      "exercise", "id": "completed", "operation": "write", "prompt": [{"kind": "text", "value": "Write
+      one Norwegian sentence about a completed action. Use present perfect."}], "payload": {"response_language":
+      "no", "min_words": 3, "max_words": 20, "criteria": [{"id": "action", "instruction": "Describes a
+      completed action using present perfect."}], "judge_prompt": "Require present perfect; reject simple
+      past."}}]}'
+  assert:
+  - type: llm-rubric
+    metric: decision_correctness
+    value: The visible task explicitly requires present perfect and the rubric enforces it. Pass only
+      if completed is clear; do not reject the requested tense restriction as unfair to otherwise grammatical
+      simple-past answers.
+    provider:
+      id: file://provider.py:call_api
+      config:
+        job: curriculum_reviewer
+        json_response: true
+- description: Attempt review accepts a complete open speaking cue without assuming hidden exact grading
+  metadata:
+    surface: attempt
+    cefr: A1
+    kind: communicative
+    source_lesson: synthetic; uncalibrated
+  vars:
+    surface: attempt
+    lesson: '{"title": "Introduce yourself", "elements": [{"element_kind": "exercise", "id": "intro",
+      "operation": "speak", "prompt": [{"kind": "text", "value": "Say your name and where you live in
+      Norwegian."}], "payload": {"target": "Jeg heter Ada. Jeg bor i Oslo."}}]}'
+  assert:
+  - type: llm-rubric
+    metric: decision_correctness
+    value: Pass only if intro is clear. The learner can state their own name and location; many valid
+      utterances are expected. The reviewer must not demand the hidden Ada/Oslo example or invent exact-match
+      grading from the keyless projection.
+    provider:
+      id: file://provider.py:call_api
+      config:
+        job: curriculum_reviewer
+        json_response: true

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Run staged file checks through the pinned hook configuration. Ruff linting and
+# formatting are configured there alongside the generic repository checks.
+uv run pre-commit run --config .pre-commit-config.yaml --hook-stage pre-commit
+
+# Knowledge is the committed current-state source. Keep the hook lightweight;
+# the full Python quality suite runs in CI and at handoff.
+if git diff --cached --name-only --diff-filter=ACMR | rg -q '^knowledge/'; then
+  uv run python scripts/okf_validate.py knowledge --strict --check-links
+fi

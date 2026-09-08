@@ -1,0 +1,12 @@
+description: Evaluate rich-draft generation against committed authoring plans (A1-B2).
+
+prompts:
+  - file://prompts.py:create_rich_draft_prompt
+
+providers:
+  - id: file://provider.py:call_api
+    label: configured-author
+    config:
+      job: author
+
+tests: file://cases/rich_draft.yaml

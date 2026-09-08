@@ -1,0 +1,294 @@
+- handle: checkpoint_identify_information
+  op: recall_fill
+  objective: obj-knowing-verbs-vite-kjenne-kunne-01
+  bloom: apply
+  prompt_md: For each item, identify the situation as factual information, then complete
+    the Norwegian sentence with the present form of vite. Choose the category and
+    verb that fit each item.
+  explanation_md: "Use vite for facts or information, kjenne for familiarity with people or places, and kunne for learned ability."
+  derived_from:
+  - section_id: vite-knowing-a-fact
+  audio_target: "Vet du hvor kjøkkenet er? Det er faktisk informasjon. Jeg vet at møtet begynner klokka ni. Det er faktisk informasjon. Jeg vet hvorfor bussen er forsinket. Det er faktisk informasjon."
+  segments:
+  - text_md: 'Item 1: Kategori: '
+  - blank_id: knowledge-kind-1
+    options:
+    - faktisk informasjon
+    - personlig kjennskap
+    - innlært ferdighet
+    answer_index: 0
+  - text_md: '. Setning: '
+  - blank_id: factual-verb-1
+    options:
+    - Vet
+    - Kjenner
+    - Kan
+    answer_index: 0
+  - text_md: ' du hvor kjøkkenet er? 2. Kategori: '
+  - blank_id: knowledge-kind-2
+    options:
+    - faktisk informasjon
+    - personlig kjennskap
+    - innlært ferdighet
+    answer_index: 0
+  - text_md: '. Setning: Lea '
+  - blank_id: factual-verb-2
+    options:
+    - vet
+    - kjenner
+    - kan
+    answer_index: 0
+  - text_md: ' at møtet begynner klokka ni. 3. Kategori: '
+  - blank_id: knowledge-kind-3
+    options:
+    - faktisk informasjon
+    - personlig kjennskap
+    - innlært ferdighet
+    answer_index: 0
+  - text_md: '. Setning: Lea '
+  - blank_id: factual-verb-3
+    options:
+    - vet
+    - kjenner
+    - kan
+    answer_index: 0
+  - text_md: ' hvorfor bussen er forsinket.'
+- handle: checkpoint_familiarity_or_identity
+  op: write
+  objective: obj-knowing-verbs-vite-kjenne-kunne-01
+  bloom: apply
+  prompt_md: Write exactly two short sentences in Norwegian about Lea and Mari. The
+    first sentence must say that Lea knows who Mari is because she has seen Mari’s
+    name on the schedule. The second must say that Lea has no personal familiarity
+    with Mari because they have never spoken. Keep identity and personal familiarity
+    separate.
+  derived_from:
+  - section_id: kjenne-being-familiar-with-someone-or-something
+  response_language: 'no'
+  min_words: 8
+  max_words: 25
+  judge_prompt: Accept natural Bokmål variants that preserve the two meanings and
+    the stated context. Pass only when identity and personal familiarity appear in
+    separate sentences. A factual form such as «Jeg vet hvem Mari er.» and a familiarity
+    form such as «Jeg kjenner ikke Mari.» are valid evidence.
+  criteria:
+  - id: identity
+    instruction: States that Lea knows who Mari is, using a factual identity construction
+      such as «Jeg vet hvem Mari er.»
+  - id: personal-familiarity
+    instruction: States that Lea has no personal familiarity with Mari, using a natural
+      form of kjenne such as «Jeg kjenner ikke Mari.»
+  - id: separate-sentences
+    instruction: Uses one sentence for identity and a different sentence for personal
+      familiarity, so the two meanings are distinguished.
+- handle: checkpoint_information_or_ability
+  op: write
+  objective: obj-knowing-verbs-vite-kjenne-kunne-01
+  bloom: apply
+  prompt_md: Write two short sentences in Norwegian about Lea and the sound system.
+    In the first, state that she knows how the system works because she has read and
+    understood the procedure. In the second, state whether the available context supports
+    saying that she can operate it. Do not claim an ability that has not been established.
+  derived_from:
+  - section_id: kunne-having-a-learned-skill-or-ability
+  response_language: 'no'
+  min_words: 10
+  max_words: 40
+  judge_prompt: Accept natural variants such as «Hun vet hvordan lydanlegget fungerer,
+    men vi vet ikke om hun kan bruke det.» The response must express factual knowledge
+    of the procedure and uncertainty about operating ability. Reject both an unsupported
+    positive claim that she can operate it and an unsupported claim that she cannot.
+  criteria:
+  - id: procedure-knowledge
+    instruction: Uses vite hvordan to state Lea’s established knowledge of how the
+      sound system works.
+  - id: unsupported-skill
+    instruction: States that the context does not establish whether Lea can operate
+      the system and does not assert that she has that ability.
+- handle: checkpoint_compare_matched_situations
+  op: write
+  objective: obj-knowing-verbs-vite-kjenne-kunne-01
+  bloom: apply
+  prompt_md: 'Write twelve short Norwegian questions: three about each topic— a colleague,
+    a town, a computer program, and a musical instrument. For every topic, ask one
+    question about factual information, one about personal familiarity, and one about
+    a learned ability. Keep the central topic constant within each trio; natural Norwegian
+    may add a necessary complement for the ability question.'
+  derived_from:
+  - section_id: three-questions-with-three-meanings
+  response_language: 'no'
+  min_words: 35
+  max_words: 140
+  judge_prompt: Accept natural Bokmål wording, inflection, and necessary complements.
+    Pass only when all four topics have three questions and each trio clearly contains
+    factual information, personal familiarity, and learned ability. The response must
+    use vet for factual questions, kjenner for familiarity, and kan for ability according
+    to meaning, while keeping each topic central within its trio.
+  criteria:
+  - id: topic-constancy
+    instruction: Keeps the colleague, town, computer program, and musical instrument
+      as the central topics within their respective three-question groups.
+  - id: meaning-based-verb-choice
+    instruction: Uses the present forms vet, kjenner, and kan for factual information,
+      personal familiarity, and learned ability respectively in every topic group.
+- handle: contextual_practice_lea_first_day
+  op: write
+  objective: obj-knowing-verbs-vite-kjenne-kunne-01
+  bloom: apply
+  prompt_md: Write a short Norwegian message of four sentences about Lea after the
+    community-centre event. Include a factual statement about where the cups go in
+    the building, a familiarity statement about Mari and Arne after working together,
+    a factual statement that Mari is on the work schedule, and an ability statement
+    about making tea with the machine. Make the three kinds of knowing clear through
+    your verb choices.
+  derived_from:
+  - section_id: back-at-the-community-centre
+  response_language: 'no'
+  min_words: 20
+  max_words: 65
+  judge_prompt: Accept natural Bokmål variants that preserve all four requested details.
+    Valid evidence can include «Jeg vet hvor vi skal sette koppene», «Jeg kjenner
+    både Mari og Arne litt nå», «Jeg vet at Mari står på arbeidsplanen», and «Jeg
+    kan lage te med denne maskinen». Check that factual information uses vite, familiarity
+    uses kjenne, and practical ability uses kunne.
+  criteria:
+  - id: building-fact
+    instruction: States a factual detail about where the cups belong in the building
+      using a natural form of vite.
+  - id: organiser-familiarity
+    instruction: States that Lea is personally familiar with Mari and Arne after working
+      together using a natural form of kjenne.
+  - id: schedule-fact
+    instruction: States the schedule information that Mari is on the work schedule
+      using a natural factual form of vite.
+  - id: kitchen-skill
+    instruction: States that Lea can make tea with the machine using a natural form
+      of kunne, normally kan with an infinitive.
+- handle: further_practice_new_workplace
+  op: recall_fill
+  objective: obj-knowing-verbs-vite-kjenne-kunne-01
+  bloom: apply
+  prompt_md: Complete every blank. The employee has read the staff list, worked closely
+    with one colleague for a week, is not familiar with the rest of the team, and
+    has previous experience using the accounting software. Choose the form that matches
+    factual information, personal familiarity, or learned ability.
+  derived_from:
+  - section_id: further-practice-in-new-situations
+  audio_target: "Fra personaloversikten vet hun hvem teamlederen er. Etter en uke med tett samarbeid kjenner hun kollegaen sin godt, men hun kjenner ikke resten av teamet. Med tidligere erfaring kan hun bruke regnskapsprogrammet."
+  segments:
+  - text_md: 'Item 1: Fra personaloversikten '
+  - blank_id: staff-fact
+    options:
+    - vet
+    - kjenner
+    - kan
+    answer_index: 0
+  - text_md: ' hun hvem teamlederen er. 2. Etter en uke med tett samarbeid: '
+  - blank_id: close-colleague
+    options:
+    - kjenner
+    - vet
+    - kan
+    answer_index: 0
+  - text_md: ' hun kollegaen sin godt, men hun '
+  - blank_id: rest-team
+    options:
+    - kjenner
+    - vet
+    - kan
+    answer_index: 0
+  - text_md: ' ikke resten av teamet. 3. Med tidligere erfaring: '
+  - blank_id: software-skill
+    options:
+    - kan
+    - vet
+    - kjenner
+    answer_index: 0
+  - text_md: ' hun bruke regnskapsprogrammet.'
+- handle: further_practice_visiting_another_town
+  op: write
+  objective: obj-knowing-verbs-vite-kjenne-kunne-01
+  bloom: apply
+  prompt_md: Write a short Norwegian exchange with one question-and-answer pair for
+    each point. Ask or state the hotel’s location or address as factual information,
+    ask or state whether one friend is familiar with Bergen, and ask or state whether
+    the other friend has the learned ability to drive confidently in heavy traffic.
+    Keep location, familiarity, and driving ability separate.
+  derived_from:
+  - section_id: further-practice-in-new-situations
+  response_language: 'no'
+  min_words: 20
+  max_words: 65
+  judge_prompt: Accept natural Bokmål alternatives that preserve the three roles.
+    Pass when hotel location or address is expressed as factual knowledge with vite,
+    Bergen familiarity with kjenne, and learned driving ability with kan plus an infinitive.
+    Do not accept a response that treats familiarity or driving skill as the hotel-location
+    fact.
+  criteria:
+  - id: hotel-location-fact
+    instruction: Keeps the hotel’s location or address as factual information and
+      uses a natural form of vite for it.
+  - id: bergen-familiarity
+    instruction: Uses a natural form of kjenne to express personal familiarity with
+      Bergen.
+  - id: driving-ability
+    instruction: Uses a natural form of kan with a driving infinitive to express learned
+      driving ability, separately from location and familiarity.
+- handle: further_practice_planning_a_concert
+  op: write
+  objective: obj-knowing-verbs-vite-kjenne-kunne-01
+  bloom: apply
+  prompt_md: Write a brief Norwegian exchange in which one organiser asks another
+    organiser about all three kinds of knowledge. Include a question and reply about
+    the concert’s starting time, a question and reply about personal acquaintance
+    with the singer, and a question and reply about the ability to use the sound equipment.
+  derived_from:
+  - section_id: further-practice-in-new-situations
+  response_language: 'no'
+  min_words: 20
+  max_words: 65
+  judge_prompt: Accept natural Bokmål exchanges with equivalent wording. Pass only
+    when the starting time is treated as a fact with vet, the singer as a personally
+    known person with kjenner, and operating the equipment as a learned ability with
+    kan plus an appropriate infinitive such as bruke.
+  criteria:
+  - id: concert-time
+    instruction: Uses a natural form of vet for the concert’s starting-time information.
+  - id: singer-familiarity
+    instruction: Uses a natural form of kjenner to express personal acquaintance with
+      the singer.
+  - id: equipment-skill
+    instruction: Uses a natural form of kan plus an infinitive to express the ability
+      to use the sound equipment.
+- handle: retrieval_review_three_kinds
+  op: write
+  objective: obj-knowing-verbs-vite-kjenne-kunne-01
+  bloom: apply
+  prompt_md: 'Choose one coherent situation that supports all three kinds of knowledge.
+    Write three short Norwegian statements: one fact someone knows, one person or
+    place someone is familiar with, and one learned skill someone possesses. Then
+    write a brief Norwegian explanation for each statement, explaining why it requires
+    vite, kjenne, or kunne.'
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  min_words: 30
+  max_words: 95
+  judge_prompt: Accept any coherent situation and natural Bokmål wording. Pass only
+    when the response contains one concrete factual statement, one personal or place
+    familiarity statement, and one learned-skill statement, followed by a separate
+    explanation for each choice. The explanations must connect fact to vite, familiarity
+    to kjenne, and ability to kunne; a bare list without explanations is insufficient.
+  criteria:
+  - id: known-fact
+    instruction: States one concrete fact someone knows using a natural present form
+      of vite, such as vet.
+  - id: familiar-person-or-place
+    instruction: Names a person or place someone is familiar with using a natural
+      present form of kjenne, such as kjenner.
+  - id: learned-skill
+    instruction: States one learned skill someone possesses using a natural present
+      form of kunne, such as kan with an infinitive.
+  - id: choice-explanations
+    instruction: Explains separately in Norwegian why each of the three statements
+      requires vite, kjenne, or kunne according to its meaning.

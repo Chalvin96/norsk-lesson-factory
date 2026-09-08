@@ -1,0 +1,373 @@
+- handle: anchor_time_connections
+  op: categorize
+  objective: obj-preterite-vs-present-perfect-01
+  bloom: analyze
+  prompt_md: Classify what motivates each highlighted verb in Leila and Jonas’s dialogue.
+    Use the stated time expression, sequence, experience, present consequence, or
+    continuing situation—not verb form alone.
+  explanation_md: "Use preterite with a finished, specified past time; use present perfect for experience, present relevance, or a period continuing to now."
+  derived_from:
+  - section_id: an-evening-plan
+  buckets:
+  - bucket_id: completed-past
+    label: Completed past time or completed sequence
+  - bucket_id: past-to-present
+    label: Earlier situation connected to the present
+  items:
+  - item_id: item-01
+    text: Har du vært på Fjordhuset før? (Experience at any time before now.)
+    bucket_id: past-to-present
+  - item_id: item-02
+    text: Jeg var der forrige fredag.
+    bucket_id: completed-past
+  - item_id: item-03
+    text: Forrige fredag spiste vi middag.
+    bucket_id: completed-past
+  - item_id: item-04
+    text: Forrige fredag hørte vi på et band etter middagen.
+    bucket_id: completed-past
+  - item_id: item-05
+    text: Jeg har aldri spist der. (Experience up to now.)
+    bucket_id: past-to-present
+  - item_id: item-06
+    text: Jeg har hørt mye positivt om stedet. (What Jonas knows now.)
+    bucket_id: past-to-present
+  - item_id: item-07
+    text: Jeg har allerede spist. (He does not need dinner now.)
+    bucket_id: past-to-present
+  - item_id: item-08
+    text: Du spiste tidlig! (A completed meal earlier today.)
+    bucket_id: completed-past
+  - item_id: item-09
+    text: Jeg har jobbet siden klokka åtte i dag. (The working period continues.)
+    bucket_id: past-to-present
+  - item_id: item-10
+    text: Jeg tok lunsj før elleve.
+    bucket_id: completed-past
+  - item_id: item-11
+    text: Jeg har bodd i dette området i tre år. (Leila still lives there.)
+    bucket_id: past-to-present
+  - item_id: item-12
+    text: Jeg bodde i Bergen i tre år før jeg flyttet hit.
+    bucket_id: completed-past
+  - item_id: item-13
+    text: Jeg bodde i Bergen før jeg flyttet hit.
+    bucket_id: completed-past
+  - item_id: item-14
+    text: Da jeg bodde i Bergen, gikk jeg ofte på små konserter.
+    bucket_id: completed-past
+- handle: completed_past_time_choice
+  op: recall_fill
+  objective: obj-preterite-vs-present-perfect-01
+  bloom: apply
+  prompt_md: Complete each report. Select the form required by the specific completed
+    past time.
+  derived_from:
+  - section_id: specific-past-events
+  audio_target: "I fjor bodde jeg i Bergen. Vi hadde tre møter forrige uke. Jeg så den filmen i går kveld. Hun ringte meg i mandags."
+  segments:
+  - text_md: 'I fjor '
+  - blank_id: residence-last-year
+    options:
+    - bodde
+    - har bodd
+    answer_index: 0
+  - text_md: ' jeg i Bergen. Vi '
+  - blank_id: meetings-last-week
+    options:
+    - har hatt
+    - hadde
+    answer_index: 1
+  - text_md: ' tre møter forrige uke. Jeg '
+  - blank_id: film-yesterday
+    options:
+    - så
+    - har sett
+    answer_index: 0
+  - text_md: ' den filmen i går kveld. Hun '
+  - blank_id: call-last-monday
+    options:
+    - har ringt
+    - ringte
+    answer_index: 1
+  - text_md: ' meg i mandags.'
+- handle: experience_or_occasion
+  op: recall_fill
+  objective: obj-preterite-vs-present-perfect-01
+  bloom: apply
+  prompt_md: Complete each pair. Use present perfect for experience before now and
+    past tense for the specified occasion.
+  explanation_md: "Use present perfect for experience before now, but preterite when the sentence points to one finished occasion."
+  derived_from:
+  - section_id: experiences-before-now
+  audio_target: "Leila: Jeg har vært på Fjordhuset før. Jeg var der forrige fredag. Jonas: Jeg har sett den filmen tre ganger. Jeg så den sist i går kveld."
+  segments:
+  - text_md: 'Leila: Jeg '
+  - blank_id: restaurant-experience
+    options:
+    - har vært
+    - var
+    answer_index: 0
+  - text_md: ' på Fjordhuset før. Jeg '
+  - blank_id: restaurant-occasion
+    options:
+    - har vært
+    - var
+    answer_index: 1
+  - text_md: ' der forrige fredag. Jonas: Jeg '
+  - blank_id: film-experience
+    options:
+    - har sett
+    - så
+    answer_index: 0
+  - text_md: ' den filmen tre ganger. Jeg '
+  - blank_id: film-occasion
+    options:
+    - har sett
+    - så
+    answer_index: 1
+  - text_md: ' den sist i går kveld.'
+- handle: present_result_choice
+  op: recall_fill
+  objective: obj-preterite-vs-present-perfect-01
+  bloom: apply
+  prompt_md: Complete each exchange according to its purpose. Use present perfect
+    for a result that matters now and past tense for an event located at a completed
+    time.
+  explanation_md: "Present perfect highlights a result that matters now; preterite simply locates the event in a finished past situation."
+  derived_from:
+  - section_id: results-that-matter-now
+  audio_target: "Leila: Vil du spise nå? Jonas: Nei, jeg har spist, så jeg vil bare ha kaffe. Kan du hjelpe meg inn? Jeg har mistet nøklene, og de er fortsatt borte. I går mistet jeg nøklene på bussen. Er leksene ferdige nå? Ja, hun har gjort leksene. Klokka tre sendte jeg meldingen."
+  segments:
+  - text_md: 'Leila: Vil du spise nå? Jonas: Nei, jeg '
+  - blank_id: meal-result
+    options:
+    - har spist
+    - spiste
+    answer_index: 0
+  - text_md: ', så jeg vil bare ha kaffe. Kan du hjelpe meg inn? Jeg '
+  - blank_id: keys-result
+    options:
+    - mistet
+    - har mistet
+    answer_index: 1
+  - text_md: ' nøklene, og de er fortsatt borte. I går '
+  - blank_id: keys-occasion
+    options:
+    - mistet
+    - har mistet
+    answer_index: 0
+  - text_md: ' jeg nøklene på bussen. Er leksene ferdige nå? Ja, hun '
+  - blank_id: homework-result
+    options:
+    - gjorde
+    - har gjort
+    answer_index: 1
+  - text_md: ' leksene. Klokka tre '
+  - blank_id: message-occasion
+    options:
+    - sendte
+    - har sendt
+    answer_index: 0
+  - text_md: ' jeg meldingen.'
+- handle: unfinished_period_viewpoint
+  op: recall_fill
+  objective: obj-preterite-vs-present-perfect-01
+  bloom: apply
+  prompt_md: Complete the worker’s review. Distinguish broad summaries of an unfinished
+    period from events at a definite past point within that period.
+  explanation_md: "An unfinished period can take present perfect for a summary up to now, while a dated event inside it takes preterite."
+  derived_from:
+  - section_id: finished-and-unfinished-periods
+  audio_target: "Arbeidsdagen fortsetter, og jeg har jobbet mye i dag. Klokka ni i dag hadde vi et møte. Denne uka er ikke over, og vi har hatt tre møter. I år har sjefen ringt meg flere ganger, men i fjor ringte hun bare én gang."
+  segments:
+  - text_md: 'Arbeidsdagen fortsetter, og jeg '
+  - blank_id: today-summary
+    options:
+    - jobbet
+    - har jobbet
+    answer_index: 1
+  - text_md: ' mye i dag. Klokka ni i dag '
+  - blank_id: exact-time-today
+    options:
+    - hadde
+    - har hatt
+    answer_index: 0
+  - text_md: ' vi et møte. Denne uka er ikke over, og vi '
+  - blank_id: week-summary
+    options:
+    - hadde
+    - har hatt
+    answer_index: 1
+  - text_md: ' tre møter. I år har sjefen '
+  - blank_id: year-summary
+    options:
+    - ringt
+    - ringte
+    answer_index: 0
+  - text_md: ' meg flere ganger, men i fjor '
+  - blank_id: finished-year
+    options:
+    - har ringt
+    - ringte
+    answer_index: 1
+  - text_md: ' hun bare én gang.'
+- handle: duration_continuation
+  op: recall_fill
+  objective: obj-preterite-vs-present-perfect-01
+  bloom: apply
+  prompt_md: Complete each biography or report. Let the context show whether the duration
+    continues now or is finished.
+  explanation_md: "A duration continuing now takes present perfect; a duration that ended in the past takes preterite."
+  derived_from:
+  - section_id: duration-still-true-or-finished
+  audio_target: "Han studerer fortsatt norsk. Han har studert norsk i to år. Søsteren hans sluttet etter to år. Hun studerte norsk i to år. Nora arbeider fortsatt på kontoret. Hun har jobbet der siden 2021. Bussen kom til slutt, så vi ventet i en time før den kom. Jeg bor fortsatt i området og har bodd her i tre år."
+  segments:
+  - text_md: 'Han studerer fortsatt norsk. Han '
+  - blank_id: continuing-study
+    options:
+    - har studert
+    - studerte
+    answer_index: 0
+  - text_md: ' norsk i to år. Søsteren hans sluttet etter to år. Hun '
+  - blank_id: finished-study
+    options:
+    - har studert
+    - studerte
+    answer_index: 1
+  - text_md: ' norsk i to år. Nora arbeider fortsatt på kontoret. Hun '
+  - blank_id: continuing-work
+    options:
+    - har jobbet
+    - jobbet
+    answer_index: 0
+  - text_md: ' der siden 2021. Bussen kom til slutt, så vi '
+  - blank_id: finished-wait
+    options:
+    - har ventet
+    - ventet
+    answer_index: 1
+  - text_md: ' i en time før den kom. Jeg bor fortsatt i området og '
+  - blank_id: continuing-residence
+    options:
+    - har bodd
+    - bodde
+    answer_index: 0
+  - text_md: ' her i tre år.'
+- handle: narrative_sequence
+  op: build
+  objective: obj-preterite-vs-present-perfect-01
+  bloom: apply
+  prompt_md: Build the complete account. Begin with experience before now, then use
+    past tense throughout the particular completed evening.
+  derived_from:
+  - section_id: telling-a-sequence-of-events
+  tokens:
+  - token_id: tok-2
+    text: Forrige fredag dro jeg dit med kollegaene mine.
+  - token_id: tok-3
+    text: Først spiste vi middag.
+  - token_id: tok-4
+    text: Så hørte vi på musikk.
+  - token_id: tok-5
+    text: Etterpå tok vi bussen hjem.
+  - token_id: tok-1
+    text: Jeg har vært på Fjordhuset én gang.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+- handle: anchor_message_revision
+  op: write
+  objective: obj-preterite-vs-present-perfect-01
+  bloom: apply
+  prompt_md: Write Leila’s connected Norwegian message to a colleague. State that
+    she has been to Fjordhuset before, that she was there last Friday, and what she
+    did there. Explain that Jonas only wants coffee tonight because he has already
+    eaten. Also state that Leila has lived in the area for three years and still lives
+    there. Use appropriate past tense or present perfect for every relationship.
+  derived_from:
+  - section_id: returning-to-leila-and-jonas
+  response_language: 'no'
+  min_words: 45
+  max_words: 85
+  judge_prompt: Check the message against each requested meaning. Accept natural Bokmål
+    wording and word-order variants when tense and time relationship remain clear.
+    Report evidence for every criterion.
+  criteria:
+  - id: prior-experience
+    instruction: Uses present perfect to state Leila’s prior experience with Fjordhuset.
+  - id: specific-occasion
+    instruction: Uses past tense for Leila’s visit last Friday.
+  - id: completed-actions
+    instruction: Uses past tense for what Leila did during that completed visit.
+  - id: current-result
+    instruction: Uses present perfect to explain that Jonas only wants coffee because
+      he has already eaten.
+  - id: continuing-duration
+    instruction: Uses present perfect to state that Leila has lived in the area for
+      three years and still lives there.
+  - id: connected-message
+    instruction: Presents the requested meanings as one understandable connected message.
+- handle: cumulative_evening_transfer
+  op: write
+  objective: obj-preterite-vs-present-perfect-01
+  bloom: apply
+  prompt_md: 'Write one coherent Norwegian paragraph about Sara. She is still cleaning
+    for guests tonight and has cleaned a lot today. The food is ready now because
+    she has made dinner. She sent a message at three o’clock. She has lived in the
+    flat for four years and still lives there. She has hosted guests before. Last
+    month she hosted a completed dinner: first the guests arrived, then they ate,
+    and afterwards they went home. Express all six time relationships with appropriate
+    tenses.'
+  derived_from:
+  - section_id: cumulative-transfer-a-different-evening
+  response_language: 'no'
+  min_words: 65
+  max_words: 110
+  judge_prompt: Check whether the paragraph expresses every supplied situation with
+    the tense required by its viewpoint. Accept natural Bokmål variants that preserve
+    all meanings. Report evidence for each criterion.
+  criteria:
+  - id: unfinished-period
+    instruction: Uses present perfect to summarize Sara’s cleaning within today, which
+      is still continuing.
+  - id: current-result
+    instruction: Uses present perfect for making dinner when its present result is
+      that the food is ready.
+  - id: specific-event
+    instruction: Uses past tense for sending a message at three o’clock.
+  - id: continuing-duration
+    instruction: Uses present perfect for living in the flat for four years when Sara
+      still lives there.
+  - id: prior-experience
+    instruction: Uses present perfect to state that Sara has hosted guests before.
+  - id: narrative-sequence
+    instruction: Uses past tense consistently for the arrival, meal, and departure
+      during last month’s completed dinner.
+  - id: coherent-account
+    instruction: Integrates all requested meanings into one understandable paragraph.
+- handle: final_tense_retrieval
+  op: write
+  objective: obj-preterite-vs-present-perfect-01
+  bloom: apply
+  prompt_md: 'Write five controlled Norwegian examples: one sentence about an unspecified experience, one about an event yesterday, one about a result that matters now, one about an activity continuing since a stated starting point, and one containing two completed events in sequence. Keep all five examples in Norwegian and make each time meaning clear.'
+  derived_from:
+  - section_id: final-retrieval-request
+  response_language: 'no'
+  min_words: 45
+  max_words: 100
+  judge_prompt: Check each Norwegian example against its assigned meaning. Accept varied natural Bokmål vocabulary when tense and time reference agree. Report evidence for every criterion.
+  criteria:
+  - id: unspecified-experience
+    instruction: Uses present perfect to give a natural Norwegian sentence about an unspecified experience before now.
+  - id: yesterday-event
+    instruction: Uses past tense for a natural Norwegian sentence about an event yesterday.
+  - id: present-result
+    instruction: Uses present perfect for a natural Norwegian sentence about a result that matters now.
+  - id: continuing-since
+    instruction: Uses present perfect for a natural Norwegian sentence about an activity continuing since a stated starting point.
+  - id: completed-sequence
+    instruction: Uses past tense for a natural Norwegian sentence containing two completed events in sequence.

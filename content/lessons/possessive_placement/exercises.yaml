@@ -1,0 +1,243 @@
+- handle: notice_possessive_noun_pairing
+  op: categorize
+  objective: obj-possessive-placement-01
+  bloom: analyze
+  prompt_md: Classify each Norwegian phrase into exactly one bucket. Focus on the
+    taught pairing between possessive placement and noun form, not on which possessive
+    is used.
+  explanation_md: "Postposed possessives take a definite noun and usually sound neutral; preposed possessives take an indefinite noun and emphasize the owner."
+  derived_from:
+  - section_id: checkpoint-noticing-two-patterns
+  buckets:
+  - bucket_id: after-definite
+    label: Possessive after noun + definite noun
+  - bucket_id: before-indefinite
+    label: Possessive before noun + indefinite noun
+  items:
+  - item_id: item-huset-mitt
+    text: huset mitt
+    bucket_id: after-definite
+  - item_id: item-sykkelen-min
+    text: sykkelen min
+    bucket_id: after-definite
+  - item_id: item-lua-mi
+    text: lua mi
+    bucket_id: after-definite
+  - item_id: item-mitt-hus
+    text: mitt hus
+    bucket_id: before-indefinite
+  - item_id: item-min-sykkel
+    text: min sykkel
+    bucket_id: before-indefinite
+  - item_id: item-mi-lue
+    text: mi lue
+    bucket_id: before-indefinite
+- handle: move_possessive_and_change_noun_form
+  op: build
+  objective: obj-possessive-placement-01
+  bloom: apply
+  prompt_md: 'Build one complete Norwegian sentence that places each possessive on
+    the other side of its noun while keeping each referent unchanged. Use the unmarked
+    form first and the owner-first counterpart second for the house, bicycle, and
+    hat. The meaning is: My house is my house, my bicycle is my bicycle, and my hat
+    is my hat.'
+  derived_from:
+  - section_id: checkpoint-changing-placement-and-noun-form
+  tokens:
+  - token_id: move-1
+    text: Huset
+  - token_id: move-2
+    text: mitt
+  - token_id: move-3
+    text: er
+  - token_id: move-4
+    text: mitt
+  - token_id: move-5
+    text: hus,
+  - token_id: move-6
+    text: sykkelen
+  - token_id: move-7
+    text: min
+  - token_id: move-8
+    text: er
+  - token_id: move-9
+    text: min
+  - token_id: move-10
+    text: sykkel,
+  - token_id: move-11
+    text: og
+  - token_id: move-12
+    text: lua
+  - token_id: move-13
+    text: mi
+  - token_id: move-14
+    text: er
+  - token_id: move-15
+    text: mi
+  - token_id: move-16
+    text: lue.
+  answer_order:
+  - move-1
+  - move-2
+  - move-3
+  - move-4
+  - move-5
+  - move-6
+  - move-7
+  - move-8
+  - move-9
+  - move-10
+  - move-11
+  - move-12
+  - move-13
+  - move-14
+  - move-15
+  - move-16
+- handle: choose_placement_from_information_focus
+  op: recall_fill
+  objective: obj-possessive-placement-01
+  bloom: apply
+  prompt_md: Fill both Norwegian phrase slots. The first context explicitly requests
+    the unmarked written default. The second explicitly requests owner-first emphasis.
+    Both matched orders are grammatical; score the requested placement and its corresponding
+    noun form.
+  explanation_md: "Postposed possessive is the neutral default; moving it before the noun emphasizes who owns the item and changes the noun to indefinite form."
+  derived_from:
+  - section_id: checkpoint-neutral-information-or-owner-contrast
+  audio_target: "Sykkelen min står ute. Min sykkel er rød."
+  segments:
+  - text_md: 'There are two bicycles. Give the routine location answer about yours
+      with the unmarked written pattern: “ '
+  - blank_id: routine-bicycle
+    options:
+    - sykkelen min
+    - min sykkel
+    answer_index: 0
+  - text_md: ' står ute.” To make the owner prominent, say: “ '
+  - blank_id: owner-bicycle
+    options:
+    - min sykkel
+    - sykkelen min
+    answer_index: 0
+  - text_md: ' er rød.”'
+- handle: repair_possessive_placement_mismatches
+  op: find_fix
+  objective: obj-possessive-placement-01
+  bloom: analyze
+  prompt_md: Select the one token that is wrong/needs changing.
+  derived_from:
+  - section_id: checkpoint-repair-possessive-placement-mismatches
+  tokens:
+  - token_id: repair-1
+    text: Min
+  - token_id: repair-2
+    text: sekken
+  - token_id: repair-3
+    text: er
+  - token_id: repair-4
+    text: her.
+  error_token_id: repair-2
+  feedback: Change sekken to sekk after the preposed possessive, producing Min sekk
+    er her. The parallel mismatch sekk min is also rejected; its matched postposed
+    form is sekken min.
+- handle: complete_cabin_ownership_clarification
+  op: recall_fill
+  objective: obj-possessive-placement-01
+  bloom: apply
+  prompt_md: Complete both Norwegian phrase slots in the cabin continuation. The first
+    slot explicitly requests the unmarked written default for a routine location answer.
+    The second explicitly requests owner-first emphasis while correcting Emil. Both
+    lua mi and mi lue are grammatical matched forms; the non-requested alternative
+    must not be called ungrammatical.
+  derived_from:
+  - section_id: checkpoint-continue-cabin-exchange
+  audio_target: "Hvor er lua? Lua mi er her. Mi lue er her."
+  segments:
+  - text_md: 'Emil: Hvor er lua? Nora gives the routine location answer with postposed
+      possessive: “ '
+  - blank_id: cabin-routine
+    options:
+    - lua mi
+    - mi lue
+    answer_index: 0
+  - text_md: ' er her.” Emil says the hat belongs to him. Nora corrects him with owner-first
+      emphasis: “ '
+  - blank_id: cabin-emphasis
+    options:
+    - mi lue
+    - lua mi
+    answer_index: 0
+  - text_md: ' er her.”'
+- handle: sort_meeting_room_belongings
+  op: build
+  objective: obj-possessive-placement-01
+  bloom: apply
+  prompt_md: 'Build one complete Norwegian response for the meeting-room scene. In
+    the first clause, give the ordinary unmarked location answer about the cup. In
+    the second clause, correct a coworker with deliberate owner-first emphasis about
+    the chargers. Use the supplied singular and plural nouns with the corresponding
+    noun forms. The meaning is: My cup is here, but my chargers are here. The alternate
+    matched order is grammatical; score the requested focus.'
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+  tokens:
+  - token_id: meeting-1
+    text: Koppen
+  - token_id: meeting-2
+    text: min
+  - token_id: meeting-3
+    text: er
+  - token_id: meeting-4
+    text: her,
+  - token_id: meeting-5
+    text: men
+  - token_id: meeting-6
+    text: mine
+  - token_id: meeting-7
+    text: ladere
+  - token_id: meeting-8
+    text: er
+  - token_id: meeting-9
+    text: her.
+  answer_order:
+  - meeting-1
+  - meeting-2
+  - meeting-3
+  - meeting-4
+  - meeting-5
+  - meeting-6
+  - meeting-7
+  - meeting-8
+  - meeting-9
+- handle: retrieve_possessive_placement_rule
+  op: write
+  objective: obj-possessive-placement-01
+  bloom: apply
+  prompt_md: Without looking back, write the two regular common-noun patterns taught
+    in the lesson. Give one natural Norwegian example of the unmarked written default
+    and one natural Norwegian example with deliberate owner-first emphasis. Then briefly
+    state in Norwegian how the noun form changes in the two patterns. Use a new lexical
+    frame rather than copying a complete lesson sentence.
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  min_words: 20
+  max_words: 50
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål variants that preserve the requested placement and noun-
+    form pairing. Do not mark the other matched order as wrong merely because it is
+    not the requested communicative default.
+  criteria:
+  - id: postposed-pattern
+    instruction: States the regular unmarked pattern as a definite common noun followed
+      by a possessive.
+  - id: preposed-pattern
+    instruction: States the owner-first pattern as a possessive followed by an indefinite
+      common noun.
+  - id: default-example
+    instruction: Gives one natural Norwegian example of the unmarked written default.
+  - id: emphasis-example
+    instruction: Gives one natural Norwegian example with deliberate owner-first emphasis.
+  - id: noun-form-explanation
+    instruction: Briefly explains in Norwegian how noun form changes between the two
+      taught patterns.

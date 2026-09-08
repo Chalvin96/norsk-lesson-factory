@@ -1,0 +1,282 @@
+- handle: notice_presentational_frames
+  op: choose
+  objective: obj-presentational-det-with-delayed-subjects-01
+  bloom: understand
+  prompt_md: Analyze the three presentational clauses shown in the options. Choose the
+    complete analysis that correctly identifies the verb and the new indefinite noun
+    phrase in every clause beginning with det, and states what Jonas learns for the
+    first time.
+  derived_from:
+  - section_id: checkpoint-noticing-presentation
+  stem_md: Choose the complete interpretation of Maja's three presentational clauses.
+  options:
+  - id: known-participants
+    text: 'Det står en varebil utenfor nå. — There’s a van standing outside now. Verb:
+      står. New indefinite phrase: en varebil. Det kommer et bud opp trappa også.
+      — There’s a courier coming up the stairs too. Verb: kommer. New indefinite phrase:
+      et bud. Det ligger en ny pakke ved døra. — There’s a new package lying by the
+      door. Verb: ligger. New indefinite phrase: en ny pakke. Jonas already knows
+      all three participants, so none is new information. '
+    correct: false
+    why: The phrases are indefinite first mentions, so treating them as already known
+      gives the wrong meaning.
+  - id: complete-analysis
+    text: 'Det står en varebil utenfor nå. — There’s a van standing outside now. Verb:
+      står. New indefinite phrase: en varebil. Det kommer et bud opp trappa også.
+      — There’s a courier coming up the stairs too. Verb: kommer. New indefinite phrase:
+      et bud. Det ligger en ny pakke ved døra. — There’s a new package lying by the
+      door. Verb: ligger. New indefinite phrase: en ny pakke. Jonas learns about all
+      three participants for the first time. '
+    correct: true
+    why: This identifies all three verbs, all three indefinite noun phrases, and their
+      new-information meaning.
+  - id: swapped-roles
+    text: 'Det står en varebil utenfor nå. — There’s a van standing outside now. Verb:
+      en varebil. New indefinite phrase: står. Det kommer et bud opp trappa også.
+      — There’s a courier coming up the stairs too. Verb: et bud. New indefinite phrase:
+      kommer. Det ligger en ny pakke ved døra. — There’s a new package lying by the
+      door. Verb: en ny pakke. New indefinite phrase: ligger. '
+    correct: false
+    why: The verb and the delayed indefinite noun phrase are assigned opposite roles.
+- handle: choose_new_participant_presentation
+  op: categorize
+  objective: obj-presentational-det-with-delayed-subjects-01
+  bloom: analyze
+  prompt_md: Classify each item into exactly one bucket. Use the situation and the
+    Norwegian sentence to decide whether the person or thing is discourse-new and
+    indefinite, or already identified.
+  explanation_md: "Presentational det introduces a new participant before the logical subject; an already established participant normally remains the grammatical subject."
+  derived_from:
+  - section_id: checkpoint-choosing-message-shape
+  buckets:
+  - bucket_id: new-participant
+    label: 'New indefinite participant: presentational det + verb + subject'
+  - bucket_id: already-known-participant
+    label: 'Already-known participant: not a new indefinite introduction'
+  items:
+  - item_id: first-van
+    text: 'Maja''s first report: Det står en varebil utenfor nå. There’s a van standing
+      outside now. '
+    bucket_id: new-participant
+  - item_id: known-electrician
+    text: 'Jonas knows which electrician Maja means: Da er elektrikeren her. Then
+      the electrician is here. '
+    bucket_id: already-known-participant
+  - item_id: first-courier
+    text: 'Maja''s first report: Det kommer et bud opp trappa også. There’s a courier
+      coming up the stairs too. '
+    bucket_id: new-participant
+  - item_id: known-courier
+    text: 'After Maja has reported the courier: Jeg tar imot budet. I’ll receive the
+      courier. '
+    bucket_id: already-known-participant
+- handle: build_presentational_word_order
+  op: recall_fill
+  objective: obj-presentational-det-with-delayed-subjects-01
+  bloom: apply
+  prompt_md: Use each English cue to retrieve a complete Norwegian presentational
+    sentence about a newly noticed participant in a community centre. Select the supplied
+    verb and indefinite noun phrase. In every answer, Det must come first, the verb
+    second, and the new noun phrase after the verb.
+  derived_from:
+  - section_id: checkpoint-constructing-frame
+  audio_target: "Det sitter en person på kjøkkenet. Det kommer en nabo opp trappa. Det ligger en nøkkel ved døra."
+  segments:
+  - text_md: 'A person is sitting in the kitchen: Det '
+  - blank_id: community-1-verb
+    options:
+    - kommer
+    - sitter
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: community-1-subject
+    options:
+    - en person
+    - en nabo
+    answer_index: 0
+  - text_md: ' på kjøkkenet. A neighbour is coming up the stairs: Det '
+  - blank_id: community-2-verb
+    options:
+    - ligger
+    - kommer
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: community-2-subject
+    options:
+    - en nabo
+    - et bud
+    answer_index: 0
+  - text_md: ' opp trappa. A key is lying by the door: Det '
+  - blank_id: community-3-verb
+    options:
+    - står
+    - ligger
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: community-3-subject
+    options:
+    - en nøkkel
+    - en ny pakke
+    answer_index: 0
+  - text_md: ' ved døra.'
+- handle: repair_presentational_sentences
+  op: find_fix
+  objective: obj-presentational-det-with-delayed-subjects-01
+  bloom: analyze
+  prompt_md: Select the one token that is wrong/needs changing.
+  derived_from:
+  - section_id: checkpoint-repairing-errors
+  tokens:
+  - token_id: repair-det
+    text: Det
+  - token_id: repair-verb
+    text: kommer
+  - token_id: repair-subject
+    text: budet
+  - token_id: repair-place
+    text: opp
+  - token_id: repair-stairs
+    text: trappa
+  - token_id: repair-also
+    text: også.
+  error_token_id: repair-subject
+  feedback: The definite form does not fit a first mention. Replace budet with the
+    indefinite phrase et bud.
+- handle: complete_reception_updates
+  op: recall_fill
+  objective: obj-presentational-det-with-delayed-subjects-01
+  bloom: apply
+  prompt_md: Continue Maja's reception report with three connected first mentions.
+    For each English cue, complete the Norwegian update by selecting a suitable taught
+    verb and an indefinite noun phrase after Det.
+  derived_from:
+  - section_id: back-at-reception
+  audio_target: "Det sitter en person på kjøkkenet. Det kommer en nabo opp trappa. Det ligger en nøkkel ved døra."
+  segments:
+  - text_md: 'A person is sitting in the kitchen: Det '
+  - blank_id: reception-1-verb
+    options:
+    - ligger
+    - sitter
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: reception-1-subject
+    options:
+    - en person
+    - en nabo
+    answer_index: 0
+  - text_md: ' på kjøkkenet. A neighbour is coming up the stairs: Det '
+  - blank_id: reception-2-verb
+    options:
+    - sitter
+    - kommer
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: reception-2-subject
+    options:
+    - en nabo
+    - et bud
+    answer_index: 0
+  - text_md: ' opp trappa. A key is lying by the door: Det '
+  - blank_id: reception-3-verb
+    options:
+    - står
+    - ligger
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: reception-3-subject
+    options:
+    - en nøkkel
+    - en ny pakke
+    answer_index: 0
+  - text_md: ' ved døra.'
+- handle: transfer_to_new_flat
+  op: recall_fill
+  objective: obj-presentational-det-with-delayed-subjects-01
+  bloom: apply
+  prompt_md: Nora is reporting new discoveries to Emil in his new flat. Complete each
+    changed scene cue in Norwegian. Every person or thing is new to Emil, so use Det
+    + verb + an indefinite subject.
+  derived_from:
+  - section_id: transfer-moving-into-a-new-flat
+  audio_target: "Det står et bord ved døra. Det ligger en ny pakke på kjøkkenet. Det sitter en person ved døra. Det kommer en nabo opp trappa."
+  segments:
+  - text_md: 'A table is standing by the door: Det '
+  - blank_id: flat-1-verb
+    options:
+    - ligger
+    - står
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: flat-1-subject
+    options:
+    - et bord
+    - en ny pakke
+    answer_index: 0
+  - text_md: ' ved døra. A new package is lying in the kitchen: Det '
+  - blank_id: flat-2-verb
+    options:
+    - står
+    - ligger
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: flat-2-subject
+    options:
+    - en ny pakke
+    - et bord
+    answer_index: 0
+  - text_md: ' på kjøkkenet. A person is sitting by the door: Det '
+  - blank_id: flat-3-verb
+    options:
+    - kommer
+    - sitter
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: flat-3-subject
+    options:
+    - en person
+    - en nabo
+    answer_index: 0
+  - text_md: ' ved døra. A neighbour is coming up the stairs: Det '
+  - blank_id: flat-4-verb
+    options:
+    - sitter
+    - kommer
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: flat-4-subject
+    options:
+    - en nabo
+    - et bud
+    answer_index: 0
+  - text_md: ' opp trappa.'
+- handle: retrieve_presentational_det
+  op: recall_fill
+  objective: obj-presentational-det-with-delayed-subjects-01
+  bloom: remember
+  prompt_md: 'Imagine opening a classroom and noticing a new key lying by the door.
+    Complete one natural Norwegian sentence. After completing it, use this compact
+    rule as an unscored self-check: det + verb + a discourse-new indefinite subject.'
+  derived_from:
+  - section_id: retrieval-and-review
+  audio_target: "Det ligger en nøkkel ved døra."
+  segments:
+  - text_md: 'Report: '
+  - blank_id: retrieval-det
+    options:
+    - Jeg
+    - Det
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: retrieval-verb
+    options:
+    - ligger
+    - kommer
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: retrieval-subject
+    options:
+    - et bud
+    - en nøkkel
+    answer_index: 1
+  - text_md: ' ved døra.'

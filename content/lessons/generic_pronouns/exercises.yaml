@@ -1,0 +1,157 @@
+- handle: notice-general-man
+  op: choose
+  objective: obj-generic-pronouns-01
+  bloom: understand
+  prompt_md: Examine statements from the visitor information and select the one that
+    describes any person in the situation, not a named or specific individual. Sentence
+    role and tone are context only, not scoring targets.
+  stem_md: Choose the statement that uses man as a generic subject.
+  options:
+  - id: named-individual
+    text: Nora sjekker værmeldingen før fjellturen.
+    correct: false
+    why: The statement refers to the named individual Nora.
+  - id: specific-individual
+    text: Elias snakker med en bestemt besøkende om sikkerhet.
+    correct: false
+    why: The statement refers to Elias and one specific visitor.
+  - id: generic-subject
+    text: Når man besøker fjellene, bør man sjekke værmeldingen.
+    correct: true
+    why: Man refers to any person in a general rule or consequence.
+  derived_from:
+  - section_id: checkpoint-notice-general-man
+- handle: choose-form-by-sentence-role
+  op: recall_fill
+  objective: obj-generic-pronouns-01
+  bloom: apply
+  prompt_md: 'Complete each mountain-safety sentence. Use the specified impersonal
+    man/en reference: both forms are possible in generic-subject slots, but only en
+    is possible in an object slot. Tone is context, not scored.'
+  audio_target: "På fjellet bør man følge merkingen. I høyfjellet må en være forberedt på raskt værskifte. Dårlig vær kan overraske en på vei hjem."
+  segments:
+  - text_md: 'På fjellet bør '
+  - blank_id: mountain-subject-man
+    options:
+    - man
+    - en
+    answer_index: 0
+  - text_md: ' følge merkingen. I høyfjellet må '
+  - blank_id: mountain-subject-en
+    options:
+    - en
+    - man
+    answer_index: 0
+  - text_md: ' være forberedt på raskt værskifte. Dårlig vær kan overraske '
+  - blank_id: mountain-object-en
+    options:
+    - en
+    - man
+    answer_index: 0
+  - text_md: ' på vei hjem.'
+  explanation_md: "«man» and «en» can both be generic subjects, but only «en» can be the object. «folk» presents people as an observed group rather than one representative person."
+  derived_from:
+  - section_id: checkpoint-choose-form-by-sentence-role
+- handle: choose-direct-or-detached-tone
+  op: write
+  objective: obj-generic-pronouns-01
+  bloom: apply
+  prompt_md: 'Write two short Norwegian tourist-office messages about checking the
+    weather before mountain travel. Give the same information twice: first as direct
+    visitor guidance, then as a neutral report about safe travel. Change the generic
+    subject while keeping its sentence position constant in both messages.'
+  response_language: 'no'
+  min_words: 12
+  max_words: 32
+  judge_prompt: Check both messages against the task and report evidence for each
+    criterion.
+  criteria:
+  - id: direct-du
+    instruction: Uses du for deliberate reader involvement in the first message.
+  - id: detached-man
+    instruction: Uses man for detached generalization in the second message.
+  - id: same-information-role
+    instruction: Keeps the underlying information the same and keeps the generic subject
+      in the same sentence position in both messages.
+  derived_from:
+  - section_id: checkpoint-choose-direct-or-detached-tone
+- handle: distinguish-individual-generalization-from-group
+  op: categorize
+  objective: obj-generic-pronouns-01
+  bloom: analyze
+  prompt_md: 'Classify each observation by meaning: representative individual generalization
+    or behavior observed among visitors as a group. Use meaning, not formality, as
+    the deciding factor.'
+  buckets:
+  - bucket_id: representative-person
+    label: A representative generic individual
+  - bucket_id: observed-group
+    label: A collective or observed group
+  items:
+  - item_id: representative-work
+    text: Når man arbeider på turistkontoret, får man mange spørsmål.
+    bucket_id: representative-person
+  - item_id: group-weather
+    text: Folk spør ofte om værmeldingen før fjellturen.
+    bucket_id: observed-group
+  - item_id: representative-help
+    text: Når man hjelper besøkende, må man lytte nøye.
+    bucket_id: representative-person
+  - item_id: group-rain
+    text: Folk venter ved skranken når det begynner å regne.
+    bucket_id: observed-group
+  derived_from:
+  - section_id: checkpoint-distinguish-individual-generalization-from-group
+- handle: transfer-generic-choices-to-pool-context
+  op: write
+  objective: obj-generic-pronouns-01
+  bloom: apply
+  prompt_md: 'Write three short Norwegian statements for a public swimming pool: direct
+    guidance for visitors, a neutral explanation of general safety, and a staff note
+    about behavior observed among customers. Across the statements, use all four forms
+    man, en, du, and folk according to meaning, tone, and sentence role. Include at
+    least one generic person in a non-subject role. Keep swimming-pool vocabulary
+    incidental; it is not being assessed.'
+  response_language: 'no'
+  min_words: 20
+  max_words: 60
+  judge_prompt: Check the three statements against the task and report evidence for
+    each criterion. Score pronoun choices, meanings, tones, and sentence roles; do
+    not score swimming vocabulary beyond whether it remains incidental.
+  criteria:
+  - id: integrated-pronoun-choice
+    instruction: Uses man for detached generalization, en in an appropriate non-subject
+      role within the impersonal man/en reference, du for direct visitor involvement,
+      and folk for a collective group.
+  - id: non-subject-role
+    instruction: Includes at least one generic person in a non-subject role.
+  - id: incidental-pool-vocabulary
+    instruction: Keeps swimming-pool vocabulary incidental rather than making it the
+      scored evidence.
+  derived_from:
+  - section_id: cumulative-transfer-request
+- handle: retrieve-generic-pronoun-rule
+  op: write
+  objective: obj-generic-pronouns-01
+  bloom: apply
+  prompt_md: Write a brief Norwegian rule summary and four new everyday sentences. In
+    the summary, state the distinctions among the impersonal man/en pair, direct du
+    and non-subject deg, and collective folk. Then apply each distinction in a new
+    sentence, using each target form in an appropriate grammatical role.
+  response_language: 'no'
+  min_words: 35
+  max_words: 85
+  judge_prompt: Check the rule summary and four new everyday sentences against the
+    task and report evidence for each criterion.
+  criteria:
+  - id: man-en-rule
+    instruction: States that man is subject-only and en is the object form within
+      an impersonal man/en reference, and applies this distinction in a new sentence.
+  - id: du-deg-rule
+    instruction: States that du is used for direct listener involvement and uses deg
+      outside subject position in a new sentence.
+  - id: collective-folk-rule
+    instruction: States that folk refers to a collective and uses folk unchanged as
+      an object in a new sentence.
+  derived_from:
+  - section_id: short-retrieval-review

@@ -1,0 +1,392 @@
+- handle: identify_count_or_amount
+  op: categorize
+  objective: obj-quantity-and-countability-01
+  bloom: analyze
+  prompt_md: Sort each Norwegian noun into the group for individual countable items
+    or the group for uncountable amounts. Treat each noun as used in the dinner scene.
+  explanation_md: "Countable plural nouns select forms such as mange, noen, få, and alle; mass or uncountable nouns select mye, noe, lite, and alt."
+  derived_from:
+  - section_id: things-you-count-and-amounts-you-measure
+  buckets:
+  - bucket_id: countable
+    label: Individual countable items
+  - bucket_id: amount
+    label: Uncountable amounts
+  items:
+  - item_id: noun-guests
+    text: gjester
+    bucket_id: countable
+  - item_id: noun-carrots
+    text: gulrøtter
+    bucket_id: countable
+  - item_id: noun-rice
+    text: ris
+    bucket_id: amount
+  - item_id: noun-milk
+    text: melk
+    bucket_id: amount
+  - item_id: noun-time
+    text: tid
+    bucket_id: amount
+- handle: choose_mange_or_mye
+  op: recall_fill
+  objective: obj-quantity-and-countability-01
+  bloom: apply
+  prompt_md: Complete Jonas's updated Norwegian shopping message with the correct
+    quantity word. Use countability and intended meaning as evidence.
+  derived_from:
+  - section_id: many-or-much-mange-and-mye
+  audio_target: "Jonas skriver til Sara: Vi trenger mange tallerkener til festen. Kan du kjøpe mye melk? Hvor mange kopper kaffe skal vi servere? Vi har mye penger igjen. I kveld kommer mange gjester."
+  segments:
+  - text_md: 'Jonas skriver til Sara: Vi trenger '
+  - blank_id: plates
+    options:
+    - mange
+    - mye
+    answer_index: 0
+  - text_md: ' tallerkener til festen. Kan du kjøpe '
+  - blank_id: milk
+    options:
+    - mange
+    - mye
+    answer_index: 1
+  - text_md: ' melk? Hvor '
+  - blank_id: coffee-cups
+    options:
+    - mange
+    - mye
+    answer_index: 0
+  - text_md: ' kopper kaffe skal vi servere? Vi har '
+  - blank_id: money
+    options:
+    - mange
+    - mye
+    answer_index: 1
+  - text_md: ' penger igjen. I kveld kommer '
+  - blank_id: guests
+    options:
+    - mange
+    - mye
+    answer_index: 0
+  - text_md: ' gjester.'
+- handle: choose_some_for_count_or_amount
+  op: recall_fill
+  objective: obj-quantity-and-countability-01
+  bloom: apply
+  prompt_md: Complete each Norwegian note or question with noen, noe, or litt. Use
+    the noun and the context to decide whether the amount is unspecified or deliberately
+    small.
+  explanation_md: "Use noen with countable plurals, noe with an unspecified amount, and litt for a small amount."
+  derived_from:
+  - section_id: some-noen-noe-and-litt
+  audio_target: "På kjøkkenbenken ligger noen epler. Jonas skriver: Kjøp noe brød; mengden er ikke viktig. Kan du hente litt melk til kaffen? Det trengs bare en liten mengde. Det står noe juice i kjøleskapet; vi vet ikke hvor mye. Har vi noen tomater til salaten?"
+  segments:
+  - text_md: 'På kjøkkenbenken ligger '
+  - blank_id: some-apples
+    options:
+    - noen
+    - noe
+    - litt
+    answer_index: 0
+  - text_md: ' epler. '
+  - text_md: 'Jonas skriver: Kjøp '
+  - blank_id: some-bread
+    options:
+    - noen
+    - noe
+    - litt
+    answer_index: 1
+  - text_md: ' brød; mengden er ikke viktig. '
+  - text_md: 'Kan du hente '
+  - blank_id: little-milk
+    options:
+    - noen
+    - noe
+    - litt
+    answer_index: 2
+  - text_md: ' melk til kaffen? Det trengs bare en liten mengde. '
+  - text_md: 'Det står '
+  - blank_id: some-juice
+    options:
+    - noen
+    - noe
+    - litt
+    answer_index: 1
+  - text_md: ' juice i kjøleskapet; vi vet ikke hvor mye. '
+  - text_md: 'Har vi '
+  - blank_id: some-tomatoes
+    options:
+    - noen
+    - noe
+    - litt
+    answer_index: 0
+  - text_md: ' tomater til salaten?'
+- handle: express_small_quantity
+  op: recall_fill
+  objective: obj-quantity-and-countability-01
+  bloom: apply
+  prompt_md: Complete each Norwegian description with få or lite. Use få with a small
+    number of plural countable things and lite with a small amount.
+  explanation_md: "Få modifies plural countable nouns; lite modifies an uncountable amount."
+  derived_from:
+  - section_id: few-and-little-fa-lite-and-litt
+  audio_target: "Det er få gulrøtter igjen, så vi må kjøpe flere. Vi har lite melk igjen, så Sara må kjøpe mer. Jonas har lite tid før gjestene kommer."
+  segments:
+  - text_md: 'Det er '
+  - blank_id: few-carrots
+    options:
+    - få
+    - lite
+    answer_index: 0
+  - text_md: ' gulrøtter igjen, så vi må kjøpe flere. '
+  - text_md: 'Vi har '
+  - blank_id: little-milk
+    options:
+    - få
+    - lite
+    answer_index: 1
+  - text_md: ' melk igjen, så Sara må kjøpe mer. '
+  - text_md: 'Jonas har '
+  - blank_id: little-time
+    options:
+    - få
+    - lite
+    answer_index: 1
+  - text_md: ' tid før gjestene kommer.'
+- handle: contrast_litt_and_lite
+  op: choose
+  objective: obj-quantity-and-countability-01
+  bloom: analyze
+  prompt_md: Choose the option that matches both situations. Situation 1 describes
+    a small amount that is available and enough. Situation 2 describes a small amount
+    that is insufficient and requires buying more.
+  derived_from:
+  - section_id: few-and-little-fa-lite-and-litt
+  stem_md: Which option uses litt and lite with the intended meanings?
+  options:
+  - id: insufficient-then-available
+    text: 1) Vi har lite melk til kaffen; det er nok. 2) Vi har litt melk; det er
+      ikke nok, så vi må kjøpe mer.
+    correct: false
+    why: The forms are reversed for the sufficient and insufficient situations.
+  - id: available-then-insufficient
+    text: 1) Vi har litt melk til kaffen; det er nok. 2) Vi har lite melk; det er
+      ikke nok, så vi må kjøpe mer.
+    correct: true
+    why: Litt presents a small available amount neutrally; lite presents an insufficient
+      amount.
+- handle: choose_all_form
+  op: recall_fill
+  objective: obj-quantity-and-countability-01
+  bloom: apply
+  prompt_md: Complete each Norwegian sentence with all, alt, or alle. Use the noun
+    or the independent meaning everything as evidence.
+  explanation_md: "Alle agrees with plural nouns, alt with neuter singular or the meaning everything, and all with common-gender singular."
+  derived_from:
+  - section_id: all-members-of-a-group-all-alt-and-alle
+  audio_target: "På kjøkkenet er all kaffen varm. Ved springen er alt vannet kaldt. Rundt bordet sitter alle gjestene. Etter ryddingen er alt klart."
+  segments:
+  - text_md: 'På kjøkkenet er '
+  - blank_id: common-gender-amount
+    options:
+    - all
+    - alt
+    - alle
+    answer_index: 0
+  - text_md: ' kaffen varm. '
+  - text_md: 'Ved springen er '
+  - blank_id: neuter-amount
+    options:
+    - all
+    - alt
+    - alle
+    answer_index: 1
+  - text_md: ' vannet kaldt. '
+  - text_md: 'Rundt bordet sitter '
+  - blank_id: plural-group
+    options:
+    - all
+    - alt
+    - alle
+    answer_index: 2
+  - text_md: ' gjestene. '
+  - text_md: 'Etter ryddingen er '
+  - blank_id: everything
+    options:
+    - all
+    - alt
+    - alle
+    answer_index: 1
+  - text_md: ' klart.'
+- handle: distinguish_all_members_from_whole_item
+  op: choose
+  objective: obj-quantity-and-countability-01
+  bloom: analyze
+  prompt_md: Choose the option whose quantity words match both cleaning situations.
+    Situation 1 concerns every member of a plural group. Situation 2 concerns one
+    kitchen cleaned as one complete whole.
+  derived_from:
+  - section_id: every-member-or-one-complete-thing
+  stem_md: Which option expresses the two intended meanings?
+  options:
+  - id: members-then-whole
+    text: 1) Sara vasket alle glassene. 2) Sara vasket hele kjøkkenet.
+    correct: true
+    why: Alle marks every member of the plural group; hele marks one complete kitchen.
+  - id: whole-then-members
+    text: 1) Sara vasket hele kjøkkenet. 2) Sara vasket alle glassene.
+    correct: false
+    why: The quantity expressions do not match the two situations in the stated order.
+- handle: choose_begge_or_alle
+  op: recall_fill
+  objective: obj-quantity-and-countability-01
+  bloom: apply
+  prompt_md: Complete each Norwegian description with begge or alle. Follow the taught
+    distinction between an exactly-two group and a larger plural group.
+  explanation_md: "Begge means exactly two members; alle refers to the complete group when it can contain more than two."
+  derived_from:
+  - section_id: exactly-two-begge
+  audio_target: "Sara og Jonas skal bære kartene. Begge skal hjelpe. Det er seks gjester ved bordet. Alle gjestene hjelper til. Sara har to flasker. Hun tar med begge flaskene."
+  segments:
+  - text_md: 'Sara og Jonas er de to som skal bære kartene. '
+  - blank_id: exactly-two-people
+    options:
+    - Begge
+    - Alle
+    answer_index: 0
+  - text_md: ' skal hjelpe. '
+  - text_md: 'Det er seks gjester ved bordet. '
+  - blank_id: larger-guest-group
+    options:
+    - Begge
+    - Alle
+    answer_index: 1
+  - text_md: ' gjestene hjelper til. '
+  - text_md: 'Sara har to flasker. Hun tar med '
+  - blank_id: exactly-two-bottles
+    options:
+    - begge
+    - alle
+    answer_index: 0
+  - text_md: ' flaskene.'
+- handle: repair_dinner_update
+  op: find_fix
+  objective: obj-quantity-and-countability-01
+  bloom: analyze
+  prompt_md: Select the one token that is wrong/needs changing.
+  derived_from:
+  - section_id: back-at-saras-flat
+  tokens:
+  - token_id: tok-1
+    text: Nå
+  - token_id: tok-2
+    text: har
+  - token_id: tok-3
+    text: vi
+  - token_id: tok-4
+    text: mye
+  - token_id: tok-5
+    text: melk
+  - token_id: tok-6
+    text: og
+  - token_id: tok-7
+    text: mye
+  - token_id: tok-8
+    text: gulrøtter.
+  - token_id: tok-9
+    text: Alle
+  - token_id: tok-10
+    text: gjestene
+  - token_id: tok-11
+    text: har
+  - token_id: tok-12
+    text: kommet.
+  - token_id: tok-13
+    text: Begge
+  - token_id: tok-14
+    text: naboene
+  - token_id: tok-15
+    text: hjelper
+  - token_id: tok-16
+    text: til.
+  - token_id: tok-17
+    text: Barna
+  - token_id: tok-18
+    text: har
+  - token_id: tok-19
+    text: dekket
+  - token_id: tok-20
+    text: hele
+  - token_id: tok-21
+    text: bordet.
+  - token_id: tok-22
+    text: Alt
+  - token_id: tok-23
+    text: er
+  - token_id: tok-24
+    text: klart.
+  error_token_id: tok-7
+  feedback: 'Replace mye with mange: gulrøtter is a plural countable noun.'
+- handle: pack_for_cabin_trip
+  op: write
+  objective: obj-quantity-and-countability-01
+  bloom: apply
+  prompt_md: 'Write a short connected exchange in Norwegian between two friends packing
+    for a weekend at a cabin. Write 10–14 sentences and use each taught form at least
+    once: mange, mye, noen, noe, litt, få, lite, all, alt, alle, hele, and begge.
+    Make the cabin context show a clear reason for each choice: plural countable items,
+    uncountable amounts, an unspecified amount, a small amount, a small insufficient
+    number, a small insufficient amount, every member of a plural group, all of a
+    common-gender amount, everything, one complete weekend, and both members of an
+    exactly-two group.'
+  derived_from:
+  - section_id: transfer-preparing-for-a-weekend-trip
+  response_language: 'no'
+  min_words: 45
+  max_words: 100
+  judge_prompt: Check the response against the cabin task and report evidence for
+    each criterion. Accept natural Bokmål wording and sentence order when the required
+    quantity meanings and listed forms remain clear.
+  criteria:
+  - id: quantity-forms
+    instruction: Uses each of mange, mye, noen, noe, litt, få, lite, all, alt, alle,
+      hele, and begge naturally and matches each form to its intended noun or meaning.
+  - id: quantity-context
+    instruction: Makes countability, amount, group scope, whole-period, and exactly-two
+      meanings clear in the connected cabin exchange.
+- handle: quantity_words_quick_review
+  op: write
+  objective: obj-quantity-and-countability-01
+  bloom: apply
+  prompt_md: 'Write eight short Norwegian sentences in a new household context, one for
+    each meaning: many countable items, much of
+    an amount, some countable items, a small insufficient amount, every member of
+    a group, one complete period, everything, and both members of an exactly-two group.
+    Make each context clear.'
+  derived_from:
+  - section_id: final-retrieval-request-quantity-words-quick-review
+  response_language: 'no'
+  min_words: 24
+  max_words: 70
+  judge_prompt: Check the eight sentences against the task and report evidence for
+    each criterion. Accept natural Bokmål nouns and phrasing when the requested quantity
+    meaning is clear; do not require exact sentence wording.
+  criteria:
+  - id: many-countable
+    instruction: Uses mange with a plural countable household noun to express many
+      countable items.
+  - id: much-amount
+    instruction: Uses mye with an uncountable household amount.
+  - id: some-countable
+    instruction: Uses noen with plural countable household items to express some.
+  - id: small-insufficient-amount
+    instruction: Uses lite with an uncountable amount and makes its insufficiency
+      clear.
+  - id: every-member
+    instruction: Uses alle with a plural group to express every member.
+  - id: complete-period
+    instruction: Uses hele with a definite period to express one complete period.
+  - id: everything
+    instruction: Uses alt independently to express everything.
+  - id: exactly-two
+    instruction: Uses begge for the members of an explicitly exactly-two group.
