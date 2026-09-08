@@ -1,0 +1,256 @@
+# Labeled catalog-design decisions. Each case supplies the batch inputs a
+# production catalog node sees and asserts only that node's material decision.
+
+- description: Offline discovery reviewer keeps a communicative owner bounded
+  metadata:
+    surface: discover_reviewer
+    cefr: A1
+    kind: communicative
+    source_lesson: synthetic
+  vars:
+    surface: discover_reviewer
+    request: '{"category":"communicative","category_guidance":"Propose one owner for asking for help when an everyday task is blocked, including understanding the helper''s proposed action and accepting or confirming it.","cefr_tags":["A1"],"max_iterations":1}'
+    existing_snapshot: |
+      - catalog_id: greetings
+        title: Basic greetings
+        objective_summary: Greet someone and close a short exchange.
+    quality_contract: |
+      Keep each candidate independently teachable, bounded, and useful. Do not return title-only
+      ideas, vocabulary lists, or broad umbrellas.
+  assert:
+    - type: llm-rubric
+      metric: decision_correctness
+      value: |
+        The candidate must teach a real communicative decision: name a blocked
+        task, ask for help, understand the proposed action, and accept it, while
+        staying distinct from the existing greetings owner. Return pass=true
+        only when the reviewed candidate is that single bounded decision; return
+        pass=false when the reviewer accepts a help-words list, a greeting
+        duplicate, or an umbrella candidate.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: Resolver marks a genuinely new owner
+  metadata:
+    surface: resolve_candidates
+    cefr: A1
+    kind: communicative
+    source_lesson: synthetic
+  vars:
+    surface: resolve_candidates
+    request: '{"category":"communicative","category_guidance":"Keep owners focused on one learner decision.","cefr_tags":["A1"],"max_iterations":1}'
+    advice: none
+    existing_lessons_payload: |
+      [{"slug":"greetings","title":"Basic greetings","objective_summary":"Greet someone and close a short exchange."}]
+    candidates_payload: |
+      [{"candidate_id":"candidate-help","slug":"ask-for-help","title":"Ask for help","alternate_labels":[],"category":"communicative","learner_question":"How do I name a blocked task and ask someone to help?","scope":"A short help request and response.","out_of_scope":["complaint escalation"],"cefr_tags":["A1"],"prerequisites":[],"confusable_with":[],"rationale":"The learner makes a new help-seeking decision.","source_agent":"reviewer","teachable_core":"Name the obstacle, ask politely, and accept a next action.","independent_difference":"This is independent from greeting someone.","nearest_existing":["greetings"]}]
+  assert:
+    - type: llm-rubric
+      metric: decision_correctness
+      value: |
+        The candidate ask-for-help changes what the learner can do in a blocked
+        task, while the only existing owner is greetings. Return pass=true only
+        when the resolution relates it as genuinely new (relationship `new`) to
+        greetings with a rationale grounded in that independent difference;
+        return pass=false when it is resolved as a duplicate of greetings or a
+        second candidate is invented.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: Evaluator rejects a duplicate owner
+  metadata:
+    surface: evaluate_candidates
+    cefr: A1
+    kind: communicative
+    source_lesson: synthetic
+  vars:
+    surface: evaluate_candidates
+    request: '{"category":"communicative","category_guidance":"Reject duplicate owners.","cefr_tags":["A1"],"max_iterations":1}'
+    candidates_payload: |
+      [{"candidate_id":"candidate-hello","slug":"say-hello","title":"Say hello","alternate_labels":[],"category":"communicative","learner_question":"How do I greet someone?","scope":"Basic greetings.","out_of_scope":[],"cefr_tags":["A1"],"prerequisites":[],"confusable_with":[],"rationale":"A greeting owner.","source_agent":"reviewer","teachable_core":"Greet and close.","independent_difference":"","nearest_existing":["greetings"]}]
+    resolutions_payload: |
+      [{"canonical_slug":"say-hello","canonical_title":"Say hello","candidate_ids":["candidate-hello"],"relationship":"exact_duplicate","aliases":[],"existing_slug":"greetings","teaching_point":"","rationale":"It repeats the greeting owner.","confidence":0.99,"architecture_question":false,"nearest_existing":[],"independent_difference":""}]
+  assert:
+    - type: llm-rubric
+      metric: decision_correctness
+      value: |
+        The canonical resolution say-hello repeats the existing greetings owner
+        exactly. Return pass=true only when the evaluation rejects it and names
+        duplication in its reason codes or hard failures; return pass=false when
+        it is approved or merely downgraded for an unrelated reason.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: Advice turns stagnation into one bounded adjustment
+  metadata:
+    surface: request_advice
+    cefr: A1
+    kind: communicative
+    source_lesson: synthetic
+  vars:
+    surface: request_advice
+    request: '{"category":"communicative","category_guidance":"Keep owners focused on one learner decision.","cefr_tags":["A1"],"max_iterations":1}'
+    reason: All candidates keep duplicating the greeting owner.
+    candidates_payload: '[{"candidate_id":"candidate-hello","slug":"say-hello"}]'
+    resolutions_payload: '[{"canonical_slug":"say-hello","relationship":"exact_duplicate"}]'
+    evaluations_payload: '[{"canonical_slug":"say-hello","status":"reject","reason_codes":["duplicate"]}]'
+  assert:
+    - type: llm-rubric
+      metric: decision_correctness
+      value: |
+        Every candidate so far was rejected as a duplicate of the greeting
+        owner, so the next round needs one concrete category-boundary
+        adjustment. Return pass=true only when the advice proposes exactly one
+        such boundary adjustment for the next discovery round and leaves the
+        candidate dispositions unchanged; return pass=false when it invents a
+        new owner, reclassifies the candidates, or offers only generic
+        encouragement.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: Dependency proposal covers every owner and keeps edge direction explicit
+  metadata:
+    surface: dependency_proposal
+    cefr: A1
+    kind: communicative
+    source_lesson: synthetic
+  vars:
+    surface: dependency_proposal
+    request: |
+      {
+        "owners": [
+          {
+            "id": "greetings",
+            "catalog_kind": "communicative",
+            "family_id": "social",
+            "title": "Basic greetings",
+            "learner_outcome": "Greet someone and close a short exchange.",
+            "cefr_tags": ["A1"]
+          },
+          {
+            "id": "ask-for-help",
+            "catalog_kind": "communicative",
+            "family_id": "help",
+            "title": "Ask for help",
+            "learner_outcome": "Name a blocked task and ask someone to help.",
+            "cefr_tags": ["A1"]
+          }
+        ]
+      }
+  assert:
+    - type: llm-rubric
+      metric: decision_correctness
+      value: |
+        Both owners must receive an explicit assessment, including an empty one
+        for greetings, and any proposed edge must run greetings ->
+        ask-for-help with a rationale naming a real learner dependency. Return
+        pass=true only when both assessments are present and every edge is
+        directed and justified that way; return pass=false when an owner lacks
+        an assessment, an edge is reversed, or an edge is justified only by the
+        shared family label.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: Dependency proposal preserves a real required grammar prerequisite
+  metadata:
+    surface: dependency_proposal
+    cefr: A1
+    kind: grammar
+    source_lesson: synthetic
+  vars:
+    surface: dependency_proposal
+    request: |
+      {
+        "owners": [
+          {
+            "id": "noun-gender",
+            "catalog_kind": "grammar",
+            "family_id": "nouns",
+            "title": "Noun gender",
+            "learner_outcome": "Choose the correct gender for common nouns.",
+            "cefr_tags": ["A1"]
+          },
+          {
+            "id": "definite-articles",
+            "catalog_kind": "grammar",
+            "family_id": "nouns",
+            "title": "Definite articles",
+            "learner_outcome": "Form definite noun phrases with the correct gendered ending.",
+            "cefr_tags": ["A1"]
+          }
+        ]
+      }
+  assert:
+    - type: llm-rubric
+      metric: decision_correctness
+      value: |
+        Forming gendered definite endings requires knowing noun gender, so the
+        genuine dependency is noun-gender -> definite-articles, required. Return
+        pass=true only when both owners are assessed and that edge is present
+        with kind required in that direction; return pass=false when the edge is
+        missing, reversed, or downgraded to helpful.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: Dependency proposal records explicit empty assessments when no edge is supplied
+  metadata:
+    surface: dependency_proposal
+    cefr: A1
+    kind: communicative
+    source_lesson: synthetic
+  vars:
+    surface: dependency_proposal
+    request: |
+      {
+        "owners": [
+          {
+            "id": "weather-talk",
+            "catalog_kind": "communicative",
+            "family_id": "social",
+            "title": "Talk about the weather",
+            "learner_outcome": "Describe today's weather in two short sentences.",
+            "cefr_tags": ["A1"]
+          },
+          {
+            "id": "cafe-ordering",
+            "catalog_kind": "communicative",
+            "family_id": "social",
+            "title": "Order at a café",
+            "learner_outcome": "Order a drink and ask for the bill politely.",
+            "cefr_tags": ["A1"]
+          }
+        ]
+      }
+  assert:
+    - type: llm-rubric
+      metric: decision_correctness
+      value: |
+        The request supplies two owners and no proposed edge. Return pass=true
+        only when the response includes an explicit assessment for both owners,
+        leaves both required_prerequisites and helpful_prerequisites lists empty,
+        and returns no invented edge. Do not require needs_human_review when no
+        relationship was supplied; return pass=false when an owner is omitted or
+        the model invents a required or helpful edge from the shared family label.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true

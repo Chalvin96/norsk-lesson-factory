@@ -1,0 +1,221 @@
+- handle: notice_specific_past_da
+  op: choose
+  objective: obj-da-vs-nar-01
+  bloom: understand
+  prompt_md: Choose the interpretation that explains why the time word fits the single
+    completed past event.
+  derived_from:
+  - section_id: one-specific-past-occasion-da
+  stem_md: 'Read: Da jeg kom hjem på fredag, lå det en melding på telefonen. Choose
+    the complete meaning of the time clause and connector.'
+  options:
+  - id: repeated-past
+    text: The clause describes a repeated routine every time I came home; the connector
+      should be når, not da.
+    correct: false
+    why: The sentence identifies one Friday arrival, not a recurring routine.
+  - id: specific-past
+    text: The clause Da jeg kom hjem på fredag describes one particular completed
+      arrival on Friday; da is appropriate. (When I came home on Friday, there was
+      a message on my phone.)
+    correct: true
+    why: The Friday arrival is one identified, completed past occasion, so da fits.
+  - id: future-time
+    text: The clause describes a future arrival; the connector should be når, not
+      da.
+    correct: false
+    why: The sentence describes a completed past arrival, not a future event.
+- handle: distinguish_single_and_repeated_past
+  op: categorize
+  objective: obj-da-vs-nar-01
+  bloom: analyze
+  prompt_md: Classify each sentence by its past-time meaning. Use one bucket per sentence;
+    the bucket labels include the connector that matches the meaning.
+  explanation_md: "Use da for one specific past occasion and når for events that happened repeatedly."
+  derived_from:
+  - section_id: repeated-time-nar
+  buckets:
+  - bucket_id: single-past
+    label: One specific completed past occasion
+  - bucket_id: repeated-past
+    label: Repeated past pattern
+  items:
+  - item_id: sunday-visit
+    text: Da jeg besøkte bestemor på søndag, bakte hun vafler. (When I visited Grandma
+      on Sunday, she made waffles.)
+    bucket_id: single-past
+  - item_id: regular-visit
+    text: Når jeg besøkte bestemor, bakte hun alltid vafler. (When I visited Grandma,
+      she always made waffles.)
+    bucket_id: repeated-past
+  - item_id: train-yesterday
+    text: Da toget kom i går, sto Anna på perrongen. (When the train arrived yesterday,
+      Anna was standing on the platform.)
+    bucket_id: single-past
+  - item_id: train-mornings
+    text: Når toget kom om morgenen, sto Anna vanligvis på perrongen. (When the train
+      arrived in the morning, Anna was usually standing on the platform.)
+    bucket_id: repeated-past
+- handle: select_nar_for_future_time
+  op: recall_fill
+  objective: obj-da-vs-nar-01
+  bloom: apply
+  prompt_md: Complete each future-time sentence with the correct taught time word.
+    The later event after the comma sets the time for the main event.
+  explanation_md: "Use når for a future time condition, followed by present tense in the subordinate clause."
+  derived_from:
+  - section_id: future-time-nar
+  audio_target: "Når jeg kommer hjem neste uke, skal jeg ringe hotellet. Når jeg avslutter arbeidet, skal jeg møte en venn. Når kurset er ferdig, skal Amir besøke familien."
+  segments:
+  - text_md: 'Item 1: '
+  - blank_id: future-home
+    options:
+    - Når
+    - Da
+    answer_index: 0
+  - text_md: ' jeg kommer hjem neste uke, skal jeg ringe hotellet. '
+  - text_md: 'Item 2: '
+  - blank_id: future-work
+    options:
+    - Når
+    - Da
+    answer_index: 0
+  - text_md: ' jeg avslutter arbeidet, skal jeg møte en venn. '
+  - text_md: 'Item 3: '
+  - blank_id: future-course
+    options:
+    - Når
+    - Da
+    answer_index: 0
+  - text_md: ' kurset er ferdig, skal Amir besøke familien.'
+- handle: interpret_time_meaning_before_choice
+  op: categorize
+  objective: obj-da-vs-nar-01
+  bloom: analyze
+  prompt_md: Classify each sentence as one specific past occasion, repeated time,
+    or future time. The bucket also records the correct connector; classify by meaning
+    rather than verb tense.
+  derived_from:
+  - section_id: compare-the-three-meanings
+  buckets:
+  - bucket_id: single-past
+    label: One specific completed past occasion
+  - bucket_id: repeated-time
+    label: Repeated situation
+  - bucket_id: future-time
+    label: Future situation
+  items:
+  - item_id: dinner-yesterday
+    text: Da gjestene kom i går, serverte Liv suppa. (When the guests arrived yesterday,
+      Liv served the soup.)
+    bucket_id: single-past
+  - item_id: dinner-routine
+    text: Når gjestene kommer, serverer Liv ofte suppe først. (When guests arrive,
+      Liv often serves soup first.)
+    bucket_id: repeated-time
+  - item_id: dinner-tomorrow
+    text: Når gjestene kommer i morgen, skal Liv servere suppe. (When the guests arrive
+      tomorrow, Liv is going to serve soup.)
+    bucket_id: future-time
+- handle: repair_tense_based_choices
+  op: write
+  objective: obj-da-vs-nar-01
+  bloom: analyze
+  prompt_md: Correct the Norwegian sentence by changing the time word, then explain
+    in Norwegian why the corrected word fits the repeated-past meaning.
+  derived_from:
+  - section_id: common-mistake-choosing-from-tense-alone
+  response_language: 'no'
+  judge_prompt: Check the corrected time word and the Norwegian meaning explanation against
+    every criterion. Accept natural wording when repeated past conditions are clear.
+  criteria:
+  - id: corrected-time-word
+    instruction: Changes Da to Når in the sentence.
+  - id: repeated-past-reason
+    instruction: Explains in Norwegian that alltid signals repeated past conditions rather than one specific occasion.
+- handle: complete_the_visit_story
+  op: recall_fill
+  objective: obj-da-vs-nar-01
+  bloom: apply
+  prompt_md: Complete the connected account with the correct taught time word in each
+    blank. Use the time expressions and routine marker to distinguish one past occasion,
+    repeated time, and future time.
+  derived_from:
+  - section_id: returning-to-mina-and-aunt-liv
+  audio_target: "Da Mina kom til tante Liv på lørdag, fikk de fiskesuppe. Når Mina besøker tante Liv, lager tante Liv alltid noe nytt. Neste måned skal Mina bestemme menyen. Når Mina bestemmer menyen, skal hun sende tante Liv en melding."
+  segments:
+  - text_md: 'Mina forteller om tante Liv: '
+  - blank_id: saturday-visit
+    options:
+    - Da
+    - Når
+    answer_index: 0
+  - text_md: ' Mina kom til tante Liv på lørdag, fikk de fiskesuppe. '
+  - blank_id: every-visit
+    options:
+    - Da
+    - Når
+    answer_index: 1
+  - text_md: ' Mina besøker tante Liv, lager tante Liv alltid noe nytt. Neste måned
+      skal Mina bestemme menyen. '
+  - blank_id: future-decision
+    options:
+    - Da
+    - Når
+    answer_index: 1
+  - text_md: ' Mina bestemmer menyen, skal hun sende tante Liv en melding.'
+- handle: transform_the_time_context
+  op: write
+  objective: obj-da-vs-nar-01
+  bloom: apply
+  prompt_md: 'Rewrite this sentence in two ways while keeping the basic event: Da
+    jeg kom hjem på fredag, ringte jeg pappa. (When I came home on Friday, I called
+    Dad.) First write a repeated routine with når; then write a future plan with når.
+    Adjust tense or time expressions naturally.'
+  derived_from:
+  - section_id: building-your-own-meaning-contrast
+  response_language: 'no'
+  min_words: 10
+  max_words: 30
+  judge_prompt: Check the two Norwegian sentences against the task and report evidence
+    for each criterion. Accept natural tense and time-expression changes, but require
+    the requested connector choices.
+  criteria:
+  - id: repeated-time-version
+    instruction: Writes a repeated-time version of the arrival-and-call event and
+      uses **når**.
+  - id: future-time-version
+    instruction: Writes a future-time version of the arrival-and-call event and uses
+      **når**.
+  - id: same-event
+    instruction: Keeps the basic arrival-and-call event in both rewrites while changing
+      the time meaning.
+- handle: narrate_memory_routine_and_plan
+  op: write
+  objective: obj-da-vs-nar-01
+  bloom: apply
+  prompt_md: 'Write a short connected account in Norwegian about Sander’s driving
+    lessons. Include one sentence for each cue: one specific earlier lesson, something
+    that normally happens during lessons, and tomorrow’s lesson or plan. Use da for
+    the single past occasion and når for both the routine and future plan. Use your
+    own wording.'
+  derived_from:
+  - section_id: cumulative-transfer-new-everyday-situation
+  response_language: 'no'
+  min_words: 25
+  max_words: 55
+  judge_prompt: Check the connected Norwegian account against the task and report
+    evidence for each criterion. Require meaning-based use of da and når, not tense-only
+    matching.
+  criteria:
+  - id: specific-past-memory
+    instruction: Describes one specific completed earlier driving lesson and uses
+      **da** for its time clause.
+  - id: repeated-routine
+    instruction: Describes something that normally happens during driving lessons
+      and uses **når**.
+  - id: future-plan
+    instruction: Describes tomorrow’s driving lesson or plan and uses **når**, even
+      if the time clause uses present tense.
+  - id: connected-original
+    instruction: Connects all three contexts in one short account with original wording.

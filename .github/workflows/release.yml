@@ -1,0 +1,54 @@
+name: release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+        with:
+          enable-cache: true
+
+      - name: Install locked project
+        run: uv sync --locked
+
+      - name: Validate complete distribution
+        run: uv run lesson-data validate-distribution --repo-root .
+
+      - name: Build deterministic distribution archive
+        run: |
+          uv run lesson-data package --repo-root . --distribution-root . --output lessons.tar.gz
+          uv run lesson-data package --repo-root . --distribution-root . --output lessons-verify.tar.gz
+
+      - name: Verify release archive
+        run: |
+          sha256sum lessons.tar.gz
+          test "$(sha256sum < lessons.tar.gz)" = "$(sha256sum < lessons-verify.tar.gz)"
+          tar tzf lessons.tar.gz > archive-files.txt
+          cat archive-files.txt
+          grep -Fx 'dist/catalog.json' archive-files.txt
+          grep -Fx 'dist/schema/lesson.schema.json' archive-files.txt
+          if grep -Fxq 'dist/manifest.json' archive-files.txt; then
+            echo 'release archive must not contain the removed manifest.json' >&2
+            exit 1
+          fi
+
+      - name: Publish release through repository reconciliation policy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: >-
+          uv run lesson-data publish lessons.tar.gz
+          --repo-root .
+          --distribution-root .
+          --github-repository "$GITHUB_REPOSITORY"
+          --github-tag "$GITHUB_REF_NAME"

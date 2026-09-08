@@ -1,0 +1,550 @@
+- handle: checkpoint_hidden_cutoff
+  op: write
+  objective: obj-rekke-aa-or-ha-tid-til-aa-01
+  bloom: apply
+  prompt_md: 'For each situation, write a few words in Norwegian that identify the
+    event limiting the available time and explain why the action must be completed
+    before it. Situations: 1. At a station, you want to buy coffee, but the bus leaves
+    in five minutes. 2. You need to buy food, but the shop closes soon. 3. You need
+    to send an email, and the meeting starts shortly. 4. You need to finish a report,
+    and it is due at the end of the day.'
+  derived_from:
+  - section_id: completion-before-a-cutoff-rekke-aa
+  response_language: 'no'
+  min_words: 20
+  max_words: 75
+  judge_prompt: Check all four situations separately and report evidence for each
+    criterion. Accept concise natural Norwegian wording and equivalent endpoint descriptions.
+  criteria:
+  - id: hidden-endpoints
+    instruction: Identifies the relevant endpoint in each of the bus, shop, meeting,
+      and report situations.
+  - id: completion-before-endpoint
+    instruction: Explains for each situation why the action must be completed before
+      that endpoint.
+- handle: checkpoint_availability
+  op: build
+  objective: obj-rekke-aa-or-ha-tid-til-aa-01
+  bloom: apply
+  prompt_md: 'Build the three complete Norwegian questions in order. All three ask
+    about available time, so use ha tid til å. Contexts: 1. Nora asks Emil whether
+    he can help with the figures. 2. A friend asks whether someone can meet after
+    work. 3. A family member asks whether someone can help with dinner.'
+  derived_from:
+  - section_id: available-time-ha-tid-til-aa
+  tokens:
+  - token_id: availq-1
+    text: Emil,
+  - token_id: availq-2
+    text: har
+  - token_id: availq-3
+    text: du
+  - token_id: availq-4
+    text: tid
+  - token_id: availq-5
+    text: til
+  - token_id: availq-6
+    text: å
+  - token_id: availq-7
+    text: kontrollere
+  - token_id: availq-8
+    text: tallene
+  - token_id: availq-9
+    text: for
+  - token_id: availq-10
+    text: meg?
+  - token_id: availq-11
+    text: Har
+  - token_id: availq-12
+    text: du
+  - token_id: availq-13
+    text: tid
+  - token_id: availq-14
+    text: til
+  - token_id: availq-15
+    text: å
+  - token_id: availq-16
+    text: møte
+  - token_id: availq-17
+    text: meg
+  - token_id: availq-18
+    text: etter
+  - token_id: availq-19
+    text: jobb?
+  - token_id: availq-20
+    text: Har
+  - token_id: availq-21
+    text: du
+  - token_id: availq-22
+    text: tid
+  - token_id: availq-23
+    text: til
+  - token_id: availq-24
+    text: å
+  - token_id: availq-25
+    text: hjelpe
+  - token_id: availq-26
+    text: meg
+  - token_id: availq-27
+    text: med
+  - token_id: availq-28
+    text: middagen?
+  answer_order:
+  - availq-1
+  - availq-2
+  - availq-3
+  - availq-4
+  - availq-5
+  - availq-6
+  - availq-7
+  - availq-8
+  - availq-9
+  - availq-10
+  - availq-11
+  - availq-12
+  - availq-13
+  - availq-14
+  - availq-15
+  - availq-16
+  - availq-17
+  - availq-18
+  - availq-19
+  - availq-20
+  - availq-21
+  - availq-22
+  - availq-23
+  - availq-24
+  - availq-25
+  - availq-26
+  - availq-27
+  - availq-28
+- handle: checkpoint_intended_perspective
+  op: build
+  objective: obj-rekke-aa-or-ha-tid-til-aa-01
+  bloom: apply
+  prompt_md: 'Build four complete Norwegian sentences in order, with the same action
+    preserved within each pair. Pair 1 concerns reading a message: available time
+    in the afternoon, then completion before a meeting. Pair 2 concerns making lunch:
+    available time after a meeting, then completion before guests arrive. Use ha tid
+    til å for availability and rekke å for timely completion.'
+  explanation_md: "Ha tid til å describes available time; rekke å focuses on succeeding before a deadline."
+  derived_from:
+  - section_id: compare-the-same-activity
+  tokens:
+  - token_id: persp-1
+    text: Har
+  - token_id: persp-2
+    text: du
+  - token_id: persp-3
+    text: tid
+  - token_id: persp-4
+    text: til
+  - token_id: persp-5
+    text: å
+  - token_id: persp-6
+    text: lese
+  - token_id: persp-7
+    text: beskjeden
+  - token_id: persp-8
+    text: i
+  - token_id: persp-9
+    text: ettermiddag?
+  - token_id: persp-10
+    text: Rekker
+  - token_id: persp-11
+    text: du
+  - token_id: persp-12
+    text: å
+  - token_id: persp-13
+    text: lese
+  - token_id: persp-14
+    text: beskjeden
+  - token_id: persp-15
+    text: før
+  - token_id: persp-16
+    text: møtet
+  - token_id: persp-17
+    text: begynner?
+  - token_id: persp-18
+    text: Vi
+  - token_id: persp-19
+    text: har
+  - token_id: persp-20
+    text: tid
+  - token_id: persp-21
+    text: til
+  - token_id: persp-22
+    text: å
+  - token_id: persp-23
+    text: lage
+  - token_id: persp-24
+    text: lunsj
+  - token_id: persp-25
+    text: etter
+  - token_id: persp-26
+    text: møtet.
+  - token_id: persp-27
+    text: Vi
+  - token_id: persp-28
+    text: rekker
+  - token_id: persp-29
+    text: å
+  - token_id: persp-30
+    text: lage
+  - token_id: persp-31
+    text: lunsj
+  - token_id: persp-32
+    text: før
+  - token_id: persp-33
+    text: gjestene
+  - token_id: persp-34
+    text: kommer?
+  answer_order:
+  - persp-1
+  - persp-2
+  - persp-3
+  - persp-4
+  - persp-5
+  - persp-6
+  - persp-7
+  - persp-8
+  - persp-9
+  - persp-10
+  - persp-11
+  - persp-12
+  - persp-13
+  - persp-14
+  - persp-15
+  - persp-16
+  - persp-17
+  - persp-18
+  - persp-19
+  - persp-20
+  - persp-21
+  - persp-22
+  - persp-23
+  - persp-24
+  - persp-25
+  - persp-26
+  - persp-27
+  - persp-28
+  - persp-29
+  - persp-30
+  - persp-31
+  - persp-32
+  - persp-33
+  - persp-34
+- handle: checkpoint_negative_problem
+  op: choose
+  objective: obj-rekke-aa-or-ha-tid-til-aa-01
+  bloom: analyze
+  prompt_md: Read the four negative Norwegian sentences. Choose the interpretation
+    set that classifies every sentence correctly. Available-time means lack of room
+    in the schedule; cutoff means inability to complete before an endpoint. 1. Nora
+    har ikke tid til å kontrollere tallene. 2. Nora rekker ikke å skrive om teksten
+    før møtet begynner. 3. Emil har ikke tid til å forlate kontoret. 4. Emil rekker
+    ikke å ta bussen.
+  derived_from:
+  - section_id: negative-statements-reveal-the-difference
+  stem_md: Choose the interpretation set that classifies all four sentences correctly.
+  options:
+  - id: set-first-pair-swapped
+    text: '1: Manglende ferdigstillelse før et tidspunkt (failure to finish before
+      a cutoff); 2: Mangel på tilgjengelig tid (lack of available time); 3: Mangel
+      på tilgjengelig tid (lack of available time); 4: Manglende ferdigstillelse før
+      et tidspunkt (failure to finish before a cutoff).'
+    correct: false
+    why: This reverses the meanings of the first two sentences.
+  - id: set-second-pair-swapped
+    text: '1: Mangel på tilgjengelig tid (lack of available time); 2: Manglende ferdigstillelse
+      før et tidspunkt (failure to finish before a cutoff); 3: Manglende ferdigstillelse
+      før et tidspunkt (failure to finish before a cutoff); 4: Mangel på tilgjengelig
+      tid (lack of available time).'
+    correct: false
+    why: This reverses the meanings of the third and fourth sentences.
+  - id: set-all-cutoff
+    text: '1: Manglende ferdigstillelse før et tidspunkt (failure to finish before
+      a cutoff); 2: Manglende ferdigstillelse før et tidspunkt (failure to finish
+      before a cutoff); 3: Manglende ferdigstillelse før et tidspunkt (failure to
+      finish before a cutoff); 4: Manglende ferdigstillelse før et tidspunkt (failure
+      to finish before a cutoff).'
+    correct: false
+    why: Sentences 1 and 3 describe lack of general available time, not failure against
+      a stated or understood cutoff.
+  - id: set-correct
+    text: '1: Mangel på tilgjengelig tid (lack of available time); 2: Manglende ferdigstillelse
+      før et tidspunkt (failure to finish before a cutoff); 3: Mangel på tilgjengelig
+      tid (lack of available time); 4: Manglende ferdigstillelse før et tidspunkt
+      (failure to finish before a cutoff).'
+    correct: true
+    why: Sentences 1 and 3 use har ikke tid til å for lack of schedule room; sentences
+      2 and 4 use rekke ikke å for failure against a cutoff, including an understood
+      bus departure.
+- handle: guided_schedule_to_deadline
+  op: build
+  objective: obj-rekke-aa-or-ha-tid-til-aa-01
+  bloom: apply
+  prompt_md: 'Build three complete Norwegian sentences in order. Rewrite each availability-focused
+    situation so timely completion is central. Use rekke å and keep an explicit cutoff:
+    1. Read a message during the afternoon; a meeting starts. 2. Buy food before a
+    guest arrives. 3. Complete an online form before the system closes.'
+  derived_from:
+  - section_id: guided-practice-in-new-situations
+  tokens:
+  - token_id: deadline-1
+    text: Jeg
+  - token_id: deadline-2
+    text: rekker
+  - token_id: deadline-3
+    text: å
+  - token_id: deadline-4
+    text: lese
+  - token_id: deadline-5
+    text: meldingen
+  - token_id: deadline-6
+    text: før
+  - token_id: deadline-7
+    text: møtet
+  - token_id: deadline-8
+    text: begynner.
+  - token_id: deadline-9
+    text: Vi
+  - token_id: deadline-10
+    text: rekker
+  - token_id: deadline-11
+    text: å
+  - token_id: deadline-12
+    text: kjøpe
+  - token_id: deadline-13
+    text: mat
+  - token_id: deadline-14
+    text: før
+  - token_id: deadline-15
+    text: gjesten
+  - token_id: deadline-16
+    text: kommer.
+  - token_id: deadline-17
+    text: Hun
+  - token_id: deadline-18
+    text: rekker
+  - token_id: deadline-19
+    text: å
+  - token_id: deadline-20
+    text: fylle
+  - token_id: deadline-21
+    text: ut
+  - token_id: deadline-22
+    text: skjemaet
+  - token_id: deadline-23
+    text: før
+  - token_id: deadline-24
+    text: systemet
+  - token_id: deadline-25
+    text: stenger.
+  answer_order:
+  - deadline-1
+  - deadline-2
+  - deadline-3
+  - deadline-4
+  - deadline-5
+  - deadline-6
+  - deadline-7
+  - deadline-8
+  - deadline-9
+  - deadline-10
+  - deadline-11
+  - deadline-12
+  - deadline-13
+  - deadline-14
+  - deadline-15
+  - deadline-16
+  - deadline-17
+  - deadline-18
+  - deadline-19
+  - deadline-20
+  - deadline-21
+  - deadline-22
+  - deadline-23
+  - deadline-24
+  - deadline-25
+- handle: guided_deadline_to_availability
+  op: build
+  objective: obj-rekke-aa-or-ha-tid-til-aa-01
+  bloom: apply
+  prompt_md: 'Build four complete Norwegian sentences in order. Recast each deadline-focused
+    situation as an availability-focused statement or question. Use ha tid til å and
+    make available time, not a deadline, central: 1. Calling a colleague after lunch.
+    2. Preparing lunch today. 3. Reviewing a document this evening. 4. Visiting a
+    friend this weekend.'
+  derived_from:
+  - section_id: guided-practice-in-new-situations
+  tokens:
+  - token_id: available-1
+    text: Jeg
+  - token_id: available-2
+    text: har
+  - token_id: available-3
+    text: tid
+  - token_id: available-4
+    text: til
+  - token_id: available-5
+    text: å
+  - token_id: available-6
+    text: ringe
+  - token_id: available-7
+    text: kollegaen
+  - token_id: available-8
+    text: etter
+  - token_id: available-9
+    text: lunsj.
+  - token_id: available-10
+    text: Vi
+  - token_id: available-11
+    text: har
+  - token_id: available-12
+    text: tid
+  - token_id: available-13
+    text: til
+  - token_id: available-14
+    text: å
+  - token_id: available-15
+    text: lage
+  - token_id: available-16
+    text: lunsj
+  - token_id: available-17
+    text: i
+  - token_id: available-18
+    text: dag.
+  - token_id: available-19
+    text: Hun
+  - token_id: available-20
+    text: har
+  - token_id: available-21
+    text: tid
+  - token_id: available-22
+    text: til
+  - token_id: available-23
+    text: å
+  - token_id: available-24
+    text: gå
+  - token_id: available-25
+    text: gjennom
+  - token_id: available-26
+    text: dokumentet
+  - token_id: available-27
+    text: i
+  - token_id: available-28
+    text: kveld.
+  - token_id: available-29
+    text: Har
+  - token_id: available-30
+    text: du
+  - token_id: available-31
+    text: tid
+  - token_id: available-32
+    text: til
+  - token_id: available-33
+    text: å
+  - token_id: available-34
+    text: besøke
+  - token_id: available-35
+    text: en
+  - token_id: available-36
+    text: venn
+  - token_id: available-37
+    text: i
+  - token_id: available-38
+    text: helgen?
+  answer_order:
+  - available-1
+  - available-2
+  - available-3
+  - available-4
+  - available-5
+  - available-6
+  - available-7
+  - available-8
+  - available-9
+  - available-10
+  - available-11
+  - available-12
+  - available-13
+  - available-14
+  - available-15
+  - available-16
+  - available-17
+  - available-18
+  - available-19
+  - available-20
+  - available-21
+  - available-22
+  - available-23
+  - available-24
+  - available-25
+  - available-26
+  - available-27
+  - available-28
+  - available-29
+  - available-30
+  - available-31
+  - available-32
+  - available-33
+  - available-34
+  - available-35
+  - available-36
+  - available-37
+  - available-38
+- handle: guided_nora_emil_plan
+  op: write
+  objective: obj-rekke-aa-or-ha-tid-til-aa-01
+  bloom: apply
+  prompt_md: Continue the office story in four short Norwegian lines. Write one positive
+    and one negative line about actions Nora and Emil can complete before the bus
+    leaves. Write one positive and one negative line about activities they have time
+    to do during the journey. Use rekke å for the bus-cutoff lines and ha tid til
+    å for the journey-availability lines.
+  derived_from:
+  - section_id: guided-practice-in-new-situations
+  response_language: 'no'
+  min_words: 20
+  max_words: 60
+  judge_prompt: Check all four lines separately. Accept natural Norwegian variants,
+    but require the requested polarity, time perspective, and target expression in
+    each line.
+  criteria:
+  - id: cutoff-positive
+    instruction: Includes a positive rekke å line connecting completed action with
+      the bus departure.
+  - id: cutoff-negative
+    instruction: Includes a negative rekke å line connecting failure to complete an
+      action with the bus departure.
+  - id: availability-positive
+    instruction: Includes a positive ha tid til å line about an activity during the
+      journey.
+  - id: availability-negative
+    instruction: Includes a negative ha tid til å line about an activity during the
+      journey.
+- handle: final_retrieval
+  op: write
+  objective: obj-rekke-aa-or-ha-tid-til-aa-01
+  bloom: apply
+  prompt_md: Write the two Norwegian target frames from this lesson. Then write one
+    Norwegian sentence with the frame for completing an action before a cutoff and one
+    with the frame for having time available for an activity. Make the chosen expression
+    fit its context clearly in Norwegian.
+  derived_from:
+  - section_id: final-retrieval
+  response_language: 'no'
+  min_words: 20
+  max_words: 70
+  judge_prompt: Check that the response contains both exact taught frames and two natural Norwegian sentences with the required time perspectives. Accept natural Bokmål variants for sentence content, but do not accept swapped perspectives.
+  criteria:
+  - id: both-frames
+    instruction: Writes both Norwegian frames rekke å + infinitive and ha tid til
+      å + infinitive.
+  - id: cutoff-sentence
+    instruction: Provides one Norwegian sentence centered on completing an action
+      before a cutoff.
+  - id: availability-sentence
+    instruction: Provides one Norwegian sentence centered on available time for an
+      activity.

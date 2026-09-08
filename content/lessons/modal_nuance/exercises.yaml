@@ -1,0 +1,709 @@
+- handle: ma_source_or_conclusion
+  op: choose
+  objective: obj-modal-nuance-01
+  bloom: understand
+  prompt_md: Choose the interpretation that distinguishes må by meaning, not by a
+    fixed English gloss.
+  derived_from:
+  - section_id: ma-necessity-or-conclusion
+  stem_md: 'Cabin preparation: «Du må huske nøkkelen.» The office is closed and no
+    one answers: «Det må være feil adresse.» Which interpretation fits both statements?'
+  options:
+  - id: reversed
+    text: «Du må huske nøkkelen.» expresses a conclusion from evidence; «Det må være
+      feil adresse.» expresses practical necessity.
+    correct: false
+    why: The contexts support the opposite interpretation.
+  - id: both-necessity
+    text: 'Both statements express practical necessity: someone must remember the
+      key and someone must have the wrong address.'
+    correct: false
+    why: The second statement describes an inference, not an order or requirement.
+  - id: correct
+    text: «Du må huske nøkkelen.» expresses practical necessity; «Det må være feil
+      adresse.» expresses a strong conclusion from evidence.
+    correct: true
+    why: The first statement requires an action, while the second infers an explanation
+      from evidence.
+  - id: both-conclusion
+    text: Both statements express conclusions from evidence.
+    correct: false
+    why: The cabin statement presents a necessary action.
+- handle: kan_meaning_in_context
+  op: choose
+  objective: obj-modal-nuance-01
+  bloom: understand
+  prompt_md: Choose the interpretation that distinguishes ability, permission, and
+    possibility in these exchanges.
+  derived_from:
+  - section_id: kan-ability-permission-possibility
+  stem_md: A. «Sara kan kjøre på vinterføre.» B. «Kan jeg sette veska her?» C. «Toget
+    kan bli forsinket.» Which mapping is correct?
+  options:
+  - id: swapped-ability-possibility
+    text: A presents possibility; B asks for permission; C expresses ability.
+    correct: false
+    why: A concerns Sara’s capability, while C concerns what may happen.
+  - id: correct
+    text: A expresses ability; B asks for permission; C presents possibility.
+    correct: true
+    why: The person can drive, the speaker asks whether an action is allowed, and
+      the train delay is only possible.
+  - id: all-possibility
+    text: All three statements present possibility.
+    correct: false
+    why: The question about the bag is a permission request, and Sara’s sentence concerns
+      ability.
+  - id: ability-permission-swapped
+    text: A asks for permission; B expresses ability; C presents possibility.
+    correct: false
+    why: The first two meanings are reversed.
+- handle: skal_basis_of_statement
+  op: choose
+  objective: obj-modal-nuance-01
+  bloom: understand
+  prompt_md: Choose the interpretation that identifies what gives each statement with
+    skal its authority.
+  derived_from:
+  - section_id: skal-arrangement-requirement-source
+  stem_md: 'The cabin trip is agreed: «Vi skal dra på hytta i helga.» A workplace
+    instruction says: «Du skal levere nøkkelen i resepsjonen.» The source is explicit:
+    «Ifølge værmeldingen skal det bli kaldere i natt.» Which mapping is correct?'
+  options:
+  - id: source-instruction-arrangement
+    text: The first reports an external source, the second presents an arrangement,
+      and the third gives an instruction.
+    correct: false
+    why: The explicit cues support a different order.
+  - id: all-arrangement
+    text: All three statements present arrangements for the future.
+    correct: false
+    why: The second is an instruction and the third is attributed to the weather forecast.
+  - id: correct
+    text: The first presents a speaker-backed arrangement, the second an authoritative
+      instruction, and the third information attributed to an external source.
+    correct: true
+    why: The surrounding cues identify an agreed plan, an instruction, and a weather-report
+      source.
+  - id: all-authority
+    text: All three statements are direct instructions from the speaker.
+    correct: false
+    why: Only the workplace sentence is an authoritative instruction.
+- handle: vil_willingness_or_prediction
+  op: choose
+  objective: obj-modal-nuance-01
+  bloom: understand
+  prompt_md: Choose the interpretation that distinguishes desire or willingness, prediction,
+    and characteristic result.
+  derived_from:
+  - section_id: vil-willingness-prediction-result
+  stem_md: «Jeg vil gjerne hjelpe.» «Sara vil være sulten når hun kommer.» «For mye
+    salt vil ødelegge smaken.» Which mapping is correct?
+  options:
+  - id: correct
+    text: The first expresses willingness or desire; the second predicts Sara’s condition;
+      the third describes a characteristic result.
+    correct: true
+    why: Gjerne supports willingness, the subject and situation support prediction,
+      and too much salt produces an expected result.
+  - id: all-prediction
+    text: All three statements make neutral predictions about the future.
+    correct: false
+    why: The first statement explicitly concerns willingness or desire.
+  - id: result-willingness-prediction
+    text: The first describes a characteristic result; the second expresses willingness;
+      the third predicts Sara’s condition.
+    correct: false
+    why: The meanings do not fit the subjects and contexts.
+  - id: all-willingness
+    text: All three statements describe what a person wants to do.
+    correct: false
+    why: The second and third statements are not about a person’s willingness.
+- handle: bor_advice_or_expectation
+  op: choose
+  objective: obj-modal-nuance-01
+  bloom: understand
+  prompt_md: Choose the interpretation that distinguishes advice from reasonable expectation
+    and compares bør with må.
+  derived_from:
+  - section_id: bor-advice-expectation
+  stem_md: 'Cabin preparation: «Du bør ta med en varm jakke.» Arrival estimate: «Toget
+    bør være her snart.» Stronger requirement: «Du må ta med pass.» Which interpretation
+    is correct?'
+  options:
+  - id: reversed
+    text: The jacket sentence expresses expectation; the train sentence gives advice;
+      bør makes the jacket necessary.
+    correct: false
+    why: The subject train supports expectation, and bør is weaker than må.
+  - id: correct
+    text: The jacket sentence gives advice; the train sentence expresses reasonable
+      expectation; må makes bringing the passport necessary, while bør makes the jacket
+      advisable rather than necessary.
+    correct: true
+    why: A person can receive advice, while a train cannot sensibly receive advice;
+      må is stronger than bør for action.
+  - id: both-advice
+    text: Both bør sentences give advice, and må merely gives a softer recommendation.
+    correct: false
+    why: The train sentence expresses expectation, and må is stronger.
+  - id: both-expectation
+    text: Both bør sentences express predictions, and må also expresses a prediction
+      about the passport.
+    correct: false
+    why: The jacket sentence evaluates an action as sensible, and the passport sentence
+      states necessity.
+- handle: modal_choice_by_intended_meaning
+  op: recall_fill
+  objective: obj-modal-nuance-01
+  bloom: apply
+  prompt_md: Complete each Norwegian statement with the modal that matches the stated
+    communicative purpose.
+  explanation_md: "The modal or particle encodes the intended speaker stance, so the surrounding purpose and shared knowledge determine the choice."
+  derived_from:
+  - section_id: compact-modal-contrast
+  audio_target: "På grunn av regelen må Nora bruke hjelm. Vi skal møtes ved inngangen klokka sju. Jonas kan kjøre varebilen. Det vil begynne å regne snart. Du bør sjekke værmeldingen før turen. Hun må ha glemt møtet."
+  segments:
+  - text_md: 'Nora has no choice and must personally follow the safety rule: På grunn av regelen '
+  - blank_id: modal-duty
+    options:
+    - må
+    - kan
+    - skal
+    - vil
+    - bør
+    answer_index: 0
+  - text_md: ' Nora bruke hjelm.'
+  - text_md: " The dinner time is agreed: Vi "
+  - blank_id: modal-arrangement
+    options:
+    - må
+    - kan
+    - skal
+    - vil
+    - bør
+    answer_index: 2
+  - text_md: ' møtes ved inngangen klokka sju.'
+  - text_md: " Jonas has the ability to drive the van: Jonas "
+  - blank_id: modal-ability
+    options:
+    - må
+    - kan
+    - skal
+    - vil
+    - bør
+    answer_index: 1
+  - text_md: ' kjøre varebilen.'
+  - text_md: " The speaker predicts a future result: Det "
+  - blank_id: modal-prediction
+    options:
+    - må
+    - kan
+    - skal
+    - vil
+    - bør
+    answer_index: 3
+  - text_md: ' begynne å regne snart.'
+  - text_md: " A sensible recommendation is intended: Du "
+  - blank_id: modal-advice
+    options:
+    - må
+    - kan
+    - skal
+    - vil
+    - bør
+    answer_index: 4
+  - text_md: ' sjekke værmeldingen før turen.'
+  - text_md: " No one answers the phone, so this is a strong conclusion: Hun "
+  - blank_id: modal-conclusion
+    options:
+    - må
+    - kan
+    - skal
+    - vil
+    - bør
+    answer_index: 0
+  - text_md: ' ha glemt møtet.'
+- handle: vel_assumption_and_confirmation
+  op: choose
+  objective: obj-modal-nuance-01
+  bloom: understand
+  prompt_md: Choose the interpretation that shows what the speaker assumes and how
+    vel changes the exchange.
+  derived_from:
+  - section_id: vel-assumption-confirmation
+  stem_md: 'Neutral question: «Skal du møte Sara på stasjonen?» Question with vel:
+    «Du skal vel møte Sara på stasjonen?» Softened estimate: «Det tar vel omtrent
+    en time.» Which interpretation is correct?'
+  options:
+  - id: certainty
+    text: Vel makes both statements completely certain and removes any need for confirmation.
+    correct: false
+    why: Vel leaves room for correction and commonly invites confirmation.
+  - id: permission
+    text: Vel asks whether Sara has permission to meet at the station.
+    correct: false
+    why: The particle concerns assumption and confirmation, not permission.
+  - id: arrangement-only
+    text: Vel adds an arrangement to the neutral question but does not change the
+      speaker-listener relationship.
+    correct: false
+    why: Skal can present the arrangement; vel adds the assumption and appeal to the
+      listener.
+  - id: correct
+    text: The neutral question asks without presenting a stated assumption; the vel
+      question presents the meeting as expected and seeks confirmation; the estimate
+      is softened as a tentative belief.
+    correct: true
+    why: Vel appeals to what seems likely or expected instead of asking from complete
+      ignorance.
+- handle: jo_shared_ground
+  op: choose
+  objective: obj-modal-nuance-01
+  bloom: understand
+  prompt_md: Choose the interpretation that identifies the shared-ground, evident,
+    or corrective stance added by jo.
+  derived_from:
+  - section_id: jo-shared-evident-corrective
+  stem_md: 'Compare: «Jeg har nøkkelen i sekken.» and «Jeg har jo nøkkelen i sekken.»
+    In the conversation, Jonas is responding to concern that the key may be missing.
+    He also says: «Vi kan jo ta en taxi.» Which interpretation is correct?'
+  options:
+  - id: correct
+    text: The factual key statement remains similar, but jo frames the key as relevant,
+      evident, or worth recalling; in «Vi kan jo ta en taxi», jo presents the taxi
+      as an available or obvious solution.
+    correct: true
+    why: Jo adds common-ground or corrective framing without proving that the listener
+      knew the fact beforehand.
+  - id: fact-change
+    text: Jo changes the location of the key and means that Jonas has probably lost
+      it.
+    correct: false
+    why: Jo changes interpersonal framing, not the factual location.
+  - id: probability
+    text: Jo marks the speaker’s probability judgment in both sentences.
+    correct: false
+    why: Probability is the central stance use of nok, not jo.
+  - id: empty
+    text: Jo adds no meaning; both sentences have exactly the same conversational
+      force.
+    correct: false
+    why: The lesson presents jo as an appeal to shared, evident, or readily available
+      information.
+- handle: nok_probability_judgment
+  op: choose
+  objective: obj-modal-nuance-01
+  bloom: understand
+  prompt_md: Choose the interpretation that distinguishes probability nok from possibility,
+    source-based skal, and quantity nok.
+  derived_from:
+  - section_id: nok-probability-judgment
+  stem_md: «Toget kommer nok senere.» «Det kan bli glatt i kveld.» «Ifølge værmeldingen
+    skal det bli kaldere i natt.» «Vi har nok mat.» Which mapping is correct?
+  options:
+  - id: correct
+    text: Nok in the first sentence marks the speaker’s likely conclusion; kan in
+      the second keeps a possibility open; skal in the third attributes information
+      to the weather forecast; nok in the fourth means enough.
+    correct: true
+    why: The contexts distinguish personal probability, open possibility, external
+      source, and sufficient quantity.
+  - id: all-probability
+    text: All four sentences express the speaker’s probability judgment.
+    correct: false
+    why: Kan presents possibility, skal identifies a source, and nok mat means enough.
+  - id: source-probability
+    text: The first sentence reports a source, the second expresses probability, and
+      the third means enough.
+    correct: false
+    why: The explicit source cue belongs to the third sentence, and quantity belongs
+      to the fourth.
+  - id: enough-everywhere
+    text: Nok means enough in the first and fourth sentences, while kan and skal both
+      mean probable.
+    correct: false
+    why: Nok in the first comments on the likelihood of the whole statement.
+- handle: da_consequence_or_response_stance
+  op: choose
+  objective: obj-modal-nuance-01
+  bloom: understand
+  prompt_md: Choose the interpretation that connects each use of da to its conversational
+    trigger.
+  derived_from:
+  - section_id: da-consequence-response-stance
+  stem_md: A. «Toget er forsinket. Da må vi vente.» B. «Kan du handle?» — «Det kan
+    jeg da.» C. «Du har vel ikke glemt billettene?» — «Nei da, de ligger i lomma.»
+    Which classification is correct?
+  options:
+  - id: time-only
+    text: All three uses place the action after an earlier event in chronological
+      time.
+    correct: false
+    why: The response uses of da express engagement, not time sequence.
+  - id: consequence-only
+    text: A, B, and C all link a practical consequence to a condition without adding
+      response stance.
+    correct: false
+    why: B and C are engaged responses with reassurance or correction.
+  - id: correct
+    text: A links a consequence to the delayed train; B adds reassurance or insistence
+      to the offer of ability; C gives an engaged correction or reassurance about
+      the tickets.
+    correct: true
+    why: Da connects A to a changed situation and makes B and C responsive stances
+      rather than chronological time references.
+  - id: probability
+    text: Da marks probability in A and asks for confirmation in B and C.
+    correct: false
+    why: Probability and confirmation are not the central contributions of da here.
+- handle: particle_choice_by_listener_relationship
+  op: recall_fill
+  objective: obj-modal-nuance-01
+  bloom: apply
+  prompt_md: Complete each Norwegian exchange with vel, jo, nok, or da according to
+    the speaker-listener relationship.
+  explanation_md: "Vel seeks confirmation, jo presents shared knowledge, nok marks a prediction, and da pushes a correction or consequence."
+  derived_from:
+  - section_id: comparing-four-particles
+  audio_target: "Du blir med på møtet i morgen, vel? Jeg har jo sendt adressen til alle. Bussen er nok forsinket etter snøfallet. Møtet er avlyst. Da tar vi en rolig middag hjemme."
+  segments:
+  - text_md: 'The plan is already expected: Du blir med på møtet i morgen, '
+  - blank_id: particle-confirmation
+    options:
+    - vel
+    - jo
+    - nok
+    - da
+    answer_index: 0
+  - text_md: '?'
+  - text_md: " The address has already been sent to everyone: Jeg har "
+  - blank_id: particle-shared
+    options:
+    - vel
+    - jo
+    - nok
+    - da
+    answer_index: 1
+  - text_md: ' sendt adressen til alle.'
+  - text_md: " After heavy snow, the speaker concludes that the bus is probably delayed without seeking confirmation: Bussen er "
+  - blank_id: particle-probability
+    options:
+    - vel
+    - jo
+    - nok
+    - da
+    answer_index: 2
+  - text_md: ' forsinket etter snøfallet.'
+  - text_md: " New circumstance: «Møtet er avlyst.» Nora responds: «"
+  - blank_id: particle-reaction
+    options:
+    - vel
+    - jo
+    - nok
+    - Da
+    answer_index: 3
+  - text_md: ' tar vi en rolig middag hjemme.»'
+- handle: modal_and_particle_layering
+  op: choose
+  objective: obj-modal-nuance-01
+  bloom: analyze
+  prompt_md: Choose the interpretation that separates the modal layer from the particle
+    layer and gives a natural English rendering.
+  derived_from:
+  - section_id: combining-modals-particles
+  stem_md: 'Jonas has told Ingrid that his meeting with Sara is arranged. Ingrid asks:
+    «Du skal vel møte Sara på stasjonen?» Which interpretation best contrasts the
+    combined form with each contribution on its own?'
+  options:
+  - id: probability-source
+    text: 'Skal marks Ingrid’s probability judgment and vel identifies information
+      from a schedule. Natural English: The schedule probably says you will meet Sara.'
+    correct: false
+    why: Probability and source attribution are not the contributions of this combination.
+  - id: single-fixed-meaning
+    text: Skal vel is one fixed expression meaning must. The two words cannot be interpreted
+      separately.
+    correct: false
+    why: The lesson explicitly teaches separate modal and particle contributions.
+  - id: particle-arrangement
+    text: 'Vel presents the arranged meeting, while skal merely asks Ingrid to confirm
+      it. Natural English: You might meet Sara.'
+    correct: false
+    why: Skal supplies the arrangement perspective, and vel supplies assumption and
+      confirmation.
+  - id: correct
+    text: 'Skal presents the meeting as arranged; vel presents that arrangement as
+      Ingrid’s assumption and seeks confirmation. Bare skal would report the arrangement
+      without the confirmation-seeking stance, while vel alone would contribute tentative
+      assumption rather than arrangement. Natural English: You are going to meet Sara
+      at the station, right?'
+    correct: true
+    why: The answer keeps the arrangement and the listener-oriented assumption as
+      separate layers.
+- handle: repair_dictionary_translation
+  op: choose
+  objective: obj-modal-nuance-01
+  bloom: analyze
+  prompt_md: Choose the complete repair of literal English-based interpretations in
+    these contexts.
+  derived_from:
+  - section_id: common-translation-traps
+  stem_md: 'Ordinary future: «Jeg kommer i morgen.» Instruction: «Du skal gå nå.»
+    Possibility versus probability: «Hun kan være hjemme.» / «Hun er nok hjemme.»
+    Shared grounding: «Du vet jo det.» Engaged response: «Det kan jeg da.» Which interpretation
+    rejects the misleading dictionary glosses?'
+  options:
+  - id: literal
+    text: Jeg kommer i morgen must contain vil because it refers to the future; skal
+      and må are interchangeable; kan means probably; jo is empty; and da always means
+      then in time.
+    correct: false
+    why: These are the translation traps identified in the lesson.
+  - id: correct
+    text: Jeg kommer i morgen uses present tense for an ordinary future event; Du
+      skal gå nå is an instruction or assigned course, not the same as må; Hun kan
+      være hjemme keeps being home possible, while Hun er nok hjemme makes it probable;
+      Du vet jo det invokes shared or evident information; Det kan jeg da is engaged
+      reassurance or insistence, not chronological then.
+    correct: true
+    why: Each interpretation follows the surrounding context and preserves the stance
+      that a mechanical gloss would miss.
+  - id: probability-only
+    text: All future forms express prediction, kan and nok both mean probability,
+      jo marks uncertainty, and da marks a later time.
+    correct: false
+    why: The forms express different relationships to action, evidence, and conversation.
+  - id: obligation-only
+    text: Jeg kommer i morgen and Du skal gå nå both express obligation, while Hun
+      kan være hjemme and Det kan jeg da both express permission.
+    correct: false
+    why: The contexts support ordinary future reference, instruction, possibility,
+      and engaged response instead.
+- handle: anchor_dialogue_stance_reconstruction
+  op: choose
+  objective: obj-modal-nuance-01
+  bloom: analyze
+  prompt_md: Choose the integrated reconstruction that follows how stance changes
+    through the station conversation.
+  derived_from:
+  - section_id: back-at-station
+  stem_md: «Har Sara kommet?» «Nei, toget står fortsatt utenfor byen. Det må være
+    noe galt med signalene.» «Det kan ta lang tid, da.» «Ja, men ifølge appen skal
+    toget kjøre videre snart.» «Du blir vel på stasjonen og venter?» «Jeg kan jo ikke
+    dra fra stasjonen nå.» «Nei, selvfølgelig. Jeg bør kanskje sjekke når neste ferge
+    går.» «Det er nok best. Vi vil uansett ikke rekke den første ferga.» Which reconstruction
+    is correct?
+  options:
+  - id: correct
+    text: Må in Det må være noe galt med signalene marks a strong conclusion from
+      evidence; kan in Det kan ta lang tid keeps the delay possible, while da links
+      the response to the situation; ifølge appen identifies the source for skal,
+      which presents the continuation as expected; vel presents the station plan as
+      assumed and seeks confirmation; jo frames Jonas’s inability to leave as evident
+      or relevant; bør presents Ingrid’s check as sensible; nok marks her judgment
+      as probable; and vil predicts that they will miss the first ferry.
+    correct: true
+    why: The reconstruction identifies each target form and tracks the changing travel
+      circumstances instead of supplying English equivalents only.
+  - id: reversed-stance
+    text: Må expresses a requirement to repair the signals; kan makes the delay probable;
+      skal gives Jonas’s own guaranteed prediction; vel asks neutrally; jo marks uncertainty;
+      bør gives a requirement; nok reports the app; and vil gives advice.
+    correct: false
+    why: The dialogue assigns different sources, strengths, and interpersonal functions.
+  - id: fixed-gloss
+    text: Må, skal, bør, and vil all simply mean different kinds of must or will,
+      while vel, jo, nok, and da add no independent stance.
+    correct: false
+    why: The dialogue is designed to show distinct modal and particle contributions.
+  - id: source-only
+    text: Every target form reports information from the app, so the speakers make
+      no conclusions, predictions, recommendations, or appeals for confirmation.
+    correct: false
+    why: Only skal is explicitly tied to the app; the other forms have different contextual
+      bases.
+- handle: dinner_modal_decisions
+  op: recall_fill
+  objective: obj-modal-nuance-01
+  bloom: apply
+  prompt_md: Complete each new Norwegian dinner statement with the modal that matches
+    the intended meaning.
+  derived_from:
+  - section_id: transfer-delayed-dinner
+  audio_target: "Butikken stenger om ti minutter, så Nora må kjøpe fløte nå. Kollegaene kan komme etter avtalt tid. De skal spise hos Nora klokka åtte. Maten vil bli kald hvis de venter lenge. Nora bør begynne med suppen nå."
+  segments:
+  - text_md: 'The shop closes soon: Butikken stenger om ti minutter, så Nora '
+  - blank_id: dinner-duty
+    options:
+    - må
+    - kan
+    - skal
+    - vil
+    - bør
+    answer_index: 0
+  - text_md: ' kjøpe fløte nå.'
+  - text_md: " The work meeting is running late, so a delay is possible: Kollegaene "
+  - blank_id: dinner-possibility
+    options:
+    - må
+    - kan
+    - skal
+    - vil
+    - bør
+    answer_index: 1
+  - text_md: ' komme etter avtalt tid.'
+  - text_md: " The arrival time is arranged: De "
+  - blank_id: dinner-arrangement
+    options:
+    - må
+    - kan
+    - skal
+    - vil
+    - bør
+    answer_index: 2
+  - text_md: ' spise hos Nora klokka åtte.'
+  - text_md: " Nora predicts the result if they wait: Maten "
+  - blank_id: dinner-prediction
+    options:
+    - må
+    - kan
+    - skal
+    - vil
+    - bør
+    answer_index: 3
+  - text_md: ' bli kald hvis de venter lenge.'
+  - text_md: " A sensible kitchen recommendation is intended: Nora "
+  - blank_id: dinner-advice
+    options:
+    - må
+    - kan
+    - skal
+    - vil
+    - bør
+    answer_index: 4
+  - text_md: ' begynne med suppen nå.'
+- handle: dinner_particle_stance
+  op: recall_fill
+  objective: obj-modal-nuance-01
+  bloom: apply
+  prompt_md: Complete each new Norwegian dinner exchange with vel, jo, nok, or da
+    according to the speaker-listener relationship.
+  derived_from:
+  - section_id: transfer-delayed-dinner
+  audio_target: "Du kommer til middag klokka åtte, vel? Jeg har jo sendt adressen til alle. Møtet er nok ikke ferdig ennå. Møtet er avlyst. Da tar vi en rolig middag hjemme."
+  segments:
+  - text_md: 'The plan is assumed: Du kommer til middag klokka åtte, '
+  - blank_id: dinner-confirmation
+    options:
+    - vel
+    - jo
+    - nok
+    - da
+    answer_index: 0
+  - text_md: '?'
+  - text_md: " The address is shared already: Jeg har "
+  - blank_id: dinner-shared
+    options:
+    - vel
+    - jo
+    - nok
+    - da
+    answer_index: 1
+  - text_md: ' sendt adressen til alle.'
+  - text_md: " The meeting is probably still running: Møtet er "
+  - blank_id: dinner-probability
+    options:
+    - vel
+    - jo
+    - nok
+    - da
+    answer_index: 2
+  - text_md: ' ikke ferdig ennå.'
+  - text_md: " New circumstance: «Møtet er avlyst.» Nora responds: «"
+  - blank_id: dinner-reaction
+    options:
+    - vel
+    - jo
+    - nok
+    - Da
+    answer_index: 3
+  - text_md: ' tar vi en rolig middag hjemme.»'
+- handle: dinner_combined_interpretation
+  op: choose
+  objective: obj-modal-nuance-01
+  bloom: analyze
+  prompt_md: Choose the interpretation that keeps modal meaning and particle stance
+    as separate layers in Nora’s delayed-dinner conversation.
+  derived_from:
+  - section_id: transfer-delayed-dinner
+  stem_md: 'Nora says: «Jeg må jo handle nå.» She asks: «De skal vel komme klokka
+    åtte?» She estimates: «Maten vil nok bli kald hvis vi venter.» She reacts: «Du
+    kan da ikke servere uten brød.» She suggests: «Vi bør vel starte suppen nå.» Which
+    interpretation is correct?'
+  options:
+  - id: collapsed-probability
+    text: Må jo, skal vel, vil nok, kan da, and bør vel all express different degrees
+      of probability.
+    correct: false
+    why: The modals and particles contribute different kinds of meaning, not one certainty
+      scale.
+  - id: particle-only
+    text: 'The particles carry the complete meaning: jo gives necessity, vel gives
+      arrangement, nok gives prediction, da gives ability, and vel gives advice.'
+    correct: false
+    why: The modal verbs supply the action or event framing.
+  - id: modal-only
+    text: The modal verbs carry the complete meaning, and jo, vel, nok, and da are
+      decorative words with no effect on the conversation.
+    correct: false
+    why: The particles mark shared grounding, assumption, probability, and engaged
+      response stance.
+
+  - id: correct
+    text: Må in må jo handle nå expresses necessity, while jo frames it as evident
+      or relevant; skal in skal vel komme marks an arrangement, while vel presents
+      it as an assumption seeking agreement; vil predicts the food becoming cold,
+      while nok marks that result as probable; kan concerns practical possibility,
+      while da adds an engaged reaction or insistence; bør gives sensible advice,
+      while vel softens it and invites agreement.
+    correct: true
+    why: Each combination preserves two independent layers instead of treating it
+      as a fixed expression.
+- handle: independent_modal_particle_retrieval
+  op: write
+  objective: obj-modal-nuance-01
+  bloom: apply
+  prompt_md: |-
+    Complete both parts in Norwegian. 1. A colleague writes: «Møtet starter om ti
+    minutter, men prosjektoren virker ikke.» Reply in one or two connected sentences.
+    Respond to the colleague and suggest what should happen, using one approved modal
+    verb and one approved stance particle. 2. Create a different everyday situation,
+    outside the cabin trip and delayed dinner, and write one short sentence another
+    speaker could say. Use a different approved modal verb and a different approved
+    stance particle. Make both contexts clear without copying a sentence from the lesson.
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  min_words: 18
+  max_words: 60
+  judge_prompt: Check both parts separately and report evidence for every criterion.
+    In part 1, require a connected Norwegian reply to the colleague's projector problem
+    that makes a socially appropriate suggestion. In both parts, require at least one
+    approved modal verb (må, kan, skal, vil, or bør) and at least one approved stance
+    particle (vel, jo, nok, or da). The modal must contribute an interpretable event
+    meaning such as necessity, possibility, arrangement, prediction, or advice, while
+    the particle must contribute an interpretable stance such as confirmation, shared
+    grounding, probability, or a consequence-linked response. In part 2, require a new
+    everyday situation outside the cabin trip and delayed dinner, and require a different
+    modal and particle from part 1. Accept natural Norwegian wording variations and do
+    not require all nine target forms.
+  criteria:
+  - id: social_reply
+    instruction: Responds naturally to the colleague's projector problem with a connected Norwegian suggestion or next step.
+  - id: modal_meaning
+    instruction: Uses an approved modal verb in each part with a context-supported meaning rather than as a mechanical insertion.
+  - id: particle_stance
+    instruction: Uses an approved stance particle in each part to express a context-supported relationship to the claim or listener.
+  - id: independent_transfer
+    instruction: Creates a second everyday situation outside the cabin trip and delayed dinner, using a different modal and particle from part 1.

@@ -1,0 +1,268 @@
+- handle: noticing_changes_in_stance
+  op: choose
+  objective: obj-advanced-pragmatics-01
+  bloom: understand
+  prompt_md: 'Maja and Henrik are planning a courtyard gathering. Henrik responds
+    to a food-order proposal with «Det blir vel litt dyrt?» Later Maja redirects
+    the plan by saying «Egentlig hadde jeg tenkt at vi kunne grille.» Choose the
+    complete interpretation that explains what «vel» and «egentlig» contribute
+    in these two turns rather than giving isolated dictionary translations.'
+  derived_from:
+  - section_id: hearing-stance-rather-than-facts
+  stem_md: Which interpretation best explains the speakers' intentions?
+  options:
+  - id: correct
+    text: «vel» uttrykker en tentativ forventning og inviterer til bekreftelse; «egentlig»
+      avslører Maja sin underliggende idé og justerer samtalen forsiktig. (Vel makes
+      the expectation tentative and invites confirmation; egentlig reveals Maja's
+      underlying idea and gently adjusts the conversation.)
+    correct: true
+    why: This explains both markers as context-dependent stance choices.
+  - id: certain-and-direct
+    text: «vel» uttrykker full sikkerhet; «egentlig» avviser Henriks forslag direkte.
+      (Vel expresses complete certainty; egentlig directly rejects Henrik's proposal.)
+    correct: false
+    why: The lesson says vel leaves room for correction and egentlig avoids direct
+      rejection.
+  - id: shared-and-unrelated
+    text: «vel» markerer delt kunnskap; «egentlig» starter et helt nytt sideemne.
+      (Vel marks shared knowledge; egentlig starts a completely new side topic.)
+    correct: false
+    why: Shared knowledge and side-topic shifting are functions taught for other markers.
+- handle: make_assumptions_less_absolute
+  op: recall_fill
+  objective: obj-advanced-pragmatics-01
+  bloom: apply
+  prompt_md: Reformulate each direct event statement as a tentative expectation. Fill
+    every blank with the marker vel.
+  explanation_md: "Use vel to soften a claim and invite confirmation; nok more often signals sufficiency or the speaker's own expectation."
+  derived_from:
+  - section_id: softening-and-testing-vel
+  audio_target: "Det blir vel litt dyrt? Det blir vel regn i morgen? Det kommer vel flere gjester enn vi trodde? Ingrid blir vel fornøyd med planen?"
+  segments:
+  - text_md: 'Det blir '
+  - blank_id: cost-marker
+    options:
+    - vel
+    - nok
+    answer_index: 0
+  - text_md: ' litt dyrt?'
+  - text_md: ' Det blir '
+  - blank_id: weather-marker
+    options:
+    - vel
+    - nok
+    answer_index: 0
+  - text_md: ' regn i morgen?'
+  - text_md: ' Det kommer '
+  - blank_id: guests-marker
+    options:
+    - vel
+    - nok
+    answer_index: 0
+  - text_md: ' flere gjester enn vi trodde?'
+  - text_md: ' Ingrid blir '
+  - blank_id: reaction-marker
+    options:
+    - vel
+    - nok
+    answer_index: 0
+  - text_md: ' fornøyd med planen?'
+- handle: adjust_rather_than_reject
+  op: write
+  objective: obj-advanced-pragmatics-01
+  bloom: apply
+  prompt_md: Respond in Norwegian as Maja after Henrik proposes holding the courtyard
+    gathering indoors. Use egentlig to introduce your preference for the courtyard
+    without bluntly rejecting his proposal. Then write a similar response in a new
+    workplace or travel situation, using egentlig to reveal an underlying preference
+    while staying connected to what was just said.
+  derived_from:
+  - section_id: revealing-underlying-thought-egentlig
+  response_language: 'no'
+  min_words: 20
+  max_words: 55
+  judge_prompt: Check both Norwegian responses against the task and report evidence
+    that egentlig reveals an underlying preference while keeping each response connected
+    to the preceding statement rather than rejecting it bluntly.
+  criteria:
+  - id: underlying-preference
+    instruction: Uses egentlig in both responses to reveal an underlying intention
+      or preference while remaining connected to what was said before.
+- handle: supply_shared_reason
+  op: write
+  objective: obj-advanced-pragmatics-01
+  bloom: apply
+  prompt_md: 'Choose one concern about the courtyard gathering: rain, noise, cost,
+    or cleanup. Write a short Norwegian response that addresses the concern with jo
+    and adds a relevant fact or solution that both speakers could reasonably know.'
+  derived_from:
+  - section_id: presenting-information-as-shared-jo
+  response_language: 'no'
+  min_words: 8
+  max_words: 30
+  judge_prompt: Check whether the response uses jo to present a relevant fact or solution
+    as shared and already available to both speakers, rather than inserting the marker
+    mechanically.
+  criteria:
+  - id: shared-ground-reason
+    instruction: Uses jo to present a relevant fact or solution as already available
+      to both speakers.
+- handle: prediction_or_confirmation
+  op: write
+  objective: obj-advanced-pragmatics-01
+  bloom: apply
+  prompt_md: Write two different Norwegian sentences about the courtyard gathering.
+    Use vel in a question that checks an expectation and invites confirmation. Use
+    nok in a statement that gives your own probability judgment. Choose an event-related
+    outcome and do not copy a complete example sentence.
+  derived_from:
+  - section_id: evaluating-likelihood-nok
+  response_language: 'no'
+  min_words: 8
+  max_words: 25
+  judge_prompt: Check both sentences and report separately whether vel seeks confirmation
+    of an expectation and nok states a probability judgment.
+  criteria:
+  - id: expectation-and-probability
+    instruction: Shows an expectation seeking confirmation with vel and a probability
+      judgment with nok.
+- handle: summarize_agreement
+  op: write
+  objective: obj-advanced-pragmatics-01
+  bloom: apply
+  prompt_md: 'The arrangement is that Maja buys the essentials, guests bring the remaining
+    food, and a weather change may move the gathering indoors. Write two Norwegian
+    turns: first summarize the arrangement with altså, then use altså to check or
+    state the implication of one change. Make both conclusions logically connected
+    to the preceding details.'
+  derived_from:
+  - section_id: drawing-a-conclusion-also
+  response_language: 'no'
+  min_words: 15
+  max_words: 45
+  judge_prompt: 'Check both turns for clear, logically connected uses of altså: one
+    practical summary and one conclusion or implication about a change.'
+  criteria:
+  - id: connected-conclusions
+    instruction: Makes the practical conclusion and the implication of the change
+      clear and logically connected to the preceding context.
+- handle: believable_topic_shift
+  op: write
+  objective: obj-advanced-pragmatics-01
+  bloom: apply
+  prompt_md: Continue a short Norwegian conversation about what food to bring to the
+    courtyard gathering. Use forresten to introduce one related practical matter such
+    as music, keys, invitations, or a neighbor. Make the connection plausible and
+    do not use the marker for an urgent warning.
+  derived_from:
+  - section_id: shifting-topic-forresten
+  response_language: 'no'
+  min_words: 12
+  max_words: 40
+  judge_prompt: Check that forresten clearly marks a related side topic and that the
+    added matter is plausible in the gathering context rather than random or an urgent
+    warning.
+  criteria:
+  - id: plausible-topic-shift
+    instruction: Clearly marks the shift with forresten without making the added information
+      seem random or inappropriately casual.
+- handle: new_circumstance_response
+  op: write
+  objective: obj-advanced-pragmatics-01
+  bloom: apply
+  prompt_md: 'Write three brief Norwegian responses, one to each circumstance: someone
+    cannot buy the food, the courtyard is unavailable, and Maja has not contacted
+    Ingrid. End each response with sentence-final da and make each one a natural consequence,
+    compromise, or offer.'
+  derived_from:
+  - section_id: responding-to-circumstances-da
+  response_language: 'no'
+  min_words: 15
+  max_words: 45
+  judge_prompt: Check all three responses for sentence-final da and report whether
+    each one reacts naturally to its stated circumstance as a consequence, compromise,
+    or offer.
+  criteria:
+  - id: circumstance-response
+    instruction: Reacts naturally to each stated circumstance with sentence-final
+      da rather than using da as an isolated filler.
+- handle: marker_fit_repair
+  op: write
+  objective: obj-advanced-pragmatics-01
+  bloom: analyze
+  prompt_md: Correct the Norwegian sentence so lowering the music responds to Ingrid's
+    concern. Explain in Norwegian why the corrected marker fits the interpersonal
+    context, then write one new Norwegian sentence using the same response-to-concern
+    function in a meeting or travel context.
+  derived_from:
+  - section_id: common-mistakes
+  response_language: 'no'
+  judge_prompt: Check the correction, interpersonal explanation, and new-context sentence
+    against every criterion. Accept natural Bokmål variants when the response-to-concern
+    function is clear.
+  criteria:
+  - id: corrected-marker
+    instruction: Corrects forresten to da in the sentence about lowering Ingrid's music.
+  - id: interpersonal-explanation
+    instruction: Explains in Norwegian that da presents the action as a response to Ingrid's concern.
+  - id: new-context-use
+    instruction: Provides one natural Norwegian meeting or travel sentence using the same response-to-concern function.
+- handle: integrated_planning_conversation
+  op: write
+  objective: obj-advanced-pragmatics-01
+  bloom: apply
+  prompt_md: Write a coherent Norwegian planning conversation in two parts. First
+    continue the courtyard discussion after the weather forecast changes. Include
+    a vel expectation check, an egentlig underlying preference, a jo shared reason,
+    a nok probability judgment, an altså practical conclusion, a forresten related
+    topic shift, and a sentence-final da response to a new circumstance. Then move
+    the same seven functions to a different workplace or travel situation. Keep both
+    situations coherent, use the markers where they fit naturally rather than once
+    in every sentence, and do not copy the courtyard wording or force direct English
+    equivalents.
+  derived_from:
+  - section_id: integrated-practice
+  response_language: 'no'
+  min_words: 60
+  max_words: 130
+  judge_prompt: Check both Norwegian situations and report evidence for every required
+    marker function, coherence of each conversation, natural placement, and flexible
+    reuse without copied courtyard wording or forced English equivalents.
+  criteria:
+  - id: required-marker-functions
+    instruction: Includes a vel expectation check, an egentlig underlying preference,
+      a jo shared reason, a nok probability judgment, an altså conclusion, a forresten
+      topic shift, and a sentence-final da response to circumstances.
+  - id: coherent-conversation
+    instruction: Keeps event planning coherent and uses markers where they fit naturally
+      rather than placing one in every sentence.
+  - id: flexible-transfer
+    instruction: Reuses the markers flexibly in a different situation without copying
+      the courtyard dialogue or forcing direct English equivalents.
+- handle: retrieval_and_review
+  op: write
+  objective: obj-advanced-pragmatics-01
+  bloom: apply
+  prompt_md: Without looking back, write a short Norwegian explanation of the conversational
+    difference between vel and nok. Then create a short Norwegian exchange in which
+    speakers solve one practical problem. Include jo, egentlig, altså, forresten,
+    and conversational sentence-final da, and make each marker contribute to tone,
+    stance, implication, or topic management.
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  min_words: 45
+  max_words: 100
+  judge_prompt: Check the explanation and exchange against the task. Report evidence
+    for the vel-versus-nok distinction, all five required markers and their functions,
+    and one coherent practical problem being solved.
+  criteria:
+  - id: vel-nok-distinction
+    instruction: Explains the conversational difference between vel and nok.
+  - id: required-marker-exchange
+    instruction: Creates a short exchange containing jo, egentlig, altså, forresten,
+      and conversational da.
+  - id: practical-coherence
+    instruction: Makes the speakers solve one practical problem and ensures each marker
+      contributes to tone, stance, implication, or topic management.

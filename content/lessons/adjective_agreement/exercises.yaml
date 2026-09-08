@@ -1,0 +1,398 @@
+- handle: indefinite-room-labels
+  op: recall_fill
+  objective: obj-adjective-agreement-01
+  bloom: apply
+  prompt_md: Complete Maja's labels with the supplied adjective in the form that matches
+    each article and noun.
+  explanation_md: "Use the base adjective after en or ei, and add -t after et: en fin stol, ei kald natt, et dyrt bord."
+  derived_from:
+  - section_id: indefinite-singular-forms
+  audio_target: "En fin stol; ei kald natt; et dyrt bord."
+  segments:
+  - text_md: 'fin: en '
+  - blank_id: masculine-fin
+    options:
+    - fin
+    - fine
+    - fint
+    answer_index: 0
+  - text_md: ' stol; kald: ei '
+  - blank_id: feminine-kald
+    options:
+    - kalde
+    - kald
+    - kaldt
+    answer_index: 1
+  - text_md: ' natt; dyr: et '
+  - blank_id: neuter-dyr
+    options:
+    - dyr
+    - dyre
+    - dyrt
+    answer_index: 2
+  - text_md: ' bord.'
+- handle: unpacking-one-or-more
+  op: recall_fill
+  objective: obj-adjective-agreement-01
+  bloom: apply
+  prompt_md: Update Elias's inventory by changing each supplied phrase to the requested
+    number.
+  explanation_md: "Plural adjectives normally take -e, while an indefinite singular phrase returns to the gender-matching singular form: grønne stoler, ei grønn lampe."
+  derived_from:
+  - section_id: plural-agreement
+  audio_target: "En grønn stol blir til grønne stoler. Grønne lamper blir til ei grønn lampe."
+  segments:
+  - text_md: 'Change «en grønn stol» to plural: '
+  - blank_id: plural-green-chairs
+    options:
+    - grønne stoler
+    - grønn stol
+    - grønt bord
+    answer_index: 0
+  - text_md: '. Change «grønne lamper» to singular with ei: '
+  - blank_id: singular-green-lamp
+    options:
+    - et grønt skap
+    - ei grønn lampe
+    - ei grønne lampe
+    answer_index: 1
+  - text_md: .
+- handle: identify-the-known-object
+  op: build
+  objective: obj-adjective-agreement-02
+  bloom: apply
+  prompt_md: Maja changes «en fin stol», «et fint rom» and «fine stoler» into known
+    objects. Build one complete sentence saying that she points to the nice chair,
+    the nice room and the nice chairs.
+  explanation_md: "Before a definite noun, use den, det, or de plus the adjective in -e, while the noun also keeps its definite ending: den fine stolen."
+  derived_from:
+  - section_id: definite-adjective-phrases
+  tokens:
+  - token_id: tok-2
+    text: peker
+  - token_id: tok-3
+    text: på
+  - token_id: tok-4
+    text: den
+  - token_id: tok-5
+    text: fine
+  - token_id: tok-6
+    text: stolen,
+  - token_id: tok-7
+    text: det
+  - token_id: tok-8
+    text: fine
+  - token_id: tok-9
+    text: rommet
+  - token_id: tok-10
+    text: og
+  - token_id: tok-11
+    text: de
+  - token_id: tok-12
+    text: fine
+  - token_id: tok-13
+    text: stolene.
+  - token_id: tok-1
+    text: Maja
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+  - tok-11
+  - tok-12
+  - tok-13
+- handle: description-position-check
+  op: recall_fill
+  objective: obj-adjective-agreement-01
+  bloom: apply
+  prompt_md: Complete Elias's notes. Choose the adjective form according to whether
+    it is inside a definite noun phrase or follows «er».
+  explanation_md: "Inside a definite noun phrase the adjective takes -e; after er it agrees with the noun: det store bordet, but bordet er stort."
+  derived_from:
+  - section_id: before-the-noun-and-after-er
+  audio_target: "Det store bordet står i stua. Bordet er stort. Den grønne stolen står her. Stolen er grønn."
+  segments:
+  - text_md: 'Det '
+  - blank_id: before-neuter-noun
+    options:
+    - stor
+    - stort
+    - store
+    answer_index: 2
+  - text_md: ' bordet står i stua. Bordet er '
+  - blank_id: after-er-neuter
+    options:
+    - stort
+    - stor
+    - store
+    answer_index: 0
+  - text_md: '. Den '
+  - blank_id: before-masculine-noun
+    options:
+    - grønn
+    - grønne
+    - grønt
+    answer_index: 1
+  - text_md: ' stolen står her. Stolen er '
+  - blank_id: after-er-masculine
+    options:
+    - grønne
+    - grønt
+    - grønn
+    answer_index: 2
+  - text_md: .
+- handle: small-object-genders
+  op: recall_fill
+  objective: obj-adjective-agreement-01
+  bloom: remember
+  prompt_md: Complete Maja's box labels with forms of «liten». For the feminine box,
+    select the option that lists both accepted labels; either «lita» or «liten» is
+    valid after «ei».
+  explanation_md: "Liten has the neuter form lite; after ei, both lita and liten are accepted in Bokmål."
+  derived_from:
+  - section_id: the-irregular-adjective-liten
+  audio_target: "En liten stol; ei lita lampe eller ei liten lampe; et lite bord."
+  segments:
+  - text_md: 'Box 1: en '
+  - blank_id: masculine-liten
+    options:
+    - liten
+    - lite
+    - lita
+    answer_index: 0
+  - text_md: ' stol. Box 2, both accepted labels: '
+  - blank_id: feminine-liten-variants
+    options:
+    - ei lite lampe / ei lille lampe
+    - ei lita lampe / ei liten lampe
+    - ei små lampe / ei liten lampe
+    answer_index: 1
+  - text_md: '. Box 3: et '
+  - blank_id: neuter-liten
+    options:
+    - liten
+    - lille
+    - lite
+    answer_index: 2
+  - text_md: ' bord.'
+- handle: little-or-small-across-number
+  op: recall_fill
+  objective: obj-adjective-agreement-01
+  bloom: apply
+  prompt_md: Update Elias's inventory by changing each phrase to the requested number.
+  explanation_md: "The plural of liten is små, while an indefinite neuter singular uses lite: små stoler, et lite bord."
+  derived_from:
+  - section_id: plural-and-definite-forms-of-liten
+  audio_target: "En liten stol blir til små stoler. Små bord blir til et lite bord."
+  segments:
+  - text_md: 'Change «en liten stol» to plural: '
+  - blank_id: plural-small-chairs
+    options:
+    - små stoler
+    - lille stoler
+    - liten stol
+    answer_index: 0
+  - text_md: '. Change «små bord» to indefinite singular with et: '
+  - blank_id: singular-small-table
+    options:
+    - det lille bordet
+    - et lite bord
+    - et liten bord
+    answer_index: 1
+  - text_md: .
+- handle: known-small-furniture
+  op: recall_fill
+  objective: obj-adjective-agreement-01
+  bloom: apply
+  prompt_md: Complete Maja's references to known furniture. Use the definite singular
+    or definite plural form of «liten».
+  explanation_md: "Use lille after den or det in the singular, and små after de in the plural."
+  derived_from:
+  - section_id: plural-and-definite-forms-of-liten
+  audio_target: "den lille stolen; det lille bordet; de små lampene."
+  segments:
+  - text_md: 'den '
+  - blank_id: definite-singular-chair
+    options:
+    - liten
+    - små
+    - lille
+    answer_index: 2
+  - text_md: ' stolen; det '
+  - blank_id: definite-singular-table
+    options:
+    - lille
+    - små
+    - lite
+    answer_index: 0
+  - text_md: ' bordet; de '
+  - blank_id: definite-plural-lamps
+    options:
+    - lille
+    - små
+    - lite
+    answer_index: 1
+  - text_md: ' lampene.'
+- handle: moving-note-correction
+  op: find_fix
+  objective: obj-adjective-agreement-01
+  bloom: analyze
+  prompt_md: Select the one token that is wrong/needs changing.
+  derived_from:
+  - section_id: returning-to-maja-and-elias
+  tokens:
+  - token_id: tok-1
+    text: Det
+  - token_id: tok-2
+    text: lille
+  - token_id: tok-3
+    text: bordet
+  - token_id: tok-4
+    text: står
+  - token_id: tok-5
+    text: ved
+  - token_id: tok-6
+    text: de
+  - token_id: tok-7
+    text: små
+  - token_id: tok-8
+    text: stolene,
+  - token_id: tok-9
+    text: men
+  - token_id: tok-10
+    text: bordet
+  - token_id: tok-11
+    text: er
+  - token_id: tok-12
+    text: store.
+  error_token_id: tok-12
+  feedback: Replace «store» with «stort». After «er», the adjective describes one
+    neuter noun, so use «stort» even though «bordet» itself is definite.
+- handle: cafe-agreement-transfer
+  op: recall_fill
+  objective: obj-adjective-agreement-01
+  bloom: apply
+  prompt_md: Complete Nora's café instructions with the correct adjective forms. Use
+    gender, number, definiteness and adjective position. For the feminine note, select
+    the option listing both accepted forms after «ei».
+  derived_from:
+  - section_id: transfer-preparing-a-small-cafe
+  audio_target: "Det fine rommet er klart. Bordet ved vinduet er stort. Vi trenger store stoler. Ta inn en liten stol. Kjøkkenet trenger et lite bord. Sett det lille bordet ved disken og de små lampene i vinduet. En feminin etikett kan være ei lita lampe eller ei liten lampe."
+  segments:
+  - text_md: 'Det '
+  - blank_id: regular-definite-room
+    options:
+    - fin
+    - fint
+    - fine
+    answer_index: 2
+  - text_md: ' rommet er klart. Bordet ved vinduet er '
+  - blank_id: regular-neuter-after-er
+    options:
+    - stort
+    - store
+    - stor
+    answer_index: 0
+  - text_md: '. Vi trenger '
+  - blank_id: regular-plural-chairs
+    options:
+    - stor
+    - store
+    - stort
+    answer_index: 1
+  - text_md: ' stoler. Ta inn en '
+  - blank_id: irregular-masculine-singular
+    options:
+    - lille
+    - lite
+    - liten
+    answer_index: 2
+  - text_md: ' stol. Kjøkkenet trenger et '
+  - blank_id: irregular-neuter-singular
+    options:
+    - lite
+    - lille
+    - liten
+    answer_index: 0
+  - text_md: ' bord. Sett det '
+  - blank_id: irregular-definite-singular
+    options:
+    - lite
+    - lille
+    - små
+    answer_index: 1
+  - text_md: ' bordet ved disken og de '
+  - blank_id: irregular-definite-plural
+    options:
+    - lite
+    - lille
+    - små
+    answer_index: 2
+  - text_md: ' lampene i vinduet. For a feminine label, both accepted versions are '
+  - blank_id: irregular-feminine-variants
+    options:
+    - ei lita lampe / ei liten lampe
+    - ei lite lampe / ei lille lampe
+    - ei små lampe / ei lita lampe
+    answer_index: 0
+  - text_md: .
+- handle: five-form-review
+  op: recall_fill
+  objective: obj-adjective-agreement-01
+  bloom: remember
+  prompt_md: Complete the quick review from memory. The feminine item asks for both
+    accepted alternatives. The table item also includes a regular neuter contrast.
+  derived_from:
+  - section_id: final-retrieval
+  audio_target: "En liten stol; ei lita lampe eller ei liten lampe; et lite, nytt bord; det lille skapet; små stoler."
+  segments:
+  - text_md: 'one small chair: en '
+  - blank_id: review-masculine-liten
+    options:
+    - lite
+    - liten
+    - lille
+    answer_index: 1
+  - text_md: ' stol; both accepted versions of one small lamp: '
+  - blank_id: review-feminine-liten
+    options:
+    - ei lite lampe / ei lille lampe
+    - ei små lampe / ei liten lampe
+    - ei lita lampe / ei liten lampe
+    answer_index: 2
+  - text_md: '; one small, new table: et '
+  - blank_id: review-neuter-liten
+    options:
+    - lite
+    - lille
+    - liten
+    answer_index: 0
+  - text_md: ', '
+  - blank_id: review-regular-neuter
+    options:
+    - nye
+    - nytt
+    - ny
+    answer_index: 1
+  - text_md: ' bord; the known small cupboard: det '
+  - blank_id: review-definite-liten
+    options:
+    - lite
+    - små
+    - lille
+    answer_index: 2
+  - text_md: ' skapet; several small chairs: '
+  - blank_id: review-plural-liten
+    options:
+    - små
+    - lite
+    - lille
+    answer_index: 0
+  - text_md: ' stoler.'

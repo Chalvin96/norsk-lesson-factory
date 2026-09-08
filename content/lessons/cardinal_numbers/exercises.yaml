@@ -1,0 +1,278 @@
+- handle: number-sequence-recall
+  op: recall_fill
+  objective: obj-cardinal-numbers-01
+  bloom: remember
+  prompt_md: Fill each blank with the Norwegian number matching the stated group size.
+  explanation_md: "Use en before a common-gender noun such as kopp and ett before a neuter noun; higher numbers do not carry that gender contrast."
+  derived_from:
+  - section_id: numbers-one-to-ten
+  audio_target: "åtte bøker, tre epler, ti bord, seks egg og en kopp."
+  segments:
+  - text_md: '8 books: '
+  - blank_id: eight-books
+    options:
+    - åtte
+    - seks
+    - ni
+    answer_index: 0
+  - text_md: ' bøker 3 apples: '
+  - blank_id: three-apples
+    options:
+    - fire
+    - tre
+    - to
+    answer_index: 1
+  - text_md: ' epler 10 tables: '
+  - blank_id: ten-tables
+    options:
+    - fem
+    - ni
+    - ti
+    answer_index: 2
+  - text_md: ' bord 6 eggs: '
+  - blank_id: six-eggs
+    options:
+    - seks
+    - fem
+    - sju
+    answer_index: 0
+  - text_md: ' egg 1 cup: '
+  - blank_id: one-cup
+    options:
+    - ett
+    - en
+    - to
+    answer_index: 1
+  - text_md: ' kopp'
+- handle: notice-en-ett-in-context
+  op: categorize
+  objective: obj-cardinal-numbers-01
+  bloom: analyze
+  prompt_md: Classify each grocery noun by the form of one required before it. Base
+    the choice on the noun.
+  derived_from:
+  - section_id: choosing-en-or-ett
+  buckets:
+  - bucket_id: takes-en
+    label: Takes en for one
+  - bucket_id: takes-ett
+    label: Takes ett for one
+  items:
+  - item_id: banana
+    text: banan
+    bucket_id: takes-en
+  - item_id: orange
+    text: appelsin
+    bucket_id: takes-en
+  - item_id: carton
+    text: kartong
+    bucket_id: takes-en
+  - item_id: bag
+    text: pose
+    bucket_id: takes-en
+  - item_id: apple
+    text: eple
+    bucket_id: takes-ett
+  - item_id: egg
+    text: egg
+    bucket_id: takes-ett
+  - item_id: bread
+    text: brød
+    bucket_id: takes-ett
+  - item_id: glass
+    text: glass
+    bucket_id: takes-ett
+- handle: contrast-one-and-more
+  op: recall_fill
+  objective: obj-cardinal-numbers-01
+  bloom: apply
+  prompt_md: Complete each quantity phrase for the stated kitchen group. Choose en
+    or ett only for one; use the stated higher number otherwise.
+  derived_from:
+  - section_id: one-and-several
+  audio_target: "en kopp, tre kopper, ett glass og tre glass."
+  segments:
+  - text_md: '1 cup: '
+  - blank_id: one-cup
+    options:
+    - ett
+    - en
+    answer_index: 1
+  - text_md: ' kopp 3 cups: '
+  - blank_id: three-cups
+    options:
+    - tre
+    - to
+    - fire
+    answer_index: 0
+  - text_md: ' kopper 1 glass: '
+  - blank_id: one-glass
+    options:
+    - en
+    - ett
+    answer_index: 1
+  - text_md: ' glass 3 glasses: '
+  - blank_id: three-glasses
+    options:
+    - ett
+    - fem
+    - tre
+    answer_index: 2
+  - text_md: ' glass'
+- handle: answer-how-many
+  op: recall_fill
+  objective: obj-cardinal-numbers-01
+  bloom: apply
+  prompt_md: Complete each answer to Hvor mange …? with the full Norwegian quantity
+    phrase matching the stated visible amount.
+  derived_from:
+  - section_id: asking-how-many
+  audio_target: "Jeg trenger en pose. Vi har ett brød. Fire kopper. Jeg trenger tre epler."
+  segments:
+  - text_md: 'There is 1 bag. Hvor mange poser trenger du? – Jeg trenger '
+  - blank_id: one-bag
+    options:
+    - en pose
+    - ett pose
+    - to poser
+    answer_index: 0
+  - text_md: '. There is 1 loaf. Hvor mange brød har dere? – Vi har '
+  - blank_id: one-loaf
+    options:
+    - en brød
+    - ett brød
+    - tre brød
+    answer_index: 1
+  - text_md: '. There are 4 cups. Hvor mange kopper? – '
+  - blank_id: four-cups
+    options:
+    - to kopper
+    - fem kopper
+    - fire kopper
+    answer_index: 2
+  - text_md: '. There are 3 apples. Hvor mange epler trenger du? – Jeg trenger '
+  - blank_id: three-apples
+    options:
+    - tre epler
+    - seks epler
+    - ett eple
+    answer_index: 0
+  - text_md: .
+- handle: repair-the-one-form
+  op: find_fix
+  objective: obj-cardinal-numbers-01
+  bloom: analyze
+  prompt_md: Select the one token that is wrong/needs changing.
+  derived_from:
+  - section_id: common-mistake
+  tokens:
+  - token_id: tok-1
+    text: Vi
+  - token_id: tok-2
+    text: trenger
+  - token_id: tok-3
+    text: en
+  - token_id: tok-4
+    text: glass
+  - token_id: tok-5
+    text: .
+  error_token_id: tok-3
+  feedback: 'Replace en with ett because glass is an ett-word: Vi trenger ett glass.'
+- handle: complete-the-checkout-quantities
+  op: recall_fill
+  objective: obj-cardinal-numbers-01
+  bloom: apply
+  prompt_md: 'Complete the checkout turns with quantity phrases matching Mina''s groceries:
+    four apples, two bananas, six eggs, one loaf of bread, and one bag.'
+  derived_from:
+  - section_id: checkout
+  audio_target: "Du har fire epler og to bananer. Jeg har seks egg. Her er det bare ett brød. En pose, takk."
+  segments:
+  - text_md: 'Jonas: Du har '
+  - blank_id: apples
+    options:
+    - tre epler
+    - fire epler
+    - ett eple
+    answer_index: 1
+  - text_md: ' og '
+  - blank_id: bananas
+    options:
+    - fem bananer
+    - en banan
+    - to bananer
+    answer_index: 2
+  - text_md: '. Stemmer det? Mina: Ja. Og jeg har '
+  - blank_id: eggs
+    options:
+    - seks egg
+    - sju egg
+    - ett egg
+    answer_index: 0
+  - text_md: '. Jonas: Her er det bare '
+  - blank_id: bread
+    options:
+    - en brød
+    - ett brød
+    - to brød
+    answer_index: 1
+  - text_md: '. Og hvor mange poser vil du ha? Mina: '
+  - blank_id: bag
+    options:
+    - fire poser
+    - ett pose
+    - en pose
+    answer_index: 2
+  - text_md: ', takk.'
+- handle: set-the-table-transfer
+  op: write
+  objective: obj-cardinal-numbers-01
+  bloom: apply
+  prompt_md: Mina is setting a table for visitors. Write 2–4 Norwegian sentences stating
+    that she has two chairs, one table, one cup, and three glasses. Use the correct
+    quantity phrase for every item, including both en and ett for the one-item groups.
+  derived_from:
+  - section_id: new-situation
+  response_language: 'no'
+  min_words: 10
+  max_words: 30
+  judge_prompt: Check that the response describes the stated table-setting quantities
+    in natural Norwegian. Report evidence for each criterion and accept natural sentence
+    variants.
+  criteria:
+  - id: chairs-quantity
+    instruction: States the quantity two chairs as to stoler.
+  - id: table-ett
+    instruction: States the quantity one table as ett bord.
+  - id: cup-en
+    instruction: States the quantity one cup as en kopp.
+  - id: glasses-quantity
+    instruction: States the quantity three glasses as tre glass.
+- handle: final-counting-review
+  op: write
+  objective: obj-cardinal-numbers-01
+  bloom: apply
+  prompt_md: 'Describe this breakfast table in Norwegian: one banana, two apples,
+    three cups, one glass, four eggs, and one loaf of bread. Produce all six quantity
+    phrases and use the correct forms of one.'
+  derived_from:
+  - section_id: retrieval-review
+  response_language: 'no'
+  min_words: 12
+  max_words: 35
+  judge_prompt: Check that the response gives every stated breakfast-table quantity
+    in natural Norwegian. Report evidence for each criterion and accept natural sentence
+    or list variants with equivalent punctuation.
+  criteria:
+  - id: banana-en
+    instruction: Uses en banan for one banana.
+  - id: apples-count
+    instruction: Uses to epler for two apples.
+  - id: cups-count
+    instruction: Uses tre kopper for three cups.
+  - id: glass-ett
+    instruction: Uses ett glass for one glass.
+  - id: eggs-count
+    instruction: Uses fire egg for four eggs.
+  - id: bread-ett
+    instruction: Uses ett brød for one loaf of bread.

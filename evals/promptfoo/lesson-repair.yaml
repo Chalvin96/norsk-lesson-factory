@@ -1,0 +1,14 @@
+description: Evaluate bounded exact edits for rejected rich lesson drafts.
+
+prompts:
+  - file://prompts.py:create_lesson_repair_prompt
+
+providers:
+  - id: file://provider.py:call_api
+    label: configured-draft-repair
+    config:
+      job: author
+
+defaultTest: file://defaults/structured-response.yaml
+
+tests: file://cases/lesson_repair.yaml

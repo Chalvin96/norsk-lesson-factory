@@ -1,0 +1,255 @@
+- handle: shop_distance_noticing
+  op: choose
+  objective: obj-demonstrative-pronouns-01
+  bloom: understand
+  derived_from:
+  - section_id: at-the-second-hand-shop
+  prompt_md: The shop has objects beside Maja and Jonas and objects farther away.
+    Choose the interpretation that correctly identifies the close and far demonstratives.
+    Focus on distance, not noun gender or number.
+  stem_md: Which interpretation matches the shop scene?
+  options:
+  - id: reversed
+    text: 'Beside the speakers: den lampa, det speilet, de stolene. Farther away:
+      denne lampa, dette speilet, disse stolene.'
+    correct: false
+    why: The close and far sets are reversed.
+  - id: close-far
+    text: 'Beside the speakers: denne lampa, dette speilet, disse stolene. Farther
+      away: den lampa, det speilet, de stolene.'
+    correct: true
+    why: The close set is denne/dette/disse; the far set is den/det/de.
+  - id: mixed
+    text: 'Beside the speakers: denne lampa, det speilet, disse stolene. Farther away:
+      den lampa, dette speilet, de stolene.'
+    correct: false
+    why: The neuter forms are assigned to the wrong distance.
+- handle: demonstrative_agreement_selection
+  op: recall_fill
+  objective: obj-demonstrative-pronouns-01
+  bloom: apply
+  explanation_md: "Use denne/den for common singular, dette/det for neuter singular, and disse/de for plural; the noun remains definite after the demonstrative."
+  derived_from:
+  - section_id: plural-disse-or-de
+  prompt_md: Fill each blank with the demonstrative that matches the noun. Close or
+    far is already stated; focus on noun gender or number.
+  audio_target: "Denne lampa, dette speilet og disse stolene. Den lampa, det speilet og de stolene."
+  segments:
+  - text_md: 'Close objects: '
+  - blank_id: close-common-singular
+    options:
+    - disse
+    - denne
+    - dette
+    answer_index: 1
+  - text_md: ' lampa, '
+  - blank_id: close-neuter-singular
+    options:
+    - denne
+    - disse
+    - dette
+    answer_index: 2
+  - text_md: ' speilet, '
+  - blank_id: close-plural
+    options:
+    - disse
+    - denne
+    - dette
+    answer_index: 0
+  - text_md: ' stolene. Far objects: '
+  - blank_id: far-common-singular
+    options:
+    - de
+    - den
+    - det
+    answer_index: 1
+  - text_md: ' lampa, '
+  - blank_id: far-neuter-singular
+    options:
+    - de
+    - den
+    - det
+    answer_index: 2
+  - text_md: ' speilet, '
+  - blank_id: far-plural
+    options:
+    - de
+    - det
+    - den
+    answer_index: 0
+  - text_md: ' stolene.'
+- handle: definite_form_repair
+  op: find_fix
+  objective: obj-demonstrative-pronouns-01
+  bloom: analyze
+  derived_from:
+  - section_id: the-noun-must-be-definite
+  prompt_md: Select the one token that is wrong/needs changing.
+  tokens:
+  - token_id: tok-1
+    text: denne
+  - token_id: tok-2
+    text: stol
+  error_token_id: tok-2
+  feedback: 'The noun after a demonstrative must be definite: change «stol» to «stolen».'
+- handle: complete_reference_building
+  op: choose
+  objective: obj-demonstrative-pronouns-01
+  bloom: apply
+  derived_from:
+  - section_id: making-both-choices-together
+  prompt_md: Choose the labels that correctly distinguish all three nearby items.
+  stem_md: Maja points to one lamp, one table, and several chairs beside her. Which
+    set uses the right demonstrative and noun form for every item?
+  options:
+  - id: correct-set
+    text: denne lampa · dette bordet · disse stolene
+    correct: true
+    why: The nearby common singular, neuter singular, and plural forms are denne,
+      dette, and disse, each followed by a definite noun.
+  - id: indefinite-nouns
+    text: denne lampe · dette bord · disse stoler
+    correct: false
+    why: A demonstrative requires the definite noun forms lampa, bordet, and stolene.
+  - id: agreement-mismatch
+    text: dette lampa · denne bordet · de stolene
+    correct: false
+    why: Dette is neuter, denne is common singular, and de points to farther-away
+      plural items.
+- handle: pattern_through_description
+  op: recall_fill
+  objective: obj-demonstrative-pronouns-01
+  bloom: apply
+  derived_from:
+  - section_id: describing-a-particular-object
+  prompt_md: Complete the phrase for the small table. Choose the demonstrative and
+    the definite noun, keeping the supplied adjective between them.
+  audio_target: "dette lille bordet."
+  segments:
+  - text_md: 'Small table: '
+  - blank_id: description-demonstrative
+    options:
+    - disse
+    - dette
+    - denne
+    answer_index: 1
+  - text_md: ' lille '
+  - blank_id: description-noun
+    options:
+    - bordene
+    - bord
+    - bordet
+    answer_index: 2
+  - text_md: .
+- handle: counter_summary
+  op: write
+  objective: obj-demonstrative-pronouns-01
+  bloom: apply
+  derived_from:
+  - section_id: back-at-the-counter
+  prompt_md: 'Write one short Norwegian counter summary with four complete noun phrases:
+    the selected lamp, selected mirror, selected chairs, and rejected chairs at the
+    back. Use the taught demonstrative plus definite-noun pattern, and include bakerst
+    with the rejected chairs.'
+  response_language: 'no'
+  judge_prompt: Check the response against the task and report evidence for every
+    criterion. Accept normal capitalization and punctuation, but require each listed
+    demonstrative to be followed by its definite noun.
+  criteria:
+  - id: selected-common-singular
+    instruction: Uses «denne lampa» for the selected lamp, with definite noun «lampa».
+  - id: selected-neuter-singular
+    instruction: Uses «dette speilet» for the selected mirror, with definite noun
+      «speilet».
+  - id: selected-plural
+    instruction: Uses «disse stolene» for the selected chairs, with definite noun
+      «stolene».
+  - id: rejected-plural-far
+    instruction: Uses «de stolene bakerst» for the rejected chairs at the back.
+- handle: moving_day_transfer
+  op: write
+  objective: obj-demonstrative-pronouns-01
+  bloom: apply
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+  prompt_md: 'In the unpacking scene, write six short Norwegian placement statements,
+    one for each cue: a box beside Jonas (close), a box near the door (far), a picture
+    in Maja''s hands (close), a picture on the far wall (far), books on the nearby
+    table (close), and books across the room (far). Use a complete demonstrative noun
+    phrase in every statement. Use new wording rather than copying any complete sentence
+    from the lesson.'
+  response_language: 'no'
+  judge_prompt: Check all six cues and report evidence for every criterion. Accept
+    varied natural Norwegian placement verbs and normal capitalization or punctuation.
+    Require the listed demonstrative plus definite noun for the matching cue.
+  criteria:
+  - id: close-box
+    instruction: Uses «denne esken» for the box beside Jonas, with definite noun «esken».
+  - id: far-box
+    instruction: Uses «den esken» for the box near the door, with definite noun «esken».
+  - id: close-picture
+    instruction: Uses «dette bildet» for the picture in Maja’s hands, with definite
+      noun «bildet».
+  - id: far-picture
+    instruction: Uses «det bildet» for the picture on the far wall, with definite
+      noun «bildet».
+  - id: close-books
+    instruction: Uses «disse bøkene» for the books on the nearby table, with definite
+      noun «bøkene».
+  - id: far-books
+    instruction: Uses «de bøkene» for the books across the room, with definite noun
+      «bøkene».
+- handle: final_demonstrative_retrieval
+  op: recall_fill
+  objective: obj-demonstrative-pronouns-01
+  bloom: remember
+  derived_from:
+  - section_id: short-retrieval-review
+  prompt_md: 'Complete three short descriptions. For each one, retrieve both the demonstrative
+    and the definite noun form: one nearby singular lamp, one farther-away neuter
+    table, and several nearby books.'
+  audio_target: "Denne lampa står her. Det bordet står der borte. Disse bøkene ligger på bordet."
+  segments:
+  - text_md: 'Nearby lamp: '
+  - blank_id: nearby-lamp-demonstrative
+    options:
+    - denne
+    - dette
+    - disse
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: nearby-lamp-noun
+    options:
+    - lampene
+    - lampa
+    - lamper
+    answer_index: 1
+  - text_md: '. Farther-away table: '
+  - blank_id: far-table-demonstrative
+    options:
+    - de
+    - den
+    - det
+    answer_index: 2
+  - text_md: ' '
+  - blank_id: far-table-noun
+    options:
+    - bordet
+    - bord
+    - bordene
+    answer_index: 0
+  - text_md: '. Nearby books: '
+  - blank_id: nearby-books-demonstrative
+    options:
+    - dette
+    - disse
+    - denne
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: nearby-books-noun
+    options:
+    - boka
+    - bøker
+    - bøkene
+    answer_index: 2
+  - text_md: .

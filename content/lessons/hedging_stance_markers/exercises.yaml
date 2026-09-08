@@ -1,0 +1,284 @@
+- handle: open_uncertainty_checkpoint
+  op: write
+  objective: obj-hedging-stance-markers-01
+  bloom: apply
+  prompt_md: 'Rewrite four definite updates as open possibilities in natural Bokmål.
+    Write one sentence for each: the weather will improve before the concert; fewer
+    people will come if it rains; the bus will arrive before the audience; and we
+    can borrow the sound equipment. Use kanskje in every sentence, present each claim
+    as possible rather than established, and use natural main-clause word order.'
+  derived_from:
+  - section_id: expressing-uncertainty-with-kanskje
+  response_language: 'no'
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål variants that preserve all four updates and use kanskje
+    in every sentence. Accept either taught internal or sentence-initial placement
+    when the resulting main-clause word order is natural.
+  criteria:
+  - id: each-sentence-uses-kanskje
+    instruction: Uses kanskje in every rewritten sentence.
+  - id: each-claim-is-possible
+    instruction: Presents every update as an open possibility rather than an established
+      fact.
+  - id: natural-main-clause-order
+    instruction: Uses natural main-clause word order in every sentence.
+- handle: possibility_or_inference_checkpoint
+  op: write
+  objective: obj-hedging-stance-markers-01
+  bloom: apply
+  prompt_md: 'Write one cautious Norwegian conclusion for each situation. Use kanskje
+    for the first and third situations, where the claim remains an open possibility.
+    Use nok for the second and fourth situations, where evidence supports a likely
+    inference. The situations are: the forecast is uncertain about whether the outdoor
+    stage can be used; dark clouds are gathering over the venue; Henrik has not answered
+    the message and you do not know why; and the train has been stationary for twenty
+    minutes while the display shows a delay. Make the wording show the difference
+    between possibility and inference.'
+  derived_from:
+  - section_id: making-an-inference-with-nok
+  response_language: 'no'
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål wording that assigns kanskje to the first and third situations
+    and nok to the second and fourth, while preserving the stated reasoning.
+  criteria:
+  - id: possibility-uses-kanskje
+    instruction: Uses kanskje for each open possibility.
+  - id: inference-uses-nok
+    instruction: Uses nok for each reasoned expectation based on evidence.
+  - id: contrast-is-clear
+    instruction: Makes the difference between open possibility and inference clear
+      through wording and marker choice.
+- handle: building_on_common_ground_checkpoint
+  op: write
+  objective: obj-hedging-stance-markers-01
+  bloom: apply
+  prompt_md: Write three brief Norwegian replies to Henrik. Use jo in each reply to
+    connect an argument or suggestion to the shared fact given. In the first situation,
+    you both know that the sports club cooperates with your concert. In the second,
+    you both know that the club is nearby. In the third, you both know that the concert
+    benefits the local community. Do not insert jo mechanically; make each reply rely
+    on its shared fact.
+  derived_from:
+  - section_id: appealing-to-shared-assumptions-with-jo
+  response_language: 'no'
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål replies and paraphrases when each use of jo is supported
+    by the stated common ground and contributes a connected suggestion or argument.
+  criteria:
+  - id: shared-context-for-jo
+    instruction: Uses jo only where the context supports shared or obvious knowledge.
+  - id: reply-connects-fact
+    instruction: Connects each argument or suggestion to the shared fact in its situation.
+  - id: jo-is-meaningful
+    instruction: Uses jo to signal common ground rather than adding it mechanically.
+- handle: shared_fact_or_expected_confirmation_checkpoint
+  op: write
+  objective: obj-hedging-stance-markers-01
+  bloom: apply
+  prompt_md: Write two suitable Norwegian sentences, one for each mini-situation.
+    First, Maja and Henrik have already established that the sports club is nearby;
+    remind Henrik of this shared fact with jo. Second, Henrik thinks Maja probably
+    brought the tickets but is checking; ask for confirmation with vel. Make each
+    sentence fit its situation and use the required marker naturally.
+  derived_from:
+  - section_id: seeking-agreement-or-softening-a-claim-with-vel
+  response_language: 'no'
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål variants when the first sentence treats the club location
+    as shared and the second tentatively seeks confirmation about the tickets.
+  criteria:
+  - id: jo-shared
+    instruction: Uses jo for the treated-as-shared club location.
+  - id: vel-confirmation
+    instruction: Uses vel for the tentative assumption and request for confirmation
+      about the tickets.
+  - id: situation-fit
+    instruction: Makes each sentence appropriate to its mini-situation.
+- handle: report_or_inference_checkpoint
+  op: write
+  objective: obj-hedging-stance-markers-01
+  bloom: apply
+  prompt_md: Write one natural Norwegian sentence for each situation. A colleague’s
+    message says that the sound equipment is delayed; report it with visst or visstnok.
+    An online notice says that the cultural centre has a new entrance; report it with
+    visst or visstnok. A barrier blocks the access road; infer that the road is closed
+    with nok. The office is dark and empty late at night; infer that it is probably
+    closed with nok. Make the source or reasoning clear and avoid adding unnecessary
+    stance markers.
+  derived_from:
+  - section_id: reporting-uncertain-information-with-visst-and-visstnok
+  response_language: 'no'
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept visst or visstnok for the two indirect reports and nok for the two evidence-based
+    inferences, provided the Bokmål wording preserves each situation and does not
+    confuse reported information with inference.
+  criteria:
+  - id: reported-information-marker
+    instruction: Uses visst or visstnok when passing on each piece of indirect information.
+  - id: evidence-inference-marker
+    instruction: Uses nok when drawing each conclusion from observable evidence.
+  - id: source-or-reasoning-clear
+    instruction: Makes the information source or evidential reasoning clear in the
+      wording.
+- handle: presenting_a_view_checkpoint
+  op: write
+  objective: obj-hedging-stance-markers-01
+  bloom: apply
+  prompt_md: Write four Norwegian reactions for a planning meeting. React to the ticket
+    price as a personal impression using synes. Evaluate the location as a personal
+    impression using synes. State a considered position about the expected attendance
+    using mener. State a considered position about the weather plan using etter min
+    mening. Frame all four as personal judgments rather than neutral facts, and do
+    not pile up opinion markers.
+  derived_from:
+  - section_id: marking-personal-opinion-with-synes-mener-and-etter-min-mening
+  response_language: 'no'
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål variants that use synes for the two impressions and mener
+    or etter min mening for considered positions, while clearly framing the statements
+    as the speaker’s judgments.
+  criteria:
+  - id: synes-for-impressions
+    instruction: Uses synes naturally for the price and location impressions.
+  - id: explicit-position-marker
+    instruction: Uses mener or etter min mening naturally for the considered positions.
+  - id: judgment-not-fact
+    instruction: Separates personal judgment from externally verifiable information.
+- handle: exact_approximate_or_informally_rough_checkpoint
+  op: write
+  objective: obj-hedging-stance-markers-01
+  bloom: apply
+  prompt_md: Write five Norwegian sentences about an event plan. For neutral planning
+    language, give an approximate audience of 180, a ticket price of 400 kroner, and
+    a walking distance of 10 minutes from the car park, using suitable neutral choices
+    among rundt, omtrent, and cirka. For informal conversation between Maja and Henrik,
+    give a tent capacity of about 30 people and a setup time of about five to ten
+    minutes, using sånn. Use one approximation marker per sentence and do not stack
+    approximation markers without a purpose.
+  derived_from:
+  - section_id: giving-approximate-amounts
+  response_language: 'no'
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål quantities and paraphrases when the first three sentences
+    use neutral approximation and the last two use informal sånn, with no unnecessary
+    combination of approximation markers.
+  criteria:
+  - id: neutral-versus-informal
+    instruction: Distinguishes neutral rundt, omtrent, or cirka from informal sånn.
+  - id: context-appropriate-choice
+    instruction: Matches the approximation choice to neutral planning or informal
+      conversation.
+  - id: no-unnecessary-stacking
+    instruction: Avoids combining several approximation markers without a clear purpose.
+- handle: changing_only_the_stance_checkpoint
+  op: write
+  objective: obj-hedging-stance-markers-01
+  bloom: apply
+  prompt_md: 'Use one basic proposition throughout: the concert needs an extra tent.
+    Write five Norwegian versions without changing that basic situation. Present it
+    first as an open possibility with kanskje, then as an inference supported by rising
+    attendance and a rain forecast with nok, as reported information from a club worker
+    with visst or visstnok, as a shared assumption after prior discussion with jo,
+    and as a tentative request for agreement with vel and a question mark. Change
+    the speaker’s relationship to the claim, not the event or need, and give each
+    marker a clear communicative reason.'
+  derived_from:
+  - section_id: combining-stance-markers-naturally
+  response_language: 'no'
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål versions that preserve the same concert-and-tent proposition
+    and use visst or visstnok for the reported version. Require the final vel version
+    to function as a tentative confirmation request.
+  criteria:
+  - id: basic-situation-preserved
+    instruction: Preserves the same concert-and-extra-tent proposition across all
+      five versions.
+  - id: five-stance-functions
+    instruction: Distinguishes possibility, inference, reported information, shared
+      assumption, and tentative agreement with the required markers.
+  - id: marker-reasons
+    instruction: Gives each marker a clear communicative reason in its version.
+- handle: reconstructing_the_planning_conversation
+  op: write
+  objective: obj-hedging-stance-markers-01
+  bloom: apply
+  prompt_md: 'Write a short, connected Norwegian exchange between Maja and Henrik
+    about a new problem: the delivery van may be unavailable, another volunteer has
+    reported that the sound equipment is delayed, and the walk from the car park takes
+    about ten minutes. Include a possibility with kanskje, an evidence-based inference
+    with nok, indirectly reported information with visst or visstnok, a shared-knowledge
+    reminder with jo, a personal opinion with synes, mener, or etter min mening, and
+    an approximation with rundt, omtrent, cirka, or informal sånn. Keep the exchange
+    natural and connected, and use each marker only when it has a clear reason to
+    be present.'
+  derived_from:
+  - section_id: back-at-the-cultural-centre
+  response_language: 'no'
+  judge_prompt: Check the exchange against the task and report evidence for each criterion.
+    Accept natural Bokmål dialogue with equivalent lexical choices when all six stance
+    functions are present, the reported source and inference are distinguishable,
+    and the turns form one connected planning exchange rather than unrelated examples.
+  criteria:
+  - id: six-stance-functions
+    instruction: Distinguishes possibility, inference, shared assumptions, reported
+      information, personal opinion, and approximation.
+  - id: natural-connected-exchange
+    instruction: Keeps the exchange natural and connected.
+  - id: clear-marker-purpose
+    instruction: Uses each stance marker only when its communicative reason is clear.
+- handle: common_problems_marker_repair
+  op: find_fix
+  objective: obj-hedging-stance-markers-01
+  bloom: analyze
+  prompt_md: 'A colleague has told you that Kari is coming later, and you are passing
+    on that report rather than expressing uncertainty. Select the stance marker that
+    does not fit this reported-information context.'
+  derived_from:
+  - section_id: common-problems-to-watch-for
+  tokens:
+  - token_id: tok-1
+    text: Kari
+  - token_id: tok-2
+    text: kommer
+  - token_id: tok-3
+    text: kanskje
+  - token_id: tok-4
+    text: senere
+  - token_id: tok-5
+    text: .
+  error_token_id: tok-3
+  feedback: Replace kanskje with visst or visstnok. Accepted repairs are Kari kommer
+    visst senere. and Kari kommer visstnok senere. The message is indirect reported
+    information, so the repair changes an open possibility into information heard
+    or learned from another source.
+- handle: retrieval_and_review
+  op: write
+  objective: obj-hedging-stance-markers-01
+  bloom: apply
+  prompt_md: Write a natural, connected update in Norwegian from Henrik to a colleague
+    about the concert, using coherent details. Include one uncertain possibility about
+    whether the outdoor stage can open, one inference
+    from visible evidence such as a full parking area, one indirectly reported fact
+    from a volunteer or notice, one reminder of shared knowledge, one tentative assumption
+    seeking agreement, one personal opinion, and one approximate amount. Use suitable
+    taught markers for all seven functions. Connect the update into one coherent text,
+    not separate example sentences, and make the source and strength of each claim
+    clear.
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural connected Bokmål with equivalent new details when it contains kanskje
+    for the possibility, nok for the inference, visst or visstnok for the report,
+    jo for shared knowledge, vel for tentative agreement, a taught opinion marker,
+    and a taught approximation marker. Do not require the exact wording of any model
+    sentence.
+  criteria:
+  - id: seven-stance-functions
+    instruction: Includes all seven requested stance functions.
+  - id: source-and-strength-clear
+    instruction: Makes the source and strength of each claim clear through stance
+      markers.
+  - id: connected-update
+    instruction: Keeps the update natural and connected rather than presenting separate
+      example sentences.

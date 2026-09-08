@@ -1,0 +1,557 @@
+- handle: scene_relationship_check
+  op: choose
+  objective: obj-verb-complementation-01
+  bloom: understand
+  prompt_md: 'Read this cabin exchange: Mina asks «Har du bestemt deg for å bli med
+    på hytta?» Erik replies «Jeg håper å bli med, men sjefen sier at vi må levere
+    rapporten på fredag.» Mina asks «Kan du jobbe med rapporten i kveld?» Erik says
+    «Ja, jeg tror at jeg kan bli ferdig før torsdag.» Mina says «Da bør du begynne
+    å pakke også.» Erik promises «Jeg lover at jeg skal gi deg beskjed i morgen.»
+    Choose the complete reading. Identify who performs each action and which complement
+    contains another explicitly stated subject.'
+  derived_from:
+  - section_id: weekend-deadline
+  stem_md: Choose the complete reading of Mina and Erik's cabin exchange.
+  options:
+  - id: mina-reading
+    text: Mina is expected to come, Mina submits the report, Mina works tonight, Mina
+      packs, and Mina gives the answer; all actions have the same understood subject.
+    correct: false
+    why: The exchange addresses Erik as du and jeg, and the report clause explicitly
+      states vi.
+  - id: mixed-reading
+    text: Erik comes, Erik alone submits the report, Erik works, Erik packs, and Mina
+      gives the answer; the at-clause has no separate subject.
+    correct: false
+    why: The report clause has the explicit subject vi, and the final clause has the
+      explicit subject jeg.
+  - id: correct-reading
+    text: «Har du bestemt deg for å bli med på hytta?» — Erik is the person expected
+      to come; «Jeg håper å bli med» — Erik hopes to come; «sjefen sier at vi må levere
+      rapporten på fredag» — vi is the stated subject that has to submit; «Kan du
+      jobbe med rapporten i kveld?» — Erik can work tonight; «Da bør du begynne å
+      pakke også» — Erik should pack; «Jeg lover at jeg skal gi deg beskjed i morgen»
+      — Erik is the person who will give the answer. The report action has another
+      explicitly stated subject, vi.
+    correct: true
+    why: The å-actions are understood as Erik’s actions, while the at-clause about
+      submitting explicitly states vi as its subject.
+- handle: same_person_infinitive_recognition
+  op: choose
+  objective: obj-verb-complementation-01
+  bloom: understand
+  prompt_md: Classify every statement by identifying whether the person connected
+    to the first verb is the intended or possible performer, and mark which statements
+    use an å-infinitive for that relationship.
+  derived_from:
+  - section_id: a-infinitive
+  stem_md: Choose the classification set that correctly marks the same-person å-infinitive
+    relationship.
+  options:
+  - id: all-same
+    text: All four statements use an å-infinitive, and the first-verb subject performs
+      every second action.
+    correct: false
+    why: The last two statements use at-clauses, and the third explicitly names Mina
+      inside its clause.
+  - id: correct-classification
+    text: «Erik håper å bli med.» — Erik is the understood performer, and this is
+      the å-infinitive relationship. «Mina planlegger å reise på fredag.» — Mina is
+      the understood performer, and this is the å-infinitive relationship. «Jeg håper
+      at Mina reiser på fredag.» — Mina is explicitly stated in an at-clause, not
+      an å-infinitive. «Jeg tror at jeg forstår.» — this is a finite at-clause, not
+      an å-infinitive.
+    correct: true
+    why: The å-infinitive examples link the second action to the person connected
+      to the first verb; the at-clauses state their own finite clause structure.
+  - id: clause-as-infinitive
+    text: The first two statements use å-infinitives, but «Jeg håper at Mina reiser
+      på fredag.» also uses an å-infinitive because Mina is the performer.
+    correct: false
+    why: A stated subject and finite verb after at form a complete clause, not an
+      å-infinitive.
+- handle: infinitive_form_completion
+  op: recall_fill
+  objective: obj-verb-complementation-01
+  bloom: apply
+  prompt_md: Complete each sentence with å and the supplied verb in its infinitive
+    form. Do not use a present-tense ending after å.
+  explanation_md: "Use å before an infinitive, at before a finite content clause, and a bare infinitive directly after a modal."
+  derived_from:
+  - section_id: a-infinitive
+  audio_target: "Hun prøver å komme tidlig. Mina planlegger å reise på fredag. De prøver å bli ferdige tidlig. Jeg håper å lære mer norsk."
+  segments:
+  - text_md: 'Hun prøver '
+  - blank_id: try-marker
+    options:
+    - å
+    - at
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: try-form
+    options:
+    - komme
+    - kommer
+    answer_index: 0
+  - text_md: ' tidlig. Mina planlegger '
+  - blank_id: plan-marker
+    options:
+    - å
+    - at
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: plan-form
+    options:
+    - reise
+    - reiser
+    answer_index: 0
+  - text_md: ' på fredag. De prøver '
+  - blank_id: finish-marker
+    options:
+    - å
+    - at
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: finish-form
+    options:
+    - bli
+    - blir
+    answer_index: 0
+  - text_md: ' ferdige tidlig. Jeg håper '
+  - blank_id: learn-marker
+    options:
+    - å
+    - at
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: learn-form
+    options:
+    - lære
+    - lærer
+    answer_index: 0
+  - text_md: ' mer norsk.'
+- handle: clause_structure_identification
+  op: recall_fill
+  objective: obj-verb-complementation-01
+  bloom: understand
+  prompt_md: In each sentence, fill in the subject and finite verb inside the overt
+    at-clause.
+  explanation_md: "An at-clause contains its own subject and finite verb; it is a complete clause rather than an infinitive phrase."
+  derived_from:
+  - section_id: at-complete-clause
+  audio_target: "Sjefen sier at vi må levere rapporten på fredag. Mina vet at Erik jobber i kveld. Jeg tror at bussen kommer snart."
+  segments:
+  - text_md: 'Sjefen sier at '
+  - blank_id: clause-one-subject
+    options:
+    - vi
+    - han
+    - Erik
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: clause-one-finite
+    options:
+    - må
+    - kan
+    - jobber
+    answer_index: 0
+  - text_md: ' levere rapporten på fredag. Mina vet at '
+  - blank_id: clause-two-subject
+    options:
+    - Erik
+    - vi
+    - bussen
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: clause-two-finite
+    options:
+    - jobber
+    - kommer
+    - må
+    answer_index: 0
+  - text_md: ' i kveld. Jeg tror at '
+  - blank_id: clause-three-subject
+    options:
+    - bussen
+    - han
+    - Mina
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: clause-three-finite
+    options:
+    - kommer
+    - jobber
+    - kan
+    answer_index: 0
+  - text_md: ' snart.'
+- handle: reporting_with_at
+  op: build
+  objective: obj-verb-complementation-01
+  bloom: apply
+  prompt_md: 'Build the sentence that reports this fact: Mina says that Erik is working
+    tonight. Use the full overt at-clause pattern with an explicit subject and a finite
+    verb.'
+  derived_from:
+  - section_id: at-complete-clause
+  tokens:
+  - token_id: report-1
+    text: Mina
+  - token_id: report-2
+    text: sier
+  - token_id: report-3
+    text: at
+  - token_id: report-4
+    text: Erik
+  - token_id: report-5
+    text: jobber
+  - token_id: report-6
+    text: i
+  - token_id: report-7
+    text: kveld.
+  answer_order:
+  - report-1
+  - report-2
+  - report-3
+  - report-4
+  - report-5
+  - report-6
+  - report-7
+- handle: meaning_contrast_selection
+  op: choose
+  objective: obj-verb-complementation-01
+  bloom: understand
+  prompt_md: 'Choose the completion set that matches all three meanings. Use the full
+    overt at form for the finite content clause: I hope to leave on Friday; I hope
+    that Mina leaves on Friday; I think that I am leaving early.'
+  derived_from:
+  - section_id: compare-complements
+  stem_md: Choose the completion set that matches all three meanings.
+  options:
+  - id: correct-contrast
+    text: «Jeg håper å reise på fredag.» — I hope to leave on Friday. «Jeg håper at
+      Mina reiser på fredag.» — I hope that Mina leaves on Friday. «Jeg tror at jeg
+      drar tidlig.» — I think that I am leaving early.
+    correct: true
+    why: The first sentence uses an å-infinitive for the same understood performer,
+      while the second and third use complete at-clauses with explicit subjects.
+  - id: wrong-complement-set
+    text: «Jeg håper at jeg reiser på fredag.» — I hope that I leave on Friday. «Jeg
+      håper å reise på fredag.» — I hope to leave on Friday. «Jeg tror å dra tidlig.»
+      — I think to leave early.
+    correct: false
+    why: The second sentence does not state Mina as the performer, and the neutral
+      pattern practised after tro is a finite content clause with overt at.
+  - id: wrong-first-verb
+    text: «Jeg planlegger å dra tidlig.» — I plan to leave early. «Jeg håper at Mina
+      reiser på fredag.» — I hope that Mina leaves on Friday. «Jeg tror at jeg drar
+      tidlig.» — I think that I am leaving early.
+    correct: false
+    why: The first sentence changes the supplied first verb from håper to planlegger,
+      so it does not match the requested meaning.
+- handle: subject_change_transformation
+  op: build
+  objective: obj-verb-complementation-01
+  bloom: apply
+  prompt_md: 'Build the transformed sentence for this meaning: Mina hopes that Erik
+    leaves on Friday. The new performer is Erik, so use the full overt at-clause.'
+  derived_from:
+  - section_id: compare-complements
+  tokens:
+  - token_id: change-1
+    text: Mina
+  - token_id: change-2
+    text: håper
+  - token_id: change-3
+    text: at
+  - token_id: change-4
+    text: Erik
+  - token_id: change-5
+    text: reiser
+  - token_id: change-6
+    text: på
+  - token_id: change-7
+    text: fredag.
+  answer_order:
+  - change-1
+  - change-2
+  - change-3
+  - change-4
+  - change-5
+  - change-6
+  - change-7
+- handle: modal_boundary_completion
+  op: recall_fill
+  objective: obj-verb-complementation-01
+  bloom: apply
+  prompt_md: Complete each sentence with the supplied verb in its bare infinitive.
+    The sentence already shows that no å is written after the modal.
+  explanation_md: "A modal takes the bare infinitive directly, without å."
+  derived_from:
+  - section_id: bare-infinitives
+  audio_target: "Kan du jobbe med rapporten i kveld? Vi skal prøve å dra før åtte. Jeg må levere rapporten på fredag. Erik bør begynne å pakke. De vil reise tidlig."
+  segments:
+  - text_md: 'Kan du '
+  - blank_id: kan-form
+    options:
+    - jobbe
+    - jobber
+    answer_index: 0
+  - text_md: ' med rapporten i kveld? Vi skal '
+  - blank_id: skal-form
+    options:
+    - prøve
+    - prøver
+    answer_index: 0
+  - text_md: ' å dra før åtte. Jeg må '
+  - blank_id: må-form
+    options:
+    - levere
+    - leverer
+    answer_index: 0
+  - text_md: ' rapporten på fredag. Erik bør '
+  - blank_id: bør-form
+    options:
+    - begynne
+    - begynner
+    answer_index: 0
+  - text_md: ' å pakke. De vil '
+  - blank_id: vil-form
+    options:
+    - reise
+    - reiser
+    answer_index: 0
+  - text_md: ' tidlig.'
+- handle: complement_chain_construction
+  op: build
+  objective: obj-verb-complementation-01
+  bloom: apply
+  prompt_md: 'Build the sentence meaning: We will try to leave before eight. Use a
+    bare infinitive immediately after the modal and å before the infinitive after
+    prøve.'
+  derived_from:
+  - section_id: bare-infinitives
+  tokens:
+  - token_id: chain-1
+    text: Vi
+  - token_id: chain-2
+    text: skal
+  - token_id: chain-3
+    text: prøve
+  - token_id: chain-4
+    text: å
+  - token_id: chain-5
+    text: dra
+  - token_id: chain-6
+    text: før
+  - token_id: chain-7
+    text: åtte.
+  answer_order:
+  - chain-1
+  - chain-2
+  - chain-3
+  - chain-4
+  - chain-5
+  - chain-6
+  - chain-7
+- handle: written_structure_check
+  op: recall_fill
+  objective: obj-verb-complementation-01
+  bloom: apply
+  prompt_md: 'Choose the written marker for each structure: å before an infinitive,
+    overt at before a finite content clause, or a bare infinitive with no å after
+    a modal.'
+  derived_from:
+  - section_id: written-forms
+  audio_target: "Jeg prøver å forstå. Jeg tror at du forstår. Jeg kan komme."
+  segments:
+  - text_md: 'Jeg prøver '
+  - blank_id: written-infinitive
+    options:
+    - å
+    - at
+    answer_index: 0
+  - text_md: ' forstå. Jeg tror '
+  - blank_id: written-clause
+    options:
+    - at
+    - å
+    answer_index: 0
+  - text_md: ' du forstår. Jeg kan '
+  - blank_id: written-modal
+    options:
+    - komme
+    - å komme
+    answer_index: 0
+  - text_md: .
+- handle: targeted_error_repair
+  op: find_fix
+  objective: obj-verb-complementation-01
+  bloom: analyze
+  prompt_md: Select the one token that is wrong/needs changing.
+  derived_from:
+  - section_id: common-mistakes
+  tokens:
+  - token_id: repair-1
+    text: Vi
+  - token_id: repair-2
+    text: prøver
+  - token_id: repair-3
+    text: å
+  - token_id: repair-4
+    text: kommer
+  - token_id: repair-5
+    text: tidlig.
+  error_token_id: repair-4
+  feedback: Replace «kommer» with the infinitive «komme» after «å»; the corrected
+    sentence is «Vi prøver å komme tidlig.»
+- handle: return_to_scene_reconstruction
+  op: build
+  objective: obj-verb-complementation-01
+  bloom: apply
+  prompt_md: 'Build the three-sentence exchange from these cues: the boss says that
+    the report is approved; you can come along; I will try to leave the office at
+    three. Include one overt at-clause, one modal with a bare infinitive, and one
+    å-infinitive after prøve.'
+  derived_from:
+  - section_id: back-to-mina-erik
+  tokens:
+  - token_id: scene-1
+    text: Sjefen
+  - token_id: scene-2
+    text: sier
+  - token_id: scene-3
+    text: at
+  - token_id: scene-4
+    text: rapporten
+  - token_id: scene-5
+    text: er
+  - token_id: scene-6
+    text: godkjent.
+  - token_id: scene-7
+    text: Du
+  - token_id: scene-8
+    text: kan
+  - token_id: scene-9
+    text: bli
+  - token_id: scene-10
+    text: med.
+  - token_id: scene-11
+    text: Jeg
+  - token_id: scene-12
+    text: skal
+  - token_id: scene-13
+    text: prøve
+  - token_id: scene-14
+    text: å
+  - token_id: scene-15
+    text: gå
+  - token_id: scene-16
+    text: fra
+  - token_id: scene-17
+    text: kontoret
+  - token_id: scene-18
+    text: klokka
+  - token_id: scene-19
+    text: tre.
+  answer_order:
+  - scene-1
+  - scene-2
+  - scene-3
+  - scene-4
+  - scene-5
+  - scene-6
+  - scene-7
+  - scene-8
+  - scene-9
+  - scene-10
+  - scene-11
+  - scene-12
+  - scene-13
+  - scene-14
+  - scene-15
+  - scene-16
+  - scene-17
+  - scene-18
+  - scene-19
+- handle: dinner_plan_transfer
+  op: build
+  objective: obj-verb-complementation-01
+  bloom: apply
+  prompt_md: 'Build the three-sentence dinner message from these meanings: Nora plans
+    to eat dinner; Jonas says that he is working late; the guests can come at seven.
+    Use an å-infinitive, an overt at-clause, and a modal with a bare infinitive.'
+  derived_from:
+  - section_id: transfer-everyday-situation
+  tokens:
+  - token_id: dinner-1
+    text: Nora
+  - token_id: dinner-2
+    text: planlegger
+  - token_id: dinner-3
+    text: å
+  - token_id: dinner-4
+    text: spise
+  - token_id: dinner-5
+    text: middag.
+  - token_id: dinner-6
+    text: Jonas
+  - token_id: dinner-7
+    text: sier
+  - token_id: dinner-8
+    text: at
+  - token_id: dinner-9
+    text: han
+  - token_id: dinner-10
+    text: jobber
+  - token_id: dinner-11
+    text: sent.
+  - token_id: dinner-12
+    text: Gjestene
+  - token_id: dinner-13
+    text: kan
+  - token_id: dinner-14
+    text: komme
+  - token_id: dinner-15
+    text: klokka
+  - token_id: dinner-16
+    text: sju.
+  answer_order:
+  - dinner-1
+  - dinner-2
+  - dinner-3
+  - dinner-4
+  - dinner-5
+  - dinner-6
+  - dinner-7
+  - dinner-8
+  - dinner-9
+  - dinner-10
+  - dinner-11
+  - dinner-12
+  - dinner-13
+  - dinner-14
+  - dinner-15
+  - dinner-16
+- handle: final_retrieval
+  op: write
+  objective: obj-verb-complementation-01
+  bloom: apply
+  prompt_md: Without looking back, write three short connected sentences in Norwegian
+    about tomorrow's cabin trip. Include one planned action with an å-infinitive,
+    one complete statement with an at-clause, and one modal ability with a bare infinitive.
+    Choose each written complement from its meaning and structure.
+  derived_from:
+  - section_id: quick-review
+  response_language: 'no'
+  judge_prompt: Check the three sentences against the task. Accept natural Bokmål
+    variants when each requested pattern and meaning is clear, and report evidence
+    for each criterion.
+  criteria:
+  - id: planned-action
+    instruction: Includes one planned action with å followed by an infinitive.
+  - id: overt-content-clause
+    instruction: Includes one complete statement introduced by overt at, with its
+      own subject and finite verb.
+  - id: modal-bare-infinitive
+    instruction: Includes one modal followed directly by a bare infinitive without
+      å.

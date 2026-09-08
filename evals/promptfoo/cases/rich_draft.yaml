@@ -1,0 +1,352 @@
+# Rich-draft cases use committed authoring plans via repository-relative
+# `plan_path`; the adapter reads the exact plan bytes and renders the real
+# production rich-draft prompt. Each case derives its narrow quality
+# dimensions from the plan's approved objective and guardrail, never from the
+# wording of the existing generated lesson.
+
+- description: Rich draft teaches verb-first questions (A1 grammar)
+  metadata:
+    surface: rich_draft
+    cefr: A1
+    kind: grammar
+    source_lesson: question_word_order
+  vars:
+    plan_path: content/lessons/question_word_order/plan.md
+  assert:
+    - type: llm-rubric
+      metric: objective_alignment
+      value: |
+        The approved objective is to ask and recognize simple Norwegian yes/no,
+        negative, wh-, and permission questions, with no second learner outcome.
+        Judge only the draft chapter. Return pass=true only when all four
+        question kinds are actually taught with examples and practice, and the
+        chapter does not give a second outcome its own rule or practice; return
+        pass=false when any approved question kind is missing or a second
+        outcome appears.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+    - type: llm-rubric
+      metric: norwegian_correctness
+      value: |
+        Every Norwegian question example in the draft must put the finite verb
+        before the subject (directly in yes/no and permission questions, after
+        the question word in wh- questions) and use natural Bokmål, with English
+        translations that match the Norwegian meaning. Return pass=true only
+        when every question example satisfies this; return pass=false if any
+        example breaks verb-before-subject order, is ungrammatical Bokmål, or is
+        mistranslated.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+    - type: llm-rubric
+      metric: pedagogical_transfer
+      value: |
+        The chapter must end with retrieval and transfer practice that makes the
+        learner use the approved question patterns in a changed everyday
+        situation rather than repeat the anchor dialogue. Return pass=true only
+        when the final checkpoint evidence requires producing or choosing target
+        questions in a new situation; return pass=false when final practice only
+        recycles dialogue sentences or stops after recognition.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: Rich draft models a complete help-seeking exchange (A1 communicative)
+  metadata:
+    surface: rich_draft
+    cefr: A1
+    kind: communicative
+    source_lesson: ask_for_help
+  vars:
+    plan_path: content/lessons/ask_for_help/plan.md
+  assert:
+    - type: llm-rubric
+      metric: objective_alignment
+      value: |
+        The approved objective is to state the obstacle, ask for help,
+        understand the response, and accept the next action, as one outcome.
+        Judge only the draft chapter. Return pass=true only when the chapter
+        models and practices all four moves of the help-seeking exchange and
+        does not add a second outcome such as complaint escalation; return
+        pass=false when any move is missing or a second outcome receives its
+        own teaching and practice.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+    - type: llm-rubric
+      metric: norwegian_correctness
+      value: |
+        The Norwegian help-seeking phrases must be natural, polite Bokmål
+        suitable for A1 (for example asking whether someone can help), with
+        English translations that preserve the politeness and the concrete
+        obstacle. Return pass=true only when every Norwegian request and
+        response line is natural and correctly translated; return pass=false
+        when a line is unnatural, too advanced for the taught forms, or
+        mistranslated.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+    - type: llm-rubric
+      metric: pedagogical_transfer
+      value: |
+        Because this is a communicative outcome, the chapter must end with a
+        short new dialogue or exchange in a changed blocked-task situation the
+        learner could actually meet. Return pass=true only when the final
+        checkpoint evidence requires the learner to produce the exchange moves
+        in that new situation; return pass=false when the final practice only
+        asks for generic recall, rereads or repeats the anchor dialogue, or
+        omits the changed situation.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: Rich draft contrasts ta med and ha med by meaning (A2 phraseology)
+  metadata:
+    surface: rich_draft
+    cefr: A2
+    kind: phraseology
+    source_lesson: ta_med_or_ha_med
+  vars:
+    plan_path: content/lessons/ta_med_or_ha_med/plan.md
+  assert:
+    - type: llm-rubric
+      metric: decision_correctness
+      value: |
+        The approved outcome is to distinguish causing accompaniment from
+        already having something with you. Return pass=true only when the draft
+        teaches the meaning contrast (ta med for causing something to come
+        along, ha med for what is already with someone) and makes the learner
+        choose the expression from the intended meaning rather than from form or
+        memorized pairs; return pass=false when the contrast is reversed,
+        blurred, or replaced by a form-only rule.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+    - type: llm-rubric
+      metric: norwegian_correctness
+      value: |
+        Every Norwegian example must use ta med and ha med correctly for the
+        taught meanings in natural Bokmål, with English translations that match
+        (bring/take along versus have with you). Return pass=true only when all
+        examples use the two expressions correctly and are faithfully
+        translated; return pass=false when any example swaps the meanings, uses
+        an ungrammatical form, or is mistranslated.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+    - type: llm-rubric
+      metric: pedagogical_transfer
+      value: |
+        The chapter must end with retrieval practice in a new everyday situation
+        where the learner must choose between the two expressions by meaning.
+        Return pass=true only when the final checkpoint evidence requires that
+        meaning-based choice in a changed situation; return pass=false when
+        final practice repeats anchor-dialogue sentences verbatim or never
+        requires the choice.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: Rich draft covers four pragmatic marker functions (B2 communicative)
+  metadata:
+    surface: rich_draft
+    cefr: B2
+    kind: communicative
+    source_lesson: advanced_pragmatics
+  vars:
+    plan_path: content/lessons/advanced_pragmatics/plan.md
+  assert:
+    - type: llm-rubric
+      metric: objective_alignment
+      value: |
+        The approved objective is to use common Bokmål markers to soften, imply,
+        evaluate, and shift topic naturally, at B2, with no second learner
+        outcome. Return pass=true only when the draft teaches markers for all
+        four functions with examples and practice; return pass=false when any
+        function is missing, the level drops to elementary phrasing, or a
+        second outcome such as formal letter writing receives its own teaching.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+    - type: llm-rubric
+      metric: norwegian_correctness
+      value: |
+        The pragmatic markers must be real, natural Bokmål discourse markers
+        whose illustrated use matches the function the draft claims (for
+        example a softening marker actually softens in its example sentence),
+        with faithful English translations. Return pass=true only when every
+        marker example is natural Bokmål and demonstrates its stated function;
+        return pass=false when a marker is invented, misused, or its example
+        does not show the claimed function.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+    - type: llm-rubric
+      metric: pedagogical_transfer
+      value: |
+        Because this is a communicative outcome, the chapter must end with a
+        short new dialogue or exchange in a changed B2 situation. Return
+        pass=true only when the final checkpoint evidence asks the learner to
+        deploy markers for the taught functions in that new exchange; return
+        pass=false when final practice is only recognition or definition
+        matching, asks for generic recall, or omits the changed situation.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: Rich draft teaches the preterite versus present perfect choice (B1 grammar)
+  metadata:
+    surface: rich_draft
+    cefr: B1
+    kind: grammar
+    source_lesson: preterite_vs_present_perfect
+  vars:
+    plan_path: content/lessons/preterite_vs_present_perfect/plan.md
+  assert:
+    - type: llm-rubric
+      metric: decision_correctness
+      value: |
+        The approved outcome is choosing between past tense and present perfect
+        for specific past events, experiences, results, unfinished periods,
+        duration, and narrative sequences. Return pass=true only when the draft
+        states a usable meaning-based criterion (for example finished/anchored
+        versus current relevance or unfinished period) and applies it across the
+        taught use types with contrasting examples; return pass=false when the
+        criterion is missing, circular, or does not decide the taught uses.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+    - type: llm-rubric
+      metric: norwegian_correctness
+      value: |
+        Every Norwegian example must use correct Bokmål tense forms: preterite
+        forms for past-tense examples and har plus the correct participle for
+        present-perfect examples, with natural word order and faithful English
+        translations. Return pass=true only when all tense examples are
+        grammatical and correctly translated; return pass=false when any
+        participle is wrong, the auxiliary is missing, or a translation changes
+        the tense meaning.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+    - type: llm-rubric
+      metric: pedagogical_transfer
+      value: |
+        The chapter must end with cumulative practice where the learner chooses
+        between the two forms in a new past-telling situation. Return pass=true
+        only when the final checkpoint evidence requires that choice in a
+        changed situation; return pass=false when final practice only identifies
+        forms or recycles the chapter's examples.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: Rich draft contrasts legge and ligge by meaning (B1 phraseology)
+  metadata:
+    surface: rich_draft
+    cefr: B1
+    kind: phraseology
+    source_lesson: legge_vs_ligge
+  vars:
+    plan_path: content/lessons/legge_vs_ligge/plan.md
+  assert:
+    - type: llm-rubric
+      metric: decision_correctness
+      value: |
+        The approved outcome is to choose legge for putting something somewhere
+        and ligge for saying where something is located. Return pass=true only
+        when the draft teaches that action-versus-state contrast and trains the
+        learner to pick the verb from the intended meaning; return pass=false
+        when the two verbs are conflated, contrasted only by translation, or the
+        taught rule decides the wrong verb for a putting or locating meaning.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+    - type: llm-rubric
+      metric: norwegian_correctness
+      value: |
+        Every Norwegian example must use legge and ligge (and their inflected
+        forms such as la and lå if present) correctly for causing position versus
+        stating location, in natural Bokmål with faithful English translations.
+        Return pass=true only when all examples use the verbs correctly; return
+        pass=false when any example swaps the verbs, uses a wrong past form, or
+        is mistranslated.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+    - type: llm-rubric
+      metric: pedagogical_transfer
+      value: |
+        The chapter must end with retrieval practice in a new everyday situation
+        where the learner must choose between the two verbs by meaning. Return
+        pass=true only when the final checkpoint evidence requires that choice
+        in a changed situation; return pass=false when final practice repeats
+        chapter examples verbatim or never requires the choice.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: Ordering lesson builds toward one cumulative exchange
+  metadata:
+    surface: rich_draft
+    cefr: A1
+    kind: communicative
+    split: dev
+    source_lesson: order_and_pay
+  vars:
+    plan_path: content/lessons/order_and_pay/plan.md
+  assert:
+    - type: llm-rubric
+      metric: practice_progression
+      value: |
+        Return pass=true only when the chapter teaches the approved transaction
+        through focused supported decisions before a cumulative exchange in a
+        new situation. Early checkpoint evidence must isolate a taught choice
+        rather than repeatedly demand complete open transactions. The ending
+        must not require the same complete transaction twice under transfer
+        and recap. Reusing forms to teach a new distinction or retrieve them is
+        useful, and no fixed section count or exercise-type quota is required.
+        Return pass=false for a missing progression, an ending that never
+        practices the complete outcome, or a duplicate full transfer task.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true

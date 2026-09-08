@@ -1,0 +1,388 @@
+- handle: notice-anchor-relations
+  op: categorize
+  objective: obj-basic-prepositions-place-time-01
+  bloom: analyze
+  prompt_md: Classify each supplied expression by the relationship it describes.
+  explanation_md: "Classify the whole relation: current place, destination, visit location, future delay, past distance from now, or duration."
+  derived_from:
+  - section_id: where-is-everyone-going
+  buckets:
+  - bucket_id: current-location
+    label: Current location
+  - bucket_id: destination
+    label: Destination
+  - bucket_id: visit-location
+    label: Visit location
+  - bucket_id: future-time
+    label: Future time from now
+  - bucket_id: past-time
+    label: Past time before now
+  - bucket_id: duration
+    label: Duration
+  items:
+  - item_id: at-work
+    text: på jobb
+    bucket_id: current-location
+  - item_id: to-cafe
+    text: til kafeen
+    bucket_id: destination
+  - item_id: at-doctor
+    text: hos legen
+    bucket_id: visit-location
+  - item_id: in-ten-minutes
+    text: om ti minutter
+    bucket_id: future-time
+  - item_id: two-days-ago
+    text: for to dager siden
+    bucket_id: past-time
+  - item_id: for-three-days
+    text: i tre dager
+    bucket_id: duration
+- handle: choose-current-place
+  op: recall_fill
+  objective: obj-basic-prepositions-place-time-01
+  bloom: apply
+  prompt_md: Complete each description of a current location with i or på.
+  explanation_md: "Learn the location as a phrase: i Oslo, i parken, i butikken, but på jobb, på skolen, på kafeen."
+  derived_from:
+  - section_id: being-in-a-place
+  audio_target: "Kari bor i Oslo. Per er på jobb. Barna leker i parken. Læreren er på skolen. Vi er i butikken. De møtes på kafeen."
+  segments:
+  - text_md: 'Kari bor '
+  - blank_id: city-location
+    options:
+    - i
+    - på
+    answer_index: 0
+  - text_md: ' Oslo. Per er '
+  - blank_id: work-location
+    options:
+    - i
+    - på
+    answer_index: 1
+  - text_md: ' jobb. Barna leker '
+  - blank_id: park-location
+    options:
+    - i
+    - på
+    answer_index: 0
+  - text_md: ' parken. Læreren er '
+  - blank_id: school-location
+    options:
+    - i
+    - på
+    answer_index: 1
+  - text_md: ' skolen. Vi er '
+  - blank_id: shop-location
+    options:
+    - i
+    - på
+    answer_index: 0
+  - text_md: ' butikken. De møtes '
+  - blank_id: cafe-location
+    options:
+    - i
+    - på
+    answer_index: 1
+  - text_md: ' kafeen.'
+- handle: contrast-location-and-destination
+  op: recall_fill
+  objective: obj-basic-prepositions-place-time-01
+  bloom: apply
+  prompt_md: Complete each mini-scene. Use til for movement toward a destination and
+    i or på for the resulting location.
+  explanation_md: "Use til for movement toward a destination; once there, switch to the location phrase with i or på."
+  derived_from:
+  - section_id: location-or-destination
+  audio_target: "Ali kjører til butikken. Nå er han i butikken. Eva reiser til Oslo. Nå er hun i Oslo. Per går til kafeen. Nå er han på kafeen."
+  segments:
+  - text_md: 'Ali kjører '
+  - blank_id: shop-destination
+    options:
+    - til
+    - på
+    - i
+    answer_index: 0
+  - text_md: ' butikken. Nå er han '
+  - blank_id: shop-location
+    options:
+    - til
+    - i
+    - på
+    answer_index: 1
+  - text_md: ' butikken. Eva reiser '
+  - blank_id: oslo-destination
+    options:
+    - i
+    - på
+    - til
+    answer_index: 2
+  - text_md: ' Oslo. Nå er hun '
+  - blank_id: oslo-location
+    options:
+    - i
+    - på
+    - til
+    answer_index: 0
+  - text_md: ' Oslo. Per går '
+  - blank_id: cafe-destination
+    options:
+    - på
+    - til
+    - i
+    answer_index: 1
+  - text_md: ' kafeen. Nå er han '
+  - blank_id: cafe-location
+    options:
+    - til
+    - i
+    - på
+    answer_index: 2
+  - text_md: ' kafeen.'
+- handle: choose-visit-location-or-destination
+  op: recall_fill
+  objective: obj-basic-prepositions-place-time-01
+  bloom: apply
+  prompt_md: Complete each exchange with hos for a visit location or til for the destination
+    of a visit.
+  explanation_md: "Use hos for the current visit location and til when someone is going to the visit."
+  derived_from:
+  - section_id: visiting-people-and-professionals
+  audio_target: "Hvor er Ida? Hun er hos legen. Hvor skal Ole? Han skal til frisøren. Hvor er barna? De er hos bestemor. Hvor går Liv? Hun går til Maja."
+  segments:
+  - text_md: 'Hvor er Ida? Hun er '
+  - blank_id: doctor-location
+    options:
+    - hos
+    - til
+    answer_index: 0
+  - text_md: ' legen. Hvor skal Ole? Han skal '
+  - blank_id: hairdresser-destination
+    options:
+    - hos
+    - til
+    answer_index: 1
+  - text_md: ' frisøren. Hvor er barna? De er '
+  - blank_id: grandmother-location
+    options:
+    - hos
+    - til
+    answer_index: 0
+  - text_md: ' bestemor. Hvor går Liv? Hun går '
+  - blank_id: maja-destination
+    options:
+    - hos
+    - til
+    answer_index: 1
+  - text_md: ' Maja.'
+- handle: choose-future-time-om
+  op: recall_fill
+  objective: obj-basic-prepositions-place-time-01
+  bloom: apply
+  prompt_md: Each event will happen after now. Add the preposition that states how
+    much time will pass before it happens.
+  explanation_md: "Use om for the amount of time from now until a future event: om ti minutter."
+  derived_from:
+  - section_id: looking-forward-from-now
+  audio_target: "Bussen går om ti minutter. Sara kommer om en time. Vi møtes om to dager. Avtalen begynner om en halvtime."
+  segments:
+  - text_md: 'Bussen går '
+  - blank_id: bus-future
+    options:
+    - om
+    - i
+    answer_index: 0
+  - text_md: ' ti minutter. Sara kommer '
+  - blank_id: arrival-future
+    options:
+    - i
+    - om
+    answer_index: 1
+  - text_md: ' en time. Vi møtes '
+  - blank_id: meeting-future
+    options:
+    - om
+    - i
+    answer_index: 0
+  - text_md: ' to dager. Avtalen begynner '
+  - blank_id: appointment-future
+    options:
+    - i
+    - om
+    answer_index: 1
+  - text_md: ' en halvtime.'
+- handle: contrast-future-and-past-time
+  op: recall_fill
+  objective: obj-basic-prepositions-place-time-01
+  bloom: apply
+  prompt_md: Complete each message with the time expression that points in the correct
+    direction from now.
+  explanation_md: "Use om for time remaining before a future event and for ... siden for elapsed time since a past event."
+  derived_from:
+  - section_id: looking-back-from-now
+  audio_target: "Erik reiser til Bergen om to dager. Erik reiste til Bergen for to dager siden. Bussen kommer om ti minutter. Bussen kom for ti minutter siden."
+  segments:
+  - text_md: 'Erik reiser til Bergen '
+  - blank_id: bergen-future
+    options:
+    - om to dager
+    - for to dager siden
+    answer_index: 0
+  - text_md: '. Erik reiste til Bergen '
+  - blank_id: bergen-past
+    options:
+    - om to dager
+    - for to dager siden
+    answer_index: 1
+  - text_md: '. Bussen kommer '
+  - blank_id: bus-future
+    options:
+    - om ti minutter
+    - for ti minutter siden
+    answer_index: 0
+  - text_md: '. Bussen kom '
+  - blank_id: bus-past
+    options:
+    - om ti minutter
+    - for ti minutter siden
+    answer_index: 1
+  - text_md: .
+- handle: contrast-future-delay-and-duration
+  op: recall_fill
+  objective: obj-basic-prepositions-place-time-01
+  bloom: apply
+  prompt_md: Complete the café plans with om when the quantity measures time until
+    an event and i when it measures duration.
+  explanation_md: "Use om for a delay until something starts and i for how long an activity lasts."
+  derived_from:
+  - section_id: saying-how-long-something-lasts
+  audio_target: "Maja kommer om en halvtime. Hun blir på kafeen i to timer. Jonas drar om en time. Han venter på kafeen i en time."
+  segments:
+  - text_md: 'Maja kommer '
+  - blank_id: maja-arrival
+    options:
+    - om
+    - i
+    answer_index: 0
+  - text_md: ' en halvtime. Hun blir på kafeen '
+  - blank_id: maja-stay
+    options:
+    - om
+    - i
+    answer_index: 1
+  - text_md: ' to timer. Jonas drar '
+  - blank_id: jonas-departure
+    options:
+    - om
+    - i
+    answer_index: 0
+  - text_md: ' en time. Han venter på kafeen '
+  - blank_id: jonas-wait
+    options:
+    - om
+    - i
+    answer_index: 1
+  - text_md: ' en time.'
+- handle: choose-duration-i
+  op: recall_fill
+  objective: obj-basic-prepositions-place-time-01
+  bloom: apply
+  prompt_md: Add the preposition that introduces the duration of each activity.
+  derived_from:
+  - section_id: more-practice-with-duration
+  audio_target: "Ola leste boka i to timer. Anne skrev i tjue minutter. Vi gikk i en time. De bodde i Norge i to år."
+  segments:
+  - text_md: 'Ola leste boka '
+  - blank_id: reading-duration
+    options:
+    - i
+    - om
+    answer_index: 0
+  - text_md: ' to timer. Anne skrev '
+  - blank_id: writing-duration
+    options:
+    - om
+    - i
+    answer_index: 1
+  - text_md: ' tjue minutter. Vi gikk '
+  - blank_id: walking-duration
+    options:
+    - i
+    - om
+    answer_index: 0
+  - text_md: ' en time. De bodde i Norge '
+  - blank_id: living-duration
+    options:
+    - om
+    - i
+    answer_index: 1
+  - text_md: ' to år.'
+- handle: transfer-weekend-plan
+  op: write
+  objective: obj-basic-prepositions-place-time-01
+  bloom: apply
+  prompt_md: Write a connected practical message from Emil. Say that he is currently
+    at work, will leave in half an hour, will travel to Bergen, and will stay with
+    his sister Lea for two days. Also say that he will be at Lea’s place and that
+    Lea travelled to Oslo one week ago. Use suitable forms from i, på, hos, til, om,
+    for … siden, and durational i.
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+  response_language: 'no'
+  min_words: 30
+  max_words: 70
+  judge_prompt: Check only whether the connected message communicates the requested
+    situation using appropriate Norwegian place and time prepositions. Report evidence
+    for every criterion. Treat reasonable changes in sentence order and supporting
+    verb forms as acceptable.
+  criteria:
+  - id: current-location
+    instruction: States that Emil is currently at work using the conventional current-location
+      phrase **på jobb**.
+  - id: destination
+    instruction: States that Emil will travel to Bergen using **til Bergen** for the
+      destination.
+  - id: visit-location
+    instruction: States that Emil will be at Lea’s place using **hos Lea**.
+  - id: future-time
+    instruction: States that Emil will leave in half an hour using **om en halvtime**.
+  - id: past-time
+    instruction: States that Lea travelled to Oslo one week ago using the frame **for
+      en uke siden**.
+  - id: duration
+    instruction: States that Emil’s stay with Lea lasts two days using durational
+      **i to dager**.
+- handle: retrieve-preposition-meanings
+  op: write
+  objective: obj-basic-prepositions-place-time-01
+  bloom: apply
+  prompt_md: 'Write six fresh, short Norwegian examples in your own words: one for
+    current location, one for a destination, one for a visit location, one for future
+    time from now, one for past time before now, and one for activity duration. Keep every example in Norwegian and make each meaning clear from its context.'
+  derived_from:
+  - section_id: final-retrieval
+  response_language: 'no'
+  min_words: 30
+  max_words: 100
+  judge_prompt: Check for six distinct Norwegian examples with the requested meanings.
+    Accept any natural, simple example grounded in the taught patterns. Report evidence
+    for every criterion; do not require specific people, places, or time quantities.
+  criteria:
+  - id: current-location
+    instruction: Gives a natural current-location example using taught **i** or **på**
+      usage and a clear Norwegian context.
+  - id: destination
+    instruction: Gives a destination example using **til** and makes the destination
+      meaning clear from the Norwegian context.
+  - id: visit-location
+    instruction: Gives a visit-location example using **hos** with a person or professional
+      and a clear Norwegian context.
+  - id: future-time
+    instruction: Gives a future-time-from-now example using **om** plus an amount
+      of time and a clear Norwegian context.
+  - id: past-time
+    instruction: Gives a past-time-before-now example using **for … siden** with the
+      amount inside the frame and a clear Norwegian context.
+  - id: activity-duration
+    instruction: Gives an activity-duration example using **i** plus an amount of
+      time and a clear Norwegian context.

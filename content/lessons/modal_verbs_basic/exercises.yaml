@@ -1,0 +1,386 @@
+- handle: notice_modal_plus_bare_infinitive
+  op: recall_fill
+  objective: obj-modal-verbs-basic-01
+  bloom: understand
+  prompt_md: Complete each short sentence with the bare infinitive that follows the
+    modal. Choose the form without å.
+  derived_from:
+  - section_id: sec-one-sentence-pattern-four-meaning-choices
+  audio_target: "Jeg kan lage mat. Jeg vil spise nå. Jeg må vente litt. Jeg skal jobbe."
+  segments:
+  - text_md: 'Jeg kan '
+  - blank_id: notice-kan-infinitive
+    options:
+    - lage
+    - å lage
+    answer_index: 0
+  - text_md: ' mat. Jeg vil '
+  - blank_id: notice-vil-infinitive
+    options:
+    - å spise
+    - spise
+    answer_index: 1
+  - text_md: ' nå. Jeg må '
+  - blank_id: notice-ma-infinitive
+    options:
+    - vente
+    - å vente
+    answer_index: 0
+  - text_md: ' litt. Jeg skal '
+  - blank_id: notice-skal-infinitive
+    options:
+    - å jobbe
+    - jobbe
+    answer_index: 1
+  - text_md: .
+- handle: choose_kan_for_ability_or_possibility
+  op: build
+  objective: obj-modal-verbs-basic-01
+  bloom: apply
+  prompt_md: 'Build the Norwegian sentence for this ability: You are able to cook.'
+  derived_from:
+  - section_id: sec-kan-ability-and-possibility
+  tokens:
+  - token_id: kan-build-2
+    text: kan
+  - token_id: kan-build-3
+    text: lage
+  - token_id: kan-build-4
+    text: mat.
+  - token_id: kan-build-1
+    text: Du
+  answer_order:
+  - kan-build-1
+  - kan-build-2
+  - kan-build-3
+  - kan-build-4
+- handle: build_vil_desire_sentences
+  op: build
+  objective: obj-modal-verbs-basic-01
+  bloom: apply
+  prompt_md: 'Build the Norwegian sentence for this desire: Mina wants to eat at home.'
+  derived_from:
+  - section_id: sec-vil-what-someone-wants-to-do
+  tokens:
+  - token_id: vil-build-2
+    text: vil
+  - token_id: vil-build-3
+    text: spise
+  - token_id: vil-build-4
+    text: hjemme.
+  - token_id: vil-build-1
+    text: Mina
+  answer_order:
+  - vil-build-1
+  - vil-build-2
+  - vil-build-3
+  - vil-build-4
+- handle: contrast_vil_and_ma
+  op: choose
+  objective: obj-modal-verbs-basic-01
+  bloom: understand
+  prompt_md: 'Choose the option that matches both situations, in order: 1. Nora wants
+    to go home. 2. Nora has to go home.'
+  derived_from:
+  - section_id: sec-ma-necessity
+  stem_md: Choose the Norwegian sentences that express the two meanings in the stated
+    order.
+  options:
+  - id: vil-then-ma
+    text: Nora vil gå hjem. Nora må gå hjem.
+    correct: true
+    why: The first sentence uses vil for desire; the second uses må for necessity.
+      Both use the bare infinitive gå.
+  - id: ma-then-vil
+    text: Nora må gå hjem. Nora vil gå hjem.
+    correct: false
+    why: The meanings are in the opposite order.
+- handle: build_skal_plan_sentences
+  op: build
+  objective: obj-modal-verbs-basic-01
+  bloom: apply
+  prompt_md: 'Build the Norwegian sentence for this planned arrangement: You are going
+    to eat at home this evening.'
+  derived_from:
+  - section_id: sec-skal-plans-and-intended-actions
+  tokens:
+  - token_id: skal-build-2
+    text: skal
+  - token_id: skal-build-3
+    text: spise
+  - token_id: skal-build-4
+    text: hjemme
+  - token_id: skal-build-5
+    text: i
+  - token_id: skal-build-6
+    text: kveld.
+  - token_id: skal-build-1
+    text: Du
+  answer_order:
+  - skal-build-1
+  - skal-build-2
+  - skal-build-3
+  - skal-build-4
+  - skal-build-5
+  - skal-build-6
+- handle: select_modal_from_context
+  op: choose
+  objective: obj-modal-verbs-basic-01
+  bloom: understand
+  prompt_md: 'Choose the set of four Norwegian sentences that matches the situations
+    in order: 1. Jonas is able to make dinner. 2. Jonas wants to make dinner. 3. Jonas
+    has to make dinner. 4. Jonas is going to make dinner.'
+  derived_from:
+  - section_id: sec-choice-changes-the-message
+  stem_md: Select the set with the correct modal for each meaning and a bare infinitive
+    after every modal.
+  options:
+  - id: marker-added
+    text: Jonas kan å lage middag. Jonas vil å lage middag. Jonas må å lage middag.
+      Jonas skal å lage middag.
+    correct: false
+    why: The infinitive marker å must not appear after these modal verbs.
+  - id: meanings-reversed
+    text: Jonas vil lage middag. Jonas kan lage middag. Jonas skal lage middag. Jonas
+      må lage middag.
+    correct: false
+    why: The modal choices do not match the four meanings in order.
+  - id: all-four-correct
+    text: Jonas kan lage middag. Jonas vil lage middag. Jonas må lage middag. Jonas
+      skal lage middag.
+    correct: true
+    why: The modals match ability, desire, necessity, and plan in order, and each
+      is followed directly by lage.
+- handle: reconstruct_saturday_plan
+  op: build
+  objective: obj-modal-verbs-basic-01
+  bloom: apply
+  prompt_md: 'Build four Norwegian sentences in this order for Nora and Amir: Nora
+    wants to make soup; Nora has to buy vegetables; Amir is going to buy some extra
+    food; Nora can eat at home this evening.'
+  derived_from:
+  - section_id: sec-returning-to-nora-and-amir
+  tokens:
+  - token_id: sat-2
+    text: vil
+  - token_id: sat-3
+    text: lage
+  - token_id: sat-4
+    text: suppe.
+  - token_id: sat-5
+    text: Nora
+  - token_id: sat-6
+    text: må
+  - token_id: sat-7
+    text: kjøpe
+  - token_id: sat-8
+    text: grønnsaker.
+  - token_id: sat-9
+    text: Amir
+  - token_id: sat-10
+    text: skal
+  - token_id: sat-11
+    text: kjøpe
+  - token_id: sat-12
+    text: litt
+  - token_id: sat-13
+    text: ekstra
+  - token_id: sat-14
+    text: mat.
+  - token_id: sat-15
+    text: Nora
+  - token_id: sat-16
+    text: kan
+  - token_id: sat-17
+    text: spise
+  - token_id: sat-18
+    text: hjemme
+  - token_id: sat-19
+    text: i
+  - token_id: sat-20
+    text: kveld.
+  - token_id: sat-1
+    text: Nora
+  answer_order:
+  - sat-1
+  - sat-2
+  - sat-3
+  - sat-4
+  - sat-5
+  - sat-6
+  - sat-7
+  - sat-8
+  - sat-9
+  - sat-10
+  - sat-11
+  - sat-12
+  - sat-13
+  - sat-14
+  - sat-15
+  - sat-16
+  - sat-17
+  - sat-18
+  - sat-19
+  - sat-20
+- handle: repair_modal_sentence_errors
+  op: find_fix
+  objective: obj-modal-verbs-basic-01
+  bloom: analyze
+  prompt_md: 'Select the one extra token after the modal. The feedback explains the required bare-infinitive pattern.'
+  derived_from:
+  - section_id: sec-common-mistakes-to-avoid
+  tokens:
+  - token_id: repair-1
+    text: Sara
+  - token_id: repair-2
+    text: må
+  - token_id: repair-3
+    text: å
+  - token_id: repair-4
+    text: jobbe.
+  error_token_id: repair-3
+  feedback: 'Remove å: after må, use the bare infinitive jobbe directly.'
+- handle: plan_day_trip_with_modals
+  op: build
+  objective: obj-modal-verbs-basic-01
+  bloom: apply
+  prompt_md: 'Build five Norwegian sentences in this order for the Sunday forest trip:
+    Lea is able to drive; Henrik wants to take photographs; the group has to leave
+    before nine; they are going to meet Mari at the station; if the weather is good
+    later, an outdoor lunch is possible.'
+  derived_from:
+  - section_id: sec-transfer-preparing-for-a-day-trip
+  tokens:
+  - token_id: trip-2
+    text: kan
+  - token_id: trip-3
+    text: kjøre
+  - token_id: trip-4
+    text: bil.
+  - token_id: trip-5
+    text: Henrik
+  - token_id: trip-6
+    text: vil
+  - token_id: trip-7
+    text: ta
+  - token_id: trip-8
+    text: bilder.
+  - token_id: trip-9
+    text: Vi
+  - token_id: trip-10
+    text: må
+  - token_id: trip-11
+    text: gå
+  - token_id: trip-12
+    text: før
+  - token_id: trip-13
+    text: klokka
+  - token_id: trip-14
+    text: ni.
+  - token_id: trip-15
+    text: De
+  - token_id: trip-16
+    text: skal
+  - token_id: trip-17
+    text: møte
+  - token_id: trip-18
+    text: Mari
+  - token_id: trip-19
+    text: på
+  - token_id: trip-20
+    text: stasjonen.
+  - token_id: trip-21
+    text: Vi
+  - token_id: trip-22
+    text: kan
+  - token_id: trip-23
+    text: spise
+  - token_id: trip-24
+    text: ute.
+  - token_id: trip-1
+    text: Lea
+  answer_order:
+  - trip-1
+  - trip-2
+  - trip-3
+  - trip-4
+  - trip-5
+  - trip-6
+  - trip-7
+  - trip-8
+  - trip-9
+  - trip-10
+  - trip-11
+  - trip-12
+  - trip-13
+  - trip-14
+  - trip-15
+  - trip-16
+  - trip-17
+  - trip-18
+  - trip-19
+  - trip-20
+  - trip-21
+  - trip-22
+  - trip-23
+  - trip-24
+- handle: retrieve_four_modal_patterns
+  op: build
+  objective: obj-modal-verbs-basic-01
+  bloom: apply
+  prompt_md: 'Build four new Norwegian sentences in this order: Lea can help you;
+    Henrik wants to eat outside; Mina has to buy vegetables; Oskar is going to learn
+    Norwegian. Use all four modal verbs once and place each modal directly before
+    the bare infinitive.'
+  derived_from:
+  - section_id: sec-short-retrieval-review
+  tokens:
+  - token_id: retrieval-2
+    text: kan
+  - token_id: retrieval-3
+    text: hjelpe
+  - token_id: retrieval-4
+    text: deg.
+  - token_id: retrieval-5
+    text: Henrik
+  - token_id: retrieval-6
+    text: vil
+  - token_id: retrieval-7
+    text: spise
+  - token_id: retrieval-8
+    text: ute.
+  - token_id: retrieval-9
+    text: Mina
+  - token_id: retrieval-10
+    text: må
+  - token_id: retrieval-11
+    text: kjøpe
+  - token_id: retrieval-12
+    text: grønnsaker.
+  - token_id: retrieval-13
+    text: Oskar
+  - token_id: retrieval-14
+    text: skal
+  - token_id: retrieval-15
+    text: lære
+  - token_id: retrieval-16
+    text: norsk.
+  - token_id: retrieval-1
+    text: Lea
+  answer_order:
+  - retrieval-1
+  - retrieval-2
+  - retrieval-3
+  - retrieval-4
+  - retrieval-5
+  - retrieval-6
+  - retrieval-7
+  - retrieval-8
+  - retrieval-9
+  - retrieval-10
+  - retrieval-11
+  - retrieval-12
+  - retrieval-13
+  - retrieval-14
+  - retrieval-15
+  - retrieval-16

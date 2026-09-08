@@ -1,0 +1,35 @@
+# Synthetic discovery input that isolates one catalog-design decision.
+
+- description: Explorer proposes a bounded help-request owner
+  metadata:
+    surface: discover_explorer
+    cefr: A1
+    kind: communicative
+    source_lesson: synthetic
+  vars:
+    surface: discover_explorer
+    request: '{"category":"communicative","category_guidance":"Propose one owner for asking for help when an everyday task is blocked.","cefr_tags":["A1"],"max_iterations":1}'
+    existing_snapshot: |
+      - catalog_id: greetings
+        title: Basic greetings
+        objective_summary: Greet someone and close a short exchange.
+        teaching_point_ids: [greeting]
+    quality_contract: |
+      A candidate must represent one independently teachable learner decision. It must have a
+      bounded scope, explicit exclusions, and a useful distinction from existing owners.
+  assert:
+    - type: llm-rubric
+      metric: decision_correctness
+      value: |
+        The proposal must be one bounded owner for asking for help when an
+        everyday task is blocked: a learner question, an explicit scope,
+        explicit exclusions, prerequisites, and a distinction from the existing
+        greetings owner, with a stable slug containing `ask-for-help`. Return
+        pass=true only when the proposal is that single teachable decision;
+        return pass=false when it is a vocabulary list, an umbrella category, or
+        is not distinguishable from greetings.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true

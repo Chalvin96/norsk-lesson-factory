@@ -1,0 +1,152 @@
+- handle: checkpoint_identify_situation_now
+  op: write
+  objective: obj-vaere-or-bli-for-state-and-change-01
+  bloom: apply
+  prompt_md: 'Write one Norwegian sentence describing the already noisy concert room now.'
+  derived_from:
+  - section_id: checkpoint-identify-the-situation-now
+  response_language: 'no'
+  min_words: 3
+  max_words: 60
+  judge_prompt: Check the Norwegian response against the task and report evidence for each criterion.
+  criteria:
+  - id: criterion-1
+    instruction: 'describes the current room with the taught temporary-state pattern'
+- handle: checkpoint_show_result_of_action
+  op: write
+  objective: obj-vaere-or-bli-for-state-and-change-01
+  bloom: apply
+  prompt_md: 'Write one connected Norwegian description of the heater and lamps being turned on, the tables being washed, and the curtains being opened. Use the taught result-of-change pattern for each resulting state.'
+  derived_from:
+  - section_id: checkpoint-show-the-result-of-an-action
+  response_language: 'no'
+  min_words: 3
+  max_words: 60
+  judge_prompt: Check the Norwegian response against the task and report evidence for each criterion.
+  criteria:
+  - id: criterion-1
+    instruction: 'includes all three supplied actions'
+  - id: criterion-2
+    instruction: 'uses the taught result-of-change pattern for each resulting adjective state'
+- handle: checkpoint_choose_intended_viewpoint
+  op: recall_fill
+  objective: obj-vaere-or-bli-for-state-and-change-01
+  bloom: apply
+  prompt_md: 'Fill each blank with er or blir. Use each surrounding situation to choose
+    the correct verb: some sentences describe a state, while others describe movement
+    into a new state.'
+  explanation_md: "Use være for a state that holds now; use bli when the subject enters or changes into that state."
+  derived_from:
+  - section_id: checkpoint-choose-the-intended-viewpoint
+  audio_target: "Under pausen er rommet støyende. Når konserten begynner, blir rommet stille. Før opptredenen er sangeren nervøs. Når sangeren roer seg på scenen, blir hun rolig."
+  segments:
+  - text_md: 'Under pausen '
+  - blank_id: room-current
+    options:
+    - er
+    - blir
+    answer_index: 0
+  - text_md: ' rommet støyende. Når konserten begynner, '
+  - blank_id: room-change
+    options:
+    - er
+    - blir
+    answer_index: 1
+  - text_md: ' rommet stille. Før opptredenen '
+  - blank_id: performer-current
+    options:
+    - er
+    - blir
+    answer_index: 0
+  - text_md: ' sangeren nervøs. Når sangeren roer seg på scenen, '
+  - blank_id: performer-change
+    options:
+    - er
+    - blir
+    answer_index: 1
+  - text_md: ' hun rolig.'
+- handle: checkpoint_correct_permanence_shortcut
+  op: write
+  objective: obj-vaere-or-bli-for-state-and-change-01
+  bloom: apply
+  prompt_md: 'Write four Norwegian pairs in order: say that you are hungry before lunch and become hungry when you wait too long to eat; say that she is nervous before a performance and becomes nervous when she is about to perform; say that you are wet after a walk in the rain and become wet while walking in the rain; say that you are tired after work and become tired when you work for a long time.'
+  derived_from:
+  - section_id: checkpoint-correct-the-permanence-shortcut
+  response_language: 'no'
+  min_words: 3
+  max_words: 60
+  judge_prompt: Check the Norwegian response against the task and report evidence for each criterion.
+  criteria:
+  - id: criterion-1
+    instruction: 'writes all four supplied situations'
+  - id: criterion-2
+    instruction: 'uses the temporary-state form first and the onset form second in every pair'
+- handle: guided_practice_follow_one_object_through_time
+  op: write
+  objective: obj-vaere-or-bli-for-state-and-change-01
+  bloom: apply
+  prompt_md: 'Write in Norwegian a connected three-stage timeline about one concert-room
+    element: the temperature, tables, lighting, hall, or Mina''s mood. Describe its
+    initial adjective state, the event that causes a change, and its resulting adjective
+    state. Use er for the existing state before and after the transition, and blir
+    for the transition into the new state.'
+  derived_from:
+  - section_id: guided-practice-follow-one-object-through-time
+  response_language: 'no'
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål wording that preserves the required er and blir contrast.
+  criteria:
+  - id: state-on-both-sides
+    instruction: Uses er to describe the selected element's initial state and resulting
+      state.
+  - id: transition
+    instruction: Uses blir for the event's transition into the new adjective state.
+  - id: coherent-timeline
+    instruction: Connects the initial state, the event, the transition, and the resulting
+      state in a coherent timeline.
+- handle: broader_practice_apply_the_contrast_in_new_situations
+  op: write
+  objective: obj-vaere-or-bli-for-state-and-change-01
+  bloom: apply
+  prompt_md: 'Write short connected descriptions in Norwegian for at least two of
+    these new everyday situations: a cold drink warming on a table, a quiet station
+    becoming busy, or a worried friend calming down. In each description, state an
+    existing adjective condition with er and describe a change into another adjective
+    condition with blir. Include enough Norwegian surrounding context for each choice
+    to be understood from the situation rather than from an English translation.'
+  derived_from:
+  - section_id: broader-practice-apply-the-contrast-in-new-situations
+  response_language: 'no'
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål descriptions with equivalent contextual wording.
+  criteria:
+  - id: state-and-change
+    instruction: Includes both an existing adjective state and a change into another
+      adjective state in each description.
+  - id: contextual-choice
+    instruction: Makes the choice of er or blir understandable from the surrounding
+      Norwegian context.
+  - id: not-translation-only
+    instruction: Uses Norwegian situational wording to convey the contrast rather
+      than relying only on memorized English translation.
+- handle: retrieval_explain_contrast
+  op: write
+  objective: obj-vaere-or-bli-for-state-and-change-01
+  bloom: apply
+  prompt_md: 'Write three Norwegian descriptions: one of a current adjective
+    state, one of a change into a new adjective state, and one that shows the change
+    followed by its resulting state. In the Norwegian descriptions, use er for the
+    existing state and blir for the transition.'
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  judge_prompt: Check the response against the task and report evidence for each criterion covering the three Norwegian descriptions.
+  criteria:
+  - id: current-state
+    instruction: Uses er, the finite form of være, for the current adjective state.
+  - id: transition
+    instruction: Uses blir, the finite form of bli, for the transition into the adjective
+      state.
+  - id: change-and-result
+    instruction: Shows a change with blir followed by its resulting state with er
+      in one Norwegian description.

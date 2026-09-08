@@ -1,0 +1,375 @@
+- handle: notice_word_order_signal
+  op: categorize
+  objective: obj-word-order-subordinate-clauses-01
+  bloom: analyze
+  prompt_md: Classify each displayed clause by its word-order pattern. Choose the
+    main-clause bucket for subject + finite verb + ikke, or the subordinate-clause
+    bucket for linker + subject + ikke + finite verb. Score word-order recognition
+    only; linker meaning is supporting context.
+  explanation_md: "A subordinate clause normally places the subject before sentence adverbs such as ikke and then the finite verb."
+  derived_from:
+  - section_id: main-clauses-and-subordinate-clauses
+  buckets:
+  - bucket_id: main-clause-order
+    label: 'Main-clause order: subject + finite verb + ikke'
+  - bucket_id: subordinate-clause-order
+    label: 'Subordinate-clause order: linker + subject + ikke + finite verb'
+  items:
+  - item_id: signal-1
+    text: Hun kommer ikke.
+    bucket_id: main-clause-order
+  - item_id: signal-2
+    text: fordi hun ikke kommer
+    bucket_id: subordinate-clause-order
+  - item_id: signal-3
+    text: Bussen går ikke klokka åtte.
+    bucket_id: main-clause-order
+  - item_id: signal-4
+    text: at hun ikke kommer på møtet
+    bucket_id: subordinate-clause-order
+- handle: build_a_linked_explanation
+  op: build
+  objective: obj-word-order-subordinate-clauses-01
+  bloom: apply
+  prompt_md: 'Build the complete Norwegian sentence from the supplied tokens. The
+    linker is provided as fordi. Meaning: Maja takes a taxi because the bus is not
+    running. Place the subordinate-clause subject, sentence adverb, and finite verb
+    in that order; linker selection is not scored.'
+  explanation_md: "Fordi starts a subordinate clause, so the subject comes before ikke and the finite verb."
+  derived_from:
+  - section_id: building-clauses-with-common-linkers
+  tokens:
+  - token_id: linked-1
+    text: Maja
+  - token_id: linked-2
+    text: tar
+  - token_id: linked-3
+    text: en
+  - token_id: linked-4
+    text: taxi
+  - token_id: linked-5
+    text: fordi
+  - token_id: linked-6
+    text: bussen
+  - token_id: linked-7
+    text: ikke
+  - token_id: linked-8
+    text: går.
+  answer_order:
+  - linked-1
+  - linked-2
+  - linked-3
+  - linked-4
+  - linked-5
+  - linked-6
+  - linked-7
+  - linked-8
+- handle: move_the_condition
+  op: build
+  objective: obj-word-order-subordinate-clauses-01
+  bloom: apply
+  prompt_md: Move the final hvis clause in Vi åpner døra hvis naboen ikke finner nøkkelen.
+    to the beginning and build the resulting complete Norwegian sentence. Keep subordinate
+    order, add a comma after the initial clause, and open the following main clause
+    with the finite verb before its subject. The primary score is clause linking after
+    the initial subordinate clause.
+  explanation_md: "Fronting the hvis-clause does not change its internal order, but it triggers verb-second order in the following main clause."
+  derived_from:
+  - section_id: building-clauses-with-common-linkers
+  tokens:
+  - token_id: condition-1
+    text: Hvis
+  - token_id: condition-2
+    text: naboen
+  - token_id: condition-3
+    text: ikke
+  - token_id: condition-4
+    text: finner
+  - token_id: condition-5
+    text: nøkkelen,
+  - token_id: condition-6
+    text: åpner
+  - token_id: condition-7
+    text: vi
+  - token_id: condition-8
+    text: døra.
+  answer_order:
+  - condition-1
+  - condition-2
+  - condition-3
+  - condition-4
+  - condition-5
+  - condition-6
+  - condition-7
+  - condition-8
+- handle: turn_a_direct_question_into_an_indirect_question
+  op: build
+  objective: obj-word-order-subordinate-clauses-01
+  bloom: apply
+  prompt_md: 'Build the complete Norwegian sentence from the supplied tokens. Meaning:
+    Henrik asks Maja whether Anna already has the document. Use om + subject + sentence
+    adverb + finite verb in the embedded question. Do not use direct-question verb-first
+    order after om; punctuation is not scored.'
+  explanation_md: "An indirect yes/no question begins with om and keeps subordinate-clause order rather than direct-question inversion."
+  derived_from:
+  - section_id: questions-and-time-relationships-inside-larger-sentences
+  tokens:
+  - token_id: indirect-1
+    text: Henrik
+  - token_id: indirect-2
+    text: spør
+  - token_id: indirect-3
+    text: Maja
+  - token_id: indirect-4
+    text: om
+  - token_id: indirect-5
+    text: Anna
+  - token_id: indirect-6
+    text: allerede
+  - token_id: indirect-7
+    text: har
+  - token_id: indirect-8
+    text: dokumentet.
+  answer_order:
+  - indirect-1
+  - indirect-2
+  - indirect-3
+  - indirect-4
+  - indirect-5
+  - indirect-6
+  - indirect-7
+  - indirect-8
+- handle: identify_the_role_of_som
+  op: categorize
+  objective: obj-word-order-subordinate-clauses-01
+  bloom: analyze
+  prompt_md: Classify each complete noun phrase by the role of som. Use the first
+    bucket when som represents the subject and no explicit subject follows som. Use
+    the second bucket when the noun is the object and an explicit subject follows
+    som. Score the relative-clause role distinction; ikke is supporting context.
+  explanation_md: "Som is the subject when no other subject appears inside the relative clause; otherwise it represents the object."
+  derived_from:
+  - section_id: relative-clauses-with-som
+  buckets:
+  - bucket_id: som-subject
+    label: Som is the subject; no explicit subject follows som
+  - bucket_id: som-object
+    label: The noun is the object; an explicit subject follows som
+  items:
+  - item_id: role-1
+    text: naboen som kommer tidlig
+    bucket_id: som-subject
+  - item_id: role-2
+    text: naboen som ikke kommer i dag
+    bucket_id: som-subject
+  - item_id: role-3
+    text: personen som sender dokumentet
+    bucket_id: som-subject
+  - item_id: role-4
+    text: dokumentet som Anna sender
+    bucket_id: som-object
+  - item_id: role-5
+    text: dokumentet som Anna ikke sender
+    bucket_id: som-object
+  - item_id: role-6
+    text: dokumentet som hun har på datamaskinen
+    bucket_id: som-object
+- handle: place_ikke_in_a_relative_clause
+  op: build
+  objective: obj-word-order-subordinate-clauses-01
+  bloom: apply
+  prompt_md: 'Build the complete Norwegian sentence from the supplied tokens. Meaning:
+    The neighbour who is not coming today sends the document. Use som as the relative-clause
+    subject, with no extra subject after som, and put ikke before the finite verb
+    kommer. Score adverb placement, not the choice between people and things.'
+  explanation_md: "Inside a relative clause, ikke comes before the finite verb."
+  derived_from:
+  - section_id: relative-clauses-with-som
+  tokens:
+  - token_id: relative-1
+    text: Naboen
+  - token_id: relative-2
+    text: som
+  - token_id: relative-3
+    text: ikke
+  - token_id: relative-4
+    text: kommer
+  - token_id: relative-5
+    text: i
+  - token_id: relative-6
+    text: dag
+  - token_id: relative-7
+    text: sender
+  - token_id: relative-8
+    text: dokumentet.
+  answer_order:
+  - relative-1
+  - relative-2
+  - relative-3
+  - relative-4
+  - relative-5
+  - relative-6
+  - relative-7
+  - relative-8
+- handle: mark_clause_boundaries
+  op: categorize
+  objective: obj-word-order-subordinate-clauses-01
+  bloom: analyze
+  prompt_md: The source sentences are Jeg håper at Anna snart ser meldingen når hun
+    ikke lenger sitter på bussen. and Maja sier at de trenger en nabo som kan åpne
+    døra hvis Henrik ikke finner nøkkelen. Classify each displayed clause excerpt
+    as a main clause, linker-led subordinate clause, or relative clause. Use each
+    excerpt as one clause boundary and inspect its local subject, sentence adverb,
+    and finite verb. Boundary recognition, not sentence production, is scored.
+  derived_from:
+  - section_id: more-than-one-subordinate-clause
+  buckets:
+  - bucket_id: boundary-main
+    label: Main clause
+  - bucket_id: boundary-linker
+    label: 'Linker-led subordinate clause: linker + subject + optional sentence adverb
+      + finite verb'
+  - bucket_id: boundary-relative
+    label: Relative clause introduced by som
+  items:
+  - item_id: boundary-1
+    text: Jeg håper
+    bucket_id: boundary-main
+  - item_id: boundary-2
+    text: at Anna snart ser meldingen
+    bucket_id: boundary-linker
+  - item_id: boundary-3
+    text: når hun ikke lenger sitter på bussen
+    bucket_id: boundary-linker
+  - item_id: boundary-4
+    text: Maja sier
+    bucket_id: boundary-main
+  - item_id: boundary-5
+    text: at de trenger en nabo
+    bucket_id: boundary-linker
+  - item_id: boundary-6
+    text: som kan åpne døra
+    bucket_id: boundary-relative
+  - item_id: boundary-7
+    text: hvis Henrik ikke finner nøkkelen
+    bucket_id: boundary-linker
+- handle: build_from_the_inside_outward
+  op: build
+  objective: obj-word-order-subordinate-clauses-01
+  bloom: apply
+  prompt_md: 'Build the complete Norwegian sentence from the supplied tokens. Meaning:
+    Henrik writes that Anna says she does not send the document before she gets home.
+    Construct it from the inside outward, starting with the før clause, then placing
+    it inside the nested at clauses and attaching the structure to the main clause.
+    Keep each subordinate clause in its own local word order.'
+  derived_from:
+  - section_id: more-than-one-subordinate-clause
+  tokens:
+  - token_id: nested-1
+    text: Henrik
+  - token_id: nested-2
+    text: skriver
+  - token_id: nested-3
+    text: at
+  - token_id: nested-4
+    text: Anna
+  - token_id: nested-5
+    text: sier
+  - token_id: nested-6
+    text: at
+  - token_id: nested-7
+    text: hun
+  - token_id: nested-8
+    text: ikke
+  - token_id: nested-9
+    text: sender
+  - token_id: nested-10
+    text: dokumentet
+  - token_id: nested-11
+    text: før
+  - token_id: nested-12
+    text: hun
+  - token_id: nested-13
+    text: kommer
+  - token_id: nested-14
+    text: hjem.
+  answer_order:
+  - nested-1
+  - nested-2
+  - nested-3
+  - nested-4
+  - nested-5
+  - nested-6
+  - nested-7
+  - nested-8
+  - nested-9
+  - nested-10
+  - nested-11
+  - nested-12
+  - nested-13
+  - nested-14
+- handle: put_negation_in_the_intended_clause
+  op: write
+  objective: obj-word-order-subordinate-clauses-01
+  bloom: apply
+  prompt_md: Write two parallel Norwegian sentences. In the first, say that Henrik
+    does not say that Anna is coming. In the second, say that Henrik says that Anna
+    is not coming. Keep the same subjects, reporting verb, linker, and embedded verb
+    in both sentences; move ikke to the clause whose meaning is negative.
+  derived_from:
+  - section_id: more-than-one-subordinate-clause
+  response_language: 'no'
+  min_words: 8
+  max_words: 16
+  judge_prompt: Check both sentences against the task and report evidence for each
+    criterion. Accept optional final punctuation, but require the same lexical frame
+    and the two specified negation scopes.
+  criteria:
+  - id: main-report-negation
+    instruction: The first sentence places ikke in the main clause after the finite
+      verb sier, negating the reporting action.
+  - id: embedded-event-negation
+    instruction: The second sentence places ikke in the at clause before the finite
+      verb kommer, negating the embedded event.
+- handle: write_a_connected_update
+  op: write
+  objective: obj-word-order-subordinate-clauses-01
+  bloom: apply
+  prompt_md: Write a short connected Norwegian update to another resident about a
+    home repair visit. Mention a technician, a spare key, a neighbour, and a possible
+    delay. Include a reported fact with at; a reason with fordi or a condition with
+    hvis; a relative clause with som or der identifying a person or object; one sentence
+    in which a subordinate clause is nested inside another structure; and ikke or
+    another taught sentence adverb in a subordinate clause where it naturally clarifies
+    word order. Use your own wording rather than copying a complete lesson sentence,
+    and connect the ideas clearly.
+  derived_from:
+  - section_id: cumulative-transfer-a-changed-everyday-situation
+  response_language: 'no'
+  min_words: 35
+  max_words: 65
+  judge_prompt: Check the update against the task and report evidence for every criterion.
+    Accept natural Bokmål wording for the repair context, either fordi or hvis, and
+    either som or der. Require clear clause relationships and correct local subordinate-clause
+    word order; do not require exact wording or a particular placement of the subordinate
+    clauses.
+  criteria:
+  - id: repair-context
+    instruction: Mentions a technician, a spare key, a neighbour, and a possible delay.
+  - id: reported-fact-at
+    instruction: Includes a reported fact introduced by at.
+  - id: reason-or-condition
+    instruction: Includes a clear reason introduced by fordi or a clear condition
+      introduced by hvis.
+  - id: relative-description
+    instruction: Includes a som or der relative clause that identifies a person or
+      object.
+  - id: nested-subordination
+    instruction: Includes a sentence in which one subordinate clause is nested inside
+      another structure.
+  - id: adverb-placement
+    instruction: Uses ikke or another taught sentence adverb naturally in a subordinate
+      clause and places it before that clause finite verb.
+  - id: connected-relationships
+    instruction: Connects the ideas into a clear update with correct local subordinate-clause
+      word order.

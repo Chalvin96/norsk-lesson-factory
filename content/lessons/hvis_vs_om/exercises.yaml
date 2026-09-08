@@ -1,0 +1,271 @@
+- handle: anchor_meaning_check
+  op: categorize
+  objective: obj-hvis-vs-om-01
+  bloom: analyze
+  prompt_md: 'Classify each sentence''s clause introduced by hvis or om. Use its communicative
+    function: a condition or an unanswered yes/no question.'
+  buckets:
+  - bucket_id: condition
+    label: Condition
+  - bucket_id: embedded-yes-no-question
+    label: Embedded yes/no question
+  items:
+  - item_id: anchor-1
+    text: Hvis Nora trenger skyss, kan Henrik hente henne.
+    bucket_id: condition
+  - item_id: anchor-2
+    text: Maja vet ikke om Nora trenger skyss.
+    bucket_id: embedded-yes-no-question
+  explanation_md: "Use «hvis» for a condition whose result follows, and «om» for an unresolved embedded yes/no question meaning whether."
+  derived_from:
+  - section_id: the-central-choice
+- handle: condition_recognition
+  op: recall_fill
+  objective: obj-hvis-vs-om-01
+  bloom: understand
+  prompt_md: Complete each message with hvis or om. Decide whether the first clause
+    sets a condition or reports an unresolved yes/no question.
+  audio_target: "Hvis det blir sent, tar Henrik en taxi. Maja vet ikke om toget er forsinket. Hvis det regner, spiser vi inne."
+  segments:
+  - text_md: 'Sentence 1: '
+  - blank_id: condition-1
+    options:
+    - Hvis
+    - Om
+    answer_index: 0
+  - text_md: ' det blir sent, tar Henrik en taxi. Sentence 2: Maja vet ikke '
+  - blank_id: condition-2
+    options:
+    - hvis
+    - om
+    answer_index: 1
+  - text_md: ' toget er forsinket. Sentence 3: '
+  - blank_id: condition-3
+    options:
+    - Hvis
+    - Om
+    answer_index: 0
+  - text_md: ' det regner, spiser vi inne.'
+  derived_from:
+  - section_id: conditions-with-hvis
+- handle: conditional_sentence_building
+  op: build
+  objective: obj-hvis-vs-om-01
+  bloom: apply
+  prompt_md: 'Build the complete Norwegian sentence. Use the supplied clause order:
+    the condition first and the result second. The condition is that it gets late;
+    Henrik takes a taxi as the result.'
+  tokens:
+  - token_id: conditional-1
+    text: Hvis
+  - token_id: conditional-2
+    text: det
+  - token_id: conditional-3
+    text: blir
+  - token_id: conditional-4
+    text: sent,
+  - token_id: conditional-5
+    text: tar
+  - token_id: conditional-6
+    text: Henrik
+  - token_id: conditional-7
+    text: en
+  - token_id: conditional-8
+    text: taxi.
+  answer_order:
+  - conditional-1
+  - conditional-2
+  - conditional-3
+  - conditional-4
+  - conditional-5
+  - conditional-6
+  - conditional-7
+  - conditional-8
+  derived_from:
+  - section_id: conditions-with-hvis
+- handle: question_embedding
+  op: build
+  objective: obj-hvis-vs-om-01
+  bloom: apply
+  prompt_md: Build the complete Norwegian embedded yes/no question. Keep the direct
+    question content inside the supplied larger sentence.
+  tokens:
+  - token_id: embedding-1
+    text: Vet
+  - token_id: embedding-2
+    text: du
+  - token_id: embedding-3
+    text: om
+  - token_id: embedding-4
+    text: Nora
+  - token_id: embedding-5
+    text: kommer
+  - token_id: embedding-6
+    text: i
+  - token_id: embedding-7
+    text: kveld?
+  answer_order:
+  - embedding-1
+  - embedding-2
+  - embedding-3
+  - embedding-4
+  - embedding-5
+  - embedding-6
+  - embedding-7
+  derived_from:
+  - section_id: embedded-yes-no-questions-with-om
+- handle: whether_test
+  op: choose
+  objective: obj-hvis-vs-om-01
+  bloom: apply
+  prompt_md: Choose the Norwegian pair that preserves both meanings of English “if.”
+  stem_md: You need to find out if the shop is open. If it is open, you will go inside.
+    Which pair expresses the unresolved question first and the condition second?
+  options:
+  - id: connectors-reversed
+    text: Jeg vet ikke hvis butikken er åpen. Om butikken er åpen, går jeg inn.
+    correct: false
+    why: The connectors are reversed for these two meanings.
+  - id: correct-contrast
+    text: Jeg vet ikke om butikken er åpen. Hvis butikken er åpen, går jeg inn.
+    correct: true
+    why: Om introduces the unresolved yes/no question; hvis introduces the condition
+      for going inside.
+  - id: both-hvis
+    text: Jeg vet ikke hvis butikken er åpen. Hvis butikken er åpen, går jeg inn.
+    correct: false
+    why: The first sentence embeds a yes/no question and therefore needs om.
+  derived_from:
+  - section_id: embedded-yes-no-questions-with-om
+- handle: paired_meaning_contrast
+  op: recall_fill
+  objective: obj-hvis-vs-om-01
+  bloom: understand
+  prompt_md: 'Complete each sentence with hvis or om. Choose from the relationship
+    in each sentence: a condition or an embedded yes/no question, not from the repeated
+    vocabulary.'
+  audio_target: "Hvis Lea er hjemme, ringer jeg henne. Jeg vet ikke om Lea er hjemme. Hvis møtet slutter tidlig, tar vi toget. Vi må finne ut om møtet slutter tidlig."
+  segments:
+  - text_md: 'Pair 1A: '
+  - blank_id: paired-1a
+    options:
+    - Hvis
+    - Om
+    answer_index: 0
+  - text_md: ' Lea er hjemme, ringer jeg henne. Pair 1B: Jeg vet ikke '
+  - blank_id: paired-1b
+    options:
+    - hvis
+    - om
+    answer_index: 1
+  - text_md: ' Lea er hjemme. Pair 2A: '
+  - blank_id: paired-2a
+    options:
+    - Hvis
+    - Om
+    answer_index: 0
+  - text_md: ' møtet slutter tidlig, tar vi toget. Pair 2B: Vi må finne ut '
+  - blank_id: paired-2b
+    options:
+    - hvis
+    - om
+    answer_index: 1
+  - text_md: ' møtet slutter tidlig.'
+  derived_from:
+  - section_id: compare-the-meanings-directly
+- handle: translation_error_repair
+  op: write
+  objective: obj-hvis-vs-om-01
+  bloom: analyze
+  prompt_md: Correct the Norwegian message by replacing the connector, then explain
+    in Norwegian whether the corrected clause is a condition or an embedded yes/no
+    question.
+  response_language: 'no'
+  judge_prompt: Check the corrected connector and Norwegian classification against every
+    criterion. Accept natural wording when the clause meaning is clear.
+  criteria:
+  - id: corrected-connector
+    instruction: Replaces hvis with om in «Jeg vet ikke om bussen er forsinket».
+  - id: clause-classification
+    instruction: Explains in Norwegian that the corrected clause is an embedded yes/no question, not a condition.
+  derived_from:
+  - section_id: common-mistake-translating-if-mechanically
+- handle: dialogue_continuation
+  op: write
+  objective: obj-hvis-vs-om-01
+  bloom: apply
+  prompt_md: Write a short, connected continuation in Norwegian as Henrik's message
+    to Maja after Nora's bus message. Ask Maja whether she needs anything, then explain
+    what you will do if she needs something. Use om in the embedded yes/no question
+    and hvis in the condition.
+  response_language: 'no'
+  min_words: 12
+  max_words: 30
+  judge_prompt: Accept natural Norwegian wording and clear pronoun choices. Check
+    the response against the task and report evidence for each criterion.
+  criteria:
+  - id: embedded-question-om
+    instruction: Asks, in an embedded yes/no question, whether Maja needs something,
+      using om.
+  - id: condition-hvis
+    instruction: Includes a condition introduced by hvis and a result that depends
+      on Maja needing something.
+  - id: connected-message
+    instruction: Connects the question and condition in a coherent message from Henrik
+      to Maja.
+  derived_from:
+  - section_id: back-to-maja-henrik-and-nora
+- handle: new_plan_transfer
+  op: write
+  objective: obj-hvis-vs-om-01
+  bloom: apply
+  prompt_md: 'Write a short, connected plan in Norwegian for Emil and Sara''s Sunday
+    walk. Include information Sara needs to discover: whether the café is open on
+    Sunday. Include what they will do if it is open, and what they will do if it rains.
+    Use om for the embedded yes/no question and hvis for each condition. Phrase the
+    plan in your own words; do not copy a complete lesson sentence.'
+  response_language: 'no'
+  min_words: 20
+  max_words: 45
+  judge_prompt: Accept natural Norwegian wording and equivalent natural variants.
+    Check the response against the task and report evidence for each criterion.
+  criteria:
+  - id: om-discovery
+    instruction: States what Sara needs to discover with an embedded yes/no question
+      introduced by om.
+  - id: hvis-cafe
+    instruction: States what they will do if the café is open, using a condition introduced
+      by hvis.
+  - id: hvis-rain
+    instruction: States what they will do if it rains, using a condition introduced
+      by hvis.
+  - id: connected-plan
+    instruction: Connects the discovery and both conditions into a coherent Sunday-walk
+      plan.
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+- handle: retrieval_and_review
+  op: write
+  objective: obj-hvis-vs-om-01
+  bloom: apply
+  prompt_md: Without looking back, write a short connected review in Norwegian about
+    a new everyday plan. State one unresolved yes/no issue someone needs to find out
+    using om. Then state what will happen under one condition based on that issue
+    using hvis. Use a new lexical frame and do not copy a complete sentence from the
+    lesson.
+  response_language: 'no'
+  min_words: 12
+  max_words: 30
+  judge_prompt: Accept any natural Norwegian wording and lexical choice that satisfies
+    the task. Check the response against the task and report evidence for each criterion.
+  criteria:
+  - id: unresolved-om-issue
+    instruction: Reports an unresolved yes/no issue inside a larger sentence, introduced
+      by om.
+  - id: hvis-condition-result
+    instruction: States a result that depends on the same issue, with a condition
+      introduced by hvis.
+  - id: coherent-review
+    instruction: Connects the issue and condition in a coherent short plan.
+  derived_from:
+  - section_id: retrieval-and-review

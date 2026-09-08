@@ -1,0 +1,220 @@
+- handle: anchor_causative_meanings
+  op: choose
+  objective: obj-causative-constructions-01
+  bloom: understand
+  prompt_md: In Sara and Jonas's community-centre dialogue, read these selected lines.
+    Identify the meaning relationship in each line. Pronoun forms and word order are
+    supporting context, not separate scoring goals. 1. Sara får Jonas til å rydde
+    bordene. 2. Sara lar Jonas hvile litt. 3. Bråket gjør Jonas trøtt.
+  derived_from:
+  - section_id: anchor-causative-meanings
+  stem_md: Choose the complete meaning classification for lines 1–3.
+  options:
+  - id: meaning-swap-action-permission
+    text: '1: tillater en handling; 2: forårsaker en handling; 3: forårsaker en tilstand.'
+    correct: false
+    why: The meanings of lines 1 and 2 are reversed.
+  - id: meaning-swap-state-action
+    text: '1: forårsaker en tilstand; 2: tillater en handling; 3: forårsaker en handling.'
+    correct: false
+    why: Lines 1 and 3 are assigned the wrong result type.
+  - id: meaning-correct
+    text: '1: forårsaker en handling; 2: tillater en handling; 3: forårsaker en tilstand.'
+    correct: true
+    why: Line 1 expresses causing an action, line 2 permission, and line 3 causing
+      a state.
+- handle: build_faa_action_causatives
+  op: build
+  objective: obj-causative-constructions-01
+  bloom: apply
+  prompt_md: At an everyday workplace, Sara influences Jonas to clean the meeting
+    room. Construct the complete Bokmål sentence. Make Sara the subject, Jonas the
+    object, and use få + object + til å + infinitive.
+  explanation_md: "Use få plus the person affected plus til å plus infinitive when someone gets another person to perform an action."
+  derived_from:
+  - section_id: build-faa-action-causatives
+  tokens:
+  - token_id: faa-subject
+    text: Sara
+  - token_id: faa-verb
+    text: får
+  - token_id: faa-object
+    text: Jonas
+  - token_id: faa-til
+    text: til
+  - token_id: faa-aa
+    text: å
+  - token_id: faa-infinitive
+    text: rydde
+  - token_id: faa-place
+    text: møterommet.
+  answer_order:
+  - faa-subject
+  - faa-verb
+  - faa-object
+  - faa-til
+  - faa-aa
+  - faa-infinitive
+  - faa-place
+- handle: contrast_faa_and_la
+  op: choose
+  objective: obj-causative-constructions-01
+  bloom: understand
+  prompt_md: Jonas wants to go home early, and Sara gives him permission. Choose the
+    Bokmål sentence that expresses permission rather than causing Jonas to start the
+    action.
+  derived_from:
+  - section_id: contrast-faa-and-la
+  stem_md: Which sentence matches the intended relationship?
+  options:
+  - id: permission-causation
+    text: Sara får Jonas til å gå hjem tidlig.
+    correct: false
+    why: Få expresses causing Jonas to perform the action, not simply giving permission.
+  - id: permission-correct
+    text: Sara lar Jonas gå hjem tidlig.
+    correct: true
+    why: La expresses permission with the object followed by a bare infinitive.
+- handle: complete_gjoere_result_states
+  op: build
+  objective: obj-causative-constructions-01
+  bloom: apply
+  prompt_md: At the community centre, loud music causes the neighbours to become angry.
+    Build the complete Bokmål sentence with gjøre + object + adjective. Use the plural
+    adjective form that describes naboene.
+  explanation_md: "Use gjøre plus object plus adjective for a result: musikken gjør naboene sinte."
+  derived_from:
+  - section_id: complete-gjoere-result-states
+  tokens:
+  - token_id: state-cause-one
+    text: Den
+  - token_id: state-cause-two
+    text: høye
+  - token_id: state-cause-three
+    text: musikken
+  - token_id: state-verb
+    text: gjør
+  - token_id: state-object
+    text: naboene
+  - token_id: state-adjective
+    text: sinte.
+  answer_order:
+  - state-cause-one
+  - state-cause-two
+  - state-cause-three
+  - state-verb
+  - state-object
+  - state-adjective
+- handle: separate_action_and_state_results
+  op: choose
+  objective: obj-causative-constructions-01
+  bloom: understand
+  prompt_md: In two paired situations, Sara causes Jonas to wash the dishes, and a
+    long journey makes Nora tired. Choose the Bokmål pair that preserves an action
+    result in the first situation and a state result in the second. Permission with
+    la is not scored.
+  derived_from:
+  - section_id: separate-action-and-state-results
+  stem_md: Which pair uses the correct construction for each intended result?
+  options:
+  - id: action-state-correct
+    text: Sara får Jonas til å vaske opp. Den lange reisen gjør Nora trøtt.
+    correct: true
+    why: Få expresses the caused action, while gjøre expresses the caused state.
+  - id: permission-state
+    text: Sara lar Jonas vaske opp. Den lange reisen gjør Nora trøtt.
+    correct: false
+    why: The first sentence expresses permission instead of causing the action.
+  - id: action-action
+    text: Sara får Jonas til å vaske opp. Den lange reisen får Nora til å sove.
+    correct: false
+    why: The second sentence uses an action construction instead of the required adjective
+      state construction.
+- handle: track_causative_roles
+  op: build
+  objective: obj-causative-constructions-01
+  bloom: apply
+  prompt_md: At the community centre, Emil gives Jonas permission to open the door.
+    Construct one complete Bokmål sentence. Put Emil as subject and Jonas as object,
+    and use la + object + bare infinitive.
+  explanation_md: "Use la plus person plus infinitive for permission: Emil lar Jonas åpne døren."
+  derived_from:
+  - section_id: track-causative-roles
+  tokens:
+  - token_id: role-subject
+    text: Emil
+  - token_id: role-verb
+    text: lar
+  - token_id: role-object
+    text: Jonas
+  - token_id: role-infinitive
+    text: åpne
+  - token_id: role-object-two
+    text: døren.
+  answer_order:
+  - role-subject
+  - role-verb
+  - role-object
+  - role-infinitive
+  - role-object-two
+- handle: family_dinner_causative_transfer
+  op: write
+  objective: obj-causative-constructions-01
+  bloom: apply
+  prompt_md: Write a short connected account in Norwegian about family members preparing
+    dinner. Include one caused action using få + object + til å + infinitive, one
+    permitted action using la + object + bare infinitive, and one caused emotional
+    or physical state using gjøre + object + adjective. Each sentence should express
+    one clear relationship and fit the family-dinner setting.
+  derived_from:
+  - section_id: family-dinner-causative-transfer
+  response_language: 'no'
+  judge_prompt: Check the Norwegian response against the task and report evidence
+    for each criterion. Accept natural Bokmål variants when they preserve the required
+    causative meaning and construction.
+  criteria:
+  - id: dinner-caused-action
+    instruction: Includes one natural Bokmål sentence in which one family member causes
+      another to perform an action with få + object + til å + infinitive.
+  - id: dinner-permitted-action
+    instruction: Includes one natural Bokmål sentence in which one family member gives
+      another permission with la + object + bare infinitive.
+  - id: dinner-caused-state
+    instruction: Includes one natural Bokmål sentence using gjøre + object + adjective
+      to express a caused emotional or physical state.
+  - id: dinner-clear-relationships
+    instruction: Each required sentence expresses one clear relationship, and the
+      account remains coherent in the family-dinner setting.
+- handle: retrieve_three_causative_frames
+  op: recall_fill
+  objective: obj-causative-constructions-01
+  bloom: remember
+  prompt_md: 'Complete each of these three new Norwegian sentences by selecting the
+    verb that matches the situation: arranging help, granting permission, or describing
+    an emotional result.'
+  derived_from:
+  - section_id: retrieve-three-causative-frames
+  audio_target: "Jeg får naboen til å passe katten. Foreldrene lar barna gå ut etter middagen. Den gode nyheten gjør Ingrid glad."
+  segments:
+  - text_md: 'Jeg '
+  - blank_id: arranging-help-verb
+    options:
+    - får
+    - lar
+    - gjør
+    answer_index: 0
+  - text_md: ' naboen til å passe katten. Foreldrene '
+  - blank_id: granting-permission-verb
+    options:
+    - får
+    - lar
+    - gjør
+    answer_index: 1
+  - text_md: ' barna gå ut etter middagen. Den gode nyheten '
+  - blank_id: emotional-result-verb
+    options:
+    - får
+    - lar
+    - gjør
+    answer_index: 2
+  - text_md: ' Ingrid glad.'

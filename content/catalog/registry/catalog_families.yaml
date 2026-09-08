@@ -1,0 +1,677 @@
+# Controlled family registry for the scratch-only catalog-family pipeline.
+#
+# This is an authoring taxonomy, not a course sequence and not a canonical
+# lesson catalog. Every family has an explicit catalog_kind so routing happens
+# before lesson grouping. Example settings are not families or standalone
+# lesson tracks.
+
+# Grammar is limited to systems that describe how sentences and word forms
+# function in a grammatical construction. Inflection stays with its owning
+# grammar family (for example, preterite with tense_aspect). There is
+# intentionally no standalone derivation/compounding family in this MVP.
+version: 6
+families:
+  # Grammar ---------------------------------------------------------------
+  - id: noun_phrase_definiteness
+    title: Substantivfraser og bestemthet (noun phrases and definiteness)
+    catalog_kind: grammar
+    systems:
+      - noun gender
+      - indefinite and definite articles
+      - definite noun endings
+      - double definiteness
+      - noun plurals
+      - genitive possession
+      - noun phrase order
+    exclusions:
+      - adjective agreement
+      - pronoun reference
+      - derivation and compounding as lexical word formation
+    boundary_confusions:
+      - adjective_adverb_comparison
+      - pronouns_determiners_reference
+    example_slugs:
+      - noun_gender
+      - indefinite_articles
+      - definite_articles
+      - double_definiteness
+      - noun_plurals
+      - genitive
+
+  - id: adjective_adverb_comparison
+    title: Adjektiv, adverb og gradbøying (adjectives, adverbs, and comparison)
+    catalog_kind: grammar
+    systems:
+      - adjective agreement
+      - adjective definiteness
+      - adjective comparison
+      - adverb formation and position
+      - degree, manner, time, frequency, and place adverbs
+    exclusions:
+      - discourse adverbs used for cohesion
+      - pronoun reference
+    boundary_confusions:
+      - noun_phrase_definiteness
+      - discourse_cohesion
+    example_slugs:
+      - adjective_agreement
+      - adjective_definite_forms
+      - adjective_and_adverb_comparison
+      - basic_adverbs_and_position
+      - adverbs_time_frequency_degree_manner_place
+
+  - id: pronouns_determiners_reference
+    title: Pronomen, determinativer og referanse (pronouns, determiners, and reference)
+    catalog_kind: grammar
+    systems:
+      - personal subject and object pronouns
+      - possessive pronouns and reflexive possessives
+      - demonstrative pronouns
+      - indefinite and generic pronouns
+      - determiner selection
+    exclusions:
+      - interrogative question formation
+      - adjective agreement
+      - discourse-level anaphora
+    boundary_confusions:
+      - noun_phrase_definiteness
+      - clause_word_order
+      - discourse_cohesion
+    example_slugs:
+      - personal_pronouns_subject
+      - personal_pronouns_object
+      - possessive_pronouns
+      - possessive_placement
+      - demonstrative_pronouns
+      - indefinite_pronouns
+      - generic_pronouns
+
+  - id: tense_aspect
+    title: Tempus og aspekt (tense and aspect)
+    catalog_kind: grammar
+    systems:
+      - present and past tense
+      - present perfect and pluperfect
+      - future expressions and future perfect
+      - preterite versus present perfect
+      - progressive aspect
+      - present participle
+      - conditional perfect
+    exclusions:
+      - modal meaning
+      - passive voice
+      - lexical verb selection
+    boundary_confusions:
+      - modality_complementation
+      - lexical_verb_frames
+    example_slugs:
+      - present_tense
+      - past_tense
+      - present_perfect
+      - future_expressions
+      - preterite_vs_present_perfect
+      - pluperfect
+      - progressive_aspect
+
+  - id: modality_complementation
+    title: Modus, modalitet og verbkomplementering (mood, modality, and verb complementation)
+    catalog_kind: grammar
+    systems:
+      - modal verbs and modal nuance
+      - imperative mood
+      - skulle versus ville
+      - infinitive marker
+      - verb complementation
+      - irrealis constructions
+    exclusions:
+      - tense and aspect of ordinary verbs
+      - conditional clause linking
+      - lexical verb contrasts
+    boundary_confusions:
+      - tense_aspect
+      - coordination_subordination_conditionals
+      - lexical_verb_frames
+    example_slugs:
+      - modal_verbs_basic
+      - modal_nuance
+      - imperative
+      - skulle_vs_ville
+      - infinitive_marker
+      - verb_complementation
+      - irrealis_constructions
+
+  - id: clause_word_order
+    title: Setningsstruktur og ordstilling (clause structure and word order)
+    catalog_kind: grammar
+    systems:
+      - main-clause V2 word order
+      - fronting and inversion
+      - subordinate-clause word order
+      - sentence adverb placement
+      - object pronoun position
+      - embedded questions
+    exclusions:
+      - discourse cohesion
+      - standalone question functions
+    boundary_confusions:
+      - questions_negation_responses
+      - coordination_subordination_conditionals
+    example_slugs:
+      - word_order_main_clauses
+      - word_order_subordinate_clauses
+      - fronting_and_v2_inversion
+      - sentence_adverbs
+      - object_pronoun_position
+      - embedded_questions
+
+  - id: information_structure_focus
+    title: Informasjonsstruktur, fokus og utrop (information structure, focus, and exclamatives)
+    catalog_kind: grammar
+    systems:
+      - cleft sentences
+      - focus-particle placement and scope
+      - exclamative clause patterns
+      - marked focus constructions
+    exclusions:
+      - presentational det for discourse-new participants
+      - ordinary question formation
+      - discourse cohesion across sentences
+    boundary_confusions:
+      - clause_word_order
+      - existential_presentational_clauses
+      - questions_negation_responses
+    example_slugs:
+      - cleft_sentences
+      - focus_particles_and_constituent_scope
+      - exclamatives_with_for_and_sa
+
+  - id: existential_presentational_clauses
+    title: Eksistens- og presentasjonssetninger (existential and presentational clauses)
+    catalog_kind: grammar
+    systems:
+      - det er for identification and description
+      - det finnes for existence and availability
+      - presentational det
+      - dummy det in weather and ambient clauses
+    exclusions:
+      - lexical verb choice outside an existential construction
+      - discourse reference with det
+      - noun phrase definiteness by itself
+    boundary_confusions:
+      - clause_word_order
+      - noun_phrase_definiteness
+      - lexical_verb_frames
+    example_slugs:
+      - det_er_vs_det_finnes
+
+  - id: questions_negation_responses
+    title: Spørsmål, negasjon og kortsvar (questions, negation, and short responses)
+    catalog_kind: grammar
+    systems:
+      - question word order
+      - yes/no response particles ja, nei, and jo
+      - basic negation
+      - interrogative forms
+    exclusions:
+      - embedded questions
+      - discourse response management
+    boundary_confusions:
+      - clause_word_order
+      - discourse_cohesion
+    example_slugs:
+      - question_word_order
+      - answering_ja_nei_jo
+      - negation_ikke_basic
+
+  - id: coordination_subordination_conditionals
+    title: Sideordning, underordning og betingelsessetninger (coordination, subordination, and conditionals)
+    catalog_kind: grammar
+    systems:
+      - coordinating conjunctions
+      - subordinating conjunctions
+      - conditional clauses and hvis versus om
+      - cause and result connectors
+      - relative clauses
+      - indirect speech
+      - jo desto correlatives
+    exclusions:
+      - discourse-level cohesion
+      - ordinary main-clause V2 order
+    boundary_confusions:
+      - clause_word_order
+      - discourse_cohesion
+      - modality_complementation
+    example_slugs:
+      - coordinating_conjunctions
+      - subordinating_conjunctions
+      - conditional_clauses
+      - hvis_vs_om
+      - fordi_derfor_sa
+      - relative_clauses
+      - indirect_speech
+      - jo_desto_correlatives
+
+  - id: voice_valency
+    title: Diatese og grammatisk valens (voice and grammatical valency)
+    catalog_kind: grammar
+    systems:
+      - bli and s-passive
+      - complex passives
+      - reflexive verbs
+      - causative constructions
+      - reciprocal constructions
+    exclusions:
+      - particle verb meaning
+      - lexical verb contrasts
+      - ordinary tense and aspect
+    boundary_confusions:
+      - tense_aspect
+      - lexical_verb_frames
+      - particle_verbs
+    example_slugs:
+      - passive_bli_and_s
+      - s_verbs
+      - complex_passives
+      - reflexive_verbs
+      - causative_constructions
+      - reciprocal_pronouns
+
+  - id: prepositions_particles
+    title: Preposisjoner og romlige partikler (prepositions and spatial particles)
+    catalog_kind: grammar
+    systems:
+      - place and time prepositions
+      - preposition stranding
+      - directional versus locative adverbs
+      - basic spatial particles
+    exclusions:
+      - fixed prepositional expressions
+      - particle verb meaning
+      - discourse connectors
+    boundary_confusions:
+      - quantity_time
+      - fixed_prepositional_expressions
+      - particle_verbs
+    example_slugs:
+      - basic_prepositions_place_time
+      - preposition_stranding
+      - directional_vs_locative_adverbs
+
+  - id: quantity_time
+    title: Mengde, datoer og tidsreferanse (quantity, dates, and time reference)
+    catalog_kind: grammar
+    systems:
+      - cardinal and ordinal numbers
+      - quantity and countability
+      - time, dates, and scheduling
+      - temporal adverbials
+    exclusions:
+      - verb tense and aspect
+      - place prepositions
+    boundary_confusions:
+      - tense_aspect
+      - prepositions_particles
+      - noun_phrase_definiteness
+    example_slugs:
+      - cardinal_numbers
+      - ordinal_numbers
+      - quantity_and_countability
+      - time_dates_and_scheduling
+      - da_vs_nar
+
+  # Pronunciation ---------------------------------------------------------
+  - id: pronunciation_sound_spelling
+    title: Alfabet og lyd–skrift-forhold (alphabet and sound–spelling relations)
+    catalog_kind: pronunciation
+    systems:
+      - Norwegian alphabet names and letter sounds
+      - spelling names and addresses aloud
+      - general sound-to-spelling orientation
+    exclusions:
+      - grammar and syntax
+      - detailed vowel and consonant contrasts
+      - word and sentence prosody
+    boundary_confusions:
+      - writing_genres
+    example_slugs:
+      - alphabet
+      - norwegian_alphabet
+
+  - id: pronunciation_vowels
+    title: Norske vokaler og vokallengde (Norwegian vowels and vowel length)
+    catalog_kind: pronunciation
+    systems:
+      - long and short vowels
+      - vowel-quality contrasts
+      - i, y, and u contrasts
+    exclusions:
+      - consonant articulation
+      - lexical word stress
+    boundary_confusions:
+      - pronunciation_sound_spelling
+      - pronunciation_prosody
+    example_slugs:
+      - norwegian_vowel_length
+      - norwegian_i_y_u_contrasts
+
+  - id: pronunciation_consonants
+    title: Norske konsonanter og konsonantgrupper (Norwegian consonants and clusters)
+    catalog_kind: pronunciation
+    systems:
+      - kj, sj, and skj contrasts
+      - retroflex consonants after r
+      - consonant clusters without deletion or vowel insertion
+    exclusions:
+      - vowel length and quality
+      - connected speech across word boundaries
+    boundary_confusions:
+      - pronunciation_sound_spelling
+      - pronunciation_connected_speech
+    example_slugs:
+      - kj_sj_skj_contrast
+      - norwegian_kj_sj_skj_contrasts
+      - norwegian_retroflex_after_r
+      - norwegian_consonant_clusters
+      - final_consonant_clusters
+
+  - id: pronunciation_prosody
+    title: Trykk, tonegang og tonelag (stress, intonation, and word tones)
+    catalog_kind: pronunciation
+    systems:
+      - word stress
+      - sentence stress and contrastive prominence
+      - statement and question intonation
+      - tonelag 1 and tonelag 2
+    exclusions:
+      - segmental sound contrasts
+      - spelling conventions
+    boundary_confusions:
+      - pronunciation_vowels
+      - pronunciation_connected_speech
+    example_slugs:
+      - norwegian_word_stress
+      - norwegian_sentence_stress
+      - norwegian_statement_question_intonation
+      - norwegian_word_tones
+
+  - id: pronunciation_connected_speech
+    title: Sammenhengende tale (connected speech)
+    catalog_kind: pronunciation
+    systems:
+      - consonant-to-vowel linking across word boundaries
+      - fluent transitions between words
+    exclusions:
+      - isolated consonant-cluster articulation
+      - sentence-level discourse organization
+    boundary_confusions:
+      - pronunciation_consonants
+      - pronunciation_prosody
+    example_slugs:
+      - consonant_vowel_linking
+
+  # Phraseology -----------------------------------------------------------
+  - id: collocations
+    title: Kollokasjoner og naturlige ordkombinasjoner (collocations and natural word combinations)
+    catalog_kind: phraseology
+    systems:
+      - frequent word combinations
+      - preferred lexical partners
+      - naturalness and selection
+    exclusions:
+      - productive grammar rules
+      - fixed idioms with non-compositional meaning
+    boundary_confusions:
+      - lexical_verb_frames
+      - fixed_expressions_idioms
+    example_slugs:
+      - collocations
+
+  - id: fixed_expressions_idioms
+    title: Faste uttrykk og idiomer (fixed expressions and idioms)
+    catalog_kind: phraseology
+    systems:
+      - fixed expressions
+      - idiomatic meaning
+      - proverb-like phrases
+    exclusions:
+      - open collocations
+      - discourse organization
+    boundary_confusions:
+      - collocations
+      - fixed_prepositional_expressions
+    example_slugs:
+      - fixed_expressions_idioms
+
+  - id: lexical_verb_frames
+    title: Leksikalske verbkontraster og verbmønstre (lexical verb contrasts and frames)
+    catalog_kind: phraseology
+    systems:
+      - verb choice by meaning and frame
+      - state and change-of-state verbs
+      - posture and placement verbs
+      - stance and knowing verbs
+    exclusions:
+      - grammatical tense and aspect
+      - passive voice
+      - productive derivation
+    boundary_confusions:
+      - tense_aspect
+      - voice_valency
+      - collocations
+    example_slugs:
+      - vaere_vs_bli_vs_ha_vs_fa
+      - legge_vs_ligge_vs_sette_vs_sitte_vs_sta
+      - stance_and_knowing_verbs
+
+  - id: particle_verbs
+    title: Partikkelverb og verb-partikkelbetydning (particle verbs and verb-particle meaning)
+    catalog_kind: phraseology
+    systems:
+      - verb-particle combinations
+      - separable particle meaning
+      - lexical selection of particles
+    exclusions:
+      - basic spatial adverbs
+      - passive morphology
+    boundary_confusions:
+      - prepositions_particles
+      - collocations
+    example_slugs:
+      - particle_verbs
+
+  - id: fixed_prepositional_expressions
+    title: Faste preposisjonsuttrykk (fixed prepositional expressions)
+    catalog_kind: phraseology
+    systems:
+      - verb and adjective preposition frames
+      - fixed prepositional phrases
+      - lexical preposition choice
+    exclusions:
+      - productive place and time prepositions
+      - open collocations
+    boundary_confusions:
+      - prepositions_particles
+      - collocations
+      - fixed_expressions_idioms
+    example_slugs:
+      - fixed_prepositional_expressions
+
+  # Communicative language ------------------------------------------------
+  - id: discourse_cohesion
+    title: Tekstbinding og diskursmarkører (discourse cohesion and connectors)
+    catalog_kind: communicative
+    systems:
+      - discourse connectors
+      - reference across sentences
+      - ellipsis and anaphora in discourse
+      - cohesion choices
+    exclusions:
+      - sentence-level clause syntax
+      - word formation
+      - register labels without a discourse task
+    boundary_confusions:
+      - coordination_subordination_conditionals
+      - clause_word_order
+      - register_pragmatics
+    example_slugs:
+      - discourse_connectors
+      - discourse_cohesion
+      - ellipsis_anaphora
+
+  - id: register_pragmatics
+    title: Register, holdning og pragmatiske valg (register, stance, and pragmatic choices)
+    catalog_kind: communicative
+    systems:
+      - formal and informal register
+      - hedging and stance
+      - pragmatic interpretation
+      - audience-appropriate choices
+    exclusions:
+      - fixed expressions
+      - sentence-level mood and modality
+      - writing genre structure
+    boundary_confusions:
+      - discourse_cohesion
+      - writing_genres
+      - lexical_verb_frames
+    example_slugs:
+      - formal_vs_informal_register
+      - hedging_stance_markers
+      - advanced_pragmatics
+
+  - id: social_interaction
+    title: Sosial samhandling (social interaction)
+    catalog_kind: communicative
+    systems:
+      - greetings and introductions
+      - invitations and responses
+      - informal plan negotiation
+      - small talk
+    exclusions:
+      - service transactions
+      - communication repair
+      - register labels without an interaction
+    boundary_confusions:
+      - register_pragmatics
+      - transactional_interaction
+    example_slugs:
+      - greet_and_introduce_yourself
+      - invite_someone_and_respond
+      - agree_on_informal_plans
+      - make_weather_small_talk
+
+  - id: transactional_interaction
+    title: Praktiske samtaler og tjenester (practical conversations and services)
+    catalog_kind: communicative
+    systems:
+      - asking for help or directions
+      - arranging and confirming appointments
+      - reporting problems or absence
+      - ordering and paying
+    exclusions:
+      - social invitations and small talk
+      - writing-only tasks
+      - communication repair by itself
+    boundary_confusions:
+      - social_interaction
+      - communication_repair
+      - writing_genres
+    example_slugs:
+      - ask_for_help
+      - ask_for_and_give_directions
+      - arrange_and_confirm_an_appointment
+      - report_a_problem_and_request_action
+      - report_workplace_absence
+      - order_and_pay
+
+  - id: communication_repair
+    title: Be om gjentakelse og forklaring (communication repair)
+    catalog_kind: communicative
+    systems:
+      - asking for repetition
+      - asking for clarification
+      - confirming a repaired message
+    exclusions:
+      - general requests for help
+      - discourse cohesion
+    boundary_confusions:
+      - transactional_interaction
+      - register_pragmatics
+    example_slugs:
+      - ask_for_repetition_or_clarification
+
+  # Writing and orthography ----------------------------------------------
+  - id: writing_genres
+    title: Meldinger og praktisk korrespondanse (messages and practical correspondence)
+    catalog_kind: writing
+    systems:
+      - messages and emails
+      - clear requests
+      - changes and cancellations
+      - problem reports and invitation replies
+      - genre-specific organization
+    exclusions:
+      - sentence grammar in isolation
+      - pronunciation
+      - general register without a writing task
+    boundary_confusions:
+      - register_pragmatics
+      - discourse_cohesion
+    example_slugs:
+      - basic_text_genres_messages_emails
+      - write_clear_request
+      - change_or_cancel_plan
+      - report_problem_request_solution
+      - reply_to_invitation
+
+  - id: writing_information
+    title: Sammendrag, forklaringer og meninger (summaries, explanations, and opinions)
+    catalog_kind: writing
+    systems:
+      - short summaries
+      - short explanations
+      - opinion writing
+      - selecting and organizing essential information
+    exclusions:
+      - form completion
+      - step-by-step instructions
+      - sentence grammar in isolation
+    boundary_confusions:
+      - writing_genres
+      - discourse_cohesion
+    example_slugs:
+      - write_short_summary
+      - short_explanation_opinion_writing
+
+  - id: writing_procedures_forms
+    title: Skjemaer og trinnvise instruksjoner (forms and step-by-step instructions)
+    catalog_kind: writing
+    systems:
+      - completing practical forms
+      - writing ordered instructions
+      - matching supplied information to fields
+    exclusions:
+      - narrative or opinion writing
+      - spoken service interactions
+    boundary_confusions:
+      - writing_genres
+      - transactional_interaction
+    example_slugs:
+      - complete_practical_forms
+      - write_practical_instructions
+
+  - id: punctuation_orthography
+    title: Tegnsetting og rettskriving (punctuation and spelling conventions)
+    catalog_kind: writing
+    systems:
+      - comma placement
+      - punctuation conventions
+      - orthographic choices
+    exclusions:
+      - sound-to-spelling pronunciation practice
+      - discourse organization
+    boundary_confusions:
+      - pronunciation_sound_spelling
+      - discourse_cohesion
+    example_slugs:
+      - punctuation_and_commas

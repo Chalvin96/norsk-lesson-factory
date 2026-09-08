@@ -1,0 +1,354 @@
+- handle: anchor_adverb_noticing
+  op: match_pairs
+  objective: obj-basic-adverbs-and-position-01
+  bloom: remember
+  prompt_md: Match each adverb in the supplied sentences to the information it contributes.
+  explanation_md: "Ofte marks frequency, ikke negation, langsomt manner, and nå time; classify the information each word adds to its sentence."
+  derived_from:
+  - section_id: what-an-adverb-does
+  left:
+  - left_id: adverb-ofte
+    text: ofte — Jeg kommer ofte sent.
+  - left_id: adverb-ikke
+    text: ikke — Jeg er ikke sen i dag.
+  - left_id: adverb-langsـomt
+    text: langsomt — Jeg arbeider langsomt.
+  - left_id: adverb-naa
+    text: nå — Jeg jobber stille nå.
+  right:
+  - right_id: meaning-frequency
+    text: often — frequency
+  - right_id: meaning-negation
+    text: not — negation
+  - right_id: meaning-manner
+    text: slowly — manner
+  - right_id: meaning-time
+    text: now — time
+  pairs:
+  - left_id: adverb-ofte
+    right_id: meaning-frequency
+  - left_id: adverb-ikke
+    right_id: meaning-negation
+  - left_id: adverb-langsـomt
+    right_id: meaning-manner
+  - left_id: adverb-naa
+    right_id: meaning-time
+- handle: quality_or_action_form
+  op: recall_fill
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Complete each pair with the supplied adjective's correct form. Use the
+    adjective after er and the adverbial form for the action.
+  explanation_md: "After er, the word describes the subject and stays adjectival; with an action verb, use the adverbial form, often with -t."
+  derived_from:
+  - section_id: using-an-adjective-to-describe-an-action
+  audio_target: "Bilen er rask. Bilen kjører raskt. Sangeren er god. Sangeren synger godt."
+  segments:
+  - text_md: 'Bilen er '
+  - blank_id: rask-quality
+    options:
+    - rask
+    - raskt
+    answer_index: 0
+  - text_md: '. Bilen kjører '
+  - blank_id: rask-action
+    options:
+    - rask
+    - raskt
+    answer_index: 1
+  - text_md: '. Sangeren er '
+  - blank_id: god-quality
+    options:
+    - god
+    - godt
+    answer_index: 0
+  - text_md: '. Sangeren synger '
+  - blank_id: god-action
+    options:
+    - god
+    - godt
+    answer_index: 1
+  - text_md: .
+- handle: unchanged_adverbial_form
+  op: categorize
+  objective: obj-basic-adverbs-and-position-01
+  bloom: analyze
+  prompt_md: Classify what the final word describes in each sentence. Its written
+    form may remain unchanged.
+  explanation_md: "After er, rolig or forsiktig describes the subject; after an action verb, the same form describes how the action happens."
+  derived_from:
+  - section_id: using-an-adjective-to-describe-an-action
+  buckets:
+  - bucket_id: subject-description
+    label: Describes a person or thing
+  - bucket_id: action-description
+    label: Describes an action
+  items:
+  - item_id: rolig-subject
+    text: Barnet er rolig.
+    bucket_id: subject-description
+  - item_id: rolig-action
+    text: Barnet sover rolig.
+    bucket_id: action-description
+  - item_id: forsiktig-subject
+    text: Anna er forsiktig.
+    bucket_id: subject-description
+  - item_id: forsiktig-action
+    text: Anna setter glasset forsiktig på bordet.
+    bucket_id: action-description
+  - item_id: stille-subject
+    text: Rommet er stille.
+    bucket_id: subject-description
+  - item_id: stille-action
+    text: Erik arbeider stille.
+    bucket_id: action-description
+- handle: frequency_and_negation_position
+  op: build
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Build the neutral sentence meaning “Erik always arrives late.” Place
+    alltid after the verb.
+  explanation_md: "In a main clause with a simple verb, alltid normally follows the finite verb: Erik kommer alltid sent."
+  derived_from:
+  - section_id: position-of-frequency-and-negative-adverbs
+  tokens:
+  - token_id: tok-kommer
+    text: kommer
+  - token_id: tok-alltid
+    text: alltid
+  - token_id: tok-sent
+    text: sent.
+  - token_id: tok-erik
+    text: Erik
+  answer_order:
+  - tok-erik
+  - tok-kommer
+  - tok-alltid
+  - tok-sent
+- handle: simple_clause_position_repair
+  op: find_fix
+  objective: obj-basic-adverbs-and-position-01
+  bloom: analyze
+  prompt_md: 'Select the misplaced adverb token. The feedback explains the corrected position.'
+  derived_from:
+  - section_id: position-of-frequency-and-negative-adverbs
+  tokens:
+  - token_id: tok-han
+    text: Han
+  - token_id: tok-ikke
+    text: ikke
+  - token_id: tok-arbeider
+    text: arbeider
+  - token_id: tok-naa
+    text: nå.
+  error_token_id: tok-ikke
+  feedback: 'Move ikke after the verb: Han arbeider ikke nå.'
+- handle: manner_adverb_position
+  op: build
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Build the neutral sentence. Place the supplied manner adverb langsomt
+    after the object.
+  explanation_md: "When a manner adverb describes how the object-directed action is done, place it after the object: leser meldingen langsomt."
+  derived_from:
+  - section_id: position-of-manner-adverbs
+  tokens:
+  - token_id: tok-leser
+    text: leser
+  - token_id: tok-meldingen
+    text: meldingen
+  - token_id: tok-langsomt
+    text: langsomt.
+  - token_id: tok-nora
+    text: Nora
+  answer_order:
+  - tok-nora
+  - tok-leser
+  - tok-meldingen
+  - tok-langsomt
+- handle: two_adverb_position_contrast
+  op: build
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Build the neutral sentence. Place alltid after the verb and forsiktig
+    after the object.
+  derived_from:
+  - section_id: position-of-manner-adverbs
+  tokens:
+  - token_id: tok-baerer
+    text: bærer
+  - token_id: tok-alltid
+    text: alltid
+  - token_id: tok-glassene
+    text: glassene
+  - token_id: tok-forsiktig
+    text: forsiktig.
+  - token_id: tok-erik
+    text: Erik
+  answer_order:
+  - tok-erik
+  - tok-baerer
+  - tok-alltid
+  - tok-glassene
+  - tok-forsiktig
+- handle: adjective_adverb_misconception_repair
+  op: find_fix
+  objective: obj-basic-adverbs-and-position-01
+  bloom: analyze
+  prompt_md: 'Select the form that incorrectly describes how the car travels.'
+  derived_from:
+  - section_id: do-you-need-an-adjective-or-an-adverb
+  tokens:
+  - token_id: tok-bilen
+    text: Bilen
+  - token_id: tok-kjorer
+    text: kjører
+  - token_id: tok-rask
+    text: rask.
+  error_token_id: tok-rask
+  feedback: 'Replace rask with raskt because it describes the action: Bilen kjører
+    raskt.'
+- handle: anchor_scene_completion_by_form
+  op: recall_fill
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Complete the continuation with each supplied adjective's natural adverbial
+    form. Positions are already fixed.
+  explanation_md: "Rask and lav normally become raskt and lavt when they describe an action; forsiktig already has the same adverbial form."
+  derived_from:
+  - section_id: back-at-annas-apartment
+  audio_target: "Nora leser meldingen langsomt. Anna bærer glassene forsiktig. Erik snakker lavt."
+  segments:
+  - text_md: 'Nora leser meldingen '
+  - blank_id: langsom-action
+    options:
+    - langsomt
+    - langsom
+    answer_index: 0
+  - text_md: '. Anna bærer glassene '
+  - blank_id: forsiktig-action
+    options:
+    - rolig
+    - forsiktig
+    answer_index: 1
+  - text_md: '. Erik snakker '
+  - blank_id: lav-action
+    options:
+    - lavt
+    - lav
+    answer_index: 0
+  - text_md: .
+- handle: anchor_scene_completion_by_position
+  op: build
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Build the new scene sentence. Place ikke after the verb and raskt after
+    the object.
+  derived_from:
+  - section_id: back-at-annas-apartment
+  tokens:
+  - token_id: tok-baerer
+    text: bærer
+  - token_id: tok-ikke
+    text: ikke
+  - token_id: tok-glassene
+    text: glassene
+  - token_id: tok-raskt
+    text: raskt.
+  - token_id: tok-erik
+    text: Erik
+  answer_order:
+  - tok-erik
+  - tok-baerer
+  - tok-ikke
+  - tok-glassene
+  - tok-raskt
+- handle: school_event_adverb_form_transfer
+  op: recall_fill
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Complete each school-event contrast with the supplied adjective's correct
+    form. Choose by what the word describes.
+  derived_from:
+  - section_id: transfer-helping-at-a-school-event
+  audio_target: "Mina er rask. Mina lager drikkene raskt. Jonas er forsiktig. Jonas bærer stolene forsiktig."
+  segments:
+  - text_md: 'Mina er '
+  - blank_id: rask-quality
+    options:
+    - raskt
+    - rask
+    answer_index: 1
+  - text_md: '. Mina lager drikkene '
+  - blank_id: rask-action
+    options:
+    - raskt
+    - rask
+    answer_index: 0
+  - text_md: '. Jonas er '
+  - blank_id: forsiktig-quality
+    options:
+    - rolig
+    - forsiktig
+    answer_index: 1
+  - text_md: '. Jonas bærer stolene '
+  - blank_id: forsiktig-action
+    options:
+    - forsiktig
+    - stille
+    answer_index: 0
+  - text_md: .
+- handle: school_event_adverb_position_transfer
+  op: build
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Build the school-event sentence. Place alltid after the verb and forsiktig
+    after the object.
+  derived_from:
+  - section_id: transfer-helping-at-a-school-event
+  tokens:
+  - token_id: tok-baerer
+    text: bærer
+  - token_id: tok-alltid
+    text: alltid
+  - token_id: tok-stolene
+    text: stolene
+  - token_id: tok-forsiktig
+    text: forsiktig.
+  - token_id: tok-jonas
+    text: Jonas
+  answer_order:
+  - tok-jonas
+  - tok-baerer
+  - tok-alltid
+  - tok-stolene
+  - tok-forsiktig
+- handle: final_position_retrieval
+  op: recall_fill
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Complete the three morning-routine clauses by retrieving the neutral
+    position of the supplied adverb.
+  derived_from:
+  - section_id: short-retrieval-review
+  audio_target: "Jeg kommer ofte tidlig. Jeg arbeider ikke nå. Jeg spiser fort."
+  segments:
+  - text_md: 'Jeg '
+  - blank_id: frequency-position
+    options:
+    - ofte kommer
+    - kommer ofte
+    answer_index: 1
+  - text_md: ' tidlig. Jeg '
+  - blank_id: negative-position
+    options:
+    - arbeider ikke
+    - ikke arbeider
+    answer_index: 0
+  - text_md: ' nå. Jeg '
+  - blank_id: manner-position
+    options:
+    - fort spiser
+    - spiser fort
+    answer_index: 1
+  - text_md: .

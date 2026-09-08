@@ -1,0 +1,497 @@
+- handle: notice_modal_perspective
+  op: choose
+  objective: obj-conditional-perfect-01
+  bloom: understand
+  prompt_md: Choose the one interpretation set that correctly matches all four modal
+    phrases in this failed dinner context. Score perspective, not participle form.
+  derived_from:
+  - section_id: looking-back-from-the-present
+  stem_md: Match each phrase with its target reading and choose the complete set.
+  options:
+  - id: swapped-set
+    text: skulle ha vært ferdige nå — retrospective advice or judgment; burde ha begynt
+      tidligere — unfulfilled expectation; kunne ha laget en salat — unreal past outcome;
+      ville ha tatt med noe hvis jeg hadde visst — missed possibility.
+    correct: false
+    why: This swaps the expectation and judgment readings and also swaps the possibility
+      and unreal-outcome readings.
+  - id: surface-set
+    text: skulle ha vært ferdige nå — unfulfilled expectation; burde ha begynt tidligere
+      — missed possibility; kunne ha laget en salat — retrospective advice or judgment;
+      ville ha tatt med noe hvis jeg hadde visst — unreal past outcome.
+    correct: false
+    why: kunne ha is treated as advice and burde ha as possibility, contrary to the
+      target readings.
+  - id: reversed-set
+    text: skulle ha vært ferdige nå — unreal past outcome; burde ha begynt tidligere
+      — missed possibility; kunne ha laget en salat — unfulfilled expectation; ville
+      ha tatt med noe hvis jeg hadde visst — retrospective advice or judgment.
+    correct: false
+    why: The set assigns all four phrases to the wrong perspectives.
+  - id: correct-set
+    text: skulle ha vært ferdige nå — unfulfilled expectation (You were supposed to
+      be finished by now); burde ha begynt tidligere — retrospective advice or judgment
+      (We should have started earlier); kunne ha laget en salat — missed possibility
+      (I could have made a salad); ville ha tatt med noe hvis jeg hadde visst — unreal
+      past outcome (I would have brought something if I had known).
+    correct: true
+    why: This set assigns each modal the target perspective established by the context.
+- handle: complete_unfulfilled_arrangements
+  op: recall_fill
+  objective: obj-conditional-perfect-01
+  bloom: apply
+  prompt_md: Complete each statement about an unfulfilled arrangement. Choose the
+    taught past-participle phrase that makes the arrangement use skulle ha correctly.
+  explanation_md: "Use skulle ha plus the past participle to say what someone was supposed to do: skulle ha tatt, kommet, møtt."
+  derived_from:
+  - section_id: skulle-ha-and-burde-ha-are-not-identical
+  audio_target: "Jonas skulle ha tatt bussen klokka fire. Du skulle ha kommet klokka fem. Jeg skulle ha møtt henne klokka seks."
+  segments:
+  - text_md: 'The plan was fixed: Jonas skulle ha '
+  - blank_id: arrangement-1
+    options:
+    - tatt bussen
+    - kjøpt brød
+    - kommet alene
+    answer_index: 0
+  - text_md: ' klokka fire.'
+  - text_md: ' The dinner arrangement was: Du skulle ha '
+  - blank_id: arrangement-2
+    options:
+    - kommet
+    - begynt
+    - ringt
+    answer_index: 0
+  - text_md: ' klokka fem.'
+  - text_md: ' My fixed appointment was: Jeg skulle ha '
+  - blank_id: arrangement-3
+    options:
+    - møtt
+    - skrevet
+    - ringt
+    answer_index: 0
+  - text_md: ' henne klokka seks.'
+- handle: contrast_arrangement_and_retrospective_advice
+  op: categorize
+  objective: obj-conditional-perfect-01
+  bloom: analyze
+  prompt_md: 'Classify each complete phrase by the perspective it expresses: an earlier
+    arrangement or expectation, or a later judgment or advice. The modal perspective
+    is scored.'
+  explanation_md: "Skulle ha reports an earlier plan or duty; burde ha gives a later judgment about what would have been better."
+  derived_from:
+  - section_id: skulle-ha-and-burde-ha-are-not-identical
+  buckets:
+  - bucket_id: earlier-arrangement
+    label: Earlier arrangement or expectation
+  - bucket_id: later-judgment
+    label: Later judgment or advice
+  items:
+  - item_id: arrangement-item-1
+    text: 'An arranged meeting was not fulfilled: Jeg skulle ha møtt henne klokka
+      seks. (I was supposed to meet her at six.)'
+    bucket_id: earlier-arrangement
+  - item_id: arrangement-item-2
+    text: 'An agreed arrival time was missed: Du skulle ha kommet klokka fem. (You
+      were supposed to come at five.)'
+    bucket_id: earlier-arrangement
+  - item_id: judgment-item-1
+    text: 'The speaker now evaluates the timing: Jeg burde ha møtt henne tidligere.
+      (I should have met her earlier.)'
+    bucket_id: later-judgment
+  - item_id: judgment-item-2
+    text: 'The speaker says an earlier arrival would have been better: Du burde ha
+      kommet tidligere. (You should have come earlier.)'
+    bucket_id: later-judgment
+- handle: build_unreal_past_outcomes
+  op: recall_fill
+  objective: obj-conditional-perfect-01
+  bloom: apply
+  prompt_md: Complete each result statement with ville ha plus a past participle.
+    The condition is supplied; forming or analyzing the condition is not scored.
+  explanation_md: "Use ville ha plus a past participle for what would have happened if the supplied condition had been met."
+  derived_from:
+  - section_id: do-not-replace-ville-with-skulle-automatically
+  audio_target: "Jonas ville ha tatt bussen hvis han hadde visst om problemet. Nora ville ha tatt med noe hvis hun hadde visst."
+  segments:
+  - text_md: 'If Jonas had known about the problem, Jonas ville ha '
+  - blank_id: unreal-result-1
+    options:
+    - tatt bussen
+    - kjøpt brød
+    - kommet alene
+    answer_index: 0
+  - text_md: ' hvis han hadde visst om problemet.'
+  - text_md: ' If Nora had known, Nora ville ha '
+  - blank_id: unreal-result-2
+    options:
+    - tatt med noe
+    - laget en salat
+    - bestilt pizza
+    answer_index: 0
+  - text_md: ' hvis hun hadde visst.'
+- handle: contrast_expected_and_conditional_actions
+  op: categorize
+  objective: obj-conditional-perfect-01
+  bloom: analyze
+  prompt_md: 'Classify each sentence by its primary perspective: an earlier expectation
+    or an unreal result under different circumstances.'
+  derived_from:
+  - section_id: do-not-replace-ville-with-skulle-automatically
+  buckets:
+  - bucket_id: expected-action
+    label: Earlier expectation or plan
+  - bucket_id: unreal-result
+    label: Unreal past result
+  items:
+  - item_id: expected-item-1
+    text: Jonas skulle ha tatt bussen klokka fire. (Jonas was supposed to take the
+      bus at four.)
+    bucket_id: expected-action
+  - item_id: expected-item-2
+    text: Jonas skulle ha kjøpt brød. (Jonas was supposed to buy bread.)
+    bucket_id: expected-action
+  - item_id: conditional-item-1
+    text: Jonas ville ha tatt bussen hvis han hadde visst om problemet. (Jonas would
+      have taken the bus if he had known about the problem.)
+    bucket_id: unreal-result
+  - item_id: conditional-item-2
+    text: Jeg ville ha tatt med noe hvis jeg hadde visst. (I would have brought something
+      if I had known.)
+    bucket_id: unreal-result
+- handle: express_past_regret
+  op: build
+  objective: obj-conditional-perfect-01
+  bloom: apply
+  prompt_md: Mina waited too long before calling, and she now regrets that completed
+    action. Build her Norwegian sentence with a negative retrospective judgment.
+  explanation_md: "Use burde, then ikke, then ha plus the participle: burde ikke ha ventet."
+  derived_from:
+  - section_id: negating-burde-ha
+  tokens:
+  - token_id: tok-1
+    text: Mina
+  - token_id: tok-2
+    text: burde
+  - token_id: tok-3
+    text: ikke
+  - token_id: tok-4
+    text: ha
+  - token_id: tok-5
+    text: ventet
+  - token_id: tok-6
+    text: så
+  - token_id: tok-7
+    text: lenge.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+- handle: separate_duty_from_judgment
+  op: categorize
+  objective: obj-conditional-perfect-01
+  bloom: analyze
+  prompt_md: Classify each sentence as a prior assigned duty or expectation, or as
+    a later retrospective evaluation. Do not score the strength of the criticism.
+  derived_from:
+  - section_id: negating-burde-ha
+  buckets:
+  - bucket_id: prior-duty
+    label: Prior duty or expectation
+  - bucket_id: retrospective-evaluation
+    label: Retrospective evaluation
+  items:
+  - item_id: duty-item-1
+    text: 'The host had assigned the task: Jonas skulle ha kjøpt brød. (Jonas was
+      supposed to buy bread.)'
+    bucket_id: prior-duty
+  - item_id: duty-item-2
+    text: 'The task had been assigned in advance: Du skulle ha kommet klokka fem.
+      (You were supposed to come at five.)'
+    bucket_id: prior-duty
+  - item_id: evaluation-item-1
+    text: 'The speaker judges the earlier choice: Jonas burde ha kjøpt brød. (Jonas
+      should have bought bread.)'
+    bucket_id: retrospective-evaluation
+  - item_id: evaluation-item-2
+    text: 'The speaker gives later advice: Jeg burde ha ringt. (I should have called.)'
+    bucket_id: retrospective-evaluation
+- handle: identify_missed_possibilities
+  op: recall_fill
+  objective: obj-conditional-perfect-01
+  bloom: apply
+  prompt_md: Complete each sentence with an action that was available but not used.
+    Choose a phrase that expresses a past possibility with kunne ha, not a duty or
+    advice.
+  explanation_md: "Use kunne ha plus a past participle for something that was possible but did not happen."
+  derived_from:
+  - section_id: missed-possibilities-kunne-ha
+  audio_target: "Jeg kunne ha bedt Nora om hjelp. Jonas kunne ha kjøpt brød på stasjonen. De kunne ha bestilt pizza."
+  segments:
+  - text_md: 'Help was available: Jeg kunne ha '
+  - blank_id: possibility-1
+    options:
+    - bedt Nora om hjelp
+    - kjøpt brød
+    - spist ute
+    answer_index: 0
+  - text_md: .
+  - text_md: ' At the station, Jonas kunne ha '
+  - blank_id: possibility-2
+    options:
+    - kjøpt brød på stasjonen
+    - bestilt pizza
+    - bedt Nora om hjelp
+    answer_index: 0
+  - text_md: .
+  - text_md: ' The available dinner alternative was pizza: De kunne ha '
+  - blank_id: possibility-3
+    options:
+    - bestilt pizza
+    - laget en salat
+    - spist ute
+    answer_index: 0
+  - text_md: .
+- handle: contrast_possible_and_advisable_actions
+  op: categorize
+  objective: obj-conditional-perfect-01
+  bloom: analyze
+  prompt_md: Classify each sentence as a missed possibility or retrospective advice.
+    Score whether the speaker presents the action as possible or as the better choice.
+  explanation_md: "Kunne ha says the action was possible; burde ha says it would have been the better choice."
+  derived_from:
+  - section_id: missed-possibilities-kunne-ha
+  buckets:
+  - bucket_id: missed-possibility
+    label: Missed possibility
+  - bucket_id: retrospective-advice
+    label: Retrospective advice
+  items:
+  - item_id: possibility-item-1
+    text: Jonas kunne ha kjøpt brød. (Jonas could have bought bread.)
+    bucket_id: missed-possibility
+  - item_id: possibility-item-2
+    text: Jeg kunne ha bedt Nora om hjelp. (I could have asked Nora for help.)
+    bucket_id: missed-possibility
+  - item_id: advice-item-1
+    text: Jonas burde ha kjøpt brød. (Jonas should have bought bread.)
+    bucket_id: retrospective-advice
+  - item_id: advice-item-2
+    text: Jeg burde ha ringt. (I should have called.)
+    bucket_id: retrospective-advice
+- handle: assemble_modal_perfect_forms
+  op: recall_fill
+  objective: obj-conditional-perfect-01
+  bloom: apply
+  prompt_md: Complete each main clause by choosing the complete verb phrase. Maintain
+    modal plus optional ikke plus ha plus past participle, including the negative
+    statements.
+  explanation_md: "Keep the order modal, optional ikke, ha, past participle: skulle ikke ha ventet."
+  derived_from:
+  - section_id: keeping-structure-together
+  audio_target: "Han skulle ha kommet i tide. Han skulle ikke ha ventet på stasjonen. Hun ville ikke ha kommet alene. Vi burde ikke ha brukt så mye penger. De kunne ikke ha visst det."
+  segments:
+  - text_md: 'The expected result was: Han '
+  - blank_id: structure-1
+    options:
+    - skulle ha kommet
+    - skulle å ha kommet
+    - ville hadde kommet
+    answer_index: 0
+  - text_md: ' i tide.'
+  - text_md: ' The instruction was not to wait: Han '
+  - blank_id: structure-2
+    options:
+    - skulle ikke ha ventet
+    - skulle ha ikke ventet
+    - skulle hadde ventet
+    answer_index: 0
+  - text_md: ' på stasjonen.'
+  - text_md: ' The intended result was not to come alone: Hun '
+  - blank_id: structure-3
+    options:
+    - ville ikke ha kommet alene
+    - ville ha ikke kommet alene
+    - ville hadde kommet alene
+    answer_index: 0
+  - text_md: .
+  - text_md: ' The spending was excessive: Vi '
+  - blank_id: structure-4
+    options:
+    - burde ikke ha brukt så mye penger
+    - burde ha ikke brukt så mye penger
+    - burde hadde brukt så mye penger
+    answer_index: 0
+  - text_md: .
+  - text_md: ' The information was unavailable: De '
+  - blank_id: structure-5
+    options:
+    - kunne ikke ha visst det
+    - kunne ha ikke visst det
+    - kunne hadde visst det
+    answer_index: 0
+  - text_md: .
+- handle: interpret_dinner_postmortem
+  op: choose
+  objective: obj-conditional-perfect-01
+  bloom: understand
+  prompt_md: Choose the interpretation set that correctly explains all four modal
+    phrases in the dinner postmortem. Producing new sentences is not required.
+  derived_from:
+  - section_id: returning-to-mina-and-jonas
+  stem_md: Match each phrase with the perspective it contributes and choose the complete
+    set.
+  options:
+  - id: dinner-swap-one
+    text: Dere skulle ha vært ferdige nå — retrospective judgment; vi burde ha begynt
+      tidligere — expected state; Jeg kunne ha laget en salat — unreal outcome; Jeg
+      ville ha tatt med noe hvis jeg hadde visst — missed possibility.
+    correct: false
+    why: The expectation and judgment readings are swapped, and the possibility and
+      unreal-outcome readings are also swapped.
+  - id: dinner-swap-two
+    text: Dere skulle ha vært ferdige nå — expected state; vi burde ha begynt tidligere
+      — missed possibility; Jeg kunne ha laget en salat — retrospective judgment;
+      Jeg ville ha tatt med noe hvis jeg hadde visst — unreal outcome.
+    correct: false
+    why: kunne ha and burde ha are assigned to the wrong perspectives.
+  - id: dinner-correct
+    text: Dere skulle ha vært ferdige nå — expected state (You were supposed to be
+      finished by now); vi burde ha begynt tidligere — retrospective judgment (We
+      should have started earlier); Jeg kunne ha laget en salat — missed possibility
+      (I could have made a salad); Jeg ville ha tatt med noe hvis jeg hadde visst
+      — unreal outcome (I would have brought something if I had known).
+    correct: true
+    why: This set correctly interprets expectation, judgment, missed possibility,
+      and unreal outcome from the shared dinner context.
+  - id: dinner-reversed
+    text: Dere skulle ha vært ferdige nå — unreal outcome; vi burde ha begynt tidligere
+      — missed possibility; Jeg kunne ha laget en salat — expected state; Jeg ville
+      ha tatt med noe hvis jeg hadde visst — retrospective judgment.
+    correct: false
+    why: The four phrases are assigned to perspectives that do not match their context.
+- handle: report_missed_appointment_expectations
+  op: write
+  objective: obj-conditional-perfect-01
+  bloom: apply
+  prompt_md: Jonas had a bicycle-repair appointment at ten. The shop reserved the
+    time, and he had agreed to arrive at ten and call the shop if delayed, but he
+    did neither. Write exactly two short Norwegian sentences reporting those missed
+    arrangements. Use skulle ha plus a past participle in both sentences. Do not give
+    advice.
+  derived_from:
+  - section_id: changed-situation-after-a-missed-appointment
+  response_language: 'no'
+  min_words: 10
+  max_words: 30
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål variants that preserve the required modal-perfect form and
+    missed- arrangement meaning.
+  criteria:
+  - id: missed-arrangements-form
+    instruction: Uses skulle ha followed by a past participle in both sentences to
+      report two arrangements that did not happen.
+- handle: evaluate_missed_appointment_choices
+  op: write
+  objective: obj-conditional-perfect-01
+  bloom: apply
+  prompt_md: 'Jonas left too late and did not call the repair shop after missing his
+    appointment. Write exactly two short Norwegian sentences: one affirmative sentence
+    with burde ha about calling the shop, and one negative sentence with burde ikke
+    ha about waiting too long. Use natural Bokmål.'
+  derived_from:
+  - section_id: changed-situation-after-a-missed-appointment
+  response_language: 'no'
+  min_words: 10
+  max_words: 30
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål variants that preserve affirmative and negative retrospective
+    judgment.
+  criteria:
+  - id: affirmative-retrospective-judgment
+    instruction: Uses affirmative burde ha to evaluate one past choice.
+  - id: negative-retrospective-judgment
+    instruction: Uses burde ikke ha to evaluate one past choice negatively.
+- handle: describe_unused_travel_options
+  op: write
+  objective: obj-conditional-perfect-01
+  bloom: apply
+  prompt_md: 'Jonas had a working phone, a later bus was available, and Nora could
+    have helped, but he used none of these alternatives. Write exactly three short
+    Norwegian sentences describing the three available but unrealized actions: calling
+    the shop, taking a later bus, and asking Nora for help. Use kunne ha plus a past
+    participle in each sentence. Present them as possibilities, not duties or advice.'
+  derived_from:
+  - section_id: changed-situation-after-a-missed-appointment
+  response_language: 'no'
+  min_words: 15
+  max_words: 40
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål variants that preserve the neutral missed-possibility reading.
+  criteria:
+  - id: missed-possibility-form
+    instruction: Uses kunne ha followed by a past participle in all three sentences
+      and presents the actions as available but unrealized possibilities.
+- handle: state_changed_circumstance_outcomes
+  op: recall_fill
+  objective: obj-conditional-perfect-01
+  bloom: apply
+  prompt_md: Complete each statement about a changed past circumstance with ville
+    ha plus a past participle. The condition is supplied; only the unreal result is
+    tested.
+  derived_from:
+  - section_id: changed-situation-after-a-missed-appointment
+  audio_target: "Jonas ville ha kommet i tide hvis han hadde tatt en tidligere buss. Jonas ville ha ringt verkstedet hvis han hadde visst om reservasjonen."
+  segments:
+  - text_md: 'The earlier bus would have changed the result: Jonas ville ha '
+  - blank_id: changed-outcome-1
+    options:
+    - kommet i tide
+    - ringt verkstedet
+    - tatt bussen
+    answer_index: 0
+  - text_md: ' hvis han hadde tatt en tidligere buss.'
+  - text_md: ' Different information would have changed the response: Jonas ville ha '
+  - blank_id: changed-outcome-2
+    options:
+    - ringt verkstedet
+    - møtt henne tidligere
+    - laget en salat
+    answer_index: 0
+  - text_md: ' hvis han hadde visst om reservasjonen.'
+- handle: retrieve_four_past_perspectives
+  op: write
+  objective: obj-conditional-perfect-01
+  bloom: apply
+  prompt_md: Write exactly four short Norwegian sentences about one failed plan to
+    join a morning hike. Sentence one must express an unfulfilled expectation with
+    skulle ha. Sentence two must express an unreal outcome under a different past
+    circumstance with ville ha. Sentence three must express regret or criticism with
+    burde ha or burde ikke ha. Sentence four must express an unused possibility with
+    kunne ha. Each sentence must use modal plus ha plus a past participle and communicate
+    its distinct perspective. Use one coherent fresh situation.
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  min_words: 35
+  max_words: 80
+  judge_prompt: Check the response against the task and report evidence separately
+    for each criterion. Accept natural Bokmål variants that preserve the four required
+    modal perspectives and the modal-perfect structure.
+  criteria:
+  - id: four-modal-perfect-sentences
+    instruction: Writes exactly four coherent Norwegian sentences, each using modal
+      plus ha plus a past participle.
+  - id: unfulfilled-expectation
+    instruction: Uses skulle ha for an arrangement or expectation that failed.
+  - id: unreal-past-outcome
+    instruction: Uses ville ha for a result under a different past circumstance.
+  - id: retrospective-judgment
+    instruction: Uses burde ha or burde ikke ha for regret or criticism about the
+      past.
+  - id: missed-possibility
+    instruction: Uses kunne ha for an available action that was not realized.

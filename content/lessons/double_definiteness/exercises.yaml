@@ -1,0 +1,287 @@
+- handle: notice_double_definiteness_in_shop_dialogue
+  op: recall_fill
+  objective: obj-double-definiteness-01
+  bloom: understand
+  prompt_md: In the shop dialogue, complete the three noun phrases for the old chair,
+    the round table, and the small lamps. For each phrase, fill the opening word,
+    the adjective form, and the definite noun form.
+  explanation_md: "A definite noun phrase with an adjective normally marks definiteness twice: den/det/de + adjective in -e + definite noun, for example «det store speilet»."
+  derived_from:
+  - section_id: first-checkpoint-notice-the-full-pattern
+  audio_target: "Den gamle stolen står her. Det runde bordet står ved vinduet. De små lampene henger over bordet."
+  segments:
+  - text_md: 'The old chair: '
+  - blank_id: old-chair-opening
+    options:
+    - den
+    - det
+    - de
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: old-chair-adjective
+    options:
+    - gamle
+    - gammel
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: old-chair-noun
+    options:
+    - stolen
+    - stol
+    answer_index: 0
+  - text_md: '. The round table: '
+  - blank_id: round-table-opening
+    options:
+    - den
+    - det
+    - de
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: round-table-adjective
+    options:
+    - runde
+    - rund
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: round-table-noun
+    options:
+    - bordet
+    - bord
+    answer_index: 0
+  - text_md: '. The small lamps: '
+  - blank_id: small-lamps-opening
+    options:
+    - den
+    - det
+    - de
+    answer_index: 2
+  - text_md: ' '
+  - blank_id: small-lamps-adjective
+    options:
+    - små
+    - røde
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: small-lamps-noun
+    options:
+    - lampene
+    - lamper
+    answer_index: 0
+  - text_md: .
+- handle: select_den_det_or_de_for_specific_objects
+  op: recall_fill
+  objective: obj-double-definiteness-01
+  bloom: understand
+  prompt_md: Complete each definite phrase by filling only the opening word. Use the
+    visible adjective and definite noun as context.
+  derived_from:
+  - section_id: checkpoint-select-the-opening-word
+  audio_target: "Det runde bordet. Den runde døren. De små lampene. De små hyllene."
+  segments:
+  - text_md: 'Chair: '
+  - blank_id: chair-opening
+    options:
+    - den
+    - det
+    - de
+    answer_index: 0
+  - text_md: ' gamle stolen. Table: '
+  - blank_id: table-opening
+    options:
+    - den
+    - det
+    - de
+    answer_index: 1
+  - text_md: ' runde bordet. Door: '
+  - blank_id: door-opening
+    options:
+    - den
+    - det
+    - de
+    answer_index: 0
+  - text_md: ' runde døren. Lamps: '
+  - blank_id: lamps-opening
+    options:
+    - den
+    - det
+    - de
+    answer_index: 2
+  - text_md: ' små lampene. Shelves: '
+  - blank_id: shelves-opening
+    options:
+    - den
+    - det
+    - de
+    answer_index: 2
+  - text_md: ' små hyllene.'
+- handle: complete_definite_nouns_after_adjectives
+  op: recall_fill
+  objective: obj-double-definiteness-01
+  bloom: apply
+  prompt_md: Complete each shop-window label with the definite noun form. The opening
+    word and adjective are already present.
+  derived_from:
+  - section_id: checkpoint-keep-the-noun-definite
+  audio_target: "Den røde jakken henger i vinduet. Det store speilet står ved døra. De svarte skoene ligger på gulvet."
+  segments:
+  - text_md: 'The red jacket: Den røde '
+  - blank_id: jacket-noun
+    options:
+    - jakken
+    - jakke
+    answer_index: 0
+  - text_md: '. The large mirror: Det store '
+  - blank_id: mirror-noun
+    options:
+    - speilet
+    - speil
+    answer_index: 0
+  - text_md: '. The black shoes: De svarte '
+  - blank_id: shoes-noun
+    options:
+    - skoene
+    - sko
+    answer_index: 0
+  - text_md: .
+- handle: add_e_to_adjectives_in_definite_phrases
+  op: recall_fill
+  objective: obj-double-definiteness-01
+  bloom: apply
+  prompt_md: Complete each definite phrase by retrieving the adjective form required
+    after den, det, or de and before the definite noun.
+  derived_from:
+  - section_id: checkpoint-form-the-adjective
+  audio_target: "Det store vinduet. Den nye sofaen. De røde gardinene. Det runde bordet."
+  segments:
+  - text_md: 'The large window: Det '
+  - blank_id: window-adjective
+    options:
+    - store
+    - stort
+    answer_index: 0
+  - text_md: ' vinduet. The new sofa: Den '
+  - blank_id: sofa-adjective
+    options:
+    - nye
+    - ny
+    answer_index: 0
+  - text_md: ' sofaen. The red curtains: De '
+  - blank_id: curtains-adjective
+    options:
+    - røde
+    - rødt
+    answer_index: 0
+  - text_md: ' gardinene. The round table: Det '
+  - blank_id: table-adjective
+    options:
+    - runde
+    - rundt
+    answer_index: 0
+  - text_md: ' bordet.'
+- handle: build_complete_double_definite_phrases
+  op: build
+  objective: obj-double-definiteness-01
+  bloom: apply
+  prompt_md: In the shop, Amir confirms one specific item. Build the Norwegian noun
+    phrase meaning the round table, including the opening word, adjective, and definite
+    noun.
+  derived_from:
+  - section_id: controlled-phrase-production
+  tokens:
+  - token_id: tok-det
+    text: det
+  - token_id: tok-runde
+    text: runde
+  - token_id: tok-bordet
+    text: bordet.
+  answer_order:
+  - tok-det
+  - tok-runde
+  - tok-bordet
+- handle: change_indefinite_phrases_to_specific_definite_phrases
+  op: build
+  objective: obj-double-definiteness-01
+  bloom: apply
+  prompt_md: Nora first mentions an object among many possibilities. Build the specific
+    Norwegian phrase for the chosen new sofa with all three target parts.
+  derived_from:
+  - section_id: meaning-checkpoint
+  tokens:
+  - token_id: tok-den
+    text: den
+  - token_id: tok-nye
+    text: nye
+  - token_id: tok-sofaen
+    text: sofaen.
+  answer_order:
+  - tok-den
+  - tok-nye
+  - tok-sofaen
+- handle: repair_double_definiteness_errors
+  op: find_fix
+  objective: obj-double-definiteness-01
+  bloom: analyze
+  prompt_md: Select the one token that is wrong/needs changing.
+  derived_from:
+  - section_id: editing-checkpoint
+  tokens:
+  - token_id: tok-de
+    text: De
+  - token_id: tok-red
+    text: rød
+  - token_id: tok-curtains
+    text: gardinene.
+  error_token_id: tok-red
+  feedback: 'Replace the adjective with its taught -e form: use røde.'
+- handle: describe_specific_items_in_new_flat
+  op: build
+  objective: obj-double-definiteness-01
+  bloom: apply
+  prompt_md: In the new flat, tell Nora that you are moving the specific old chair.
+    Build one complete Norwegian sentence with an opening word, an -e adjective, and
+    a definite noun.
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+  tokens:
+  - token_id: tok-jeg
+    text: Jeg
+  - token_id: tok-flytter
+    text: flytter
+  - token_id: tok-den
+    text: den
+  - token_id: tok-gamle
+    text: gamle
+  - token_id: tok-stolen
+    text: stolen.
+  answer_order:
+  - tok-jeg
+  - tok-flytter
+  - tok-den
+  - tok-gamle
+  - tok-stolen
+- handle: retrieve_double_definiteness_after_delay
+  op: write
+  objective: obj-double-definiteness-01
+  bloom: apply
+  prompt_md: Write three brief Norwegian descriptions for Nora. Identify one specific
+    chair, one specific table, and one specific group of lamps among several choices.
+    Use den in one description, det in one, and de in one. Each description must contain
+    an adjective and a definite noun. Write from memory rather than copying a model.
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  min_words: 9
+  max_words: 30
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål variants, but require the specified opening word and the
+    full definite pattern in each description.
+  criteria:
+  - id: den-description
+    instruction: Includes one specific chair description using den, an adjective in
+      the taught definite form, and a definite noun.
+  - id: det-description
+    instruction: Includes one specific table description using det, an adjective in
+      the taught definite form, and a definite noun.
+  - id: de-description
+    instruction: Includes one specific group-of-lamps description using de, an adjective
+      in the taught definite form, and a definite noun.

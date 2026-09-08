@@ -1,0 +1,258 @@
+- handle: build_invitations
+  op: build
+  objective: obj-invite-someone-and-respond-01
+  bloom: apply
+  explanation_md: "Invitation frames select their own complements: «har lyst til å», modal + bare infinitive, and «skal vi …?». Match the response to acceptance, refusal, or an alternative."
+  derived_from:
+  - section_id: checkpoint-build-the-invitation
+  prompt_md: 'Arrange the tokens to create three complete, natural invitations: coffee
+    tomorrow, the cinema on Friday, and lunch together. Use each invitation pattern
+    exactly once.'
+  tokens:
+  - token_id: tok-har
+    text: Har
+  - token_id: tok-du
+    text: du
+  - token_id: tok-lyst
+    text: lyst
+  - token_id: tok-til
+    text: til
+  - token_id: tok-a
+    text: å
+  - token_id: tok-drikke
+    text: drikke
+  - token_id: tok-kaffe
+    text: kaffe
+  - token_id: tok-i
+    text: i
+  - token_id: tok-morgen
+    text: morgen?
+  - token_id: tok-vil
+    text: Vil
+  - token_id: tok-du-2
+    text: du
+  - token_id: tok-ga
+    text: gå
+  - token_id: tok-pa
+    text: på
+  - token_id: tok-kino
+    text: kino
+  - token_id: tok-pa-2
+    text: på
+  - token_id: tok-fredag
+    text: fredag?
+  - token_id: tok-skal
+    text: Skal
+  - token_id: tok-vi
+    text: vi
+  - token_id: tok-spise
+    text: spise
+  - token_id: tok-lunsj
+    text: lunsj
+  - token_id: tok-sammen
+    text: sammen?
+  answer_order:
+  - tok-har
+  - tok-du
+  - tok-lyst
+  - tok-til
+  - tok-a
+  - tok-drikke
+  - tok-kaffe
+  - tok-i
+  - tok-morgen
+  - tok-vil
+  - tok-du-2
+  - tok-ga
+  - tok-pa
+  - tok-kino
+  - tok-pa-2
+  - tok-fredag
+  - tok-skal
+  - tok-vi
+  - tok-spise
+  - tok-lunsj
+  - tok-sammen
+- handle: respond_warmly
+  op: write
+  objective: obj-invite-someone-and-respond-01
+  bloom: apply
+  derived_from:
+  - section_id: checkpoint-respond-warmly
+  prompt_md: Lea invites you to have coffee on Saturday. Reply in Norwegian with a
+    warm acceptance and ask when or where you should meet.
+  response_language: 'no'
+  min_words: 4
+  max_words: 20
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+  criteria:
+  - id: clear-acceptance
+    instruction: Clearly accepts the invitation.
+  - id: meeting-question
+    instruction: Adds one relevant question about when or where to meet.
+- handle: decline_and_offer_saturday
+  op: write
+  objective: obj-invite-someone-and-respond-01
+  bloom: apply
+  derived_from:
+  - section_id: checkpoint-decline-and-keep-plan-open
+  prompt_md: Someone invites you to go to the cinema on Friday. Friday is impossible,
+    but Saturday works. Reply in Norwegian, decline courteously, and offer Saturday
+    as the alternative.
+  response_language: 'no'
+  min_words: 4
+  max_words: 20
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+  criteria:
+  - id: courteous-refusal
+    instruction: Clearly declines Friday without sounding abrupt.
+  - id: saturday-alternative
+    instruction: Proposes Saturday as a specific replacement.
+- handle: propose_seven
+  op: write
+  objective: obj-invite-someone-and-respond-01
+  bloom: apply
+  derived_from:
+  - section_id: checkpoint-decline-and-keep-plan-open
+  prompt_md: Someone suggests meeting at six. Six does not work, but seven does. Reply
+    in Norwegian, make the problem clear, and propose seven using either Hva med ...?
+    or a sentence with men.
+  response_language: 'no'
+  min_words: 4
+  max_words: 20
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+  criteria:
+  - id: six-does-not-work
+    instruction: Makes clear that meeting at six does not work.
+  - id: seven-proposal
+    instruction: Proposes seven using Hva med ...? or a sentence with men.
+- handle: repair_the_exchange
+  op: find_fix
+  objective: obj-invite-someone-and-respond-01
+  bloom: analyze
+  prompt_md: Select the one token that is wrong/needs changing.
+  derived_from:
+  - section_id: checkpoint-repair-the-exchange
+  tokens:
+  - token_id: tok-vil
+    text: Vil
+  - token_id: tok-du
+    text: du
+  - token_id: tok-a
+    text: å
+  - token_id: tok-ga
+    text: gå
+  - token_id: tok-pa
+    text: på
+  - token_id: tok-kino
+    text: kino
+  - token_id: tok-i
+    text: i
+  - token_id: tok-kveld
+    text: kveld?
+  error_token_id: tok-a
+  feedback: 'Remove å after Vil du. The corrected invitation is: Vil du gå på kino
+    i kveld?'
+- handle: complete_social_exchange
+  op: write
+  objective: obj-invite-someone-and-respond-01
+  bloom: apply
+  derived_from:
+  - section_id: extended-practice-complete-a-social-exchange
+  prompt_md: Write a short exchange in Norwegian between two named people. One person
+    invites the other to an everyday activity at a particular time. The suggested
+    time does not work, so the second person declines courteously and offers an alternative.
+    The first person responds to the alternative and confirms the plan.
+  response_language: 'no'
+  min_words: 20
+  max_words: 50
+  judge_prompt: Check the exchange against the task and report evidence for each criterion.
+  criteria:
+  - id: activity-clear
+    instruction: Makes the activity clear.
+  - id: original-time-problem
+    instruction: Makes clear why the first suggested time does not work.
+  - id: alternative-clear
+    instruction: Makes the alternative clear.
+  - id: final-confirmation
+    instruction: Shows that the final plan is accepted or confirmed.
+- handle: accept_immediately
+  op: write
+  objective: obj-invite-someone-and-respond-01
+  bloom: apply
+  derived_from:
+  - section_id: extended-practice-complete-a-social-exchange
+  prompt_md: Reuse the same type of social exchange in Norwegian, but let the invited
+    person accept immediately. Write a warm acceptance and ask for or confirm one
+    practical detail.
+  response_language: 'no'
+  min_words: 4
+  max_words: 20
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+  criteria:
+  - id: immediate-acceptance
+    instruction: Clearly accepts the invitation immediately.
+  - id: warm-tone
+    instruction: Uses a warm, natural acceptance.
+  - id: practical-detail
+    instruction: Asks for or confirms one practical detail.
+  - id: contextual-choice
+    instruction: Responds with acceptance rather than a courteous decline.
+- handle: retrieve_core_responses
+  op: recall_fill
+  objective: obj-invite-someone-and-respond-01
+  bloom: apply
+  derived_from:
+  - section_id: retrieval-and-review
+  prompt_md: Without looking back, complete each Norwegian response with the taught
+    form that matches its communicative purpose.
+  audio_target: "Har du lyst til å gå på kino? Ja, det vil jeg gjerne. Takk for invitasjonen, men jeg kan ikke på fredag. Hva med lørdag?"
+  segments:
+  - text_md: 'Item 1: Invitation: Har du lyst '
+  - blank_id: invitation-connector
+    options:
+    - til å
+    - å til
+    answer_index: 0
+  - text_md: ' gå på kino? 2. Warm acceptance: Ja, det '
+  - blank_id: warm-acceptance
+    options:
+    - vil jeg gjerne
+    - kan jeg ikke
+    answer_index: 0
+  - text_md: '. 3. Courteous decline: Takk for invitasjonen, men jeg '
+  - blank_id: courteous-decline
+    options:
+    - kan ikke
+    - vil gjerne
+    answer_index: 0
+  - text_md: '. 4. Decline with an alternative: Jeg kan ikke på fredag. Hva med '
+  - blank_id: alternative-day
+    options:
+    - lørdag
+    - invitasjonen
+    answer_index: 0
+  - text_md: '?'
+- handle: combine_two_exchanges
+  op: write
+  objective: obj-invite-someone-and-respond-01
+  bloom: apply
+  derived_from:
+  - section_id: retrieval-and-review
+  prompt_md: Write two brief exchanges in Norwegian. In the first, the invitation
+    is accepted. In the second, the original time is declined and another time is
+    proposed. Make both intended plans clear.
+  response_language: 'no'
+  min_words: 20
+  max_words: 50
+  judge_prompt: Check both exchanges against the task and report evidence for each
+    criterion.
+  criteria:
+  - id: accepted-exchange
+    instruction: Shows one exchange in which the invitation is accepted.
+  - id: declined-exchange
+    instruction: Shows one exchange in which the original time is declined.
+  - id: proposed-time
+    instruction: Proposes another time in the second exchange.
+  - id: clear-plans
+    instruction: Communicates both intended plans clearly.

@@ -1,0 +1,248 @@
+- handle: room_article_hunt
+  op: recall_fill
+  objective: obj-indefinite-articles-01
+  bloom: understand
+  prompt_md: |
+    Fill each blank with the correct Norwegian indefinite article. This exercise explicitly
+    uses the traditional three-gender convention: use «ei» for feminine nouns, and treat
+    «ei» as the keyed answer even though «en» is also used for feminine nouns in some
+    Norwegian varieties. Read each completed article-and-noun phrase as one unit.
+  explanation_md: "Choose the article from the noun’s gender: en for masculine/common, ei for feminine in this three-gender convention, and et for neuter. A profession after «være» is normally bare."
+  derived_from:
+  - section_id: one-thing-en-ei-et
+  audio_target: "Amina ser en seng, ei hylle og et skrivebord."
+  segments:
+  - text_md: 'Amina ser '
+  - blank_id: room-seng-article
+    options:
+    - en
+    - et
+    - ei
+    answer_index: 0
+  - text_md: ' seng, '
+  - blank_id: room-hylle-article
+    options:
+    - et
+    - ei
+    - en
+    answer_index: 1
+  - text_md: ' hylle og '
+  - blank_id: room-skrivebord-article
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 2
+  - text_md: ' skrivebord.'
+- handle: furnishing_the_room
+  op: recall_fill
+  objective: obj-indefinite-articles-01
+  bloom: apply
+  prompt_md: |
+    Complete this practical list by adding the correct article before each noun. This
+    exercise explicitly uses the traditional three-gender convention: use «ei» for
+    feminine nouns, and treat «ei» as the keyed answer even though «en» is also used for
+    feminine nouns in some Norwegian varieties. The completed sentence must contain natural
+    Norwegian noun phrases.
+  derived_from:
+  - section_id: choosing-the-article-in-a-sentence
+  audio_target: "Til rommet trenger Amina en stol, ei bok og et kart."
+  segments:
+  - text_md: 'Til rommet trenger Amina '
+  - blank_id: furnishing-stol-article
+    options:
+    - en
+    - et
+    - ei
+    answer_index: 0
+  - text_md: ' stol, '
+  - blank_id: furnishing-bok-article
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 1
+  - text_md: ' bok og '
+  - blank_id: furnishing-kart-article
+    options:
+    - ei
+    - en
+    - et
+    answer_index: 2
+  - text_md: ' kart.'
+- handle: role_or_person
+  op: recall_fill
+  objective: obj-indefinite-articles-01
+  bloom: understand
+  prompt_md: Complete each sentence with the correct noun phrase. Use the bare profession
+    after være, and use an article when the sentence refers to one person.
+  derived_from:
+  - section_id: no-article-for-a-role-after-vaere
+  audio_target: "Hun er lærer. Hun møter en lærer. Han er lege. Han ringer en lege. Jeg er student. Jeg kjenner en student."
+  segments:
+  - text_md: 'Hun er '
+  - blank_id: role-laerer-role-phrase
+    options:
+    - lærer
+    - en lærer
+    answer_index: 0
+  - text_md: '. Hun møter '
+  - blank_id: role-laerer-person-phrase
+    options:
+    - lærer
+    - en lærer
+    answer_index: 1
+  - text_md: '. Han er '
+  - blank_id: role-lege-role-phrase
+    options:
+    - lege
+    - en lege
+    answer_index: 0
+  - text_md: '. Han ringer '
+  - blank_id: role-lege-person-phrase
+    options:
+    - lege
+    - en lege
+    answer_index: 1
+  - text_md: '. Jeg er '
+  - blank_id: role-student-role-phrase
+    options:
+    - student
+    - en student
+    answer_index: 0
+  - text_md: '. Jeg kjenner '
+  - blank_id: role-student-person-phrase
+    options:
+    - student
+    - en student
+    answer_index: 1
+  - text_md: .
+- handle: drink_or_serving
+  op: choose
+  objective: obj-indefinite-articles-01
+  bloom: understand
+  prompt_md: Amina orders one serving of coffee at a café. Choose the sentence that
+    expresses this serving meaning rather than coffee as a substance.
+  derived_from:
+  - section_id: no-article-for-a-substance
+  stem_md: Which sentence matches the café order?
+  options:
+  - id: substance
+    text: Amina kjøper kaffe.
+    correct: false
+    why: Kaffe without an article refers to coffee as a substance or product.
+  - id: serving
+    text: Amina kjøper en kaffe.
+    correct: true
+    why: En kaffe treats coffee as one countable serving.
+- handle: repair_aminas_message
+  op: find_fix
+  objective: obj-indefinite-articles-01
+  bloom: analyze
+  prompt_md: Select the one token that is wrong/needs changing.
+  derived_from:
+  - section_id: bringing-the-choices-together
+  tokens:
+  - token_id: repair-1
+    text: Jeg
+  - token_id: repair-2
+    text: har
+  - token_id: repair-3
+    text: funnet
+  - token_id: repair-4
+    text: en
+  - token_id: repair-5
+    text: rom.
+  - token_id: repair-6
+    text: Jeg
+  - token_id: repair-7
+    text: drikker
+  - token_id: repair-8
+    text: kaffe.
+  - token_id: repair-9
+    text: Lars
+  - token_id: repair-10
+    text: er
+  - token_id: repair-11
+    text: student.
+  - token_id: repair-12
+    text: Ingrid
+  - token_id: repair-13
+    text: er
+  - token_id: repair-14
+    text: lærer.
+  error_token_id: repair-4
+  feedback: 'Replace en with et: rom is a neuter noun, so the phrase is et rom.'
+- handle: new_kitchen_transfer
+  op: recall_fill
+  objective: obj-indefinite-articles-01
+  bloom: apply
+  prompt_md: |
+    Complete Amina and Ingrid's shop-and-café account with en, ei, et, or no article. This
+    exercise explicitly uses the traditional three-gender convention: use «ei» for feminine
+    nouns, and treat «ei» as the keyed answer even though «en» is also used for feminine
+    nouns in some Norwegian varieties. Choose the form that matches each noun's gender or
+    meaning.
+  derived_from:
+  - section_id: back-at-the-flat
+  audio_target: "I butikken kjøper de en stol og ei bok. De finner også et kart. Ingrid er lærer. På kafeen bestiller Amina en kaffe."
+  segments:
+  - text_md: 'I butikken kjøper de '
+  - blank_id: kitchen-stol-article
+    options:
+    - ei
+    - en
+    - et
+    answer_index: 1
+  - text_md: ' stol og '
+  - blank_id: kitchen-bok-article
+    options:
+    - et
+    - en
+    - ei
+    answer_index: 2
+  - text_md: ' bok. De finner også '
+  - blank_id: kitchen-kart-article
+    options:
+    - et
+    - en
+    - ei
+    answer_index: 0
+  - text_md: ' kart. Ingrid er '
+  - blank_id: kitchen-role-phrase
+    options:
+    - lærer
+    - en lærer
+    answer_index: 0
+  - text_md: '. På kafeen bestiller Amina '
+  - blank_id: kitchen-serving-phrase
+    options:
+    - kaffe
+    - en kaffe
+    answer_index: 1
+  - text_md: .
+- handle: four_way_retrieval_review
+  op: write
+  objective: obj-indefinite-articles-01
+  bloom: apply
+  prompt_md: 'Without looking back, write four natural Norwegian examples: one with
+    en, one with ei, one with et, and one with no article. Make the no-article example
+    express either a simple role after være or a substance.'
+  derived_from:
+  - section_id: back-at-the-flat
+  response_language: 'no'
+  min_words: 4
+  max_words: 20
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+    Accept natural Bokmål variants that clearly use the requested article or no-article
+    meaning.
+  criteria:
+  - id: en-example
+    instruction: Includes one natural singular noun phrase with en.
+  - id: ei-example
+    instruction: Includes one natural singular noun phrase with ei.
+  - id: et-example
+    instruction: Includes one natural singular noun phrase with et.
+  - id: no-article-example
+    instruction: Includes one natural no-article example expressing a simple role
+      after være or a substance.

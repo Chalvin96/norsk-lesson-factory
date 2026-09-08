@@ -1,0 +1,14 @@
+description: Evaluate source normalization for content preservation and compiler-safe handoff.
+
+prompts:
+  - file://prompts.py:create_normalization_prompt
+
+providers:
+  - id: file://provider.py:call_api
+    label: configured-normalizer
+    config:
+      job: normalizer
+
+defaultTest: file://defaults/structured-response.yaml
+
+tests: file://cases/normalization.yaml

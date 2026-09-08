@@ -1,0 +1,560 @@
+- handle: notice_addition
+  op: choose
+  objective: obj-coordinating-conjunctions-01
+  bloom: understand
+  prompt_md: Choose the sentence where both items belong together and og expresses
+    simple addition.
+  derived_from:
+  - section_id: adding-with-og
+  stem_md: Mina wants both coffee and cake. Which sentence matches?
+  options:
+  - id: addition
+    text: Mina kjøper kaffe og kake.
+    correct: true
+    why: Both items are included, so og expresses addition.
+  - id: reason
+    text: Mina kjøper kaffe, for hun er trøtt.
+    correct: false
+    why: For introduces a reason.
+  - id: choice
+    text: Mina kjøper kaffe eller kake.
+    correct: false
+    why: Eller presents the items as alternatives.
+  - id: result
+    text: Mina er trøtt, så hun kjøper kaffe.
+    correct: false
+    why: Så introduces a result.
+  - id: contrast
+    text: Mina kjøper kaffe, men ikke kake.
+    correct: false
+    why: Men introduces a contrast rather than simple addition.
+- handle: build_with_og
+  op: build
+  objective: obj-coordinating-conjunctions-01
+  bloom: apply
+  prompt_md: Build three sentences. Use og to connect equal words or actions, and
+    do not repeat a shared subject.
+  explanation_md: "Use og between parallel nouns, verbs, or descriptions; when one subject performs both actions, state it once."
+  derived_from:
+  - section_id: adding-with-og
+  tokens:
+  - token_id: og-02
+    text: og
+  - token_id: og-03
+    text: kake.
+  - token_id: og-04
+    text: Jonas går en tur
+  - token_id: og-05
+    text: og
+  - token_id: og-06
+    text: spiser lunsj ute.
+  - token_id: og-07
+    text: Kafeen er liten
+  - token_id: og-08
+    text: og
+  - token_id: og-09
+    text: koselig.
+  - token_id: og-01
+    text: Mina bestiller kaffe
+  answer_order:
+  - og-01
+  - og-02
+  - og-03
+  - og-04
+  - og-05
+  - og-06
+  - og-07
+  - og-08
+  - og-09
+- handle: hear_the_contrast
+  op: categorize
+  objective: obj-coordinating-conjunctions-01
+  bloom: analyze
+  prompt_md: Classify each connection by meaning. Put simple additions under Addition
+    and connections that require men under Contrast.
+  explanation_md: "Og adds compatible information, while men marks a contrast between an expectation and what follows."
+  derived_from:
+  - section_id: showing-contrast-with-men
+  buckets:
+  - bucket_id: addition
+    label: Addition
+  - bucket_id: contrast
+    label: Contrast requiring men
+  items:
+  - item_id: contrast-01
+    text: Det skal regne, men Jonas vil gå en tur.
+    bucket_id: contrast
+  - item_id: addition-01
+    text: Mina kjøper kaffe og kake.
+    bucket_id: addition
+  - item_id: contrast-02
+    text: Kafeen er liten, men den er populær.
+    bucket_id: contrast
+  - item_id: addition-02
+    text: Kafeen er liten og koselig.
+    bucket_id: addition
+  - item_id: contrast-03
+    text: Jeg liker kaffe, men jeg drikker te i dag.
+    bucket_id: contrast
+- handle: complete_a_change_of_plan
+  op: recall_fill
+  objective: obj-coordinating-conjunctions-01
+  bloom: apply
+  prompt_md: Complete each change of plan with the joining word that connects an expectation
+    to a contrasting reality.
+  derived_from:
+  - section_id: showing-contrast-with-men
+  audio_target: "Vi vil sitte ute, men det regner. Kafeen er liten, men den er populær. Jonas vil gå en lang tur, men Mina vil gå en kort tur."
+  segments:
+  - text_md: 'Vi vil sitte ute, '
+  - blank_id: change-01
+    options:
+    - og
+    - men
+    - så
+    answer_index: 1
+  - text_md: ' det regner. Kafeen er liten, '
+  - blank_id: change-02
+    options:
+    - eller
+    - for
+    - men
+    answer_index: 2
+  - text_md: ' den er populær. Jonas vil gå en lang tur, '
+  - blank_id: change-03
+    options:
+    - men
+    - så
+    - og
+    answer_index: 0
+  - text_md: ' Mina vil gå en kort tur.'
+- handle: separate_both_from_either
+  op: recall_fill
+  objective: obj-coordinating-conjunctions-01
+  bloom: understand
+  prompt_md: Complete each sentence with og when both things are included or eller
+    when they are alternatives.
+  explanation_md: "Use og when both items or actions apply; use eller when the listener must choose between possibilities."
+  derived_from:
+  - section_id: presenting-alternatives-with-eller
+  audio_target: "Mina bestiller både kaffe og kake. Vil Jonas ha kaffe eller te? På lørdag kan de gå på kafé eller lage mat hjemme. Etterpå går Mina en tur og spiser lunsj ute."
+  segments:
+  - text_md: 'Mina bestiller både kaffe '
+  - blank_id: both-01
+    options:
+    - og
+    - eller
+    answer_index: 0
+  - text_md: ' kake. Vil Jonas ha kaffe '
+  - blank_id: either-01
+    options:
+    - og
+    - eller
+    answer_index: 1
+  - text_md: ' te? På lørdag kan de gå på kafé '
+  - blank_id: either-02
+    options:
+    - eller
+    - og
+    answer_index: 0
+  - text_md: ' lage mat hjemme. Etterpå går Mina en tur '
+  - blank_id: both-02
+    options:
+    - eller
+    - og
+    answer_index: 1
+  - text_md: ' spiser lunsj ute.'
+- handle: ask_about_alternatives
+  op: build
+  objective: obj-coordinating-conjunctions-01
+  bloom: apply
+  prompt_md: Build three questions in which Mina asks Jonas to choose between two
+    genuine alternatives.
+  derived_from:
+  - section_id: presenting-alternatives-with-eller
+  tokens:
+  - token_id: ask-02
+    text: eller
+  - token_id: ask-03
+    text: te?
+  - token_id: ask-04
+    text: Skal vi møtes klokka ti
+  - token_id: ask-05
+    text: eller
+  - token_id: ask-06
+    text: klokka elleve?
+  - token_id: ask-07
+    text: Skal vi gå på kafé
+  - token_id: ask-08
+    text: eller
+  - token_id: ask-09
+    text: lage mat hjemme?
+  - token_id: ask-01
+    text: Vil du ha kaffe
+  answer_order:
+  - ask-01
+  - ask-02
+  - ask-03
+  - ask-04
+  - ask-05
+  - ask-06
+  - ask-07
+  - ask-08
+  - ask-09
+- handle: find_the_reason
+  op: match_pairs
+  objective: obj-coordinating-conjunctions-01
+  bloom: remember
+  prompt_md: Match each decision on the left with its sensible reason on the right.
+    Each completed sentence places the decision before for and the reason after it.
+  derived_from:
+  - section_id: giving-a-reason-with-for
+  left:
+  - left_id: decision-01
+    text: Jonas tar med en paraply, for
+  - left_id: decision-02
+    text: Vi går inn, for
+  - left_id: decision-03
+    text: Jeg bestiller te, for
+  right:
+  - right_id: reason-01
+    text: det skal regne.
+  - right_id: reason-02
+    text: det er kaldt ute.
+  - right_id: reason-03
+    text: jeg liker ikke kaffe.
+  pairs:
+  - left_id: decision-01
+    right_id: reason-01
+  - left_id: decision-02
+    right_id: reason-02
+  - left_id: decision-03
+    right_id: reason-03
+- handle: explain_an_everyday_decision
+  op: recall_fill
+  objective: obj-coordinating-conjunctions-01
+  bloom: apply
+  prompt_md: Complete each everyday decision with a logical reason introduced by for.
+  explanation_md: "Place the action or decision first, then for and the cause: Jeg tar på en jakke, for det er kaldt."
+  derived_from:
+  - section_id: giving-a-reason-with-for
+  audio_target: "Jeg tar på en jakke, for det er kaldt ute. Vi tar bussen, for det regner. Vi møtes inne, for kafeen er åpen."
+  segments:
+  - text_md: 'Jeg tar på en jakke, '
+  - blank_id: reason-fill-01
+    options:
+    - men det er kaldt ute
+    - så det er kaldt ute
+    - for det er kaldt ute
+    answer_index: 2
+  - text_md: '. Vi tar bussen, '
+  - blank_id: reason-fill-02
+    options:
+    - for det regner
+    - eller det regner
+    - så det regner
+    answer_index: 0
+  - text_md: '. Vi møtes inne, '
+  - blank_id: reason-fill-03
+    options:
+    - men kafeen er åpen
+    - for kafeen er åpen
+    - så kafeen er åpen
+    answer_index: 1
+  - text_md: .
+- handle: reason_or_result
+  op: recall_fill
+  objective: obj-coordinating-conjunctions-01
+  bloom: understand
+  prompt_md: Choose for when the second clause explains the first. Choose så when
+    the second clause is a consequence of the first.
+  explanation_md: "Use for when the second clause is the reason; use så when the second clause is the result."
+  derived_from:
+  - section_id: showing-a-result-with-sa
+  audio_target: "Vi går på kafé, for det regner. Det regner, så vi går på kafé. Jeg spiser lunsj, for jeg er sulten. Jeg er sulten, så jeg spiser lunsj."
+  segments:
+  - text_md: 'Vi går på kafé, '
+  - blank_id: direction-01
+    options:
+    - så
+    - for
+    answer_index: 1
+  - text_md: ' det regner. Det regner, '
+  - blank_id: direction-02
+    options:
+    - så
+    - for
+    answer_index: 0
+  - text_md: ' vi går på kafé. Jeg spiser lunsj, '
+  - blank_id: direction-03
+    options:
+    - så
+    - for
+    answer_index: 1
+  - text_md: ' jeg er sulten. Jeg er sulten, '
+  - blank_id: direction-04
+    options:
+    - så
+    - for
+    answer_index: 0
+  - text_md: ' jeg spiser lunsj.'
+- handle: reverse_the_connection
+  op: build
+  objective: obj-coordinating-conjunctions-01
+  bloom: apply
+  prompt_md: Build two sentences from the same facts. First place the action before
+    its reason with for. Then reverse the ideas and place the situation before its
+    result with så.
+  derived_from:
+  - section_id: showing-a-result-with-sa
+  tokens:
+  - token_id: reverse-02
+    text: for
+  - token_id: reverse-03
+    text: bussen er forsinket.
+  - token_id: reverse-04
+    text: Bussen er forsinket,
+  - token_id: reverse-05
+    text: så
+  - token_id: reverse-06
+    text: Lea tar taxi.
+  - token_id: reverse-01
+    text: Lea tar taxi,
+  answer_order:
+  - reverse-01
+  - reverse-02
+  - reverse-03
+  - reverse-04
+  - reverse-05
+  - reverse-06
+- handle: name_the_relationship
+  op: categorize
+  objective: obj-coordinating-conjunctions-01
+  bloom: analyze
+  prompt_md: Classify each sentence by the relationship expressed by its joining word.
+    Production and punctuation are not scored.
+  derived_from:
+  - section_id: connecting-complete-clauses
+  buckets:
+  - bucket_id: addition
+    label: Addition
+  - bucket_id: contrast
+    label: Contrast
+  - bucket_id: choice
+    label: Choice
+  - bucket_id: reason
+    label: Reason
+  - bucket_id: result
+    label: Result
+  items:
+  - item_id: relationship-01
+    text: Mina drikker kaffe, og Jonas drikker te.
+    bucket_id: addition
+  - item_id: relationship-02
+    text: Mina drikker kaffe, men Jonas drikker te.
+    bucket_id: contrast
+  - item_id: relationship-03
+    text: Mina drikker kaffe, eller Jonas drikker te.
+    bucket_id: choice
+  - item_id: relationship-04
+    text: Mina drikker kaffe, for hun er trøtt.
+    bucket_id: reason
+  - item_id: relationship-05
+    text: Mina er trøtt, så hun drikker kaffe.
+    bucket_id: result
+- handle: join_two_simple_clauses
+  op: build
+  objective: obj-coordinating-conjunctions-01
+  bloom: apply
+  prompt_md: 'Build five sentences from the supplied clause pairs. Use the requested
+    relationships in this order: addition, contrast, choice, reason, result. Preserve
+    both ideas in every pair.'
+  derived_from:
+  - section_id: connecting-complete-clauses
+  tokens:
+  - token_id: join-02
+    text: og
+  - token_id: join-03
+    text: Jonas bestiller te.
+  - token_id: join-04
+    text: Det er kaldt,
+  - token_id: join-05
+    text: men
+  - token_id: join-06
+    text: vi sitter ute.
+  - token_id: join-07
+    text: Vi kan møtes klokka ti,
+  - token_id: join-08
+    text: eller
+  - token_id: join-09
+    text: vi kan møtes klokka elleve.
+  - token_id: join-10
+    text: Vi sitter inne,
+  - token_id: join-11
+    text: for
+  - token_id: join-12
+    text: det regner.
+  - token_id: join-13
+    text: Bussen er forsinket,
+  - token_id: join-14
+    text: så
+  - token_id: join-15
+    text: Jonas kommer sent.
+  - token_id: join-01
+    text: Mina bestiller kaffe,
+  answer_order:
+  - join-01
+  - join-02
+  - join-03
+  - join-04
+  - join-05
+  - join-06
+  - join-07
+  - join-08
+  - join-09
+  - join-10
+  - join-11
+  - join-12
+  - join-13
+  - join-14
+  - join-15
+- handle: reconstruct_the_cafe_update
+  op: build
+  objective: obj-coordinating-conjunctions-01
+  bloom: apply
+  prompt_md: Reconstruct the café update. Use the supplied clauses and all five joining
+    words so each message expresses its intended meaning.
+  derived_from:
+  - section_id: back-at-the-cafe
+  tokens:
+  - token_id: cafe-02
+    text: så
+  - token_id: cafe-03
+    text: jeg kommer litt sent.
+  - token_id: cafe-04
+    text: Det går bra,
+  - token_id: cafe-05
+    text: for
+  - token_id: cafe-06
+    text: jeg har en bok med meg.
+  - token_id: cafe-07
+    text: Vil du vente inne
+  - token_id: cafe-08
+    text: eller
+  - token_id: cafe-09
+    text: ute?
+  - token_id: cafe-10
+    text: Jeg sitter inne
+  - token_id: cafe-11
+    text: og
+  - token_id: cafe-12
+    text: leser.
+  - token_id: cafe-13
+    text: Det regner,
+  - token_id: cafe-14
+    text: men
+  - token_id: cafe-15
+    text: jeg har paraply.
+  - token_id: cafe-01
+    text: Bussen er forsinket,
+  answer_order:
+  - cafe-01
+  - cafe-02
+  - cafe-03
+  - cafe-04
+  - cafe-05
+  - cafe-06
+  - cafe-07
+  - cafe-08
+  - cafe-09
+  - cafe-10
+  - cafe-11
+  - cafe-12
+  - cafe-13
+  - cafe-14
+  - cafe-15
+- handle: plan_dinner_together
+  op: recall_fill
+  objective: obj-coordinating-conjunctions-01
+  bloom: apply
+  prompt_md: Complete Amir and Lea's dinner exchange. Use each joining word once so
+    addition, contrast, choice, reason, and result remain distinct.
+  derived_from:
+  - section_id: transfer-to-new-situation
+  audio_target: "Amir: Skal vi spise hjemme eller på restaurant? Lea: Jeg vil lage suppe og salat. Amir: Jeg liker suppe, men jeg har ikke mye tid. Lea: Vi kan spise hjemme, for restauranten er stengt. Amir: Butikken er også stengt, så vi lager mat med det vi har."
+  segments:
+  - text_md: 'Amir: Skal vi spise hjemme '
+  - blank_id: dinner-choice
+    options:
+    - eller
+    - men
+    - og
+    - så
+    - for
+    answer_index: 0
+  - text_md: ' på restaurant? Lea: Jeg vil lage suppe '
+  - blank_id: dinner-addition
+    options:
+    - men
+    - og
+    - så
+    - eller
+    - for
+    answer_index: 1
+  - text_md: ' salat. Amir: Jeg liker suppe, '
+  - blank_id: dinner-contrast
+    options:
+    - og
+    - for
+    - men
+    - så
+    - eller
+    answer_index: 2
+  - text_md: ' jeg har ikke mye tid. Lea: Vi kan spise hjemme, '
+  - blank_id: dinner-reason
+    options:
+    - men
+    - eller
+    - og
+    - for
+    - så
+    answer_index: 3
+  - text_md: ' restauranten er stengt. Amir: Butikken er også stengt, '
+  - blank_id: dinner-result
+    options:
+    - men
+    - for
+    - og
+    - eller
+    - så
+    answer_index: 4
+  - text_md: ' vi lager mat med det vi har.'
+- handle: five_connections_from_one_evening
+  op: write
+  objective: obj-coordinating-conjunctions-01
+  bloom: apply
+  prompt_md: Write five short Norwegian sentences about one evening involving food,
+    weather, transport, and a change of plan. Write one sentence with og for addition,
+    one with men for contrast, one with eller for choice, one with for for a reason,
+    and one with så for a result.
+  derived_from:
+  - section_id: transfer-to-new-situation
+  response_language: 'no'
+  min_words: 20
+  max_words: 70
+  judge_prompt: Check that the response contains five short Norwegian sentences and
+    report evidence for each criterion. Judge each conjunction by the relationship
+    it creates. Do not score vocabulary variety.
+  criteria:
+  - id: og-addition
+    instruction: Contains one sentence using og to express addition.
+  - id: men-contrast
+    instruction: Contains one sentence using men to express contrast.
+  - id: eller-choice
+    instruction: Contains one sentence using eller to present alternatives.
+  - id: for-reason
+    instruction: Contains one sentence placing a statement or action before for and
+      a logical reason after it.
+  - id: sa-result
+    instruction: Contains one sentence placing a situation before så and a logical
+      result after it.

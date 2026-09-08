@@ -1,0 +1,349 @@
+- handle: notice_som_connections
+  op: choose
+  objective: obj-relative-clauses-01
+  bloom: understand
+  prompt_md: Which option correctly identifies the person or thing described by each
+    som-clause in this workshop dialogue? 1. «Hvem er mannen som snakker med Nora?»
+    2. «Det er han som har nøkkelen til verktøyrommet.» 3. «Jeg trenger en lader som
+    passer til denne PC-en.» 4. «Det ligger en lader i skapet som står ved vinduet.»
+    5. «Er det skapet som ikke kan låses?» 6. «kvinnen som du møtte ved inngangen»
+    7. «en lampe som jeg vil reparere»
+  options:
+  - id: incorrect
+    text: '1: Nora («snakker med Nora»); 2: nøkkelen («har nøkkelen til verktøyrommet»);
+      3: denne PC-en («passer til denne PC-en»); 4: en lader («står ved vinduet»);
+      5: skapet («ikke kan låses»); 6: du («du møtte ved inngangen»); 7: jeg («jeg
+      vil reparere») — 1: Nora; 2: the key; 3: this computer; 4: a charger; 5: the
+      cupboard; 6: you; 7: I.'
+    correct: false
+    why: This assigns several clauses to a person or thing inside the clause instead
+      of to the noun phrase being described.
+  - id: correct
+    text: '1: mannen («snakker med Nora»); 2: han («har nøkkelen til verktøyrommet»);
+      3: en lader («passer til denne PC-en»); 4: skapet («står ved vinduet»); 5: skapet
+      («ikke kan låses»); 6: kvinnen («du møtte ved inngangen»); 7: en lampe («jeg
+      vil reparere») — 1: the man; 2: him; 3: a charger; 4: the cupboard; 5: the cupboard;
+      6: the woman; 7: a lamp.'
+    correct: true
+    why: Each listed noun phrase is the person or thing that the following som-clause
+      identifies.
+  derived_from:
+  - section_id: first-day-community-workshop
+- handle: build_subject_relative_clauses
+  op: build
+  objective: obj-relative-clauses-01
+  bloom: apply
+  prompt_md: 'Combine these notes into one Norwegian sentence: «Vi bruker et program.»
+    «Programmet fungerer på gamle PC-er.» Use noun + som + verb and do not add another
+    subject pronoun after som.'
+  tokens:
+  - token_id: subject-1
+    text: Vi
+  - token_id: subject-2
+    text: bruker
+  - token_id: subject-3
+    text: et
+  - token_id: subject-4
+    text: program
+  - token_id: subject-5
+    text: som
+  - token_id: subject-6
+    text: fungerer
+  - token_id: subject-7
+    text: på
+  - token_id: subject-8
+    text: gamle
+  - token_id: subject-9
+    text: PC-er.
+  answer_order:
+  - subject-1
+  - subject-2
+  - subject-3
+  - subject-4
+  - subject-5
+  - subject-6
+  - subject-7
+  - subject-8
+  - subject-9
+  explanation_md: "Som introduces the relative clause and represents the described noun; any required preposition remains with its verb inside the clause."
+  derived_from:
+  - section_id: relative-clause-subject-action
+- handle: repair_extra_subjects
+  op: find_fix
+  objective: obj-relative-clauses-01
+  bloom: analyze
+  prompt_md: Select the one token that is wrong/needs changing.
+  tokens:
+  - token_id: extra-1
+    text: Jeg
+  - token_id: extra-2
+    text: kjenner
+  - token_id: extra-3
+    text: en
+  - token_id: extra-4
+    text: mann
+  - token_id: extra-5
+    text: som
+  - token_id: extra-6
+    text: han
+  - token_id: extra-7
+    text: jobber
+  - token_id: extra-8
+    text: her.
+  error_token_id: extra-6
+  feedback: Remove the unnecessary subject pronoun; som already represents the person
+    performing the action.
+  derived_from:
+  - section_id: relative-clause-subject-action
+- handle: distinguish_relative_clause_actors
+  op: choose
+  objective: obj-relative-clauses-01
+  bloom: analyze
+  prompt_md: Which option correctly interprets who performs the action in these paired
+    relative clauses? A. «Jeg kjenner mannen som reparerer lampen.» B. «Jeg kjenner
+    mannen som Lea møtte.»
+  options:
+  - id: correct
+    text: 'A: Mannen reparerer lampen. B: Lea møtte mannen. — A: The man repairs the
+      lamp. B: Lea met the man.'
+    correct: true
+    why: In A, the noun before som performs the action. In B, Lea is the subject after
+      som and the man receives the action.
+  - id: incorrect
+    text: 'A: Lea reparerer lampen. B: Mannen møtte Lea. — A: Lea repairs the lamp.
+      B: The man met Lea.'
+    correct: false
+    why: This changes the actor in both clauses instead of following the words after
+      som.
+  derived_from:
+  - section_id: relative-clause-object-action
+- handle: build_object_relative_clauses
+  op: build
+  objective: obj-relative-clauses-01
+  bloom: apply
+  prompt_md: 'Combine these notes into one Norwegian sentence: «Dette er boka.» «Amir
+    anbefalte boka.» Keep Amir after som and do not repeat boka with an object pronoun.'
+  tokens:
+  - token_id: object-1
+    text: Dette
+  - token_id: object-2
+    text: er
+  - token_id: object-3
+    text: boka
+  - token_id: object-4
+    text: som
+  - token_id: object-5
+    text: Amir
+  - token_id: object-6
+    text: anbefalte.
+  answer_order:
+  - object-1
+  - object-2
+  - object-3
+  - object-4
+  - object-5
+  - object-6
+  explanation_md: "When the shared noun is the object inside the relative clause, som may be omitted; the subject inside the clause remains overt."
+  derived_from:
+  - section_id: relative-clause-object-action
+- handle: repair_repeated_objects
+  op: find_fix
+  objective: obj-relative-clauses-01
+  bloom: analyze
+  prompt_md: Select the one token that is wrong/needs changing.
+  tokens:
+  - token_id: repeated-1
+    text: Jeg
+  - token_id: repeated-2
+    text: fant
+  - token_id: repeated-3
+    text: jakken
+  - token_id: repeated-4
+    text: som
+  - token_id: repeated-5
+    text: jeg
+  - token_id: repeated-6
+    text: kjøpte
+  - token_id: repeated-7
+    text: den.
+  error_token_id: repeated-7
+  feedback: Remove the repeated object pronoun; jakken already fills that role in
+    the som-clause.
+  derived_from:
+  - section_id: relative-clause-object-action
+- handle: attach_clause_to_intended_noun
+  op: build
+  objective: obj-relative-clauses-01
+  bloom: apply
+  prompt_md: Build one Norwegian sentence in which «passer til denne PC-en» clearly
+    describes laderen, not skapet.
+  tokens:
+  - token_id: attach-1
+    text: Laderen
+  - token_id: attach-2
+    text: som
+  - token_id: attach-3
+    text: passer
+  - token_id: attach-4
+    text: til
+  - token_id: attach-5
+    text: denne
+  - token_id: attach-6
+    text: PC-en,
+  - token_id: attach-7
+    text: ligger
+  - token_id: attach-8
+    text: i
+  - token_id: attach-9
+    text: skapet.
+  answer_order:
+  - attach-1
+  - attach-2
+  - attach-3
+  - attach-4
+  - attach-5
+  - attach-6
+  - attach-7
+  - attach-8
+  - attach-9
+  explanation_md: "Place the relative clause directly after laderen so the description cannot attach to skapet."
+  derived_from:
+  - section_id: keeping-information-close
+- handle: complete_workshop_identifications
+  op: build
+  objective: obj-relative-clauses-01
+  bloom: apply
+  prompt_md: Complete the workshop exchange by building one Norwegian sentence. Identify
+    Erik as the person who can help you with the lamp, and identify the lamp that
+    you want to repair.
+  tokens:
+  - token_id: workshop-1
+    text: Erik
+  - token_id: workshop-2
+    text: er
+  - token_id: workshop-3
+    text: personen
+  - token_id: workshop-4
+    text: som
+  - token_id: workshop-5
+    text: kan
+  - token_id: workshop-6
+    text: hjelpe
+  - token_id: workshop-7
+    text: deg
+  - token_id: workshop-8
+    text: med
+  - token_id: workshop-9
+    text: lampen,
+  - token_id: workshop-10
+    text: og
+  - token_id: workshop-11
+    text: dette
+  - token_id: workshop-12
+    text: er
+  - token_id: workshop-13
+    text: lampen
+  - token_id: workshop-14
+    text: som
+  - token_id: workshop-15
+    text: jeg
+  - token_id: workshop-16
+    text: vil
+  - token_id: workshop-17
+    text: reparere.
+  answer_order:
+  - workshop-1
+  - workshop-2
+  - workshop-3
+  - workshop-4
+  - workshop-5
+  - workshop-6
+  - workshop-7
+  - workshop-8
+  - workshop-9
+  - workshop-10
+  - workshop-11
+  - workshop-12
+  - workshop-13
+  - workshop-14
+  - workshop-15
+  - workshop-16
+  - workshop-17
+  derived_from:
+  - section_id: back-at-workshop
+- handle: describe_workshop_people_and_things
+  op: write
+  objective: obj-relative-clauses-01
+  bloom: apply
+  prompt_md: Write two connected Norwegian sentences for a newly arrived volunteer.
+    Identify Erik as the person who can help with the lamp, and identify a lamp that
+    you want to repair. Use a complete som-clause in each sentence. Do not repeat
+    the described noun or an unnecessary pronoun inside its som-clause.
+  response_language: 'no'
+  min_words: 15
+  max_words: 35
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+  criteria:
+  - id: workshop-identification
+    instruction: Identifies Erik and the lamp with complete som-clauses in two connected
+      Norwegian sentences.
+  - id: no-unnecessary-repetition
+    instruction: Does not repeat either described noun or an unnecessary pronoun inside
+      its som-clause.
+  derived_from:
+  - section_id: back-at-workshop
+- handle: transfer_som_to_station_scene
+  op: write
+  objective: obj-relative-clauses-01
+  bloom: apply
+  prompt_md: At a busy railway station, write three short Norwegian sentences for
+    a friend. Identify (1) the man who is standing by the ticket machine, (2) the
+    jacket that is easy to recognize, and (3) the suitcase that Nora has with her.
+    Make the first two described nouns perform the action in their som-clauses, and
+    make Nora perform the action in the third clause. Keep every som-clause next to
+    the noun phrase it describes. Use original wording.
+  response_language: 'no'
+  min_words: 20
+  max_words: 55
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+  criteria:
+  - id: station-identification
+    instruction: Identifies all three specified station people or things with clear
+      som-clauses.
+  - id: actor-patterns
+    instruction: Uses noun + som + verb for the first two descriptions and noun +
+      som + subject + verb for the third description.
+  - id: clear-attachment
+    instruction: Keeps each som-clause next to the noun phrase it describes.
+  derived_from:
+  - section_id: transfer-new-situation
+- handle: retrieve_core_som_patterns
+  op: write
+  objective: obj-relative-clauses-01
+  bloom: apply
+  prompt_md: 'Choose a familiar place other than a workshop or railway station. First
+    write both core som patterns: noun + som + verb, and noun + som + subject + verb.
+    Then write two complete Norwegian sentences
+    about people or things in that place: one where the described noun performs the
+    action, and one where another person acts on the described noun. Use som to add
+    clear identifying information. Do not repeat the described noun or an unnecessary
+    pronoun inside either som-clause.'
+  response_language: 'no'
+  min_words: 25
+  max_words: 65
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+  criteria:
+  - id: core-pattern-recall
+    instruction: 'Reconstructs both core structures with som: noun + som + verb, and
+      noun + som + subject + verb.'
+  - id: subject-relative-example
+    instruction: Provides a fresh Norwegian sentence where the described person or
+      thing performs the action after som.
+  - id: object-relative-example
+    instruction: Provides a fresh Norwegian sentence where another person acts on
+      the described person or thing, with that subject retained after som.
+  - id: no-repeated-reference
+    instruction: Avoids unnecessary repeated nouns or pronouns inside both relative
+      clauses.
+  derived_from:
+  - section_id: retrieval-and-review
