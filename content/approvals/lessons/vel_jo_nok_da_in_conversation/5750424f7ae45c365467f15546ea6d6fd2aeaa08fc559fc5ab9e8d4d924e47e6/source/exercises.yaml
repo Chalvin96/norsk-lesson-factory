@@ -1,0 +1,182 @@
+- handle: interpret_jo_shared_ground_in_lines
+  op: choose
+  objective: obj-vel-jo-nok-da-in-conversation-01
+  bloom: understand
+  prompt_md: 'You are visiting your friend Haavard in Trondheim. His mother greets
+    you at the door: «Dere har jo møtt meg før.» (You have met me before.) Later,
+    while you wait for the bus together, Haavard says: «Bussen går jo hvert tiende
+    minutt.» (The bus runs every ten minutes.)'
+  stem_md: What does jo signal in both lines?
+  options:
+  - id: shared-ground-reminder
+    text: In both lines the speaker treats the claim as something both speakers already
+      know, reminding the listener of shared ground.
+    correct: true
+    why: jo marks a claim as shared property — a reminder, not news.
+  - id: guess-for-confirmation
+    text: In both lines the speaker floats a best guess and asks the listener to confirm
+      or correct it.
+    correct: false
+    why: Floating a claim for confirmation is the job of vel.
+  - id: lone-own-conclusion
+    text: In both lines the speaker states a conclusion reached alone from evidence,
+      expecting nothing from the listener.
+    correct: false
+    why: A weighed, self-reached conclusion is the job of nok.
+  - id: shared-next-step
+    text: In both lines the speaker marks the sentence as the natural next step in
+      the talk and coaxes the listener along.
+    correct: false
+    why: Marking a shared next step with coaxing is the job of conversational da.
+- handle: choose_jo_or_vel_for_stance
+  op: recall_fill
+  objective: obj-vel-jo-nok-da-in-conversation-01
+  bloom: apply
+  prompt_md: 'You and your friend Marit agreed last week to drive to Bergen today.
+    Marit packed the car last night, and you half-remember that the road atlas went
+    in with everything else. Complete your two lines. Blank 1 — «Vi skulle ... dra
+    til Bergen i dag.» (We were going to drive to Bergen today.): you remind Marit
+    of the plan you made together last week. Blank 2 — «Du har ... kartet med deg?»
+    (You do have the atlas with you?): you are not sure, and you want Marit to confirm
+    it.'
+  audio_target: Vi skulle jo dra til Bergen i dag. Du har vel kartet med deg?
+  segments:
+  - text_md: 'Vi skulle '
+  - blank_id: line1-particle
+    options:
+    - jo
+    - vel
+    answer_index: 0
+  - text_md: ' dra til Bergen i dag. Du har '
+  - blank_id: line2-particle
+    options:
+    - jo
+    - vel
+    answer_index: 1
+  - text_md: ' kartet med deg?'
+  explanation_md: 'Line 1 takes jo: the plan was made together, so the speaker treats
+    it as shared ground and expects agreement. Line 2 takes vel: the speaker is unsure
+    and holds the claim out for Marit to confirm.'
+- handle: choose_particle_for_claimed_stance
+  op: recall_fill
+  objective: obj-vel-jo-nok-da-in-conversation-01
+  bloom: apply
+  prompt_md: 'You and your colleague Sindre are leaving the office for a meeting with
+    a client you both visited last year. Complete your three lines. Line 1 — «De har
+    ... kontor i Storgata.» (Their office is in Storgata.): you remind Sindre of something
+    you both know from last year''s visit. Line 2 — «Møtet er ... klokka to?» (The
+    meeting is at two?): you half-remember the time and want Sindre to confirm it.
+    Line 3 — «Trikken er ... full nå.» (The tram is full now.): Sindre has never taken
+    this tram on a Friday, and the transit app shows unusually high occupancy. You
+    tell him your conclusion; you are not asking him to confirm it.'
+  audio_target: De har jo kontor i Storgata. Møtet er vel klokka to? Trikken er nok
+    full nå.
+  segments:
+  - text_md: 'De har '
+  - blank_id: line1-particle
+    options:
+    - vel
+    - jo
+    - nok
+    answer_index: 1
+  - text_md: ' kontor i Storgata. Møtet er '
+  - blank_id: line2-particle
+    options:
+    - vel
+    - nok
+    - jo
+    answer_index: 0
+  - text_md: ' klokka to? Trikken er '
+  - blank_id: line3-particle
+    options:
+    - jo
+    - nok
+    - vel
+    answer_index: 1
+  - text_md: ' full nå.'
+  explanation_md: jo marks the office address as knowledge shared with Sindre; vel
+    floats the meeting time for him to confirm; nok presents the crowded tram as the
+    speaker's conclusion from the occupancy information. Sindre lacks the experience
+    needed to confirm it, so vel does not fit this exchange.
+- handle: soften_request_with_conversational_da
+  op: recall_fill
+  objective: obj-vel-jo-nok-da-in-conversation-01
+  bloom: apply
+  prompt_md: 'You and your friend Sofie are off to the cinema, and she is unsure whether
+    to come. Blank 1 — Complete your warm invitation: «Bli med ...!» (Come along!)
+    Blank 2 — Neither of you knows which screen
+    the film is on, and you have already agreed that asking the usher is the thing
+    to do. You want to mark this step as something you are settling together with
+    Sofie, with a coaxing tone. Choose the version that does that: «Da spør vi vakten.»
+    (Then we''ll ask the usher.) or «Vi spør vakten, da.» (We''ll ask the usher, then.)'
+  audio_target: Bli med, da! Vi spør vakten, da. Filmen begynner klokka åtte.
+  segments:
+  - text_md: 'Bli med, '
+  - blank_id: coax-particle
+    options:
+    - jo
+    - da
+    - vel
+    answer_index: 1
+  - text_md: '! '
+  - blank_id: placement-choice
+    options:
+    - Da spør vi vakten.
+    - Vi spør vakten, da.
+    answer_index: 1
+  - text_md: ' Filmen begynner klokka åtte.'
+  explanation_md: In this friendly invitation, sentence-final da supports a coaxing
+    reading; another situation or tone could make da sound insistent or impatient.
+    Sentence-initial Da states plain consequence, while sentence-final da marks the
+    step as something the speakers are settling in this context.
+- handle: diagnose_particle_misfit_in_exchange
+  op: find_fix
+  objective: obj-vel-jo-nok-da-in-conversation-01
+  bloom: analyze
+  prompt_md: 'Kari is staying with her cousin Ola in Oslo. She wants to buy a drill
+    bit at the local hardware shop, but she has never been there — Ola is the one
+    who knows the neighbourhood, and Kari is only guessing about the closing time.
+    Ola asks: «Skal du opp til butikken i dag?» (Are you going up to the shop today?)
+    Kari answers: «Butikken stenger jo klokka seks?» (The shop closes at six?) Kari''s
+    particle signals the wrong stance. Tap the word that misfires.'
+  tokens:
+  - token_id: tok-1
+    text: Butikken
+  - token_id: tok-2
+    text: stenger
+  - token_id: tok-3
+    text: jo
+  - token_id: tok-4
+    text: klokka
+  - token_id: tok-5
+    text: seks?
+  error_token_id: tok-3
+  feedback: 'jo wrongly claims shared ground: it signals that Kari and Ola both already
+    know when the shop closes. Kari is unsure and wants Ola to confirm, which is the
+    job of vel: «Butikken stenger vel klokka seks?»'
+- handle: produce_particle_dialogue_in_new_situation
+  op: write
+  objective: obj-vel-jo-nok-da-in-conversation-01
+  bloom: apply
+  prompt_md: 'It is Thursday afternoon in the office, and you and your colleague Ben
+    are planning a surprise birthday party for your boss on Friday afternoon. Write
+    a short dialogue in Norwegian between you and Ben — three to five lines, about
+    25 to 60 words, with the speaker name at the start of each line. Choose two of
+    jo, vel, nok, and conversational da. Use each chosen word once with a context-supported
+    function taught in the lesson. If you choose da, make the surrounding wording
+    clearly coaxing, settling, insistent, or impatient rather than treating da as
+    automatically friendly.'
+  response_language: 'no'
+  min_words: 25
+  max_words: 60
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+  criteria:
+  - id: dialogue-situation
+    instruction: Writes a coherent Norwegian dialogue between the two named colleagues,
+      set in the office party-planning situation, with a speaker label on each line.
+  - id: exactly-two-target-particles
+    instruction: Uses exactly two different target words from jo, vel, nok, and conversational
+      da, with each chosen word used at least once.
+  - id: particle-functions-fit-context
+    instruction: Each chosen word has a context-supported function taught in the lesson;
+      any use of da has a tone supported by the surrounding situation and wording.

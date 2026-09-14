@@ -76,6 +76,18 @@ class AudioSettings:
     synthesis_revision: str = K_AUDIO_DEFAULT_SYNTHESIS_REVISION
 
 
+@dataclass(frozen=True)
+class AudioCandidateIdentity:
+    """Provider-independent identity and binding for one audio candidate."""
+
+    binding: str
+    fingerprint: str
+    audio_id: str
+    filename: str
+    text: str
+    voice: str
+
+
 def validate_lesson_audio_sources(transcript_blocks: list[dict[str, Any]], settings: AudioSettings) -> None:
     """Validate all source identities and voice allocations without provider I/O."""
     allocator = _SpeakerVoiceAllocator(settings)
@@ -158,11 +170,17 @@ def synthesize_lesson_audio(
     return entries, bindings
 
 
-def load_audio_settings(*, repo_root: Path, service_account_path: Path | None = None) -> AudioSettings:
+def load_audio_settings(
+    *, repo_root: Path, service_account_path: Path | None = None, require_service_account: bool = True
+) -> AudioSettings:
     """Load and validate the configured audio provider for an explicit export."""
     root = Path(repo_root)
     raw_audio = _load_audio_config(root)
-    selected_path = _resolve_service_account_path(root, service_account_path)
+    selected_path = (
+        _resolve_service_account_path(root, service_account_path)
+        if require_service_account
+        else _optional_service_account_path(root, service_account_path)
+    )
     validated = _validate_audio_configuration(root, raw_audio)
     return AudioSettings(
         provider=validated.provider,
@@ -183,6 +201,52 @@ def validate_audio_configuration(*, repo_root: Path) -> None:
     """Validate all non-secret audio configuration without provider I/O."""
     root = Path(repo_root)
     _validate_audio_configuration(root, _load_audio_config(root))
+
+
+def identify_audio_candidate(
+    *, block: Mapping[str, Any], settings: AudioSettings, speaker_allocator: _SpeakerVoiceAllocator
+) -> AudioCandidateIdentity:
+    """Derive the exact cache identity used by synthesis for one candidate."""
+    text = block.get("text")
+    candidate_id = block.get("id")
+    source = block.get("source")
+    origin = block.get("origin")
+    if not isinstance(text, str) or not text.strip():
+        raise ValueError("audio candidate text must be non-empty")
+    if not isinstance(candidate_id, str) or not candidate_id:
+        raise ValueError("audio candidate id must be non-empty")
+    if not isinstance(source, Mapping):
+        raise TypeError(f"audio candidate {candidate_id!r} has no source locator")
+    binding = audio_binding_key(source)
+    voice = speaker_allocator.voice_for(source, candidate_id=candidate_id, origin=origin)
+    fingerprint = _synthesis_fingerprint(settings=settings, voice=voice, text=text)
+    opaque_id = str(uuid.uuid5(uuid.NAMESPACE_URL, fingerprint))
+    return AudioCandidateIdentity(
+        binding=binding,
+        fingerprint=fingerprint,
+        audio_id=f"audio-{opaque_id}",
+        filename=f"{opaque_id}.wav",
+        text=text,
+        voice=voice,
+    )
+
+
+def plan_lesson_audio_candidates(
+    *, transcript_blocks: list[dict[str, Any]], settings: AudioSettings
+) -> list[AudioCandidateIdentity]:
+    """Derive validated, deterministic audio identities for release planning.
+
+    Shares ``identify_audio_candidate`` with synthesis so planned fingerprints
+    can never drift from the fingerprints synthesis actually caches.
+    """
+    validate_lesson_audio_sources(transcript_blocks, settings)
+    allocator = _SpeakerVoiceAllocator(settings)
+    allocator.validate_sources(transcript_blocks)
+    return [
+        identify_audio_candidate(block=block, settings=settings, speaker_allocator=allocator)
+        for block in transcript_blocks
+        if block.get("origin") in {"lesson_reading", "lesson_example", "exercise_target"}
+    ]
 
 
 @dataclass(frozen=True)
@@ -252,6 +316,17 @@ def _resolve_service_account_path(root: Path, configured_path: Path | None) -> P
     return selected_path
 
 
+def _optional_service_account_path(root: Path, configured_path: Path | None) -> Path:
+    """Return a harmless placeholder while loading provider-free plan settings."""
+    if configured_path is not None:
+        return configured_path if configured_path.is_absolute() else root / configured_path
+    env_path = os.environ.get(K_AUDIO_SERVICE_ACCOUNT_ENV)
+    if env_path:
+        selected_path = Path(os.path.expanduser(env_path))
+        return selected_path if selected_path.is_absolute() else root / selected_path
+    return root / ".audio-service-account-not-required"
+
+
 def _require_supported_language(raw_audio: dict[str, Any]) -> str:
     """Return the configured language when it is supported by the exporter."""
     language = str(raw_audio.get("language", K_AUDIO_DEFAULT_LANGUAGE))
@@ -297,27 +372,17 @@ def _synthesize_audio_candidate(
     cache_root: Path | None,
 ) -> tuple[str, str, dict[str, Any] | None]:
     """Synthesize one candidate and return its binding, ID, and new entry."""
-    text = block.get("text")
-    candidate_id = block.get("id")
-    source = block.get("source")
-    origin = block.get("origin")
-    if not isinstance(text, str) or not text.strip():
-        raise ValueError("audio candidate text must be non-empty")
-    if not isinstance(candidate_id, str) or not candidate_id:
-        raise ValueError("audio candidate id must be non-empty")
-    if not isinstance(source, dict):
-        raise TypeError(f"audio candidate {candidate_id!r} has no source locator")
-    binding = audio_binding_key(source)
-    voice = speaker_allocator.voice_for(source, candidate_id=candidate_id, origin=origin)
-    fingerprint = _synthesis_fingerprint(settings=settings, voice=voice, text=text)
-    opaque_id = str(uuid.uuid5(uuid.NAMESPACE_URL, fingerprint))
-    audio_id = f"audio-{opaque_id}"
-    filename = f"{opaque_id}.wav"
+    identity = identify_audio_candidate(block=block, settings=settings, speaker_allocator=speaker_allocator)
+    binding = identity.binding
+    voice = identity.voice
+    fingerprint = identity.fingerprint
+    audio_id = identity.audio_id
+    filename = identity.filename
     destination = audio_dir / filename
     _ensure_synthesized_audio(
         destination=destination,
         fingerprint=fingerprint,
-        text=text,
+        text=identity.text,
         voice=voice,
         client=client,
         cache_root=cache_root,
@@ -749,8 +814,11 @@ def _synthesis_fingerprint(*, settings: AudioSettings, voice: str, text: str) ->
 
 
 __all__ = [
+    "AudioCandidateIdentity",
     "AudioSettings",
+    "identify_audio_candidate",
     "load_audio_settings",
+    "plan_lesson_audio_candidates",
     "synthesize_lesson_audio",
     "validate_audio_configuration",
 ]

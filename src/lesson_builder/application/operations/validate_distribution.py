@@ -16,6 +16,7 @@ from pathlib import Path
 from pathlib import PurePosixPath
 from pathlib import PureWindowsPath
 from typing import Any
+from typing import cast
 
 import yaml
 
@@ -51,7 +52,10 @@ def validate_audio_asset(path: Path) -> int:
 
 
 def validate_distribution(
-    distribution_root: Path, *, expected_lesson_ids: list[str] | None = None
+    distribution_root: Path,
+    *,
+    expected_lesson_ids: list[str] | None = None,
+    require_local_audio: bool = True,
 ) -> dict[str, object]:
     """Validate one complete lesson distribution in place and return a summary.
 
@@ -61,6 +65,11 @@ def validate_distribution(
     Validation fails closed on duplicate lesson IDs, catalog or packet-set drift,
     invalid lesson packets, and audio files that are missing, unreadable, or stale
     against their optional SHA-256.
+
+    With ``require_local_audio=False`` the audio files may live remotely: packet
+    audio references must then carry ready HTTPS URLs and SHA-256 digests instead
+    of readable local WAV bytes. That mode exists for verifying published
+    archives that intentionally omit WAV bytes.
     """
     root = Path(distribution_root)
     dist = WorkspacePaths(root).dist_root
@@ -72,27 +81,34 @@ def validate_distribution(
     catalog_order = _validate_catalog(dist / K_CATALOG_FILENAME, packet_ids=packet_ids)
     _validate_expected_lesson_ids(packet_ids, catalog_order, expected_lesson_ids)
     lesson_ids = catalog_order
-    audio_file_count, audio_total_bytes, referenced_audio_paths = _validate_packet_entries(
+    audio_summary = _validate_packet_entries(
         root=root,
         dist=dist,
         entries=entries,
+        require_local_audio=require_local_audio,
     )
     actual_audio_paths = _discover_audio_paths(dist)
+    referenced_audio_paths = cast(set[str], audio_summary["referenced_audio_paths"])
     stale_audio = sorted(actual_audio_paths - referenced_audio_paths)
     if stale_audio:
         raise ValueError(f"distribution contains unreferenced audio: {', '.join(stale_audio)}")
     schema_file = _validate_distribution_schema(dist)
-    return {
+    summary: dict[str, object] = {
         "distribution_root": str(root),
         "schema_version": K_LESSON_SCHEMA_VERSION,
         "lesson_ids": lesson_ids,
         "lesson_count": len(lesson_ids),
         "packet_count": len(entries),
         "catalog_present": True,
-        "audio_file_count": audio_file_count,
-        "audio_total_bytes": audio_total_bytes,
         "schema_path": str(schema_file),
+        "audio_required_locally": require_local_audio,
     }
+    if require_local_audio:
+        summary["audio_file_count"] = audio_summary["audio_file_count"]
+        summary["audio_total_bytes"] = audio_summary["audio_total_bytes"]
+    else:
+        summary["audio_reference_count"] = audio_summary["audio_reference_count"]
+    return summary
 
 
 def validate_committed_distribution(
@@ -100,13 +116,18 @@ def validate_committed_distribution(
     *,
     distribution_root: Path | None = None,
     compiled_packages: Mapping[str, LessonPackageCompilation] | None = None,
+    require_local_audio: bool = True,
 ) -> dict[str, object]:
     """Validate a distribution and require its non-audio content to match source."""
     root = Path(repo_root)
     published_root = Path(distribution_root) if distribution_root is not None else root
     lesson_ids = load_planned_lesson_ids(root)
     validate_lesson_inventory(root, lesson_ids)
-    summary = validate_distribution(published_root, expected_lesson_ids=lesson_ids)
+    summary = validate_distribution(
+        published_root,
+        expected_lesson_ids=lesson_ids,
+        require_local_audio=require_local_audio,
+    )
     character_registry = load_optional_character_registry(root, search_parents=False)
     for lesson_id in lesson_ids:
         expected = _create_expected_packet(
@@ -228,26 +249,41 @@ def _validate_packet_entries(
     root: Path,
     dist: Path,
     entries: list[dict[str, Any]],
-) -> tuple[int, int, set[str]]:
-    """Validate packets and their referenced audio, returning audio totals."""
+    require_local_audio: bool = True,
+) -> dict[str, object]:
+    """Validate packets and their audio references, returning audio totals."""
     audio_file_count = 0
     audio_total_bytes = 0
+    audio_reference_count = 0
     referenced_audio_paths: set[str] = set()
     for entry in entries:
         packet = _load_packet(root, str(entry["path"]))
         _require_packet_matches_path(packet, entry)
         for audio in packet.media.audio:
-            _validate_packet_audio(packet, dist, audio)
-            audio_bytes = (dist / audio.path).read_bytes()
-            audio_file_count += 1
-            audio_total_bytes += len(audio_bytes)
+            _validate_packet_audio(packet, dist, audio, require_local_audio=require_local_audio)
             referenced_audio_paths.add(audio.path)
-    return audio_file_count, audio_total_bytes, referenced_audio_paths
+            audio_reference_count += 1
+            if require_local_audio:
+                audio_bytes = (dist / audio.path).read_bytes()
+                audio_file_count += 1
+                audio_total_bytes += len(audio_bytes)
+    return {
+        "referenced_audio_paths": referenced_audio_paths,
+        "audio_file_count": audio_file_count,
+        "audio_total_bytes": audio_total_bytes,
+        "audio_reference_count": audio_reference_count,
+    }
 
 
-def _validate_packet_audio(packet: ExportedLesson, dist: Path, audio: ExportedAudio) -> None:
+def _validate_packet_audio(
+    packet: ExportedLesson, dist: Path, audio: ExportedAudio, *, require_local_audio: bool = True
+) -> None:
     """Validate one packet audio reference and its optional metadata."""
     _require_safe_audio_path(audio.path)
+    if not require_local_audio:
+        if audio.sha256 is None:
+            raise ValueError(f"packet {packet.id!r} references remote audio {audio.path!r} without a sha256 digest")
+        return
     audio_file = dist / audio.path
     if not audio_file.is_file():
         raise ValueError(f"packet {packet.id!r} references missing audio {audio.path!r}")

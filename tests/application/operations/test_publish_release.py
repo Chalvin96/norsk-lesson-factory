@@ -149,6 +149,66 @@ def test_publish_release_given_stale_archive_expect_refusal_before_destinations(
     assert gh_calls == []
 
 
+def test_publish_release_given_audio_free_archive_of_audio_dist_expect_publication(tmp_path: Path, monkeypatch) -> None:
+    release_root = _write_release(tmp_path / "release")
+    audio = release_root / "dist" / "audio" / "lessons" / "present_tense" / "clip.wav"
+    audio.parent.mkdir(parents=True)
+    audio.write_bytes(b"wav-bytes")
+    _patch_validation(monkeypatch)
+    package_distribution(
+        repo_root=release_root,
+        distribution_root=release_root,
+        output_path=tmp_path / "lessons.tar.gz",
+        include_audio=False,
+    )
+    upload_calls = _patch_upload(monkeypatch, {"uploaded": 1, "skipped": 0})
+    gh_calls = _patch_gh(monkeypatch)
+
+    result = publish_release(
+        archive_path=tmp_path / "lessons.tar.gz",
+        repo_root=tmp_path,
+        distribution_root=release_root,
+        upload_s3=True,
+        github_repository="owner/repo",
+        github_tag="lessons-2026.08.23",
+        archive_includes_audio=False,
+    )
+
+    assert result["published"] == ["s3_audio", "github_release"]
+    assert upload_calls == [{"distribution_root": release_root, "env_path": None}]
+    assert len(gh_calls) == 1
+    assert audio.is_file()
+
+
+def test_publish_release_given_audio_archive_without_audio_flag_expect_refusal(tmp_path: Path, monkeypatch) -> None:
+    release_root = _write_release(tmp_path / "release")
+    audio = release_root / "dist" / "audio" / "lessons" / "present_tense" / "clip.wav"
+    audio.parent.mkdir(parents=True)
+    audio.write_bytes(b"wav-bytes")
+    _patch_validation(monkeypatch)
+    package_distribution(
+        repo_root=release_root,
+        distribution_root=release_root,
+        output_path=tmp_path / "lessons.tar.gz",
+        include_audio=False,
+    )
+    upload_calls = _patch_upload(monkeypatch, {"uploaded": 0, "skipped": 0})
+    gh_calls = _patch_gh(monkeypatch)
+
+    with pytest.raises(ValueError, match="missing dist/ members"):
+        publish_release(
+            archive_path=tmp_path / "lessons.tar.gz",
+            repo_root=tmp_path,
+            distribution_root=release_root,
+            upload_s3=True,
+            github_repository="owner/repo",
+            github_tag="lessons-2026.08.23",
+        )
+
+    assert upload_calls == []
+    assert gh_calls == []
+
+
 def _tampered_archive(release_root: Path, monkeypatch, *, mutate) -> Path:
     archive = _build_archive(release_root, release_root.parent / "lessons.tar.gz", monkeypatch)
     source = _build_archive(release_root, release_root.parent / "source.tar.gz", monkeypatch)

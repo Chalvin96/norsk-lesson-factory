@@ -47,6 +47,7 @@ def test_package_distribution_given_same_validated_dist_expect_reproducible_arch
     )
 
     assert first["sha256"] == second["sha256"]
+    assert first["include_audio"] is True
     with tarfile.open(tmp_path / "first.tar.gz", "r:gz") as archive:
         assert set(archive.getnames()) == {
             "dist",
@@ -54,3 +55,29 @@ def test_package_distribution_given_same_validated_dist_expect_reproducible_arch
             "dist/schema",
             "dist/schema/lesson.schema.json",
         }
+
+
+def test_package_distribution_given_audio_exclusion_expect_archive_omits_wav_bytes(tmp_path: Path, monkeypatch) -> None:
+    distribution_root = _write_distribution(tmp_path / "distribution")
+    audio = distribution_root / "dist" / "audio" / "lessons" / "present_tense" / "clip.wav"
+    audio.parent.mkdir(parents=True)
+    audio.write_bytes(b"wav-bytes")
+    _patch_validation(monkeypatch)
+
+    result = package_distribution(
+        repo_root=tmp_path,
+        distribution_root=distribution_root,
+        output_path=tmp_path / "lessons.tar.gz",
+        include_audio=False,
+    )
+
+    assert result["include_audio"] is False
+    with tarfile.open(tmp_path / "lessons.tar.gz", "r:gz") as archive:
+        names = archive.getnames()
+    assert set(names) == {
+        "dist",
+        "dist/catalog.json",
+        "dist/schema",
+        "dist/schema/lesson.schema.json",
+    }
+    assert audio.is_file()

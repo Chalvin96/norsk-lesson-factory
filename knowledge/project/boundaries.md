@@ -48,3 +48,29 @@ atomically, so failures cannot rewrite unrelated lessons or expose partial data.
 External release publication packages and ships that already validated distribution;
 it does not alter authoring source. Release publication is all-or-nothing and separate
 from authoring, keeping failed or incomplete work from becoming current.
+
+Release preparation is provider-free until explicitly approved. `lesson-data
+release` writes a source-bound plan that discovers validated recordings in the
+canonical local cache and historical scratch distributions, reports exact reuse
+and missing counts, and estimates synthesis cost. Planning and synthesis derive
+cache identity from one shared candidate-identification function, so planned
+fingerprints cannot drift from the fingerprints synthesis reuses; the plan binds
+to the source digest of curriculum, audio configuration, character registry,
+and lesson source. The plan also freezes its release tag, GitHub repository, and
+the digest of each historical recording selected for reuse. `lesson-data release
+--approve` requires the selected release tag to identify the checked-out source
+commit locally and in that GitHub repository, resumes only an unchanged plan,
+synthesizes missing fingerprints, validates complete audio coverage,
+uploads serving audio before publishing the GitHub packet archive, and omits
+WAV bytes from that archive because packets carry HTTPS URLs and SHA-256
+digests. A release cannot silently publish the provider-free text distribution.
+
+Synthesis and publication happen only in that local approval flow, because only
+the local workspace holds the ignored audio cache that makes reuse possible.
+Command output stays bounded — counts, cost, plan path, and next command by
+default, full detail behind `--format json` or in the persisted plan file. Tag
+CI holds no audio-provider or storage credentials and cannot synthesize or
+spend; it verifies the already published archive against tagged source with
+`lesson-data release-verify`, failing closed on a missing release, embedded
+audio bytes, or source drift. The operational command order lives in the
+knowledge README.

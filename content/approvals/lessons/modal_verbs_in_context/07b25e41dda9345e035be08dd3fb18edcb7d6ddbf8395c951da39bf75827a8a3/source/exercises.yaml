@@ -1,0 +1,258 @@
+- handle: recall_five_modal_meanings
+  op: recall_fill
+  objective: obj-modal-verbs-in-context-01
+  bloom: remember
+  prompt_md: 'Complete the summary of the five modal verbs from memory. Each part
+    tells you what one modal means ("betyr" = "means"). Choose the appropriate
+    Norwegian meaning for each blank.'
+  audio_target: Må betyr nødvendighet, kan betyr mulighet, skal betyr plan, vil betyr
+    ønske, og bør betyr råd.
+  segments:
+  - text_md: 'Må betyr '
+  - blank_id: meaning-of-ma
+    options:
+    - mulighet
+    - råd
+    - nødvendighet
+    - ønske
+    - plan
+    answer_index: 2
+  - text_md: ', kan betyr '
+  - blank_id: meaning-of-kan
+    options:
+    - plan
+    - mulighet
+    - nødvendighet
+    - råd
+    - ønske
+    answer_index: 1
+  - text_md: ', skal betyr '
+  - blank_id: meaning-of-skal
+    options:
+    - ønske
+    - råd
+    - plan
+    - mulighet
+    - nødvendighet
+    answer_index: 2
+  - text_md: ', vil betyr '
+  - blank_id: meaning-of-vil
+    options:
+    - plan
+    - nødvendighet
+    - råd
+    - ønske
+    - mulighet
+    answer_index: 3
+  - text_md: ', og bør betyr '
+  - blank_id: meaning-of-bor
+    options:
+    - mulighet
+    - plan
+    - ønske
+    - råd
+    - nødvendighet
+    answer_index: 3
+  - text_md: .
+- handle: distinguish_ma_ikke_from_trenger_ikke
+  op: choose
+  objective: obj-modal-verbs-in-context-01
+  bloom: understand
+  prompt_md: Before the cabin trip, the host sends the guest two messages. Read them
+    and choose the correct interpretation of both.
+  stem_md: 'Item 1: Du må ikke ta med hund til hytta. 2. Du trenger ikke ta med sengetøy.
+    What do the two sentences tell the guest?'
+  options:
+  - id: option-forbid-and-free
+    text: Sentence 1 forbids bringing a dog — it is against the cabin rules. Sentence
+      2 says bringing bedding is not necessary.
+    correct: true
+    why: 'Correct: må ikke is a prohibition (a rule says no), while trenger ikke removes
+      the obligation — the bedding is already there.'
+  - id: option-swapped
+    text: Sentence 1 says bringing a dog is not necessary. Sentence 2 forbids bringing
+      bedding.
+    correct: false
+    why: 'The meanings are swapped: må ikke never means "don''t have to", and trenger
+      ikke never forbids.'
+  - id: option-both-forbid
+    text: Both sentences forbid the action — one about the dog, one about the bedding.
+    correct: false
+    why: Only må ikke forbids; trenger ikke says the action is not needed, not that
+      it is banned.
+  - id: option-both-optional
+    text: Both sentences say the action is not necessary — the choice is up to the
+      guest.
+    correct: false
+    why: trenger ikke does mean "not necessary", but må ikke is a prohibition, not
+      an open choice.
+- handle: choose_kan_or_ma_for_option_or_requirement
+  op: recall_fill
+  objective: obj-modal-verbs-in-context-01
+  bloom: apply
+  prompt_md: Fill each blank with kan or må so that the finished sentence expresses
+    the right kind of pressure. kan presents the action as possible or permitted —
+    an open option. må presents it as necessary — a requirement.
+  audio_target: Du kan ta med en venn på turen — det er plass nok. Bussen går klokka
+    seks, så vi må stå opp før fem. Du kan låne stavene mine hvis du trenger dem.
+    Værmeldingen sier storm, så dere må bli på hytta i natt.
+  segments:
+  - text_md: 'Du '
+  - blank_id: extra-guest
+    options:
+    - kan
+    - må
+    answer_index: 0
+  - text_md: ' ta med en venn på turen — det er plass nok. Bussen går klokka seks,
+      så vi '
+  - blank_id: early-bus
+    options:
+    - kan
+    - må
+    answer_index: 1
+  - text_md: ' stå opp før fem. Du '
+  - blank_id: lend-poles
+    options:
+    - kan
+    - må
+    answer_index: 0
+  - text_md: ' låne stavene mine hvis du trenger dem. Værmeldingen sier storm, så
+      dere '
+  - blank_id: storm-warning
+    options:
+    - kan
+    - må
+    answer_index: 1
+  - text_md: ' bli på hytta i natt.'
+  explanation_md: 'kan opens options: there is room on the trip, and the poles are
+    available if needed. må marks necessity created by outside pressure: the bus time
+    and the storm warning.'
+- handle: assign_skal_or_vil_from_context
+  op: categorize
+  objective: obj-modal-verbs-in-context-01
+  bloom: analyze
+  prompt_md: 'Each context below needs one modal: skal or vil. skal marks what is
+    decided — plans, arrangements, promises. vil marks what is wanted or expected
+    — wishes (often with gjerne) and predictions (often with sikkert or nok). Sort
+    every item into the matching group.'
+  buckets:
+  - bucket_id: skal-decided
+    label: 'skal — decided: plan, arrangement, or promise'
+  - bucket_id: vil-wanted-or-expected
+    label: 'vil — wanted or expected: wish or prediction'
+  items:
+  - item_id: bergen-flight
+    text: Vi [BLANK] reise til Bergen i august — flybillettene er allerede kjøpt.
+    bucket_id: skal-decided
+  - item_id: weekend-rain
+    text: Det [BLANK] sikkert bli regn i helgen.
+    bucket_id: vil-wanted-or-expected
+  - item_id: ski-wish
+    text: Jeg [BLANK] gjerne lære meg å stå på ski denne vinteren.
+    bucket_id: vil-wanted-or-expected
+  - item_id: dentist-appointment
+    text: Jeg [BLANK] til tannlegen klokka halv to i morgen; timen er bestilt.
+    bucket_id: skal-decided
+  - item_id: moving-help-promise
+    text: Slutt å bekymre deg — jeg [BLANK] hjelpe deg med flyttingen på lørdag.
+    bucket_id: skal-decided
+  - item_id: long-sleep
+    text: Han [BLANK] nok sove lenge i morgen; han har vært oppe hele natten.
+    bucket_id: vil-wanted-or-expected
+- handle: rank_modal_force_from_optional_to_required
+  op: categorize
+  objective: obj-modal-verbs-in-context-01
+  bloom: analyze
+  prompt_md: 'Every sentence below uses one of kan, bør, or må. Sort the sentences
+    by rising speaker pressure: from an open option, through advice, up to a requirement.'
+  buckets:
+  - bucket_id: pressure-option
+    label: 'Option — lowest pressure: possible, up to you'
+  - bucket_id: pressure-advice
+    label: 'Advice — middle: recommended, but your choice'
+  - bucket_id: pressure-requirement
+    label: 'Requirement — highest pressure: necessary'
+  items:
+  - item_id: borrow-money
+    text: Du kan låne pengene mine til fredag.
+    bucket_id: pressure-option
+  - item_id: check-forecast
+    text: Du bør sjekke værmeldingen før du går oppover.
+    bucket_id: pressure-advice
+  - item_id: signup-list
+    text: Alle må skrive seg på listen utenfor kontoret.
+    bucket_id: pressure-requirement
+  - item_id: ride-along
+    text: Du kan gjerne sitte på med oss i bilen.
+    bucket_id: pressure-option
+  - item_id: packed-lunch
+    text: Du bør ta med nistemat — det er dyrt å spise ute der.
+    bucket_id: pressure-advice
+  - item_id: valid-ticket
+    text: Du må ha gyldig billett for å komme inn.
+    bucket_id: pressure-requirement
+- handle: distinguish_action_and_evidence_readings
+  op: categorize
+  objective: obj-modal-verbs-in-context-01
+  bloom: analyze
+  prompt_md: Sort each sentence by what the modal contributes in this context. Choose
+    action meaning when it directs, plans, or advises an action. Choose evidence meaning
+    when it marks an inference, reported information, or an expectation.
+  buckets:
+  - bucket_id: action-meaning
+    label: Action meaning
+  - bucket_id: evidence-meaning
+    label: Evidence, report, or expectation
+  items:
+  - item_id: submit-form
+    text: Du må levere skjemaet før fredag.
+    bucket_id: action-meaning
+  - item_id: bicycle-evidence
+    text: Hun må være på kontoret; sykkelen hennes står utenfor.
+    bucket_id: evidence-meaning
+  - item_id: friday-plan
+    text: Vi skal møte kunden på fredag.
+    bucket_id: action-meaning
+  - item_id: reported-teacher
+    text: Den nye læreren skal være svært flink, ifølge kollegene.
+    bucket_id: evidence-meaning
+  - item_id: save-copy
+    text: Du bør lagre en kopi før du lukker dokumentet.
+    bucket_id: action-meaning
+  - item_id: expected-bus
+    text: Bussen bør være her om fem minutter hvis rutetabellen holder.
+    bucket_id: evidence-meaning
+- handle: transfer_modals_across_action_and_evidence
+  op: write
+  objective: obj-modal-verbs-in-context-01
+  bloom: apply
+  prompt_md: 'New situation: a delivery is late at your workplace, and two colleagues
+    are deciding what to do. Write a short conversation in natural Bokmål — between
+    20 and 70 words — and mark the speaker at the start of each line. Use at least
+    three of the lesson''s modal verbs. Include (1) one evidence-based reading: inferential
+    må, reported-information skal, or expectation bør; and (2) one core action meaning
+    such as necessity, possibility, plan, wish, or advice. Make the surrounding context
+    clear enough to support both readings.'
+  response_language: 'no'
+  min_words: 20
+  max_words: 70
+  judge_prompt: Check the dialogue against the task and report evidence for each criterion,
+    quoting each modal use and the contextual evidence for its reading. State the total
+    word count excluding speaker labels.
+  criteria:
+  - id: dialogue-format
+    instruction: Written as a coherent workplace conversation about the late delivery,
+      with the speaker marked at the start of each line.
+  - id: within-word-bounds
+    instruction: The dialogue is between 20 and 70 words, not counting speaker labels.
+  - id: at-least-three-modals
+    instruction: Uses at least three of må, kan, skal, vil, and bør.
+  - id: evidence-reading
+    instruction: Uses inferential må, reported-information skal, or expectation bør
+      at least once, with context that supports that reading.
+  - id: action-reading
+    instruction: Uses at least one modal for a core action meaning such as necessity,
+      possibility, plan, wish, or advice, with context that supports that reading.
+  - id: natural-bokmal-grammar
+    instruction: 'Natural Bokmål with correct modal grammar: no å between a modal
+      and its infinitive, and word order that fits a conversation.'

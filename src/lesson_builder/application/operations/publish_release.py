@@ -47,6 +47,7 @@ def publish_release(
     env_path: Path | None = None,
     github_repository: str | None = None,
     github_tag: str | None = None,
+    archive_includes_audio: bool = True,
 ) -> dict[str, object]:
     """Publish serving audio to S3 and the complete archive to GitHub.
 
@@ -63,7 +64,7 @@ def publish_release(
         raise ValueError("request at least one publication destination")
     root = Path(distribution_root)
     validation = validate_committed_distribution(Path(repo_root), distribution_root=root)
-    _verify_archive_matches_distribution(archive, root)
+    _verify_archive_matches_distribution(archive, root, include_audio=archive_includes_audio)
     digest = hashlib.sha256(archive.read_bytes()).hexdigest()
     published: list[str] = []
     s3_result: dict[str, int] | None = None
@@ -127,7 +128,7 @@ def upload_release_audio(
     return {"uploaded": uploaded, "skipped": skipped}
 
 
-def _verify_archive_matches_distribution(archive: Path, distribution_root: Path) -> None:
+def _verify_archive_matches_distribution(archive: Path, distribution_root: Path, *, include_audio: bool = True) -> None:
     """Require the archive to be exactly the current ``dist/`` inventory and bytes.
 
     Unsafe member paths, links, unexpected member types, duplicates, missing
@@ -137,7 +138,7 @@ def _verify_archive_matches_distribution(archive: Path, distribution_root: Path)
     dist = WorkspacePaths(distribution_root).dist_root
     if not dist.is_dir():
         raise FileNotFoundError(f"release dist directory not found at {dist}")
-    expected_files, expected_dirs = _archive_expected_members(dist)
+    expected_files, expected_dirs = _archive_expected_members(dist, include_audio=include_audio)
     seen: set[str] = set()
     try:
         with tarfile.open(archive, "r:gz") as tar:
@@ -160,14 +161,18 @@ def _verify_archive_matches_distribution(archive: Path, distribution_root: Path)
         raise ValueError("archive is missing dist/ members: " + ", ".join(missing))
 
 
-def _archive_expected_members(dist: Path) -> tuple[set[str], set[str]]:
+def _archive_expected_members(dist: Path, *, include_audio: bool = True) -> tuple[set[str], set[str]]:
     """Return the expected archive file and directory names for ``dist``."""
     expected_files = {
-        f"{K_ARCHIVE_DIST_PREFIX}{path.relative_to(dist).as_posix()}" for path in dist.rglob("*") if path.is_file()
+        f"{K_ARCHIVE_DIST_PREFIX}{path.relative_to(dist).as_posix()}"
+        for path in dist.rglob("*")
+        if path.is_file() and (include_audio or not _is_audio_path(path, dist))
     }
     expected_dirs = {K_ARCHIVE_DIST_PREFIX.rstrip("/")}
     expected_dirs.update(
-        f"{K_ARCHIVE_DIST_PREFIX}{path.relative_to(dist).as_posix()}" for path in dist.rglob("*") if path.is_dir()
+        f"{K_ARCHIVE_DIST_PREFIX}{path.relative_to(dist).as_posix()}"
+        for path in dist.rglob("*")
+        if path.is_dir() and (include_audio or not _is_audio_path(path, dist))
     )
     return expected_files, expected_dirs
 
@@ -200,6 +205,15 @@ def _verify_archive_member(
     local_file = dist / PurePosixPath(name).relative_to("dist")
     if member_bytes != local_file.read_bytes():
         raise ValueError(f"archive member does not match the current dist/: {name}")
+
+
+def _is_audio_path(path: Path, dist: Path) -> bool:
+    """Return whether a distribution path belongs to serving audio."""
+    try:
+        relative = path.relative_to(dist)
+    except ValueError:
+        return False
+    return relative.parts[:1] == ("audio",)
 
 
 def _file_digest(path: Path) -> str:

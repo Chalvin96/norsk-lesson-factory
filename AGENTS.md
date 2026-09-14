@@ -41,6 +41,20 @@ Update the affected knowledge concepts whenever behavior or architecture changes
 Use `uv` for Python dependencies and commands. Enable the repository hook with
 `git config core.hooksPath .githooks` when you want local checks.
 
+## Release workflow
+
+Follow the [Release Operations Runbook](knowledge/README.md) for standard releases.
+Run `uv run lesson-data release` and review audio reuse, missing recordings, and
+estimated synthesis cost before running its printed `release --approve`
+continuation with authorization for synthesis and publication.
+
+Do not publish committed provider-free `dist/` through low-level `package` or
+`publish` commands as a standard release. Standard releases require complete
+source-derived audio coverage and verified audio uploaded before the lesson
+archive. Tag CI only runs `release-verify` against the locally published release;
+it does not synthesize or publish. Confirm verification passes before reporting
+the release complete.
+
 ## Authoring preview
 
 Use `uv run lesson-data preview <lesson-id> --no-browser` and open the printed

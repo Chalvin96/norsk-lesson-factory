@@ -15,7 +15,9 @@ from pathlib import Path
 import pytest
 
 from lesson_builder.clients.github.releases import reconcile_release_asset
+from lesson_builder.clients.github.releases import resolve_release_tag_commit
 from lesson_builder.clients.github.releases import upload_release_asset
+from lesson_builder.clients.github.settings import K_GITHUB_RELEASE_DOWNLOAD_TIMEOUT_SECONDS
 from lesson_builder.clients.github.settings import K_GITHUB_RELEASE_UPLOAD_TIMEOUT_SECONDS
 
 
@@ -44,7 +46,7 @@ def test_upload_release_asset_given_archive_expect_immutable_gh_upload_with_time
                 "owner/repo",
             ],
             "check": True,
-            "timeout": K_GITHUB_RELEASE_UPLOAD_TIMEOUT_SECONDS,
+            "timeout": K_GITHUB_RELEASE_DOWNLOAD_TIMEOUT_SECONDS,
         }
     ]
 
@@ -154,3 +156,46 @@ def test_reconcile_release_asset_given_non_not_found_view_failure_expect_propaga
     monkeypatch.setattr("lesson_builder.clients.github.releases.subprocess.run", fake_run)
     with pytest.raises(subprocess.CalledProcessError):
         reconcile_release_asset(archive_path=archive, repository="owner/repo", tag="v1")
+
+
+def test_resolve_release_tag_commit_given_lightweight_tag_expect_commit_sha(monkeypatch) -> None:
+    calls: list[dict[str, object]] = []
+
+    def fake_run(command: list[str], **kwargs: object) -> subprocess.CompletedProcess[str]:
+        calls.append({"command": command, **kwargs})
+        return subprocess.CompletedProcess(command, 0, stdout='{"object":{"type":"commit","sha":"abc123"}}')
+
+    monkeypatch.setattr("lesson_builder.clients.github.releases.subprocess.run", fake_run)
+
+    assert resolve_release_tag_commit(repository="owner/repo", tag="v2026.09.14") == "abc123"
+    assert calls == [
+        {
+            "command": ["gh", "api", "repos/owner/repo/git/ref/tags/v2026.09.14"],
+            "check": True,
+            "capture_output": True,
+            "text": True,
+            "timeout": K_GITHUB_RELEASE_UPLOAD_TIMEOUT_SECONDS,
+        }
+    ]
+
+
+def test_resolve_release_tag_commit_given_annotated_tag_expect_peeled_commit(monkeypatch) -> None:
+    responses = iter(
+        (
+            '{"object":{"type":"tag","sha":"tag-object"}}',
+            '{"object":{"type":"commit","sha":"commit-object"}}',
+        )
+    )
+    calls: list[list[str]] = []
+
+    def fake_run(command: list[str], **kwargs: object) -> subprocess.CompletedProcess[str]:
+        calls.append(command)
+        return subprocess.CompletedProcess(command, 0, stdout=next(responses))
+
+    monkeypatch.setattr("lesson_builder.clients.github.releases.subprocess.run", fake_run)
+
+    assert resolve_release_tag_commit(repository="owner/repo", tag="v2026.09.14") == "commit-object"
+    assert calls == [
+        ["gh", "api", "repos/owner/repo/git/ref/tags/v2026.09.14"],
+        ["gh", "api", "repos/owner/repo/git/tags/tag-object"],
+    ]

@@ -97,7 +97,7 @@ def export_distribution(
                 compiled_packages=compiled_packages,
                 staging_root=staging_root,
                 settings=audio_settings,
-                cache_root=audio_cache_root or repo_root / "store" / "cache" / "audio",
+                cache_root=audio_cache_root or layout.audio_cache_root,
                 synthesis_client=synthesis_client,
                 workers=audio_workers,
                 public_base_url=str(resolved_public_base_url),

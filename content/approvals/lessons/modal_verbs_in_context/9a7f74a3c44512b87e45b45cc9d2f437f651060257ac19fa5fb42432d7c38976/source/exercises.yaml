@@ -1,0 +1,257 @@
+- handle: recall_five_modal_meanings
+  op: recall_fill
+  objective: obj-modal-verbs-in-context-01
+  bloom: remember
+  prompt_md: 'Complete the summary of the five modal verbs from memory. Each part
+    tells you what one modal means ("betyr" = "means"). Choose the appropriate
+    Norwegian meaning for each blank.'
+  audio_target: Må betyr nødvendighet, kan betyr mulighet, skal betyr plan, vil betyr
+    ønske, og bør betyr råd.
+  segments:
+  - text_md: 'Må betyr '
+  - blank_id: meaning-of-ma
+    options:
+    - mulighet
+    - råd
+    - nødvendighet
+    - ønske
+    - plan
+    answer_index: 2
+  - text_md: ', kan betyr '
+  - blank_id: meaning-of-kan
+    options:
+    - plan
+    - mulighet
+    - nødvendighet
+    - råd
+    - ønske
+    answer_index: 1
+  - text_md: ', skal betyr '
+  - blank_id: meaning-of-skal
+    options:
+    - ønske
+    - råd
+    - plan
+    - mulighet
+    - nødvendighet
+    answer_index: 2
+  - text_md: ', vil betyr '
+  - blank_id: meaning-of-vil
+    options:
+    - plan
+    - nødvendighet
+    - råd
+    - ønske
+    - mulighet
+    answer_index: 3
+  - text_md: ', og bør betyr '
+  - blank_id: meaning-of-bor
+    options:
+    - mulighet
+    - plan
+    - ønske
+    - råd
+    - nødvendighet
+    answer_index: 3
+  - text_md: .
+- handle: distinguish_ma_ikke_from_trenger_ikke
+  op: choose
+  objective: obj-modal-verbs-in-context-01
+  bloom: understand
+  prompt_md: Before the cabin trip, the host sends the guest two messages. Read them
+    and choose the correct interpretation of both.
+  stem_md: 'Item 1: Du må ikke ta med hund til hytta. 2. Du trenger ikke ta med sengetøy.
+    What do the two sentences tell the guest?'
+  options:
+  - id: option-forbid-and-free
+    text: Sentence 1 forbids bringing a dog — it is against the cabin rules. Sentence
+      2 says bringing bedding is not necessary.
+    correct: true
+    why: 'Correct: må ikke is a prohibition (a rule says no), while trenger ikke removes
+      the obligation — the bedding is already there.'
+  - id: option-swapped
+    text: Sentence 1 says bringing a dog is not necessary. Sentence 2 forbids bringing
+      bedding.
+    correct: false
+    why: 'The meanings are swapped: må ikke never means "don''t have to", and trenger
+      ikke never forbids.'
+  - id: option-both-forbid
+    text: Both sentences forbid the action — one about the dog, one about the bedding.
+    correct: false
+    why: Only må ikke forbids; trenger ikke says the action is not needed, not that
+      it is banned.
+  - id: option-both-optional
+    text: Both sentences say the action is not necessary — the choice is up to the
+      guest.
+    correct: false
+    why: trenger ikke does mean "not necessary", but må ikke is a prohibition, not
+      an open choice.
+- handle: choose_kan_or_ma_for_option_or_requirement
+  op: recall_fill
+  objective: obj-modal-verbs-in-context-01
+  bloom: apply
+  prompt_md: Fill each blank with kan or må so that the finished sentence expresses
+    the right kind of pressure. kan presents the action as possible or permitted —
+    an open option. må presents it as necessary — a requirement.
+  audio_target: Du kan ta med en venn på turen — det er plass nok. Bussen går klokka
+    seks, så vi må stå opp før fem. Du kan låne stavene mine hvis du trenger dem.
+    Værmeldingen sier storm, så dere må bli på hytta i natt.
+  segments:
+  - text_md: 'Du '
+  - blank_id: extra-guest
+    options:
+    - kan
+    - må
+    answer_index: 0
+  - text_md: ' ta med en venn på turen — det er plass nok. Bussen går klokka seks,
+      så vi '
+  - blank_id: early-bus
+    options:
+    - kan
+    - må
+    answer_index: 1
+  - text_md: ' stå opp før fem. Du '
+  - blank_id: lend-poles
+    options:
+    - kan
+    - må
+    answer_index: 0
+  - text_md: ' låne stavene mine hvis du trenger dem. Værmeldingen sier storm, så
+      dere '
+  - blank_id: storm-warning
+    options:
+    - kan
+    - må
+    answer_index: 1
+  - text_md: ' bli på hytta i natt.'
+  explanation_md: 'kan opens options: there is room on the trip, and the poles are
+    available if needed. må marks necessity created by outside pressure: the bus time
+    and the storm warning.'
+- handle: assign_skal_or_vil_from_context
+  op: categorize
+  objective: obj-modal-verbs-in-context-01
+  bloom: analyze
+  prompt_md: 'Each context below needs one modal: skal or vil. skal marks what is
+    decided — plans, arrangements, promises. vil marks what is wanted or expected
+    — wishes (often with gjerne) and predictions (often with sikkert or nok). Sort
+    every item into the matching group.'
+  buckets:
+  - bucket_id: skal-decided
+    label: 'skal — decided: plan, arrangement, or promise'
+  - bucket_id: vil-wanted-or-expected
+    label: 'vil — wanted or expected: wish or prediction'
+  items:
+  - item_id: bergen-flight
+    text: Vi [BLANK] reise til Bergen i august — flybillettene er allerede kjøpt.
+    bucket_id: skal-decided
+  - item_id: weekend-rain
+    text: Det [BLANK] sikkert bli regn i helgen.
+    bucket_id: vil-wanted-or-expected
+  - item_id: ski-wish
+    text: Jeg [BLANK] gjerne lære meg å stå på ski denne vinteren.
+    bucket_id: vil-wanted-or-expected
+  - item_id: dentist-appointment
+    text: Jeg [BLANK] til tannlegen klokka halv to i morgen; timen er bestilt.
+    bucket_id: skal-decided
+  - item_id: moving-help-promise
+    text: Slutt å bekymre deg — jeg [BLANK] hjelpe deg med flyttingen på lørdag.
+    bucket_id: skal-decided
+  - item_id: long-sleep
+    text: Han [BLANK] nok sove lenge i morgen; han har vært oppe hele natten.
+    bucket_id: vil-wanted-or-expected
+- handle: rank_modal_force_from_optional_to_required
+  op: categorize
+  objective: obj-modal-verbs-in-context-01
+  bloom: analyze
+  prompt_md: 'Every sentence below uses one of kan, bør, or må. Sort the sentences
+    by rising speaker pressure: from an open option, through advice, up to a requirement.'
+  buckets:
+  - bucket_id: pressure-option
+    label: 'Option — lowest pressure: possible, up to you'
+  - bucket_id: pressure-advice
+    label: 'Advice — middle: recommended, but your choice'
+  - bucket_id: pressure-requirement
+    label: 'Requirement — highest pressure: necessary'
+  items:
+  - item_id: borrow-money
+    text: Du kan låne pengene mine til fredag.
+    bucket_id: pressure-option
+  - item_id: check-forecast
+    text: Du bør sjekke værmeldingen før du går oppover.
+    bucket_id: pressure-advice
+  - item_id: signup-list
+    text: Alle må skrive seg på listen utenfor kontoret.
+    bucket_id: pressure-requirement
+  - item_id: ride-along
+    text: Du kan gjerne sitte på med oss i bilen.
+    bucket_id: pressure-option
+  - item_id: packed-lunch
+    text: Du bør ta med nistemat — det er dyrt å spise ute der.
+    bucket_id: pressure-advice
+  - item_id: valid-ticket
+    text: Du må ha gyldig billett for å komme inn.
+    bucket_id: pressure-requirement
+- handle: produce_each_modal_for_stated_meaning
+  op: write
+  objective: obj-modal-verbs-in-context-01
+  bloom: apply
+  prompt_md: 'Write five new Norwegian sentences of your own — not lines copied from
+    the lesson. Write exactly one sentence for each modal verb below, matching its
+    meaning cue, and label each sentence with its number: 1. må — necessity: something
+    outside the speaker makes the action necessary 2. kan — possibility, ability,
+    or permission 3. skal — a plan, an arrangement, or a promise 4. vil — a wish (or
+    a prediction) 5. bør — advice: wise, but not required Use each modal grammatically:
+    the infinitive after a modal has no å (jeg må gå, never jeg må å gå).'
+  response_language: 'no'
+  judge_prompt: Check the response against the task and report evidence for each criterion,
+    quoting the sentence offered for each numbered cue.
+  criteria:
+  - id: one-sentence-per-cue
+    instruction: Provides one Norwegian sentence for each of the five numbered cues,
+      labeled 1-5.
+  - id: modal-matches-cue
+    instruction: 'Each numbered sentence uses the modal that matches its cue: må for
+      necessity, kan for possibility, ability, or permission, skal for a plan, arrangement,
+      or promise, vil for a wish or prediction, bør for advice.'
+  - id: context-expresses-cue
+    instruction: 'The context of each sentence actually expresses its cue: a må sentence
+      presents a genuine necessity, not a wish or a plan; a bør sentence recommends
+      rather than compels.'
+  - id: own-new-sentences
+    instruction: Each sentence is newly written for this task and is not copied from
+      the lesson's dialogue lines or example sentences.
+  - id: modal-grammar-correct
+    instruction: 'Uses each modal grammatically: no å between the modal and its infinitive.'
+- handle: transfer_modals_into_new_roommate_exchange
+  op: write
+  objective: obj-modal-verbs-in-context-01
+  bloom: apply
+  prompt_md: 'New situation: it is moving day, and the roommates Silje and Marius
+    are carrying boxes into a new flat. Write their short conversation in natural
+    Bokmål — between 20 and 80 words — and mark the speaker at the start of each line
+    (Silje: / Marius:). Use each of the five modal verbs at least once, so that each
+    one fits its meaning in the new situation: - må — necessity - kan — possibility,
+    ability, or permission - skal — a plan or a promise - vil — a wish - bør — advice'
+  response_language: 'no'
+  min_words: 20
+  max_words: 80
+  judge_prompt: Check the dialogue against the task and report evidence for each criterion,
+    quoting each modal use and the line it appears in, and state the total word count
+    excluding the speaker labels.
+  criteria:
+  - id: dialogue-format
+    instruction: Written as a conversation between the two named roommates on moving
+      day, with the speaker marked at the start of each line.
+  - id: within-word-bounds
+    instruction: 'The dialogue is between 20 and 80 words, not counting the speaker
+      labels (Silje: / Marius:).'
+  - id: all-five-modals
+    instruction: Includes må, kan, skal, vil, and bør at least once each, spelled
+      correctly.
+  - id: modal-meaning-fit
+    instruction: 'Each modal use fits its taught meaning in the situation: må necessity,
+      kan possibility, ability, or permission, skal plan or promise, vil wish, bør
+      advice.'
+  - id: natural-bokmal-grammar
+    instruction: 'Natural Bokmål with correct modal grammar: no å between a modal
+      and its infinitive, and word order that fits a conversation.'

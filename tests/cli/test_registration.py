@@ -50,6 +50,12 @@ K_PARSER_ROUTES: list[tuple[list[str], dict[str, object]]] = [
     (["regenerate-dist", "--repo-root", "."], {"repo_root": "."}),
     (["export", "--repo-root", "."], {"workers": 1}),
     (["validate-distribution", "--repo-root", "."], {"distribution_root": None}),
+    (["release", "--repo-root", "."], {"approve": False, "tag": None, "max_cost": None, "format": "text"}),
+    (["release", "--approve", "--tag", "v2026.09.14"], {"approve": True, "tag": "v2026.09.14"}),
+    (
+        ["release-verify", "--tag", "v2026.09.14", "--github-repository", "owner/repo"],
+        {"tag": "v2026.09.14", "github_repository": "owner/repo", "format": "text"},
+    ),
     (["check", "--workspace-root", "."], {"workspace_root": ".", "format": "json"}),
     (
         ["package", "--distribution-root", "distribution", "--output", "lessons.tar.gz"],
@@ -71,6 +77,8 @@ K_CLI_COMMAND_ORDER = (
     "resume-lessons",
     "curriculum",
     "exercise",
+    "release",
+    "release-verify",
     "regenerate-dist",
     "export",
     "validate-distribution",

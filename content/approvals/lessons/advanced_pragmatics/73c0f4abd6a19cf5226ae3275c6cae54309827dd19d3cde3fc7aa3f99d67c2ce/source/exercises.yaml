@@ -1,0 +1,176 @@
+- handle: noticing_changes_in_stance
+  op: choose
+  objective: obj-advanced-pragmatics-01
+  bloom: understand
+  prompt_md: Maja and Henrik are planning a courtyard gathering. Henrik responds to
+    a food-order proposal with «Det blir vel litt dyrt?» Later Maja redirects the
+    plan by saying «Egentlig hadde jeg tenkt at vi kunne grille.» Choose the complete
+    interpretation of both turns.
+  stem_md: Which interpretation best explains the speakers' intentions?
+  options:
+  - id: correct
+    text: Henrik expects the order to be costly but invites a response; Maja returns
+      to her earlier idea of grilling.
+    correct: true
+    why: The familiar particle and the new discourse marker work together to manage
+      stance and direction.
+  - id: certain-and-direct
+    text: Henrik attributes the cost estimate to someone else; Maja firmly announces
+      that the group has already decided to grill.
+    correct: false
+    why: Vel leaves room for correction, while egentlig can reveal an underlying preference
+      without a blunt rejection.
+  - id: shared-and-unrelated
+    text: Henrik reminds Maja of a price they already agreed on; Maja shifts to an
+      unrelated topic about a future gathering.
+    correct: false
+    why: Shared-ground marking and side-topic shifting are different functions.
+- handle: adjust_rather_than_reject
+  op: write
+  objective: obj-advanced-pragmatics-01
+  bloom: apply
+  prompt_md: Respond in Norwegian as Maja after Henrik proposes holding the courtyard
+    gathering indoors. Use egentlig to introduce your preference for the courtyard
+    without bluntly rejecting his proposal. Then write a similar response in a new
+    workplace or travel situation.
+  derived_from:
+  - section_id: revealing-underlying-thought-egentlig
+  response_language: 'no'
+  min_words: 20
+  max_words: 55
+  judge_prompt: Check both responses against the task and report evidence that egentlig
+    reveals an underlying preference while keeping each response connected to what
+    was said before. Require the second response to use a new workplace or travel
+    situation, and apply the 20–55 word bound to the whole response.
+  criteria:
+  - id: underlying-preference
+    instruction: Uses egentlig in both responses to reveal an underlying intention
+      or preference without bluntly rejecting the preceding proposal.
+  - id: new-situation-and-length
+    instruction: Gives a distinct workplace or travel response after the courtyard
+      response, with the whole response between 20 and 55 words.
+- handle: summarize_agreement
+  op: write
+  objective: obj-advanced-pragmatics-01
+  bloom: apply
+  prompt_md: 'The arrangement is that Maja buys the essentials, guests bring the remaining
+    food, and a weather change may move the gathering indoors. Write two Norwegian
+    turns: first summarize the arrangement with altså, then use altså to check or
+    state the implication of a weather-related change.'
+  derived_from:
+  - section_id: drawing-a-conclusion-also
+  response_language: 'no'
+  min_words: 15
+  max_words: 45
+  judge_prompt: 'Check both turns for clear, logically connected uses of altså: one
+    practical summary of the arrangement and one conclusion or implication about
+    a weather-related change. Require altså in both turns and 15–45 words overall.'
+  criteria:
+  - id: connected-conclusions
+    instruction: Makes the practical summary and the implication of the change clear
+      and logically connected to the preceding context.
+  - id: altsa-in-both-turns
+    instruction: Uses altså naturally in each of the two turns.
+  - id: summary-word-bounds
+    instruction: Uses 15 to 45 words across the two turns.
+- handle: believable_topic_shift
+  op: write
+  objective: obj-advanced-pragmatics-01
+  bloom: apply
+  prompt_md: Continue a short Norwegian conversation about what food to bring to the
+    courtyard gathering. Use forresten to introduce one related practical matter,
+    such as music, keys, invitations, or a neighbour. Do not use it for an urgent
+    warning.
+  derived_from:
+  - section_id: shifting-topic-forresten
+  response_language: 'no'
+  min_words: 12
+  max_words: 40
+  judge_prompt: Check that forresten clearly marks a plausible related side topic
+    rather than a random subject or urgent warning, in 12 to 40 words.
+  criteria:
+  - id: plausible-topic-shift
+    instruction: Uses forresten to introduce a believable related side topic with
+      an appropriately casual transition.
+  - id: topic-shift-word-bounds
+    instruction: Uses 12 to 40 words.
+- handle: marker_fit_repair
+  op: write
+  objective: obj-advanced-pragmatics-01
+  bloom: analyze
+  prompt_md: 'Henrik says that Ingrid is worried about the music. Maja answers: «Forresten,
+    vi skrur ned musikken klokka elleve.» Her marker makes the reply sound like a
+    side topic. Replace it with an appropriate conversational particle at the end
+    of the clause. Explain in Norwegian what your chosen particle does here, then
+    write one new Norwegian sentence using the same function in a meeting or travel
+    context.'
+  derived_from:
+  - section_id: common-mistakes
+  response_language: 'no'
+  judge_prompt: Check the correction, explanation, and new-context sentence against
+    every criterion. Accept natural Bokmål variants when the response-to-circumstances
+    function is clear.
+  criteria:
+  - id: corrected-marker
+    instruction: Corrects forresten to sentence-final da in the sentence about lowering
+      Ingrid's music.
+  - id: interpersonal-explanation
+    instruction: Explains in Norwegian that da presents the action as a response to
+      Ingrid's concern.
+  - id: new-context-use
+    instruction: Provides one natural meeting or travel sentence using the same function.
+- handle: integrated_planning_conversation
+  op: write
+  objective: obj-advanced-pragmatics-01
+  bloom: apply
+  prompt_md: Write one coherent Norwegian planning conversation after a weather change.
+    Use egentlig to reveal an underlying preference, altså to draw a practical conclusion,
+    and forresten for a plausible related topic shift. Also choose two different familiar
+    particles from vel, jo, nok, and conversational da and use them where the exchange
+    genuinely supports their functions. Do not force one marker into every sentence.
+  derived_from:
+  - section_id: integrated-practice
+  response_language: 'no'
+  min_words: 45
+  max_words: 90
+  judge_prompt: Check the conversation and report evidence for every required discourse
+    move, both chosen particle functions, the weather-change setting, coherence,
+    and natural placement. Apply the 45–90 word bound.
+  criteria:
+  - id: new-marker-functions
+    instruction: Uses egentlig for an underlying preference, altså for a connected
+      conclusion, and forresten for a plausible topic shift.
+  - id: two-foundation-particles
+    instruction: Uses exactly two different choices from vel, jo, nok, and conversational
+      da, with every use fitting the surrounding context.
+  - id: coherent-conversation
+    instruction: Keeps the planning exchange coherent and avoids inserting markers
+      mechanically.
+  - id: weather-change-and-length
+    instruction: Sets the planning conversation after a weather change and keeps
+      the response between 45 and 90 words.
+- handle: retrieval_and_review
+  op: write
+  objective: obj-advanced-pragmatics-01
+  bloom: apply
+  prompt_md: Without looking back, explain briefly in Norwegian how egentlig, altså,
+    and forresten organize a conversation differently. Then create a short exchange
+    that solves one practical problem using all three naturally and one familiar particle
+    from vel, jo, nok, or conversational da.
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  min_words: 40
+  max_words: 85
+  judge_prompt: Check the explanation and exchange for all three distinct discourse
+    functions, one contextually fitting familiar particle, a coherent practical
+    solution, and 40 to 85 words overall.
+  criteria:
+  - id: three-way-distinction
+    instruction: Distinguishes underlying thought, conclusion, and topic-shift functions
+      for egentlig, altså, and forresten.
+  - id: integrated-exchange
+    instruction: Uses all three markers and one familiar particle naturally while
+      solving one coherent practical problem.
+  - id: retrieval-word-bounds
+    instruction: Uses 40 to 85 words across the explanation and exchange.

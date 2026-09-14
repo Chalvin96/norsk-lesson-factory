@@ -9,12 +9,15 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 
+from lesson_builder.workspace.settings import K_WORKSPACE_AUDIO_CACHE_DIR
 from lesson_builder.workspace.settings import K_WORKSPACE_AUTHORING_DIR
 from lesson_builder.workspace.settings import K_WORKSPACE_CATALOG_DIR
 from lesson_builder.workspace.settings import K_WORKSPACE_CONTENT_DIR
 from lesson_builder.workspace.settings import K_WORKSPACE_CURRICULUM_DIR
 from lesson_builder.workspace.settings import K_WORKSPACE_DIST_DIR
+from lesson_builder.workspace.settings import K_WORKSPACE_LEGACY_AUDIO_CACHE_DIR
 from lesson_builder.workspace.settings import K_WORKSPACE_LESSONS_DIR
+from lesson_builder.workspace.settings import K_WORKSPACE_RELEASE_SCRATCH_DIR
 from lesson_builder.workspace.settings import K_WORKSPACE_ROOT
 from lesson_builder.workspace.settings import K_WORKSPACE_TERMINOLOGY_DIR
 from lesson_builder.workspace.settings import K_WORKSPACE_TERMINOLOGY_FILE
@@ -90,6 +93,21 @@ class WorkspacePaths:
     @property
     def dist_root(self) -> Path:
         return self.root / K_WORKSPACE_DIST_DIR
+
+    @property
+    def audio_cache_root(self) -> Path:
+        """Resolve the canonical reusable synthesis cache."""
+        return self.root / K_WORKSPACE_AUDIO_CACHE_DIR
+
+    @property
+    def legacy_audio_cache_root(self) -> Path:
+        """Resolve the historical reusable synthesis cache."""
+        return self.root / K_WORKSPACE_LEGACY_AUDIO_CACHE_DIR
+
+    @property
+    def release_scratch_root(self) -> Path:
+        """Resolve ignored release plans and staged release distributions."""
+        return self.root / K_WORKSPACE_RELEASE_SCRATCH_DIR
 
 
 __all__ = ["K_WORKSPACE_ROOT", "WorkspacePaths", "get_workspace_root"]
