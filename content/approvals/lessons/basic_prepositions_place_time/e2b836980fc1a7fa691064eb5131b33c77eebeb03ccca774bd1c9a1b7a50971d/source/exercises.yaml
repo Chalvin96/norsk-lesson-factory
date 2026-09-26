@@ -1,0 +1,202 @@
+- handle: choose-current-place
+  op: recall_fill
+  objective: obj-basic-prepositions-place-time-01
+  bloom: apply
+  prompt_md: Complete the location updates with i or på.
+  audio_target: Kari og Per snakker om hvor de bor, arbeider og møtes.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Kari
+      text_md: «Jeg bor ___ Oslo.»
+    - speaker: Per
+      text_md: «Jeg er ___ jobb.»
+    - speaker: Kari
+      text_md: «Vi er ___ Norge.»
+    - speaker: Per
+      text_md: «De møtes ___ Bergen.»
+  segments:
+  - text_md: '«Jeg bor '
+  - blank_id: city-location
+    options:
+    - i
+    - på
+    answer_index: 0
+  - text_md: ' Oslo.» Per: «Jeg er '
+  - blank_id: work-location
+    options:
+    - i
+    - på
+    answer_index: 1
+  - text_md: ' jobb.» Kari: «Vi er '
+  - blank_id: country-location
+    options:
+    - på
+    - i
+    answer_index: 1
+  - text_md: ' Norge.» Per: «De møtes '
+  - blank_id: meeting-location
+    options:
+    - i
+    - på
+    answer_index: 0
+  - text_md: ' Bergen.»'
+  explanation_md: I brukes foran by- og landnavn, mens på jobb er et fast uttrykk for arbeidssted.
+  derived_from:
+  - section_id: being-in-a-place
+- handle: contrast-location-and-destination
+  op: recall_fill
+  objective: obj-basic-prepositions-place-time-01
+  bloom: apply
+  prompt_md: Complete the travel updates with til, i, or på.
+  audio_target: Ali, Eva og Per forteller om reiser og steder de skal besøke.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Ali
+      text_md: «Jeg kjører ___ Tromsø. Senere er jeg ___ Tromsø.»
+    - speaker: Eva
+      text_md: «Jeg reiser ___ Spania. Etterpå er jeg ___ Spania.»
+    - speaker: Per
+      text_md: «Jeg går ___ garasjen. Når jeg kommer fram, er jeg ___ garasjen og henter sykkelen.»
+  segments:
+  - text_md: '«Jeg kjører '
+  - blank_id: tromso-destination
+    options:
+    - til
+    - i
+    - på
+    answer_index: 0
+  - text_md: ' Tromsø. Senere er jeg '
+  - blank_id: tromso-location
+    options:
+    - på
+    - i
+    - til
+    answer_index: 1
+  - text_md: ' Tromsø.» Eva: «Jeg reiser '
+  - blank_id: spania-destination
+    options:
+    - i
+    - til
+    - på
+    answer_index: 1
+  - text_md: ' Spania. Etterpå er jeg '
+  - blank_id: spania-location
+    options:
+    - på
+    - i
+    - til
+    answer_index: 1
+  - text_md: ' Spania.» Per: «Jeg går '
+  - blank_id: garage-destination
+    options:
+    - på
+    - til
+    - i
+    answer_index: 1
+  - text_md: ' garasjen. Når jeg kommer fram, er jeg '
+  - blank_id: garage-location
+    options:
+    - i
+    - til
+    - på
+    answer_index: 0
+  - text_md: ' garasjen og henter sykkelen.»'
+  explanation_md: Til viser reisemålet, mens i eller på viser hvor personen er etter ankomst.
+  derived_from:
+  - section_id: location-or-destination
+- handle: retrieve-preposition-meanings
+  op: write
+  objective: obj-basic-prepositions-place-time-01
+  bloom: apply
+  prompt_md: 'Til: Nora. Formål: Forklar hvor folk er, og når ting skjer. Skriv en norsk melding på 35–65
+    ord til Nora som formidler disse seks opplysningene uten å kopiere formuleringene: Lars befinner seg
+    der man låner bøker, akkurat nå; legekontoret er Saras reisemål; Omar er på besøk hos bestemoren sin;
+    møtet starter tre timer fra nå; Eva kom hjem for to dager siden; kurset varer to timer. Bruk på for
+    nåværende sted, til for reisemål, hos for besøkssted hos en person, om for framtidig tidspunkt, for
+    ... siden for tidligere tidspunkt og i for varighet.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Kan du fortelle meg hvor folk er, og hva som skjer senere?»
+    - speaker: Mina
+      text_md: «Ja, jeg sender deg en samlet oppdatering.»
+  response_language: 'no'
+  min_words: 35
+  max_words: 65
+  judge_prompt: Vurder formål, de seks opplysningene, ordgrensen og at svaret bruker på for nåværende
+    sted, til for reisemål, hos for besøkssted hos en person, om for framtidig tidspunkt, for ... siden
+    for tidligere tidspunkt og i for varighet.
+  criteria:
+  - id: message-purpose
+    instruction: Svaret er en sammenhengende norsk melding til Nora som forklarer hvor folk er og når
+      hendelser skjer.
+  - id: six-updates
+    instruction: Meldingen formidler alle de seks opplysningene fra oppgaven med riktig betydning.
+  - id: relation-forms
+    instruction: 'Svaret bruker de nødvendige preposisjonsformene riktig: på for nåværende sted, til for
+      reisemål, hos for besøkssted hos en person, om for framtidig tidspunkt, for ... siden for tidligere
+      tidspunkt og i for varighet.'
+  - id: word-bound
+    instruction: Meldingen inneholder 35–65 ord.
+  derived_from:
+  - section_id: final-retrieval
+- handle: first_day_exchange
+  op: write
+  objective: obj-basic-prepositions-place-time-01
+  bloom: apply
+  prompt_md: 'Write a 15–30-word Norwegian message to Nora about where people are and when events happen.
+    Include: Aino is at the station now; Mikkel is going to the dentist; Liv is visiting her uncle;
+    a train leaves in twenty minutes; Anders came to school yesterday; and a concert lasts ninety minutes.
+    Use suitable Norwegian prepositions and time expressions.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: «Nora spør hvor vennene hennes er, og når de møtes.»
+    - speaker: Elev
+      text_md: «Skriv en kort melding med opplysninger om steder og tid.»
+  response_language: 'no'
+  judge_prompt: Check that the Norwegian message contains 15–30 words and conveys all six updates accurately
+    using suitable expressions for location, destination, visiting a person, future time, past time, and
+    duration.
+  criteria:
+  - id: updates
+    instruction: Meldingen formidler alle de seks opplysningene med riktig betydning.
+  - id: relations
+    instruction: Meldingen bruker naturlige norske uttrykk for nåværende sted, reisemål, besøk hos en
+      person, framtidig tidspunkt, tidligere tidspunkt og varighet.
+  - id: word-count
+    instruction: Meldingen inneholder 15–30 ord.
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+- handle: review_complete_meeting
+  op: write
+  objective: obj-basic-prepositions-place-time-01
+  bloom: apply
+  prompt_md: Write a 12–24-word Norwegian message about Emil’s Saturday visit to his sister Lea in Bergen.
+    Include that Emil is at work now, will leave in half an hour, travel to Bergen, stay with Lea for
+    two days, and that Lea visited Oslo one week ago. Use suitable Norwegian prepositions and time expressions.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Emil
+      text_md: «Jeg planlegger å besøke søsteren min Lea på lørdag.»
+    - speaker: Elev
+      text_md: «Skriv en kort melding til en venn om hvor jeg er, og hva som skal skje.»
+  response_language: 'no'
+  judge_prompt: Check that the Norwegian message contains 12–24 words and accurately conveys Emil’s current
+    location, departure in half an hour, destination, two-day stay with Lea, and Lea’s visit to Oslo one
+    week ago.
+  criteria:
+  - id: updates
+    instruction: Meldingen formidler alle opplysningene med riktig betydning.
+  - id: relations
+    instruction: Meldingen bruker naturlige norske uttrykk for nåværende sted, framtidig tidspunkt, reisemål,
+      varighet og et tidligere tidspunkt.
+  - id: word-count
+    instruction: Meldingen inneholder 12–24 ord.
+  derived_from:
+  - section_id: transfer-to-a-new-situation

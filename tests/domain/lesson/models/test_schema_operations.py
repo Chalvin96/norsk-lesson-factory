@@ -6,6 +6,7 @@ import pytest
 import yaml
 
 from lesson_builder.application.operations.load_exercises import load_exercises
+from lesson_builder.domain.lesson.models.operations import eligible_operations
 from lesson_builder.domain.lesson.models.operations import evidence_route_bloom_levels
 from lesson_builder.domain.lesson.models.operations import evidence_route_operations
 from lesson_builder.domain.lesson.models.operations import is_oracle_operation
@@ -24,7 +25,7 @@ def test_is_oracle_operation_given_text_and_spoken_operations_expect_classificat
 def test_render_operation_guidance_given_registry_expect_all_operations_once():
     guidance = render_operation_guidance()
 
-    assert "match_pairs = remember" in guidance
+    assert "match_pairs = remember, understand" in guidance
     assert "write = apply" in guidance
     assert "payload=" in guidance
     assert "stage=" not in guidance
@@ -90,8 +91,17 @@ def test_evidence_route_operations_given_unknown_route_expect_empty_tuple():
     assert evidence_route_operations("not-a-route") == ()
 
 
-def test_evidence_route_bloom_levels_given_pair_matching_expect_remember_only():
-    assert evidence_route_bloom_levels("pair_matching") == ("remember",)
+def test_evidence_route_bloom_levels_given_pair_matching_expect_remember_and_understand():
+    assert evidence_route_bloom_levels("pair_matching") == ("remember", "understand")
+
+
+def test_eligible_operations_given_understand_expect_match_pairs_accepted():
+    assert "match_pairs" in eligible_operations(["understand"])
+    assert "match_pairs" in eligible_operations(["remember"])
+
+
+def test_eligible_operations_given_apply_expect_match_pairs_invalid():
+    assert "match_pairs" not in eligible_operations(["apply"])
 
 
 def test_render_evidence_route_guidance_given_registry_expect_routes_and_operations():

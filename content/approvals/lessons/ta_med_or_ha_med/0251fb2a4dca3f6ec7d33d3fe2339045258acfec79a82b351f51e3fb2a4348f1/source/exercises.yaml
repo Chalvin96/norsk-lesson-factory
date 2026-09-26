@@ -1,0 +1,189 @@
+- handle: identify_ta_med_ha_med
+  op: categorize
+  objective: obj-ta-med-or-ha-med-01
+  bloom: analyze
+  prompt_md: Sorter replikkene etter om de handler om å ta noen eller noe med, eller om å ha det med seg.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Emil
+      text_md: «Skal jeg ta med noe mat?»
+    - speaker: Nora
+      text_md: «Jeg har ikke med nøkkelen.»
+    - speaker: Emil
+      text_md: «Da kan jeg ta den med.»
+    - speaker: Nora
+      text_md: «Har du med varme klær?»
+  explanation_md: «Ta med» beskriver handlingen der noe blir med. «Ha med» forteller at noe allerede er med.
+  derived_from:
+  - section_id: first-checkpoint-identify-action-and-situation
+  buckets:
+  - bucket_id: arranging-accompaniment
+    label: Sørge for at noen eller noe blir med
+  - bucket_id: already-present
+    label: Sjekke eller si at noe allerede er med
+  items:
+  - item_id: food-before-departure
+    text: Skal jeg ta med noe mat?
+    bucket_id: arranging-accompaniment
+  - item_id: key-on-bus
+    text: Jeg har ikke med nøkkelen.
+    bucket_id: already-present
+  - item_id: key-from-home
+    text: Da kan jeg ta den med.
+    bucket_id: arranging-accompaniment
+  - item_id: clothes-on-journey
+    text: Har du med varme klær?
+    bucket_id: already-present
+- handle: complete_travel_sequence
+  op: recall_fill
+  objective: obj-ta-med-or-ha-med-01
+  bloom: understand
+  prompt_md: Fyll ut de tre tomme feltene i dialogen på flyplassen.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lea
+      text_md: «Når jeg drar hjemmefra, må jeg ___ passet fra bordet til flyplassen.»
+    - speaker: Ida
+      text_md: «Nå som vi står ved sikkerhetskontrollen, ___ passet med deg?»
+    - speaker: Lea
+      text_md: «Ja, jeg ___ passet i vesken.»
+  explanation_md: I det første feltet beskriver verbet at passet blir tatt med fra ett sted til et annet. I de to siste feltene spør og forteller man om passet allerede er med.
+  derived_from:
+  - section_id: second-checkpoint-complete-the-travel-sequence
+  audio_target: Når jeg drar hjemmefra, må jeg ta med passet fra bordet til flyplassen. Nå som vi står ved sikkerhetskontrollen, har du passet med deg? Ja, jeg har med passet i vesken.
+  segments:
+  - text_md: '«Når jeg drar hjemmefra, må jeg '
+  - blank_id: preparation-expression
+    options:
+    - ta med
+    - ha med
+    answer_index: 0
+  - text_md: ' passet fra bordet til flyplassen.» Ida: «Nå som vi står ved sikkerhetskontrollen, '
+  - blank_id: airport-question
+    options:
+    - tar du med
+    - har du
+    answer_index: 1
+  - text_md: ' passet med deg?» Lea: «Ja, jeg '
+  - blank_id: confirmed-expression
+    options:
+    - har med
+    - tar med
+    answer_index: 0
+  - text_md: ' passet i vesken.»'
+- handle: change_the_viewpoint
+  op: write
+  objective: obj-ta-med-or-ha-med-01
+  bloom: apply
+  prompt_md: Skriv om de seks opplysningene som korte norske setninger. Bruk «ha med» om det personene har hos seg nå, og «ta med» om det de planlegger å ta med seg.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Sander
+      text_md: «Jeg har dokumentene hos meg.»
+    - speaker: Mina
+      text_md: «Vi har håndklærne hos oss.»
+    - speaker: Sander
+      text_md: «Mina har søsteren sin hos seg.»
+    - speaker: Mina
+      text_md: «Før avreise sørger Sander for at dokumentene blir med til kontoret.»
+    - speaker: Sander
+      text_md: «Vi sørger for at håndklærne blir med til stranda.»
+    - speaker: Mina
+      text_md: «Jeg sørger for at søsteren min blir med på konserten.»
+  explanation_md: De tre første setningene forteller hva personene har med seg nå. De tre siste beskriver noe de planlegger å ta med. Begge plasseringene av «med» kan være naturlige på norsk.
+  derived_from:
+  - section_id: third-checkpoint-change-the-viewpoint
+  response_language: "no"
+  min_words: 30
+  max_words: 60
+  judge_prompt: Evaluate six-facts, viewpoint-contrast, norwegian, and word-bound. Accept natural Bokmål variants that preserve each fact and meaning, including «Sander har med dokumentene» and «Sander har dokumentene med»; do not require a single position for med.
+  criteria:
+  - id: six-facts
+    instruction: 'Preserves all six facts: Sander has the documents; we have towels; Mina has her sister with her; Sander plans to take the documents to the office; we plan to take towels to the beach; Mina plans to take her sister to the concert.'
+  - id: viewpoint-contrast
+    instruction: Uses ha med to report what is currently with someone in the first three sentences, and ta med for planned actions in the last three; accept natural placement of med before or after the object.
+  - id: norwegian
+    instruction: The sentences are understandable, natural Bokmål.
+  - id: word-bound
+    instruction: The response contains 30–60 words.
+- handle: guided_context_practice
+  op: write
+  objective: obj-ta-med-or-ha-med-01
+  bloom: apply
+  prompt_md: 'Skriv en melding på 45–65 ord til læreren din om piknikdagen. Ali sørget for at maten ble med før avreise. På busstoppet sjekket Nora om Liv hadde et teppe. I parken hadde Mina to venner hos seg. Til neste piknik ba Nora Ali sørge for at en ball blir med. Bruk både ta med og ha med naturlig i meldingen.'
+  explanation_md: Før avreise handler det om å sørge for at noe blir med. Senere spør man om noe allerede er med eller forteller at det er det.
+  derived_from:
+  - section_id: guided-context-practice
+  response_language: "no"
+  judge_prompt: Evaluate criteria message-purpose, supplied-facts, norwegian-text, word-bound, action-form, and state-form as gating criteria. Record the observation criteria diagnostically, but do not fail a response based on them. The prompt requests both taught expressions, so require them for the two form criteria.
+  criteria:
+  - id: message-purpose
+    instruction: Writes a coherent message to the teacher that reports the planning and course of the picnic day.
+  - id: supplied-facts
+    instruction: Communicates all four supplied facts without materially changing who acts, what accompanies them, or when each event occurs.
+  - id: norwegian-text
+    instruction: Writes the message in understandable Norwegian.
+  - id: word-bound
+    instruction: Uses 45–65 words.
+  - id: action-form
+    instruction: Uses a natural ta med form for both actions that arrange accompaniment.
+  - id: state-form
+    instruction: Uses a natural ha med form for the bus-stop check and park report.
+  - id: action-form-observation
+    instruction: 'Observation only: note whether the taught ta med form appears; do not fail a natural equivalent.'
+  - id: state-form-observation
+    instruction: 'Observation only: note whether the taught ha med form appears; do not fail a natural equivalent.'
+- handle: retrieval_and_review
+  op: write
+  objective: obj-ta-med-or-ha-med-01
+  bloom: apply
+  prompt_md: 'Du og Erik står ved bilen før dere går tur. Skriv en kort melding der du ber ham ta med paraplyen fra bilen, og sier at dere vil ha den med på turen. Bruk både «ta med» og «ha med». Skriv 12–20 ord.'
+  explanation_md: Begge setningene gjelder før turen. Den første ber om at paraplyen blir tatt med, og den andre sier at dere skal ha den med på turen.
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: "no"
+  judge_prompt: Evaluate criteria recipient-and-purpose, single-setting, same-object, norwegian-text, word-bound, action-form, and state-form as gating criteria. The prompt requests both taught expressions, so require them for the two form criteria while accepting natural inflection and placement variants.
+  criteria:
+  - id: recipient-and-purpose
+    instruction: Addresses Erik with one coherent message before the walk, asking him to bring the umbrella from the car and expressing that it is wanted on the walk.
+  - id: single-setting
+    instruction: Both clauses make sense in the same setting and at the same time, before the walk begins.
+  - id: same-object
+    instruction: Both clauses concern the same umbrella.
+  - id: norwegian-text
+    instruction: Writes the message in understandable Norwegian.
+  - id: word-bound
+    instruction: Uses 12–20 words.
+  - id: action-form
+    instruction: Uses a natural ta med form to ask Erik to bring the umbrella from the car.
+  - id: state-form
+    instruction: Uses a natural ha med form to say that they want the umbrella with them on the walk.
+- handle: review_ta_med_action
+  op: write
+  objective: obj-ta-med-or-ha-med-01
+  bloom: apply
+  prompt_md: 'Du pakker solbrillene til en fjelltur. Skriv én setning om at du sørger for at de blir med. Bruk «ta med» i riktig form.'
+  explanation_md: «Ta med» beskriver handlingen der solbrillene blir pakket til turen.
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: "no"
+  judge_prompt: Evaluate only criterion action-expression. Accept a grammatical sentence using the taught expression for the planned action of bringing the sunglasses along, and add no other gating requirement.
+  criteria:
+  - id: action-expression
+    instruction: Uses ta med to express the planned action of bringing the sunglasses along.
+- handle: review_ha_med_state
+  op: write
+  objective: obj-ta-med-or-ha-med-01
+  bloom: apply
+  prompt_md: 'Du er på hytta, og lommelykten ligger allerede i sekken. Skriv én setning om at du har den med på turen. Bruk «ha med» i riktig form.'
+  explanation_md: «Ha med» forteller at lommelykten allerede er med på turen.
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: "no"
+  judge_prompt: Evaluate only criterion state-expression. Accept a grammatical sentence using the taught expression for the flashlight already being with the speaker, and add no other gating requirement.
+  criteria:
+  - id: state-expression
+    instruction: Uses ha med to report that the flashlight is already with the speaker.

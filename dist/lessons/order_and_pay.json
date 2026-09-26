@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "order_and_pay",
   "kind": "communicative",
   "language": "nb-NO",
@@ -88,6 +88,30 @@
     {
       "kind": "exercise",
       "id": "quick_retrieval_review"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_making_first_request"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_responding_to_choice"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_changing_quantities"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_item_price_or_total"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_confirming_payment"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_closing_transaction"
     }
   ],
   "sections": [
@@ -1258,7 +1282,7 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ to kanelbolle"
+                  "value": "to kanelbolle"
                 }
               ],
               "en": [
@@ -1266,7 +1290,8 @@
                   "kind": "text",
                   "value": "two cinnamon bun"
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "saying-how-many-block-19"
@@ -1822,35 +1847,26 @@
           "id": "checking-how-to-pay-block-18"
         },
         {
-          "kind": "paragraph",
-          "spans": [
-            {
-              "kind": "text",
-              "value": "Not:"
-            }
-          ],
-          "id": "checking-how-to-pay-block-19"
-        },
-        {
           "kind": "examples",
           "items": [
             {
-              "id": "checking-how-to-pay-block-20-item-1",
+              "id": "checking-how-to-pay-block-19-item-1",
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Jeg betaler av kort."
+                  "value": "Jeg betaler av kort."
                 }
               ],
               "en": [
                 {
                   "kind": "text",
-                  "value": "Incorrect: I’m paying of card."
+                  "value": "I’m paying of card."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
-          "id": "checking-how-to-pay-block-20"
+          "id": "checking-how-to-pay-block-19"
         },
         {
           "kind": "paragraph",
@@ -1860,13 +1876,13 @@
               "value": "Also avoid copying English can I have with ha:"
             }
           ],
-          "id": "checking-how-to-pay-block-21"
+          "id": "checking-how-to-pay-block-20"
         },
         {
           "kind": "examples",
           "items": [
             {
-              "id": "checking-how-to-pay-block-22-item-1",
+              "id": "checking-how-to-pay-block-21-item-1",
               "no": [
                 {
                   "kind": "text",
@@ -1881,7 +1897,7 @@
               ]
             }
           ],
-          "id": "checking-how-to-pay-block-22"
+          "id": "checking-how-to-pay-block-21"
         },
         {
           "kind": "paragraph",
@@ -1891,7 +1907,7 @@
               "value": "Kan jeg få is the natural request. Kan jeg ha usually asks whether you are allowed or able to keep or possess something, not whether a server can give it to you."
             }
           ],
-          "id": "checking-how-to-pay-block-23"
+          "id": "checking-how-to-pay-block-22"
         }
       ]
     },
@@ -2478,7 +2494,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Choose two different café items from «et rundstykke med ost», «en kopp te», and «en flaske vann». Write two complete Norwegian requests that order both chosen items. Begin the first request with «Jeg vil gjerne ha» and the second with «Kan jeg få»."
+          "value": "Menu: a cheese roll, a cup of tea, a bottle of water. Choose two items and write two complete orders for the same items, using a different ordering phrase each time."
         }
       ],
       "explanation": null,
@@ -2486,18 +2502,38 @@
         "response_language": "no",
         "min_words": null,
         "max_words": null,
-        "judge_prompt": "Accept any two distinct items from «et rundstykke med ost», «en kopp te», and «en flaske vann». Require complete orders, the exact expressions «Jeg vil gjerne ha» and «Kan jeg få», and the same two items in both sentences. Reject bare item names or untaught substitutions.",
+        "judge_prompt": "Vurder kriteriene first-order og second-order. Registrer frame-variety-observation diagnostisk. Godta bøying, tegnsetting og rekkefølge som ikke endrer bestillingen.",
         "criteria": [
           {
             "id": "first-order",
-            "instruction": "Uses «Jeg vil gjerne ha» in a complete order naming two different taught café items."
+            "instruction": "Den første bestillingen er en fullstendig norsk bestilling av begge varene."
           },
           {
             "id": "second-order",
-            "instruction": "Uses «Kan jeg få» in a complete order naming the same two items as the first order."
+            "instruction": "Den andre bestillingen er en fullstendig norsk bestilling av de samme to varene og bruker et annet bestillingsuttrykk enn den første."
+          },
+          {
+            "id": "frame-variety-observation",
+            "instruction": "Observation only: registrer om bestillingene bruker to tydelige, naturlige bestillingsrammer (for eksempel Jeg vil gjerne ha og Kan jeg få); ikke underkjenn en naturlig tilsvarende variant."
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Ved kafédisken vil du bestille to varer fra menyen på to ulike måter."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2507,7 +2543,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write three Norwegian responses in this café sequence. Nora asks «Vil du ha liten eller stor kaffe?»; Sara chooses one size. Nora then asks «Vil du ha melk i kaffen?»; Sara chooses yes or no. Give a short response to each question, then write one complete order that combines both choices."
+          "value": "Answer both questions briefly, then write one complete order with your choices."
         }
       ],
       "explanation": null,
@@ -2515,22 +2551,65 @@
         "response_language": "no",
         "min_words": null,
         "max_words": null,
-        "judge_prompt": "Accept either «Liten, takk.» or «Stor, takk.» for the size, and either «Ja takk.» or «Nei takk.» for the milk choice. Bare «Liten», «Stor», «Ja», or «Nei» is acceptable only when the choice is unambiguous and the complete order is natural. The final order must use the selected size and «med melk» or «uten melk»; accept «Jeg vil gjerne ha», «Kan jeg få», or «Jeg tar». Reject any order that contradicts either earlier choice.",
+        "judge_prompt": "Vurder kriteriene size-response, milk-response og combined-order. Godta både liten og stor og både med og uten melk når den fullstendige bestillingen samsvarer med svarene.",
         "criteria": [
           {
             "id": "size-response",
-            "instruction": "Gives a short response selecting exactly one size."
+            "instruction": "Det første svaret velger tydelig én størrelse."
           },
           {
             "id": "milk-response",
-            "instruction": "Gives a short response selecting exactly one milk option."
+            "instruction": "Det andre svaret velger tydelig melk eller ikke melk."
           },
           {
             "id": "combined-order",
-            "instruction": "Gives a complete ordering phrase that preserves both earlier choices with «med melk» or «uten melk»."
+            "instruction": "Den siste setningen er en fullstendig bestilling som samsvarer med begge valgene."
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Nora",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Vil du ha liten eller stor kaffe?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Du svarer kort."
+                }
+              ]
+            },
+            {
+              "speaker": "Nora",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Vil du ha melk i kaffen?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Svar kort, og bestill deretter alt i én fullstendig replikk."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2540,7 +2619,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Use Emil’s starting order: «Jeg tar en kaffe og to flasker vann.» Write one new complete Norwegian order beginning with «Jeg tar». Change the order to two coffees and one bottle of water, adjusting the noun forms. You may name either item first."
+          "value": "Write the new order as one complete sentence. Use the correct noun forms after the numbers."
         }
       ],
       "explanation": null,
@@ -2548,18 +2627,38 @@
         "response_language": "no",
         "min_words": null,
         "max_words": null,
-        "judge_prompt": "Require «Jeg tar» with both taught items. The coffee must change to a taught plural form, either «to kaffer» or «to kopper kaffe», and the water must change to «en flaske vann». Accept either item order if both quantities and noun forms are clear. Reject «en kaffe» or «to flasker vann», since those quantities were not changed.",
+        "judge_prompt": "Vurder kriteriene order-frame og quantity-forms. Registrer plural-form-observation diagnostisk. Godta både «to kaffer» og «to kopper kaffe», og begge rekkefølger på varene.",
         "criteria": [
           {
             "id": "order-frame",
-            "instruction": "Uses «Jeg tar» in one complete order containing coffee and water bottles."
+            "instruction": "Skriver én fullstendig norsk bestilling."
           },
           {
             "id": "quantity-forms",
-            "instruction": "Specifies exactly two coffees and one bottle of water, using «to kaffer» or «to kopper kaffe» and «en flaske vann»."
+            "instruction": "Bestiller to kaffer (eller to kopper kaffe) og én flaske vann med riktige tall- og substantivformer."
+          },
+          {
+            "id": "plural-form-observation",
+            "instruction": "Observation only: registrer om flertallsformene etter tallene er korrekte; ikke underkjenn en naturlig tilsvarende variant."
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Først bestilte du én kaffe og to flasker vann. Du vil endre bestillingen: Du trenger dobbelt så mye kaffe, men bare én flaske vann."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2569,7 +2668,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write two Norwegian price questions for this sequence: Sara first asks the price of one cinnamon bun; after Emil adds food, she asks for the whole order. Name the item in the first question and ask for the total in the second."
+          "value": "Write the two questions Sara asks about the prices."
         }
       ],
       "explanation": null,
@@ -2577,18 +2676,34 @@
         "response_language": "no",
         "min_words": null,
         "max_words": null,
-        "judge_prompt": "Accept «Hva koster en kanelbolle?» as the first question, and also accept the natural definite form «Hva koster kanelbollen?». Accept «Hvor mye koster det?» «Hvor mye koster det til sammen?» or «Hva blir det til sammen?» as the second question. Require the named cinnamon bun first and a whole-order reference with «det» or «til sammen» second.",
+        "judge_prompt": "Vurder kriteriene named-item-price og whole-order-total. Godta naturlige lærte varianter med samme betydning.",
         "criteria": [
           {
             "id": "named-item-price",
-            "instruction": "Names the cinnamon bun in the first price question."
+            "instruction": "Det første spørsmålet spør om prisen på den navngitte varen."
           },
           {
             "id": "whole-order-total",
-            "instruction": "Uses «det» or «til sammen» in the second question to ask about the whole order."
+            "instruction": "Det andre spørsmålet spør om totalprisen for hele bestillingen."
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Sara står ved disken med en kanelbolle og en bestilling. Først vil hun vite hva kanelbollen koster, og deretter hva hele bestillingen koster."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2598,7 +2713,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write three Norwegian lines for this sequence. Nora asks «Hvordan vil du betale?». First, answer Nora’s question about payment with a short reply. Next, expand the same method into a complete sentence. Finally, ask whether the two people can pay together. Choose card or cash."
+          "value": "Write three lines in this order: a short answer, the same answer in a complete sentence, and a final question to the cashier about paying together."
         }
       ],
       "explanation": null,
@@ -2606,22 +2721,47 @@
         "response_language": "no",
         "min_words": null,
         "max_words": null,
-        "judge_prompt": "Accept «Med kort, takk.» followed by «Jeg betaler med kort.» or «Kontant, takk.» followed by «Jeg betaler kontant.». The complete sentence must preserve the selected method, and the final question must be «Kan vi betale sammen?». Do not accept «av kort» or a response that changes payment method between lines.",
+        "judge_prompt": "Vurder kriteriene short-payment-reply, complete-payment-sentence og shared-payment-question. Godta kort eller kontant når samme metode brukes i de to første linjene.",
         "criteria": [
           {
             "id": "short-payment-reply",
-            "instruction": "Gives a short reply naming either «med kort» or «kontant»."
+            "instruction": "Gir et kort svar som tydelig velger én betalingsmåte."
           },
           {
             "id": "complete-payment-sentence",
-            "instruction": "Expands the same payment method into a complete sentence."
+            "instruction": "Uttrykker den samme betalingsmåten i en fullstendig setning."
           },
           {
             "id": "shared-payment-question",
-            "instruction": "Asks whether they can pay together with the appropriate shared-payment question."
+            "instruction": "Spør om de kan betale sammen."
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Nora",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hvordan vil du betale?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Sara og Emil vil betale sammen med samme betalingsmåte."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2631,7 +2771,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete the customer's five lines in this guided café exchange. Write only the customer's lines, in order, after each supplied server line. 1. Server: «Hei! Hva vil du ha?» Order two coffees and one cinnamon bun with «Jeg tar». 2. Server: «Vil du ha melk i kaffen?» Choose no milk. 3. Server: «Er det alt?» Say that it is everything and ask for the total. 4. Server: «Det blir 96 kroner. Hvordan vil du betale?» Answer that you will pay by card. 5. Server: «Vil du ha kvitteringen?» Accept the receipt and close politely."
+          "value": "Write the customer's five replies in the correct order: order, milk choice, question about the total price, payment, and closing."
         }
       ],
       "explanation": null,
@@ -2639,30 +2779,127 @@
         "response_language": "no",
         "min_words": 17,
         "max_words": 45,
-        "judge_prompt": "Check the five customer turns separately and verify that they remain in the supplied order. Accept natural punctuation and capitalization variants, but require the taught meanings and forms for each turn.",
+        "judge_prompt": "Vurder kriteriene guided-order, guided-choice, guided-total, guided-payment og guided-close. Godta naturlige tegnsettings- og høflighetsvarianter.",
         "criteria": [
           {
             "id": "guided-order",
-            "instruction": "Orders exactly two coffees and one cinnamon bun with «Jeg tar», using a taught form such as «to kopper kaffe» or «to kaffer»."
+            "instruction": "Bestiller de oppgitte varene i riktig mengde med en fullstendig bestillingsramme."
           },
           {
             "id": "guided-choice",
-            "instruction": "Chooses no milk with a taught form such as «Nei takk» or «uten melk»."
+            "instruction": "Velger kaffe uten melk."
           },
           {
             "id": "guided-total",
-            "instruction": "Says that the order is complete and asks for the total after «Er det alt?»."
+            "instruction": "Svarer at det er alt og spør om totalprisen."
           },
           {
             "id": "guided-payment",
-            "instruction": "Answers the supplied price question by saying that the payment will be by card, using «Med kort, takk» or «Jeg betaler med kort»."
+            "instruction": "Oppgir kort som betalingsmåte etter prisopplysningen."
           },
           {
             "id": "guided-close",
-            "instruction": "Accepts the receipt and closes politely after the payment turn, using taught forms such as «Ja takk» and «Takk, ha det»."
+            "instruction": "Tar imot kvitteringen og avslutter høflig."
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Ansatt",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hei! Hva vil du ha?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Du vil bestille to kaffer og én kanelbolle."
+                }
+              ]
+            },
+            {
+              "speaker": "Ansatt",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Vil du ha melk i kaffen?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Du vil ikke ha melk."
+                }
+              ]
+            },
+            {
+              "speaker": "Ansatt",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Er det alt?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Du vil svare at det er alt og spørre om totalprisen."
+                }
+              ]
+            },
+            {
+              "speaker": "Ansatt",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Det blir 96 kroner. Hvordan vil du betale?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Du vil betale med kort."
+                }
+              ]
+            },
+            {
+              "speaker": "Ansatt",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Vil du ha kvitteringen?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Du vil ha kvitteringen."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2672,30 +2909,59 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Create an original short Norwegian café exchange between a customer and a server. Follow this sequence: order a drink and a food item, make one choice about size, type, or an addition, include a clear quantity, ask for the total, check or state the payment method, and close the transaction politely. You may order kaffe or te plus a kanelbolle or et rundstykke; use «liten» or «stor», «med melk» or «uten melk», or «med eller uten kullsyre» for the choice. Use an original combination and wording."
+          "value": "Continue the dialogue from the order to the end. Have the worker ask whether the customer wants to eat in or take it away, say the total, and ask how the customer will pay."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": null,
-        "max_words": null,
-        "judge_prompt": "Require an identifiable customer-server exchange in the requested sequence. The order must contain one taught drink, one taught food item, a clear quantity for each, and at least one taught choice such as «liten» or «stor», «kaffe» or «te», «med melk» or «uten melk», or «med eller uten kullsyre». Accept taught ordering frames «Jeg vil gjerne ha», «Kan jeg få», or «Jeg tar». After the order, require a total question such as «Hvor mye koster det til sammen?» or «Hva blir det til sammen?» and a taught payment form such as «Kan jeg betale med kort?», «Kan jeg betale kontant?», «Jeg betaler med kort.», «Jeg betaler kontant.», «Med kort, takk.», or «Kontant, takk.». Require a polite closing with taught «Takk» after payment, not an ending immediately after the price. Reject a complete copied example sentence used as the whole transaction.",
+        "min_words": 35,
+        "max_words": 65,
+        "judge_prompt": "Vurder kriteriene order-choice-quantity, total-and-payment og polite-close. Registrer transaction-language-observation diagnostisk. Ikke legg til andre krav.",
         "criteria": [
           {
             "id": "order-choice-quantity",
-            "instruction": "Orders a drink and a food item, makes one taught size, type, or addition choice, and makes quantity clear."
+            "instruction": "Bestiller én kopp te og tre kanelboller med riktige former og velger å ta med da den ansatte spør."
           },
           {
             "id": "total-and-payment",
-            "instruction": "Asks for the total and checks or states how to pay after the order."
+            "instruction": "Spør om totalprisen, lar den ansatte oppgi 154 kroner og gjennomfører kontantbetaling etter spørsmålet om betalingsmåte."
           },
           {
             "id": "polite-close",
-            "instruction": "Ends the exchange clearly and politely after payment rather than stopping after the price."
+            "instruction": "Takker nei til kvitteringen og avslutter dialogen høflig."
+          },
+          {
+            "id": "transaction-language-observation",
+            "instruction": "Observation only: registrer om bestillings-, mengde- eller betalingsformene har mindre språkfeil; kriteriet kan ikke alene føre til underkjenning."
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Ansatt",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«God morgen! Hva kan jeg hjelpe deg med?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Kunden bestiller en kopp te og tre kanelboller til å ta med, spør om totalprisen og betaler 154 kroner kontant. Kunden trenger ikke kvittering og avslutter høflig."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2705,7 +2971,222 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write one Norwegian expression for each stage: ordering an item with «Jeg vil gjerne ha», «Kan jeg få», or «Jeg tar»; specifying more than one with a number and a plural item; asking for the total; asking to pay by card; and closing politely with «Takk» after payment. Then use all five expressions in one original short café transaction. For the order, choose among kanelboller, rundstykker, flasker vann, kopper kaffe, and kaffe."
+          "value": "Write the lines the customer says to the café worker: order the items, ask the price for the whole order, say that you want to pay by card, and end politely."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "response_language": "no",
+        "min_words": null,
+        "max_words": 45,
+        "judge_prompt": "Vurder kriteriene ordering-expression, plural-quantity-expression, total-expression, card-payment-expression og completion-expression. Godta alle naturlige formuleringer som utfører de synlige trinnene.",
+        "criteria": [
+          {
+            "id": "ordering-expression",
+            "instruction": "Bestiller kanelboller av den kaféansatte."
+          },
+          {
+            "id": "plural-quantity-expression",
+            "instruction": "Gjør antallet tre tydelig med en passende flertallsform."
+          },
+          {
+            "id": "total-expression",
+            "instruction": "Spør om prisen for hele kjøpet."
+          },
+          {
+            "id": "card-payment-expression",
+            "instruction": "Spør om eller oppgir kortbetaling."
+          },
+          {
+            "id": "completion-expression",
+            "instruction": "Avslutter kjøpet høflig etter betalingen."
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Ansatt",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hei! Hva vil du ha?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Kunden vil ha tre kanelboller, spørre om totalprisen, betale med kort og avslutte høflig."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_making_first_request",
+      "operation": "write",
+      "objective_id": "obj-order-and-pay-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Reply to the café worker with one short order."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "response_language": "no",
+        "min_words": 3,
+        "max_words": 4,
+        "judge_prompt": "Vurder kriteriet request-chunk. Registrer request-frame-observation diagnostisk.",
+        "criteria": [
+          {
+            "id": "request-chunk",
+            "instruction": "Gir en kort, fullstendig norsk bestilling av teen."
+          },
+          {
+            "id": "request-frame-observation",
+            "instruction": "Observation only: registrer hvilken bestillingsramme som brukes; ikke underkjenn en naturlig tilsvarende variant."
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Ansatt",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hei! Hva vil du ha?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Du vil bestille en kopp te."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_responding_to_choice",
+      "operation": "write",
+      "objective_id": "obj-order-and-pay-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Give the café worker a short reply."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "response_language": "no",
+        "min_words": 2,
+        "max_words": 4,
+        "judge_prompt": "Vurder kriteriet option-chunk. Godta en kort og høflig formulering som velger alternativet i spørsmålet.",
+        "criteria": [
+          {
+            "id": "option-chunk",
+            "instruction": "Velger alternativet uten kullsyre i et kort, naturlig svar."
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Ansatt",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hva slags vann vil du ha?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Du vil ikke ha vann med kullsyre."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_changing_quantities",
+      "operation": "write",
+      "objective_id": "obj-order-and-pay-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Write the phrase for the new amount."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "response_language": "no",
+        "min_words": 2,
+        "max_words": 3,
+        "judge_prompt": "Vurder kriteriet plural-chunk. Registrer plural-form-observation diagnostisk.",
+        "criteria": [
+          {
+            "id": "plural-chunk",
+            "instruction": "Skriver et korrekt uttrykk som betyr to flasker vann."
+          },
+          {
+            "id": "plural-form-observation",
+            "instruction": "Observation only: registrer om flertallsformen etter tallet er korrekt; ikke underkjenn en naturlig tilsvarende variant."
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Du har allerede bestilt én flaske vann, men vil nå ha to."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_item_price_or_total",
+      "operation": "write",
+      "objective_id": "obj-order-and-pay-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Write the question the customer asks now."
         }
       ],
       "explanation": null,
@@ -2713,34 +3194,148 @@
         "response_language": "no",
         "min_words": null,
         "max_words": null,
-        "judge_prompt": "Accept «Jeg vil gjerne ha», «Kan jeg få», or «Jeg tar» applied to a taught item for ordering. Accept a taught plural quantity expression such as «to kanelboller», «tre rundstykker», «to flasker vann», «to kopper kaffe», or «to kaffer». Accept «Hvor mye koster det?», «Hvor mye koster det til sammen?», or «Hva blir det til sammen?» for the total, and «Kan jeg betale med kort?» for card payment. For completion, accept the taught polite closing «Takk» used after payment; do not require an untaught phrase such as «Det var alt». The final transaction must use all five retrieved expressions coherently, in stage order, with a new combination of taught items and quantities rather than a copied complete lesson example.",
+        "judge_prompt": "Vurder kriteriet total-question. Godta lærte, naturlige spørsmål om totalprisen.",
         "criteria": [
           {
-            "id": "ordering-expression",
-            "instruction": "Provides one taught Norwegian expression for ordering an item."
-          },
-          {
-            "id": "plural-quantity-expression",
-            "instruction": "Provides one taught Norwegian expression specifying more than one with a clear plural form."
-          },
-          {
-            "id": "total-expression",
-            "instruction": "Provides one taught Norwegian expression asking for the total."
-          },
-          {
-            "id": "card-payment-expression",
-            "instruction": "Provides the taught expression asking to pay by card."
-          },
-          {
-            "id": "completion-expression",
-            "instruction": "Provides a taught polite closing signal for a complete order, using «Takk» after payment."
-          },
-          {
-            "id": "transaction-use",
-            "instruction": "Uses all five expressions in one coherent short transaction with a new taught-item combination."
+            "id": "total-question",
+            "instruction": "Spør om prisen på hele bestillingen, ikke bare én vare."
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Kunde",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg tar en kaffe og to rundstykker.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Ansatt",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Er det alt?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Kunden svarer ja og vil vite hva hele bestillingen koster."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_confirming_payment",
+      "operation": "write",
+      "objective_id": "obj-order-and-pay-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Tell the cashier how you will pay."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "response_language": "no",
+        "min_words": 2,
+        "max_words": 3,
+        "judge_prompt": "Vurder kriteriet payment-chunk. Godta et kort, naturlig uttrykk for kortbetaling med valgfritt «takk».",
+        "criteria": [
+          {
+            "id": "payment-chunk",
+            "instruction": "Oppgir kortbetaling i et kort, naturlig svar."
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Ansatt",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hvordan vil du betale?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Du vil betale med kort."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_closing_transaction",
+      "operation": "write",
+      "objective_id": "obj-order-and-pay-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Give the café worker a short reply."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "response_language": "no",
+        "min_words": 3,
+        "max_words": 4,
+        "judge_prompt": "Vurder kriteriet closing-chunk. Godta et kort, høflig svar som tydelig sier at kunden ikke vil ha mer.",
+        "criteria": [
+          {
+            "id": "closing-chunk",
+            "instruction": "Sier høflig at kunden ikke vil ha mer."
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Ansatt",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Skal du ha noe mer?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Du er ferdig med bestillingen."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "practice_groups": [
@@ -2755,7 +3350,13 @@
         "confirming_payment",
         "guided_transaction",
         "integrated_transaction",
-        "quick_retrieval_review"
+        "quick_retrieval_review",
+        "review_making_first_request",
+        "review_responding_to_choice",
+        "review_changing_quantities",
+        "review_item_price_or_total",
+        "review_confirming_payment",
+        "review_closing_transaction"
       ]
     }
   ],

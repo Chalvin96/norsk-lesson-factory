@@ -1,0 +1,358 @@
+- handle: making_first_request
+  op: write
+  objective: obj-order-and-pay-01
+  bloom: apply
+  prompt_md: 'Meny: et rundstykke med ost, en kopp te, en flaske vann. Velg to varer og skriv to fullstendige
+    bestillinger av de samme varene, hver med et ulikt bestillingsuttrykk.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: You are at a café counter and want to order two items from the menu in two different ways.
+  response_language: 'no'
+  judge_prompt: Vurder kriteriene first-order og second-order. Registrer frame-variety-observation diagnostisk.
+    Godta bøying, tegnsetting og rekkefølge som ikke endrer bestillingen.
+  criteria:
+  - id: first-order
+    instruction: Den første bestillingen er en fullstendig norsk bestilling av begge varene.
+  - id: second-order
+    instruction: Den andre bestillingen er en fullstendig norsk bestilling av de samme to varene og bruker
+      et annet bestillingsuttrykk enn den første.
+  - id: frame-variety-observation
+    instruction: 'Observation only: registrer om bestillingene bruker to tydelige, naturlige bestillingsrammer
+      (for eksempel Jeg vil gjerne ha og Kan jeg få); ikke underkjenn en naturlig tilsvarende variant.'
+  derived_from:
+  - section_id: choosing-an-item
+- handle: responding_to_choice
+  op: write
+  objective: obj-order-and-pay-01
+  bloom: apply
+  prompt_md: Svar kort på begge spørsmålene, og skriv så én fullstendig bestilling som samler valgene
+    dine.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Vil du ha liten eller stor kaffe?»
+    - speaker: Context
+      text_md: You give a short answer.
+    - speaker: Nora
+      text_md: «Vil du ha melk i kaffen?»
+    - speaker: Context
+      text_md: You give a short answer, then place one complete order.
+  response_language: 'no'
+  judge_prompt: Vurder kriteriene size-response, milk-response og combined-order. Godta både liten og
+    stor og både med og uten melk når den fullstendige bestillingen samsvarer med svarene.
+  criteria:
+  - id: size-response
+    instruction: Det første svaret velger tydelig én størrelse.
+  - id: milk-response
+    instruction: Det andre svaret velger tydelig melk eller ikke melk.
+  - id: combined-order
+    instruction: Den siste setningen er en fullstendig bestilling som samsvarer med begge valgene.
+  derived_from:
+  - section_id: choosing-between-options
+- handle: changing_quantities
+  op: write
+  objective: obj-order-and-pay-01
+  bloom: apply
+  prompt_md: Skriv den nye bestillingen som én fullstendig setning med riktige substantivformer etter
+    tallene.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: You first ordered one coffee and two bottles of water. Now you want two coffees and one
+        bottle of water instead.
+  response_language: 'no'
+  judge_prompt: Vurder kriteriene order-frame og quantity-forms. Registrer plural-form-observation diagnostisk.
+    Godta både «to kaffer» og «to kopper kaffe», og begge rekkefølger på varene.
+  criteria:
+  - id: order-frame
+    instruction: Skriver én fullstendig norsk bestilling.
+  - id: quantity-forms
+    instruction: Bestiller to kaffer (eller to kopper kaffe) og én flaske vann med riktige tall- og substantivformer.
+  - id: plural-form-observation
+    instruction: 'Observation only: registrer om flertallsformene etter tallene er korrekte; ikke underkjenn
+      en naturlig tilsvarende variant.'
+  derived_from:
+  - section_id: saying-how-many
+- handle: item_price_or_total
+  op: write
+  objective: obj-order-and-pay-01
+  bloom: apply
+  prompt_md: Skriv de to norske prisspørsmålene Sara stiller.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Sara is at the counter with one cinnamon bun and a full order. She first wants to know
+        the price of the cinnamon bun, and then the price of the whole order.
+  response_language: 'no'
+  judge_prompt: Vurder kriteriene named-item-price og whole-order-total. Godta naturlige lærte varianter
+    med samme betydning.
+  criteria:
+  - id: named-item-price
+    instruction: Det første spørsmålet spør om prisen på den navngitte varen.
+  - id: whole-order-total
+    instruction: Det andre spørsmålet spør om totalprisen for hele bestillingen.
+  derived_from:
+  - section_id: checking-the-price
+- handle: confirming_payment
+  op: write
+  objective: obj-order-and-pay-01
+  bloom: apply
+  prompt_md: 'Skriv tre replikker i denne rekkefølgen: et kort svar, samme svar i en fullstendig setning
+    og et avsluttende spørsmål til kassereren om én felles betaling.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Hvordan vil du betale?»
+    - speaker: Context
+      text_md: Sara and Emil want to use the same payment method and pay together.
+  response_language: 'no'
+  judge_prompt: Vurder kriteriene short-payment-reply, complete-payment-sentence og shared-payment-question.
+    Godta kort eller kontant når samme metode brukes i de to første linjene.
+  criteria:
+  - id: short-payment-reply
+    instruction: Gir et kort svar som tydelig velger én betalingsmåte.
+  - id: complete-payment-sentence
+    instruction: Uttrykker den samme betalingsmåten i en fullstendig setning.
+  - id: shared-payment-question
+    instruction: Spør om de kan betale sammen.
+  derived_from:
+  - section_id: checking-how-to-pay
+- handle: guided_transaction
+  op: write
+  objective: obj-order-and-pay-01
+  bloom: apply
+  prompt_md: Skriv kundens fem svar i riktig rekkefølge. Bestill varene, svar på valget, svar at det er
+    alt og spør om totalprisen, oppgi betalingsmåten og ta imot kvitteringen før du avslutter høflig.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Server
+      text_md: «Hei! Hva vil du ha?»
+    - speaker: Context
+      text_md: Du vil bestille to kaffer og én kanelbolle.
+    - speaker: Server
+      text_md: «Vil du ha melk i kaffen?»
+    - speaker: Context
+      text_md: Du vil ikke ha melk.
+    - speaker: Server
+      text_md: «Er det alt?»
+    - speaker: Context
+      text_md: Du vil svare at det er alt og spørre om totalprisen.
+    - speaker: Server
+      text_md: «Det blir 96 kroner. Hvordan vil du betale?»
+    - speaker: Context
+      text_md: Du vil betale med kort.
+    - speaker: Server
+      text_md: «Vil du ha kvitteringen?»
+    - speaker: Context
+      text_md: Du vil ha kvitteringen.
+  response_language: 'no'
+  min_words: 17
+  max_words: 45
+  judge_prompt: Vurder kriteriene guided-order, guided-choice, guided-total, guided-payment og guided-close.
+    Godta naturlige tegnsettings- og høflighetsvarianter.
+  criteria:
+  - id: guided-order
+    instruction: Bestiller de oppgitte varene i riktig mengde med en fullstendig bestillingsramme.
+  - id: guided-choice
+    instruction: Velger kaffe uten melk.
+  - id: guided-total
+    instruction: Svarer at det er alt og spør om totalprisen.
+  - id: guided-payment
+    instruction: Oppgir kort som betalingsmåte etter prisopplysningen.
+  - id: guided-close
+    instruction: Tar imot kvitteringen og avslutter høflig.
+  derived_from:
+  - section_id: guided-transaction
+- handle: integrated_transaction
+  op: write
+  objective: obj-order-and-pay-01
+  bloom: apply
+  prompt_md: Fortsett dialogen fra bestilling til avslutning. La den ansatte spørre om kunden vil spise
+    der eller ta med, opplyse totalsummen og spørre om betalingsmåte.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Server
+      text_md: «God morgen! Hva kan jeg hjelpe deg med?»
+    - speaker: Context
+      text_md: The customer orders one cup of tea and three cinnamon buns to take away, asks for the total,
+        and pays 154 kroner in cash. The customer does not need a receipt and closes politely.
+  response_language: 'no'
+  min_words: 35
+  max_words: 65
+  judge_prompt: Vurder kriteriene order-choice-quantity, total-and-payment og polite-close. Registrer
+    transaction-language-observation diagnostisk. Ikke legg til andre krav.
+  criteria:
+  - id: order-choice-quantity
+    instruction: Bestiller én kopp te og tre kanelboller med riktige former og velger å ta med da den
+      ansatte spør.
+  - id: total-and-payment
+    instruction: Spør om totalprisen, lar den ansatte oppgi 154 kroner og gjennomfører kontantbetaling
+      etter spørsmålet om betalingsmåte.
+  - id: polite-close
+    instruction: Takker nei til kvitteringen og avslutter dialogen høflig.
+  - id: transaction-language-observation
+    instruction: 'Observation only: registrer om bestillings-, mengde- eller betalingsformene har mindre
+      språkfeil; kriteriet kan ikke alene føre til underkjenning.'
+  derived_from:
+  - section_id: integrated-practice
+- handle: quick_retrieval_review
+  op: write
+  objective: obj-order-and-pay-01
+  bloom: apply
+  prompt_md: 'Skriv replikkene kunden sier til den kaféansatte: bestill varene, spør om prisen for hele
+    kjøpet, oppgi at du vil betale med kort og avslutt kjøpet høflig.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Server
+      text_md: «Hei! Hva vil du ha?»
+    - speaker: Context
+      text_md: Kunden vil ha tre kanelboller, vite totalprisen, betale med kort og deretter avslutte høflig.
+  response_language: 'no'
+  max_words: 45
+  judge_prompt: Vurder kriteriene ordering-expression, plural-quantity-expression, total-expression, card-payment-expression
+    og completion-expression. Godta alle naturlige formuleringer som utfører de synlige trinnene.
+  criteria:
+  - id: ordering-expression
+    instruction: Bestiller kanelboller av den kaféansatte.
+  - id: plural-quantity-expression
+    instruction: Gjør antallet tre tydelig med en passende flertallsform.
+  - id: total-expression
+    instruction: Spør om prisen for hele kjøpet.
+  - id: card-payment-expression
+    instruction: Spør om eller oppgir kortbetaling.
+  - id: completion-expression
+    instruction: Avslutter kjøpet høflig etter betalingen.
+  derived_from:
+  - section_id: quick-retrieval-review
+- handle: review_making_first_request
+  op: write
+  objective: obj-order-and-pay-01
+  bloom: apply
+  prompt_md: Svar den kaféansatte med én kort bestilling på 3–4 ord.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Server
+      text_md: «Hei! Hva vil du ha?»
+    - speaker: Context
+      text_md: You want to order a cup of tea.
+  response_language: 'no'
+  judge_prompt: Vurder kriteriet request-chunk. Registrer request-frame-observation diagnostisk.
+  criteria:
+  - id: request-chunk
+    instruction: Gir en kort, fullstendig norsk bestilling av teen.
+  - id: request-frame-observation
+    instruction: 'Observation only: registrer hvilken bestillingsramme som brukes; ikke underkjenn en
+      naturlig tilsvarende variant.'
+  derived_from:
+  - section_id: choosing-an-item
+- handle: review_responding_to_choice
+  op: write
+  objective: obj-order-and-pay-01
+  bloom: apply
+  prompt_md: Svar den kaféansatte med et kort svar på 2–4 ord.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Server
+      text_md: «Hva slags vann vil du ha?»
+    - speaker: Context
+      text_md: You do not want sparkling water.
+  response_language: 'no'
+  judge_prompt: Vurder kriteriet option-chunk. Godta en kort og høflig formulering som velger alternativet
+    i spørsmålet.
+  criteria:
+  - id: option-chunk
+    instruction: Velger alternativet uten kullsyre i et kort, naturlig svar.
+  derived_from:
+  - section_id: choosing-between-options
+- handle: review_changing_quantities
+  op: write
+  objective: obj-order-and-pay-01
+  bloom: apply
+  prompt_md: Skriv vareuttrykket for den nye mengden på 2–3 ord.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: You already ordered one bottle of water. Now you want two.
+  response_language: 'no'
+  judge_prompt: Vurder kriteriet plural-chunk. Registrer plural-form-observation diagnostisk.
+  criteria:
+  - id: plural-chunk
+    instruction: Skriver et korrekt uttrykk som betyr to flasker vann.
+  - id: plural-form-observation
+    instruction: 'Observation only: registrer om flertallsformen etter tallet er korrekt; ikke underkjenn
+      en naturlig tilsvarende variant.'
+  derived_from:
+  - section_id: saying-how-many
+- handle: review_item_price_or_total
+  op: write
+  objective: obj-order-and-pay-01
+  bloom: apply
+  prompt_md: Skriv spørsmålet kunden stiller nå.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Kunde
+      text_md: «Jeg tar en kaffe og to rundstykker.»
+    - speaker: Server
+      text_md: «Er det alt?»
+    - speaker: Context
+      text_md: The customer says yes and now wants to know what the whole order costs.
+  response_language: 'no'
+  judge_prompt: Vurder kriteriet total-question. Godta lærte, naturlige spørsmål om totalprisen.
+  criteria:
+  - id: total-question
+    instruction: Spør om prisen på hele bestillingen, ikke bare én vare.
+  derived_from:
+  - section_id: checking-the-price
+- handle: review_confirming_payment
+  op: write
+  objective: obj-order-and-pay-01
+  bloom: apply
+  prompt_md: Svar kassereren med betalingsmåten på 2–3 ord.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Server
+      text_md: «Hvordan vil du betale?»
+    - speaker: Context
+      text_md: You want to pay by card.
+  response_language: 'no'
+  judge_prompt: Vurder kriteriet payment-chunk. Godta et kort, naturlig uttrykk for kortbetaling med valgfritt
+    «takk».
+  criteria:
+  - id: payment-chunk
+    instruction: Oppgir kortbetaling i et kort, naturlig svar.
+  derived_from:
+  - section_id: checking-how-to-pay
+- handle: review_closing_transaction
+  op: write
+  objective: obj-order-and-pay-01
+  bloom: apply
+  prompt_md: Svar den kaféansatte med et kort svar på 3–4 ord.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Server
+      text_md: «Skal du ha noe mer?»
+    - speaker: Context
+      text_md: You are finished with your order.
+  response_language: 'no'
+  judge_prompt: Vurder kriteriet closing-chunk. Godta et kort, høflig svar som tydelig sier at kunden
+    ikke vil ha mer.
+  criteria:
+  - id: closing-chunk
+    instruction: Sier høflig at kunden ikke vil ha mer.
+  derived_from:
+  - section_id: closing-the-transaction

@@ -1,0 +1,423 @@
+- handle: notice_question_links
+  op: choose
+  objective: obj-preposition-stranding-01
+  bloom: understand
+  prompt_md: Choose the analysis that matches the two questions.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: «Hvem snakker med Jonas?»
+    - speaker: Jonas
+      text_md: «Hvem snakker Maja med?»
+  options:
+  - id: complement-then-subject
+    text: In the first question, hvem is linked to med; in the second, hvem is the subject.
+    correct: false
+    why: This reverses the two grammatical roles.
+  - id: subject-both
+    text: Hvem is the subject in both questions.
+    correct: false
+    why: Maja is the subject of the second question, and hvem represents the person linked to med.
+  - id: subject-then-complement
+    text: In the first question, hvem is the subject; in the second, hvem is linked to med.
+    correct: true
+    why: The first question asks who is talking, while the second asks which person completes the expression
+      snakke med noen.
+  derived_from:
+  - section_id: subject-contrast
+- handle: complete_stranded_prepositions_in_questions
+  op: recall_fill
+  objective: obj-preposition-stranding-01
+  bloom: apply
+  prompt_md: Complete each question with the missing preposition.
+  explanation_md: The question word or phrase supplies the missing person, thing or place, while the expression
+    keeps its preposition later in the question.
+  derived_from:
+  - section_id: asking-natural-questions
+  audio_target: 'Maja spør: Hvem snakker du med? Jonas spør: Hva snakker dere om? Maja spør: Hvem venter
+    hun på? Jonas spør: Hvilket hus bor de i?'
+  segments:
+  - text_md: 'Maja spør: «Hvem snakker du '
+  - blank_id: question-med
+    options:
+    - med
+    - om
+    answer_index: 0
+  - text_md: '?» Jonas spør: «Hva snakker dere '
+  - blank_id: question-om
+    options:
+    - med
+    - om
+    answer_index: 1
+  - text_md: '?» Maja spør: «Hvem venter hun '
+  - blank_id: question-pa
+    options:
+    - på
+    - i
+    answer_index: 0
+  - text_md: '?» Jonas spør: «Hvilket hus bor de '
+  - blank_id: question-i
+    options:
+    - i
+    - på
+    answer_index: 0
+  - text_md: ?»
+- handle: form_everyday_questions
+  op: build
+  objective: obj-preposition-stranding-01
+  bloom: apply
+  prompt_md: Gjestene skal være i et rom, men Maja vet ikke hvilket. Build Maja's everyday question.
+  derived_from:
+  - section_id: formal-everyday-placement
+  tokens:
+  - token_id: room-hvilket
+    text: Hvilket
+  - token_id: room-rom
+    text: rom
+  - token_id: room-skal
+    text: skal
+  - token_id: room-gjestene
+    text: gjestene
+  - token_id: room-vaere
+    text: være
+  - token_id: room-i
+    text: i?
+  answer_order:
+  - room-hvilket
+  - room-rom
+  - room-skal
+  - room-gjestene
+  - room-vaere
+  - room-i
+- handle: trace_relative_clause_connections
+  op: match_pairs
+  objective: obj-preposition-stranding-01
+  bloom: understand
+  prompt_md: Match each described noun with its preposition.
+  explanation_md: Som points back to the described noun, while the expression keeps its associated preposition
+    inside the relative clause.
+  derived_from:
+  - section_id: relative-clauses
+  left:
+  - left_id: noun-naboen
+    text: Naboen som jeg snakket ___
+  - left_id: noun-hoyttaleren
+    text: Høyttaleren som vi hørte ___
+  - left_id: noun-rommet
+    text: Rommet som gjestene skal være ___
+  - left_id: noun-sangen
+    text: Sangen som folk liker å danse ___
+  right:
+  - right_id: prep-med
+    text: med — i selskap med noen
+  - right_id: prep-pa
+    text: på — lytte til noe
+  - right_id: prep-i
+    text: i — befinne seg inne i noe
+  - right_id: prep-til
+    text: til — bevege seg etter musikk
+  pairs:
+  - left_id: noun-naboen
+    right_id: prep-med
+  - left_id: noun-hoyttaleren
+    right_id: prep-pa
+  - left_id: noun-rommet
+    right_id: prep-i
+  - left_id: noun-sangen
+    right_id: prep-til
+- handle: complete_relative_clauses_with_prepositions
+  op: recall_fill
+  objective: obj-preposition-stranding-01
+  bloom: apply
+  prompt_md: Complete each relative clause with the missing preposition.
+  explanation_md: The described noun comes before the relative clause, and the expression keeps its associated
+    preposition later in the clause.
+  derived_from:
+  - section_id: relative-clauses
+  audio_target: 'Maja forklarer: Dette er naboen som jeg snakket med. Dette er høyttaleren som vi hørte
+    på. Dette er rommet som gjestene skal være i. Dette er sangen som folk liker å danse til.'
+  segments:
+  - text_md: 'Maja forklarer: «Dette er naboen som jeg snakket '
+  - blank_id: relative-med
+    options:
+    - med
+    - om
+    answer_index: 0
+  - text_md: '. Dette er høyttaleren som vi hørte '
+  - blank_id: relative-pa
+    options:
+    - til
+    - på
+    answer_index: 1
+  - text_md: '. Dette er rommet som gjestene skal være '
+  - blank_id: relative-i
+    options:
+    - i
+    - med
+    answer_index: 0
+  - text_md: '. Dette er sangen som folk liker å danse '
+  - blank_id: relative-til
+    options:
+    - om
+    - til
+    answer_index: 1
+  - text_md: .»
+- handle: combine_statements_as_relative_clauses
+  op: build
+  objective: obj-preposition-stranding-01
+  bloom: apply
+  prompt_md: «Jeg snakket med naboen. Naboen har en høyttaler.» Combine the statements with som.
+  derived_from:
+  - section_id: relative-clauses
+  tokens:
+  - token_id: combine-naboen
+    text: Naboen
+  - token_id: combine-som
+    text: som
+  - token_id: combine-jeg
+    text: jeg
+  - token_id: combine-snakket
+    text: snakket
+  - token_id: combine-med
+    text: med,
+  - token_id: combine-har
+    text: har
+  - token_id: combine-en
+    text: en
+  - token_id: combine-hoyttaler
+    text: høyttaler.
+  answer_order:
+  - combine-naboen
+  - combine-som
+  - combine-jeg
+  - combine-snakket
+  - combine-med
+  - combine-har
+  - combine-en
+  - combine-hoyttaler
+- handle: repair_preposition_stranding_errors
+  op: find_fix
+  objective: obj-preposition-stranding-01
+  bloom: analyze
+  prompt_md: Select the unnecessary word.
+  derived_from:
+  - section_id: common-mistakes
+  tokens:
+  - token_id: repair-hvem
+    text: Hvem
+  - token_id: repair-snakket
+    text: snakket
+  - token_id: repair-du
+    text: du
+  - token_id: repair-med
+    text: med
+  - token_id: repair-ham
+    text: ham?
+  error_token_id: repair-ham
+  feedback: Remove ham. Hvem already supplies the person linked to med, so the natural question is «Hvem
+    snakket du med?»
+- handle: transfer_questions_to_work_trip
+  op: build
+  objective: obj-preposition-stranding-01
+  bloom: apply
+  prompt_md: «Vi venter på et tog, men vi vet ikke hvilket.» Build the travelers' question.
+  derived_from:
+  - section_id: transfer-new-situation
+  tokens:
+  - token_id: trip-hvilket
+    text: Hvilket
+  - token_id: trip-tog
+    text: tog
+  - token_id: trip-venter
+    text: venter
+  - token_id: trip-vi
+    text: vi
+  - token_id: trip-pa
+    text: på?
+  answer_order:
+  - trip-hvilket
+  - trip-tog
+  - trip-venter
+  - trip-vi
+  - trip-pa
+- handle: transfer_relative_clauses_to_work_trip
+  op: build
+  objective: obj-preposition-stranding-01
+  bloom: apply
+  prompt_md: «Vi snakket om møtet. Dette er møtet.» Combine the statements with som.
+  derived_from:
+  - section_id: transfer-new-situation
+  tokens:
+  - token_id: meeting-dette
+    text: Dette
+  - token_id: meeting-er
+    text: er
+  - token_id: meeting-motet
+    text: møtet
+  - token_id: meeting-som
+    text: som
+  - token_id: meeting-vi
+    text: vi
+  - token_id: meeting-snakket
+    text: snakket
+  - token_id: meeting-om
+    text: om.
+  answer_order:
+  - meeting-dette
+  - meeting-er
+  - meeting-motet
+  - meeting-som
+  - meeting-vi
+  - meeting-snakket
+  - meeting-om
+- handle: retrieve_end_position_pattern
+  op: write
+  objective: obj-preposition-stranding-01
+  bloom: apply
+  prompt_md: 'Jonas writes: «Vi trenger en høyttaler. Lea har en. Vi hørte på den i går.» Write a 20–35-word
+    message to Maja that asks which speaker they can borrow and that identifies the speaker they heard
+    by joining the information with the relative word som.'
+  derived_from:
+  - section_id: short-review
+  response_language: 'no'
+  judge_prompt: 'Evaluate only criteria question, relative-clause and word-bound. Report preposition-placement-observation
+    diagnostically and never use it to fail the response. Anchor that must pass: «Hvilken høyttaler kan
+    vi låne? Er det høyttaleren som vi hørte på i går? Lea kan kanskje hjelpe oss med å finne den.» Anchor
+    that must fail question: «Vi kan låne høyttaleren. Det er høyttaleren som vi hørte på i går. Lea kan
+    kanskje hjelpe oss med å finne den.» Anchor that must pass while flagging preposition-placement-observation:
+    «Hvilken høyttaler kan vi låne? Er det høyttaleren som vi hørte på i går? Kanskje Lea kan hjelpe oss
+    med å finne den.»'
+  criteria:
+  - id: question
+    instruction: The message asks which speaker they can borrow.
+  - id: relative-clause
+    instruction: The message identifies the speaker they heard by using a relative clause introduced with
+      som.
+  - id: word-bound
+    instruction: The message contains 20–35 words.
+  - id: preposition-placement-observation
+    instruction: Diagnose whether the question and relative clause retain their associated prepositions
+      in natural everyday Bokmål positions; this observation never fails the response.
+- handle: review_notice_question_links
+  op: choose
+  objective: obj-preposition-stranding-01
+  bloom: understand
+  prompt_md: Velg analysen som passer til de to spørsmålene.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Jonas
+      text_md: «Hvem skriver til Maja?»
+    - speaker: Maja
+      text_md: «Hvem skriver Maja til?»
+  options:
+  - id: review-complement-then-subject
+    text: I det første spørsmålet er hvem knyttet til til, mens hvem er subjekt i det andre.
+    correct: false
+    why: Dette bytter om rollene i de to spørsmålene.
+  - id: review-subject-then-complement
+    text: I det første spørsmålet er hvem subjekt, mens hvem i det andre er knyttet til til.
+    correct: true
+    why: Det første spørsmålet spør hvem som skriver, og det andre spør hvem Maja skriver til.
+  - id: review-subject-both
+    text: Hvem er subjekt i begge spørsmålene.
+    correct: false
+    why: Maja er subjekt i det andre spørsmålet, mens hvem er knyttet til til.
+  derived_from:
+  - section_id: subject-contrast
+- handle: review_complete_stranded_prepositions_in_questions
+  op: recall_fill
+  objective: obj-preposition-stranding-01
+  bloom: apply
+  prompt_md: Complete each question with the missing preposition.
+  explanation_md: The question word or phrase supplies the missing person, thing or place, while the expression
+    keeps its preposition later in the question.
+  derived_from:
+  - section_id: asking-natural-questions
+  audio_target: 'Jonas spør: Hvem skal du reise med? Maja spør: Hva drømmer dere om? Jonas spør: Hvem
+    ser hun på? Maja spør: Hvilket rom sitter de i?'
+  segments:
+  - text_md: 'Jonas spør: «Hvem skal du reise '
+  - blank_id: review-question-med
+    options:
+    - med
+    - om
+    answer_index: 0
+  - text_md: '?» Maja spør: «Hva drømmer dere '
+  - blank_id: review-question-om
+    options:
+    - med
+    - om
+    answer_index: 1
+  - text_md: '?» Jonas spør: «Hvem ser hun '
+  - blank_id: review-question-pa
+    options:
+    - i
+    - på
+    answer_index: 1
+  - text_md: '?» Maja spør: «Hvilket rom sitter de '
+  - blank_id: review-question-i
+    options:
+    - i
+    - på
+    answer_index: 0
+  - text_md: ?»
+- handle: review_complete_relative_clauses_with_prepositions
+  op: recall_fill
+  objective: obj-preposition-stranding-01
+  bloom: apply
+  prompt_md: Complete each relative clause with the missing preposition.
+  explanation_md: The described noun comes before the relative clause, and the expression keeps its associated
+    preposition later in the clause.
+  derived_from:
+  - section_id: relative-clauses
+  audio_target: 'Maja forklarer: Dette er kollegaen som jeg jobbet sammen med. Dette er filmen som vi
+    snakket om. Dette er stolen som hun sitter på. Dette er byen som de bor i.'
+  segments:
+  - text_md: 'Maja forklarer: «Dette er kollegaen som jeg jobbet sammen '
+  - blank_id: review-relative-med
+    options:
+    - med
+    - på
+    answer_index: 0
+  - text_md: '. Dette er filmen som vi snakket '
+  - blank_id: review-relative-om
+    options:
+    - med
+    - om
+    answer_index: 1
+  - text_md: '. Dette er stolen som hun sitter '
+  - blank_id: review-relative-pa
+    options:
+    - i
+    - på
+    answer_index: 1
+  - text_md: '. Dette er byen som de bor '
+  - blank_id: review-relative-i
+    options:
+    - i
+    - til
+    answer_index: 0
+  - text_md: .»
+- handle: review_avoid_repeated_pronoun
+  op: choose
+  objective: obj-preposition-stranding-01
+  bloom: analyze
+  prompt_md: Choose the natural everyday question.
+  derived_from:
+  - section_id: common-mistakes
+  stem_md: Maja snakket med en gjest, men Jonas vet ikke hvilken gjest.
+  options:
+  - id: missing-preposition
+    text: Hvem snakket Maja?
+    correct: false
+    why: This drops med from the expression snakke med noen.
+  - id: no-repeated-pronoun
+    text: Hvem snakket Maja med?
+    correct: true
+    why: Hvem supplies the person linked to med, so no additional pronoun is needed.
+  - id: repeated-pronoun
+    text: Hvem snakket Maja med henne?
+    correct: false
+    why: Henne repeats the person already represented by hvem.

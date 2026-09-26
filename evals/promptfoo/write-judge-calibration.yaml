@@ -1,0 +1,30 @@
+description: >-
+  Write-judge calibration seed for the write-exercise archetypes introduced by
+  the P1 exemplar lessons. Each case embeds one learner response with its
+  authored task, criteria, stimulus (where the exercise has one), and the
+  verbatim judge_prompt, so the reviewer job simulates the same contract the
+  production judge applies. All cases of one archetype share one byte-identical
+  rubric that never pre-states a verdict. Positives expect PASS; matching
+  negatives expect FAIL; the repair archetype's pass-with-observation case
+  verifies that observation-only criteria never lower the verdict (R9/R14
+  severity convention). Structural invariants — verbatim task, judge, criteria,
+  and stimulus fidelity against the lesson source, uniform rubrics, word bounds,
+  and holdout separation from same-archetype dev responses — are enforced by
+  tests/evals/test_promptfoo_case_files.py. Every case also carries stable
+  case_id, archetype, and error_class metadata from a small shared vocabulary;
+  scripts/export_write_judge_calibration.py projects the bank into a
+  deterministic, schema-versioned JSON with dev-only anchors and held-out
+  evaluation cases, and fails closed while labels remain seed-pending. These
+  labels are seed labels pending review by a qualified Norwegian
+  language/pedagogy reviewer; this is not a validated golden set. Accept/reject
+  thresholds and the pinned app-side judge live in the consuming learner
+  application, which must rerun calibration after any judge change.
+
+prompts:
+  - "{{candidate}}"
+
+providers:
+  - id: echo
+    label: fixed-candidate
+
+tests: file://cases/write_judge_calibration.yaml

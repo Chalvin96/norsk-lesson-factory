@@ -5,6 +5,7 @@ import json
 from lesson_builder.domain.lesson.validation.review_payloads import build_expected_answers
 from lesson_builder.domain.lesson.validation.review_payloads import extract_answer_questions
 from lesson_builder.domain.lesson.validation.review_payloads import extract_attempt_questions
+from lesson_builder.domain.lesson.validation.review_payloads import extract_open_rubric_questions
 from lesson_builder.domain.lesson.validation.review_payloads import project_answer_review
 from lesson_builder.domain.lesson.validation.review_payloads import restore_answer_review_ids
 
@@ -13,6 +14,7 @@ def test_extract_answer_questions_given_mixed_exercises_expect_visible_question_
     questions = extract_answer_questions(_lesson())
     assert [question["id"] for question in questions] == ["ex_choose", "ex_judge", "ex_recall", "ex_speak"]
     assert questions[0]["options"][1]["option_id"].startswith("review-option-")
+    assert questions[0]["stimulus"][0]["turns"][0] == {"speaker": "Lea", "text": "Kanskje."}
     assert questions[2]["sentence"] == "Han ___"
     assert questions[3]["target"] == "Hvis timen ikke passer, kan jeg få en annen time."
 
@@ -83,6 +85,12 @@ def test_extract_attempt_questions_given_hidden_context_expect_standalone_surfac
             "operation": "write",
             "derived_from": [{"section_id": "sec-hidden"}],
             "prompt": [{"kind": "text", "value": "Write a reply."}],
+            "stimulus": [
+                {
+                    "kind": "dialogue",
+                    "turns": [{"speaker": "Lea", "text": [{"kind": "text", "value": "Kanskje."}]}],
+                }
+            ],
             "payload": {
                 "response_language": "no",
                 "criteria": [{"id": "greeting", "instruction": "Use a greeting."}],
@@ -97,6 +105,10 @@ def test_extract_attempt_questions_given_hidden_context_expect_standalone_surfac
     assert "judge_prompt" not in rendered
     assert "target" not in rendered
     assert "hidden rubric" not in rendered
+    assert "Kanskje." in rendered
+
+    rubric = extract_open_rubric_questions(lesson)[0]
+    assert rubric["stimulus"][0]["turns"][0] == {"speaker": "Lea", "text": "Kanskje."}
 
 
 def test_extract_answer_questions_given_referenced_section_expect_keyless_context_slice():
@@ -166,6 +178,12 @@ def _lesson() -> dict:
                 "id": "ex_choose",
                 "operation": "choose",
                 "prompt": [{"kind": "text", "value": "Pick one."}],
+                "stimulus": [
+                    {
+                        "kind": "dialogue",
+                        "turns": [{"speaker": "Lea", "text": [{"kind": "text", "value": "Kanskje."}]}],
+                    }
+                ],
                 "payload": {
                     "stem": [{"kind": "text", "value": "Choose."}],
                     "options": [{"option_id": "a", "text": "A"}, {"option_id": "b", "text": "B"}],

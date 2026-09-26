@@ -1,0 +1,180 @@
+- handle: synes_evaluation_checkpoint
+  op: write
+  objective: obj-stance-verbs-synes-mene-tro-01
+  bloom: apply
+  prompt_md: 'Use synes for a personal evaluation or impression. Use tro when the speaker is uncertain whether a fact is true. Read these five reactions: 1. I think the café is cosy. 2. The meal was disappointing. 3. We thought the film was a little long. 4. I think the course is useful. 5. I think the concert was sold out. Answer in Norwegian. First label each item as evaluation or belief/fact. Then restate every evaluation in natural Bokmål with synes.'
+  stimulus: []
+  derived_from:
+  - section_id: synes-giving-an-evaluation
+  response_language: 'no'
+  min_words: 20
+  max_words: 60
+  judge_prompt: Check both the labels and the Norwegian restatements. Accept natural Bokmål variants that preserve each topic and evaluative meaning. Items 1–4 must be identified as evaluations and restated with synes; item 5 must be identified as a factual belief and not rewritten as an evaluation with synes.
+  criteria:
+  - id: evaluation-selection
+    instruction: Correctly identifies the personal evaluations and excludes the factual belief.
+  - id: synes-restatement
+    instruction: Restates every identified evaluation in natural Norwegian with synes and preserves its evaluative meaning.
+- handle: mene_position_checkpoint
+  op: write
+  objective: obj-stance-verbs-synes-mene-tro-01
+  bloom: apply
+  prompt_md: Contrast Jeg synes den nye planen er komplisert. as a personal assessment with Jeg mener at vi bør endre den nye planen. as a position about what should happen. At Mina and Jonas's meeting, they discuss Sunday opening. Write two or three connected Norwegian sentences. Show Mina's personal reaction that Sunday opening is a good idea, and state Jonas's position that the café should stay open on Sundays. Use synes for the reaction and mener for the position. Make clear which sentence is a personal reaction and which is an argument about action.
+  stimulus: []
+  derived_from:
+  - section_id: mene-stating-a-viewpoint-or-position
+  response_language: 'no'
+  min_words: 12
+  max_words: 45
+  judge_prompt: Accept natural Bokmål variants with the same roles and meanings. The response must separate Mina's personal evaluation from Jonas's position about what the café should do, use synes for the evaluation, and use mener for the action-oriented position.
+  criteria:
+  - id: reaction-position-distinction
+    instruction: Clearly distinguishes liking or evaluating the idea from arguing what the café should do.
+  - id: mene-position
+    instruction: Expresses the café action or recommendation with mener and preserves the Sunday-opening context.
+- handle: tro_belief_checkpoint
+  op: write
+  objective: obj-stance-verbs-synes-mene-tro-01
+  bloom: apply
+  prompt_md: Write one Norwegian sentence for each uncertain situation below. Use a form of tro for every sentence to express a belief or prediction, not a personal rating or recommendation. 1. The neighbours' kitchen light is off and you hear no sounds; they may be away. 2. A parcel's tracking has not changed, but you expect it to arrive tomorrow. 3. You smell smoke near the toaster and suspect that the bread is burning. 4. A football team has trained well, and you predict that it will win on Saturday.
+  stimulus: []
+  derived_from:
+  - section_id: tro-expressing-belief-or-uncertainty
+  response_language: 'no'
+  min_words: 20
+  max_words: 60
+  judge_prompt: Accept natural Bokmål variants with appropriate subjects, tense, and word order. Each sentence must use tror or another natural form of tro, preserve its situation, and express an uncertain fact or prediction rather than a personal evaluation or recommendation.
+  criteria:
+  - id: tro-beliefs
+    instruction: Uses tro in all four sentences and preserves each incomplete-information situation.
+  - id: belief-not-rating
+    instruction: Expresses beliefs or predictions rather than synes evaluations or mene recommendations.
+- handle: three_way_stance_contrast
+  op: write
+  objective: obj-stance-verbs-synes-mene-tro-01
+  bloom: apply
+  prompt_md: 'Keep one topic stable while changing the communicative purpose: personal impression, position about what should happen, and prediction about a future situation. Use one planned journey as your stable situation. Write three connected Norwegian sentences about it: - a personal evaluation with synes; - a position or recommendation with mener; - an uncertain belief or prediction with tror. Make the three purposes clearly different. Do not use three interchangeable translations of English think.'
+  stimulus: []
+  derived_from:
+  - section_id: one-situation-three-different-perspectives
+  response_language: 'no'
+  min_words: 15
+  max_words: 45
+  judge_prompt: Accept natural Bokmål wording about the same journey. Require one genuine evaluation with synes, one position or recommendation with mener, and one uncertain belief or prediction with tror. The three sentences must show distinct communicative purposes.
+  criteria:
+  - id: three-stance-forms
+    instruction: Produces one Norwegian statement with synes, one with mener, and one with tror.
+  - id: three-purpose-contrast
+    instruction: Keeps one journey as the topic while clearly distinguishing evaluation, position, and belief or prediction.
+- handle: question_response_stance_match
+  op: write
+  objective: obj-stance-verbs-synes-mene-tro-01
+  bloom: apply
+  prompt_md: 'Write one complete Norwegian reply for each situation. Choose a form of synes, mene, or tro that fits what you want to communicate; use each verb once. 1. Café: Give your personal reaction to the new menu. 2. Workplace meeting: Say what should happen with the new work schedule. 3. Community event: Say whether you expect many people to attend.'
+  stimulus: []
+  derived_from:
+  - section_id: asking-what-someone-thinks
+  response_language: 'no'
+  min_words: 20
+  max_words: 55
+  judge_prompt: Accept natural Norwegian replies with different but suitable content. Require each of synes, mene, and tro exactly once in an appropriate inflected form. The café reply must use synes for a personal evaluation; the workplace reply must use mener for a position or recommendation about the schedule; the event reply must use tror for a belief or prediction about attendance. Replies that express the purposes but omit or mismatch the target verbs do not satisfy the task.
+  criteria:
+  - id: evaluation-response
+    instruction: Answers the café situation with a personal evaluation using an appropriate form of synes.
+  - id: position-response
+    instruction: Answers the workplace situation with a position or recommendation using an appropriate form of mene.
+  - id: belief-response
+    instruction: Answers the community-event situation with a belief or prediction using an appropriate form of tro.
+- handle: stance_verb_mistake_correction
+  op: find_fix
+  objective: obj-stance-verbs-synes-mene-tro-01
+  bloom: analyze
+  prompt_md: In this two-sentence note, the speaker has watched the play and is evaluating it, but is uncertain about the time of tomorrow's performance. Identify the stance verb that does not fit its sentence.
+  stimulus: []
+  derived_from:
+  - section_id: common-mistakes
+  tokens:
+  - token_id: tok-1
+    text: Jeg
+  - token_id: tok-2
+    text: synes
+  - token_id: tok-3
+    text: stykket
+  - token_id: tok-4
+    text: var
+  - token_id: tok-5
+    text: spennende.
+  - token_id: tok-6
+    text: Jeg
+  - token_id: tok-7
+    text: synes
+  - token_id: tok-8
+    text: forestillingen
+  - token_id: tok-9
+    text: begynner
+  - token_id: tok-10
+    text: klokka
+  - token_id: tok-11
+    text: sju
+  - token_id: tok-12
+    text: i
+  - token_id: tok-13
+    text: morgen.
+  error_token_id: tok-7
+  feedback: 'Replace the second synes with tror: the first sentence evaluates the play, while the second
+    expresses an uncertain fact about the performance time. A repaired note is «Jeg synes stykket var
+    spennende. Jeg tror forestillingen begynner klokka sju i morgen.»'
+- handle: cafe_decision_context_completion
+  op: write
+  objective: obj-stance-verbs-synes-mene-tro-01
+  bloom: apply
+  prompt_md: 'Use this café context: Jonas has checked the figures and believes they may afford to open one Sunday a month. The staff want to close somewhat earlier on Sundays. Mina evaluates a shorter opening day positively. They discuss whether customers will be satisfied. Retell the decision in four or five connected Norwegian sentences. Include: - Jonas''s belief about affording one Sunday opening each month; - the staff''s position that the café should close earlier on Sundays; - Mina''s evaluation that a shorter opening day is better; - the prediction about whether customers will be satisfied. Use all three verbs according to their purposes: tro for belief or prediction, mene for the staff''s position, and synes for Mina''s evaluation. Keep Mina, Jonas, the staff, and the café decision logically consistent. Paraphrase rather than repeating the prompt verbatim.'
+  stimulus: []
+  derived_from:
+  - section_id: back-at-the-cafe
+  response_language: 'no'
+  min_words: 30
+  max_words: 70
+  judge_prompt: Check all four required facts and their roles. Accept natural Bokmål paraphrases and pronoun choices, but require Jonas's affordability belief, the staff's earlier-closing position, Mina's evaluation of the shorter day, and the customer-satisfaction prediction. Require synes for the evaluation, mener for the position, and tro for beliefs or predictions, with a coherent café update.
+  criteria:
+  - id: jonas-belief
+    instruction: Includes Jonas's belief that the café can afford one Sunday opening a month.
+  - id: staff-position
+    instruction: States the staff's position that the café should close earlier on Sundays with mener.
+  - id: mina-evaluation
+    instruction: Presents Mina's evaluation that a shorter opening day is better with synes.
+  - id: customer-prediction
+    instruction: Includes a belief or prediction about customers being satisfied with tro.
+  - id: cafe-coherence
+    instruction: Keeps the speakers, café decision, and relationships among the statements logically consistent.
+- handle: stance_verbs_retrieval_review
+  op: write
+  objective: obj-stance-verbs-synes-mene-tro-01
+  bloom: apply
+  prompt_md: 'Complete both parts in one response, in Norwegian. Part A: explain the difference among the
+    three ways of presenting a thought. Part B: write a connected update from Anja to a colleague about
+    the local library. Anja has visited a new photo exhibition of places from her childhood neighborhood,
+    which moved her. Local schools have asked for more time to visit, so the coordinator argues that the
+    exhibition should stay open one extra week. Registration numbers are already high, suggesting many
+    visitors may come on Saturday. Use each of synes, mener, and tror once in a natural form, and give a
+    brief reason for each thought based on these details.'
+  stimulus: []
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  min_words: 35
+  max_words: 75
+  judge_prompt: 'Check both parts. Part A must explain in Norwegian the difference among a personal evaluation,
+    a stated position, and an uncertain belief or prediction. Part B must be a connected update about the
+    library that preserves Anja''s reaction to the exhibition, the coordinator''s position about its closing
+    date, and the visitor prediction. Accept natural variants and require the three stance verbs to fit their
+    respective meanings. Part B must briefly support each thought with the relevant detail: the childhood
+    neighborhood photos, the schools'' requests, and the high registration numbers. Reasons should explain
+    the characters'' thoughts, not label the stance-verb categories. Check the 35–75-word limit.'
+  criteria:
+  - id: distinction-explanation
+    instruction: Explains in Norwegian the difference among evaluating something, taking a position, and expressing an uncertain belief or prediction.
+  - id: library-review-update
+    instruction: Writes a connected Norwegian update preserving Anja's evaluation of the exhibition, the coordinator's position about keeping it open, and the prediction about Saturday's visitors; uses synes, mener, and tror once each in meanings that fit those contexts, briefly grounding each thought in the childhood neighborhood photos, the schools' requests, and high registration numbers.
+  - id: word-bound
+    instruction: Contains 35–75 Norwegian words.

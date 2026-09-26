@@ -1,0 +1,408 @@
+- handle: interpret_speakers_perspective
+  op: choose
+  objective: obj-uttrykke-onske-med-vil-og-ha-lyst-til-01
+  bloom: understand
+  prompt_md: Velg tolkningen som passer til de to replikkene.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Sara
+      text_md: «Jeg vil lage middag etter konserten.»
+    - speaker: Mia
+      text_md: «Så koselig! Skal du handle først?»
+    - speaker: Sara
+      text_md: «Nei, jeg kjøpte alt i går.»
+    - speaker: Mia
+      text_md: «Jeg har lyst til å bli med på konserten, men jeg vet ikke om jeg får tid.»
+  derived_from:
+  - section_id: checkpoint-interpret-speakers-perspective
+  options:
+  - id: inclination-then-direct
+    text: "Sara virker bare fristet av middag, mens Mia allerede har bestemt seg for konserten."
+    correct: false
+    why: Denne tolkningen bytter om hva vil og har lyst til å uttrykker i de to replikkene.
+  - id: both-direct
+    text: "Både Sara og Mia forteller om planer de allerede har bestemt seg for."
+    correct: false
+    why: Har lyst til å uttrykker noe som frister, ikke en avgjørelse som er tatt.
+  - id: both-inclination
+    text: "Både Sara og Mia beskriver bare noe som frister, uten noen bestemt plan."
+    correct: false
+    why: Vil presenterer et direkte ønske eller en plan, slik den første replikken gjør.
+  - id: direct-then-inclination
+    text: "Sara uttrykker en bestemt middagsplan; Mia nevner en konsert som frister, men er usikker."
+    correct: true
+    why: Vil står med infinitiv og uttrykker et direkte ønske eller en plan, mens har lyst til å uttrykker at aktiviteten frister uten å være bestemt.
+  explanation_md: Vil presenterer et direkte ønske eller en intensjon. Har lyst til å presenterer en aktivitet som frister.
+- handle: identify_clear_decisions
+  op: recall_fill
+  objective: obj-uttrykke-onske-med-vil-og-ha-lyst-til-01
+  bloom: apply
+  prompt_md: Velg uttrykket som viser et bestemt valg, ikke bare et ønske.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: '**Reiseplan** Emma har kjøpt bussbillett. Avgang: 10.05 Valget hennes er bestemt.'
+  explanation_md: Vil uttrykker Emmas bestemte valg. Etter vil står infinitiven direkte, uten å.
+  derived_from:
+  - section_id: checkpoint-identify-clear-decisions
+  audio_target: Emma vil ta bussen.
+  segments:
+  - text_md: 'Emma '
+  - blank_id: clear-decision
+    options:
+    - vil
+    - har lyst til å
+    answer_index: 0
+  - text_md: ' ta bussen.'
+- handle: choose_correct_lyst_frame
+  op: recall_fill
+  objective: obj-uttrykke-onske-med-vil-og-ha-lyst-til-01
+  bloom: apply
+  prompt_md: Fyll inn til å eller på.
+  explanation_md: Bruk lyst til å foran en aktivitet og lyst på foran en ting.
+  derived_from:
+  - section_id: checkpoint-choose-correct-lyst-frame
+  audio_target: Museet virker interessant. Emma har lyst til å besøke museet. Kaffe frister Jonas. Han har lyst på en kaffe.
+  segments:
+  - text_md: 'Museet virker interessant. Emma har lyst '
+  - blank_id: visit-activity
+    options:
+    - på
+    - til å
+    answer_index: 1
+  - text_md: ' besøke museet. Kaffe frister Jonas. Han har lyst '
+  - blank_id: coffee-thing
+    options:
+    - på
+    - til å
+    answer_index: 0
+  - text_md: ' en kaffe.'
+- handle: choose_object_perspective
+  op: choose
+  objective: obj-uttrykke-onske-med-vil-og-ha-lyst-til-01
+  bloom: analyze
+  prompt_md: Hva uttrykker Mina og Jonas med de to ulike formuleringene?
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Mina
+      text_md: «Jeg vil ha den blå jakka. Den passer best.»
+    - speaker: Jonas
+      text_md: «Jeg har lyst på noe søtt, men jeg har ikke bestemt meg ennå.»
+  derived_from:
+  - section_id: things-that-appeal-to-you-ha-lyst-pa
+  options:
+  - id: both-appetite
+    text: Begge har allerede bestemt seg for en bestemt ting.
+    correct: false
+    why: Jonas sier at han ennå ikke har bestemt seg.
+  - id: direct-then-appetite
+    text: Mina uttrykker et bestemt valg. Jonas forteller hva som frister, uten å ha valgt ennå.
+    correct: true
+    why: Mina velger den blå jakka; Jonas sier at han har lyst på noe søtt, men ikke har bestemt seg.
+  - id: appetite-then-direct
+    text: Mina nevner bare noe som frister. Jonas uttrykker et bestemt valg.
+    correct: false
+    why: Dette bytter om det talerne faktisk sier om valgene sine.
+  - id: both-direct
+    text: Ingen av dem uttrykker noe ønske eller valg.
+    correct: false
+    why: Begge uttrykker ønsker; Mina har også valgt en bestemt jakke.
+  explanation_md: Vil ha kan uttrykke et direkte valg. Har lyst på uttrykker at noe frister; Jonas sier selv at han ennå ikke har valgt.
+- handle: complete_vil_action
+  op: write
+  objective: obj-uttrykke-onske-med-vil-og-ha-lyst-til-01
+  bloom: apply
+  prompt_md: '**Ved holdeplassen** Bussen går om ett minutt. Nora har kjøpt billett. «Jeg vil ___.» Fyll hullet med 1–4 norske ord.'
+  explanation_md: En passende fullføring har en infinitiv direkte etter vil, for eksempel «dra nå».
+  derived_from:
+  - section_id: direct-want-or-intention-vil
+  response_language: 'no'
+  min_words: 1
+  max_words: 4
+  judge_prompt: Vurder bare kriteriene vil-completion og word-bound. Begge er bindende.
+  criteria:
+  - id: vil-completion
+    instruction: Fullfører setningen naturlig med en infinitiv direkte etter vil; godta blant annet «dra nå», «gå om bord» og tilsvarende varianter.
+  - id: word-bound
+    instruction: Svaret inneholder 1–4 ord.
+- handle: review_complete_vil_action
+  op: write
+  objective: obj-uttrykke-onske-med-vil-og-ha-lyst-til-01
+  bloom: apply
+  prompt_md: 'Fyll hullet i Noras svar med 1–4 norske ord: «Jeg vil ___.»'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Elias
+      text_md: «Hva gjør du når du kommer til Bergen?»
+    - speaker: Nora
+      text_md: «Jeg vil ___.»
+  explanation_md: En passende fullføring har en infinitiv direkte etter vil, for eksempel «besøke søsteren min».
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  min_words: 1
+  max_words: 4
+  judge_prompt: Vurder bare kriteriene vil-completion og word-bound. Begge er bindende.
+  criteria:
+  - id: vil-completion
+    instruction: Fullfører Noras svar naturlig med en infinitiv direkte etter vil og passer til spørsmålet om hva hun skal gjøre i Bergen.
+  - id: word-bound
+    instruction: Svaret inneholder 1–4 ord.
+- handle: complete_lyst_activity
+  op: write
+  objective: obj-uttrykke-onske-med-vil-og-ha-lyst-til-01
+  bloom: apply
+  prompt_md: 'Fyll hullet i svaret med 2–4 norske ord slik at det uttrykker en aktivitet som frister: «Jeg har lyst ___.»'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Venn
+      text_md: «Du har fri resten av dagen. Hva frister?»
+    - speaker: Elev
+      text_md: «Jeg har lyst ___.»
+  explanation_md: En aktivitet etter lyst trenger til å og en infinitiv, for eksempel «til å slappe av».
+  derived_from:
+  - section_id: what-appeals-to-you-ha-lyst-til-a
+  response_language: 'no'
+  min_words: 2
+  max_words: 4
+  judge_prompt: Vurder bare kriteriene activity-completion og word-bound. Begge er bindende.
+  criteria:
+  - id: activity-completion
+    instruction: Fullfører setningen naturlig med til å og en infinitiv som uttrykker en aktivitet.
+  - id: word-bound
+    instruction: Svaret inneholder 2–4 ord.
+- handle: review_complete_lyst_activity
+  op: write
+  objective: obj-uttrykke-onske-med-vil-og-ha-lyst-til-01
+  bloom: apply
+  prompt_md: 'Fullfør Leas svar med en aktivitet uttrykt som til å + infinitiv, ikke som en tur eller annen ting: «Jeg har lyst ___.» Skriv 1–4 norske ord.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Omar
+      text_md: «Eksamen er ferdig, sola skinner, og sykkelen din står klar. Hva skal du gjøre etter eksamen?»
+    - speaker: Lea
+      text_md: «Jeg har lyst ___.»
+  explanation_md: En aktivitet etter lyst trenger til å, for eksempel «til å sykle».
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  min_words: 1
+  max_words: 4
+  judge_prompt: Vurder bare kriteriene activity-completion og word-bound. Begge er bindende; krev en infinitivfrase for aktiviteten, ikke et substantiv som «en sykkeltur».
+  criteria:
+  - id: activity-completion
+    instruction: Fullfører Leas svar naturlig med «til å» og en infinitiv som uttrykker aktiviteten. Ikke godta en substantivfrase som «på en sykkeltur».
+  - id: word-bound
+    instruction: Svaret inneholder 1–4 ord.
+- handle: complete_lyst_thing
+  op: write
+  objective: obj-uttrykke-onske-med-vil-og-ha-lyst-til-01
+  bloom: apply
+  prompt_md: 'Fyll hullet i svaret med 2–4 norske ord slik at det uttrykker en drikk som frister: «Jeg har lyst ___.»'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Servitør
+      text_md: «Hva vil du drikke?»
+    - speaker: Gjest
+      text_md: «Jeg har lyst ___.»
+  explanation_md: En ønsket drikk etter lyst trenger på, for eksempel «på en kaffe».
+  derived_from:
+  - section_id: things-that-appeal-to-you-ha-lyst-pa
+  response_language: 'no'
+  min_words: 2
+  max_words: 4
+  judge_prompt: Vurder bare kriteriene thing-completion og word-bound. Begge er bindende.
+  criteria:
+  - id: thing-completion
+    instruction: Fullfører setningen naturlig med på og en drikk.
+  - id: word-bound
+    instruction: Svaret inneholder 2–4 ord.
+- handle: review_complete_lyst_thing
+  op: write
+  objective: obj-uttrykke-onske-med-vil-og-ha-lyst-til-01
+  bloom: apply
+  prompt_md: 'Fullfør Amirs svar med en spiselig ting uttrykt som substantivfrase, ikke som en handling: «Jeg har lyst ___.» Skriv 1–4 norske ord.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Mina
+      text_md: «Skal vi kjøpe noe å spise før toget går?»
+    - speaker: Amir
+      text_md: «Jeg har lyst ___.»
+  explanation_md: En ting etter lyst trenger på, for eksempel «på et rundstykke».
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  min_words: 1
+  max_words: 4
+  judge_prompt: Vurder bare kriteriene thing-completion og word-bound. Begge er bindende.
+  criteria:
+  - id: thing-completion
+    instruction: Fullfører Amirs svar med «på» og en naturlig norsk substantivfrase som navngir noe spiselig som passer til situasjonen. Ikke godta en infinitivfrase om å kjøpe eller lage mat.
+  - id: word-bound
+    instruction: Svaret inneholder 1–4 ord.
+- handle: review_direct_or_inclined
+  op: choose
+  objective: obj-uttrykke-onske-med-vil-og-ha-lyst-til-01
+  bloom: analyze
+  prompt_md: Velg svarparet som passer.
+  derived_from:
+  - section_id: retrieval-and-review
+  stem_md: Lea har kjøpt togbillett og bestemt avreisetiden. 2. Amir vurderer flere aktiviteter; en tur langs sjøen virker hyggelig.
+  options:
+  - id: inclined-then-decided
+    text: «Jeg har lyst til å reise klokka ni.» 2. «Jeg vil gå en tur langs sjøen.»
+    correct: false
+    why: Dette bytter om den bestemte planen og den åpne tilbøyeligheten.
+  - id: both-decided
+    text: «Jeg vil reise klokka ni.» 2. «Jeg vil gå en tur langs sjøen.»
+    correct: false
+    why: Den andre situasjonen sier bare at turen virker hyggelig; den er ikke valgt.
+  - id: both-inclined
+    text: «Jeg har lyst til å reise klokka ni.» 2. «Jeg har lyst til å gå en tur langs sjøen.»
+    correct: false
+    why: Den første situasjonen inneholder en gjennomført beslutning, ikke bare en aktivitet som frister.
+  - id: decided-then-inclined
+    text: «Jeg vil reise klokka ni.» 2. «Jeg har lyst til å gå en tur langs sjøen.»
+    correct: true
+    why: Den første situasjonen presenterer en fast intensjon, mens den andre presenterer en aktivitet som frister.
+  explanation_md: Konteksten avgjør om ønsket presenteres som en direkte intensjon eller som en tilbøyelighet.
+- handle: review_vil_ha_or_lyst_pa
+  op: choose
+  objective: obj-uttrykke-onske-med-vil-og-ha-lyst-til-01
+  bloom: analyze
+  prompt_md: Choose the interpretation that best captures what each speaker emphasizes.
+  explanation_md: Both expressions are natural for wanting an item. Vil ha can present a direct choice,
+    while har lyst på can present an item as appealing; context helps foreground the difference without
+    making the other expression ungrammatical.
+  derived_from:
+  - section_id: retrieval-and-review
+  stem_md: 'Kunden peker på en bestemt sekk og sier: «Jeg vil ha akkurat denne.» En venn sier: «Jeg har lyst på en grønn sekk.»'
+  options:
+  - id: correct
+    text: The first statement presents a direct choice of a specific item; the second says that this kind of item appeals to the speaker.
+    correct: true
+    why: Akkurat denne marks a direct choice, while the other sentence expresses an inclination toward a type of item.
+  - id: reversed-emphasis
+    text: The first statement says that the item is merely appealing; the second presents a direct choice of one specific item.
+    correct: false
+    why: This reverses the emphasis provided by akkurat denne and the general description of a green bag.
+  - id: both-commitments
+    text: Both sentences express an equally definite purchase decision.
+    correct: false
+    why: The second sentence expresses an inclination, without identifying a particular selected item.
+  - id: both-appeal
+    text: Both sentences only say that a kind of item sounds appealing.
+    correct: false
+    why: The first sentence points to a specific item and presents it as the customer's direct choice.
+- handle: changing_plans
+  op: write
+  objective: obj-uttrykke-onske-med-vil-og-ha-lyst-til-01
+  bloom: apply
+  prompt_md: '**Melding fra Nora til gruppa** «Det regner. Museet er åpent til klokka 17, banen går hvert kvarter, og kafeen ved museet har varm suppe. Hva gjør vi?» Svar vennene med 25–45 norske ord. Bruk minst to relevante opplysninger fra meldingen. Bruk vil om én bestemt plan, og har lyst til å om én aktivitet som frister.'
+  explanation_md: Skillet mellom en bestemt plan og en fristende aktivitet hjelper vennene å forstå hva du foreslår.
+  derived_from:
+  - section_id: guided-practice-changing-plans
+  response_language: 'no'
+  min_words: 25
+  max_words: 45
+  judge_prompt: Vurder reply-purpose, supplied-facts, word-bound, norwegian, vil-plan og lyst-activity som bindende. Rapporter lyst-thing-observation diagnostisk; det kan ikke føre til underkjenning.
+  criteria:
+  - id: reply-purpose
+    instruction: Svarer Nora og foreslår hva gruppa kan gjøre i regnet.
+  - id: supplied-facts
+    instruction: Bruker minst to relevante opplysninger fra meldingen.
+  - id: word-bound
+    instruction: Svaret inneholder 25–45 ord.
+  - id: norwegian
+    instruction: Meldingen er skrevet på forståelig norsk.
+  - id: vil-plan
+    instruction: Bruker vil fulgt direkte av infinitiv om én bestemt plan.
+  - id: lyst-activity
+    instruction: Bruker har lyst til å fulgt av infinitiv om én aktivitet som frister.
+  - id: lyst-thing-observation
+    instruction: 'Observation only: Registrer om meldingen bruker har lyst på naturlig om mat, drikke eller en ting; dette skal ikke føre til underkjenning.'
+- handle: revise_message
+  op: write
+  objective: obj-uttrykke-onske-med-vil-og-ha-lyst-til-01
+  bloom: analyze
+  prompt_md: '**Utkast til gruppemelding** «Jeg vil å besøke museet. Etterpå har jeg lyst på spise suppe, og jeg har lyst til å kaffe.» Send en korrigert melding på 15–30 norske ord.'
+  explanation_md: Skriv infinitiven uten å etter vil, bruk til å foran en aktivitet og på foran en ting.
+  derived_from:
+  - section_id: common-mistakes
+  response_language: 'no'
+  min_words: 15
+  max_words: 30
+  judge_prompt: Vurder bare vil-correction, activity-correction, thing-correction, message-meaning og word-bound. Alle fem er bindende.
+  criteria:
+  - id: vil-correction
+    instruction: Retter den første handlingen til vil fulgt direkte av infinitiv.
+  - id: activity-correction
+    instruction: Retter spise-leddet til har lyst til å fulgt av infinitiv.
+  - id: thing-correction
+    instruction: Retter kaffe-leddet til har lyst på fulgt av substantiv.
+  - id: message-meaning
+    instruction: Bevarer budskapet om museum, suppe og kaffe i en naturlig gruppemelding.
+  - id: word-bound
+    instruction: Svaret inneholder 15–30 ord.
+- handle: personalised_bounded_practice
+  op: write
+  objective: obj-uttrykke-onske-med-vil-og-ha-lyst-til-01
+  bloom: apply
+  prompt_md: '**Plan for klassegruppa** | Tid | Opplysning | |---|---| | 15.30 | Bibliotekboka må leveres | | 16.00 | Sol og 18 °C | | 18.00 | Gratis konsert i parken | | Etter konserten | Kafeen selger pizza og limonade | Skriv en melding på 30–50 norske ord. Bruk minst tre opplysninger fra tabellen. Bruk vil om én bestemt plan, har lyst til å om en aktivitet som frister, og har lyst på om noe du kunne tenke deg å spise eller drikke.'
+  explanation_md: Opplysningene inviterer til å presentere både en nødvendig plan og aktiviteter eller mat som virker fristende.
+  derived_from:
+  - section_id: personalised-but-bounded-practice
+  response_language: 'no'
+  min_words: 30
+  max_words: 50
+  judge_prompt: Vurder audience-purpose, fact-use, coherent-plan, word-bound, norwegian, vil-plan, lyst-activity og lyst-thing som bindende fordi alle står i oppgaven.
+  criteria:
+  - id: audience-purpose
+    instruction: Skriver til klassegruppa for å foreslå en felles ettermiddagsplan.
+  - id: fact-use
+    instruction: Bruker minst tre opplysninger fra tabellen.
+  - id: coherent-plan
+    instruction: Presenterer en forståelig rekkefølge for ettermiddagen.
+  - id: word-bound
+    instruction: Svaret inneholder 30–50 ord.
+  - id: norwegian
+    instruction: Meldingen er skrevet på forståelig norsk.
+  - id: vil-plan
+    instruction: Bruker vil fulgt direkte av infinitiv om én bestemt plan.
+  - id: lyst-activity
+    instruction: Bruker har lyst til å fulgt av infinitiv om en aktivitet som frister.
+  - id: lyst-thing
+    instruction: Bruker har lyst på fulgt av substantiv om mat eller drikke som frister.
+- handle: retrieval_and_review
+  op: write
+  objective: obj-uttrykke-onske-med-vil-og-ha-lyst-til-01
+  bloom: apply
+  prompt_md: '**Melding fra språkpartneren din** «I morgen er museet gratis fra klokka 12. Det blir sol, og bakeriet ved parken selger kanelboller. Hva foreslår du?» Svar med 35–60 norske ord. Bruk minst to opplysninger fra meldingen, én direkte intensjon, én fristende aktivitet og én fristende ting.'
+  explanation_md: Svaret skal hente fram alle tre kontrastene i en sammenhengende melding.
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  min_words: 35
+  max_words: 60
+  judge_prompt: Vurder direct-intention, inclined-activity, appealing-thing, reply-purpose, supplied-facts og word-bound. Alle seks er bindende fordi de står i oppgaven.
+  criteria:
+  - id: direct-intention
+    instruction: Uttrykker én direkte intensjon med vil fulgt direkte av infinitiv, eller med vil ha foran en ting.
+  - id: inclined-activity
+    instruction: Uttrykker én fristende aktivitet med har lyst til å fulgt av infinitiv.
+  - id: appealing-thing
+    instruction: Uttrykker én fristende ting med har lyst på fulgt av substantiv.
+  - id: reply-purpose
+    instruction: Svarer språkpartneren med et sammenhengende forslag for morgendagen.
+  - id: supplied-facts
+    instruction: Bruker minst to opplysninger fra meldingen.
+  - id: word-bound
+    instruction: Svaret inneholder 35–60 ord.

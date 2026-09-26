@@ -1,0 +1,515 @@
+- handle: anchor_ownership_map
+  op: choose
+  objective: obj-reflexive-possessives-01
+  bloom: understand
+  prompt_md: Choose the interpretation of the possessive in Lina's line.
+  derived_from:
+  - section_id: sec-checkpoint-anchor-ownership-map
+  stem_md: 'Lina: Jonas leter etter jakka si. Oskar: Ja, han la den på stolen.'
+  options:
+  - id: oskar-owns-jacket
+    text: Jonas is the subject, but Oskar owns the jacket.
+    correct: false
+    why: That ownership reading would require an ordinary possessive referring to Oskar.
+  - id: lina-owns-jacket
+    text: Lina is the subject and owns the jacket.
+    correct: false
+    why: Lina speaks in the first line, but Jonas is the subject of the target clause.
+  - id: jonas-owns-jacket
+    text: Jonas is the subject and owns the jacket.
+    correct: true
+    why: Si refers to the clause subject, Jonas.
+  explanation_md: The confusable pair is reflexive sin, si, sitt, sine versus ordinary hans, hennes, deres.
+    This contrast builds on subject pronouns and ordinary possessives.
+- handle: possessed_noun_agreement
+  op: recall_fill
+  objective: obj-reflexive-possessives-01
+  bloom: apply
+  prompt_md: Fill each blank with sin, si, sitt or sine.
+  derived_from:
+  - section_id: sec-checkpoint-possessed-noun-agreement
+  audio_target: Jonas finner nøkkelen sin. Jonas tar på seg jakka si. Jonas finner passet sitt. Jonas
+    finner billettene sine.
+  segments:
+  - text_md: 'Jonas finner nøkkelen '
+  - blank_id: agreement-masculine
+    options:
+    - sin
+    - si
+    - sitt
+    - sine
+    answer_index: 0
+  - text_md: '. Jonas tar på seg jakka '
+  - blank_id: agreement-feminine
+    options:
+    - sin
+    - si
+    - sitt
+    - sine
+    answer_index: 1
+  - text_md: '. Jonas finner passet '
+  - blank_id: agreement-neuter
+    options:
+    - sin
+    - si
+    - sitt
+    - sine
+    answer_index: 2
+  - text_md: '. Jonas finner billettene '
+  - blank_id: agreement-plural
+    options:
+    - sin
+    - si
+    - sitt
+    - sine
+    answer_index: 3
+  - text_md: .
+  explanation_md: 'The possessed noun controls the form: nøkkelen–sin, jakka–si, passet–sitt and billettene–sine.'
+- handle: same_owner_or_other_owner
+  op: recall_fill
+  objective: obj-reflexive-possessives-01
+  bloom: apply
+  prompt_md: Complete each sentence with the possessive that matches the stated owner.
+  derived_from:
+  - section_id: sec-checkpoint-same-owner-or-other-owner
+  audio_target: Jonas pakker jakka hennes for Nora. Nora pakker jakka si. Nora legger passet hans i sekken
+    for Jonas. Jonas finner passet sitt.
+  segments:
+  - text_md: 'Jakka tilhører Nora. Jonas pakker jakka '
+  - blank_id: contrast-jonas-nora
+    options:
+    - hennes
+    - si
+    answer_index: 0
+  - text_md: '. Jakka tilhører Nora. Nora pakker jakka '
+  - blank_id: contrast-nora-own
+    options:
+    - si
+    - hennes
+    answer_index: 0
+  - text_md: '. Passet tilhører Jonas. Nora legger passet '
+  - blank_id: contrast-nora-jonas
+    options:
+    - sitt
+    - hans
+    answer_index: 1
+  - text_md: ' i sekken. Passet tilhører Jonas. Jonas finner passet '
+  - blank_id: contrast-jonas-own
+    options:
+    - hans
+    - sitt
+    answer_index: 1
+  - text_md: .
+  explanation_md: Use a reflexive possessive when the clause subject is the owner and an ordinary possessive
+    when someone else is the owner.
+- handle: agreement_misconception_check
+  op: recall_fill
+  objective: obj-reflexive-possessives-01
+  bloom: apply
+  prompt_md: Complete the sentences with the matching reflexive possessive.
+  derived_from:
+  - section_id: sec-common-mistake-matching-the-owner
+  audio_target: Jonas tar på seg jakka si. Nora tar på seg jakka si. Nora og Emil tar på seg jakka si.
+    Nora finner passet sitt. Nora og Emil finner passet sitt.
+  segments:
+  - text_md: 'Jonas tar på seg jakka '
+  - blank_id: misconception-male-owner
+    options:
+    - sin
+    - si
+    - sitt
+    - sine
+    answer_index: 1
+  - text_md: '. Nora tar på seg jakka '
+  - blank_id: misconception-female-owner
+    options:
+    - sin
+    - si
+    - sitt
+    - sine
+    answer_index: 1
+  - text_md: '. Nora og Emil tar på seg jakka '
+  - blank_id: misconception-plural-owner
+    options:
+    - sin
+    - si
+    - sitt
+    - sine
+    answer_index: 1
+  - text_md: '. Nora finner passet '
+  - blank_id: misconception-single-owner-passport
+    options:
+    - sin
+    - si
+    - sitt
+    - sine
+    answer_index: 2
+  - text_md: '. Nora og Emil finner passet '
+  - blank_id: misconception-group-owner-passport
+    options:
+    - sin
+    - si
+    - sitt
+    - sine
+    answer_index: 2
+  - text_md: .
+  explanation_md: Changing the owner's gender or number does not change the form; jakka takes si and passet
+    takes sitt.
+- handle: complete_own_belonging_phrases
+  op: build
+  objective: obj-reflexive-possessives-01
+  bloom: apply
+  prompt_md: Build the sentence from all the tokens.
+  derived_from:
+  - section_id: sec-checkpoint-complete-own-belonging-phrases
+  stem_md: 'Pakkeliste for Nora: hennes egen nøkkel hennes egen jakke hennes eget pass hennes egne billetter'
+  tokens:
+  - token_id: phrase-nora
+    text: Nora
+  - token_id: phrase-finner
+    text: finner
+  - token_id: phrase-nokkelen
+    text: nøkkelen
+  - token_id: phrase-sin
+    text: sin,
+  - token_id: phrase-jakka
+    text: jakka
+  - token_id: phrase-si
+    text: si,
+  - token_id: phrase-passet
+    text: passet
+  - token_id: phrase-sitt
+    text: sitt
+  - token_id: phrase-og
+    text: og
+  - token_id: phrase-billettene
+    text: billettene
+  - token_id: phrase-sine
+    text: sine.
+  answer_order:
+  - phrase-nora
+  - phrase-finner
+  - phrase-nokkelen
+  - phrase-sin
+  - phrase-jakka
+  - phrase-si
+  - phrase-passet
+  - phrase-sitt
+  - phrase-og
+  - phrase-billettene
+  - phrase-sine
+  explanation_md: In this pattern, the definite noun comes before its matching reflexive possessive.
+- handle: changing_subject_same_belonging
+  op: recall_fill
+  objective: obj-reflexive-possessives-01
+  bloom: apply
+  prompt_md: Complete each pair with the possessives required by the changing subject.
+  derived_from:
+  - section_id: sec-practice-changing-subject-same-belonging
+  audio_target: Jonas bærer nøkkelen hennes for Nora. Nora bærer nøkkelen sin til bilen. Nora legger jakka
+    hans på stolen for Jonas. Jonas tar på seg jakka si. Oskar holder passet deres for Jonas og Nora.
+    Jonas og Nora finner passet sitt.
+  segments:
+  - text_md: 'Nøkkelen tilhører Nora. Jonas bærer nøkkelen '
+  - blank_id: changing-nora-key-other
+    options:
+    - hennes
+    - sin
+    answer_index: 0
+  - text_md: '. Nora bærer nøkkelen '
+  - blank_id: changing-nora-key-own
+    options:
+    - sin
+    - hennes
+    answer_index: 0
+  - text_md: '. Jakka tilhører Jonas. Nora legger jakka '
+  - blank_id: changing-jonas-jacket-other
+    options:
+    - si
+    - hans
+    answer_index: 1
+  - text_md: '. Jonas tar på seg jakka '
+  - blank_id: changing-jonas-jacket-own
+    options:
+    - hans
+    - si
+    answer_index: 1
+  - text_md: '. Passet tilhører Jonas og Nora. Oskar holder passet '
+  - blank_id: changing-group-passport-other
+    options:
+    - deres
+    - sitt
+    answer_index: 0
+  - text_md: '. Jonas og Nora finner passet '
+  - blank_id: changing-group-passport-own
+    options:
+    - sitt
+    - deres
+    answer_index: 0
+  - text_md: .
+  explanation_md: The physical item stays the same, but the possessive changes when the clause subject
+    changes.
+- handle: cabin_departure_sentence_building
+  op: build
+  objective: obj-reflexive-possessives-01
+  bloom: apply
+  prompt_md: Build the four cabin updates from all the tokens.
+  derived_from:
+  - section_id: sec-practice-cabin-departure-sentence-building
+  stem_md: 'Departure list: Jonas finds his own key. Nora puts on her own jacket. Oskar finds his own
+    passport. Nora and Emil find their own tickets.'
+  tokens:
+  - token_id: cabin-jonas
+    text: Jonas
+  - token_id: cabin-finner-1
+    text: finner
+  - token_id: cabin-nokkelen
+    text: nøkkelen
+  - token_id: cabin-sin
+    text: sin.
+  - token_id: cabin-nora-1
+    text: Nora
+  - token_id: cabin-tar
+    text: tar
+  - token_id: cabin-pa
+    text: på
+  - token_id: cabin-seg
+    text: seg
+  - token_id: cabin-jakka
+    text: jakka
+  - token_id: cabin-si
+    text: si.
+  - token_id: cabin-oskar
+    text: Oskar
+  - token_id: cabin-finner-2
+    text: finner
+  - token_id: cabin-passet
+    text: passet
+  - token_id: cabin-sitt
+    text: sitt.
+  - token_id: cabin-nora-2
+    text: Nora
+  - token_id: cabin-og
+    text: og
+  - token_id: cabin-emil
+    text: Emil
+  - token_id: cabin-finner-3
+    text: finner
+  - token_id: cabin-billettene
+    text: billettene
+  - token_id: cabin-sine
+    text: sine.
+  answer_order:
+  - cabin-jonas
+  - cabin-finner-1
+  - cabin-nokkelen
+  - cabin-sin
+  - cabin-nora-1
+  - cabin-tar
+  - cabin-pa
+  - cabin-seg
+  - cabin-jakka
+  - cabin-si
+  - cabin-oskar
+  - cabin-finner-2
+  - cabin-passet
+  - cabin-sitt
+  - cabin-nora-2
+  - cabin-og
+  - cabin-emil
+  - cabin-finner-3
+  - cabin-billettene
+  - cabin-sine
+  explanation_md: Each owner is also the subject, while the possessed nouns require four different agreement
+    forms.
+- handle: office_ownership_transfer
+  op: write
+  objective: obj-reflexive-possessives-01
+  bloom: apply
+  prompt_md: 'Closing note: Amina must turn off the computer that belongs to her. Petter must close the
+    window that belongs to him. Amina must place Petter''s access card on his desk. Both colleagues must
+    collect the papers that belong to them. Write a 35–55-word Norwegian message to the closing team confirming
+    these tasks. Use the reflexive possessives datamaskinen sin, vinduet sitt and papirene sine, and the
+    ordinary possessive Petters adgangskort.'
+  derived_from:
+  - section_id: sec-cumulative-office-ownership-transfer
+  response_language: 'no'
+  min_words: 35
+  max_words: 55
+  judge_prompt: Vurder svaret etter kriteriene office-message, supplied-facts, reflexive-possessives,
+    noun-agreement og word-bound. Et naturlig norsk svar på 35–55 ord må bestå. Svaret må bruke refleksive
+    eiendomsord for subjektets eierskap og vanlige eiendomsord for en annen kollegas eierskap. Svaret
+    må bruke riktig samsvar mellom eiendomsord og substantiv. Et svar som utelater adgangskortet, skal
+    stryke på supplied-facts.
+  criteria:
+  - id: office-message
+    instruction: Svaret er en norsk melding til avslutningsteamet som bekrefter oppgavene ved stengetid.
+  - id: supplied-facts
+    instruction: Meldingen kommuniserer alle fire oppgitte kontorfakta uten å endre hvem som eier hver
+      gjenstand.
+  - id: word-bound
+    instruction: Meldingen inneholder 35–55 ord.
+  - id: reflexive-possessives
+    instruction: Meldingen bruker nøyaktig uttrykkene datamaskinen sin, vinduet sitt og papirene sine
+      for subjektets eierskap, samt nøyaktig uttrykket Petters adgangskort for den andre kollegaens eierskap.
+  - id: noun-agreement
+    instruction: Refleksive eiendomsord samsvarer riktig med substantivene de bestemmer.
+- handle: two_question_review
+  op: write
+  objective: obj-reflexive-possessives-01
+  bloom: apply
+  prompt_md: 'Study-note facts: Check whether the possessed noun belongs to the clause subject. If it
+    does, check the possessed noun''s gender or number. Examples needed: bil, jakke, pass and billetter,
+    each owned by its sentence subject. Write a 40–65-word Norwegian study note to a classmate explaining
+    both checks and illustrating sin, si, sitt and sine once each.'
+  derived_from:
+  - section_id: sec-final-retrieval-review
+  response_language: 'no'
+  min_words: 40
+  max_words: 65
+  judge_prompt: Evaluate the response using study-note-purpose, ownership-check, noun-form-check, four-examples
+    and word-bound. All five are gating because each mirrors the visible task. Accept natural Norwegian
+    paraphrases. A 40–65-word note that explains both checks and gives exactly one accurate example each
+    for sin with bil, si with jakke, sitt with pass and sine with billetter must pass. A note that explains
+    only noun agreement must fail ownership-check.
+  criteria:
+  - id: study-note-purpose
+    instruction: The response is a Norwegian study note addressed to a classmate.
+  - id: ownership-check
+    instruction: The note explains that the learner first checks whether the possessed noun belongs to
+      the clause subject.
+  - id: noun-form-check
+    instruction: The note explains that the learner then checks the possessed noun's gender or number.
+  - id: four-examples
+    instruction: The note gives exactly one subject-owner example each using sin with bil, si with jakke,
+      sitt with pass and sine with billetter, with no additional uses of these four target forms.
+  - id: word-bound
+    instruction: The note contains 40–65 words.
+- handle: review_ownership_relation
+  op: choose
+  objective: obj-reflexive-possessives-01
+  bloom: understand
+  prompt_md: Choose the sentence that matches the note.
+  derived_from:
+  - section_id: sec-final-retrieval-review
+  stem_md: 'Note: The phone belongs to Jonas. Jonas checks it before leaving.'
+  options:
+  - id: wrong-noun-agreement
+    text: Jonas sjekker mobilen sitt før han drar.
+    correct: false
+    why: The ownership relation is reflexive, but mobilen does not take sitt.
+  - id: jonas-own-phone
+    text: Jonas sjekker mobilen sin før han drar.
+    correct: true
+    why: Jonas is both the clause subject and the phone's owner.
+  - id: jonas-other-phone
+    text: Jonas sjekker mobilen hans før han drar.
+    correct: false
+    why: Hans presents another male person as the owner.
+  explanation_md: A reflexive possessive points back to the subject of its own clause.
+- handle: review_reflexive_or_ordinary
+  op: recall_fill
+  objective: obj-reflexive-possessives-01
+  bloom: apply
+  prompt_md: Fill the blank with sin or hans.
+  derived_from:
+  - section_id: sec-final-retrieval-review
+  audio_target: Oskar finner sekken hans for Jonas.
+  segments:
+  - text_md: 'Sekken tilhører Jonas. Oskar finner sekken '
+  - blank_id: review-other-owner
+    options:
+    - sin
+    - hans
+    answer_index: 1
+  - text_md: ' for Jonas.'
+  explanation_md: The backpack belongs to Jonas, not to the clause subject Oskar, so the ordinary possessive
+    is required.
+- handle: review_possessed_noun_agreement
+  op: recall_fill
+  objective: obj-reflexive-possessives-01
+  bloom: apply
+  prompt_md: Fill each blank with sin, si, sitt or sine.
+  derived_from:
+  - section_id: sec-final-retrieval-review
+  audio_target: Mina låser døra si. Erik sjekker kartet sitt. De henter koffertene sine. Nora starter
+    bilen sin.
+  segments:
+  - text_md: 'Mina låser døra '
+  - blank_id: review-feminine
+    options:
+    - sin
+    - si
+    - sitt
+    - sine
+    answer_index: 1
+  - text_md: '. Erik sjekker kartet '
+  - blank_id: review-neuter
+    options:
+    - sin
+    - si
+    - sitt
+    - sine
+    answer_index: 2
+  - text_md: '. De henter koffertene '
+  - blank_id: review-plural
+    options:
+    - sin
+    - si
+    - sitt
+    - sine
+    answer_index: 3
+  - text_md: '. Nora starter bilen '
+  - blank_id: review-masculine
+    options:
+    - sin
+    - si
+    - sitt
+    - sine
+    answer_index: 0
+  - text_md: .
+  explanation_md: The four forms follow the possessed nouns døra, kartet, koffertene and bilen.
+- handle: review_complete_own_phrase
+  op: recall_fill
+  objective: obj-reflexive-possessives-01
+  bloom: apply
+  prompt_md: Complete the noun phrase.
+  derived_from:
+  - section_id: sec-final-retrieval-review
+  audio_target: passet sitt
+  segments:
+  - text_md: 'Emil must bring the passport that belongs to him:'
+  - blank_id: review-complete-neuter-phrase
+    options:
+    - pass sitt
+    - passet sitt
+    - passet sin
+    - sitt passet
+    answer_index: 1
+  explanation_md: The post-nominal pattern uses the definite noun followed by the agreeing possessive.
+- handle: review_transfer_response
+  op: choose
+  objective: obj-reflexive-possessives-01
+  bloom: apply
+  prompt_md: Velg svaret som gjengir begge eierforholdene riktig.
+  derived_from:
+  - section_id: sec-cumulative-office-ownership-transfer
+  stem_md: 'Amina: Datamaskinen tilhører meg. Veska tilhører Liv. Petter: Hva gjør du før vi går?'
+  options:
+  - id: both-made-ordinary
+    text: Jeg slår av datamaskinen hennes og setter veska hennes ved døra.
+    correct: false
+    why: Hennes viser til en annen kvinne som eier datamaskinen.
+  - id: agreement-only-error
+    text: Jeg slår av datamaskinen mitt og setter veska hennes ved døra.
+    correct: false
+    why: Eierskapskontrasten er riktig, men datamaskinen krever min, ikke mitt.
+  - id: both-owners-correct
+    text: Jeg slår av datamaskinen min og setter veska hennes ved døra.
+    correct: true
+    why: Datamaskinen tilhører Amina, mens veska tilhører Liv.
+  - id: both-made-reflexive
+    text: Jeg slår av datamaskinen min og setter veska si ved døra.
+    correct: false
+    why: Si viser at Amina eier veska, men veska tilhører Liv.
+  explanation_md: Svaret må kombinere riktig eier for hvert objekt med riktig possessivform.

@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "subordinating_conjunctions",
   "kind": "grammar",
   "language": "nb-NO",
@@ -104,6 +104,34 @@
     {
       "kind": "section",
       "id": "short-retrieval-review"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_at_reported_content"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_fordi_reason"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_hvis_condition"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_time_relationships"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_selv_om_contrast"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_om_indirect_question"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_clause_boundary"
     }
   ],
   "sections": [
@@ -2383,7 +2411,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Read the weather, transport, and cabin messages. Select the option that marks each complete dependent clause introduced by at and identifies the content it supplies. Marking only at is incomplete."
+          "value": "Choose the marking that shows the full content of each «at» clause."
         }
       ],
       "explanation": null,
@@ -2391,25 +2419,25 @@
         "options": [
           {
             "option_id": "conjunction-only",
-            "text": "[at] bussen kommer snart; [at] han er klar; [at] veien er åpen.",
-            "why": "Only the conjunction is marked, not the complete dependent clause."
+            "text": "Maja tror [at bussen kommer] snart; Jonas sier [at han er] klar; Vi vet [at veien er] åpen.",
+            "why": "Each marked span stops before the full reported content is complete."
           },
           {
             "option_id": "complete-content-clauses",
-            "text": "[at bussen kommer snart] — what Maja thinks; [at han er klar] — what Jonas says; [at veien er åpen] — known information.",
-            "why": "Each marked span includes at and the complete content clause."
+            "text": "Maja tror [at bussen kommer snart]; Jonas sier [at han er klar]; Vi vet [at veien er åpen].",
+            "why": "Each span contains the conjunction and the complete reported content."
           },
           {
             "option_id": "whole-sentences",
-            "text": "[Maja tror at bussen kommer snart]; [Jonas sier at han er klar]; [Vi vet at veien er åpen].",
-            "why": "The marked spans include the main clauses instead of isolating the at-clauses."
+            "text": "[Maja tror at bussen kommer] snart; [Jonas sier at han er] klar; [Vi vet at veien er] åpen.",
+            "why": "These spans include the reporting clause instead of isolating only its content."
           }
         ],
         "answer_id": "complete-content-clauses",
         "stem": [
           {
             "kind": "text",
-            "value": "Maja tror at bussen kommer snart. Jonas sier at han er klar. Vi vet at veien er åpen. Which option is correct?"
+            "value": "Maja tror at bussen kommer snart. Jonas sier at han er klar. Vi vet at veien er åpen."
           }
         ]
       }
@@ -2422,13 +2450,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each sentence with the conjunction that introduces reported content after saying, believing, or hoping."
+          "value": "Fill in the conjunction that introduces what someone says, thinks, or hopes."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Choose the conjunction from the clause relation: content, reason, condition, time, concession, or an unresolved indirect question."
+          "value": "«At» innleder innholdet i det noen sier, tror eller håper."
         }
       ],
       "payload": {
@@ -2450,12 +2478,12 @@
             "kind": "blank",
             "blank_id": "report-content-1",
             "options": [
+              "når",
               "at",
               "fordi",
-              "hvis",
-              "når"
+              "hvis"
             ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
@@ -2478,12 +2506,12 @@
             "kind": "blank",
             "blank_id": "report-content-2",
             "options": [
-              "at",
-              "fordi",
               "hvis",
-              "når"
+              "når",
+              "at",
+              "fordi"
             ],
-            "answer_index": 0
+            "answer_index": 2
           },
           {
             "kind": "span",
@@ -2506,12 +2534,12 @@
             "kind": "blank",
             "blank_id": "report-content-3",
             "options": [
+              "når",
               "at",
               "fordi",
-              "hvis",
-              "når"
+              "hvis"
             ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
@@ -2527,7 +2555,32 @@
             ]
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Jonas",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Bussen kommer snart, så rekker vi starten på turen.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg tror det kommer til å regne.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2537,7 +2590,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Match each main event with the complete fordi-clause that explains why it happens. Use every clause once."
+          "value": "Match each event to the reason that fits."
         }
       ],
       "explanation": null,
@@ -2553,7 +2606,7 @@
           },
           {
             "left_id": "event-3",
-            "text": "Vi blir inne."
+            "text": "Vi ser film inne."
           },
           {
             "left_id": "event-4",
@@ -2563,19 +2616,19 @@
         "right": [
           {
             "right_id": "reason-1",
-            "text": "fordi det har regnet."
+            "text": "fordi hun skal vade over bekken."
           },
           {
             "right_id": "reason-2",
-            "text": "fordi han har et spørsmål."
+            "text": "fordi han trenger et svar."
           },
           {
             "right_id": "reason-3",
-            "text": "fordi det blåser mye."
+            "text": "fordi vi har planlagt en innendørs filmkveld."
           },
           {
             "right_id": "reason-4",
-            "text": "fordi været blir dårlig."
+            "text": "fordi arrangøren har meldt om rasfare på turstien."
           }
         ],
         "pairs": [
@@ -2606,10 +2659,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each practical travel sentence with the conjunction that gives the stated reason for the action."
+          "value": "Fill in the conjunction that introduces the reason for the action."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Fordi» innleder grunnen til handlingen."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -2617,7 +2675,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Maja tar med støvler"
+                "value": "Lina tørker gulvet"
               },
               {
                 "kind": "text",
@@ -2643,7 +2701,7 @@
               },
               {
                 "kind": "text",
-                "value": "det har regnet. Jonas ringer"
+                "value": "noen har sølt vann. Per åpner vinduet"
               },
               {
                 "kind": "text",
@@ -2669,7 +2727,7 @@
               },
               {
                 "kind": "text",
-                "value": "han har et spørsmål. Vi blir inne"
+                "value": "rommet er varmt. Vi tar trikken"
               },
               {
                 "kind": "text",
@@ -2681,10 +2739,10 @@
             "kind": "blank",
             "blank_id": "trip-reason-3",
             "options": [
-              "fordi",
-              "hvis"
+              "hvis",
+              "fordi"
             ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
@@ -2695,7 +2753,7 @@
               },
               {
                 "kind": "text",
-                "value": "det blåser mye. De vurderer å avlyse turen"
+                "value": "bilen står på verksted. De flytter møtet inn"
               },
               {
                 "kind": "text",
@@ -2707,10 +2765,10 @@
             "kind": "blank",
             "blank_id": "trip-reason-4",
             "options": [
-              "fordi",
-              "hvis"
+              "hvis",
+              "fordi"
             ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
@@ -2721,7 +2779,7 @@
               },
               {
                 "kind": "text",
-                "value": "været blir dårlig."
+                "value": "det regner nå."
               }
             ]
           }
@@ -2736,13 +2794,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each sentence with fordi for a stated reason or hvis for a possible condition."
+          "value": "Fill in «fordi» or «hvis», depending on whether the sentence gives a known reason or a possible condition."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Fordi supplies an actual reason; hvis introduces a condition whose outcome is not asserted."
+          "value": "«Fordi» viser en faktisk grunn. «Hvis» innleder en mulig betingelse."
         }
       ],
       "payload": {
@@ -2752,7 +2810,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Vi blir inne"
+                "value": "Vinden blåser allerede kraftig. Vi blir inne"
               },
               {
                 "kind": "text",
@@ -2778,7 +2836,7 @@
               },
               {
                 "kind": "text",
-                "value": "det blåser mye. Vi drar"
+                "value": "det blåser mye. Veien kan være åpen. Vi drar"
               },
               {
                 "kind": "text",
@@ -2804,7 +2862,7 @@
               },
               {
                 "kind": "text",
-                "value": "veien er åpen. Jeg tar med mat"
+                "value": "veien er åpen. Butikken kan være stengt. Jeg tar med mat"
               },
               {
                 "kind": "text",
@@ -2830,7 +2888,7 @@
               },
               {
                 "kind": "text",
-                "value": "butikken ved hytta er stengt. Jonas ringer"
+                "value": "butikken ved hytta er stengt. Et spørsmål forklarer hvorfor han ringer. Jonas ringer"
               },
               {
                 "kind": "text",
@@ -2871,33 +2929,33 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Read the cabin plans. Select the option that marks every complete hvis-clause and states which event or decision depends on each condition."
+          "value": "Choose the marking of each complete «hvis» clause."
         }
       ],
       "explanation": null,
       "payload": {
         "options": [
           {
-            "option_id": "full-conditions-and-dependent-events",
-            "text": "[Hvis det blir kaldt] → tar Jonas med ved; [Hvis butikken ved hytta er stengt] → kan vi handle på veien; [Hvis veien er åpen] → drar vi.",
-            "why": "Each marked span contains the full hvis-clause, and each arrow identifies the event that depends on its condition."
-          },
-          {
             "option_id": "conjunctions-only",
-            "text": "[Hvis] det blir kaldt, tar Jonas med ved; [Hvis] butikken ved hytta er stengt, kan vi handle på veien; [Hvis] veien er åpen, drar vi.",
-            "why": "Only Hvis is marked, so the dependent clauses are incomplete."
+            "text": "[Hvis det blir] kaldt, tar Jonas med ved; [Hvis butikken ved hytta er] stengt, kan vi handle på veien; [Hvis veien er] åpen, drar vi.",
+            "why": "Each marked span stops before the condition is complete."
           },
           {
-            "option_id": "whole-clauses",
-            "text": "[Hvis det blir kaldt, tar Jonas med ved]; [Hvis butikken ved hytta er stengt, kan vi handle på veien]; [Hvis veien er åpen, drar vi].",
-            "why": "Each marked span incorrectly includes the event that depends on the condition."
+            "option_id": "whole-sentences",
+            "text": "Hvis det blir kaldt, [tar Jonas med ved]; Hvis butikken ved hytta er stengt, [kan vi handle på veien]; Hvis veien er åpen, [drar vi].",
+            "why": "These spans mark only the event and leave out the condition it depends on."
+          },
+          {
+            "option_id": "full-conditions-and-dependent-events",
+            "text": "[Hvis det blir kaldt], tar Jonas med ved; [Hvis butikken ved hytta er stengt], kan vi handle på veien; [Hvis veien er åpen], drar vi.",
+            "why": "Each span contains the complete condition and identifies the event depending on it."
           }
         ],
         "answer_id": "full-conditions-and-dependent-events",
         "stem": [
           {
             "kind": "text",
-            "value": "Hvis det blir kaldt, tar Jonas med ved. Hvis butikken ved hytta er stengt, kan vi handle på veien. Hvis veien er åpen, drar vi. Which option is correct?"
+            "value": "Hvis det blir kaldt, tar Jonas med ved. Hvis butikken ved hytta er stengt, kan vi handle på veien. Hvis veien er åpen, drar vi."
           }
         ]
       }
@@ -2910,7 +2968,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Read the Saturday preparation sequence. Select the option that marks each complete dependent clause introduced by når, før, or mens and identifies the main event it places in time."
+          "value": "Choose the marking of each complete time clause."
         }
       ],
       "explanation": null,
@@ -2918,25 +2976,25 @@
         "options": [
           {
             "option_id": "conjunctions-only",
-            "text": "[Når] vi kommer fram, lager vi middag; Vi kjøper mat [før] vi kjører til hytta; [Mens] Jonas pakker, sjekker Maja butikken.",
-            "why": "Only the conjunctions are marked, not the complete dependent clauses."
+            "text": "Når [vi kommer fram, lager vi] middag; Vi kjøper mat [før vi kjører] til hytta; Mens Jonas [pakker, sjekker Maja] butikken.",
+            "why": "The marked spans combine incomplete clauses with part of the main event."
           },
           {
             "option_id": "whole-sentences",
-            "text": "[Når vi kommer fram, lager vi middag]; [Vi kjøper mat før vi kjører til hytta]; [Mens Jonas pakker, sjekker Maja butikken].",
-            "why": "The marked spans include the main events instead of isolating the time clauses."
+            "text": "[Når vi kommer fram, lager] vi middag; [Vi kjøper mat før vi kjører til] hytta; [Mens Jonas pakker, sjekker] Maja butikken.",
+            "why": "Each span includes only part of the main event and leaves the event incomplete."
           },
           {
             "option_id": "full-time-clauses-and-events",
-            "text": "[Når vi kommer fram] — lager vi middag; [før vi kjører til hytta] — Vi kjøper mat; [Mens Jonas pakker] — sjekker Maja butikken.",
-            "why": "Each marked span is a complete time clause, including clauses that come before the main clause."
+            "text": "[Når vi kommer fram], lager vi middag; Vi kjøper mat [før vi kjører til hytta]; [Mens Jonas pakker], sjekker Maja butikken.",
+            "why": "Each span contains a complete time clause and its associated event."
           }
         ],
         "answer_id": "full-time-clauses-and-events",
         "stem": [
           {
             "kind": "text",
-            "value": "Når vi kommer fram, lager vi middag. Vi kjøper mat før vi kjører til hytta. Mens Jonas pakker, sjekker Maja butikken. Which option is correct?"
+            "value": "Når vi kommer fram, lager vi middag. Vi kjøper mat før vi kjører til hytta. Mens Jonas pakker, sjekker Maja butikken."
           }
         ]
       }
@@ -2949,13 +3007,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each sentence with the conjunction for earlier sequence, the relevant time, or overlapping actions."
+          "value": "Fill in the conjunction that fits each sentence."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Før marks earlier sequence, når identifies the relevant time, and mens presents overlapping events."
+          "value": "«Før» viser hva som skjer først, «når» knytter en handling til et tidspunkt, og «mens» viser at handlinger skjer samtidig."
         }
       ],
       "payload": {
@@ -2965,7 +3023,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Vi kjøper mat"
+                "value": "Matkjøp klokka ti, avreise klokka elleve: Vi kjøper mat"
               },
               {
                 "kind": "text",
@@ -2992,7 +3050,7 @@
               },
               {
                 "kind": "text",
-                "value": "vi kjører til hytta. Vi lager middag"
+                "value": "vi kjører til hytta. Middag ved ankomst: Vi lager middag"
               },
               {
                 "kind": "text",
@@ -3019,7 +3077,7 @@
               },
               {
                 "kind": "text",
-                "value": "vi kommer fram. Maja sjekker butikken"
+                "value": "vi kommer fram. Samtidig: Maja sjekker butikken"
               },
               {
                 "kind": "text",
@@ -3061,13 +3119,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each sentence with fordi when the weather explains the action and selv om when the action happens despite the weather."
+          "value": "Fill in the conjunction that shows a known reason or that the action happens despite an obstacle."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Fordi explains why the action occurs; selv om marks an action that occurs despite the stated obstacle."
+          "value": "«Fordi» viser grunnen til handlingen. «Selv om» viser at den skjer til tross for en hindring."
         }
       ],
       "payload": {
@@ -3077,7 +3135,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Vi blir inne"
+                "value": "Det regner, så vi blir inne. Vi blir inne"
               },
               {
                 "kind": "text",
@@ -3103,7 +3161,7 @@
               },
               {
                 "kind": "text",
-                "value": "det regner. De går en liten tur"
+                "value": "det regner. Det regner, men de går tur likevel. De går en liten tur"
               },
               {
                 "kind": "text",
@@ -3129,7 +3187,7 @@
               },
               {
                 "kind": "text",
-                "value": "det regner. Vi tar med støvler"
+                "value": "det regner. Stien er våt etter regnet. Vi tar med støvler"
               },
               {
                 "kind": "text",
@@ -3170,7 +3228,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Read the plan descriptions. Select the option that marks each complete dependent clause beginning with the two-word conjunction selv om. The whole expression belongs together."
+          "value": "Mark each complete «selv om» clause."
         }
       ],
       "explanation": null,
@@ -3178,25 +3236,25 @@
         "options": [
           {
             "option_id": "conjunction-only",
-            "text": "Jonas pakker regnjakka [selv om] han håper på sol; [Selv om] det regner, går de en liten tur.",
-            "why": "The two-word conjunction is marked, but the rest of each dependent clause is missing."
+            "text": "Jonas pakker [regnjakka selv om han] håper på sol; [Selv om det regner], går de en liten tur.",
+            "why": "The first marked span includes part of the main clause and omits part of the dependent clause."
           },
           {
             "option_id": "first-word-only",
-            "text": "Jonas pakker regnjakka [selv] om han håper på sol; [Selv] om det regner, går de en liten tur.",
-            "why": "Only selv is marked, so the conjunction is split and the clauses are not identified."
+            "text": "Jonas pakker regnjakka selv om [han håper på sol]; Selv om [det regner], går de en liten tur.",
+            "why": "These spans omit the conjunction that introduces each dependent clause."
           },
           {
             "option_id": "complete-selv-om-clauses",
             "text": "Jonas pakker regnjakka [selv om han håper på sol]; [Selv om det regner], går de en liten tur.",
-            "why": "Each marked span includes both words of selv om and the complete clause that follows."
+            "why": "Each span contains the complete conjunction and dependent clause."
           }
         ],
         "answer_id": "complete-selv-om-clauses",
         "stem": [
           {
             "kind": "text",
-            "value": "Jonas pakker regnjakka selv om han håper på sol. Selv om det regner, går de en liten tur. Which option is correct?"
+            "value": "Jonas pakker regnjakka selv om han håper på sol. Selv om det regner, går de en liten tur."
           }
         ]
       }
@@ -3209,13 +3267,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each sentence with at for reported information and om for an unresolved indirect yes-or-no question."
+          "value": "Fill in «at» or «om» where it fits."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "At introduces reported information; om introduces an unresolved indirect yes/no question."
+          "value": "«At» innleder noe som blir fortalt. «Om» innleder et indirekte ja/nei-spørsmål."
         }
       ],
       "payload": {
@@ -3225,7 +3283,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Jeg vet"
+                "value": "Jeg kjenner svaret: Butikken er åpen. Jeg vet"
               },
               {
                 "kind": "text",
@@ -3251,7 +3309,7 @@
               },
               {
                 "kind": "text",
-                "value": "butikken er åpen. Jeg vet ikke"
+                "value": "butikken er åpen. Ingen har fortalt meg åpningstida. Jeg vet ikke"
               },
               {
                 "kind": "text",
@@ -3344,10 +3402,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each bicycle-plan sentence with the conjunction matching its single meaning: reported content, reason, condition, time, overlap, unexpected contrast, or an indirect yes-or-no question."
+          "value": "Fill in the conjunction that fits each sentence."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Velg bindeord etter forholdet mellom de to setningene."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -3417,7 +3480,7 @@
               },
               {
                 "kind": "text",
-                "value": "det regner. De kan sykle til kafeen"
+                "value": "det regner. De vet ennå ikke om veien er åpen. De kan sykle til kafeen"
               },
               {
                 "kind": "text",
@@ -3448,7 +3511,7 @@
               },
               {
                 "kind": "text",
-                "value": "veien er åpen. De starter turen"
+                "value": "veien er åpen. Amina har avtalt å møte dem klokka ti, og de venter på henne. De starter turen"
               },
               {
                 "kind": "text",
@@ -3479,7 +3542,7 @@
               },
               {
                 "kind": "text",
-                "value": "Amina kommer fram. De hører på radio"
+                "value": "Amina kommer fram. På den lange strekningen hører de på radio"
               },
               {
                 "kind": "text",
@@ -3494,12 +3557,11 @@
               "at",
               "fordi",
               "hvis",
-              "når",
               "mens",
               "selv om",
               "om"
             ],
-            "answer_index": 4
+            "answer_index": 3
           },
           {
             "kind": "span",
@@ -3587,7 +3649,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Read Amina’s message. Select the option that marks every complete dependent clause, including its introductory conjunction, and links each clause to the main event or message part it completes or modifies. Clause-internal word order is not scored."
+          "value": "Choose the marking that shows all the subordinate clauses and how they connect to the main clause."
         }
       ],
       "explanation": null,
@@ -3596,24 +3658,465 @@
           {
             "option_id": "conjunctions-only",
             "text": "Amina sier [at] de sykler på søndag. Henrik tar med en regnjakke [fordi] værmeldingen melder regn. [Hvis] kafeen er åpen, stopper de [når] de kommer fram. De hører på radio [mens] de sykler, [selv om] det regner.",
-            "why": "Only the conjunctions are marked, so none of the dependent clauses is complete."
+            "why": "Her er bare bindeordene markert."
           },
           {
             "option_id": "all-boundaries-and-functions",
-            "text": "Amina sier [at de sykler på søndag] — reported content; Henrik tar med en regnjakke [fordi værmeldingen melder regn] — reason; [Hvis kafeen er åpen] — condition for stopping; stopper de [når de kommer fram] — time of stopping; De hører på radio [mens de sykler] — overlapping actions; De hører på radio [selv om det regner] — unexpected contrast.",
-            "why": "Every dependent clause is complete, and each clause is linked to the correct main event and function."
+            "text": "Amina sier [at de sykler på søndag] — det hun forteller; Henrik tar med en regnjakke [fordi værmeldingen melder regn] — grunn; [Hvis kafeen er åpen] — vilkår for stopp; de stopper [når de kommer fram] — tidspunkt for stopp; de hører på radio [mens de sykler] — samtidige handlinger; de hører på radio [selv om det regner] — uventet motsetning.",
+            "why": "Alle leddsetningene er hele og knyttet til riktig funksjon."
           },
           {
             "option_id": "wrong-functions",
-            "text": "Amina sier [at de sykler på søndag] — reason; Henrik tar med en regnjakke [fordi værmeldingen melder regn] — reported content; [Hvis kafeen er åpen] — time of stopping; stopper de [når de kommer fram] — condition; De hører på radio [mens de sykler] — unexpected contrast; De hører på radio [selv om det regner] — overlapping actions.",
-            "why": "Several clause boundaries are marked, but their functions and links to the main events are incorrectly assigned."
+            "text": "Amina sier [at de sykler på søndag] — grunn; Henrik tar med en regnjakke [fordi værmeldingen melder regn] — det han forteller; [Hvis kafeen er åpen] — tidspunkt for stopp; de stopper [når de kommer fram] — vilkår; de hører på radio [mens de sykler] — uventet motsetning; de hører på radio [selv om det regner] — samtidige handlinger.",
+            "why": "Leddsetningene er delt riktig, men forholdet mellom dem og hovedsetningene er feil."
           }
         ],
         "answer_id": "all-boundaries-and-functions",
         "stem": [
           {
             "kind": "text",
-            "value": "Amina sier at de sykler på søndag. Henrik tar med en regnjakke fordi værmeldingen melder regn. Hvis kafeen er åpen, stopper de når de kommer fram. De hører på radio mens de sykler, selv om det regner. Which option is correct?"
+            "value": "Amina sier at de sykler på søndag. Henrik tar med en regnjakke fordi værmeldingen melder regn. Hvis kafeen er åpen, stopper de når de kommer fram. De hører på radio mens de sykler, selv om det regner."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_at_reported_content",
+      "operation": "recall_fill",
+      "objective_id": "obj-subordinating-conjunctions-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Nora has an opinion about the train times. Fill in the conjunction that introduces what she thinks."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Verbet «tror» innleder det Nora tror."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Nora tror"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-at-1",
+            "options": [
+              "at",
+              "om",
+              "fordi"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "toget går klokka åtte."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_fordi_reason",
+      "operation": "recall_fill",
+      "objective_id": "obj-subordinating-conjunctions-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Leo's bike has a flat tyre, so he takes the bus. Fill in the conjunction that shows the reason."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Den andre setningen gir grunnen til at Leo tar bussen."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Leo tar bussen"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-fordi-1",
+            "options": [
+              "fordi",
+              "hvis",
+              "selv om"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "sykkelen har punktert."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_hvis_condition",
+      "operation": "recall_fill",
+      "objective_id": "obj-subordinating-conjunctions-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "The trip depends on whether the weather changes. Fill in the conjunction that expresses the condition."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Turen avhenger av om regnet gir seg."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Vi går en tur"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-hvis-1",
+            "options": [
+              "hvis",
+              "fordi",
+              "når"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "regnet stopper."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_time_relationships",
+      "operation": "recall_fill",
+      "objective_id": "obj-subordinating-conjunctions-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fill in the conjunctions in the sentences."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Før» viser hva som skjer først, «når» knytter en handling til et tidspunkt, og «mens» viser at handlinger skjer samtidig."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Døra låses klokka åtte, og Sara går fem minutter senere. Sara låser døra"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-time-1",
+            "options": [
+              "før",
+              "når",
+              "mens"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "hun går. Sara kommer fram klokka 12.05 og sender meldingen da. Hun sender en melding"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-time-2",
+            "options": [
+              "før",
+              "når",
+              "mens"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "hun kommer fram. De begynner begge klokka seks. Amir lager mat"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-time-3",
+            "options": [
+              "før",
+              "når",
+              "mens"
+            ],
+            "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "Sara dekker bordet."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_selv_om_contrast",
+      "operation": "recall_fill",
+      "objective_id": "obj-subordinating-conjunctions-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "It is cold, but they go for a walk anyway. Fill in the conjunction that fits."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "De går tur til tross for kulda."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "De går en tur"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-selv-om-1",
+            "options": [
+              "selv om",
+              "fordi",
+              "hvis"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "det er kaldt."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_om_indirect_question",
+      "operation": "recall_fill",
+      "objective_id": "obj-subordinating-conjunctions-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Emil is unsure whether the library is open. Fill in the conjunction in the indirect question."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Vet ikke» viser at Emil er usikker på om biblioteket er åpent."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Emil vet ikke"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-om-1",
+            "options": [
+              "om",
+              "at",
+              "når"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "biblioteket er åpent."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_clause_boundary",
+      "operation": "choose",
+      "objective_id": "obj-subordinating-conjunctions-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Mark the whole subordinate clause: «Ida tar med kaffe fordi kiosken er stengt.»"
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "boundary-conjunction",
+            "text": "[Ida tar med kaffe fordi kiosken] er stengt.",
+            "why": "The marked span crosses the boundary between the main and dependent clauses."
+          },
+          {
+            "option_id": "boundary-dependent",
+            "text": "Ida tar med kaffe [fordi kiosken er stengt].",
+            "why": "The brackets mark the complete dependent clause."
+          },
+          {
+            "option_id": "boundary-whole",
+            "text": "Ida [tar med kaffe fordi kiosken er] stengt.",
+            "why": "The marked span omits the start of the dependent clause and includes part of the main clause."
+          }
+        ],
+        "answer_id": "boundary-dependent",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Ida tar med kaffe fordi kiosken er stengt."
           }
         ]
       }
@@ -3636,7 +4139,14 @@
         "identify_selv_om_clause",
         "contrast_at_and_om",
         "build_bicycle_plan_connections",
-        "mark_dependent_clauses_in_bicycle_message"
+        "mark_dependent_clauses_in_bicycle_message",
+        "review_at_reported_content",
+        "review_fordi_reason",
+        "review_hvis_condition",
+        "review_time_relationships",
+        "review_selv_om_contrast",
+        "review_om_indirect_question",
+        "review_clause_boundary"
       ]
     }
   ],

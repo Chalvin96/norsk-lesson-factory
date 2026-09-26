@@ -1,0 +1,429 @@
+- handle: notice-known-singular-nouns
+  op: choose
+  objective: obj-definite-articles-01
+  bloom: understand
+  prompt_md: "Velg forklaringen som passer til dialogen."
+  derived_from:
+  - section_id: checkpoint-noticing-known-things
+  stem_md: 'Nora: Kan du gi meg koppen, boka og posen?
+
+    Amir: Ja, her er de.
+
+    '
+  options:
+  - id: known-but-indefinite
+    text: The objects are identifiable, but en, ei or et must still stand before each noun.
+    correct: false
+    why: In these simple noun phrases, the definite ending replaces the indefinite article.
+  - id: known-particular-objects
+    text: Koppen, boka and posen identify particular objects that Nora and Amir can distinguish in the
+      situation.
+    correct: true
+    why: The dialogue treats each noun as an identifiable object, so Norwegian marks definiteness with
+      a noun ending.
+  - id: first-mentions
+    text: The three nouns introduce objects that Nora and Amir have not identified.
+    correct: false
+    why: This reading confuses a later reference to an identifiable object with the first mention of an
+      unspecified object.
+- handle: form-definite-singular-endings
+  op: recall_fill
+  objective: obj-definite-articles-01
+  bloom: apply
+  prompt_md: "Fyll inn bestemt entall i hver setning."
+  explanation_md: "Formene er «stolen», «boka» og «kartet»."
+  derived_from:
+  - section_id: checkpoint-forming-definite-singular-nouns
+  audio_target: I rommet står stolen. Der ligger boka. I veska ligger kartet.
+  segments:
+  - text_md: 'I rommet står '
+  - blank_id: singular-masculine
+    options:
+    - en stol
+    - stolen
+    - stolene
+    answer_index: 1
+  - text_md: '. Der ligger '
+  - blank_id: singular-feminine
+    options:
+    - bøker
+    - ei bok
+    - boka
+    answer_index: 2
+  - text_md: '. I veska ligger '
+  - blank_id: singular-neuter
+    options:
+    - kartet
+    - et kart
+    - kartene
+    answer_index: 0
+  - text_md: .
+- handle: choose-singular-definiteness-from-context
+  op: choose
+  objective: obj-definite-articles-01
+  bloom: understand
+  prompt_md: "Velg setningsparet som viser overgangen fra noe nytt til noe kjent."
+  derived_from:
+  - section_id: checkpoint-choosing-meaning-not-only-endings
+  stem_md: "En lærer peker ut en ting i gangen og viser senere til den samme tingen."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lærer
+      text_md: «Jeg ser noe nytt i gangen.»
+    - speaker: Elev
+      text_md: «Hva mener du?»
+    - speaker: Lærer
+      text_md: «Den gjenstanden vi nå snakker om, er våt.»
+  options:
+  - id: known-then-new
+    text: I gangen henger jakka. Ei jakke er våt.
+    correct: false
+    why: This presents the jacket as known before introducing it as an unspecified object.
+  - id: new-throughout
+    text: I gangen henger ei jakke. Ei jakke er våt.
+    correct: false
+    why: The second indefinite phrase can introduce another jacket instead of referring clearly to the
+      first one.
+  - id: new-then-known
+    text: I gangen henger ei jakke. Jakka er våt.
+    correct: true
+    why: The first sentence introduces a jacket, and the second identifies that same jacket with the definite
+      form.
+- handle: form-definite-plural-endings
+  op: recall_fill
+  objective: obj-definite-articles-01
+  bloom: apply
+  prompt_md: "Fyll inn bestemt flertall i hver setning."
+  explanation_md: "Formene for de bestemte gruppene er «koppene», «stolene», «bøkene», «eplene» og «posene»."
+  derived_from:
+  - section_id: checkpoint-forming-definite-plural-nouns
+  audio_target: Mellom koppene står vasen. Ved døra står stolene. På bordet ligger bøkene. I bilen ligger
+    eplene. Ved vinduet står posene.
+  segments:
+  - text_md: 'Mellom '
+  - blank_id: plural-cups
+    options:
+    - koppen
+    - kopper
+    - koppene
+    answer_index: 2
+  - text_md: ' står vasen. Ved døra står '
+  - blank_id: plural-chairs
+    options:
+    - stolene
+    - stolen
+    - stoler
+    answer_index: 0
+  - text_md: '. På bordet ligger '
+  - blank_id: plural-books
+    options:
+    - boka
+    - bøkene
+    - bøker
+    answer_index: 1
+  - text_md: '. I bilen ligger '
+  - blank_id: plural-apples
+    options:
+    - epler
+    - eplet
+    - eplene
+    answer_index: 2
+  - text_md: '. Ved vinduet står '
+  - blank_id: plural-bags
+    options:
+    - posene
+    - posen
+    - poser
+    answer_index: 0
+  - text_md: .
+- handle: match-definite-ending-to-number
+  op: recall_fill
+  objective: obj-definite-articles-01
+  bloom: understand
+  prompt_md: "Fyll inn bestemt form som passer til antallet."
+  explanation_md: >-
+    Entall og flertall krever ulike bestemte former: «koppen» eller «koppene», «boka» eller «bøkene»
+    og «eplet» eller «eplene».
+  derived_from:
+  - section_id: checkpoint-singular-or-plural-definite-form
+  audio_target: Koppen er blå. Koppene er blå. Boka ligger her. Bøkene ligger her. Eplet er grønt. Eplene
+    er grønne.
+  segments:
+  - text_md: 'Én kopp er identifisert:'
+  - blank_id: cup-singular
+    options:
+    - koppene
+    - koppen
+    answer_index: 1
+  - text_md: ' er blå. Flere kopper er identifisert:'
+  - blank_id: cup-plural
+    options:
+    - koppene
+    - koppen
+    answer_index: 0
+  - text_md: ' er blå. Én bok er identifisert:'
+  - blank_id: book-singular
+    options:
+    - bøkene
+    - boka
+    answer_index: 1
+  - text_md: ' ligger her. Flere bøker er identifisert:'
+  - blank_id: book-plural
+    options:
+    - boka
+    - bøkene
+    answer_index: 1
+  - text_md: ' ligger her. Ett eple er identifisert:'
+  - blank_id: apple-singular
+    options:
+    - eplet
+    - eplene
+    answer_index: 0
+  - text_md: ' er grønt. Flere epler er identifisert:'
+  - blank_id: apple-plural
+    options:
+    - eplene
+    - eplet
+    answer_index: 0
+  - text_md: ' er grønne.'
+- handle: use-definite-nouns-in_room_instructions
+  op: recall_fill
+  objective: obj-definite-articles-01
+  bloom: apply
+  prompt_md: "Fyll inn bestemt form av hver kjent ting eller gruppe."
+  explanation_md: >-
+    Inventaret viser hvilke ting det gjelder. Antallet og substantivmønsteret avgjør hvilken bestemt
+    form du skal bruke.
+  derived_from:
+  - section_id: guided-transfer-preparing-a-meeting-room
+  audio_target: Sett stolen ved bordet. Legg kartet på bordet. Sett posen under vinduet. Sett stolene
+    ved døra. Legg bøkene ved døra. Sett koppene ved vinduet.
+  segments:
+  - text_md: 'Inventar: én stol, ett kart, én pose, flere stoler, bøker og kopper. Én stol: Sett '
+  - blank_id: meeting-chair-singular
+    options:
+    - en stol
+    - stolen
+    - stolene
+    answer_index: 1
+  - text_md: ' ved bordet. Ett kart: Legg '
+  - blank_id: meeting-map-singular
+    options:
+    - et kart
+    - kartet
+    - kartene
+    answer_index: 1
+  - text_md: ' på bordet. Én pose: Sett '
+  - blank_id: meeting-bag-singular
+    options:
+    - posen
+    - en pose
+    - posene
+    answer_index: 0
+  - text_md: ' under vinduet. Flere stoler: Sett '
+  - blank_id: meeting-chairs-plural
+    options:
+    - stoler
+    - stolene
+    - stolen
+    answer_index: 1
+  - text_md: ' ved døra. Flere bøker: Legg '
+  - blank_id: meeting-books-plural
+    options:
+    - boka
+    - bøker
+    - bøkene
+    answer_index: 2
+  - text_md: ' ved døra. Flere kopper: Sett '
+  - blank_id: meeting-cups-plural
+    options:
+    - koppene
+    - kopper
+    - koppen
+    answer_index: 0
+  - text_md: ' ved vinduet.'
+- handle: retrieve-definite_noun_patterns
+  op: write
+  objective: obj-definite-articles-01
+  bloom: apply
+  prompt_md: >-
+    Ved piknikbordet i parken ligger én kurv, én bok (ei bok), ett eple, flere kopper og flere
+    poser. Skriv en melding på 25–45 ord til en venn og fortell hvor hver ting eller gruppe ligger,
+    så vennen kan hente dem. Bruk bestemt form av hvert substantiv.
+  derived_from:
+  - section_id: final-retrieval-and-review
+  response_language: 'no'
+  judge_prompt: Check gating criteria picnic-items, audience-purpose, word-bound, definite-forms and comprehensibility.
+    Record singular-ending-observation and plural-ending-observation diagnostically; criterion ids ending
+    in -observation never cause failure.
+  criteria:
+  - id: picnic-items
+    instruction: States a location for the basket, book, apple, cups and bags.
+  - id: audience-purpose
+    instruction: Functions as a message to a friend who needs to collect the listed things.
+  - id: word-bound
+    instruction: Contains 25–45 words.
+  - id: definite-forms
+    instruction: Uses the definite form of each established noun, not the indefinite form.
+  - id: comprehensibility
+    instruction: Uses standard Norwegian vocabulary and word order so a Norwegian reader can understand
+      and act on every location; a message that is not standard Norwegian fails this criterion.
+  - id: singular-ending-observation
+    instruction: 'Observation only: note which definite singular endings appear for the basket, book and
+      apple; never fail on this observation.'
+  - id: plural-ending-observation
+    instruction: 'Observation only: note which definite plural endings appear for the cups and bags; never
+      fail on this observation.'
+- handle: review_form-definite-singular-endings
+  op: recall_fill
+  objective: obj-definite-articles-01
+  bloom: apply
+  prompt_md: "Fyll inn bestemt entall for hver kjente ting."
+  explanation_md: "Formene er «døra», «lampen» og «vinduet»."
+  derived_from:
+  - section_id: checkpoint-forming-definite-singular-nouns
+  audio_target: Ved inngangen står døra. På hylla står lampen. Foran vinduet ligger teppet.
+  segments:
+  - text_md: 'Ved inngangen står '
+  - blank_id: singular-door
+    options:
+    - dører
+    - døra
+    - ei dør
+    answer_index: 1
+  - text_md: '. På hylla står '
+  - blank_id: singular-lamp
+    options:
+    - lamper
+    - en lampe
+    - lampen
+    answer_index: 2
+  - text_md: '. Foran '
+  - blank_id: singular-window
+    options:
+    - vinduet
+    - vinduer
+    - et vindu
+    answer_index: 0
+  - text_md: ' ligger teppet.'
+- handle: review_choose-singular-definiteness-from-context
+  op: choose
+  objective: obj-definite-articles-01
+  bloom: understand
+  prompt_md: "Velg setningsparet som først introduserer en ny ting og deretter viser til den samme tingen."
+  derived_from:
+  - section_id: checkpoint-choosing-meaning-not-only-endings
+  stem_md: "Nora forteller at hun fant en ting på kjøkkenet, og sier senere til Amir hvor den ligger."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Jeg fant noe på kjøkkenet.»
+    - speaker: Amir
+      text_md: «Hva fant du?»
+    - speaker: Nora
+      text_md: «Det jeg fant, står nå ved vasken.»
+  options:
+  - id: known-throughout
+    text: På kjøkkenet står koppen. Koppen står ved vasken.
+    correct: false
+    why: The first sentence treats the cup as already identified instead of introducing it as new.
+  - id: new-then-known
+    text: På kjøkkenet finner jeg en kopp. Koppen står ved vasken.
+    correct: true
+    why: En kopp introduces one cup, while Koppen refers back to that identified cup.
+  - id: new-throughout
+    text: På kjøkkenet finner jeg en kopp. En kopp står ved vasken.
+    correct: false
+    why: The second indefinite phrase does not clearly identify the same cup.
+- handle: review_form-definite-plural-endings
+  op: recall_fill
+  objective: obj-definite-articles-01
+  bloom: apply
+  prompt_md: "Fyll inn bestemt flertall for hver kjente gruppe."
+  explanation_md: "Formene er «dørene», «lampene», «teppene» og «nøklene»."
+  derived_from:
+  - section_id: checkpoint-forming-definite-plural-nouns
+  audio_target: Ved gangen står dørene. På veggen henger lampene. I stua ligger teppene. På benken ligger
+    nøklene.
+  segments:
+  - text_md: 'Ved gangen står '
+  - blank_id: plural-doors
+    options:
+    - døra
+    - dører
+    - dørene
+    answer_index: 2
+  - text_md: '. På veggen henger '
+  - blank_id: plural-lamps
+    options:
+    - lamper
+    - lampene
+    - lampen
+    answer_index: 1
+  - text_md: '. I stua ligger '
+  - blank_id: plural-rugs
+    options:
+    - teppet
+    - tepper
+    - teppene
+    answer_index: 2
+  - text_md: '. På benken ligger '
+  - blank_id: plural-keys
+    options:
+    - nøkler
+    - nøklene
+    - nøkkelen
+    answer_index: 1
+  - text_md: .
+- handle: review_match-definite-ending-to-number
+  op: recall_fill
+  objective: obj-definite-articles-01
+  bloom: understand
+  prompt_md: "Fyll inn bestemt form som passer til antallet."
+  explanation_md: >-
+    Entall og flertall krever ulike bestemte former: «døra» eller «dørene», «lampen» eller «lampene»
+    og «nøkkelen» eller «nøklene».
+  derived_from:
+  - section_id: checkpoint-singular-or-plural-definite-form
+  audio_target: Døra er åpen. Dørene er åpne. Lampen lyser. Lampene lyser. Nøkkelen ligger her. Nøklene
+    ligger her.
+  segments:
+  - text_md: 'Én identifisert dør:'
+  - blank_id: door-singular
+    options:
+    - dørene
+    - døra
+    answer_index: 1
+  - text_md: ' er åpen. Flere identifiserte dører:'
+  - blank_id: door-plural
+    options:
+    - døra
+    - dørene
+    answer_index: 1
+  - text_md: ' er åpne. Én identifisert lampe:'
+  - blank_id: lamp-singular
+    options:
+    - lampene
+    - lampen
+    answer_index: 1
+  - text_md: ' lyser. Flere identifiserte lamper:'
+  - blank_id: lamp-plural
+    options:
+    - lampene
+    - lampen
+    answer_index: 0
+  - text_md: ' lyser. Én identifisert nøkkel:'
+  - blank_id: key-singular
+    options:
+    - nøklene
+    - nøkkelen
+    answer_index: 1
+  - text_md: ' ligger her. Flere identifiserte nøkler:'
+  - blank_id: key-plural
+    options:
+    - nøkkelen
+    - nøklene
+    answer_index: 1
+  - text_md: ' ligger her.'

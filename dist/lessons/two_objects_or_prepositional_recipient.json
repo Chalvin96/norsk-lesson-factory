@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "two_objects_or_prepositional_recipient",
   "kind": "grammar",
   "language": "nb-NO",
@@ -80,6 +80,26 @@
     {
       "kind": "exercise",
       "id": "recall_two_recipient_frames"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_identify_recipient_theme"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_order_without_til"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_order_with_til"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_preserve_transfer_across_frames"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_choose_frame_from_context"
     }
   ],
   "sections": [
@@ -1116,7 +1136,7 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Gi til Nora nøkkelen."
+                  "value": "Gi til Nora nøkkelen."
                 }
               ],
               "en": [
@@ -1124,7 +1144,8 @@
                   "kind": "text",
                   "value": "Give to Nora the key."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "choosing-the-frame-block-10"
@@ -1188,7 +1209,7 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Send adressen meg."
+                  "value": "Send adressen meg."
                 }
               ],
               "en": [
@@ -1196,7 +1217,8 @@
                   "kind": "text",
                   "value": "Send the address me."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "choosing-the-frame-block-15"
@@ -1310,24 +1332,14 @@
           "id": "choosing-the-frame-block-21"
         },
         {
-          "kind": "paragraph",
-          "spans": [
-            {
-              "kind": "text",
-              "value": "Not:"
-            }
-          ],
-          "id": "choosing-the-frame-block-22"
-        },
-        {
           "kind": "examples",
           "items": [
             {
-              "id": "choosing-the-frame-block-23-item-1",
+              "id": "choosing-the-frame-block-22-item-1",
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Send adressen meg."
+                  "value": "Send adressen meg."
                 }
               ],
               "en": [
@@ -1335,10 +1347,11 @@
                   "kind": "text",
                   "value": "Send the address me."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
-          "id": "choosing-the-frame-block-23"
+          "id": "choosing-the-frame-block-22"
         }
       ]
     },
@@ -2101,38 +2114,43 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Read these Norwegian office sentences and choose the interpretation that correctly identifies the recipient and the theme. The recipient is the person who receives something; the theme is the thing given or sent. Jonas gir Nora nøkkelen. (Jonas gives Nora the key.) Jeg sender henne boka. (I send her the book.)"
+          "value": "Choose the correct description."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Nora får nøkkelen, og henne viser til personen som får boka."
+        }
+      ],
       "payload": {
         "options": [
           {
-            "option_id": "roles-reversed",
-            "text": "Nøkkelen and boka are recipients; Nora and henne are themes.",
-            "why": "The objects are themes, not recipients, in these sentences."
+            "option_id": "first-sentence-reversed",
+            "text": "Nora og boka er mottakere; nøkkelen og «henne» er temaer.",
+            "why": "Dette identifiserer rollene riktig bare i den første setningen."
           },
           {
-            "option_id": "mixed-roles",
-            "text": "Nora is a recipient and nøkkelen is a recipient; henne and boka are themes.",
-            "why": "Nøkkelen is the theme in the first sentence, and henne is the recipient in the second."
-          },
-          {
-            "option_id": "no-recipient",
-            "text": "The elements after gi and sende are both themes, so no recipient is identified.",
-            "why": "The first element after the verb identifies the recipient."
+            "option_id": "second-sentence-reversed",
+            "text": "Nøkkelen og «henne» er mottakere; Nora og boka er temaer.",
+            "why": "Dette identifiserer rollene riktig bare i den andre setningen."
           },
           {
             "option_id": "roles-correct",
-            "text": "Nora and henne are recipients; nøkkelen and boka are themes.",
-            "why": "Nora and henne are the first elements after gir or sender; nøkkelen and boka follow as themes."
+            "text": "Nora og henne er mottakere; nøkkelen og boka er temaer.",
+            "why": "Nora og «henne» mottar nøkkelen og boka."
+          },
+          {
+            "option_id": "roles-reversed",
+            "text": "Nora og henne er temaer; nøkkelen og boka er mottakere.",
+            "why": "Dette bytter om på personene som mottar noe, og tingene som blir gitt."
           }
         ],
         "answer_id": "roles-correct",
         "stem": [
           {
             "kind": "text",
-            "value": "Which option correctly identifies the recipient and the theme in both sentences?"
+            "value": "På kontoret gir Jonas Nora nøkkelen. Jeg sender henne boka."
           }
         ]
       }
@@ -2145,44 +2163,44 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Match each Norwegian sentence with the sentence describing the same transfer in the other frame. Track both the recipient and the theme."
+          "value": "Match each sentence with two objects to the expression with «til» that has the same recipient and item. Identify the person who gets the thing and the thing being transferred."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "The two-object frame places recipient before theme; the til frame places the theme before til + recipient."
+          "value": "I setningen med to objekter står mottakeren før temaet. Med til kommer temaet før til + mottaker. Den som gir, gjentas ikke."
         }
       ],
       "payload": {
         "left": [
           {
-            "left_id": "left-1",
+            "left_id": "left-key-to-nora",
             "text": "Jonas gir Nora nøkkelen."
           },
           {
-            "left_id": "left-2",
-            "text": "Mari sender Jonas adressen."
+            "left_id": "left-key-to-jonas",
+            "text": "Nora gir Jonas nøkkelen."
           }
         ],
         "right": [
           {
-            "right_id": "right-1",
-            "text": "Jonas gir nøkkelen til Nora."
+            "right_id": "right-key-to-nora",
+            "text": "nøkkelen til Nora"
           },
           {
-            "right_id": "right-2",
-            "text": "Mari sender adressen til Jonas."
+            "right_id": "right-key-to-jonas",
+            "text": "nøkkelen til Jonas"
           }
         ],
         "pairs": [
           {
-            "left_id": "left-1",
-            "right_id": "right-1"
+            "left_id": "left-key-to-nora",
+            "right_id": "right-key-to-nora"
           },
           {
-            "left_id": "left-2",
-            "right_id": "right-2"
+            "left_id": "left-key-to-jonas",
+            "right_id": "right-key-to-jonas"
           }
         ]
       }
@@ -2195,38 +2213,43 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Choose one complete Norwegian sentence. Its first clause must use verb + recipient + theme without til, and its second clause must use verb + theme + til + recipient. Keep both clauses correctly ordered."
+          "value": "Choose the correctly formed message."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Uten til står mottaker før tema. Med til står tema før til + mottaker."
+        }
+      ],
       "payload": {
         "options": [
           {
-            "option_id": "til-before-theme",
-            "text": "Gi til Nora nøkkelen, og send bildet til meg.",
-            "why": "The first clause incorrectly puts til + recipient before the theme."
-          },
-          {
-            "option_id": "recipient-first-twice",
-            "text": "Gi Nora nøkkelen, og send meg bildet.",
-            "why": "The second clause uses recipient before theme instead of theme before til + recipient."
+            "option_id": "wrong-first-frame",
+            "text": "Gi nøkkelen Nora, og send bildet til meg.",
+            "why": "Without til, the first clause puts the theme before the recipient."
           },
           {
             "option_id": "both-licensed",
             "text": "Gi Nora nøkkelen, og send bildet til meg.",
-            "why": "The first clause puts the recipient before the theme without til; the second puts the theme before til + recipient."
+            "why": "The first clause has recipient before theme; the second has theme before til + recipient."
           },
           {
-            "option_id": "mixed-second-frame",
+            "option_id": "til-before-theme",
+            "text": "Gi til Nora nøkkelen, og send bildet til meg.",
+            "why": "The first clause puts til + recipient before the theme."
+          },
+          {
+            "option_id": "recipient-first-with-til",
             "text": "Gi Nora nøkkelen, og send til meg bildet.",
-            "why": "The second clause mixes til + recipient with the wrong element order."
+            "why": "The second clause puts til + recipient before the theme."
           }
         ],
         "answer_id": "both-licensed",
         "stem": [
           {
             "kind": "text",
-            "value": "Which complete sentence uses both licensed frames in the required order?"
+            "value": "Before the meeting: Nora skal få nøkkelen. Jeg skal få bildet. Use the pattern without «til» first, then the pattern with «til»."
           }
         ]
       }
@@ -2239,15 +2262,20 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Rewrite the Norwegian sentence as a til-recipient sentence. Keep Mari, Jonas, the address, and the sending event unchanged. Use theme + til + recipient order. Source: Mari sender Jonas adressen. (Mari sends Jonas the address.)"
+          "value": "Rewrite the sentence with «til»."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Temaet står før til + mottaker."
+        }
+      ],
       "payload": {
         "tokens": [
           {
-            "token_id": "tok-mari",
-            "text": "Mari",
+            "token_id": "tok-jonas",
+            "text": "Jonas",
             "fixed": false
           },
           {
@@ -2256,8 +2284,8 @@
             "fixed": false
           },
           {
-            "token_id": "tok-adressen",
-            "text": "adressen",
+            "token_id": "tok-en-melding",
+            "text": "en melding",
             "fixed": false
           },
           {
@@ -2266,19 +2294,35 @@
             "fixed": false
           },
           {
-            "token_id": "tok-jonas",
-            "text": "Jonas.",
+            "token_id": "tok-nora",
+            "text": "Nora.",
             "fixed": false
           }
         ],
         "answer_order": [
-          "tok-mari",
+          "tok-jonas",
           "tok-sender",
-          "tok-adressen",
+          "tok-en-melding",
           "tok-til",
-          "tok-jonas"
+          "tok-nora"
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Utgangspunkt: Jonas sender Nora en melding. Skriv setningen om med «til»."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2288,15 +2332,20 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Rewrite the Norwegian sentence without til. Keep Jonas, henne, the key, and the giving event unchanged. Put the recipient before the theme. Source: Jonas gir nøkkelen til henne. (Jonas gives the key to her.)"
+          "value": "Rewrite the sentence without «til»."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Uten til står mottakeren før temaet."
+        }
+      ],
       "payload": {
         "tokens": [
           {
-            "token_id": "tok-jonas",
-            "text": "Jonas",
+            "token_id": "tok-maja",
+            "text": "Maja",
             "fixed": false
           },
           {
@@ -2305,23 +2354,39 @@
             "fixed": false
           },
           {
-            "token_id": "tok-henne",
-            "text": "henne",
+            "token_id": "tok-jonas-recipient",
+            "text": "Jonas",
             "fixed": false
           },
           {
-            "token_id": "tok-nokkelen",
-            "text": "nøkkelen.",
+            "token_id": "tok-boka",
+            "text": "boka.",
             "fixed": false
           }
         ],
         "answer_order": [
-          "tok-jonas",
+          "tok-maja",
           "tok-gir",
-          "tok-henne",
-          "tok-nokkelen"
+          "tok-jonas-recipient",
+          "tok-boka"
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Utgangspunkt: Maja gir boka til Jonas. Skriv setningen om uten «til»."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2331,10 +2396,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete Mari's reply in the office exchange. Nora says: Tusen takk. Kan du sende Jonas en melding også? Mari answers: Ja, jeg ... med en gang. Build the complete reply using theme + til + recipient order, and use ham for Jonas."
+          "value": "Build Jonas's full reply with «til». Use «henne» for Mari."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Et bilde er temaet, og til henne viser at Mari er mottakeren."
+        }
+      ],
       "payload": {
         "tokens": [
           {
@@ -2353,13 +2423,13 @@
             "fixed": false
           },
           {
-            "token_id": "tok-en-1",
-            "text": "en",
+            "token_id": "tok-et",
+            "text": "et",
             "fixed": false
           },
           {
-            "token_id": "tok-melding",
-            "text": "melding",
+            "token_id": "tok-bilde",
+            "text": "bilde",
             "fixed": false
           },
           {
@@ -2368,23 +2438,18 @@
             "fixed": false
           },
           {
-            "token_id": "tok-ham",
-            "text": "ham",
+            "token_id": "tok-henne",
+            "text": "henne",
             "fixed": false
           },
           {
-            "token_id": "tok-med",
-            "text": "med",
+            "token_id": "tok-i",
+            "text": "i",
             "fixed": false
           },
           {
-            "token_id": "tok-en-2",
-            "text": "en",
-            "fixed": false
-          },
-          {
-            "token_id": "tok-gang",
-            "text": "gang.",
+            "token_id": "tok-kveld",
+            "text": "kveld.",
             "fixed": false
           }
         ],
@@ -2392,15 +2457,39 @@
           "tok-ja",
           "tok-jeg",
           "tok-sender",
-          "tok-en-1",
-          "tok-melding",
+          "tok-et",
+          "tok-bilde",
           "tok-til",
-          "tok-ham",
-          "tok-med",
-          "tok-en-2",
-          "tok-gang"
+          "tok-henne",
+          "tok-i",
+          "tok-kveld"
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Nora",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Kan du sende Mari et bilde også?"
+                }
+              ]
+            },
+            {
+              "speaker": "Jonas",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Ja, jeg … i kveld."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2410,10 +2499,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "At a hotel, the receptionist gives the guest the receipt. Build one complete Norwegian sentence using the two-object frame: verb + recipient + theme, without til."
+          "value": "Put together the whole sentence in Norwegian without «til»."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Uten til kommer gjesten før kvitteringen."
+        }
+      ],
       "payload": {
         "tokens": [
           {
@@ -2443,7 +2537,32 @@
           "tok-gjesten",
           "tok-kvitteringen"
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Resepsjonisten",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Vær så god, her er kvitteringen.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Gjesten",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Tusen takk!»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2453,27 +2572,27 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "In Norwegian, write four short sentences about Lea finding Emil's backpack at a café and contacting him. Mention the backpack, a message, the number, and the receipt. Alternate the frames exactly: sentences 1 and 3 use verb + recipient + theme without til; sentences 2 and 4 use verb + theme + til + recipient. Make clear who receives each item, and use original café wording throughout."
+          "value": "Message from Emil: «Hei, Lea! Jeg glemte ryggsekken min på Kafé Sol. Kan du be den ansatte sende meg en melding? Send også telefonnummeret til meg. Den ansatte kan gi deg kvitteringen.» Write a message to the employee. Say that you are sending Emil the phone number. Ask the employee to send Emil a message about the backpack and give you the receipt. Use one sentence with two objects for the phone number and one sentence with «til» for the message."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 20,
-        "max_words": 50,
-        "judge_prompt": "Check exactly four Norwegian sentences against the task and report evidence for each criterion. Accept natural Bokmål wording and inflection for the listed items, including ryggsekken or sekken for the backpack and nummeret for the number. Require clear recipients and themes, the specified alternating frame order, and a new café context rather than copied office wording.",
+        "min_words": 25,
+        "max_words": 45,
+        "judge_prompt": "Evaluate criteria cafe-message-purpose, cafe-transfer-facts, cafe-recipient-frames as gating criteria. Report a verdict and evidence for every criterion id.",
         "criteria": [
           {
-            "id": "cafe-who-receives-what",
-            "instruction": "Makes it clear who receives each of the backpack, message, number, and receipt."
+            "id": "cafe-message-purpose",
+            "instruction": "The response is a Norwegian message to the café employee that explains what must be returned or sent and to whom, and asks the employee to give the receipt to the writer."
           },
           {
-            "id": "cafe-alternating-order",
-            "instruction": "Uses recipient before theme without til in sentences 1 and 3, and theme before til + recipient in sentences 2 and 4."
+            "id": "cafe-transfer-facts",
+            "instruction": "The response accurately uses the supplied facts about the backpack, message, phone number, and receipt without requiring invented transfer details. Lea herself sends Emil the phone number; the employee sends Emil a message about the backpack and gives Lea the receipt."
           },
           {
-            "id": "cafe-transfer-accuracy",
-            "instruction": "Uses accurate recipient–theme frame choice and ordering in the new café context."
+            "id": "cafe-recipient-frames",
+            "instruction": "The response explicitly demonstrates both a two-object frame for Lea sending Emil the phone number and a til-recipient frame for the employee sending the message about the backpack to Emil; pass only when the message shows who receives what in both frames."
           }
         ]
       }
@@ -2486,27 +2605,251 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Without looking back, write in Norwegian the two ordering patterns for gi and sende. Then write two new Norwegian sentences about one transfer, such as sending the address to the customer: first put the recipient before the theme without til; then put the theme before til + recipient. Keep the same recipient and theme in both sentences."
+          "value": "A classmate missed the explanation of the two recipient patterns. Write a note explaining both. Use the same transfer in both examples: the teacher sends the student a document, first without «til» and then with «til»."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 15,
-        "max_words": 45,
-        "judge_prompt": "Check the response against the task and report evidence for each criterion. Accept equivalent Norwegian wording for the labels recipient and theme, but require both structural orders and the Norwegian function words uten til and til. The two example sentences must describe the same new transfer and must not copy a complete sentence from the lesson.",
+        "min_words": 20,
+        "max_words": 40,
+        "judge_prompt": "Evaluate criteria note-audience-purpose, two-object-pattern, til-pattern, same-transfer-two-frames. Report a verdict and evidence for every criterion id. Add no requirements beyond those criteria.",
         "criteria": [
           {
+            "id": "note-audience-purpose",
+            "instruction": "The response is a Norwegian study note that helps the classmate understand the two recipient patterns."
+          },
+          {
             "id": "two-object-pattern",
-            "instruction": "States in Norwegian the pattern verb + mottaker + tema, uten til, or an equivalent Norwegian formulation."
+            "instruction": "The note explains or demonstrates that the recipient precedes the theme when til is absent."
           },
           {
             "id": "til-pattern",
-            "instruction": "States in Norwegian the pattern verb + tema + til + mottaker, or an equivalent Norwegian formulation."
+            "instruction": "The note explains or demonstrates that the theme precedes til + recipient."
           },
           {
             "id": "same-transfer-two-frames",
-            "instruction": "Produces two Norwegian sentences about the same transfer, with recipient before theme in the first and theme before til + recipient in the second."
+            "instruction": "The examples preserve læreren as sender, eleven as recipient, and dokumentet as theme in both frames."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_identify_recipient_theme",
+      "operation": "choose",
+      "objective_id": "obj-two-objects-or-prepositional-recipient-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Who receives the confirmation, and what is sent?"
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Til gjesten» viser mottakeren; «en bekreftelse» er det som sendes."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "confirmation-recipient",
+            "text": "Mottaker = en bekreftelse; tema = gjesten.",
+            "why": "Dette bytter om på mottakeren og det som blir sendt."
+          },
+          {
+            "option_id": "receptionist-recipient",
+            "text": "Mottaker = resepsjonisten; tema = en bekreftelse.",
+            "why": "Resepsjonisten sender bekreftelsen, men mottar den ikke."
+          },
+          {
+            "option_id": "guest-recipient",
+            "text": "Mottaker = gjesten; tema = en bekreftelse.",
+            "why": "Gjesten mottar bekreftelsen."
+          }
+        ],
+        "answer_id": "guest-recipient",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "På hotellet sender resepsjonisten en bekreftelse til gjesten."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_order_without_til",
+      "operation": "choose",
+      "objective_id": "obj-two-objects-or-prepositional-recipient-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the correct reply without «til»."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Uten til kommer sender, mottaker og tema i denne rekkefølgen."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "til-recipient-theme",
+            "text": "til deg kartet i kveld.",
+            "why": "This adds til but leaves the marked recipient before the theme."
+          },
+          {
+            "option_id": "recipient-theme",
+            "text": "deg kartet i kveld.",
+            "why": "Without til, the recipient deg comes before the theme kartet."
+          },
+          {
+            "option_id": "theme-recipient",
+            "text": "kartet deg i kveld.",
+            "why": "This puts the theme before an unmarked recipient."
+          }
+        ],
+        "answer_id": "recipient-theme",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Message from Sara: «Jeg trenger kartet før turen.» Reply: «Klart. Jeg sender …»"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_order_with_til",
+      "operation": "choose",
+      "objective_id": "obj-two-objects-or-prepositional-recipient-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the correct reply with «til»."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Med til står temaet før til + mottaker."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "til-recipient-theme",
+            "text": "til kunden kontrakten nå.",
+            "why": "This puts til + recipient before the theme."
+          },
+          {
+            "option_id": "recipient-til-theme",
+            "text": "kunden til kontrakten nå.",
+            "why": "This incorrectly marks the theme with til."
+          },
+          {
+            "option_id": "theme-til-recipient",
+            "text": "kontrakten til kunden nå.",
+            "why": "The theme kontrakten comes before til + recipient."
+          }
+        ],
+        "answer_id": "theme-til-recipient",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Message from Ali: «Kunden venter på kontrakten.» Reply: «Jeg sender …»"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_preserve_transfer_across_frames",
+      "operation": "choose",
+      "objective_id": "obj-two-objects-or-prepositional-recipient-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the sentence that describes the same transfer."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Når vi bytter mønster, endres rekkefølgen, men ikke hvem som får hva."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "wrong-til-order",
+            "text": "Vi gir til barnet maten.",
+            "why": "This preserves the roles but puts til + recipient before the theme."
+          },
+          {
+            "option_id": "same-transfer",
+            "text": "Vi gir maten til barnet.",
+            "why": "Barnet remains the recipient, and maten remains the theme."
+          },
+          {
+            "option_id": "roles-reversed",
+            "text": "Vi gir barnet til maten.",
+            "why": "This marks maten as though it were the recipient."
+          }
+        ],
+        "answer_id": "same-transfer",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Starting sentence: «Vi gir barnet maten.» Write the same action with «til»."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_choose_frame_from_context",
+      "operation": "choose",
+      "objective_id": "obj-two-objects-or-prepositional-recipient-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the reply with «til» that has the correct word order."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Med til står temaet før til + mottaker."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "mixed-order",
+            "text": "Jeg sender til Dina kartet først.",
+            "why": "«Kartet» er temaet, og «til Dina» er mottakeren. Med «til» står temaet først."
+          },
+          {
+            "option_id": "theme-first-til",
+            "text": "Jeg sender kartet til Dina først.",
+            "why": "Med «til» står temaet «adressen» før mottakeren."
+          },
+          {
+            "option_id": "recipient-first",
+            "text": "Jeg sender Dina kartet først.",
+            "why": "Her mangler «til», og mottakeren står før temaet."
+          }
+        ],
+        "answer_id": "theme-first-til",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Nora: «Hva sender du til Dina?» Jonas: «Et kart.»"
           }
         ]
       }
@@ -2525,7 +2868,12 @@
         "complete_office_transfers",
         "build_frame_from_transfer_context",
         "transfer_recipient_patterns_to_cafe_scene",
-        "recall_two_recipient_frames"
+        "recall_two_recipient_frames",
+        "review_identify_recipient_theme",
+        "review_order_without_til",
+        "review_order_with_til",
+        "review_preserve_transfer_across_frames",
+        "review_choose_frame_from_context"
       ]
     }
   ],

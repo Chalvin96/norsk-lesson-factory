@@ -1,0 +1,337 @@
+- handle: notice_indefinite_and_definite_groups
+  op: choose
+  objective: obj-noun-plurals-01
+  bloom: understand
+  prompt_md: "Nora lager en liste over kopper til møterommet. Først nevner hun kopper uten å vise til en bestemt gruppe. Senere viser Amir til gruppa som allerede er satt fram. Velg uttrykkene som passer til begge situasjonene."
+  derived_from:
+  - section_id: the-most-common-pattern-er-and-ene
+  stem_md: "Velg paret med riktig betydning i begge situasjonene."
+  options:
+  - id: both_definite
+    text: 'Først: koppene. Senere: koppene.'
+    correct: false
+    why: The first situation does not identify a particular group.
+  - id: reversed
+    text: 'Først: koppene. Senere: kopper.'
+    correct: false
+    why: The meanings are reversed.
+  - id: correct
+    text: 'Først: kopper. Senere: koppene.'
+    correct: true
+    why: kopper introduces an unspecified quantity; koppene refers to an identifiable group.
+  - id: both_indefinite
+    text: 'Først: kopper. Senere: kopper.'
+    correct: false
+    why: The second reference needs to identify the known group.
+- handle: form_regular_indefinite_plurals
+  op: recall_fill
+  objective: obj-noun-plurals-01
+  bloom: apply
+  prompt_md: "Skriv ubestemt flertall av hvert oppgitte substantiv."
+  explanation_md: Plural endings depend on gender and noun pattern; short neuter nouns often have zero
+    ending, while common irregular nouns change their stem.
+  derived_from:
+  - section_id: nouns-ending-in-an-unstressed-e
+  audio_target: Til møtet trenger vi flere stoler. Nora kjøper flere poser. Det står flere lamper i vinduet.
+    Vi trenger flere kopper.
+  segments:
+  - text_md: 'Entall: en stol. Til møtet trenger vi flere '
+  - blank_id: stol-indef
+    options:
+    - stolene
+    - stoler
+    answer_index: 1
+  - text_md: .
+  - text_md: ' Entall: en pose. Nora kjøper flere '
+  - blank_id: pose-indef
+    options:
+    - poser
+    - posene
+    answer_index: 0
+  - text_md: .
+  - text_md: ' Entall: en lampe. Det står flere '
+  - blank_id: lampe-indef
+    options:
+    - lampene
+    - lamper
+    answer_index: 1
+  - text_md: ' i vinduet.'
+  - text_md: ' Entall: en kopp. Vi trenger flere '
+  - blank_id: kopp-indef
+    options:
+    - kopper
+    - koppene
+    answer_index: 0
+  - text_md: .
+- handle: form_regular_definite_plurals
+  op: recall_fill
+  objective: obj-noun-plurals-01
+  bloom: apply
+  prompt_md: "Fullfør setningene med bestemt flertall av hvert substantiv. Det er snakk om en kjent gruppe."
+  explanation_md: A bestemt flertall names the whole known group and adds the bestemt flertall ending, unlike
+    an indefinite quantity.
+  derived_from:
+  - section_id: nouns-ending-in-an-unstressed-e
+  audio_target: Nora finner stolene i rommet. Nora har lagt posene på bordet. De nye lampene står her. Nora vasket koppene. Nå er de rene.
+  segments:
+  - text_md: 'Entall: en stol. Nora finner '
+  - blank_id: stol-def
+    options:
+    - stolerene
+    - stolene
+    answer_index: 1
+  - text_md: ' i rommet.'
+  - text_md: ' Entall: en pose. Nora har lagt '
+  - blank_id: pose-def
+    options:
+    - posene
+    - poser
+    answer_index: 0
+  - text_md: ' på bordet.'
+  - text_md: ' Entall: en lampe. De nye '
+  - blank_id: lampe-def
+    options:
+    - lamper
+    - lampene
+    answer_index: 1
+  - text_md: ' står her.'
+  - text_md: ' Entall: en kopp. Nora vasket '
+  - blank_id: kopp-def
+    options:
+    - koppene
+    - kopper
+    answer_index: 0
+  - text_md: '. Nå er de rene.'
+- handle: recognize_zero_ending_neuter_plurals
+  op: choose
+  objective: obj-noun-plurals-01
+  bloom: understand
+  prompt_md: "Nora teller møbler til møterommet. Velg setningen som sier at det er tre bord og to stoler."
+  derived_from:
+  - section_id: short-neuter-nouns-with-no-indefinite-plural-ending
+  stem_md: "Velg setningen med riktige flertallsformer."
+  options:
+  - id: er_plural
+    text: Det står tre border og to stoler i møterommet.
+    correct: false
+    why: bord does not take an -er ending in the plural.
+  - id: definite_singular
+    text: Det står tre bordet og to stoler i møterommet.
+    correct: false
+    why: bordet is the definite singular, which does not follow tre.
+  - id: correct
+    text: Det står tre bord og to stoler inne i møterommet.
+    correct: true
+    why: Short neuter nouns such as bord keep the same form in the ubestemt flertall, while stol takes
+      the -er plural.
+  - id: definite_plural
+    text: Det står tre bord og to stolene på gulvet i møterommet.
+    correct: false
+    why: stolene is the bestemt flertall, which does not follow to.
+- handle: produce_zero_ending_neuter_plurals
+  op: recall_fill
+  objective: obj-noun-plurals-01
+  bloom: apply
+  prompt_md: "Fullfør Amirs opptelling med ubestemt flertall av de korte intetkjønnsordene."
+  explanation_md: Short neuter nouns commonly take no ending in the ubestemt flertall, as in ett hus and
+    flere hus.
+  derived_from:
+  - section_id: short-neuter-nouns-with-no-indefinite-plural-ending
+  audio_target: 'Amir rapporterer: Det står tre bord og fem glass i rommet.'
+  segments:
+  - text_md: 'Amir rapporterer: Det står tre '
+  - blank_id: bord-zero
+    options:
+    - bord
+    - border
+    answer_index: 0
+  - text_md: ' og fem '
+  - blank_id: glass-zero
+    options:
+    - glasser
+    - glass
+    answer_index: 1
+  - text_md: ' i rommet.'
+- handle: recognize_common_irregular_plurals
+  op: match_pairs
+  objective: obj-noun-plurals-01
+  bloom: remember
+  prompt_md: "Koble hvert substantiv i entall til riktig flertallsform."
+  explanation_md: Noen flertallsformer endrer stammen. Koble hvert substantiv til riktig ubestemt eller bestemt flertallsform.
+  derived_from:
+  - section_id: some-common-nouns-change-inside-the-word
+  left:
+  - left_id: book-indefinite
+    text: ei/en bok → ubestemt flertall
+  - left_id: book-definite
+    text: ei/en bok → bestemt flertall
+  - left_id: man-indefinite
+    text: en mann → ubestemt flertall
+  - left_id: man-definite
+    text: en mann → bestemt flertall
+  - left_id: foot-indefinite
+    text: en fot → ubestemt flertall
+  - left_id: foot-definite
+    text: en fot → bestemt flertall
+  right:
+  - right_id: books-indefinite
+    text: bøker
+  - right_id: books-definite
+    text: bøkene
+  - right_id: men-indefinite
+    text: menn
+  - right_id: men-definite
+    text: mennene
+  - right_id: feet-indefinite
+    text: føtter
+  - right_id: feet-definite
+    text: føttene
+  pairs:
+  - left_id: book-indefinite
+    right_id: books-indefinite
+  - left_id: book-definite
+    right_id: books-definite
+  - left_id: man-indefinite
+    right_id: men-indefinite
+  - left_id: man-definite
+    right_id: men-definite
+  - left_id: foot-indefinite
+    right_id: feet-indefinite
+  - left_id: foot-definite
+    right_id: feet-definite
+- handle: track_plural_reference_in_context
+  op: choose
+  objective: obj-noun-plurals-01
+  bloom: understand
+  prompt_md: "Nora og Amir gjør klart møterommet. Den første setningen nevner fire kopper; den andre viser til de samme koppene. Velg dialogen med riktig bruk av bestemt og ubestemt flertall."
+  derived_from:
+  - section_id: following-a-noun-through-a-conversation
+  stem_md: "Velg dialogen som viser til den samme gruppen."
+  options:
+  - id: reversed
+    text: Nora finner koppene. Fire kopper står ved døra.
+    correct: false
+    why: The first sentence treats the group as already known, while the second makes it indefinite.
+  - id: first_definite
+    text: Nora finner koppene. Koppene står ved døra.
+    correct: false
+    why: The first sentence is introducing the group, not referring back to an earlier group.
+  - id: second_indefinite
+    text: Nora finner fire kopper. Kopper står ved døra.
+    correct: false
+    why: The second sentence should identify the group introduced in the first sentence.
+  - id: correct
+    text: Nora finner fire kopper. Koppene står ved døra.
+    correct: true
+    why: kopper introduces the group; koppene refers back to the same identifiable cups.
+- handle: repair_plural_form_errors
+  op: write
+  objective: obj-noun-plurals-01
+  bloom: analyze
+  prompt_md: "Nora finner stolene Jonas viste henne tidligere. Rett den feilaktige formen «stolerene» og forklar kort hvordan bestemt flertall dannes av «stol»."
+  derived_from:
+  - section_id: common-mistakes-to-avoid
+  response_language: 'no'
+  min_words: 5
+  max_words: 22
+  judge_prompt: Check that the learner corrects stolerene to stolene, which refers to the previously identified chairs, and explains that the bestemt flertall ending attaches to the noun stem stol, not to the ubestemt flertall stoler. Accept concise natural Norwegian explanations.
+  criteria:
+  - id: corrected-form
+    instruction: Replaces stolerene with the bestemt flertall stolene, referring to the chairs already identified.
+  - id: plural-rule
+    instruction: Explains that the bestemt flertall ending attaches to singular stem stol rather than the ubestemt flertall stoler.
+  - id: concise-response
+    instruction: Responds in 5–22 words.
+- handle: choose_plural_forms_for_picnic
+  op: choose
+  objective: obj-noun-plurals-01
+  bloom: understand
+  prompt_md: "To familiemedlemmer pakker til piknik. Alle tingene i den første lista nevnes for første gang; den andre lista viser til de samme tingene. Velg dialogen med riktig bestemt og ubestemt flertall."
+  derived_from:
+  - section_id: cumulative-transfer-preparing-for-a-picnic
+  stem_md: "Velg piknikdialogen med riktig bruk av bestemt og ubestemt flertall. Tingene nevnes for første gang i den første lista."
+  options:
+  - id: zero-ending-first-list
+    text: 'A: Vi pakker poser, kopper, epler, glassene og bøker. B: Nå ligger posene, koppene, eplene, glassene
+      og bøkene i sekken.'
+    correct: false
+    why: The first list introduces the glasses for the first time, so it needs their ubestemt flertall form.
+  - id: zero-ending-second-list
+    text: 'A: Vi pakker poser, kopper, epler, glass og bøker. B: Nå ligger posene, koppene, eplene, glass
+      og bøkene i sekken.'
+    correct: false
+    why: The second list refers back to the known glasses, so it needs the bestemt flertall form.
+  - id: irregular-definite
+    text: 'A: Vi pakker poser, kopper, epler, glass og bøker. B: Nå ligger posene, koppene, eplene, glassene
+      og bøker i sekken.'
+    correct: false
+    why: The second list refers back to the known books, so it needs the bestemt flertall form.
+  - id: correct
+    text: 'A: Vi pakker poser, kopper, epler, glass og bøker. B: Nå ligger posene, koppene, eplene, glassene
+      og bøkene i sekken.'
+    correct: true
+    why: The first list introduces the items, and the second list refers back to the known group with bestemt flertalls.
+- handle: form_plurals_in_picnic_inventory
+  op: recall_fill
+  objective: obj-noun-plurals-01
+  bloom: apply
+  prompt_md: "Fullfør den nye pikniklista. Bruk ubestemt flertall når tingene nevnes først, og bestemt flertall når det vises til den samme gruppen."
+  derived_from:
+  - section_id: cumulative-transfer-preparing-for-a-picnic
+  audio_target: Til pikniken pakker vi flere servietter. De samme serviettene ligger i kurven. Vi tar med flere flasker. De samme flaskene står ved maten. Vi pakker fire pledd. De samme pleddene er rene. Flere fedre blir med på pikniken. De samme fedrene setter seg ved bordet.
+  segments:
+  - text_md: 'Entall: en serviett. Til pikniken pakker vi flere '
+  - blank_id: picnic-serviett-indef
+    options:
+    - servietter
+    - serviettene
+    answer_index: 0
+  - text_md: .
+  - text_md: ' De samme '
+  - blank_id: picnic-serviett-def
+    options:
+    - serviettene
+    - servietter
+    answer_index: 0
+  - text_md: ' ligger i kurven.'
+  - text_md: ' Entall: en flaske. Vi tar med flere '
+  - blank_id: picnic-flaske-indef
+    options:
+    - flaskene
+    - flasker
+    answer_index: 1
+  - text_md: .
+  - text_md: ' De samme '
+  - blank_id: picnic-flaske-def
+    options:
+    - flasker
+    - flaskene
+    answer_index: 1
+  - text_md: ' står ved maten.'
+  - text_md: ' Entall: et pledd. Vi pakker fire '
+  - blank_id: picnic-pledd-indef
+    options:
+    - pleddene
+    - pledd
+    answer_index: 1
+  - text_md: .
+  - text_md: ' De samme '
+  - blank_id: picnic-pledd-def
+    options:
+    - pledd
+    - pleddene
+    answer_index: 1
+  - text_md: ' er rene.'
+  - text_md: ' Entall: en far. Flere '
+  - blank_id: picnic-far-indef
+    options:
+    - fedrene
+    - fedre
+    answer_index: 1
+  - text_md: ' blir med på pikniken. De samme '
+  - blank_id: picnic-far-def
+    options:
+    - fedre
+    - fedrene
+    answer_index: 1
+  - text_md: ' setter seg ved bordet.'

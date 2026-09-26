@@ -1,0 +1,420 @@
+- handle: notice_name_question
+  op: choose
+  objective: obj-greet-and-introduce-yourself-01
+  bloom: understand
+  prompt_md: Choose what Mina asks about.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Mina
+      text_md: «Hei! Jeg heter Mina. Hva heter du?»
+  options:
+  - id: wellbeing
+    text: How the other person feels.
+    correct: false
+    why: A wellbeing question would use Hvordan har du det?
+  - id: other-name
+    text: The other person's name.
+    correct: true
+    why: Hva heter du? asks for the person addressed to give their name.
+  - id: own-name
+    text: Mina's name.
+    correct: false
+    why: Mina gives her own name with Jeg heter Mina.
+  derived_from:
+  - section_id: a-first-meeting
+- handle: match_line_to_job
+  op: match_pairs
+  objective: obj-greet-and-introduce-yourself-01
+  bloom: understand
+  prompt_md: Match each line to its communicative job.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Mina
+      text_md: «Hei! Jeg heter Mina. Hva heter du?»
+    - speaker: Jonas
+      text_md: «Hyggelig å møte deg. Ha det!»
+  left:
+  - left_id: greeting
+    text: Hei!
+  - left_id: own-name
+    text: Jeg heter Mina.
+  - left_id: ask-name
+    text: Hva heter du?
+  - left_id: friendly
+    text: Hyggelig å møte deg.
+  - left_id: closing
+    text: Ha det!
+  right:
+  - right_id: open
+    text: Opens the meeting.
+  - right_id: state
+    text: States the speaker's name.
+  - right_id: ask
+    text: Asks for the other person's name.
+  - right_id: friendly-job
+    text: Marks the meeting as friendly.
+  - right_id: close
+    text: Closes the exchange.
+  pairs:
+  - left_id: greeting
+    right_id: open
+  - left_id: own-name
+    right_id: state
+  - left_id: ask-name
+    right_id: ask
+  - left_id: friendly
+    right_id: friendly-job
+  - left_id: closing
+    right_id: close
+  derived_from:
+  - section_id: the-shape-of-the-exchange
+- handle: begin_the_meeting
+  op: speak
+  objective: obj-greet-and-introduce-yourself-01
+  bloom: apply
+  prompt_md: 'Read exactly this opening aloud: Hei! Jeg heter Nora.'
+  target: Hei! Jeg heter Nora.
+  derived_from:
+  - section_id: greeting-with-hei
+- handle: answer_aleksander
+  op: write
+  objective: obj-greet-and-introduce-yourself-01
+  bloom: apply
+  prompt_md: 'Write a 5–10-word Norwegian reply to Aleksander: give your name and say «Hyggelig å møte
+    deg».'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Aleksander
+      text_md: «Hei! Jeg heter Aleksander. Hva heter du?»
+  response_language: 'no'
+  judge_prompt: Check criteria gives-name and returns-friendly. Record friendly-form-observation diagnostically
+    when relevant.
+  criteria:
+  - id: gives-name
+    instruction: The reply gives the writer's name.
+  - id: returns-friendly
+    instruction: The reply includes «Hyggelig å møte deg».
+  - id: friendly-form-observation
+    instruction: 'Observation only: note whether «Hyggelig å møte deg» appears.'
+  derived_from:
+  - section_id: asking-the-other-persons-name
+- handle: choose_next_line
+  op: choose
+  objective: obj-greet-and-introduce-yourself-01
+  bloom: apply
+  prompt_md: Velg Eriks svar på Sigrids hyggelige kommentar.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Sigrid
+      text_md: «Jeg heter Sigrid.»
+    - speaker: Erik
+      text_md: «Jeg er Erik.»
+    - speaker: Sigrid
+      text_md: «Hyggelig å møte deg.»
+  options:
+  - id: close-now
+    text: Ha det!
+    correct: false
+    why: Dette avslutter samtalen før Erik svarer vennlig tilbake.
+  - id: return-friendly
+    text: Hyggelig å møte deg også!
+    correct: true
+    why: «Hyggelig å møte deg også» svarer med uttrykket eleven har lært i leksjonen.
+  - id: repeat-name
+    text: Jeg heter Lars.
+    correct: false
+    why: Erik presenterer et annet navn i stedet for å svare på Sigrids vennlige replikk.
+  derived_from:
+  - section_id: responding-to-the-name-question
+- handle: complete_the_exchange
+  op: recall_fill
+  objective: obj-greet-and-introduce-yourself-01
+  bloom: apply
+  prompt_md: Fill the four blanks to complete the café exchange.
+  audio_target: Hei! Jeg heter Selma. Hva heter du? Jeg er Noah. Hyggelig å møte deg. I like måte! Vi
+    ses.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Selma
+      text_md: «Hei! Jeg ___ Selma. Hva ___ du?»
+    - speaker: Noah
+      text_md: «Jeg er Noah. Hyggelig å ___ deg.»
+    - speaker: Selma
+      text_md: «I like måte! ___ ses!»
+  segments:
+  - text_md: '«Hei! Jeg '
+  - blank_id: heter-1
+    options:
+    - heter
+    - het
+    answer_index: 0
+  - text_md: ' Selma. Hva '
+  - blank_id: heter-2
+    options:
+    - heter
+    - har
+    answer_index: 0
+  - text_md: ' du?» Noah: «Jeg er Noah. Hyggelig å '
+  - blank_id: mote
+    options:
+    - møtes
+    - møte
+    answer_index: 1
+  - text_md: ' deg.» Selma: «I like måte! '
+  - blank_id: vi
+    options:
+    - De
+    - Vi
+    answer_index: 1
+  - text_md: ' ses!»'
+  explanation_md: Jeg heter states a name, Hva heter du? asks for a name, møte deg marks the meeting as
+    friendly, and Vi ses closes it.
+  derived_from:
+  - section_id: building-the-complete-first-meeting
+- handle: first_day_exchange
+  op: write
+  objective: obj-greet-and-introduce-yourself-01
+  bloom: apply
+  prompt_md: 'Write a 15–30-word Norwegian exchange for a classmate at the door: greet, ask and answer
+    names, mark the meeting as friendly, and close in one connected conversation.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Du møter en ny klassekamerat ved døren på din første norsktime.
+  response_language: 'no'
+  judge_prompt: Check criteria opens-greeting, both-names, friendly-meeting, connected-conversation, and
+    closes.
+  criteria:
+  - id: opens-greeting
+    instruction: The exchange opens with a Norwegian greeting.
+  - id: both-names
+    instruction: One speaker asks for the other person's name, and both speakers give their names.
+  - id: friendly-meeting
+    instruction: The exchange includes a natural friendly meeting expression.
+  - id: connected-conversation
+    instruction: The lines form one connected conversation.
+  - id: closes
+    instruction: The exchange ends with a natural goodbye.
+  derived_from:
+  - section_id: guided-exchange-practice
+- handle: review_state_name
+  op: recall_fill
+  objective: obj-greet-and-introduce-yourself-01
+  bloom: apply
+  prompt_md: Complete the line with the Norwegian verb.
+  audio_target: Hei! Jeg heter Live.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Live
+      text_md: «Hei! Jeg ___ Live.»
+  segments:
+  - text_md: '«Hei! Jeg '
+  - blank_id: name-verb
+    options:
+    - heter
+    - har
+    - het
+    answer_index: 0
+  - text_md: ' Live.»'
+  explanation_md: Jeg heter states the speaker's name.
+  derived_from:
+  - section_id: saying-your-name-with-jeg-heter
+- handle: review_friendly_line
+  op: recall_fill
+  objective: obj-greet-and-introduce-yourself-01
+  bloom: apply
+  prompt_md: Complete the friendly meeting line.
+  audio_target: Hyggelig å møte deg.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Jeg er Nora.»
+    - speaker: Eli
+      text_md: «Hyggelig å ___ deg.»
+  segments:
+  - text_md: '«Hyggelig å '
+  - blank_id: friendly-verb
+    options:
+    - møte
+    - heter
+    - ha
+    answer_index: 0
+  - text_md: ' deg.»'
+  explanation_md: Hyggelig å møte deg marks the meeting as friendly.
+  derived_from:
+  - section_id: marking-the-meeting-as-friendly
+- handle: review_ask_name
+  op: write
+  objective: obj-greet-and-introduce-yourself-01
+  bloom: apply
+  prompt_md: Ask the new classmate for their name. Write only the Norwegian question.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Classmate
+      text_md: «Hei!»
+  response_language: 'no'
+  judge_prompt: Check asks-name. Record taught-question-observation diagnostically.
+  criteria:
+  - id: asks-name
+    instruction: The response asks for the other person's name in natural Norwegian.
+  - id: taught-question-observation
+    instruction: 'Observation only: note whether Hva heter du? appears; do not fail a natural equivalent.'
+  derived_from:
+  - section_id: asking-the-other-persons-name
+- handle: review_closing_function
+  op: choose
+  objective: obj-greet-and-introduce-yourself-01
+  bloom: understand
+  prompt_md: Choose the job of the final line.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: A
+      text_md: «Jeg heter Eline.»
+    - speaker: B
+      text_md: «Hyggelig å møte deg. Ha det bra!»
+  options:
+  - id: state-name
+    text: It states the speaker's name.
+    correct: false
+    why: The line gives no speaker name.
+  - id: close
+    text: It closes the conversation.
+    correct: true
+    why: Ha det bra is a farewell at the end of the exchange.
+  - id: ask-name
+    text: It asks for the other person's name.
+    correct: false
+    why: The line contains a farewell, not a name question.
+  derived_from:
+  - section_id: closing-the-exchange
+- handle: review_opening_greeting
+  op: recall_fill
+  objective: obj-greet-and-introduce-yourself-01
+  bloom: apply
+  prompt_md: Complete the opening line of this exchange.
+  audio_target: Hei! Jeg heter Omar.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Omar
+      text_md: «___! Jeg heter Omar.»
+  segments:
+  - text_md: «
+  - blank_id: greeting
+    options:
+    - Hei
+    - Ha det
+    - Takk
+    answer_index: 0
+  - text_md: '! Jeg heter Omar.»'
+  explanation_md: This short word opens an everyday first meeting.
+  derived_from:
+  - section_id: greeting-with-hei
+- handle: review_name_answer
+  op: write
+  objective: obj-greet-and-introduce-yourself-01
+  bloom: apply
+  prompt_md: Write a short Norwegian reply to Maja.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: «Hva heter du?»
+  response_language: 'no'
+  judge_prompt: Check gives-name. Record name-form-observation diagnostically.
+  criteria:
+  - id: gives-name
+    instruction: The response gives the speaker's name.
+  - id: name-form-observation
+    instruction: 'Observation only: note whether Jeg heter appears; do not fail a natural equivalent.'
+  derived_from:
+  - section_id: responding-to-the-name-question
+- handle: review_return_friendly
+  op: choose
+  objective: obj-greet-and-introduce-yourself-01
+  bloom: apply
+  prompt_md: A svarer «Hyggelig å møte deg!» Velg B sin neste replikk som returnerer den vennlige møtehilsenen.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: A
+      text_md: «Hyggelig å møte deg!»
+  options:
+  - id: question
+    text: Hva heter du?
+    correct: false
+    why: Dette spør om navn i stedet for å svare vennlig tilbake.
+  - id: also
+    text: I like måte!
+    correct: true
+    why: Dette svarer høflig og vennlig på møtehilsenen.
+  - id: name
+    text: Jeg heter Liv.
+    correct: false
+    why: Dette oppgir et navn uten å returnere møtehilsenen.
+  derived_from:
+  - section_id: marking-the-meeting-as-friendly
+- handle: review_name_contrast
+  op: choose
+  objective: obj-greet-and-introduce-yourself-01
+  bloom: apply
+  prompt_md: Choose the line that asks B for B's name.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: A
+      text_md: «Hei! Hyggelig å møte deg.»
+    - speaker: B
+      text_md: «Hei!»
+  options:
+  - id: wellbeing
+    text: Hvordan har du det?
+    correct: false
+    why: This asks how B is doing, not what B is called.
+  - id: state
+    text: Jeg heter Runa.
+    correct: false
+    why: This states A's name again instead of asking for B's name.
+  - id: close
+    text: Vi ses!
+    correct: false
+    why: This closes the meeting without asking for B's name.
+  - id: ask
+    text: Hva heter du?
+    correct: true
+    why: This asks B for B's name.
+  derived_from:
+  - section_id: asking-the-other-persons-name
+- handle: review_complete_meeting
+  op: write
+  objective: obj-greet-and-introduce-yourself-01
+  bloom: apply
+  prompt_md: 'Two neighbors who have never met are waiting for a delayed elevator in their apartment building. Write a 12–24-word Norwegian exchange: greet, let one person ask the other’s name, introduce both naturally, say something friendly, and close before the elevator arrives.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Ada and Leo are new residents in the same apartment building. They meet while waiting for a delayed elevator and have only a moment to talk before it arrives.
+  response_language: 'no'
+  judge_prompt: Check that the exchange includes a greeting, a natural two-way introduction of Ada and Leo, a friendly line, and a closing. One name question with the other person’s answer is enough; do not require both people to repeat the same question.
+  criteria:
+  - id: greeting
+    instruction: The exchange contains a Norwegian greeting.
+  - id: name-exchange
+    instruction: One person asks the other's name and receives an answer, and both Ada and Leo's names are introduced naturally without repeating a name question after the names are known.
+  - id: friendly-line
+    instruction: The exchange contains a natural friendly meeting expression.
+  - id: closing
+    instruction: The exchange ends with a natural closing.
+  derived_from:
+  - section_id: building-the-complete-first-meeting

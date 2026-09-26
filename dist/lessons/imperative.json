@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "imperative",
   "kind": "grammar",
   "language": "nb-NO",
@@ -1216,7 +1216,7 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Kommer hit!"
+                  "value": "Kommer hit!"
                 }
               ],
               "en": [
@@ -1224,7 +1224,8 @@
                   "kind": "text",
                   "value": "Come here!"
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "remove-unstressed-e-block-14"
@@ -1282,7 +1283,7 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Venter litt!"
+                  "value": "Venter litt!"
                 }
               ],
               "en": [
@@ -1290,7 +1291,8 @@
                   "kind": "text",
                   "value": "Wait a moment!"
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "remove-unstressed-e-block-18"
@@ -3275,7 +3277,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Identify which lines directly instruct Sara and what actions she should perform."
+          "value": "Choose the lines that tell Sara what to do."
         }
       ],
       "explanation": null,
@@ -3283,25 +3285,25 @@
         "options": [
           {
             "option_id": "instruction-one-only",
-            "text": "Only line 1 is an instruction: come inside. Lines 2 and 3 describe actions.",
-            "why": "Lines 2 and 3 begin with imperative verbs and directly instruct the listener."
+            "text": "Only line 1 is an instruction: wait by the door. Lines 2 and 3 describe actions.",
+            "why": "Lines 2 and 3 directly tell Sara to fetch the lanterns and place them by the window."
           },
           {
             "option_id": "instructions-one-two",
-            "text": "Lines 1 and 2 are instructions: come inside, then take this box. Line 3 is a statement.",
-            "why": "Du kommer inn is a statement, while Sett glassene her! is an instruction."
+            "text": "Lines 1 and 2 are instructions: wait by the door, then fetch the lanterns. Line 3 is a statement.",
+            "why": "«Sara venter ved døra» is a statement, while «Plasser dem ved vinduet» is also an instruction."
           },
           {
             "option_id": "instructions-two-three",
-            "text": "Lines 2 and 3 are instructions: take this box, then put the glasses here. Line 1 is a statement.",
-            "why": "The imperative verbs Ta and Sett directly tell Sara what to do."
+            "text": "Lines 2 and 3 are instructions: fetch the lanterns, then place them by the window. Line 1 is a statement.",
+            "why": "«Hent» and «Plasser» directly tell Sara what to do; line 1 describes her position."
           }
         ],
         "answer_id": "instructions-two-three",
         "stem": [
           {
             "kind": "text",
-            "value": "Mina says: 1. Du kommer inn. 2. Ta denne esken! 3. Sett glassene her! Choose the correct interpretation."
+            "value": "Mina says: 1. Sara venter ved døra. 2. Hent lyktene fra hylla. 3. Plasser dem ved vinduet."
           }
         ]
       }
@@ -3314,13 +3316,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each room-setup instruction with the imperative of the verb in parentheses."
+          "value": "Complete the instructions with the imperative form of the verb in brackets."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "The imperative addresses the listener directly and normally omits the subject. Regular infinitives in -e usually drop -e, while frequent short and irregular verbs must be learned as whole forms."
+          "value": "Imperativ retter seg direkte til den som lytter, og subjektet står vanligvis ikke med. Verb på -e mister som regel -e; vanlige korte og uregelrette verb må læres som egne former."
         }
       ],
       "payload": {
@@ -3331,10 +3333,6 @@
               {
                 "kind": "text",
                 "value": "Item 1:"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -3342,10 +3340,10 @@
             "kind": "blank",
             "blank_id": "move-table",
             "options": [
-              "Finn",
-              "Flytt"
+              "Flytt",
+              "Flytte"
             ],
-            "answer_index": 1
+            "answer_index": 0
           },
           {
             "kind": "span",
@@ -3356,11 +3354,16 @@
               },
               {
                 "kind": "text",
-                "value": "bordet! (å flytte) 2."
-              },
+                "value": "bordet! (å flytte)"
+              }
+            ]
+          },
+          {
+            "kind": "span",
+            "spans": [
               {
                 "kind": "text",
-                "value": " "
+                "value": "Item 2:"
               }
             ]
           },
@@ -3369,7 +3372,7 @@
             "blank_id": "find-objects",
             "options": [
               "Finn",
-              "Flytt"
+              "Finne"
             ],
             "answer_index": 0
           },
@@ -3382,11 +3385,16 @@
               },
               {
                 "kind": "text",
-                "value": "serviettene! (å finne) 3."
-              },
+                "value": "serviettene! (å finne)"
+              }
+            ]
+          },
+          {
+            "kind": "span",
+            "spans": [
               {
                 "kind": "text",
-                "value": " "
+                "value": "Item 3:"
               }
             ]
           },
@@ -3394,7 +3402,7 @@
             "kind": "blank",
             "blank_id": "close-door",
             "options": [
-              "Legg",
+              "Lukke",
               "Lukk"
             ],
             "answer_index": 1
@@ -3408,22 +3416,27 @@
               },
               {
                 "kind": "text",
-                "value": "døra! (å lukke) 4."
-              },
+                "value": "døra! (å lukke)"
+              }
+            ]
+          },
+          {
+            "kind": "span",
+            "spans": [
               {
                 "kind": "text",
-                "value": " "
+                "value": "Item 4:"
               }
             ]
           },
           {
             "kind": "blank",
-            "blank_id": "place-glasses",
+            "blank_id": "lay-tablecloth",
             "options": [
-              "Legg",
-              "Lukk"
+              "Legge",
+              "Legg"
             ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
@@ -3434,11 +3447,16 @@
               },
               {
                 "kind": "text",
-                "value": "glassene på bordet! (å legge) 5."
-              },
+                "value": "duken på bordet! (å legge)"
+              }
+            ]
+          },
+          {
+            "kind": "span",
+            "spans": [
               {
                 "kind": "text",
-                "value": " "
+                "value": "Item 5:"
               }
             ]
           },
@@ -3446,10 +3464,10 @@
             "kind": "blank",
             "blank_id": "come-here",
             "options": [
-              "Finn",
-              "Kom"
+              "Kom",
+              "Komme"
             ],
-            "answer_index": 1
+            "answer_index": 0
           },
           {
             "kind": "span",
@@ -3475,7 +3493,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Classify each line by whether the verb describes an action or directly tells someone to perform it."
+          "value": "Sort the lines by whether the verb describes an action or gives an instruction."
         }
       ],
       "explanation": null,
@@ -3498,7 +3516,7 @@
           },
           {
             "item_id": "wait-here",
-            "text": "Vent her!",
+            "text": "Vent her.",
             "bucket_id": "direct-instruction"
           },
           {
@@ -3508,7 +3526,7 @@
           },
           {
             "item_id": "come-inside",
-            "text": "Kom inn!",
+            "text": "Kom inn.",
             "bucket_id": "direct-instruction"
           },
           {
@@ -3518,7 +3536,7 @@
           },
           {
             "item_id": "move-table",
-            "text": "Flytt bordet, Mina!",
+            "text": "Flytt bordet, Mina.",
             "bucket_id": "direct-instruction"
           }
         ]
@@ -3532,7 +3550,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each everyday direction with the imperative of the verb in parentheses. Keep unchanged verbs complete."
+          "value": "Complete the instructions with the imperative form of the verb in brackets."
         }
       ],
       "explanation": null,
@@ -3544,10 +3562,6 @@
               {
                 "kind": "text",
                 "value": "Item 1:"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -3556,7 +3570,7 @@
             "blank_id": "go-inside",
             "options": [
               "Gå",
-              "Stå"
+              "Går"
             ],
             "answer_index": 0
           },
@@ -3569,11 +3583,16 @@
               },
               {
                 "kind": "text",
-                "value": "inn! (å gå) 2."
-              },
+                "value": "inn! (å gå)"
+              }
+            ]
+          },
+          {
+            "kind": "span",
+            "spans": [
               {
                 "kind": "text",
-                "value": " "
+                "value": "Item 2:"
               }
             ]
           },
@@ -3581,34 +3600,8 @@
             "kind": "blank",
             "blank_id": "take-box",
             "options": [
-              "Bli",
-              "Ta"
-            ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "denne esken! (å ta) 3."
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "look-picture",
-            "options": [
-              "Se",
-              "S"
+              "Ta",
+              "Tar"
             ],
             "answer_index": 0
           },
@@ -3621,11 +3614,47 @@
               },
               {
                 "kind": "text",
-                "value": "på bildet! (å se) 4."
-              },
+                "value": "denne esken! (å ta)"
+              }
+            ]
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Item 3:"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "look-picture",
+            "options": [
+              "Ser",
+              "Se"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
               {
                 "kind": "text",
                 "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "på bildet! (å se)"
+              }
+            ]
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Item 4:"
               }
             ]
           },
@@ -3633,7 +3662,7 @@
             "kind": "blank",
             "blank_id": "stand-here",
             "options": [
-              "Bli",
+              "Står",
               "Stå"
             ],
             "answer_index": 1
@@ -3647,11 +3676,16 @@
               },
               {
                 "kind": "text",
-                "value": "her! (å stå) 5."
-              },
+                "value": "her! (å stå)"
+              }
+            ]
+          },
+          {
+            "kind": "span",
+            "spans": [
               {
                 "kind": "text",
-                "value": " "
+                "value": "Item 5:"
               }
             ]
           },
@@ -3660,7 +3694,7 @@
             "blank_id": "stay-here",
             "options": [
               "Bli",
-              "Stå"
+              "Blir"
             ],
             "answer_index": 0
           },
@@ -3688,7 +3722,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each instruction with the imperative of the verb in parentheses."
+          "value": "Complete the instructions with the imperative form of the verb in brackets."
         }
       ],
       "explanation": null,
@@ -3700,10 +3734,6 @@
               {
                 "kind": "text",
                 "value": "Item 1:"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -3711,10 +3741,10 @@
             "kind": "blank",
             "blank_id": "be-careful",
             "options": [
-              "Gjør",
-              "Vær"
+              "Vær",
+              "Være"
             ],
-            "answer_index": 1
+            "answer_index": 0
           },
           {
             "kind": "span",
@@ -3725,11 +3755,16 @@
               },
               {
                 "kind": "text",
-                "value": "forsiktig! (å være) 2."
-              },
+                "value": "forsiktig! (å være)"
+              }
+            ]
+          },
+          {
+            "kind": "span",
+            "spans": [
               {
                 "kind": "text",
-                "value": " "
+                "value": "Item 2:"
               }
             ]
           },
@@ -3738,7 +3773,7 @@
             "blank_id": "do-first",
             "options": [
               "Gjør",
-              "Vær"
+              "Gjøre"
             ],
             "answer_index": 0
           },
@@ -3751,11 +3786,16 @@
               },
               {
                 "kind": "text",
-                "value": "dette først! (å gjøre) 3."
-              },
+                "value": "dette først! (å gjøre)"
+              }
+            ]
+          },
+          {
+            "kind": "span",
+            "spans": [
               {
                 "kind": "text",
-                "value": " "
+                "value": "Item 3:"
               }
             ]
           },
@@ -3763,7 +3803,7 @@
             "kind": "blank",
             "blank_id": "put-cup",
             "options": [
-              "Sitt",
+              "Sette",
               "Sett"
             ],
             "answer_index": 1
@@ -3777,11 +3817,16 @@
               },
               {
                 "kind": "text",
-                "value": "koppen på bordet! (å sette) 4."
-              },
+                "value": "koppen på bordet! (å sette)"
+              }
+            ]
+          },
+          {
+            "kind": "span",
+            "spans": [
               {
                 "kind": "text",
-                "value": " "
+                "value": "Item 4:"
               }
             ]
           },
@@ -3790,7 +3835,7 @@
             "blank_id": "sit-chair",
             "options": [
               "Sitt",
-              "Sett"
+              "Sitte"
             ],
             "answer_index": 0
           },
@@ -3803,11 +3848,16 @@
               },
               {
                 "kind": "text",
-                "value": "på stolen! (å sitte) 5."
-              },
+                "value": "på stolen! (å sitte)"
+              }
+            ]
+          },
+          {
+            "kind": "span",
+            "spans": [
               {
                 "kind": "text",
-                "value": " "
+                "value": "Item 5:"
               }
             ]
           },
@@ -3815,10 +3865,10 @@
             "kind": "blank",
             "blank_id": "open-door",
             "options": [
-              "Vær",
-              "Åpne"
+              "Åpne",
+              "Åpner"
             ],
-            "answer_index": 1
+            "answer_index": 0
           },
           {
             "kind": "span",
@@ -3844,33 +3894,33 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Determine the action, object, and destination expressed by the two instructions."
+          "value": "Choose the meaning that shows what Sara should fetch and where she should put it."
         }
       ],
       "explanation": null,
       "payload": {
         "options": [
           {
+            "option_id": "put-then-take",
+            "text": "First place the candles in the middle of the table. Then fetch them from the box.",
+            "why": "This reverses the order of the two instructions."
+          },
+          {
             "option_id": "take-then-put",
-            "text": "First take the glasses. Then put the glasses here.",
-            "why": "Ta means take, while Sett means put and her supplies the destination."
+            "text": "First fetch the candles from the box. Then place them in the middle of the table.",
+            "why": "The first action retrieves the candles; the second gives their destination."
           },
           {
             "option_id": "take-twice",
-            "text": "Both instructions tell the listener to take the glasses.",
-            "why": "The second instruction uses Sett and specifies where to put the glasses."
-          },
-          {
-            "option_id": "put-then-take",
-            "text": "First put the glasses here. Then take the glasses.",
-            "why": "This reverses the actions expressed by Ta and Sett."
+            "text": "Both instructions tell the listener to fetch the candles from the box.",
+            "why": "The second instruction tells Sara where to place the candles."
           }
         ],
         "answer_id": "take-then-put",
         "stem": [
           {
             "kind": "text",
-            "value": "Item 1: Ta glassene! 2. Sett glassene her! Choose the correct interpretation."
+            "value": "The lights are in a box. Mina says to Sara: «Hent lysene fra esken og plasser dem midt på bordet!»"
           }
         ]
       }
@@ -3883,7 +3933,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Build a sensible two-step party-setup instruction. Move the chair, then open the door. Join the actions with og."
+          "value": "A guest needs to move the chair and then open the door. Put together one instruction with «og»."
         }
       ],
       "explanation": null,
@@ -3932,14 +3982,14 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Select the single incorrect verb form in this instruction. The feedback explains the natural command form."
+          "value": "Choose the word that needs to change to make this a natural Norwegian instruction."
         }
       ],
       "explanation": null,
       "payload": {
         "tokens": [
           {
-            "token_id": "incorrect-verb",
+            "token_id": "verb-form",
             "text": "Setter"
           },
           {
@@ -3951,7 +4001,7 @@
             "text": "her!"
           }
         ],
-        "error_token_id": "incorrect-verb",
+        "error_token_id": "verb-form",
         "feedback": "Replace Setter with Sett. Sett glasset her! preserves the intended meaning while removing the present-tense ending."
       }
     },
@@ -3963,7 +4013,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Build a coherent kitchen-preparation sequence. Open the cupboard, take the large plates, and put them on the table."
+          "value": "Before the guests arrive, the cupboard must be opened, the plates taken out, and then put on the table. Put together one instruction."
         }
       ],
       "explanation": null,
@@ -4010,7 +4060,7 @@
             "fixed": false
           },
           {
-            "token_id": "true",
+            "token_id": "preposition",
             "text": "på",
             "fixed": false
           },
@@ -4035,7 +4085,7 @@
           "and",
           "put",
           "them",
-          "true",
+          "preposition",
           "table"
         ]
       }
@@ -4048,7 +4098,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write exactly three short Norwegian instructions for a fresh room-preparation situation. Tell a helper to move an object, look at something, and put something in a particular place. Use correctly formed imperative verbs without present-tense -r endings."
+          "value": "Write three short instructions in Norwegian for someone setting up a room. Tell the person to move something, look at something, and put something in a certain place."
         }
       ],
       "explanation": null,
@@ -4060,7 +4110,7 @@
         "criteria": [
           {
             "id": "clear-actions",
-            "instruction": "Each of the three lines communicates a clear instruction with a correctly formed imperative verb."
+            "instruction": "The three instructions communicate clear actions with correctly formed imperative verbs."
           },
           {
             "id": "no-present-endings",

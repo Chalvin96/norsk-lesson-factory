@@ -1,0 +1,476 @@
+- handle: find_the_cause
+  op: choose
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: understand
+  prompt_md: Choose the sentence that gives the reason for the result in the dialogue.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Jonas
+      text_md: «Hvorfor tok du taxi?»
+    - speaker: Mina
+      text_md: «Bussen kom ikke.»
+  options:
+  - id: cause-reversed
+    text: Bussen kom ikke fordi Mina tok taxi.
+    correct: false
+    why: This makes the taxi ride the cause of the bus not coming.
+  - id: result-instead
+    text: Mina rakk møtet etter at hun tok taxi.
+    correct: false
+    why: This describes what happened after the taxi ride instead of why Mina took it.
+  - id: cause-correct
+    text: Mina tok taxi fordi bussen ikke kom.
+    correct: true
+    why: Fordi introduces the reason for the result stated before it.
+  explanation_md: Fordi introduces the reason for the result stated before it.
+  derived_from:
+  - section_id: giving-the-reason-with-fordi
+- handle: fordi_word_order
+  op: recall_fill
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: apply
+  prompt_md: Complete each sentence so the stated reason follows fordi in natural Norwegian.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lærer
+      text_md: «Hvordan kan vi knytte hvert resultat til årsaken?»
+    - speaker: Elev
+      text_md: «Jeg vil gjøre begge forklaringene tydelige.»
+  audio_target: Jeg tok taxi fordi bussen ikke kom. Vi spiste hjemme fordi restauranten ikke var åpen.
+  segments:
+  - text_md: '«Jeg tok taxi fordi '
+  - blank_id: because-bus-clause
+    options:
+    - bussen ikke kom
+    - bussen ankom ikke
+    answer_index: 0
+  - text_md: '. Vi spiste hjemme fordi '
+  - blank_id: because-restaurant-clause
+    options:
+    - restauranten åpnet ikke
+    - restauranten var ikke åpen
+    answer_index: 1
+  - text_md: .»
+  explanation_md: After fordi, ikke normally comes before the finite verb.
+  derived_from:
+  - section_id: giving-the-reason-with-fordi
+- handle: derfor_inversion
+  op: recall_fill
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: apply
+  prompt_md: Complete each sentence so derfor introduces the stated consequence in natural Norwegian.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lærer
+      text_md: «Hva ble konsekvensen i hver situasjon?»
+    - speaker: Elev
+      text_md: «Jeg vil uttrykke resultatene med derfor.»
+  audio_target: Veien var stengt. Derfor tok Mina taxi. Hotellet var fullt. Derfor bestilte vi et annet
+    rom.
+  segments:
+  - text_md: 'Veien var stengt. Derfor '
+  - blank_id: therefore-taxi-result
+    options:
+    - tok Mina taxi
+    - Mina tok taxi
+    answer_index: 0
+  - text_md: '. Hotellet var fullt. Derfor '
+  - blank_id: therefore-room-result
+    options:
+    - vi bestilte et annet rom
+    - bestilte vi et annet rom
+    answer_index: 1
+  - text_md: .
+  explanation_md: Sentence-initial derfor occupies the first position, so the finite verb comes before
+    the subject.
+  derived_from:
+  - section_id: pointing-to-the-result-with-derfor
+- handle: sa_result_order
+  op: recall_fill
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: apply
+  prompt_md: Complete each sentence so så links the situation to its stated result in natural Norwegian.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lærer
+      text_md: «Hva skjedde som følge av hver situasjon?»
+    - speaker: Elev
+      text_md: «Jeg vil knytte situasjonene direkte til resultatene.»
+  audio_target: Det regnet, så vi tok bussen. Han fant ikke nøklene, så han kunne ikke låse døra.
+  segments:
+  - text_md: 'Det regnet, så '
+  - blank_id: so-bus-result
+    options:
+    - vi tok bussen
+    - tok vi bussen
+    answer_index: 0
+  - text_md: '. Han fant ikke nøklene, så '
+  - blank_id: so-key-result
+    options:
+    - han ikke kunne låse døra
+    - han kunne ikke låse døra
+    answer_index: 1
+  - text_md: .
+  explanation_md: Result-linking så is followed here by an ordinary subject-first main clause; the finite
+    verb comes before ikke.
+  derived_from:
+  - section_id: connecting-a-cause-and-result-with-sa
+- handle: connector_meaning_choice
+  op: choose
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: understand
+  prompt_md: Choose the option where all three sentences are correct.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Jonas
+      text_md: «Hvorfor avlyste dere turen?»
+    - speaker: Mina
+      text_md: «Været var dårlig.»
+  options:
+  - id: sa-order-error
+    text: Vi avlyste turen fordi været var dårlig. Været var dårlig. Derfor avlyste vi turen. Været var
+      dårlig, så avlyste vi turen.
+    correct: false
+    why: After result-linking så the clause keeps subject–verb order, so avlyste vi is wrong.
+  - id: correct-three-connectors
+    text: Vi avlyste turen fordi været var dårlig. Været var dårlig. Derfor avlyste vi turen. Været var
+      dårlig, så vi avlyste turen.
+    correct: true
+    why: Fordi gives the reason after the result, sentence-initial derfor takes verb–subject order, and
+      så links the cause to its result with subject–verb order.
+  - id: derfor-order-error
+    text: Vi avlyste turen fordi været var dårlig. Været var dårlig. Derfor vi avlyste turen. Været var
+      dårlig, så vi avlyste turen.
+    correct: false
+    why: After sentence-initial derfor the finite verb must come before the subject.
+  explanation_md: Fordi follows a result with its reason; derfor begins a separate consequence with inversion;
+    så links a cause to its result with ordinary main-clause order.
+  derived_from:
+  - section_id: three-ways-to-describe-the-same-relationship
+- handle: connector_and_verb_position
+  op: build
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: apply
+  prompt_md: Build one sentence from all the tokens.
+  stem_md: Jeg følte meg ikke bra. Jeg gikk derfor hjem.
+  tokens:
+  - token_id: c-1
+    text: Jeg
+  - token_id: c-2
+    text: gikk
+  - token_id: c-3
+    text: hjem
+  - token_id: c-4
+    text: fordi
+  - token_id: c-5
+    text: jeg
+  - token_id: c-6
+    text: ikke
+  - token_id: c-7
+    text: følte
+  - token_id: c-8
+    text: meg
+  - token_id: c-9
+    text: bra.
+  answer_order:
+  - c-1
+  - c-2
+  - c-3
+  - c-4
+  - c-5
+  - c-6
+  - c-7
+  - c-8
+  - c-9
+  explanation_md: The result comes first; fordi introduces the reason, where ikke precedes the finite
+    verb.
+  derived_from:
+  - section_id: connector-and-word-order-must-work-together
+- handle: follow_up_response_discrimination
+  op: choose
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: apply
+  prompt_md: Choose the reply that answers Jonas's question with correct word order.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Jonas
+      text_md: «Hvorfor var du nervøs?»
+    - speaker: Mina
+      text_md: «Jeg hadde ikke lest den siste rapporten.»
+  options:
+  - id: follow-up-reversed
+    text: Jeg hadde ikke lest den siste rapporten fordi jeg var nervøs.
+    correct: false
+    why: This makes nervousness the reason the report was not read.
+  - id: follow-up-correct
+    text: Jeg var nervøs fordi jeg ikke hadde lest den siste rapporten.
+    correct: true
+    why: The reply states the result and gives the reason with subordinate-clause word order.
+  - id: follow-up-main-order
+    text: Jeg var nervøs fordi jeg hadde ikke lest den siste rapporten.
+    correct: false
+    why: This preserves main-clause placement of ikke after hadde inside the fordi-clause.
+  explanation_md: In a fordi-clause, ikke comes before hadde, and the reason must match Jonas's question.
+  derived_from:
+  - section_id: returning-to-mina-and-jonas
+- handle: revise_dinner_message
+  op: choose
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: apply
+  prompt_md: Choose the corrected message.
+  stem_md: «Ovnen virker ikke. Derfor jeg bestilte mat. Leveringen er sen, så blir middagen forsinket.»
+  options:
+  - id: revise-sa-only
+    text: Ovnen virker ikke. Derfor jeg bestilte mat. Leveringen er sen, så middagen blir forsinket.
+    correct: false
+    why: The så-clause is repaired, but the sentence beginning with derfor still lacks V2 inversion.
+  - id: revise-correct
+    text: Ovnen virker ikke. Derfor bestilte jeg mat. Leveringen er sen, så middagen blir forsinket.
+    correct: true
+    why: Derfor has verb–subject order, while the result clause after så has subject–verb order.
+  - id: revise-derfor-only
+    text: Ovnen virker ikke. Derfor bestilte jeg mat. Leveringen er sen, så blir middagen forsinket.
+    correct: false
+    why: The derfor-clause is repaired, but the result clause after så still has inversion.
+  explanation_md: Use Derfor + finite verb + subject, but så + subject + finite verb for the result-linking
+    pattern practiced here.
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+- handle: dinner_plan_transfer
+  op: write
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: apply
+  prompt_md: Write a 35–55-word Norwegian message to the guests. Use at least two of fordi, derfor, and
+    så to explain the delay and the dinner plan.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Gjest
+      text_md: «Når blir middagen klar? Vi er sultne.»
+    - speaker: Emil
+      text_md: «Ovnen sluttet å virke. Jeg bestilte mat fra en restaurant, men leveringen kom sent.»
+  response_language: 'no'
+  min_words: 35
+  max_words: 55
+  judge_prompt: Check criteria message-purpose, uses-connectors, supplied-facts, word-bound, and connector-order.
+    Record connector-style-observation diagnostically.
+  criteria:
+  - id: message-purpose
+    instruction: The response is a message to the guests that explains the delay and communicates the
+      dinner plan.
+  - id: uses-connectors
+    instruction: The response uses at least two of fordi, derfor, and så to connect the reason and the
+      result.
+  - id: supplied-facts
+    instruction: The response remains consistent with the supplied facts and does not invent a conflicting
+      account.
+  - id: word-bound
+    instruction: The response contains 35–55 words.
+  - id: connector-order
+    instruction: The response uses natural Norwegian word order in each connector clause it writes.
+  - id: connector-style-observation
+    instruction: 'Observation only: note which connectors and clause patterns the learner uses; do not
+      fail an otherwise acceptable response.'
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+- handle: review_fordi_word_order
+  op: recall_fill
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: remember
+  prompt_md: Complete each sentence so the stated reason follows fordi in natural Norwegian.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lærer
+      text_md: «Hvorfor gikk hun tidlig, og hvorfor ventet de inne?»
+    - speaker: Elev
+      text_md: «Jeg vil bruke opplysningene i hver situasjon.»
+  audio_target: Hun gikk tidlig fordi møtet ikke varte lenge. Vi ventet inne fordi regnet ikke ga seg.
+  segments:
+  - text_md: '«Hun gikk tidlig fordi '
+  - blank_id: review-because-meeting-clause
+    options:
+    - møtet ikke varte lenge
+    - møtet varte ikke lenge
+    answer_index: 0
+  - text_md: '. Vi ventet inne fordi '
+  - blank_id: review-because-rain-clause
+    options:
+    - regnet ga seg ikke
+    - regnet ikke ga seg
+    answer_index: 1
+  - text_md: .»
+  explanation_md: In a fordi-clause, ikke normally comes before the finite verb.
+  derived_from:
+  - section_id: giving-the-reason-with-fordi
+- handle: review_derfor_inversion
+  op: recall_fill
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: remember
+  prompt_md: Complete each sentence so derfor introduces the stated consequence in natural Norwegian.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lærer
+      text_md: «Hva gjorde dere på grunn av solen og den stengte butikken?»
+    - speaker: Elev
+      text_md: «Jeg vil uttrykke begge konsekvensene med derfor.»
+  audio_target: Solen var sterk. Derfor kjøpte vi is. Butikken var stengt. Derfor dro vi hjem.
+  segments:
+  - text_md: 'Solen var sterk. Derfor '
+  - blank_id: review-therefore-ice-result
+    options:
+    - kjøpte vi is
+    - vi kjøpte is
+    answer_index: 0
+  - text_md: '. Butikken var stengt. Derfor '
+  - blank_id: review-therefore-home-result
+    options:
+    - vi dro hjem
+    - dro vi hjem
+    answer_index: 1
+  - text_md: .
+  explanation_md: 'Sentence-initial derfor triggers V2 order: the finite verb comes before the subject.'
+  derived_from:
+  - section_id: pointing-to-the-result-with-derfor
+- handle: review_sa_result_order
+  op: recall_fill
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: remember
+  prompt_md: Complete each sentence so så links the situation to its stated consequence in natural Norwegian.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lærer
+      text_md: «Hva skjedde med bilen og kaffen?»
+    - speaker: Elev
+      text_md: «Jeg vil knytte hver situasjon til konsekvensen.»
+  audio_target: Bilen var gammel, så den startet ikke. Kaffen var kald, så vi lagde ny.
+  segments:
+  - text_md: 'Bilen var gammel, så '
+  - blank_id: review-so-car-result
+    options:
+    - den startet ikke
+    - startet den ikke
+    answer_index: 0
+  - text_md: '. Kaffen var kald, så '
+  - blank_id: review-so-coffee-result
+    options:
+    - lagde vi ny
+    - vi lagde ny
+    answer_index: 1
+  - text_md: .
+  explanation_md: After result-linking så, the following main clause keeps subject–verb order.
+  derived_from:
+  - section_id: connecting-a-cause-and-result-with-sa
+- handle: review_connector_meaning_choice
+  op: choose
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: remember
+  prompt_md: Choose the option where all three sentences are correct.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Jonas
+      text_md: «Hvorfor kjøpte dere en ny bil?»
+    - speaker: Mina
+      text_md: «Den gamle bilen brøt sammen.»
+  options:
+  - id: review-derfor-order-error
+    text: Vi kjøpte en ny bil fordi den gamle bilen brøt sammen. Den gamle bilen brøt sammen. Derfor vi
+      kjøpte en ny bil. Den gamle bilen brøt sammen, så vi kjøpte en ny bil.
+    correct: false
+    why: After sentence-initial derfor the finite verb must come before the subject.
+  - id: review-sa-order-error
+    text: Vi kjøpte en ny bil fordi den gamle bilen brøt sammen. Den gamle bilen brøt sammen. Derfor kjøpte
+      vi en ny bil. Den gamle bilen brøt sammen, så kjøpte vi en ny bil.
+    correct: false
+    why: After result-linking så the clause keeps subject–verb order, so kjøpte vi is wrong.
+  - id: review-correct-three-connectors
+    text: Vi kjøpte en ny bil fordi den gamle bilen brøt sammen. Den gamle bilen brøt sammen. Derfor kjøpte
+      vi en ny bil. Den gamle bilen brøt sammen, så vi kjøpte en ny bil.
+    correct: true
+    why: Fordi gives the reason after the result, sentence-initial derfor takes verb–subject order, and
+      så links the cause to its result with subject–verb order.
+  explanation_md: Fordi follows a result with its reason, sentence-initial derfor takes verb–subject order,
+    and så links a cause to its result with ordinary main-clause order.
+  derived_from:
+  - section_id: three-ways-to-describe-the-same-relationship
+- handle: review_fordi_retrieval
+  op: recall_fill
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: remember
+  prompt_md: Complete the sentence so the stated reason follows fordi in natural Norwegian.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lærer
+      text_md: «Hvorfor kom Jonas sent?»
+    - speaker: Elev
+      text_md: «Jeg vil svare med opplysningen om toget.»
+  audio_target: Jonas kom sent fordi toget ikke stoppet på stasjonen.
+  segments:
+  - text_md: 'Jonas kom sent fordi '
+  - blank_id: review-train-reason
+    options:
+    - toget ikke stoppet på stasjonen
+    - toget stoppet ikke på stasjonen
+    answer_index: 0
+  - text_md: .
+  explanation_md: In the fordi-clause, ikke precedes the finite verb stoppet.
+  derived_from:
+  - section_id: quick-retrieval-and-review
+- handle: review_derfor_retrieval
+  op: recall_fill
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: remember
+  prompt_md: Complete the sentence so derfor introduces the stated consequence in natural Norwegian.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lærer
+      text_md: «Hva ble konsekvensen av forsinkelsen?»
+    - speaker: Elev
+      text_md: «Jeg vil uttrykke resultatet med derfor.»
+  audio_target: Toget var forsinket. Derfor kom Jonas sent.
+  segments:
+  - text_md: 'Toget var forsinket. Derfor '
+  - blank_id: review-train-consequence
+    options:
+    - kom Jonas sent
+    - Jonas kom sent
+    answer_index: 0
+  - text_md: .
+  explanation_md: With derfor first, the finite verb kom precedes the subject Jonas.
+  derived_from:
+  - section_id: quick-retrieval-and-review
+- handle: review_sa_retrieval
+  op: recall_fill
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: remember
+  prompt_md: Complete the sentence so så links the situation to its stated result in natural Norwegian.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lærer
+      text_md: «Hva skjedde som følge av forsinkelsen?»
+    - speaker: Elev
+      text_md: «Jeg vil knytte årsaken direkte til resultatet.»
+  audio_target: Toget var forsinket, så Jonas kom sent.
+  segments:
+  - text_md: 'Toget var forsinket, så '
+  - blank_id: review-train-linked-result
+    options:
+    - Jonas kom sent
+    - kom Jonas sent
+    answer_index: 0
+  - text_md: .
+  explanation_md: After result-linking så, the result has subject-first main-clause order.
+  derived_from:
+  - section_id: quick-retrieval-and-review

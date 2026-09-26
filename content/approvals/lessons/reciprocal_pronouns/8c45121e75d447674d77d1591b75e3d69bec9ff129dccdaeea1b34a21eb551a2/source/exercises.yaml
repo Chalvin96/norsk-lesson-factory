@@ -1,0 +1,369 @@
+- handle: notice_shared_action
+  op: choose
+  objective: obj-reciprocal-pronouns-01
+  bloom: understand
+  prompt_md: Choose the Norwegian sentence that matches what Aida and Noor do.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Aida
+      text_md: «Jeg bærer kassene til Noor i dag.»
+    - speaker: Noor
+      text_md: «Jeg bærer bagene til Aida i dag.»
+  options:
+  - id: joint-activity
+    text: Aida og Noor bærer de samme kassene sammen.
+    correct: false
+    why: Dialogen beskriver to ulike oppgaver, ikke én felles bærejobb.
+  - id: one-way-noor
+    text: Noor bærer kassene alene.
+    correct: false
+    why: Dialogen sier at begge bærer noe til den andre, hver sin vei.
+  - id: reciprocal-help
+    text: Aida og Noor bærer ting til hverandre.
+    correct: true
+    why: Begge bærer noe til den andre, hver sin vei.
+  derived_from:
+  - section_id: checkpoint-notice-reciprocal-relationship
+- handle: complete_direct_reciprocal_object
+  op: recall_fill
+  objective: obj-reciprocal-pronouns-01
+  bloom: apply
+  prompt_md: Fill the blank so the sentence matches what Lise and Omar do.
+  audio_target: Lise og Omar ringer hverandre hver kveld.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lise
+      text_md: «Jeg ringer Omar hver kveld.»
+    - speaker: Omar
+      text_md: «Jeg ringer Lise hver kveld.»
+  segments:
+  - text_md: '«Lise og Omar ringer '
+  - blank_id: direct-call
+    options:
+    - hverandre
+    - dem
+    answer_index: 0
+  - text_md: ' hver kveld.»'
+  explanation_md: Hverandre shows that Lise calls Omar and Omar calls Lise.
+  derived_from:
+  - section_id: checkpoint-complete-shared-action
+- handle: use_reciprocal_after_preposition
+  op: build
+  objective: obj-reciprocal-pronouns-01
+  bloom: apply
+  prompt_md: Build one Norwegian sentence that combines everything Maria and Jonas say they do, including
+    how often.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maria
+      text_md: «Jeg snakker med Jonas hver dag.»
+    - speaker: Jonas
+      text_md: «Jeg snakker med Maria hver dag.»
+  explanation_md: The preposition med stays before hverandre because the verb expression is snakke med,
+    and hver dag must remain in the combined sentence.
+  tokens:
+  - token_id: tok-1
+    text: Maria
+  - token_id: tok-2
+    text: og
+  - token_id: tok-3
+    text: Jonas
+  - token_id: tok-4
+    text: snakker
+  - token_id: tok-5
+    text: med
+  - token_id: tok-6
+    text: hverandre
+  - token_id: tok-7
+    text: hver
+  - token_id: tok-8
+    text: dag.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  derived_from:
+  - section_id: checkpoint-preposition-reciprocal
+- handle: distinguish_joint_and_reciprocal_meaning
+  op: categorize
+  objective: obj-reciprocal-pronouns-01
+  bloom: analyze
+  prompt_md: Read each Norwegian sentence and sort it by the meaning it carries.
+  stem_md: Decide whether each sentence describes one shared activity or an action that passes between
+    the people.
+  explanation_md: A plural subject can act together without acting toward one another; hverandre marks
+    the two-way action.
+  buckets:
+  - bucket_id: joint
+    label: One shared activity
+  - bucket_id: reciprocal
+    label: An action between the people
+  items:
+  - item_id: joint-cooking
+    text: Vennene lager én middag sammen.
+    bucket_id: joint
+  - item_id: reciprocal-cooking
+    text: Vennene lager middag til hverandre.
+    bucket_id: reciprocal
+  - item_id: joint-walking
+    text: Naboene går sammen til bussen.
+    bucket_id: joint
+  - item_id: reciprocal-waiting
+    text: Naboene venter på hverandre ved bussen.
+    bucket_id: reciprocal
+  derived_from:
+  - section_id: checkpoint-joint-and-reciprocal
+- handle: combine_actions_with_hverandre
+  op: build
+  objective: obj-reciprocal-pronouns-01
+  bloom: apply
+  prompt_md: Combine the two directions into one Norwegian sentence, keeping the detail about what the
+    help concerns.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Mina
+      text_md: «Jeg hjelper Jonas med flyttingen.»
+    - speaker: Jonas
+      text_md: «Jeg hjelper Mina med flyttingen.»
+  explanation_md: A plural subject and hverandre combine the two directions, while med flyttingen keeps
+    the stated context.
+  tokens:
+  - token_id: tok-1
+    text: Mina
+  - token_id: tok-2
+    text: og
+  - token_id: tok-3
+    text: Jonas
+  - token_id: tok-4
+    text: hjelper
+  - token_id: tok-5
+    text: hverandre
+  - token_id: tok-6
+    text: med
+  - token_id: tok-7
+    text: flyttingen.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  derived_from:
+  - section_id: checkpoint-combine-directions
+- handle: write_reciprocal_sentences_in_new_context
+  op: write
+  objective: obj-reciprocal-pronouns-01
+  bloom: apply
+  prompt_md: 'The building caretaker asks how the neighbors cooperated after the winter storm. Write a
+    35–55-word Norwegian message that states all three facts: the neighbors cleared snow for one another,
+    sent one another warnings about icy paths, and borrowed tools from one another last week.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Vaktmester
+      text_md: «Det var mye snø etter stormen. Hvilke ting gjorde naboene for å samarbeide?»
+    - speaker: Nabo
+      text_md: «De ryddet området, delte informasjon om farlige steder og lånte utstyr i forrige uke.»
+  response_language: 'no'
+  min_words: 35
+  max_words: 55
+  explanation_md: A useful report communicates the supplied facts clearly and uses reciprocal wording
+    for each two-way relationship.
+  judge_prompt: Evaluate only the listed gating criteria. Criteria whose ids end in -observation are diagnostic
+    only and must never cause failure. Report a verdict and evidence for every criterion id.
+  criteria:
+  - id: neighbor-facts
+    instruction: The message communicates all three supplied facts about snow clearing, icy-path warnings,
+      and borrowing tools.
+  - id: reciprocal-forms
+    instruction: The message expresses each of the three two-way relationships with an explicit and natural
+      use of hverandre.
+  - id: audience-purpose
+    instruction: The response is a coherent Norwegian report suitable for updating the caretaker.
+  - id: word-bound
+    instruction: The message contains 35–55 words.
+  - id: reciprocal-form-observation
+    instruction: The message uses hverandre for all three relationships between the neighbors.
+  - id: preposition-form-observation
+    instruction: 'Observation only: note whether any preposition used before hverandre fits its Norwegian
+      verb expression; do not fail the message for this.'
+  derived_from:
+  - section_id: guided-transfer-new-situation
+- handle: retrieve_and_transfer_hverandre
+  op: write
+  objective: obj-reciprocal-pronouns-01
+  bloom: apply
+  prompt_md: 'Nora has asked for a short plan for Saturday''s trip. Write a 30–50-word Norwegian reply
+    that explicitly uses reciprocal constructions for all four facts: the friends will call one another
+    on Friday, wait for one another at the station, help one another with the luggage, and send one another
+    messages during the trip.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Kan du sende meg en kort plan for lørdagsturen?»
+    - speaker: Jon
+      text_md: «Ja. Vi har avtalt flere punkter for reisen og møtes ved stasjonen.»
+  response_language: 'no'
+  min_words: 30
+  max_words: 50
+  explanation_md: The reply should give Nora a complete, practical plan based on the supplied facts and
+    use reciprocal constructions for each relationship.
+  judge_prompt: Evaluate only the listed gating criteria. Criteria whose ids end in -observation are diagnostic
+    only and must never cause failure. Report a verdict and evidence for every criterion id.
+  criteria:
+  - id: trip-facts
+    instruction: The reply communicates all four supplied facts about calling, waiting, helping with bags,
+      and sending messages.
+  - id: reciprocal-constructions
+    instruction: The reply explicitly uses natural Norwegian reciprocal constructions for all four relationships.
+  - id: reply-purpose
+    instruction: The response is a coherent Norwegian reply that gives Nora the requested plan.
+  - id: word-bound
+    instruction: The reply contains 30–50 words.
+  - id: reciprocal-form
+    instruction: The reply expresses each reciprocal relationship with hverandre.
+  - id: construction-choice-observation
+    instruction: 'Observation only: note whether hverandre is placed directly after suitable verbs and
+      after the required preposition in expressions such as vente på; do not fail the reply for this.'
+  derived_from:
+  - section_id: retrieval-and-review
+- handle: review_notice_shared_action
+  op: choose
+  objective: obj-reciprocal-pronouns-01
+  bloom: understand
+  prompt_md: Choose the Norwegian sentence that matches what Sofie and Tarek do.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Sofie
+      text_md: «Jeg hjelper Tarek med leksene på mandager.»
+    - speaker: Tarek
+      text_md: «Jeg hjelper Sofie med leksene på fredager.»
+  options:
+  - id: joint
+    text: Sofie og Tarek gjør leksene sammen.
+    correct: false
+    why: The dialogue describes mutual help, not one shared homework task.
+  - id: one-way
+    text: Tarek hjelper Sofie med leksene på mandager.
+    correct: false
+    why: The dialogue assigns Tarek's helping to Fridays, not Mondays.
+  - id: mutual
+    text: Sofie og Tarek hjelper hverandre med leksene.
+    correct: true
+    why: Each person helps the other, so the help goes both ways.
+  derived_from:
+  - section_id: retrieval-and-review
+- handle: review_complete_direct_reciprocal_object
+  op: recall_fill
+  objective: obj-reciprocal-pronouns-01
+  bloom: apply
+  prompt_md: Fill the blank so the sentence matches the two people.
+  audio_target: Ida og Petter besøker hverandre hver søndag.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Ida
+      text_md: «Jeg besøker Petter hver søndag.»
+    - speaker: Petter
+      text_md: «Jeg besøker Ida hver søndag.»
+  segments:
+  - text_md: '«Ida og Petter besøker '
+  - blank_id: direct-visit
+    options:
+    - hverandre
+    - dem
+    answer_index: 0
+  - text_md: ' hver søndag.»'
+  explanation_md: Hverandre shows that Ida visits Petter and Petter visits Ida.
+  derived_from:
+  - section_id: retrieval-and-review
+- handle: review_preposition_with_reciprocal
+  op: recall_fill
+  objective: obj-reciprocal-pronouns-01
+  bloom: apply
+  prompt_md: Fill the blank so the sentence matches what Eirik and Sana do.
+  audio_target: Eirik og Sana venter på hverandre utenfor kinoen.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Eirik
+      text_md: «Jeg venter på Sana utenfor kinoen.»
+    - speaker: Sana
+      text_md: «Jeg venter på Eirik utenfor kinoen.»
+  segments:
+  - text_md: '«Eirik og Sana venter '
+  - blank_id: waiting-phrase
+    options:
+    - på hverandre
+    - med hverandre
+    - av hverandre
+    answer_index: 0
+  - text_md: ' utenfor kinoen.»'
+  explanation_md: Vente requires på, and hverandre expresses the two-way relationship.
+  derived_from:
+  - section_id: retrieval-and-review
+- handle: review_joint_or_reciprocal
+  op: choose
+  objective: obj-reciprocal-pronouns-01
+  bloom: analyze
+  prompt_md: Choose the Norwegian sentence that matches what Ada and Kim do.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Ada
+      text_md: «Kim og jeg står side om side og lager én gryte suppe.»
+    - speaker: Kim
+      text_md: «Vi lager suppen i én gryte, og ingen av oss lager mat til den andre.»
+  options:
+  - id: reciprocal-meals
+    text: Ada og Kim lager suppe til hverandre.
+    correct: false
+    why: This says each cooks for the other, which the speakers deny.
+  - id: one-way
+    text: Ada lager suppe til Kim.
+    correct: false
+    why: This reports only one direction, which the dialogue does not support.
+  - id: shared-meal
+    text: Ada og Kim lager suppe sammen.
+    correct: true
+    why: They prepare one shared pot, so the activity is joint.
+  derived_from:
+  - section_id: retrieval-and-review
+- handle: review_combine_two_directions
+  op: recall_fill
+  objective: obj-reciprocal-pronouns-01
+  bloom: apply
+  prompt_md: Fill the blank so the sentence matches what Iben and Amir do every day.
+  audio_target: Iben og Amir sender hverandre meldinger hver dag.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Iben
+      text_md: «Jeg sender Amir meldinger hver dag.»
+    - speaker: Amir
+      text_md: «Jeg sender Iben meldinger hver dag.»
+  segments:
+  - text_md: '«Iben og Amir sender '
+  - blank_id: reciprocal-recipient
+    options:
+    - hverandre
+    - dem
+    answer_index: 0
+  - text_md: ' meldinger hver dag.»'
+  explanation_md: Hverandre compresses the two opposite directions into one sentence, while hver dag preserves
+    the stated frequency.
+  derived_from:
+  - section_id: retrieval-and-review

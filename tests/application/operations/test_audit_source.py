@@ -71,7 +71,7 @@ def test_audit_source_directory_given_valid_fixture_expect_assembled_build_targe
     assert audit.material_findings == []
 
 
-def test_audit_source_directory_given_incorrect_english_gloss_without_marker_expect_blocking_finding(
+def test_audit_source_directory_given_incorrect_english_gloss_without_marker_expect_no_marker_finding(
     tmp_path: Path,
 ):
     source = _copy_fixture(tmp_path)
@@ -85,10 +85,7 @@ def test_audit_source_directory_given_incorrect_english_gloss_without_marker_exp
 
     audit = audit_source_directory(source)
 
-    findings = [finding for finding in audit.findings if finding.code == "incorrect-example-marker-missing"]
-    assert len(findings) == 1
-    assert findings[0].severity == "blocking"
-    assert findings[0].artifact == "lesson.md"
+    assert not any(finding.code == "incorrect-example-marker-missing" for finding in audit.findings)
 
 
 def test_audit_source_directory_given_request_anchor_expect_visible_nonblocking_finding(tmp_path: Path) -> None:
@@ -539,25 +536,6 @@ def test_audit_source_directory_given_internal_or_typographic_quotes_expect_no_w
     assert not any(finding.code == "typed-example-outer-quote-wrapper" for finding in audit.findings)
 
 
-def _copy_fixture(tmp_path: Path, fixture_root: Path = K_CATALOG_PACKAGE_FIXTURE_ROOT) -> Path:
-    """Copy the fixture's authored source into a disposable test directory."""
-    destination = tmp_path / "source"
-    destination.mkdir()
-    for name in ("plan.md", "lesson.md", "exercises.yaml"):
-        shutil.copy2(fixture_root / name, destination / name)
-    return destination
-
-
-def _replace_norwegian_example_but(text: str) -> str:
-    """Normalize any Norwegian example conjunction for negative cases."""
-    return K_NORWEGIAN_EXAMPLE_BUT_RE.sub(r"\1men", text)
-
-
-def _introduce_norwegian_example_but(text: str) -> str:
-    """Seed the known Norwegian example defect for the positive audit case."""
-    return K_NORWEGIAN_EXAMPLE_MEN_RE.sub(r"\1 but", text)
-
-
 def test_audit_source_directory_given_visible_exact_speak_target_expect_no_speak_surface_finding(tmp_path: Path):
     source = _copy_fixture(tmp_path)
     lesson_path = source / "lesson.md"
@@ -574,6 +552,36 @@ def test_audit_source_directory_given_visible_exact_speak_target_expect_no_speak
   objective: obj-question-order
   bloom: apply
   prompt_md: In the morning, say exactly: Jeg star opp klokka sju.
+  target: Jeg star opp klokka sju.
+""",
+        encoding="utf-8",
+    )
+
+    audit = audit_source_directory(source)
+
+    codes = {finding.code for finding in audit.findings}
+    assert "speak-target-cue-exact-missing" not in codes
+    assert "speak-target-not-visible" not in codes
+
+
+def test_audit_source_directory_given_visible_norwegian_exact_speak_target_expect_no_speak_surface_finding(
+    tmp_path: Path,
+):
+    source = _copy_fixture(tmp_path)
+    lesson_path = source / "lesson.md"
+    lesson_path.write_text(
+        lesson_path.read_text(encoding="utf-8") + "\n{{exercise: speak-exact-norwegian}}\n",
+        encoding="utf-8",
+    )
+    exercises_path = source / "exercises.yaml"
+    exercises_path.write_text(
+        exercises_path.read_text(encoding="utf-8")
+        + """
+- handle: speak-exact-norwegian
+  op: speak
+  objective: obj-question-order
+  bloom: apply
+  prompt_md: Si akkurat denne setningen høyt: Jeg star opp klokka sju.
   target: Jeg star opp klokka sju.
 """,
         encoding="utf-8",
@@ -644,3 +652,22 @@ def test_audit_source_directory_given_hidden_or_non_exact_speak_target_expect_su
         audit = audit_source_directory(source)
 
         assert expected_code in {finding.code for finding in audit.findings}
+
+
+def _copy_fixture(tmp_path: Path, fixture_root: Path = K_CATALOG_PACKAGE_FIXTURE_ROOT) -> Path:
+    """Copy the fixture's authored source into a disposable test directory."""
+    destination = tmp_path / "source"
+    destination.mkdir()
+    for name in ("plan.md", "lesson.md", "exercises.yaml"):
+        shutil.copy2(fixture_root / name, destination / name)
+    return destination
+
+
+def _replace_norwegian_example_but(text: str) -> str:
+    """Normalize any Norwegian example conjunction for negative cases."""
+    return K_NORWEGIAN_EXAMPLE_BUT_RE.sub(r"\1men", text)
+
+
+def _introduce_norwegian_example_but(text: str) -> str:
+    """Seed the known Norwegian example defect for the positive audit case."""
+    return K_NORWEGIAN_EXAMPLE_MEN_RE.sub(r"\1 but", text)

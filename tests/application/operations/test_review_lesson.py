@@ -112,6 +112,14 @@ def test_answer_prompt_given_closed_payload_expect_full_keyless_learner_view():
     assert "temporarily ignore the Norwegian text" in prompt
 
 
+def test_answer_prompt_given_composite_decision_load_expect_category_and_multi_response_exception():
+    prompt = build_answer_prompt(_closed_prompt_lesson())
+
+    assert "composite_decision_load" in prompt
+    assert "multiple independent mappings or propositions" in prompt
+    assert "not defective merely because they expose multiple independently represented responses" in prompt
+
+
 def test_answer_prompt_given_answer_signaling_option_ids_expect_opaque_reviewer_input():
     lesson = _closed_prompt_lesson()
     lesson["elements"][0]["payload"]["options"] = [
@@ -275,6 +283,7 @@ def test_open_semantic_prompt_given_broad_goal_and_supported_task_expect_claims_
     assert "cannot prove that the learner selected that form independently" in prompt
     assert "Composing both sides of a dialogue does not by itself show a responsive interaction" in prompt
     assert "A focused task may practice part of a broader objective" in prompt
+    assert "Do not use composite_decision_load for open write or speak tasks" in prompt
     assert "cannot supply an object or cue missing from the learner-visible attempt prompt" in prompt
 
 

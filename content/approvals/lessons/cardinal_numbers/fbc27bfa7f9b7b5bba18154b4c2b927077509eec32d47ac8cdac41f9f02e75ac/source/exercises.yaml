@@ -1,0 +1,495 @@
+- handle: number-sequence-recall
+  op: recall_fill
+  objective: obj-cardinal-numbers-01
+  bloom: remember
+  prompt_md: Fill each blank with the Norwegian number for the shown quantity.
+  explanation_md: Match each shown quantity to its Norwegian number word, and check the noun's gender
+    for the quantity one.
+  derived_from:
+  - section_id: numbers-one-to-ten
+  audio_target: Fyll inn tallordene for de viste mengdene.
+  segments:
+  - text_md: '8 books:'
+  - blank_id: eight-books
+    options:
+    - åtte
+    - seks
+    - ni
+    answer_index: 0
+  - text_md: ' bøker; 3 apples:'
+  - blank_id: three-apples
+    options:
+    - fire
+    - tre
+    - to
+    answer_index: 1
+  - text_md: ' epler; 10 tables:'
+  - blank_id: ten-tables
+    options:
+    - fem
+    - ni
+    - ti
+    answer_index: 2
+  - text_md: ' bord; 6 eggs:'
+  - blank_id: six-eggs
+    options:
+    - seks
+    - fem
+    - sju
+    answer_index: 0
+  - text_md: ' egg; 1 cup:'
+  - blank_id: one-cup
+    options:
+    - ett
+    - en
+    - to
+    answer_index: 1
+  - text_md: ' kopp'
+- handle: notice-en-ett-in-context
+  op: categorize
+  objective: obj-cardinal-numbers-01
+  bloom: analyze
+  prompt_md: Sort the nouns by the form used for one.
+  explanation_md: Use en with the taught en-words and ett with the taught ett-words.
+  derived_from:
+  - section_id: choosing-en-or-ett
+  buckets:
+  - bucket_id: takes-en
+    label: Takes en for one
+  - bucket_id: takes-ett
+    label: Takes ett for one
+  items:
+  - item_id: banana
+    text: banan
+    bucket_id: takes-en
+  - item_id: orange
+    text: appelsin
+    bucket_id: takes-en
+  - item_id: carton
+    text: kartong
+    bucket_id: takes-en
+  - item_id: bag
+    text: pose
+    bucket_id: takes-en
+  - item_id: apple
+    text: eple
+    bucket_id: takes-ett
+  - item_id: egg
+    text: egg
+    bucket_id: takes-ett
+  - item_id: bread
+    text: brød
+    bucket_id: takes-ett
+  - item_id: glass
+    text: glass
+    bucket_id: takes-ett
+- handle: contrast-one-and-more
+  op: recall_fill
+  objective: obj-cardinal-numbers-01
+  bloom: apply
+  prompt_md: Complete the quantity phrases.
+  explanation_md: For a quantity of one, choose en or ett to match the noun's gender; the number for three
+    stays the same.
+  derived_from:
+  - section_id: one-and-several
+  audio_target: Fyll inn tallordene i mengdene.
+  segments:
+  - text_md: '1 cup:'
+  - blank_id: one-cup
+    options:
+    - ett
+    - en
+    answer_index: 1
+  - text_md: ' kopp; 3 cups:'
+  - blank_id: three-cups
+    options:
+    - tre
+    - to
+    - fire
+    answer_index: 0
+  - text_md: ' kopper; 1 glass:'
+  - blank_id: one-glass
+    options:
+    - en
+    - ett
+    answer_index: 1
+  - text_md: ' glass; 3 glasses:'
+  - blank_id: three-glasses
+    options:
+    - ett
+    - fem
+    - tre
+    answer_index: 2
+  - text_md: ' glass'
+- handle: answer-how-many
+  op: recall_fill
+  objective: obj-cardinal-numbers-01
+  bloom: apply
+  prompt_md: Complete each answer with the shown quantity.
+  explanation_md: The noun determines en or ett when the quantity is one; higher number words do not change.
+  derived_from:
+  - section_id: asking-how-many
+  audio_target: Svar på spørsmålene med de viste mengdene.
+  segments:
+  - text_md: '1 bag — Hvor mange poser trenger du? – Jeg trenger '
+  - blank_id: one-bag
+    options:
+    - en pose
+    - ett pose
+    - to poser
+    answer_index: 0
+  - text_md: '. 1 loaf — Hvor mange brød har dere? – Vi har '
+  - blank_id: one-loaf
+    options:
+    - en brød
+    - ett brød
+    - tre brød
+    answer_index: 1
+  - text_md: . 4 cups — Hvor mange kopper? –
+  - blank_id: four-cups
+    options:
+    - to kopper
+    - fem kopper
+    - fire kopper
+    answer_index: 2
+  - text_md: '. 3 apples — Hvor mange epler trenger du? – Jeg trenger '
+  - blank_id: three-apples
+    options:
+    - tre epler
+    - seks epler
+    - ett eple
+    answer_index: 0
+  - text_md: .
+- handle: repair-the-one-form
+  op: find_fix
+  objective: obj-cardinal-numbers-01
+  bloom: analyze
+  prompt_md: Select the token that must change.
+  explanation_md: Glass is an ett-word, so the one-form must take the ett form.
+  derived_from:
+  - section_id: common-mistake
+  tokens:
+  - token_id: tok-1
+    text: Vi
+  - token_id: tok-2
+    text: trenger
+  - token_id: tok-3
+    text: en
+  - token_id: tok-4
+    text: glass
+  - token_id: tok-5
+    text: .
+  error_token_id: tok-3
+  feedback: The one-form must match the noun's gender; glass takes the ett form.
+- handle: complete-the-checkout-quantities
+  op: recall_fill
+  objective: obj-cardinal-numbers-01
+  bloom: apply
+  prompt_md: 'Complete the checkout dialogue with these quantities: four apples, two bananas, six eggs,
+    one loaf of bread, and one bag.'
+  explanation_md: For a quantity of one, choose en or ett to match the noun's gender; other numbers stay
+    the same.
+  derived_from:
+  - section_id: checkout
+  audio_target: Fyll inn mengdene i kassedialogen.
+  segments:
+  - text_md: 'Jonas: Du har '
+  - blank_id: apples
+    options:
+    - tre epler
+    - fire epler
+    - ett eple
+    answer_index: 1
+  - text_md: ' og '
+  - blank_id: bananas
+    options:
+    - fem bananer
+    - en banan
+    - to bananer
+    answer_index: 2
+  - text_md: '. Stemmer det? Mina: Ja. Og jeg har '
+  - blank_id: eggs
+    options:
+    - seks egg
+    - sju egg
+    - ett egg
+    answer_index: 0
+  - text_md: '. Jonas: Her er det bare '
+  - blank_id: bread
+    options:
+    - en brød
+    - ett brød
+    - to brød
+    answer_index: 1
+  - text_md: '. Og hvor mange poser vil du ha? Mina:'
+  - blank_id: bag
+    options:
+    - fire poser
+    - ett pose
+    - en pose
+    answer_index: 2
+  - text_md: ', takk.'
+- handle: set-the-table-transfer
+  op: write
+  objective: obj-cardinal-numbers-01
+  bloom: apply
+  prompt_md: 'Table check for Mina: chairs: 2, table: 1, cup: 1, glasses: 3. Write Mina a 10–30-word message
+    in Norwegian telling her what is available, using Norwegian quantity phrases and the correct en or
+    ett one-form for each single item.'
+  explanation_md: A complete message reports the four supplied quantities with suitable Norwegian quantity
+    phrases, choosing en or ett to match each noun's gender.
+  derived_from:
+  - section_id: new-situation
+  response_language: 'no'
+  min_words: 10
+  max_words: 30
+  judge_prompt: 'Evaluate only criteria chairs-quantity, table-quantity, cup-quantity, glasses-quantity
+    and word-bound. Report a verdict and evidence for every criterion. A quantity stated with the wrong
+    one-form gender fails its criterion: «en bord» fails table-quantity and «ett kopp» fails cup-quantity.
+    Accept natural sentence order and punctuation. Anchors: Must pass: "Hei Mina! Du har to stoler, ett
+    bord, en kopp og tre glass." Must fail: "Hei Mina! Du har to stoler, ett bord og en kopp." It omits
+    the glasses. Must fail: "Hei Mina! Du har tre stoler, ett bord, en kopp og tre glass." The chair quantity
+    is wrong. Must fail: "Hei Mina! Du har to stoler, en bord, ett kopp og tre glass." The table and cup
+    one-forms use the wrong gender.'
+  criteria:
+  - id: chairs-quantity
+    instruction: States that two chairs are available using a Norwegian quantity phrase (to stoler).
+  - id: table-quantity
+    instruction: States that one table is available using the correct Norwegian one-form (ett bord).
+  - id: cup-quantity
+    instruction: States that one cup is available using the correct Norwegian one-form (en kopp).
+  - id: glasses-quantity
+    instruction: States that three glasses are available using a Norwegian quantity phrase (tre glass).
+  - id: word-bound
+    instruction: Contains 10–30 words.
+- handle: final-counting-review
+  op: write
+  objective: obj-cardinal-numbers-01
+  bloom: apply
+  prompt_md: 'Breakfast table: banana: 1, apples: 2, cups: 3, glass: 1, eggs: 4, loaf of bread: 1. Write
+    a 12–35-word message in Norwegian to a guest describing what is on the table, using Norwegian quantity
+    phrases and the correct en or ett one-form for each single item.'
+  explanation_md: A complete message reports all six supplied quantities with suitable Norwegian quantity
+    phrases, choosing en or ett to match each noun's gender.
+  derived_from:
+  - section_id: retrieval-review
+  response_language: 'no'
+  min_words: 12
+  max_words: 35
+  judge_prompt: 'Evaluate only criteria banana-quantity, apples-quantity, cups-quantity, glass-quantity,
+    eggs-quantity, bread-quantity and word-bound. Report a verdict and evidence for every criterion. A
+    quantity stated with the wrong one-form gender fails its criterion: «ett banan» fails banana-quantity,
+    «en glass» fails glass-quantity and «en brød» fails bread-quantity. Accept natural sentences, list-like
+    phrasing and equivalent punctuation. Anchors: Must pass: "Hei! På bordet er det en banan, to epler,
+    tre kopper, ett glass, fire egg og ett brød." Must fail: "Hei! På bordet er det en banan, to epler,
+    tre kopper og fire egg." It omits the glass and bread. Must fail: "Hei! På bordet er det en banan,
+    tre epler, tre kopper, ett glass, fire egg og ett brød." The apple quantity is wrong. Must fail: "Hei!
+    På bordet er det ett banan, to epler, tre kopper, en glass, fire egg og en brød." The banana, glass
+    and bread one-forms use the wrong gender.'
+  criteria:
+  - id: banana-quantity
+    instruction: States that the table has one banana using the correct Norwegian one-form (en banan).
+  - id: apples-quantity
+    instruction: States that the table has two apples using a Norwegian quantity phrase (to epler).
+  - id: cups-quantity
+    instruction: States that the table has three cups using a Norwegian quantity phrase (tre kopper).
+  - id: glass-quantity
+    instruction: States that the table has one glass using the correct Norwegian one-form (ett glass).
+  - id: eggs-quantity
+    instruction: States that the table has four eggs using a Norwegian quantity phrase (fire egg).
+  - id: bread-quantity
+    instruction: States that the table has one loaf of bread using the correct Norwegian one-form (ett
+      brød).
+  - id: word-bound
+    instruction: Contains 12–35 words.
+- handle: review_number-sequence-recall
+  op: recall_fill
+  objective: obj-cardinal-numbers-01
+  bloom: remember
+  prompt_md: Write the Norwegian number word for each quantity shown.
+  explanation_md: Match each shown quantity to its Norwegian number word, and check the noun's gender
+    for the quantity one.
+  derived_from:
+  - section_id: numbers-one-to-ten
+  audio_target: Fyll inn tallordene for mengdene.
+  segments:
+  - text_md: '7 chairs:'
+  - blank_id: seven-chairs
+    options:
+    - seks
+    - sju
+    - ni
+    answer_index: 1
+  - text_md: ' stoler; 4 apples:'
+  - blank_id: four-apples
+    options:
+    - fire
+    - to
+    - fem
+    answer_index: 0
+  - text_md: ' epler; 9 cups:'
+  - blank_id: nine-cups
+    options:
+    - ti
+    - ni
+    - åtte
+    answer_index: 1
+  - text_md: ' kopper; 5 eggs:'
+  - blank_id: five-eggs
+    options:
+    - seks
+    - fire
+    - fem
+    answer_index: 2
+  - text_md: ' egg; 1 glass:'
+  - blank_id: one-glass
+    options:
+    - en
+    - ett
+    - to
+    answer_index: 1
+  - text_md: ' glass'
+- handle: review_contrast-one-and-more
+  op: recall_fill
+  objective: obj-cardinal-numbers-01
+  bloom: apply
+  prompt_md: Complete the quantity phrases with the correct number word.
+  explanation_md: For a quantity of one, choose en or ett to match the noun's gender; other numbers do
+    not change.
+  derived_from:
+  - section_id: one-and-several
+  audio_target: Fyll inn tallordene i mengdene.
+  segments:
+  - text_md: '1 glass:'
+  - blank_id: one-glass
+    options:
+    - en
+    - ett
+    answer_index: 1
+  - text_md: ' glass; 2 glasses:'
+  - blank_id: two-glasses
+    options:
+    - to
+    - tre
+    - en
+    answer_index: 0
+  - text_md: ' glass; 1 cup:'
+  - blank_id: one-cup
+    options:
+    - ett
+    - en
+    answer_index: 1
+  - text_md: ' kopp; 4 cups:'
+  - blank_id: four-cups
+    options:
+    - to
+    - fem
+    - fire
+    answer_index: 2
+  - text_md: ' kopper'
+- handle: review_answer-how-many
+  op: recall_fill
+  objective: obj-cardinal-numbers-01
+  bloom: apply
+  prompt_md: Answer each question with the quantity shown.
+  explanation_md: The noun determines en or ett when the quantity is one; higher number words do not change.
+  derived_from:
+  - section_id: asking-how-many
+  audio_target: Svar på spørsmålene med mengdene som vises.
+  segments:
+  - text_md: '2 bags — Hvor mange poser trenger du? – Jeg trenger '
+  - blank_id: two-bags
+    options:
+    - to poser
+    - en pose
+    - tre poser
+    answer_index: 0
+  - text_md: '. 1 glass — Hvor mange glass har dere? – Vi har '
+  - blank_id: one-glass
+    options:
+    - en glass
+    - ett glass
+    - to glass
+    answer_index: 1
+  - text_md: . 5 cups — Hvor mange kopper? –
+  - blank_id: five-cups
+    options:
+    - to kopper
+    - fem kopper
+    - tre kopper
+    answer_index: 1
+  - text_md: '. 3 apples — Hvor mange epler trenger du? – Jeg trenger '
+  - blank_id: three-apples
+    options:
+    - ett eple
+    - seks epler
+    - tre epler
+    answer_index: 2
+  - text_md: .
+- handle: review_complete-the-checkout-quantities
+  op: recall_fill
+  objective: obj-cardinal-numbers-01
+  bloom: apply
+  prompt_md: 'Complete the checkout dialogue with these quantities: two apples, five bananas, eight eggs,
+    one loaf of bread, and three bags.'
+  explanation_md: For a quantity of one, choose en or ett to match the noun's gender; other numbers stay
+    the same.
+  derived_from:
+  - section_id: checkout
+  audio_target: Fyll inn mengdene i kassedialogen.
+  segments:
+  - text_md: 'Kari: Jeg har '
+  - blank_id: apples
+    options:
+    - fire epler
+    - to epler
+    - ett eple
+    answer_index: 1
+  - text_md: ' og '
+  - blank_id: bananas
+    options:
+    - fem bananer
+    - en banan
+    - tre bananer
+    answer_index: 0
+  - text_md: '. Har du mer? Ola: Ja, jeg har '
+  - blank_id: eggs
+    options:
+    - seks egg
+    - åtte egg
+    - ett egg
+    answer_index: 1
+  - text_md: '. Kari: Fint. Og her er '
+  - blank_id: bread
+    options:
+    - to brød
+    - en brød
+    - ett brød
+    answer_index: 2
+  - text_md: '. Ola: Hvor mange poser? Kari:'
+  - blank_id: bag
+    options:
+    - tre poser
+    - ett pose
+    - en pose
+    answer_index: 0
+  - text_md: ', takk.'
+- handle: review_repair-the-one-form
+  op: recall_fill
+  objective: obj-cardinal-numbers-01
+  bloom: apply
+  prompt_md: Complete the sentence with the correct one-form.
+  explanation_md: Choose the en or ett form that matches the noun's gender; brød is an ett-word, so it
+    takes ett.
+  derived_from:
+  - section_id: common-mistake
+  audio_target: Fyll inn den riktige formen i setningen.
+  segments:
+  - text_md: 'Hun kjøper '
+  - blank_id: corrected-bread
+    options:
+    - en brød
+    - ett brød
+    - to brød
+    answer_index: 1
+  - text_md: ' på butikken.'

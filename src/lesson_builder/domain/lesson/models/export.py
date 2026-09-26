@@ -101,6 +101,7 @@ class ExportedExampleItem(ExportBase):
     id: str
     no: ExportedSpans
     en: ExportedSpans
+    teaching_role: Literal["model", "incorrect", "caution"] = "model"
     audio_id: str | None = None
 
 
@@ -109,6 +110,7 @@ class ExportedExampleBlock(ExportBase):
     id: str
     no: ExportedSpans
     en: ExportedSpans
+    teaching_role: Literal["model", "incorrect", "caution"] = "model"
     audio_id: str | None = None
 
 
@@ -255,6 +257,27 @@ class ExportedChoosePayload(ExportBase):
         return self
 
 
+class ExportedDialogueTurn(ExportBase):
+    """One public speaker turn in exercise stimulus context."""
+
+    speaker: str = Field(min_length=1)
+    text: ExportedSpans = Field(min_length=1)
+
+    @field_validator("speaker")
+    @classmethod
+    def _speaker_is_not_blank(cls, value: str) -> str:
+        if not value.strip():
+            raise ValueError("dialogue speaker must contain non-whitespace text")
+        return value
+
+
+class ExportedDialogueStimulus(ExportBase):
+    """Public ordered dialogue supplied before an exercise task."""
+
+    kind: Literal["dialogue"]
+    turns: list[ExportedDialogueTurn] = Field(min_length=1)
+
+
 class ExportedExerciseBase[OperationT: str, PayloadT: BaseModel](ExportBase):
     """Common fields for one statically typed exported exercise variant."""
 
@@ -263,6 +286,7 @@ class ExportedExerciseBase[OperationT: str, PayloadT: BaseModel](ExportBase):
     operation: OperationT
     objective_id: str
     prompt: ExportedSpans
+    stimulus: list[ExportedDialogueStimulus] = Field(default_factory=list)
     explanation: ExportedSpans | None
     audio_id: str | None = None
     payload: PayloadT
@@ -367,7 +391,7 @@ class ExportedLesson(ExportBase):
     adding app-side page or session state to the contract.
     """
 
-    schema_version: Literal["4.0"]
+    schema_version: Literal["4.1"]
     id: str
     kind: Literal["grammar", "phraseology", "communicative", "pronunciation", "writing"]
     language: Literal["nb-NO"] = "nb-NO"

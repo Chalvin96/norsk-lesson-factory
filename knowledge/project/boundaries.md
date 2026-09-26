@@ -12,9 +12,11 @@ meaning and pedagogical intent without coupling itself to runtime behavior.
 
 The local authoring preview is a read-only inspection surface over current source.
 It reuses source parsing, deterministic audit, and public packet projection, binds
-only to loopback, and keeps answers and review evidence author-only. It does not
-publish, write source or distribution files, call providers, score learners, or
-attach stale distribution audio to changed authored text.
+to loopback by default, and supports an explicitly configured trusted LAN IPv4 address
+for local inspection. LAN access can expose answers and review evidence to clients
+that can reach that address. It does not publish, write source or distribution
+files, call providers, score learners, or attach stale distribution audio to
+changed authored text.
 
 The approved catalog owns lesson identity, outcomes, scope, and prerequisites. The
 plan orders approved lessons. Scratch generation may propose or repair content, but a
@@ -27,6 +29,9 @@ authored order, exercises, and ready audio references, but not request notes, re
 evidence, provenance, provider voice data, or runtime behavior. Audio is synthesized
 at export; voice policy remains private and provider-neutral; missing audio has no
 learner-facing pending state.
+Exercise stimulus is intrinsic learner content: schema 4.1 carries authored dialogue
+as ordered speaker turns. The learner application owns turn layout and styling, but
+must not infer semantic dialogue structure from prose or punctuation.
 
 Learner-facing `lesson.md` must not carry exercise request notes. The author
 preview reports deterministic source findings, while generation rejects known
@@ -37,6 +42,10 @@ repository check, and distribution export reject any detected match.
 Intrinsic lesson data stays in the packet while `catalog.json` carries only distribution
 metadata such as position and optional family/status. A separate manifest would
 duplicate packet fields and turn packaging metadata into a second lesson contract.
+An example's `teaching_role` (`model`, `incorrect`, or `caution`) is intrinsic lesson
+meaning and therefore belongs in source and the packet; the learner app independently
+owns its labels, styling, and interaction. Missing roles default to `model` for v4
+compatibility, while the compiler normalizes legacy inline status markers during migration.
 Recurring voices are explicit registry-backed authoring data, never inferred from a
 matching name; unresolved identity or profile conflicts fail closed before paid audio.
 

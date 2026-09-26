@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "preposition_stranding",
   "kind": "grammar",
   "language": "nb-NO",
@@ -88,6 +88,22 @@
     {
       "kind": "exercise",
       "id": "retrieve_end_position_pattern"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_notice_question_links"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_complete_stranded_prepositions_in_questions"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_complete_relative_clauses_with_prepositions"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_avoid_repeated_pronoun"
     }
   ],
   "sections": [
@@ -1161,15 +1177,16 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Hva snakker dere?"
+                  "value": "Hva snakker dere?"
                 }
               ],
               "en": [
                 {
                   "kind": "text",
-                  "value": "✗ What are you talking?"
+                  "value": "What are you talking?"
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "common-mistakes-block-3"
@@ -1217,15 +1234,16 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Dette er sangen som alle danser."
+                  "value": "Dette er sangen som alle danser."
                 }
               ],
               "en": [
                 {
                   "kind": "text",
-                  "value": "✗ This is the song that everyone dances."
+                  "value": "This is the song that everyone dances."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "common-mistakes-block-6"
@@ -1273,15 +1291,16 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Hvem snakket du med ham?"
+                  "value": "Hvem snakket du med ham?"
                 }
               ],
               "en": [
                 {
                   "kind": "text",
-                  "value": "✗ Who did you speak with him?"
+                  "value": "Who did you speak with him?"
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "common-mistakes-block-9"
@@ -1319,15 +1338,16 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Dette er naboen som jeg lånte verktøyet av ham."
+                  "value": "Dette er naboen som jeg lånte verktøyet av ham."
                 }
               ],
               "en": [
                 {
                   "kind": "text",
-                  "value": "✗ This is the neighbour whom I borrowed the tool from him."
+                  "value": "This is the neighbour whom I borrowed the tool from him."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "common-mistakes-block-11"
@@ -1558,36 +1578,56 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Read the everyday question and choose the analysis that identifies the linked question word and preposition and distinguishes it from a subject question."
+          "value": "Velg analysen som passer til spørsmålene."
         }
       ],
       "explanation": null,
       "payload": {
         "options": [
           {
-            "option_id": "isolated-preposition",
-            "text": "Hvem snakket du med? (Who did you speak with?) — med is an isolated final word and has no connection to hvem.",
-            "why": "Med belongs to the question phrase represented by hvem."
+            "option_id": "complement-then-subject",
+            "text": "I det første spørsmålet er hvem knyttet til med; i det andre er hvem subjekt.",
+            "why": "Dette bytter om rollene i de to spørsmålene."
           },
           {
-            "option_id": "linked-preposition",
-            "text": "Hvem snakket du med? (Who did you speak with?) — hvem is linked to med; med remains later, unlike a subject question with no stranded preposition.",
-            "why": "The taught everyday pattern moves hvem to the beginning and keeps med after the verb."
+            "option_id": "subject-both",
+            "text": "Hvem er subjekt i begge spørsmålene.",
+            "why": "Maja er subjekt i det andre spørsmålet, og hvem er knyttet til med."
           },
           {
-            "option_id": "subject-analysis",
-            "text": "Hvem snakket du med? (Who did you speak with?) — hvem is the subject and med is linked to du.",
-            "why": "The sentence asks about the person connected to med, not the subject."
+            "option_id": "subject-then-complement",
+            "text": "I det første spørsmålet er hvem subjekt; i det andre er hvem knyttet til med.",
+            "why": "Det første spørsmålet spør hvem som snakker, og det andre spør hvem Maja snakker med."
           }
         ],
-        "answer_id": "linked-preposition",
-        "stem": [
-          {
-            "kind": "text",
-            "value": "Which analysis correctly identifies the question word and the preposition connected to it?"
-          }
-        ]
-      }
+        "answer_id": "subject-then-complement",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hvem snakker med Jonas?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Jonas",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hvem snakker Maja med?»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -1597,13 +1637,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each party-planning question with the preposition required by the expression. Keep the question word or phrase at the beginning."
+          "value": "Fyll ut spørsmålene med preposisjonene som mangler."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "The preposition belongs to the verb or expression and stays at the end when its complement is questioned or represented by som."
+          "value": "Spørreordet viser til personen, tingen eller stedet. Uttrykket beholder preposisjonen senere i spørsmålet."
         }
       ],
       "payload": {
@@ -1613,7 +1653,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Maja spør: Hvem snakker du"
+                "value": "Maja spør: «Hvem snakker du"
               },
               {
                 "kind": "text",
@@ -1635,7 +1675,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "? Jonas spør: Hva snakker dere"
+                "value": "?» Jonas spør: «Hva snakker dere"
               },
               {
                 "kind": "text",
@@ -1657,7 +1697,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "? Maja spør: Hvem venter hun"
+                "value": "?» Maja spør: «Hvem venter hun"
               },
               {
                 "kind": "text",
@@ -1679,7 +1719,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "? Jonas spør: Hvilket hus bor de"
+                "value": "?» Jonas spør: «Hvilket hus bor de"
               },
               {
                 "kind": "text",
@@ -1701,7 +1741,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "?"
+                "value": "?»"
               }
             ]
           }
@@ -1716,7 +1756,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "The guests will be in an unknown room. Build one complete natural Bokmål question asking which room they will be in, using everyday word order."
+          "value": "Gjestene skal være i et rom, men Maja vet ikke hvilket. Bygg spørsmålet hennes."
         }
       ],
       "explanation": null,
@@ -1771,50 +1811,50 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Match each described noun with the preposition later in its relative clause. The correct links show why the preposition remains inside the clause."
+          "value": "Knytt hvert substantiv til preposisjonen som hører til."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Som represents the earlier noun, while the verb keeps its required preposition later in the relative clause."
+          "value": "«Som» viser tilbake til substantivet, og uttrykket beholder preposisjonen sin i leddsetningen."
         }
       ],
       "payload": {
         "left": [
           {
             "left_id": "noun-naboen",
-            "text": "Naboen som jeg snakket med"
+            "text": "Naboen som jeg snakket ___"
           },
           {
             "left_id": "noun-hoyttaleren",
-            "text": "Høyttaleren som vi hørte på"
+            "text": "Høyttaleren som vi hørte ___"
           },
           {
             "left_id": "noun-rommet",
-            "text": "Rommet som gjestene skal være i"
+            "text": "Rommet som gjestene skal være ___"
           },
           {
             "left_id": "noun-sangen",
-            "text": "Sangen som folk liker å danse til"
+            "text": "Sangen som folk liker å danse ___"
           }
         ],
         "right": [
           {
             "right_id": "prep-med",
-            "text": "med — with"
+            "text": "med — i selskap med noen"
           },
           {
             "right_id": "prep-pa",
-            "text": "på — to"
+            "text": "på — lytte til noe"
           },
           {
             "right_id": "prep-i",
-            "text": "i — in"
+            "text": "i — befinne seg inne i noe"
           },
           {
             "right_id": "prep-til",
-            "text": "til — to"
+            "text": "til — bevege seg etter musikk"
           }
         ],
         "pairs": [
@@ -1845,10 +1885,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each relative clause with the preposition required by the verb or expression. Keep the preposition in its natural later position."
+          "value": "Fyll ut leddsetningene med preposisjonen som mangler."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Substantivet står før leddsetningen, og uttrykket beholder preposisjonen sin senere i leddsetningen."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -1856,7 +1901,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Maja forklarer: Dette er naboen som jeg snakket"
+                "value": "Maja forklarer: «Dette er verktøyet som jeg festet hylla"
               },
               {
                 "kind": "text",
@@ -1869,74 +1914,30 @@
             "blank_id": "relative-med",
             "options": [
               "med",
-              "om"
-            ],
-            "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": ". Dette er høyttaleren som vi hørte"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "relative-pa",
-            "options": [
-              "til",
-              "på"
-            ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": ". Dette er rommet som gjestene skal være"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "relative-i",
-            "options": [
-              "i",
-              "med"
-            ],
-            "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": ". Dette er sangen som folk liker å danse"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "relative-til",
-            "options": [
-              "om",
               "til"
             ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Maja spør hvilken tekst vi brukte som kilde. Dette er artikkelen som vi lærte mye"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "relative-av",
+            "options": [
+              "om",
+              "av"
+            ],
             "answer_index": 1
           },
           {
@@ -1944,7 +1945,51 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "."
+                "value": ". Dette er appen som hun betalte"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "relative-for",
+            "options": [
+              "for",
+              "på"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Dette er skjemaet som han ba"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "relative-om",
+            "options": [
+              "om",
+              "på"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ".»"
               }
             ]
           }
@@ -1959,15 +2004,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Combine the two statements into one natural Bokmål sentence. Put the shared noun before som and keep the preposition inside the relative clause. Statements: Jeg snakket med naboen. Naboen har en høyttaler. (I spoke with the neighbour. The neighbour has a speaker.)"
+          "value": "«Jeg ventet på bussen. Bussen kom sent.» Slå sammen setningene med «som»."
         }
       ],
       "explanation": null,
       "payload": {
         "tokens": [
           {
-            "token_id": "combine-naboen",
-            "text": "Naboen",
+            "token_id": "combine-bussen",
+            "text": "Bussen",
             "fixed": false
           },
           {
@@ -1981,40 +2026,34 @@
             "fixed": false
           },
           {
-            "token_id": "combine-snakket",
-            "text": "snakket",
+            "token_id": "combine-ventet",
+            "text": "ventet",
             "fixed": false
           },
           {
-            "token_id": "combine-med",
-            "text": "med,",
+            "token_id": "combine-paa",
+            "text": "på,",
             "fixed": false
           },
           {
-            "token_id": "combine-har",
-            "text": "har",
+            "token_id": "combine-kom",
+            "text": "kom",
             "fixed": false
           },
           {
-            "token_id": "combine-en",
-            "text": "en",
-            "fixed": false
-          },
-          {
-            "token_id": "combine-hoyttaler",
-            "text": "høyttaler.",
+            "token_id": "combine-sent",
+            "text": "sent.",
             "fixed": false
           }
         ],
         "answer_order": [
-          "combine-naboen",
+          "combine-bussen",
           "combine-som",
           "combine-jeg",
-          "combine-snakket",
-          "combine-med",
-          "combine-har",
-          "combine-en",
-          "combine-hoyttaler"
+          "combine-ventet",
+          "combine-paa",
+          "combine-kom",
+          "combine-sent"
         ]
       }
     },
@@ -2026,7 +2065,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Select the one token that is wrong/needs changing."
+          "value": "Velg ordet som er til overs."
         }
       ],
       "explanation": null,
@@ -2054,7 +2093,7 @@
           }
         ],
         "error_token_id": "repair-ham",
-        "feedback": "Remove the repeated pronoun ham. The natural Bokmål repair is Hvem snakket du med?; the initial question word already supplies the person linked to med."
+        "feedback": "Remove ham. Hvem already supplies the person linked to med, so the natural question is «Hvem snakket du med?»"
       }
     },
     {
@@ -2065,7 +2104,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "A colleague needs to identify the train the travelers are waiting for. Build one complete natural Bokmål question with the question phrase first and the associated preposition later."
+          "value": "«Vi venter på et tog, men vet ikke hvilket.» Bygg spørsmålet de reisende stiller."
         }
       ],
       "explanation": null,
@@ -2114,7 +2153,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Combine these new work-trip statements into one natural Bokmål sentence with a relative clause: Vi snakket om møtet. Dette er møtet. (We talked about the meeting. This is the meeting.) Keep the preposition inside the clause."
+          "value": "«Vi snakket om møtet. Dette er møtet.» Slå sammen setningene med «som»."
         }
       ],
       "explanation": null,
@@ -2175,31 +2214,363 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Without looking back, write in natural Bokmål: one question and one sentence with a relative clause. Use different prepositions in the two sentences. After each sentence, briefly state which earlier question word or noun the preposition connects to."
+          "value": "Jonas skriver: «Vi trenger en høyttaler. Lea har en. Vi hørte på den i går.» Skriv Maja en melding. Spør hvem dere kan låne en høyttaler av, og bruk en leddsetning med «som» om høyttaleren dere hørte på i går."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": null,
-        "max_words": null,
-        "judge_prompt": "Check the response against the task and report evidence for every criterion. Accept different natural Bokmål wording and any taught prepositions, provided the two prepositions differ and their connections and positions are clear.",
+        "min_words": 20,
+        "max_words": 35,
+        "judge_prompt": "Evaluate criteria question, relative-clause, preposition-placement. The message must ask who they can borrow a speaker from, with «av» after «en høyttaler» in the question; an optional time phrase may follow «av». It must identify the heard speaker in a relative clause with «på» in its natural clause position. Accept natural variants that meet both requirements. Anchors that must pass: «Hvem kan vi låne en høyttaler av? Er det høyttaleren som vi hørte på i går? Lea kan kanskje hjelpe oss med å finne den.» and «Hvem kan vi låne en høyttaler av i morgen? Er det høyttaleren som vi hørte på i går? Lea kan kanskje hjelpe oss med å finne den.» Anchor that must fail the question requirement: «Hvem kan vi låne en høyttaler? Er det høyttaleren som vi hørte på i går? Lea kan kanskje hjelpe oss med å finne den.»",
         "criteria": [
           {
-            "id": "question-stranding",
-            "instruction": "Writes one natural Bokmål question with the question word or phrase early and its required preposition later."
+            "id": "question",
+            "instruction": "The message asks who they can borrow a speaker from, with «av» at the end of the question."
           },
           {
-            "id": "relative-stranding",
-            "instruction": "Writes one natural Bokmål sentence with a relative clause, with the described noun before the clause and the required preposition retained inside it."
+            "id": "relative-clause",
+            "instruction": "The message identifies the speaker they heard by using a relative clause introduced with som."
           },
           {
-            "id": "different-prepositions",
-            "instruction": "Uses different prepositions in the question and the relative-clause sentence."
+            "id": "preposition-placement",
+            "instruction": "The question places «av» after «en høyttaler»; a time phrase may follow «av». In the relative clause, «på» follows «hørte» and remains inside the clause; a time phrase may follow «på»."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_notice_question_links",
+      "operation": "choose",
+      "objective_id": "obj-preposition-stranding-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg analysen som passer til de to spørsmålene."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "review-complement-then-subject",
+            "text": "I det første spørsmålet er hvem knyttet til til, mens hvem er subjekt i det andre.",
+            "why": "Dette bytter om rollene i de to spørsmålene."
           },
           {
-            "id": "connection-notes",
-            "instruction": "Briefly states in Norwegian which earlier question word or noun each preposition connects to."
+            "option_id": "review-subject-then-complement",
+            "text": "I det første spørsmålet er hvem subjekt, mens hvem i det andre er knyttet til til.",
+            "why": "Det første spørsmålet spør hvem som skriver, og det andre spør hvem Maja skriver til."
+          },
+          {
+            "option_id": "review-subject-both",
+            "text": "Hvem er subjekt i begge spørsmålene.",
+            "why": "Maja er subjekt i det andre spørsmålet, mens hvem er knyttet til til."
+          }
+        ],
+        "answer_id": "review-subject-then-complement",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Jonas",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hvem skriver til Maja?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hvem skriver Maja til?»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_complete_stranded_prepositions_in_questions",
+      "operation": "recall_fill",
+      "objective_id": "obj-preposition-stranding-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fyll ut spørsmålene med preposisjonen som mangler."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Spørreordet viser til personen, tingen eller stedet. Uttrykket beholder preposisjonen senere i spørsmålet."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Jonas spør: «Hvem skal du reise"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-question-med",
+            "options": [
+              "med",
+              "om"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "?» Maja spør: «Hva drømmer dere"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-question-om",
+            "options": [
+              "med",
+              "om"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "?» Jonas spør: «Hvem ser hun"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-question-pa",
+            "options": [
+              "i",
+              "på"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "?» Maja spør: «Hvilket land flytter de"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-question-til",
+            "options": [
+              "i",
+              "til"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "?»"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_complete_relative_clauses_with_prepositions",
+      "operation": "recall_fill",
+      "objective_id": "obj-preposition-stranding-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fyll ut leddsetningene med preposisjonen som mangler."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Substantivet står før leddsetningen, og uttrykket beholder preposisjonen senere i leddsetningen."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Maja forklarer: «Dette er kollegaen som jeg jobbet sammen"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-relative-med",
+            "options": [
+              "med",
+              "på"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Dette er filmen som vi snakket"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-relative-om",
+            "options": [
+              "med",
+              "om"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Hun brukte en krakk for å nå hylla. Dette er stolen som hun la jakken"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-relative-pa",
+            "options": [
+              "i",
+              "på"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Dette er byen som de bor"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-relative-i",
+            "options": [
+              "i",
+              "til"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ".»"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_avoid_repeated_pronoun",
+      "operation": "choose",
+      "objective_id": "obj-preposition-stranding-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg det naturlige spørsmålet."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "missing-preposition",
+            "text": "Hvem snakket Maja?",
+            "why": "This drops med from the expression snakke med noen."
+          },
+          {
+            "option_id": "no-repeated-pronoun",
+            "text": "Hvem snakket Maja med?",
+            "why": "Hvem supplies the person linked to med, so no additional pronoun is needed."
+          },
+          {
+            "option_id": "repeated-pronoun",
+            "text": "Hvem snakket Maja med henne?",
+            "why": "Henne repeats the person already represented by hvem."
+          }
+        ],
+        "answer_id": "no-repeated-pronoun",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Maja snakket med en gjest, men Jonas vet ikke hvilken gjest."
           }
         ]
       }
@@ -2219,7 +2590,11 @@
         "repair_preposition_stranding_errors",
         "transfer_questions_to_work_trip",
         "transfer_relative_clauses_to_work_trip",
-        "retrieve_end_position_pattern"
+        "retrieve_end_position_pattern",
+        "review_notice_question_links",
+        "review_complete_stranded_prepositions_in_questions",
+        "review_complete_relative_clauses_with_prepositions",
+        "review_avoid_repeated_pronoun"
       ]
     }
   ],

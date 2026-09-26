@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "answering_ja_nei_jo",
   "kind": "grammar",
   "language": "nb-NO",
@@ -30,10 +30,6 @@
       "id": "positive-question-compact-rule"
     },
     {
-      "kind": "exercise",
-      "id": "positive_question_response"
-    },
-    {
       "kind": "section",
       "id": "why-norwegian-needs-jo"
     },
@@ -51,15 +47,19 @@
     },
     {
       "kind": "exercise",
-      "id": "negative_question_meaning"
+      "id": "notice_jo_in_dialogue"
     },
     {
       "kind": "exercise",
-      "id": "negative_question_response_word"
+      "id": "response_word_supported"
     },
     {
       "kind": "exercise",
-      "id": "negative_question_full_response"
+      "id": "response_word_unsupported"
+    },
+    {
+      "kind": "exercise",
+      "id": "choose_full_response"
     },
     {
       "kind": "section",
@@ -67,7 +67,7 @@
     },
     {
       "kind": "exercise",
-      "id": "correcting_an_assumption"
+      "id": "reply_to_emil"
     },
     {
       "kind": "section",
@@ -75,7 +75,7 @@
     },
     {
       "kind": "exercise",
-      "id": "affirmative_addition_with_ogsa"
+      "id": "ogsa_heller_replies"
     },
     {
       "kind": "section",
@@ -90,24 +90,8 @@
       "id": "common-mistake-ogsa-after-negative"
     },
     {
-      "kind": "exercise",
-      "id": "negative_addition_with_heller"
-    },
-    {
-      "kind": "exercise",
-      "id": "affirmative_or_negative_addition"
-    },
-    {
       "kind": "section",
       "id": "keeping-response-and-addition-separate"
-    },
-    {
-      "kind": "exercise",
-      "id": "response_then_addition"
-    },
-    {
-      "kind": "exercise",
-      "id": "addition_after_response"
     },
     {
       "kind": "section",
@@ -119,15 +103,23 @@
     },
     {
       "kind": "exercise",
-      "id": "trip_plan_response_transfer"
-    },
-    {
-      "kind": "exercise",
-      "id": "trip_plan_addition_transfer"
+      "id": "cabin_trip_transfer"
     },
     {
       "kind": "section",
       "id": "quick-review"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_response_word"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_ogsa_heller"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_jo_meaning"
     }
   ],
   "sections": [
@@ -1470,35 +1462,26 @@
           "id": "common-mistake-ja-after-every-yes-block-4"
         },
         {
-          "kind": "paragraph",
-          "spans": [
-            {
-              "kind": "text",
-              "value": "Not:"
-            }
-          ],
-          "id": "common-mistake-ja-after-every-yes-block-5"
-        },
-        {
           "kind": "examples",
           "items": [
             {
-              "id": "common-mistake-ja-after-every-yes-block-6-item-1",
+              "id": "common-mistake-ja-after-every-yes-block-5-item-1",
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Ja, jeg kommer."
+                  "value": "Ja, jeg kommer."
                 }
               ],
               "en": [
                 {
                   "kind": "text",
-                  "value": "✗ Yes, I am coming."
+                  "value": "Yes, I am coming."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
-          "id": "common-mistake-ja-after-every-yes-block-6"
+          "id": "common-mistake-ja-after-every-yes-block-5"
         },
         {
           "kind": "paragraph",
@@ -1532,7 +1515,7 @@
               "value": "."
             }
           ],
-          "id": "common-mistake-ja-after-every-yes-block-7"
+          "id": "common-mistake-ja-after-every-yes-block-6"
         }
       ]
     },
@@ -3286,82 +3269,78 @@
   "exercises": [
     {
       "kind": "exercise",
-      "id": "positive_question_response",
-      "operation": "write",
-      "objective_id": "obj-answering-ja-nei-jo-01",
-      "prompt": [
-        {
-          "kind": "text",
-          "value": "Answer all five positive yes/no questions in Norwegian. For each item, give a short answer (Ja or Nei) and then a matching complete sentence. You may combine them naturally, for example Ja, jeg kommer på filmkvelden. Use ikke in every complete negative answer. Only response polarity is scored; ordinary vocabulary variation is allowed. 1. Fact: You are coming to film night. Question: «Kommer du på filmkvelden?» 2. Fact: You do not eat fish. Question: «Spiser du fisk?» 3. Fact: You work today. Question: «Jobber du i dag?» 4. Fact: You are not at home. Question: «Er du hjemme?» 5. Fact: You do not like coffee. Question: «Liker du kaffe?»"
-        }
-      ],
-      "explanation": null,
-      "payload": {
-        "response_language": "no",
-        "min_words": null,
-        "max_words": null,
-        "judge_prompt": "Check all five answers and report evidence for each criterion. Items 1 and 3 require Ja with affirmative meaning. Items 2, 4, and 5 require Nei with negative meaning, and their complete sentences must contain ikke. Accept natural Norwegian wording variants and do not score vocabulary or formatting.",
-        "criteria": [
-          {
-            "id": "response-polarity",
-            "instruction": "Uses Ja for items 1 and 3 and Nei for items 2, 4, and 5, matching each supplied fact."
-          },
-          {
-            "id": "negative-ikke",
-            "instruction": "Includes ikke in the complete sentences for items 2, 4, and 5 and preserves their negative meanings; accept natural wording variants."
-          }
-        ]
-      }
-    },
-    {
-      "kind": "exercise",
-      "id": "negative_question_meaning",
+      "id": "notice_jo_in_dialogue",
       "operation": "choose",
       "objective_id": "obj-answering-ja-nei-jo-01",
       "prompt": [
         {
           "kind": "text",
-          "value": "Choose the Norwegian response that shows whether the respondent confirms or contradicts the negative idea."
+          "value": "Choose what Maja answers about Sara."
         }
       ],
       "explanation": null,
       "payload": {
         "options": [
           {
-            "option_id": "contradicts-negative",
-            "text": "Jo, Kari kommer på filmkvelden.",
-            "why": "Jo contradicts the negative question and confirms that Kari is coming."
+            "option_id": "already-arrived",
+            "text": "Sara is already at the film night.",
+            "why": "Jo confirms that Sara is coming, but it does not say she has already arrived."
           },
           {
-            "option_id": "confirms-negative",
-            "text": "Nei, Kari kommer ikke på filmkvelden.",
-            "why": "Nei confirms the negative idea, but the context says that Kari is coming."
+            "option_id": "coming-later",
+            "text": "Sara is coming to the film night.",
+            "why": "Jo rejects the negative assumption, so Maja confirms that Sara is coming."
+          },
+          {
+            "option_id": "not-coming",
+            "text": "Sara is not coming to the film night.",
+            "why": "That would be the answer if Maja had said Nei; Jo means the opposite of the negative question."
           }
         ],
-        "answer_id": "contradicts-negative",
-        "stem": [
-          {
-            "kind": "text",
-            "value": "Kari has said that she is coming to film night. The question is «Kommer Kari ikke på filmkvelden?» Choose the response that matches this fact."
-          }
-        ]
-      }
+        "answer_id": "coming-later",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Jonas",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Kommer ikke Sara på filmkvelden?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jo.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
-      "id": "negative_question_response_word",
+      "id": "response_word_supported",
       "operation": "recall_fill",
       "objective_id": "obj-answering-ja-nei-jo-01",
       "prompt": [
         {
           "kind": "text",
-          "value": "Fill only the response word in each exchange. Choose Ja, Nei, or Jo. Use Ja for an affirmative answer to a positive question, Nei for a negative answer to a positive question, Jo for an affirmative answer to a negative question, and Nei for a negative answer to a negative question. Do not construct full sentences; only the response word is scored."
+          "value": "Fill in Ja, Nei, or Jo."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Use jo to contradict a negative question, ja to affirm a positive question, and nei when the answer itself is negative."
+          "value": "På et negativt spørsmål bekrefter «jo» den positive opplysningen. «Nei» avviser den."
         }
       ],
       "payload": {
@@ -3371,11 +3350,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Item 1: Fact: You are coming to film night. Question: «Kommer du på filmkvelden?» Answer:"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "Punkt 1: Du kommer på filmkvelden. «Kommer du på filmkvelden?»"
               }
             ]
           },
@@ -3383,77 +3358,8 @@
             "kind": "blank",
             "blank_id": "response-1",
             "options": [
-              "Jo",
-              "Ja",
-              "Nei"
-            ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": ". 2. Fact: You do not like coffee. Question: «Liker du kaffe?» Answer:"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "response-2",
-            "options": [
-              "Jo",
-              "Ja",
-              "Nei"
-            ],
-            "answer_index": 2
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": ". 3. Fact: You are coming to film night. Question: «Kommer du ikke på filmkvelden?» Answer:"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "response-3",
-            "options": [
-              "Jo",
-              "Ja",
-              "Nei"
-            ],
-            "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": ". 4. Fact: You do not work tomorrow. Question: «Jobber du ikke i morgen?» Answer:"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "response-4",
-            "options": [
-              "Ja",
               "Nei",
+              "Ja",
               "Jo"
             ],
             "answer_index": 1
@@ -3463,11 +3369,80 @@
             "spans": [
               {
                 "kind": "text",
-                "value": ". 5. Fact: You are at home. Question: «Er du ikke hjemme?» Answer:"
+                "value": " "
               },
               {
                 "kind": "text",
+                "value": "Punkt 2: Du liker ikke kaffe. «Liker du kaffe?»"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "response-2",
+            "options": [
+              "Jo",
+              "Nei",
+              "Ja"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
                 "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "Punkt 3: Du kommer på filmkvelden. «Kommer du ikke på filmkvelden?»"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "response-3",
+            "options": [
+              "Nei",
+              "Ja",
+              "Jo"
+            ],
+            "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "Punkt 4: Du jobber ikke i morgen. «Jobber du ikke i morgen?»"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "response-4",
+            "options": [
+              "Jo",
+              "Nei",
+              "Ja"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "Punkt 5: Du er hjemme. «Er du ikke hjemme?»"
               }
             ]
           },
@@ -3486,11 +3461,11 @@
             "spans": [
               {
                 "kind": "text",
-                "value": ". 6. Fact: You do not eat fish. Question: «Spiser du fisk?» Answer:"
+                "value": " "
               },
               {
                 "kind": "text",
-                "value": " "
+                "value": "Punkt 6: Du spiser ikke fisk. «Spiser du fisk?»"
               }
             ]
           },
@@ -3518,13 +3493,13 @@
     },
     {
       "kind": "exercise",
-      "id": "negative_question_full_response",
+      "id": "response_word_unsupported",
       "operation": "write",
       "objective_id": "obj-answering-ja-nei-jo-01",
       "prompt": [
         {
           "kind": "text",
-          "value": "Answer all four questions in Norwegian. Every question contains ikke, and the supplied fact tells whether to contradict or confirm the negative idea. Write a complete answer: use Jo plus an affirmative sentence when the fact is true, and Nei plus a negative sentence containing ikke when the fact is false. Natural wording variations are accepted. 1. Fact: You arrive at seven. Question: «Kommer du ikke klokka sju?» 2. Fact: You do not bring drinks. Question: «Tar du ikke med drikke?» 3. Fact: You eat pizza. Question: «Spiser du ikke pizza?» 4. Fact: You do not attend film night. Question: «Kommer du ikke på filmkvelden?»"
+          "value": "Answer each question with one word: 1) You are bringing a drink. «Tar du ikke med drikke?» 2) You are not going to movie night. «Kommer du på filmkvelden?» 3) You like tea. «Liker du ikke te?» 4) You do not eat fish. «Spiser du ikke fisk?»"
         }
       ],
       "explanation": null,
@@ -3532,109 +3507,125 @@
         "response_language": "no",
         "min_words": null,
         "max_words": null,
-        "judge_prompt": "Check all four answers and report evidence for each criterion. The key is item 1 Jo with an affirmative clause, item 2 Nei with a negative clause, item 3 Jo with an affirmative clause, and item 4 Nei with a negative clause. Negative clauses must contain ikke. Accept natural Norwegian wording variants and treat ordinary vocabulary as supporting context.",
+        "judge_prompt": "Check the response words against the task and report evidence for each criterion.",
         "criteria": [
           {
-            "id": "negative-question-word",
-            "instruction": "Uses Jo for the affirmative facts in items 1 and 3 and Nei for the negative facts in items 2 and 4."
+            "id": "response-words-correct",
+            "instruction": "Answers Jo to items 1 and 3 and Nei to items 2 and 4, one word each."
           },
           {
-            "id": "following-clause-polarity",
-            "instruction": "The complete clause after the response word matches the supplied fact; negative clauses contain ikke, while positive clauses do not need it. Accept natural wording variants."
+            "id": "response-format-observation",
+            "instruction": "Observation, not gating — note capitalization or punctuation only; do not fail correct response words."
           }
         ]
       }
     },
     {
       "kind": "exercise",
-      "id": "correcting_an_assumption",
+      "id": "choose_full_response",
+      "operation": "choose",
+      "objective_id": "obj-answering-ja-nei-jo-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "You are going to movie night. Choose your reply."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "nei-mismatch",
+            "text": "Nei, jeg kommer.",
+            "why": "Nei would confirm that you are not coming — the sentence contradicts it."
+          },
+          {
+            "option_id": "jo-full",
+            "text": "Jo, jeg kommer.",
+            "why": "Jo rejects the negative assumption and the sentence states the true fact."
+          },
+          {
+            "option_id": "ja-mismatch",
+            "text": "Ja, jeg kommer ikke.",
+            "why": "Ja does not fit a negative question here, and the sentence contradicts the fact."
+          }
+        ],
+        "answer_id": "jo-full",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Kommer du ikke på filmkvelden?»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "reply_to_emil",
       "operation": "write",
       "objective_id": "obj-answering-ja-nei-jo-01",
       "prompt": [
         {
           "kind": "text",
-          "value": "Correct each mistaken assumption in Norwegian. For a false positive assumption, write Nei and then a complete sentence with the actual fact. For a false negative assumption, write Jo and then a complete sentence with the actual fact. The correction word is the primary scored evidence. 1. Assumption: «Maja kommer på filmkvelden.» Actual fact: Maja does not come. 2. Assumption: «Jonas kommer ikke på filmkvelden.» Actual fact: Jonas comes. 3. Assumption: «Sara tar ikke med mat.» Actual fact: Sara brings food. 4. Assumption: «Emil er med på filmkvelden.» Actual fact: Emil is not attending."
+          "value": "Emil writes: «Jeg tror ikke du eller Maja kommer på filmkvelden.» You and Maja are going. Begin with the response word that rejects the assumption, then write that you are both coming."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": null,
-        "max_words": null,
-        "judge_prompt": "Check all four corrections and report evidence for the criterion. Items 1 and 4 must begin with Nei; items 2 and 3 must begin with Jo. The following sentence must agree with the supplied actual fact so the correction is interpretable. Accept natural Norwegian wording variants and do not score vocabulary details.",
+        "min_words": 5,
+        "max_words": 20,
+        "judge_prompt": "Check the reply against the task and report evidence for each criterion.",
         "criteria": [
           {
-            "id": "correction-word",
-            "instruction": "Uses Nei for the false positive assumptions in items 1 and 4 and Jo for the false negative assumptions in items 2 and 3; the following sentence states the supplied actual fact, with natural wording accepted."
+            "id": "conveys-coming",
+            "instruction": "The reply makes clear that the writer is coming to film night."
+          },
+          {
+            "id": "contradicts-negative-assumption",
+            "instruction": "Begins the correction with jo, the natural short answer to Emil's negative assumption."
+          },
+          {
+            "id": "conveys-maja",
+            "instruction": "The reply makes clear that Maja is coming as well."
+          },
+          {
+            "id": "replies-to-emil",
+            "instruction": "The reply is addressed to Emil and answers his message about film night."
+          },
+          {
+            "id": "ogsa-observation",
+            "instruction": "Observation, not gating — the reply adds the second person with også or equally natural wording."
           }
         ]
       }
     },
     {
       "kind": "exercise",
-      "id": "affirmative_addition_with_ogsa",
-      "operation": "write",
-      "objective_id": "obj-answering-ja-nei-jo-01",
-      "prompt": [
-        {
-          "kind": "text",
-          "value": "Add yourself to each affirmative film-night statement in Norwegian. For each item, write a short addition such as Jeg også. or a complete sentence such as Jeg lager også popcorn. Make clear that you share the stated action or situation and use også. Its placement may vary. 1. «Maja lager popcorn.» 2. «Jonas dekker bordet.» 3. «Sara kjøper drikke.» 4. «Emil er hjemme.»"
-        }
-      ],
-      "explanation": null,
-      "payload": {
-        "response_language": "no",
-        "min_words": null,
-        "max_words": null,
-        "judge_prompt": "Check all four additions and report evidence for the criterion. Every base statement is affirmative. Accept Jeg også. when the shared fact is clear, or a natural complete clause such as Jeg lager også popcorn. Do not require a fixed position for også and do not score ordinary wording.",
-        "criteria": [
-          {
-            "id": "affirmative-ogsa-addition",
-            "instruction": "Each response adds jeg to the same affirmative fact and uses også; accept the short form Jeg også. or a natural complete Norwegian clause with også in a natural position."
-          }
-        ]
-      }
-    },
-    {
-      "kind": "exercise",
-      "id": "negative_addition_with_heller",
-      "operation": "write",
-      "objective_id": "obj-answering-ja-nei-jo-01",
-      "prompt": [
-        {
-          "kind": "text",
-          "value": "Add yourself to each negative statement in Norwegian. You may write a complete clause with ikke ... heller, such as Jeg spiser ikke fisk heller, or the short reply Ikke jeg heller when the subject and fact are clear. Preserve the negative meaning and use heller. 1. «Maja spiser ikke fisk.» 2. «Jonas tar ikke buss.» 3. «Sara jobber ikke på lørdag.» 4. «Emil liker ikke te.»"
-        }
-      ],
-      "explanation": null,
-      "payload": {
-        "response_language": "no",
-        "min_words": null,
-        "max_words": null,
-        "judge_prompt": "Check all four additions and report evidence for the criterion. Each response must retain the negative fact and use heller. Accept complete clauses such as Jeg spiser ikke fisk heller and the short form Ikke jeg heller when the context makes the shared fact clear. Do not score subject wording or heller placement beyond natural Norwegian usage.",
-        "criteria": [
-          {
-            "id": "negative-heller-addition",
-            "instruction": "Each response makes a natural negative addition with heller, retaining ikke in a complete clause or using the accepted short reply Ikke jeg heller when the subject is clear."
-          }
-        ]
-      }
-    },
-    {
-      "kind": "exercise",
-      "id": "affirmative_or_negative_addition",
+      "id": "ogsa_heller_replies",
       "operation": "recall_fill",
       "objective_id": "obj-answering-ja-nei-jo-01",
       "prompt": [
         {
           "kind": "text",
-          "value": "Fill only the addition word in each sentence. Use også after an affirmative statement and heller when the statement contains ikke. Positive and negative items alternate. The choice between the two words is the only scored evidence."
+          "value": "Fill in each reply with the correct response word."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Use også in an affirmative addition; with ikke, use heller for the corresponding negative addition."
+          "value": "«Også» legger noe til en positiv opplysning. «Heller» legger noe til en negativ opplysning."
         }
       ],
       "payload": {
@@ -3644,7 +3635,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Item 1: Maja lager popcorn. Jonas lager"
+                "value": "Punkt 1: «Jeg jobber i dag.» — «Jeg jobber"
               },
               {
                 "kind": "text",
@@ -3670,7 +3661,7 @@
               },
               {
                 "kind": "text",
-                "value": "popcorn. 2. Sara spiser ikke fisk. Jeg spiser ikke fisk"
+                "value": "i dag.» Punkt 2: «Jeg liker ikke kaffe.» — «Jeg liker ikke kaffe"
               },
               {
                 "kind": "text",
@@ -3682,17 +3673,17 @@
             "kind": "blank",
             "blank_id": "addition-2",
             "options": [
-              "heller",
-              "også"
+              "også",
+              "heller"
             ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
             "spans": [
               {
                 "kind": "text",
-                "value": ". 3. Ola er hjemme. Nora er"
+                "value": ". Punkt 3: «Maja lager popcorn.» — «Jeg lager"
               },
               {
                 "kind": "text",
@@ -3704,10 +3695,10 @@
             "kind": "blank",
             "blank_id": "addition-3",
             "options": [
-              "heller",
-              "også"
+              "også",
+              "heller"
             ],
-            "answer_index": 1
+            "answer_index": 0
           },
           {
             "kind": "span",
@@ -3718,7 +3709,7 @@
               },
               {
                 "kind": "text",
-                "value": "hjemme. 4. Kari liker ikke kaffe. Emil liker ikke kaffe"
+                "value": "popcorn.» Punkt 4: «Jonas tar ikke buss.» — «Jeg tar ikke buss"
               },
               {
                 "kind": "text",
@@ -3740,20 +3731,89 @@
             "spans": [
               {
                 "kind": "text",
-                "value": ". 5. Lina jobber i dag. Jeg jobber"
-              },
+                "value": "."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "cabin_trip_transfer",
+      "operation": "write",
+      "objective_id": "obj-answering-ja-nei-jo-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Your friend writes: «Kjører du ikke bil? Ola drikker ikke kaffe.» You drive, but you do not drink coffee. Reply with a suitable ja/nei/jo response and include both facts."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "response_language": "no",
+        "min_words": 10,
+        "max_words": 30,
+        "judge_prompt": "Check the reply against the task and report evidence for each criterion.",
+        "criteria": [
+          {
+            "id": "conveys-driving",
+            "instruction": "The reply makes clear that the writer is driving."
+          },
+          {
+            "id": "conveys-no-coffee",
+            "instruction": "The reply makes clear that the writer does not drink coffee either."
+          },
+          {
+            "id": "replies-to-friend",
+            "instruction": "The reply is addressed to the friend and answers the friend's message about the trip."
+          },
+          {
+            "id": "jo-observation",
+            "instruction": "The reply answers «Kjører du ikke bil?» with Jo because the writer is driving; Ja does not satisfy this criterion."
+          },
+          {
+            "id": "heller-observation",
+            "instruction": "Observation, not gating — adds the negative fact with heller or equally natural wording."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_response_word",
+      "operation": "recall_fill",
+      "objective_id": "obj-answering-ja-nei-jo-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the correct response word in each situation."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "På et negativt spørsmål bekrefter «jo» den positive opplysningen. «Nei» avviser den."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
               {
                 "kind": "text",
-                "value": " "
+                "value": "Punkt 1: Du tar bussen til jobb hver dag. «Tar du bussen til jobben hver dag?»"
               }
             ]
           },
           {
             "kind": "blank",
-            "blank_id": "addition-5",
+            "blank_id": "response-1",
             "options": [
-              "heller",
-              "også"
+              "Nei",
+              "Ja",
+              "Jo"
             ],
             "answer_index": 1
           },
@@ -3766,22 +3826,42 @@
               },
               {
                 "kind": "text",
-                "value": "i dag. 6. Jonas tar ikke buss. Jeg tar ikke buss"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "Punkt 2: Du drikker melk til frokost. «Drikker du ikke melk?»"
               }
             ]
           },
           {
             "kind": "blank",
-            "blank_id": "addition-6",
+            "blank_id": "response-2",
             "options": [
-              "heller",
-              "også"
+              "Nei",
+              "Ja",
+              "Jo"
             ],
-            "answer_index": 0
+            "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "Punkt 3: Du liker ikke regn. «Liker du ikke regn?»"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "response-3",
+            "options": [
+              "Jo",
+              "Ja",
+              "Nei"
+            ],
+            "answer_index": 2
           },
           {
             "kind": "span",
@@ -3797,16 +3877,21 @@
     },
     {
       "kind": "exercise",
-      "id": "response_then_addition",
+      "id": "review_ogsa_heller",
       "operation": "recall_fill",
       "objective_id": "obj-answering-ja-nei-jo-01",
       "prompt": [
         {
           "kind": "text",
-          "value": "In each two-part situation, fill only the initial response word. Use Ja, Nei, or Jo according to the question or assumption and the stated fact. The second-person addition is supplied as meaningful context; it is not an additional blank. Only the initial choice among Ja, Nei, and Jo is scored."
+          "value": "Fill in the correct response word."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Også» viser til en positiv opplysning, mens «heller» viser til en negativ."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -3814,7 +3899,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Item 1: Fact: You are coming to film night. Question: «Kommer du på filmkvelden?» First response word:"
+                "value": "Punkt 1: «Jeg liker å svømme.» — «Jeg liker"
               },
               {
                 "kind": "text",
@@ -3824,57 +3909,10 @@
           },
           {
             "kind": "blank",
-            "blank_id": "initial-1",
+            "blank_id": "addition-1",
             "options": [
-              "Nei",
-              "Ja",
-              "Jo"
-            ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": ". The supplied addition is «Maja kommer også på filmkvelden.» 2. Fact: You do not bring food. Question: «Tar du med mat?» First response word:"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "initial-2",
-            "options": [
-              "Jo",
-              "Ja",
-              "Nei"
-            ],
-            "answer_index": 2
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": ". The supplied addition is «Jonas tar ikke med mat heller.» 3. Fact: You bring drinks. Question: «Tar du ikke med drikke?» First response word:"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "initial-3",
-            "options": [
-              "Jo",
-              "Ja",
-              "Nei"
+              "også",
+              "heller"
             ],
             "answer_index": 0
           },
@@ -3883,7 +3921,11 @@
             "spans": [
               {
                 "kind": "text",
-                "value": ". The supplied addition is «Sara tar også med drikke.» 4. Assumption: «Du kommer på filmkvelden.» Actual fact: «Du kommer ikke på filmkvelden.» Correction word:"
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "å svømme.» Punkt 2: «Jeg spiser ikke kjøtt.» — «Jeg spiser"
               },
               {
                 "kind": "text",
@@ -3893,11 +3935,10 @@
           },
           {
             "kind": "blank",
-            "blank_id": "initial-4",
+            "blank_id": "addition-2",
             "options": [
-              "Jo",
-              "Nei",
-              "Ja"
+              "også",
+              "heller"
             ],
             "answer_index": 1
           },
@@ -3906,30 +3947,11 @@
             "spans": [
               {
                 "kind": "text",
-                "value": ". The supplied addition is «Mina kommer ikke på filmkvelden heller.» 5. Assumption: «Du kommer ikke på filmkvelden.» Actual fact: «Du kommer på filmkvelden.» Correction word:"
+                "value": " "
               },
               {
                 "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "initial-5",
-            "options": [
-              "Nei",
-              "Ja",
-              "Jo"
-            ],
-            "answer_index": 2
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": ". The supplied addition is «Ola kommer også på filmkvelden.»"
+                "value": "ikke kjøtt.»"
               }
             ]
           }
@@ -3938,231 +3960,62 @@
     },
     {
       "kind": "exercise",
-      "id": "addition_after_response",
-      "operation": "recall_fill",
+      "id": "review_jo_meaning",
+      "operation": "choose",
       "objective_id": "obj-answering-ja-nei-jo-01",
       "prompt": [
         {
           "kind": "text",
-          "value": "The initial response is supplied. Fill only the missing addition word in each Norwegian sentence. Use også with an affirmative response and heller with a negative response that retains ikke. Only the choice between også and heller is scored."
+          "value": "Read the conversation and choose what the other person means."
         }
       ],
       "explanation": null,
       "payload": {
-        "segments": [
+        "options": [
           {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": "Item 1: Supplied response: «Ja, jeg kommer på filmkvelden.» Add-on: «Lina kommer"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
+            "option_id": "has-time",
+            "text": "Peter has time tomorrow.",
+            "why": "Jo rejects the negative assumption and confirms that Peter does have time."
           },
           {
-            "kind": "blank",
-            "blank_id": "addition-after-1",
-            "options": [
-              "også",
-              "heller"
-            ],
-            "answer_index": 0
+            "option_id": "no-time",
+            "text": "Peter does not have time tomorrow.",
+            "why": "That is the plain Nei reading; Jo says the opposite of the negative question."
           },
           {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "på filmkvelden.» 2. Supplied response: «Nei, jeg kommer ikke på filmkvelden.» Add-on: «Jonas kommer ikke"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "addition-after-2",
-            "options": [
-              "også",
-              "heller"
-            ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "på filmkvelden.» 3. Supplied response: «Jo, jeg tar med mat.» Add-on: «Sara tar"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "addition-after-3",
-            "options": [
-              "også",
-              "heller"
-            ],
-            "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "med mat.» 4. Supplied response: «Nei, jeg liker ikke kaffe.» Add-on: «Nora liker ikke kaffe"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "addition-after-4",
-            "options": [
-              "også",
-              "heller"
-            ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": ".» 5. Supplied response: «Jo, jeg jobber i dag.» Add-on: «Emil jobber"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "addition-after-5",
-            "options": [
-              "også",
-              "heller"
-            ],
-            "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "i dag.» 6. Supplied response: «Nei, jeg tar ikke buss.» Add-on: «Kari tar ikke buss"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "addition-after-6",
-            "options": [
-              "også",
-              "heller"
-            ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": ".»"
-              }
-            ]
+            "option_id": "unsure",
+            "text": "Peter is not sure whether he has time tomorrow.",
+            "why": "The reply is a clear confirmation, not uncertainty."
           }
-        ]
-      }
-    },
-    {
-      "kind": "exercise",
-      "id": "trip_plan_response_transfer",
-      "operation": "write",
-      "objective_id": "obj-answering-ja-nei-jo-01",
-      "prompt": [
+        ],
+        "answer_id": "has-time",
+        "stem": null
+      },
+      "stimulus": [
         {
-          "kind": "text",
-          "value": "Answer all six trip questions in Norwegian. The fact after each question tells the intended meaning. Write a natural complete response beginning with Ja, Nei, or Jo. For positive questions, use Ja for yes and Nei for no. For negative questions containing ikke, use Jo when the fact is yes and Nei when the fact is no. Include ikke in negative clauses. 1. Fact: You are going on a trip on Sunday. Question: «Skal du på tur på søndag?» 2. Fact: You are not driving to the trip. Question: «Kjører du til turen?» 3. Fact: You are bringing food. Question: «Tar du ikke med mat?» 4. Fact: You are not arriving early. Question: «Kommer du ikke tidlig?» 5. Fact: You are bringing coffee. Question: «Tar du med kaffe?» 6. Fact: You are going on a trip on Sunday. Question: «Skal du ikke på tur på søndag?»"
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Ingrid",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Har du ikke tid i morgen?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Peter",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jo, det har jeg.»"
+                }
+              ]
+            }
+          ]
         }
-      ],
-      "explanation": null,
-      "payload": {
-        "response_language": "no",
-        "min_words": null,
-        "max_words": null,
-        "judge_prompt": "Check all six trip answers and report evidence for each criterion. The key is item 1 Ja with an affirmative clause, item 2 Nei with a negative clause, item 3 Jo with an affirmative clause, item 4 Nei with a negative clause, item 5 Ja with an affirmative clause, and item 6 Jo with an affirmative clause. Negative clauses must contain ikke. Accept natural Norwegian wording variants that preserve each supplied fact.",
-        "criteria": [
-          {
-            "id": "trip-response-word",
-            "instruction": "Begins item 1 with Ja, item 2 with Nei, item 3 with Jo, item 4 with Nei, item 5 with Ja, and item 6 with Jo, matching question polarity and intended fact."
-          },
-          {
-            "id": "trip-complete-meaning",
-            "instruction": "Each complete response preserves the supplied trip fact; negative facts are expressed with ikke, and natural Norwegian wording variants are accepted."
-          }
-        ]
-      }
-    },
-    {
-      "kind": "exercise",
-      "id": "trip_plan_addition_transfer",
-      "operation": "write",
-      "objective_id": "obj-answering-ja-nei-jo-01",
-      "prompt": [
-        {
-          "kind": "text",
-          "value": "Respond to each traveler statement in Norwegian by adding yourself to the same fact. With positive statements, use også. With negative statements, retain ikke and use heller, or use the short personal reply Ikke jeg heller when it fits. Use short and complete forms where natural. 1. «Mina skal på tur på søndag.» 2. «Oskar tar med mat.» 3. «Lise kommer ikke tidlig.» 4. «Per kjører ikke til turen.» 5. «Nora tar med kaffe.» 6. «Jonas liker ikke kaffe.»"
-        }
-      ],
-      "explanation": null,
-      "payload": {
-        "response_language": "no",
-        "min_words": null,
-        "max_words": null,
-        "judge_prompt": "Check all six trip additions and report evidence for each criterion. Items 1, 2, and 5 are positive and require a natural addition with også. Items 3, 4, and 6 are negative and require heller while retaining ikke, or the accepted short reply Ikke jeg heller when adding the learner. Accept short and complete forms and natural wording variants.",
-        "criteria": [
-          {
-            "id": "trip-addition-word",
-            "instruction": "Uses også for the positive traveler statements in items 1, 2, and 5; uses heller with retained ikke, or Ikke jeg heller, for the negative statements in items 3, 4, and 6. The added response preserves the same fact."
-          }
-        ]
-      }
+      ]
     }
   ],
   "practice_groups": [
@@ -4170,18 +4023,16 @@
       "id": "practice-obj-answering-ja-nei-jo-01",
       "objective_id": "obj-answering-ja-nei-jo-01",
       "exercise_ids": [
-        "positive_question_response",
-        "negative_question_meaning",
-        "negative_question_response_word",
-        "negative_question_full_response",
-        "correcting_an_assumption",
-        "affirmative_addition_with_ogsa",
-        "negative_addition_with_heller",
-        "affirmative_or_negative_addition",
-        "response_then_addition",
-        "addition_after_response",
-        "trip_plan_response_transfer",
-        "trip_plan_addition_transfer"
+        "notice_jo_in_dialogue",
+        "response_word_supported",
+        "response_word_unsupported",
+        "choose_full_response",
+        "reply_to_emil",
+        "ogsa_heller_replies",
+        "cabin_trip_transfer",
+        "review_response_word",
+        "review_ogsa_heller",
+        "review_jo_meaning"
       ]
     }
   ],

@@ -1,0 +1,648 @@
+- handle: identify_understood_noun
+  op: choose
+  objective: obj-adjectives-as-nouns-01
+  bloom: understand
+  prompt_md: Koble hver kortform til substantivet den viser til.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: Vi ser på et bord og flere stoler.
+    - speaker: Erik
+      text_md: Det lille passer best. De blå står ved døra.
+  stem_md: Velg tolkningen som passer til samtalen.
+  options:
+  - id: unmentioned
+    text: det lille = et skap; de blå = en lampe
+    correct: false
+    why: These nouns are not established in the dialogue.
+  - id: correct
+    text: det lille = et bord; de blå = flere stoler
+    correct: true
+    why: Det lille is singular neuter, while de blå is plural.
+  - id: reversed
+    text: det lille = flere stoler; de blå = et bord
+    correct: false
+    why: The singular and plural references are reversed.
+- handle: distinguish_definite_gender_and_number
+  op: choose
+  objective: obj-adjectives-as-nouns-01
+  bloom: understand
+  prompt_md: Sorter den, det og de etter kjønn og tall.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: Her er en stol, et skap og flere lamper.
+    - speaker: Erik
+      text_md: Jeg liker den røde, det røde og de røde.
+  stem_md: Sorter uttrykkene etter kjønn og tall.
+  options:
+  - id: number-swap
+    text: den røde = flertall; det røde = intetkjønn entall; de røde =
+      hankjønn/hunkjønn entall
+    correct: false
+    why: «Den» og «de» viser til feil tall.
+  - id: correct
+    text: den røde = hankjønn/hunkjønn entall; det røde = intetkjønn entall; de
+      røde = flertall
+    correct: true
+    why: «Den» og «det» viser til entall med ulikt kjønn, mens «de» viser til
+      flertall.
+  - id: gender-swap
+    text: den røde = intetkjønn entall; det røde = hankjønn/hunkjønn entall; de
+      røde = flertall
+    correct: false
+    why: Kjønnsformene for hankjønn/hunkjønn og intetkjønn er byttet om.
+- handle: build_definite_shortened_phrases
+  op: build
+  objective: obj-adjectives-as-nouns-01
+  bloom: apply
+  prompt_md: 'Lag spørsmålet med tre bestemte adjektivfraser i denne rekkefølgen:
+    felleskjønn, intetkjønn, flertall.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: Vi ser på et rødt skap, flere røde lamper og en rød stol.
+    - speaker: Erik
+      text_md: Hvilke av dem synes du vi bør ta med?
+  explanation_md: Determinativet og adjektivendelsen må passe til kjønnet og
+    tallet på substantivet frasen viser til.
+  derived_from:
+  - section_id: definite-forms-the-red-one-and-the-red-ones
+  tokens:
+  - token_id: tok-1
+    text: Tar
+  - token_id: tok-2
+    text: vi
+  - token_id: tok-3
+    text: den
+  - token_id: tok-4
+    text: røde,
+  - token_id: tok-5
+    text: det
+  - token_id: tok-6
+    text: røde
+  - token_id: tok-7
+    text: eller
+  - token_id: tok-8
+    text: de
+  - token_id: tok-9
+    text: røde?
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+- handle: review_definite_gender_and_number
+  op: recall_fill
+  objective: obj-adjectives-as-nouns-01
+  bloom: remember
+  prompt_md: 'Fyll ut frasene i denne rekkefølgen: flertall, felleskjønn entall, intetkjønn
+    entall.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: Det finnes en gammel stol, et gammelt skap og flere gamle lamper.
+  audio_target: Jeg velger de gamle, den gamle eller det gamle.
+  segments:
+  - text_md: 'Jeg velger '
+  - blank_id: plural
+    options:
+    - den gamle
+    - de gamle
+    - det gamle
+    answer_index: 1
+  - text_md: ', '
+  - blank_id: common
+    options:
+    - den gamle
+    - det gamle
+    - de gamle
+    answer_index: 0
+  - text_md: ' eller '
+  - blank_id: neuter
+    options:
+    - de gamle
+    - den gamle
+    - det gamle
+    answer_index: 2
+  - text_md: .
+  explanation_md: «De gamle» viser til flertall, «den gamle» til felleskjønn
+    entall og «det gamle» til intetkjønn entall.
+  derived_from:
+  - section_id: definite-forms-the-red-one-and-the-red-ones
+- handle: contrast_indefinite_and_definite_singular
+  op: recall_fill
+  objective: obj-adjectives-as-nouns-01
+  bloom: apply
+  prompt_md: Fyll ut hvert svar med riktig entallsform.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: Butikken har flere billige lamper og store bord. Vi har ikke
+        valgt noen av dem ennå.
+    - speaker: Erik
+      text_md: Vi trenger noe nytt før kundene kommer. Hvilken lampe og hvilket
+        bord foreslår du?
+  audio_target: Jeg trenger en billig. Nå velger jeg den billige. Jeg trenger et
+    stort. Nå velger jeg det store.
+  segments:
+  - text_md: 'Jeg trenger '
+  - blank_id: common-indefinite
+    options:
+    - en billig
+    - den billige
+    answer_index: 0
+  - text_md: '. Nå velger jeg '
+  - blank_id: common-definite
+    options:
+    - en billig
+    - den billige
+    answer_index: 1
+  - text_md: '. Jeg trenger '
+  - blank_id: neuter-indefinite
+    options:
+    - et stort
+    - det store
+    answer_index: 0
+  - text_md: '. Nå velger jeg '
+  - blank_id: neuter-definite
+    options:
+    - et stort
+    - det store
+    answer_index: 1
+  - text_md: .
+- handle: review_contrast_indefinite_and_definite_singular
+  op: choose
+  objective: obj-adjectives-as-nouns-01
+  bloom: apply
+  prompt_md: Velg Majas replikk. Først nevner hun to nye ting hun ikke har
+    valgt, så peker hun på tingene hun har valgt.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: Vi har en gammel lampe og et gammelt bord på lageret.
+    - speaker: Erik
+      text_md: Vi trenger noe nytt før kundene kommer. Hva foreslår du?
+  stem_md: Velg den riktige replikken.
+  options:
+  - id: neuter-form
+    text: Jeg vurderer en ny og et nytt. Til slutt velger jeg den nye og det
+      nytt.
+    correct: false
+    why: A definite neuter phrase before an understood noun takes the -e form,
+      not -t.
+  - id: correct
+    text: Jeg vurderer en ny og et nytt. Til slutt velger jeg den nye og det
+      nye.
+    correct: true
+    why: The first two phrases leave the two items open, and the last two point
+      to the items Maja has settled on.
+  - id: reversed
+    text: Jeg vurderer den nye og det nye. Til slutt velger jeg en ny og et
+      nytt.
+    correct: false
+    why: This points to the settled items first and leaves the open phrases for
+      last.
+- handle: produce_neuter_singular_forms
+  op: build
+  objective: obj-adjectives-as-nouns-01
+  bloom: apply
+  prompt_md: Lag setningen med en ubestemt og en bestemt intetkjønnsfrase.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: Hun leter fortsatt etter et bord til kjøkkenet.
+    - speaker: Erik
+      text_md: Til stua har hun allerede bestemt seg for det store bordet.
+  explanation_md: Den ubestemte frasen viser til et bord hun fortsatt leter etter.
+    Den bestemte frasen viser til det valgte stuebordet.
+  derived_from:
+  - section_id: indefinite-singular-a-new-one
+  tokens:
+  - token_id: tok-1
+    text: Hun
+  - token_id: tok-2
+    text: vil
+  - token_id: tok-3
+    text: kjøpe
+  - token_id: tok-4
+    text: et
+  - token_id: tok-5
+    text: stort,
+  - token_id: tok-6
+    text: men
+  - token_id: tok-7
+    text: hun
+  - token_id: tok-8
+    text: velger
+  - token_id: tok-9
+    text: det
+  - token_id: tok-10
+    text: store.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+- handle: separate_plural_number_from_definiteness
+  op: categorize
+  objective: obj-adjectives-as-nouns-01
+  bloom: analyze
+  prompt_md: Sorter frasene etter om de viser til en ubestemt eller bestemt
+    gruppe.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: Butikken har mange stoler i forskjellige farger.
+    - speaker: Erik
+      text_md: Vi trenger flere stoler til kafeen. Hvilke bør vi velge?
+  explanation_md: Tenk på om frasen introduserer en gruppe eller viser til en
+    kjent gruppe.
+  derived_from:
+  - section_id: plural-forms-new-ones-and-the-new-ones
+  buckets:
+  - bucket_id: indefinite-plural
+    label: Ubestemt gruppe
+  - bucket_id: definite-plural
+    label: Bestemt gruppe
+  items:
+  - item_id: item-1
+    text: Vi trenger svarte.
+    bucket_id: indefinite-plural
+  - item_id: item-2
+    text: Vi tar de blå.
+    bucket_id: definite-plural
+  - item_id: item-3
+    text: Butikken selger billige.
+    bucket_id: indefinite-plural
+  - item_id: item-4
+    text: Jeg liker ikke de svarte.
+    bucket_id: definite-plural
+- handle: form_plural_adjective_phrases
+  op: build
+  objective: obj-adjectives-as-nouns-01
+  bloom: apply
+  prompt_md: Lag setningen med én ubestemt og én bestemt flertallsfrase.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: Ved døra står stolene vi har valgt; de er blå. På lageret står
+        mange stoler i svart.
+    - speaker: Erik
+      text_md: Hvilke stoler mangler vi, og hvilke skal vi ha med?
+  explanation_md: Den ubestemte frasen viser til en gruppe som ikke er valgt
+    ennå; den bestemte frasen viser til stolene som allerede er valgt.
+  derived_from:
+  - section_id: plural-forms-new-ones-and-the-new-ones
+  tokens:
+  - token_id: tok-1
+    text: Vi
+  - token_id: tok-2
+    text: trenger
+  - token_id: tok-3
+    text: svarte,
+  - token_id: tok-4
+    text: men
+  - token_id: tok-5
+    text: vi
+  - token_id: tok-6
+    text: tar
+  - token_id: tok-7
+    text: de
+  - token_id: tok-8
+    text: blå.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+- handle: retrieve_forms_of_liten
+  op: recall_fill
+  objective: obj-adjectives-as-nouns-01
+  bloom: remember
+  prompt_md: Fyll ut replikkene i butikken med riktig form av liten.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: Vi ser på en lampe, et bord og flere stoler.
+    - speaker: Erik
+      text_md: Først ser vi etter noe vi kan bruke. Senere velger vi det vi
+        liker best.
+  audio_target: Jeg trenger en liten. Jeg trenger et lite. Jeg velger den lille
+    og det lille. Vi trenger små. Vi tar de små.
+  segments:
+  - text_md: 'Jeg trenger '
+  - blank_id: common-indefinite
+    options:
+    - en liten
+    - den lille
+    answer_index: 0
+  - text_md: '. Jeg trenger '
+  - blank_id: neuter-indefinite
+    options:
+    - et lite
+    - det lille
+    answer_index: 0
+  - text_md: '. Jeg velger '
+  - blank_id: common-definite
+    options:
+    - en liten
+    - den lille
+    answer_index: 1
+  - text_md: ' og '
+  - blank_id: neuter-definite
+    options:
+    - et lite
+    - det lille
+    answer_index: 1
+  - text_md: '. Vi trenger '
+  - blank_id: plural-indefinite
+    options:
+    - små
+    - de små
+    answer_index: 0
+  - text_md: '. Vi tar '
+  - blank_id: plural-definite
+    options:
+    - de små
+    - små
+    answer_index: 0
+  - text_md: .
+- handle: review_forms_of_liten
+  op: recall_fill
+  objective: obj-adjectives-as-nouns-01
+  bloom: remember
+  prompt_md: Fyll ut pakkelisten med riktig form av liten.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: Teltet og sitteunderlagene er allerede valgt. Av to telt valgte Nora teltet som var minst. Hun trenger også en ny sekk, et bord og lamper til turen.
+    - speaker: Erik
+      text_md: Nora skal pakke til helgeturen. Hun velger mellom flere sekker. Bordet og lampene er nye innkjøp, og størrelsen er ennå ikke bestemt.
+  audio_target: Vi har en sekk. Vi vil ha en liten. Hun tar teltet. Hun tar det
+    lille. Vi kjøper små. Hun vil ha et lite. Blant sekkene tar hun den lille.
+    Vi kjøper de små.
+  segments:
+  - text_md: 'Vi har en sekk. Vi vil ha '
+  - blank_id: common-indefinite
+    options:
+    - den lille
+    - en liten
+    answer_index: 1
+  - text_md: '. Hun tar teltet. Hun tar '
+  - blank_id: neuter-definite
+    options:
+    - et lite
+    - det lille
+    answer_index: 1
+  - text_md: '. Vi kjøper '
+  - blank_id: plural-indefinite
+    options:
+    - de små
+    - små
+    answer_index: 1
+  - text_md: '. Hun vil ha '
+  - blank_id: neuter-indefinite
+    options:
+    - en liten
+    - et lite
+    answer_index: 1
+  - text_md: '. Blant sekkene tar hun '
+  - blank_id: common-definite
+    options:
+    - den lille
+    - en liten
+    answer_index: 0
+  - text_md: '. Vi kjøper '
+  - blank_id: plural-definite
+    options:
+    - små
+    - de små
+    answer_index: 1
+  - text_md: .
+  explanation_md: Ubestemte former brukes om nye eller uspesifiserte ting,
+    bestemte former om ting som allerede er valgt, og flertallsformer om flere
+    ting.
+  derived_from:
+  - section_id: indefinite-singular-a-new-one
+- handle: track_reference_across_the_dialogue
+  op: choose
+  objective: obj-adjectives-as-nouns-01
+  bloom: understand
+  prompt_md: Velg tolkningen som viser hvilken gruppe hver adjektivfrase viser
+    til.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: Jeg så noen svarte stoler ved døra.
+    - speaker: Erik
+      text_md: De svarte står ved døra, og de blå står ved vinduet.
+  stem_md: Velg tolkningen som passer til samtalen.
+  options:
+  - id: same-group
+    text: Alle tre frasene viser til den samme gruppa med stoler.
+    correct: false
+    why: «De blå» viser til en annen gruppe med stoler.
+  - id: correct
+    text: «Noen svarte» innfører en gruppe, «de svarte» viser tilbake til den,
+      og «de blå» viser til en annen kjent gruppe.
+    correct: true
+    why: «Noen» innfører en ubestemt gruppe, mens «de» viser til bestemte
+      grupper i flertall.
+  - id: reversed
+    text: «De svarte» innfører en ny gruppe, «noen svarte» viser tilbake til
+      den, og «de blå» viser til den første gruppa.
+    correct: false
+    why: «Noen» innfører gruppa; «de» viser til en kjent gruppe.
+- handle: transfer_adjective_noun_phrases_to_the_bakery
+  op: write
+  objective: obj-adjectives-as-nouns-01
+  bloom: apply
+  prompt_md: 'Skriv en melding på 30–45 ord til den du skal møte. Velg kaker og bakverk
+    fra situasjonen. Ta med én frase av hver type: ubestemt og bestemt felleskjønn,
+    intetkjønn og flertall. Utelat substantivene.'
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+  response_language: "no"
+  min_words: 30
+  max_words: 45
+  judge_prompt: Check criteria C1 through C6 and the word-bound criterion.
+    Report each criterion separately. Accept any taught adjective that agrees
+    with the requested gender, number and definiteness. Judge whether the
+    message chooses cakes and baked goods from the supplied bakery situation
+    overall.
+  criteria:
+  - id: C1-indefinite-common
+    instruction: Contains an indefinite common-gender adjective-only phrase with
+      en.
+  - id: C2-indefinite-neuter
+    instruction: Contains an indefinite neuter adjective-only phrase with et and
+      the neuter adjective form.
+  - id: C3-definite-common
+    instruction: Contains a definite common-gender adjective-only phrase with
+      den and the definite adjective form.
+  - id: C4-definite-neuter
+    instruction: Contains a definite neuter adjective-only phrase with det and
+      the definite adjective form.
+  - id: C5-indefinite-plural
+    instruction: Contains an indefinite plural adjective-only phrase without de.
+  - id: C6-definite-plural
+    instruction: Contains a definite plural adjective-only phrase with de.
+  - id: C7-word-bound
+    instruction: Contains between 30 and 45 words.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: På disken står det flere kaker og bakverk. Vi skal velge til
+        møtet.
+    - speaker: Hassan
+      text_md: Møtet begynner snart. Hvilke kaker og hvilket bakverk skal vi
+        sette fram?
+- handle: recall_the_core_patterns
+  op: recall_fill
+  objective: obj-adjectives-as-nouns-01
+  bloom: remember
+  prompt_md: Fyll ut adjektivfrasene med riktig form av rød. Determinativet
+    viser kjønn, tall og bestemt eller ubestemt form.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: Du ser på en stol, et skap og flere lamper. Først beskriver du
+        uspesifikke ting, så bestemte ting.
+  audio_target: Jeg trenger en rød. Jeg trenger et rødt. Jeg velger den røde.
+    Jeg velger det røde. Vi trenger noen røde. Vi tar de røde.
+  segments:
+  - text_md: 'Jeg trenger en '
+  - blank_id: common-indefinite
+    options:
+    - rød
+    - rødt
+    answer_index: 0
+  - text_md: '. Jeg trenger et '
+  - blank_id: neuter-indefinite
+    options:
+    - rødt
+    - rød
+    answer_index: 0
+  - text_md: '. Jeg velger den '
+  - blank_id: common-definite
+    options:
+    - rød
+    - røde
+    answer_index: 1
+  - text_md: '. Jeg velger det '
+  - blank_id: neuter-definite
+    options:
+    - rødt
+    - røde
+    answer_index: 1
+  - text_md: '. Vi trenger noen '
+  - blank_id: plural-indefinite
+    options:
+    - røde
+    - rød
+    answer_index: 0
+  - text_md: '. Vi tar de '
+  - blank_id: plural-definite
+    options:
+    - røde
+    - rød
+    answer_index: 0
+  - text_md: .
+- handle: review_core_patterns
+  op: write
+  objective: obj-adjectives-as-nouns-01
+  bloom: apply
+  prompt_md: 'Skriv seks fraser med «grønn»: ubestemt og bestemt felleskjønn og intetkjønn, samt ubestemt og bestemt flertall. Bruk adjektivet uten substantiv i alle seks frasene.'
+  response_language: "no"
+  min_words: 6
+  max_words: 24
+  judge_prompt: Check criteria C1 through C6, one requested phrase each. Do not
+    add requirements beyond the criteria.
+  criteria:
+  - id: C1-common-indefinite
+    instruction: Provides an indefinite common-gender phrase with en and the common-gender form of grønn, without a noun.
+  - id: C2-neuter-indefinite
+    instruction: Provides an indefinite neuter phrase with et and the neuter form of grønn, without a noun.
+  - id: C3-common-definite
+    instruction: Provides a definite common-gender phrase with den and the definite form of grønn, without a noun.
+  - id: C4-neuter-definite
+    instruction: Provides a definite neuter phrase with det and the definite form of grønn, without a noun.
+  - id: C5-plural-indefinite
+    instruction: Provides an indefinite plural adjective-only phrase for grønn,
+      using grønne without de.
+  - id: C6-plural-definite
+    instruction: Provides a definite plural adjective-only phrase for grønn,
+      using de grønne.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: Til kontoret trenger vi en stol, et bord og flere hyller.
+    - speaker: Erik
+      text_md: Skriv de seks frasene til meg, så bestiller jeg malingen i samme
+        farge.
+- handle: speak_core_chunk
+  op: recall_fill
+  objective: obj-adjectives-as-nouns-01
+  bloom: apply
+  prompt_md: Fullfør meldingen om hva Maja og Erik tar med.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: Vi ser på en stol, et bord og flere lamper.
+    - speaker: Erik
+      text_md: Vi har bestemt oss for å ta med dem.
+  audio_target: Vi tar den lille, det store og de blå.
+  segments:
+  - text_md: 'Vi tar '
+  - blank_id: common-definite
+    options:
+    - det lille
+    - den lille
+    answer_index: 1
+  - text_md: ', '
+  - blank_id: neuter-definite
+    options:
+    - det store
+    - den store
+    answer_index: 0
+  - text_md: ' og '
+  - blank_id: plural-definite
+    options:
+    - de blå
+    - den blå
+    answer_index: 0
+  - text_md: .
+  derived_from:
+  - section_id: definite-forms-the-red-one-and-the-red-ones

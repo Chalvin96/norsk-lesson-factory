@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "det_er_vs_det_finnes",
   "kind": "grammar",
   "language": "nb-NO",
@@ -88,6 +88,22 @@
     {
       "kind": "exercise",
       "id": "existence-or-description-retrieval"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_known_thing_description"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_existence_statement"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_availability_question"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_known_thing_location"
     }
   ],
   "sections": [
@@ -1837,9 +1853,10 @@
               "en": [
                 {
                   "kind": "text",
-                  "value": "'Not: The room is large and bright. (in this situation)'"
+                  "value": "The room is large and bright. (in this situation)"
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "common-mistakes-block-3"
@@ -2641,36 +2658,65 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Choose the interpretation that correctly explains all three hotel messages."
+          "value": "Choose the explanation that fits all three messages."
         }
       ],
       "explanation": null,
       "payload": {
         "options": [
           {
-            "option_id": "wrong-description",
-            "text": "Det er rom 214 announces that any room exists; Det finnes et bagasjerom ved resepsjonen describes a known luggage room; and Finnes det en restaurant på hotellet? identifies a particular restaurant.",
-            "why": "The meanings are reversed: the room is identified, while the luggage room and restaurant concern existence or availability."
+            "option_id": "notice-shift-purpose",
+            "text": "The first line asks whether a room exists; the second names a specific luggage room; the third says a restaurant is available.",
+            "why": "The first line is a statement rather than a question, the second announces the luggage room rather than naming it, and the third asks about the restaurant rather than announcing it."
           },
           {
-            "option_id": "wrong-location-rule",
-            "text": "Every statement uses det finnes because each one mentions a hotel place; det er cannot identify or describe a room.",
-            "why": "A location does not decide the expression; speaker purpose does."
+            "option_id": "notice-correct",
+            "text": "The first line names a specific room; the second says a luggage room is available; the third asks whether a restaurant exists.",
+            "why": "Det er rom 214 names a particular room, det finnes et bagasjerom announces something available, and finnes det en restaurant? asks whether it exists."
           },
           {
-            "option_id": "correct",
-            "text": "Det er rom 214 identifies a particular room; Det finnes et bagasjerom ved resepsjonen introduces a luggage room as existing; and Finnes det en restaurant på hotellet? asks about restaurant existence or availability.",
-            "why": "Det er identifies a known thing, while det finnes and finnes det express existence or availability."
+            "option_id": "notice-swap-first",
+            "text": "The first line says a room is available; the second names a specific luggage room; the third asks whether a restaurant exists.",
+            "why": "The first two jobs are swapped: the opening line names room 214, while the luggage-room line announces availability."
           }
         ],
-        "answer_id": "correct",
-        "stem": [
-          {
-            "kind": "text",
-            "value": "Which explanation correctly classifies the room, luggage-room, and restaurant messages?"
-          }
-        ]
-      }
+        "answer_id": "notice-correct",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Ingrid",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Det er rom 214.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Ingrid",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Det finnes et bagasjerom ved resepsjonen.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Sara",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Finnes det en restaurant på hotellet?»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2680,13 +2726,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each hotel reply with the expression used to identify or describe a known person, place, or object."
+          "value": "Complete the replies."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Use «det finnes» to introduce that something exists or is available. Use «det er» to identify, locate, or describe something already established."
+          "value": "Når noe allerede er nevnt, beskriver eller lokaliserer vi det i stedet for å presentere det som noe nytt."
         }
       ],
       "payload": {
@@ -2696,11 +2742,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Gjesten spør: Hvordan er rom 214?"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "Gjesten: Hvordan er rom 214? Ingrid:"
               }
             ]
           },
@@ -2722,11 +2764,7 @@
               },
               {
                 "kind": "text",
-                "value": "ganske lyst og stille. Gjesten spør: Hvor er nøkkelkortet?"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "ganske lyst og stille. Gjesten: Hvor er nøkkelkortet? Ingrid:"
               }
             ]
           },
@@ -2734,10 +2772,10 @@
             "kind": "blank",
             "blank_id": "blank-known-keycard-location",
             "options": [
-              "Det er",
-              "Det finnes"
+              "Det finnes",
+              "Det er"
             ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
@@ -2748,11 +2786,7 @@
               },
               {
                 "kind": "text",
-                "value": "på rommet. Gjesten spør: Hvilket rom er dette?"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "på rommet. Gjesten: Hvilket rom er dette? Ingrid:"
               }
             ]
           },
@@ -2784,57 +2818,47 @@
     {
       "kind": "exercise",
       "id": "availability-question",
-      "operation": "build",
+      "operation": "choose",
       "objective_id": "obj-det-er-vs-det-finnes-01",
       "prompt": [
         {
           "kind": "text",
-          "value": "Build the guest's question about whether a café is available at the hotel."
+          "value": "Choose the question that asks whether the hotel has a café."
         }
       ],
       "explanation": null,
       "payload": {
-        "tokens": [
+        "options": [
           {
-            "token_id": "availability-1",
-            "text": "Finnes",
-            "fixed": false
+            "option_id": "availability-question-existence",
+            "text": "Finnes det en kafé på hotellet?",
+            "why": "The guest asks whether a café exists at the hotel, so the question is about availability."
           },
           {
-            "token_id": "availability-2",
-            "text": "det",
-            "fixed": false
-          },
-          {
-            "token_id": "availability-3",
-            "text": "en",
-            "fixed": false
-          },
-          {
-            "token_id": "availability-4",
-            "text": "kafé",
-            "fixed": false
-          },
-          {
-            "token_id": "availability-5",
-            "text": "på",
-            "fixed": false
-          },
-          {
-            "token_id": "availability-6",
-            "text": "hotellet?",
-            "fixed": false
+            "option_id": "availability-question-known-cafe",
+            "text": "Er kafeen åpen på hotellet?",
+            "why": "This asks whether a particular, already-known café is open; it does not ask whether one exists."
           }
         ],
-        "answer_order": [
-          "availability-1",
-          "availability-2",
-          "availability-3",
-          "availability-4",
-          "availability-5",
-          "availability-6"
-        ]
-      }
+        "answer_id": "availability-question-existence",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Gjesten",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg har ikke vært på hotellet før. Hva kan jeg spise der?»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2844,10 +2868,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each paired statement. Use the expression that matches whether the place is newly introduced or already known; the location phrase alone is not the deciding factor."
+          "value": "Complete the messages. Use «det finnes» when Ingrid tells Sara about a new place, and «det er» when she talks about a place already mentioned."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Det finnes» presenterer et sted som ny informasjon. «Det er» brukes til å identifisere eller beskrive et sted som allerede er nevnt."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -2855,11 +2884,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Ny informasjon ved torget:"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "Sara: Er det en kafé ved torget? Ingrid:"
               }
             ]
           },
@@ -2868,7 +2893,7 @@
             "blank_id": "blank-cafe-existence",
             "options": [
               "Det finnes",
-              "Det er"
+              "Finnes det"
             ],
             "answer_index": 0
           },
@@ -2881,11 +2906,7 @@
               },
               {
                 "kind": "text",
-                "value": "en kafé ved torget. Kafeen er allerede kjent:"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "en kafé ved torget. Sara: Hvilken bygning er kafeen? Ingrid:"
               }
             ]
           },
@@ -2893,10 +2914,10 @@
             "kind": "blank",
             "blank_id": "blank-cafe-known",
             "options": [
-              "Det er",
-              "Det finnes"
+              "Det finnes",
+              "Det er"
             ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
@@ -2907,11 +2928,7 @@
               },
               {
                 "kind": "text",
-                "value": "kafeen ved torget. Ny informasjon ved busstasjonen:"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "den røde bygningen ved torget. Jonas: Er det et apotek ved busstasjonen? Ingrid:"
               }
             ]
           },
@@ -2919,10 +2936,10 @@
             "kind": "blank",
             "blank_id": "blank-pharmacy-existence",
             "options": [
-              "Det finnes",
-              "Det er"
+              "Det er",
+              "Det finnes"
             ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
@@ -2933,11 +2950,7 @@
               },
               {
                 "kind": "text",
-                "value": "et apotek ved busstasjonen. Apoteket er allerede kjent:"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "et apotek ved busstasjonen. Jonas: Hvilken bygning er apoteket? Ingrid:"
               }
             ]
           },
@@ -2959,7 +2972,7 @@
               },
               {
                 "kind": "text",
-                "value": "apoteket ved busstasjonen."
+                "value": "den gule bygningen ved busstasjonen."
               }
             ]
           }
@@ -2974,7 +2987,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Select the one expression that does not fit a known-room description."
+          "value": "Ingrid is talking about a luggage room they already know about. Choose the phrase that does not fit."
         }
       ],
       "explanation": null,
@@ -2982,7 +2995,7 @@
         "tokens": [
           {
             "token_id": "repair-room-1",
-            "text": "Rommet"
+            "text": "Bagasjerommet"
           },
           {
             "token_id": "repair-room-2",
@@ -3002,7 +3015,7 @@
           }
         ],
         "error_token_id": "repair-room-2",
-        "feedback": "Replace finnes with er: the room is already known and described, so this is not an existence statement."
+        "feedback": "Replace «finnes» with «er»: the already-known luggage room is being described, not introduced as existing."
       }
     },
     {
@@ -3013,10 +3026,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete the reception conversation with the expression that fits each speaker's purpose across the connected turns."
+          "value": "Complete the conversation at the front desk. When Ingrid tells them about the bus service, use «det finnes»."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Den første replikken beskriver et rom som allerede er nevnt. I den siste replikken presenterer Ingrid et nytt tilbud med «det finnes». I dagligtale kan «det er» også brukes om noe som finnes."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -3025,10 +3043,6 @@
               {
                 "kind": "text",
                 "value": "Sara: Er rommet klart? Ingrid: Ja,"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -3050,11 +3064,7 @@
               },
               {
                 "kind": "text",
-                "value": "ledig nå. Jonas:"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "klart nå. Jonas:"
               }
             ]
           },
@@ -3062,10 +3072,10 @@
             "kind": "blank",
             "blank_id": "blank-dialogue-service-question",
             "options": [
-              "Finnes det",
-              "Det er"
+              "Det er",
+              "Finnes det"
             ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
@@ -3077,10 +3087,6 @@
               {
                 "kind": "text",
                 "value": "en buss fra hotellet til sentrum? Ingrid: Ja,"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -3117,7 +3123,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write a brief connected sequence in Norwegian about a hotel facility for Jonas to send to Sara. First announce that a facility exists with det finnes; then identify or describe the now-known facility with det er."
+          "value": "Write a message to Sara. Tell her there is a laundry room, then use «det er» and a fact about the room or door to show where it is."
         }
       ],
       "explanation": null,
@@ -3125,15 +3131,15 @@
         "response_language": "no",
         "min_words": 8,
         "max_words": 25,
-        "judge_prompt": "Check the sequence against the task. Accept any natural Bokmål facility and any natural identification or description, but require det finnes for the new existence information and det er for the known referent that follows.",
+        "judge_prompt": "Evaluate only the visible message task. Criteria availability-form, follow-up-forms are gating; no criterion is diagnostic-only. Valid variant that must pass: «Det finnes et vaskerom i andre etasje. Det er rommet med det blå skiltet ved trappa.» Near-miss that must fail because it never uses det finnes: «Vaskerommet er i andre etasje.» Near-miss that must fail because it never identifies or describes the laundry room with det er: «Det finnes et vaskerom i andre etasje.»",
         "criteria": [
           {
-            "id": "new-existence",
-            "instruction": "The first sentence uses det finnes to announce a hotel facility as existing or available."
+            "id": "availability-form",
+            "instruction": "The message announces the laundry room as available using det finnes."
           },
           {
-            "id": "known-referent",
-            "instruction": "A following sentence uses det er to identify or describe the facility after it is known."
+            "id": "follow-up-forms",
+            "instruction": "The message then uses det er to identify or describe the laundry room with at least one supplied detail that helps Sara find it."
           }
         ]
       }
@@ -3146,7 +3152,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write four short connected Norwegian sentences for visitors in a neighbourhood, not a hotel. Announce two local services or facilities with det finnes; then identify one now-known place with det er; then describe that known place with det er. Use neighbourhood content rather than copying hotel dialogue."
+          "value": "Write a message to a visiting friend. A free information leaflet in Norwegian is in the blue basket at the far right of the entrance. Use «det finnes» for the leaflet and «det er» to point out the basket."
         }
       ],
       "explanation": null,
@@ -3154,23 +3160,19 @@
         "response_language": "no",
         "min_words": 16,
         "max_words": 40,
-        "judge_prompt": "Accept natural Bokmål variants for services, places, locations, and descriptions. Require two existence or availability statements with det finnes, followed by identification and description of a known place with det er. Confirm that the content is neighbourhood-based and does not copy the hotel dialogue.",
+        "judge_prompt": "Evaluate only the visible message task. Criteria guide-facts, availability-form, basket-identification are gating; no criterion is diagnostic-only. Valid variant that must pass: «Det finnes en gratis informasjonsbrosjyre på norsk. Den ligger i en blå kurv ved inngangen. Det er kurven lengst til høyre.» Near-miss that must fail because it omits the brochure's availability: «Brosjyren ligger i en blå kurv ved inngangen.» Near-miss that must fail because it does not identify the correct basket with det er: «Det finnes en gratis informasjonsbrosjyre på norsk, og kurvene står ved inngangen.»",
         "criteria": [
           {
-            "id": "neighbourhood-existence",
-            "instruction": "Announces two neighbourhood services or facilities with det finnes for existence or availability."
+            "id": "guide-facts",
+            "instruction": "The message accurately mentions a free Norwegian information brochure and that it is in the rightmost blue basket by the entrance."
           },
           {
-            "id": "neighbourhood-identification",
-            "instruction": "Uses det er to identify one place that has already been introduced."
+            "id": "availability-form",
+            "instruction": "The message presents the information brochure as available using det finnes."
           },
           {
-            "id": "neighbourhood-description",
-            "instruction": "Uses det er to describe a place that is already known."
-          },
-          {
-            "id": "neighbourhood-transfer",
-            "instruction": "Uses unfamiliar neighbourhood content rather than repeating the hotel dialogue."
+            "id": "basket-identification",
+            "instruction": "The message uses det er to identify which basket contains the guide, with a supplied detail."
           }
         ]
       }
@@ -3183,7 +3185,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Without looking back, write exactly three short Norwegian sentences about a useful place or service nearby and another place or service. First say that the useful place or service exists or is available nearby with det finnes; then identify or describe that known place with det er; finally ask whether the other place or service is available with Finnes det."
+          "value": "Reply to Sara. Outside the hotel there is a red bicycle that guests can borrow. Say that the bicycle is available, then use «det er» to say which bicycle you mean."
         }
       ],
       "explanation": null,
@@ -3191,22 +3193,216 @@
         "response_language": "no",
         "min_words": 12,
         "max_words": 35,
-        "judge_prompt": "Accept any natural Bokmål places, services, and locations, including lexical choices different from the lesson examples. Require exactly three sentences, the requested existence statement with det finnes, the identification or description with det er, and the existence question with Finnes det.",
+        "judge_prompt": "Evaluate only the visible reply task. Criteria retrieval-facts, retrieval-forms are gating; no criterion is diagnostic-only. Valid variant that must pass: «Det finnes en sykkel du kan låne. Det er den røde sykkelen utenfor hotellet.» Near-miss that must fail because it produces neither target form: «Du kan låne den røde sykkelen utenfor hotellet.» Near-miss that must fail because it omits which bicycle it is: «Det finnes en sykkel du kan låne.»",
         "criteria": [
           {
-            "id": "retrieval-existence",
-            "instruction": "States that one useful nearby place or service exists or is available with det finnes."
+            "id": "retrieval-facts",
+            "instruction": "The reply accurately states that the hotel has a bicycle available to borrow and identifies it as the red bicycle outside the hotel."
           },
           {
-            "id": "retrieval-description",
-            "instruction": "Identifies or describes that known place or service with det er."
-          },
-          {
-            "id": "retrieval-question",
-            "instruction": "Asks whether another place or service is available with Finnes det."
+            "id": "retrieval-forms",
+            "instruction": "The reply uses det finnes to present the available bicycle and det er to identify which bicycle it is."
           }
         ]
       }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_known_thing_description",
+      "operation": "recall_fill",
+      "objective_id": "obj-det-er-vs-det-finnes-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Complete Ingrid's reply."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Rommet er allerede nevnt, så Ingrid beskriver det i stedet for å fortelle at det finnes."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Gjesten: Hvordan ser rommet ut? Ingrid:"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-blank-known-description",
+            "options": [
+              "Det finnes",
+              "Det er"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "rolig og lyst."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_existence_statement",
+      "operation": "choose",
+      "objective_id": "obj-det-er-vs-det-finnes-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the reply that first introduces the coat room as new information, then says where it is."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "review-coat-storage-availability",
+            "text": "Ja, det finnes en gratis garderobe ved inngangen.",
+            "why": "«Det finnes» introduces the not-yet-mentioned service as available, and the rest tells where it is."
+          },
+          {
+            "option_id": "review-coat-storage-location",
+            "text": "Ja, den gratis garderoben er ved inngangen.",
+            "why": "This locates an already identified cloakroom instead of introducing the service as newly available."
+          }
+        ],
+        "answer_id": "review-coat-storage-availability",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Nora",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Kan jeg henge fra meg jakken gratis her?»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_availability_question",
+      "operation": "choose",
+      "objective_id": "obj-det-er-vs-det-finnes-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the question Jonas asks."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "review-bus-availability",
+            "text": "Finnes det en buss som går fra stasjonen til sentrum?",
+            "why": "Jonas asks whether a bus service exists for that route, not where a known bus is parked."
+          },
+          {
+            "option_id": "review-bus-location",
+            "text": "Er bussen ved stasjonen?",
+            "why": "This asks where an already-known bus is; it does not ask whether a bus service is available."
+          }
+        ],
+        "answer_id": "review-bus-availability",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Jonas",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg vet ikke om det går buss fra stasjonen til sentrum.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_known_thing_location",
+      "operation": "choose",
+      "objective_id": "obj-det-er-vs-det-finnes-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "The guests already know about the luggage room. Choose the reply that uses «det er» to say where it is."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "review-location-identify",
+            "text": "Det er bagasjerommet.",
+            "why": "This identifies what the thing is instead of answering where it is."
+          },
+          {
+            "option_id": "review-location-existence",
+            "text": "Det finnes et bagasjerom ved resepsjonen.",
+            "why": "This mentions available storage but does not locate the known bagasjerom."
+          },
+          {
+            "option_id": "review-location-correct",
+            "text": "Det er ved resepsjonen.",
+            "why": "Det er with a place phrase locates a room that is already established in the conversation."
+          },
+          {
+            "option_id": "review-location-describe",
+            "text": "Det er et stort bagasjerom.",
+            "why": "This describes the room but does not say where it is."
+          }
+        ],
+        "answer_id": "review-location-correct",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Gjesten",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg har hørt at hotellet har et bagasjerom. Hvor ligger det?»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "practice_groups": [
@@ -3222,7 +3418,11 @@
         "hotel-dialogue-completion",
         "new-to-known-sequence",
         "neighbourhood-information-transfer",
-        "existence-or-description-retrieval"
+        "existence-or-description-retrieval",
+        "review_known_thing_description",
+        "review_existence_statement",
+        "review_availability_question",
+        "review_known_thing_location"
       ]
     }
   ],

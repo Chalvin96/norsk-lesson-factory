@@ -1,0 +1,384 @@
+- handle: notice_focus_in_cabin_dialogue
+  op: choose
+  objective: obj-focus-particles-and-constituent-scope-01
+  bloom: understand
+  prompt_md: Velg hva «bare» avgrenser.
+  derived_from:
+  - section_id: cabin-dinner
+  stem_md: 'Jonas: Hva tar Amir med? Sofie: Amir tar bare brød.'
+  options:
+  - id: bare-restricts-person
+    text: Amir er den eneste personen som tar med brød.
+    correct: false
+    why: Da måtte «bare» stå foran Amir.
+  - id: bare-restricts-item
+    text: Brød er det eneste Amir tar med.
+    correct: true
+    why: «Bare» står rett foran brød og utelukker andre ting.
+  - id: bare-adds-item
+    text: Amir tar med brød i tillegg til andre ting.
+    correct: false
+    why: Det ville være en tilføyelse, mens «bare» uttrykker en avgrensning.
+- handle: place_bare_by_restricted_constituent
+  op: build
+  objective: obj-focus-particles-and-constituent-scope-01
+  bloom: apply
+  prompt_md: Bygg oppdateringen.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Treningsplan: Ida hviler mandag. Ida trener tirsdag. Ida hviler onsdag.'
+  explanation_md: «Bare» står foran dagen som avgrenses.
+  derived_from:
+  - section_id: restricting-with-bare
+  tokens:
+  - token_id: tok-3
+    text: bare
+  - token_id: tok-1
+    text: Ida
+  - token_id: tok-4
+    text: på
+  - token_id: tok-5
+    text: tirsdag.
+  - token_id: tok-2
+    text: trener
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+- handle: interpret_bare_position_contrasts
+  op: choose
+  objective: obj-focus-particles-and-constituent-scope-01
+  bloom: analyze
+  prompt_md: Velg forklaringen som passer til begge meldingene.
+  derived_from:
+  - section_id: bare-scope-mistake
+  stem_md: 'Melding 1: Bare Liv kjøper dessert. Melding 2: Liv kjøper bare dessert.'
+  options:
+  - id: purchases-then-buyers
+    text: Melding 1 utelukker andre kjøp; melding 2 utelukker andre kjøpere.
+    correct: false
+    why: Dette bytter om hva «bare» står foran i de to meldingene.
+  - id: purchases-in-both
+    text: Begge meldingene utelukker andre kjøp.
+    correct: false
+    why: I den første meldingen står «bare» foran Liv og avgrenser hvem som kjøper.
+  - id: buyers-then-purchases
+    text: Melding 1 utelukker andre kjøpere; melding 2 utelukker andre kjøp.
+    correct: true
+    why: Plasseringen flytter avgrensningen fra personen til tingen.
+- handle: place_ogsa_by_added_constituent
+  op: build
+  objective: obj-focus-particles-and-constituent-scope-01
+  bloom: apply
+  prompt_md: Bygg Saras oppdatering.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Jonas: Hva har Sara pakket? Mina: Hun har lagt kjeks i veska. Nå pakker hun epler også.'
+  explanation_md: Se på hvem som allerede er med i planen, og hva som kommer i tillegg.
+  derived_from:
+  - section_id: adding-with-ogsa
+  tokens:
+  - token_id: tok-3
+    text: også
+  - token_id: tok-1
+    text: Sara
+  - token_id: tok-4
+    text: epler.
+  - token_id: tok-2
+    text: pakker
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+- handle: repair_ogsa_scope_in_messages
+  op: find_fix
+  objective: obj-focus-particles-and-constituent-scope-01
+  bloom: analyze
+  prompt_md: Sammenlign hele utkastet med planen, og velg den forekomsten av «også» som har feil fokus.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Planen: Liv er allerede med og tar med brød. Osten er et tillegg. Arne tar med kjeks; brødet legges også til kjeksene hans. Utkast: Også Liv tar med ost, og Arne tar med kjeks og brød også.'
+  derived_from:
+  - section_id: ogsa-scope-mistake
+  tokens:
+  - token_id: tok-1
+    text: Også
+  - token_id: tok-2
+    text: Liv
+  - token_id: tok-3
+    text: tar
+  - token_id: tok-4
+    text: med
+  - token_id: tok-5
+    text: ost,
+  - token_id: tok-6
+    text: og
+  - token_id: tok-7
+    text: Arne
+  - token_id: tok-8
+    text: tar
+  - token_id: tok-9
+    text: med
+  - token_id: tok-10
+    text: kjeks
+  - token_id: tok-11
+    text: og
+  - token_id: tok-12
+    text: brød
+  - token_id: tok-13
+    text: også.
+  error_token_id: tok-1
+  feedback: '«Også Liv» legger Liv til en gruppe personer, men planen sier at Liv allerede er med. Her er osten tillegget: «Liv tar også med ost». I den andre setningen står «også» etter «brød», og brød legges dermed til Arnes kjeks.'
+- handle: place_surprising_inclusion_particle
+  op: build
+  objective: obj-focus-particles-and-constituent-scope-01
+  bloom: apply
+  prompt_md: Bygg Jørgens overraskede oppdatering.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Jørgen velger vanligvis salat i kantina. I dag bestiller han suppe.
+  explanation_md: «Til og med» står rett foran den overraskende retten.
+  derived_from:
+  - section_id: surprising-inclusion
+  tokens:
+  - token_id: tok-5
+    text: til
+  - token_id: tok-1
+    text: I
+  - token_id: tok-8
+    text: suppe.
+  - token_id: tok-3
+    text: bestiller
+  - token_id: tok-6
+    text: og
+  - token_id: tok-2
+    text: dag
+  - token_id: tok-7
+    text: med
+  - token_id: tok-4
+    text: han
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+- handle: distinguish_even_selv_from_personal_selv
+  op: find_fix
+  objective: obj-focus-particles-and-constituent-scope-01
+  bloom: analyze
+  prompt_md: Velg ordet som må flyttes.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Fakta: Alle ventet at Amir skulle lage maten. Ingen ventet det av Liv. Ment betydning:
+        Det overraskende er at Liv også lagde maten. Utkast: Liv lagde maten selv.'
+  derived_from:
+  - section_id: personal-selv-mistake
+  tokens:
+  - token_id: tok-1
+    text: Liv
+  - token_id: tok-2
+    text: lagde
+  - token_id: tok-3
+    text: maten
+  - token_id: tok-4
+    text: selv.
+  error_token_id: tok-4
+  feedback: 'Etter «maten» betyr «selv» at Liv gjorde arbeidet personlig. For overraskende deltakelse
+    står ordet foran personen: «Selv Liv lagde maten.»'
+- handle: transfer_focus_to_workplace_picnic
+  op: write
+  objective: obj-focus-particles-and-constituent-scope-01
+  bloom: apply
+  prompt_md: Du skriver til kollegene for å oppdatere piknikplanen. Bruk «bare» for å avgrense hvem som
+    kommer, «også» for å vise at én matvare føyes til den andre, og «selv» eller «til og med» foran det overraskende leddet.
+    Skriv også at direktøren overraskende kommer, med «selv» eller «til og med» foran direktøren.
+    Skriv en tydelig melding på 30–50 ord.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Mina
+      text_md: «Jeg kommer på pikniken, men ingen andre fra økonomiavdelingen kan.»
+    - speaker: Jonas
+      text_md: «Bra. Tar du med mat?»
+    - speaker: Mina
+      text_md: «Ja, jeg tar med salat og brød.»
+    - speaker: Jonas
+      text_md: «Direktøren kommer faktisk, enda hun vanligvis takker nei.»
+    - speaker: Mina
+      text_md: «Så hyggelig. Og vi møtes ute, enda det er meldt regn.»
+  derived_from:
+  - section_id: transfer-workplace-picnic
+  response_language: 'no'
+  min_words: 30
+  max_words: 50
+  judge_prompt: Vurder kriteriene facts-attendance, facts-food, facts-surprise, audience-purpose, word-bound,
+    bare-scope, ogsa-scope og surprising-scope som beståttkrav. Alle disse synlige kravene må være oppfylt;
+    legg ikke til andre beståttkrav.
+  criteria:
+  - id: facts-attendance
+    instruction: Meldingen sier at Mina er den eneste fra økonomiavdelingen som kommer.
+  - id: facts-food
+    instruction: Meldingen sier at Mina tar med både salat og brød.
+  - id: facts-surprise
+    instruction: Meldingen sier at direktøren kommer, og formidler at dette er overraskende.
+  - id: audience-purpose
+    instruction: Svaret fungerer som en forståelig oppdatering til kollegene.
+  - id: word-bound
+    instruction: Meldingen inneholder 30–50 ord.
+  - id: bare-scope
+    instruction: Meldingen bruker «bare» tydelig for å uttrykke at én person er den eneste fra økonomiavdelingen
+      som kommer.
+  - id: ogsa-scope
+    instruction: Meldingen bruker «også» naturlig for å vise at den ene matvaren føyes til den andre; godta både salat som tillegg til brød og brød som tillegg til salat.
+  - id: surprising-scope
+    instruction: Meldingen bruker «selv» eller «til og med» foran direktøren for å markere at hennes deltakelse er overraskende.
+- handle: compare_picnic_scope_shifts
+  op: write
+  objective: obj-focus-particles-and-constituent-scope-01
+  bloom: analyze
+  prompt_md: 'En kollega spør hvorfor disse meldingene betyr forskjellige ting: A: Bare Ada tar med salat.
+    B: Ada tar bare med salat. C: Også Per møter oss i parken. D: Per møter oss også i parken, i tillegg
+    til på kontoret. Svar kollegaen på norsk og forklar forskjellene på 35–65 ord.'
+  derived_from:
+  - section_id: transfer-workplace-picnic
+  response_language: 'no'
+  min_words: 35
+  max_words: 65
+  judge_prompt: Vurder kriteriene bare-pair-meaning, ogsa-pair-meaning, colleague-explanation og word-bound.
+    Hvert av disse synlige kravene må være oppfylt; legg ikke til andre beståttkrav.
+  criteria:
+  - id: bare-pair-meaning
+    instruction: Forklarer at A avgrenser hvem som tar med salat, mens B avgrenser hva Ada tar med.
+  - id: ogsa-pair-meaning
+    instruction: Forklarer at C legger Per til deltakerne, mens D i denne konteksten legger parken til
+      Pers møtesteder.
+  - id: colleague-explanation
+    instruction: Svaret er formulert som en forståelig forklaring til kollegaen.
+  - id: word-bound
+    instruction: Svaret inneholder 35–65 ord.
+- handle: retrieve_focus_particle_placement
+  op: write
+  objective: obj-focus-particles-and-constituent-scope-01
+  bloom: apply
+  prompt_md: Skriv en kort melding på 20–35 ord til lunsjgruppen som gjengir disse fakta presist. Bruk
+    «bare», «også» og «selv» eller «til og med» slik at leseren forstår hva som avgrenses, legges til
+    og er overraskende.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Jonas
+      text_md: «Kari tar med te, men ingen annen drikke.»
+    - speaker: Sofie
+      text_md: «Oskar har te på listen sin, i tillegg til Kari.»
+    - speaker: Jonas
+      text_md: «Vaktmesteren kommer på lunsjen. Det hadde ingen regnet med.»
+  derived_from:
+  - section_id: retrieval-review
+  response_language: 'no'
+  min_words: 20
+  max_words: 35
+  judge_prompt: Vurder kriteriene liv-purchase, amir-addition, unexpected-neighbors,
+    message-purpose, word-bound, bare-placement, ogsa-placement og even-placement som beståttkrav. Alle
+    disse synlige kravene må være oppfylt; legg ikke til andre beståttkrav.
+  criteria:
+  - id: liv-purchase
+    instruction: Meldingen uttrykker at te er den eneste drikken Kari tar med.
+  - id: amir-addition
+    instruction: Meldingen uttrykker at Oskar er en ekstra person som tar med te.
+  - id: unexpected-neighbors
+    instruction: Meldingen uttrykker at vaktmesterens deltakelse er overraskende.
+  - id: message-purpose
+    instruction: Svaret fungerer som én forståelig melding til lunsjgruppen som gjengir faktaene.
+  - id: word-bound
+    instruction: Meldingen inneholder 20–35 ord.
+  - id: bare-placement
+    instruction: Meldingen bruker «bare» slik at drikken, og ikke Kari, avgrenses.
+  - id: ogsa-placement
+    instruction: Meldingen bruker «også» slik at Oskar legges til dem som tar med te.
+  - id: even-placement
+    instruction: Meldingen bruker «selv» eller «til og med» foran det overraskende leddet.
+- handle: review_bare_purchase_scope
+  op: write
+  objective: obj-focus-particles-and-constituent-scope-01
+  bloom: apply
+  prompt_md: En venn skal bidra med én ting til lunsjen, men noen tror at vennen tar med flere. Skriv
+    én kort norsk setning med «bare» som avgrenser hva vennen bidrar med.
+  derived_from:
+  - section_id: retrieval-review
+  response_language: 'no'
+  min_words: 3
+  max_words: 8
+  judge_prompt: Vurder bare kriteriet restricted-purchase; legg ikke til andre beståttkrav.
+  criteria:
+  - id: restricted-purchase
+    instruction: Svaret bruker «bare» slik at det tydelig avgrenser hva vennen bidrar med til én ting.
+- handle: review_ogsa_person_scope
+  op: write
+  objective: obj-focus-particles-and-constituent-scope-01
+  bloom: apply
+  prompt_md: Én person skaffer dessert til lunsjen. En annen blir med på å skaffe dessert. Skriv én kort
+    norsk setning med «også» som viser at den andre er en ekstra bidragsyter.
+  derived_from:
+  - section_id: retrieval-review
+  response_language: 'no'
+  min_words: 3
+  max_words: 8
+  judge_prompt: Vurder bare kriteriet added-buyer; legg ikke til andre beståttkrav.
+  criteria:
+  - id: added-buyer
+    instruction: Svaret bruker «også» slik at personen tydelig framstår som en ekstra bidragsyter til
+      dessertkjøpet.
+- handle: review_til_og_med_item_scope
+  op: write
+  objective: obj-focus-particles-and-constituent-scope-01
+  bloom: apply
+  prompt_md: En venn spiser en matvare som alle vet at vennen vanligvis unngår. Skriv én kort norsk setning
+    med «til og med» som fremhever den overraskende matvaren.
+  derived_from:
+  - section_id: retrieval-review
+  response_language: 'no'
+  min_words: 3
+  max_words: 8
+  judge_prompt: Vurder bare kriteriet surprising-item; legg ikke til andre beståttkrav.
+  criteria:
+  - id: surprising-item
+    instruction: Svaret bruker «til og med» rett foran den overraskende matvaren, ikke foran subjektet
+      eller verbet.
+- handle: review_selv_meaning_contrast
+  op: choose
+  objective: obj-focus-particles-and-constituent-scope-01
+  bloom: analyze
+  prompt_md: Velg setningen som framhever den uventede deltakeren.
+  derived_from:
+  - section_id: retrieval-review
+  stem_md: Amir, Nora og Per lager maten sammen og hjelper hverandre underveis. Liv pleier ikke å lage mat, og Amir har meldt seg til å lage hovedretten.
+  options:
+  - id: object-surprise
+    text: Til og med Amir lagde maten.
+    correct: false
+    why: Amir hadde allerede meldt seg til å lage hovedretten, så han er ikke den uventede deltakeren.
+  - id: focus-selv
+    text: Selv Liv lagde maten.
+    correct: true
+    why: Foran Liv markerer «selv» personen som overraskende inkludert.
+  - id: personal-selv
+    text: Liv lagde maten selv.
+    correct: false
+    why: Etter maten fremhever «selv» at Liv gjorde arbeidet personlig.

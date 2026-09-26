@@ -1,0 +1,421 @@
+- handle: notice_v2_in_the_cafe
+  op: choose
+  objective: obj-fronting-and-v2-inversion-01
+  bloom: understand
+  prompt_md: 'Les hovedsetningene. Velg analysen som identifiserer hvert foranstilt ledd, finitt verb og subjekt riktig.'
+  stem_md: '**Oppdatering fra verkstedet** 1. På tirsdag åpner Sara verkstedet. 2. I foajeen kan Omar vente.'
+  options:
+  - id: identify-v2-roles
+    text: 1. Foranstilt ledd «På tirsdag»; finitt verb «åpner»; subjekt «Sara». 2. Foranstilt ledd «I foajeen»; finitt verb «kan»; subjekt «Omar».
+    correct: true
+    why: Begge setningene begynner med et tids- eller stedsuttrykk, fulgt av det finitte verbet og subjektet.
+  - id: subject-as-fronted
+    text: 1. Foranstilt ledd «Sara»; finitt verb «åpner»; subjekt «På tirsdag». 2. Foranstilt ledd «Omar»; finitt verb «kan»; subjekt «I foajeen».
+    correct: false
+    why: Sara og Omar er subjektene; tids- og stedsuttrykkene står først.
+  - id: infinitive-as-finite
+    text: 1. Foranstilt ledd «På tirsdag»; finitt verb «åpner»; subjekt «Sara». 2. Foranstilt ledd «I foajeen»; finitt verb «vente»; subjekt «Omar».
+    correct: false
+    why: «Kan» er det finitte modalverbet; «vente» står i infinitiv.
+  explanation_md: 'Et foranstilt tids- eller stedsuttrykk står først, deretter kommer det finitte verbet og subjektet. Med modalverb står infinitiven senere i setningen.'
+  derived_from:
+  - section_id: central-pattern
+- handle: front_a_time_or_place
+  op: build
+  objective: obj-fronting-and-v2-inversion-01
+  bloom: apply
+  prompt_md: 'Skriv om «Vi åpner sideinngangen klokka åtte» med «Klokka åtte» først.'
+  explanation_md: 'Etter det foranstilte tidsuttrykket kommer det finitte verbet «åpner» foran subjektet «vi».'
+  derived_from:
+  - section_id: changing-the-starting-point
+  tokens:
+  - token_id: ft-1
+    text: Klokka
+  - token_id: ft-2
+    text: åtte
+  - token_id: ft-3
+    text: åpner
+  - token_id: ft-4
+    text: vi
+  - token_id: ft-5
+    text: sideinngangen.
+  answer_order:
+  - ft-1
+  - ft-2
+  - ft-3
+  - ft-4
+  - ft-5
+- handle: move_only_the_finite_verb
+  op: build
+  objective: obj-fronting-and-v2-inversion-01
+  bloom: apply
+  prompt_md: 'Skriv om «Sara skal levere nøklene på fredag» med «På fredag» først.'
+  explanation_md: 'Det finitte modalverbet «skal» står på andre plass. Infinitiven «levere» står etter subjektet.'
+  derived_from:
+  - section_id: when-there-is-more-than-one-verb
+  tokens:
+  - token_id: mv-1
+    text: På
+  - token_id: mv-2
+    text: fredag
+  - token_id: mv-3
+    text: skal
+  - token_id: mv-4
+    text: Sara
+  - token_id: mv-5
+    text: levere
+  - token_id: mv-6
+    text: nøklene.
+  answer_order:
+  - mv-1
+  - mv-2
+  - mv-3
+  - mv-4
+  - mv-5
+  - mv-6
+- handle: complete_emphatic_openings
+  op: build
+  objective: obj-fronting-and-v2-inversion-01
+  bloom: apply
+  prompt_md: 'Sett sammen en setning om at de ansatte kan bruke lagerrommet først etter stengetid. Begynn med «Bare etter stengetid».'
+  explanation_md: 'Etter et begrensende innledningsledd i en hovedsetning står det finitte verbet på andre plass og subjektet etter det.'
+  derived_from:
+  - section_id: negative-and-restrictive-openings
+  tokens:
+  - token_id: emphatic-1
+    text: lagerrommet.
+  - token_id: emphatic-2
+    text: Bare
+  - token_id: emphatic-3
+    text: kan
+  - token_id: emphatic-4
+    text: de
+  - token_id: emphatic-5
+    text: etter
+  - token_id: emphatic-6
+    text: ansatte
+  - token_id: emphatic-7
+    text: stengetid
+  - token_id: emphatic-8
+    text: bruke
+  answer_order:
+  - emphatic-2
+  - emphatic-5
+  - emphatic-7
+  - emphatic-3
+  - emphatic-4
+  - emphatic-6
+  - emphatic-8
+  - emphatic-1
+- handle: neutral_or_emphatic_rewrite
+  op: build
+  objective: obj-fronting-and-v2-inversion-01
+  bloom: apply
+  prompt_md: 'Skriv om «Elias leser sjelden avisa på toget» med «Sjelden» først.'
+  explanation_md: 'Når «sjelden» står først, blir setningen mer framhevet. Det finitte verbet kommer foran subjektet.'
+  derived_from:
+  - section_id: negative-and-restrictive-openings
+  tokens:
+  - token_id: nr-1
+    text: Sjelden
+  - token_id: nr-2
+    text: leser
+  - token_id: nr-3
+    text: Elias
+  - token_id: nr-4
+    text: avisa
+  - token_id: nr-5
+    text: på
+  - token_id: nr-6
+    text: toget.
+  answer_order:
+  - nr-1
+  - nr-2
+  - nr-3
+  - nr-4
+  - nr-5
+  - nr-6
+- handle: keep_subordinate_order
+  op: find_fix
+  objective: obj-fronting-and-v2-inversion-01
+  bloom: analyze
+  prompt_md: 'Velg ordet som må flyttes.'
+  explanation_md: 'Etter «at» står subjektet i leddsetningen foran «ikke» og det finitte verbet.'
+  derived_from:
+  - section_id: crucial-boundary-subordinate-clauses
+  tokens:
+  - token_id: ko-1
+    text: Nora
+  - token_id: ko-2
+    text: vet
+  - token_id: ko-3
+    text: at
+  - token_id: ko-4
+    text: kan
+  - token_id: ko-5
+    text: Elias
+  - token_id: ko-6
+    text: ikke
+  - token_id: ko-7
+    text: komme
+  - token_id: ko-8
+    text: tidlig.
+  error_token_id: ko-4
+  feedback: 'Flytt «kan» etter «ikke»: «Nora vet at Elias ikke kan komme tidlig.»'
+- handle: distinguish_main_and_subordinate_order
+  op: recall_fill
+  objective: obj-fronting-and-v2-inversion-01
+  bloom: analyze
+  prompt_md: 'Velg paret der begge setningene har riktig ordstilling.'
+  explanation_md: 'I en hovedsetning med foranstilt ledd står det finitte verbet foran subjektet. I en «at»-setning står subjektet foran «ikke» og det finitte verbet.'
+  derived_from:
+  - section_id: crucial-boundary-subordinate-clauses
+  audio_target: I helga jobber Sara hjemme. Per sier at Sara ikke kan ta ekstravakten.
+  segments:
+  - text_md: 'Riktig par:'
+  - blank_id: main-subordinate-pair
+    options:
+    - «I helga jobber Sara hjemme.» / «Per sier at Sara ikke kan ta ekstravakten.»
+    - «I helga Sara jobber hjemme.» / «Per sier at Sara ikke kan ta ekstravakten.»
+    - «I helga jobber Sara hjemme.» / «Per sier at kan Sara ikke ta ekstravakten.»
+    answer_index: 0
+- handle: two_clause_boundary
+  op: build
+  objective: obj-fronting-and-v2-inversion-01
+  bloom: apply
+  prompt_md: 'Sett sammen setningen om at møtet først kan starte når rommet er klart.'
+  explanation_md: 'Den innledende leddsetningen har ordstillingen «rommet er klart». Hovedsetningen etterpå har «kan vi».'
+  derived_from:
+  - section_id: when-a-whole-subordinate-clause-comes-first
+  tokens:
+  - token_id: tc-1
+    text: Bare
+  - token_id: tc-2
+    text: når
+  - token_id: tc-3
+    text: rommet
+  - token_id: tc-4
+    text: er
+  - token_id: tc-5
+    text: klart,
+  - token_id: tc-6
+    text: kan
+  - token_id: tc-7
+    text: vi
+  - token_id: tc-8
+    text: starte
+  - token_id: tc-9
+    text: møtet.
+  answer_order:
+  - tc-1
+  - tc-2
+  - tc-3
+  - tc-4
+  - tc-5
+  - tc-6
+  - tc-7
+  - tc-8
+  - tc-9
+- handle: repair_the_cafe_update
+  op: find_fix
+  objective: obj-fronting-and-v2-inversion-01
+  bloom: analyze
+  prompt_md: 'Velg det finitte verbet som må flyttes for å få riktig ordstilling.'
+  explanation_md: 'Den innledende leddsetningen beholder subjekt–verb-ordstilling. I hovedsetningen etterpå står det finitte verbet foran subjektet.'
+  derived_from:
+  - section_id: back-at-the-repair-cafe
+  tokens:
+  - token_id: rc-1
+    text: Når
+  - token_id: rc-2
+    text: møtet
+  - token_id: rc-3
+    text: er
+  - token_id: rc-4
+    text: slutt,
+  - token_id: rc-5
+    text: deltakerne
+  - token_id: rc-6
+    text: rydder
+  - token_id: rc-7
+    text: opp
+  - token_id: rc-8
+    text: sammen.
+  error_token_id: rc-6
+  feedback: 'Flytt «rydder» foran «deltakerne»: «Når møtet er slutt, rydder deltakerne opp sammen.»'
+- handle: reply_to_nora_about_the_delay
+  op: write
+  objective: obj-fronting-and-v2-inversion-01
+  bloom: apply
+  prompt_md: '**Melding fra Nora:** «Hvor er du? Skal jeg åpne reparasjonskafeen alene?» **Fakta:** Bussen kom ikke. Neste buss går klokka 09.20. Du kommer klokka ti hvis bussen er i rute. Svar Nora på norsk i 35–50 ord. Ta med alle faktaene, spør «Kan du åpne uten meg?», og begynn minst én hovedsetning med et tids- eller vilkårsuttrykk.'
+  explanation_md: 'Et godt svar til Nora bruker de oppgitte faktaene. Når et tids- eller vilkårsuttrykk står først i hovedsetningen, kommer det finitte verbet foran subjektet. Leddsetninger beholder subjektet foran det finitte verbet.'
+  derived_from:
+  - section_id: back-at-the-repair-cafe
+  response_language: 'no'
+  judge_prompt: Check the response against reply-purpose, supplied-facts, conditional-arrival, norwegian-response, word-bound, and v2-and-boundary-observation. Treat every listed criterion as required and accept natural Norwegian wording for the condition.
+  criteria:
+  - id: reply-purpose
+    instruction: The response is a reply to Nora that explains the delay and gives the plan.
+  - id: supplied-facts
+    instruction: 'The response conveys the delay and the plan: that «Bussen kom ikke», when the next bus leaves, when the learner arrives, and asks «Kan du åpne uten meg?»'
+  - id: conditional-arrival
+    instruction: States that the speaker arrives at ten if the bus is on schedule, using a natural subordinate condition such as hvis bussen er i rute. Do not require the stronger meaning only if.
+  - id: norwegian-response
+    instruction: The response is understandable Norwegian.
+  - id: word-bound
+    instruction: The response contains 35–50 words.
+  - id: v2-and-boundary-observation
+    instruction: The response starts at least one main clause with a time or condition expression, placing its finite verb before its subject.
+- handle: station_main_clause_transfer
+  op: build
+  objective: obj-fronting-and-v2-inversion-01
+  bloom: apply
+  prompt_md: 'Sett sammen setningen «At the station, Ingrid can take the train.» på norsk.'
+  explanation_md: 'Stedsuttrykket står først, derfor kommer «kan» foran «Ingrid».'
+  derived_from:
+  - section_id: cumulative-transfer-a-delayed-train
+  tokens:
+  - token_id: sm-1
+    text: På
+  - token_id: sm-2
+    text: stasjonen
+  - token_id: sm-3
+    text: kan
+  - token_id: sm-4
+    text: Ingrid
+  - token_id: sm-5
+    text: ta
+  - token_id: sm-6
+    text: toget.
+  answer_order:
+  - sm-1
+  - sm-2
+  - sm-3
+  - sm-4
+  - sm-5
+  - sm-6
+- handle: station_subordinate_transfer
+  op: build
+  objective: obj-fronting-and-v2-inversion-01
+  bloom: apply
+  prompt_md: 'Sett sammen setningen «If the ticket machine does not work, Ingrid asks a staff member.» på norsk.'
+  explanation_md: 'I den innledende leddsetningen beholder vi subjekt–verb-ordstilling («billettautomaten ikke virker»). Etterpå står verbet foran subjektet («spør Ingrid»).'
+  derived_from:
+  - section_id: cumulative-transfer-a-delayed-train
+  tokens:
+  - token_id: st-1
+    text: Hvis
+  - token_id: st-2
+    text: billettautomaten
+  - token_id: st-3
+    text: ikke
+  - token_id: st-4
+    text: virker,
+  - token_id: st-5
+    text: spør
+  - token_id: st-6
+    text: Ingrid
+  - token_id: st-7
+    text: en
+  - token_id: st-8
+    text: ansatt.
+  answer_order:
+  - st-1
+  - st-2
+  - st-3
+  - st-4
+  - st-5
+  - st-6
+  - st-7
+  - st-8
+- handle: review_front_a_time_or_place
+  op: recall_fill
+  objective: obj-fronting-and-v2-inversion-01
+  bloom: apply
+  prompt_md: Fullfør setningen «Etter kurset ___ verktøyet.» Velg rekkefølgen som bruker presens og fortsetter setningen naturlig.
+  explanation_md: Det finitte verbet står etter det fremskutte tidsuttrykket og foran subjektet.
+  derived_from:
+  - section_id: changing-the-starting-point
+  audio_target: Etter kurset rengjør reparatørene verktøyet.
+  segments:
+  - text_md: '«Etter kurset '
+  - blank_id: review-time-order
+    options:
+    - rengjør reparatørene
+    - reparatørene rengjør
+    answer_index: 0
+  - text_md: ' verktøyet.»'
+- handle: review_move_only_the_finite_verb
+  op: recall_fill
+  objective: obj-fronting-and-v2-inversion-01
+  bloom: apply
+  prompt_md: Fullfør setningen «Før kurset ___ ta med verktøyet.» Velg rekkefølgen som uttrykker at reparatørene må ta med verktøyet.
+  explanation_md: 'Bare det finitte modalverbet flyttes foran subjektet. Infinitiven blir stående etter modalverbet.'
+  derived_from:
+  - section_id: when-there-is-more-than-one-verb
+  audio_target: Før kurset må reparatørene ta med verktøyet.
+  segments:
+  - text_md: '«Før kurset '
+  - blank_id: review-modal-order
+    options:
+    - må reparatørene
+    - reparatørene må
+    answer_index: 0
+  - text_md: ' ta med verktøyet.»'
+- handle: review_complete_emphatic_openings
+  op: recall_fill
+  objective: obj-fronting-and-v2-inversion-01
+  bloom: apply
+  prompt_md: 'Fullfør setningen «Ikke før klokka ti ___» slik at møtet ikke starter før klokka ti.'
+  explanation_md: 'Etter det begrensende innledningsleddet «Ikke før klokka ti» kommer det finitte verbet foran subjektet.'
+  derived_from:
+  - section_id: negative-and-restrictive-openings
+  audio_target: Ikke før klokka ti starter møtet.
+  segments:
+  - text_md: '«Ikke før klokka ti '
+  - blank_id: review-negative-order
+    options:
+    - starter møtet
+    - møtet starter
+    answer_index: 0
+  - text_md: .»
+- handle: review_keep_subordinate_order
+  op: recall_fill
+  objective: obj-fronting-and-v2-inversion-01
+  bloom: apply
+  prompt_md: 'Fullfør setningen om pasientens kosthold før prøven.'
+  explanation_md: 'I at-setningen står subjektet foran «ikke» og det finitte verbet. Ikke bruk hovedsetningsordstilling.'
+  derived_from:
+  - section_id: crucial-boundary-subordinate-clauses
+  audio_target: Legen vet at pasienten ikke kan spise før prøven.
+  segments:
+  - text_md: '«Legen vet at '
+  - blank_id: review-subordinate-order
+    options:
+    - pasienten ikke kan
+    - kan pasienten ikke
+    answer_index: 0
+  - text_md: ' spise før prøven.»'
+- handle: review_two_clause_boundary
+  op: recall_fill
+  objective: obj-fronting-and-v2-inversion-01
+  bloom: apply
+  prompt_md: 'Fullfør setningen om hva Nora gjør når verkstedet stenger.'
+  explanation_md: 'Den innledende leddsetningen beholder subjekt–verb-ordstilling. Hovedsetningen etterpå har finitt verb foran subjektet.'
+  derived_from:
+  - section_id: when-a-whole-subordinate-clause-comes-first
+  audio_target: Når verkstedet stenger, rydder Nora bordene.
+  segments:
+  - text_md: '«Når '
+  - blank_id: review-opening-order
+    options:
+    - verkstedet stenger
+    - stenger verkstedet
+    answer_index: 0
+  - text_md: ', '
+  - blank_id: review-main-order
+    options:
+    - rydder Nora bordene
+    - Nora rydder bordene
+    answer_index: 0
+  - text_md: .»

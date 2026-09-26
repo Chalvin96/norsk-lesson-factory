@@ -55,7 +55,18 @@ def test_apply_dependency_review_given_human_approval_expect_schema_three_catalo
         repo_root: Path,
     ) -> DependencySecondOpinion:
         del request, repo_root
-        return DependencySecondOpinion(summary="checked")
+        return DependencySecondOpinion(
+            summary="checked",
+            findings=[
+                DependencySecondOpinionFinding(
+                    prerequisite_id="first",
+                    dependent_id="second",
+                    current_kind="required",
+                    recommendation="keep",
+                    rationale="The dependent outcome requires the first outcome.",
+                )
+            ],
+        )
 
     review = run_dependency_design(
         repo_root=tmp_path,
@@ -195,7 +206,7 @@ def test_apply_dependency_review_given_removal_without_second_opinion_finding_ex
     _write_catalog(tmp_path)
     review = _review_with_p1_second_opinion(tmp_path, run_id="dependency-unreviewed-removal", with_finding=False)
 
-    with pytest.raises(ValueError, match="did not flag for human review"):
+    with pytest.raises(ValueError, match="second-opinion omitted proposed edge"):
         apply_dependency_review(
             repo_root=tmp_path,
             review_path=tmp_path / review.review_path,

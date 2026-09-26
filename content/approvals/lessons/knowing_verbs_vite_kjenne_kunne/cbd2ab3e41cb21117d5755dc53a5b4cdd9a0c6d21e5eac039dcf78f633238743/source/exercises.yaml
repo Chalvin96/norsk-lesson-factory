@@ -1,0 +1,481 @@
+- handle: checkpoint_identify_information
+  op: recall_fill
+  objective: obj-knowing-verbs-vite-kjenne-kunne-01
+  bloom: apply
+  prompt_md: Complete each sentence with the verb that matches the meaning.
+  stimulus: []
+  explanation_md: Vet presents a location, time, reason or other fact as information.
+  derived_from:
+  - section_id: vite-knowing-a-fact
+  audio_target: Lea vet hvor kjøkkenet er. Lea vet at møtet begynner klokka ni. Lea vet hvorfor bussen
+    er forsinket.
+  segments:
+  - text_md: 'Lea '
+  - blank_id: factual-verb-1
+    options:
+    - vet
+    - kjenner
+    - kan
+    answer_index: 0
+  - text_md: ' hvor kjøkkenet er. Lea '
+  - blank_id: factual-verb-2
+    options:
+    - kjenner
+    - kan
+    - vet
+    answer_index: 2
+  - text_md: ' at møtet begynner klokka ni. Lea '
+  - blank_id: factual-verb-3
+    options:
+    - kan
+    - vet
+    - kjenner
+    answer_index: 1
+  - text_md: ' hvorfor bussen er forsinket.'
+- handle: notice_identity_or_familiarity
+  op: recall_fill
+  objective: obj-knowing-verbs-vite-kjenne-kunne-01
+  bloom: understand
+  prompt_md: Complete the replies with the verb that fits each kind of knowledge.
+  stimulus: []
+  explanation_md: Vet hvem expresses knowledge of identity; kjenner expresses familiarity gained through
+    contact.
+  derived_from:
+  - section_id: kjenne-being-familiar-with-someone-or-something
+  audio_target: Før arrangementet vet Lea hvem Mari er, men hun kjenner henne ikke. Etter arrangementet
+    kjenner Lea Mari litt.
+  segments:
+  - text_md: 'Før arrangementet '
+  - blank_id: identity-before
+    options:
+    - kjenner
+    - vet
+    answer_index: 1
+  - text_md: ' Lea hvem Mari er, men hun '
+  - blank_id: familiarity-before
+    options:
+    - kjenner
+    - vet
+    answer_index: 0
+  - text_md: ' henne ikke. Etter arrangementet '
+  - blank_id: familiarity-after
+    options:
+    - vet
+    - kjenner
+    answer_index: 1
+  - text_md: ' Lea Mari litt.'
+- handle: select_information_or_ability
+  op: recall_fill
+  objective: obj-knowing-verbs-vite-kjenne-kunne-01
+  bloom: apply
+  prompt_md: Complete each reply with the form that matches factual knowledge or practical ability.
+  stimulus: []
+  explanation_md: Vet hvordan reports information about a procedure; kan plus an infinitive reports an
+    established practical ability.
+  derived_from:
+  - section_id: kunne-having-a-learned-skill-or-ability
+  audio_target: Lea vet hvordan lydanlegget fungerer. Vi vet ikke om hun kan bruke det. Omar kan bruke
+    kaffemaskinen. Sara vet hvorfor skriveren stopper.
+  segments:
+  - text_md: 'Lea '
+  - blank_id: sound-system-information
+    options:
+    - kan
+    - vet
+    answer_index: 1
+  - text_md: ' hvordan lydanlegget fungerer, men det er uklart om hun '
+  - blank_id: sound-system-ability
+    options:
+    - vet
+    - kan
+    answer_index: 1
+  - text_md: ' bruke det. Omar '
+  - blank_id: coffee-machine-ability
+    options:
+    - kan
+    - vet
+    answer_index: 0
+  - text_md: ' bruke kaffemaskinen. Sara '
+  - blank_id: printer-reason
+    options:
+    - vet
+    - kan
+    answer_index: 0
+  - text_md: ' hvorfor skriveren stopper.'
+- handle: checkpoint_familiarity_or_identity
+  op: write
+  objective: obj-knowing-verbs-vite-kjenne-kunne-01
+  bloom: apply
+  prompt_md: 'Lea har sett navnet til Mari på arbeidsplanen, men de har aldri snakket sammen. Skriv to
+    separate norske setninger til en kollega: si at Lea vet hvem Mari er, og si at Lea ikke kjenner henne
+    personlig. Bruk «vet hvem» i den første setningen og «kjenner ikke» i den andre.'
+  derived_from:
+  - section_id: kjenne-being-familiar-with-someone-or-something
+  response_language: 'no'
+  min_words: 8
+  max_words: 25
+  judge_prompt: Vurder identitetsbetydning, betydningen av personlig kjennskap og om svaret består av
+    to separate setninger. Naturlige bokmålsvarianter er godkjent.
+  criteria:
+  - id: identity-meaning
+    instruction: Sier at Lea vet hvem Mari er, ved å bruke «vet hvem».
+  - id: familiarity-meaning
+    instruction: Sier at Lea ikke kjenner Mari personlig, ved å bruke «kjenner ikke».
+  - id: separate-sentences
+    instruction: Uttrykker identitetsfaktaet og den personlige kjennskapen i nøyaktig to setninger.
+  - id: target-forms-observation
+    instruction: Bruker «vet hvem» for identitet og «kjenner ikke» for manglende personlig kjennskap.
+- handle: checkpoint_information_or_ability
+  op: write
+  objective: obj-knowing-verbs-vite-kjenne-kunne-01
+  bloom: apply
+  prompt_md: 'Lea has read and understood the sound-system instructions, but she has never operated the
+    system. Write exactly two Norwegian sentences for Arne: state what Lea knows and state that the facts
+    do not establish whether she can operate the system. Use the forms «vet hvordan» and «kan».'
+  derived_from:
+  - section_id: kunne-having-a-learned-skill-or-ability
+  response_language: 'no'
+  min_words: 10
+  max_words: 40
+  judge_prompt: Evaluate procedure-knowledge, ability-status and two-sentence form. Accept natural Bokmål
+    variants, but require both target meanings, the forms vet hvordan and kan, and exactly two sentences.
+  criteria:
+  - id: procedure-knowledge
+    instruction: States that Lea knows how the sound system works, using vet hvordan.
+  - id: ability-status
+    instruction: States that the available facts do not establish whether Lea can operate it, using kan.
+  - id: sentence-count
+    instruction: Uses exactly two Norwegian sentences.
+  - id: vite-kunne-observation
+    instruction: Requires factual procedure knowledge to be expressed with vet hvordan and practical ability
+      with kan.
+- handle: discriminate_three_kinds
+  op: recall_fill
+  objective: obj-knowing-verbs-vite-kjenne-kunne-01
+  bloom: apply
+  prompt_md: Complete each response with the verb that fits the shown evidence.
+  stimulus: []
+  explanation_md: Identity is a fact expressed with vet; personal acquaintance is expressed with kjenner;
+    a learned skill is expressed with kan.
+  derived_from:
+  - section_id: three-questions-with-three-meanings
+  audio_target: Nora vet hvem pianisten er. Ivar kjenner pianisten. Sofie kan spille piano.
+  segments:
+  - text_md: 'Nora '
+  - blank_id: pianist-identity
+    options:
+    - kjenner
+    - kan
+    - vet
+    answer_index: 2
+  - text_md: ' hvem pianisten er. Ivar '
+  - blank_id: pianist-acquaintance
+    options:
+    - vet
+    - kjenner
+    - kan
+    answer_index: 1
+  - text_md: ' pianisten. Sofie '
+  - blank_id: piano-skill
+    options:
+    - kan
+    - vet
+    - kjenner
+    answer_index: 0
+  - text_md: ' spille piano.'
+- handle: further_practice_new_workplace
+  op: recall_fill
+  objective: obj-knowing-verbs-vite-kjenne-kunne-01
+  bloom: apply
+  prompt_md: Complete every sentence with the verb that matches its evidence.
+  stimulus: []
+  explanation_md: A staff-list detail is information, contact creates familiarity, and previous software
+    use establishes a practical skill.
+  derived_from:
+  - section_id: further-practice-in-new-situations
+  audio_target: Amina vet hvem teamlederen er. Hun kjenner Erik, men kjenner ikke resten av teamet. Hun
+    kan bruke regnskapsprogrammet.
+  segments:
+  - text_md: 'Fra personaloversikten '
+  - blank_id: staff-list-fact
+    options:
+    - kjenner
+    - vet
+    - kan
+    answer_index: 1
+  - text_md: ' Amina hvem teamlederen er. Hun '
+  - blank_id: close-colleague
+    options:
+    - kan
+    - kjenner
+    - vet
+    answer_index: 1
+  - text_md: ' Erik, men hun '
+  - blank_id: unfamiliar-team
+    options:
+    - vet
+    - kan
+    - kjenner
+    answer_index: 2
+  - text_md: ' ikke resten av teamet. Hun '
+  - blank_id: software-skill
+    options:
+    - kan
+    - kjenner
+    - vet
+    answer_index: 0
+  - text_md: ' bruke regnskapsprogrammet.'
+- handle: contextual_practice_lea_first_day
+  op: write
+  objective: obj-knowing-verbs-vite-kjenne-kunne-01
+  bloom: apply
+  prompt_md: Write a 35–60-word Norwegian message to Ingrid explaining what Lea learned and can now do.
+    Include where the cups belong using vite, her familiarity with Mari and Arne using kjenne, the fact
+    that Mari is on the work schedule, and Lea's ability to make tea with the machine using kunne.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Ingrid
+      text_md: «Hvordan gikk dagen på senteret?»
+    - speaker: Lea
+      text_md: «Arne viste meg hvor koppene skal stå, og jeg jobbet og snakket med Mari og Arne.»
+  derived_from:
+  - section_id: back-at-the-community-centre
+  response_language: 'no'
+  min_words: 35
+  max_words: 60
+  judge_prompt: Evaluate cup-information, organiser-familiarity, schedule-information, tea-ability and
+    message-purpose. Observe whether the target verb distinctions are used for the relevant meanings.
+  criteria:
+  - id: cup-information
+    instruction: Communicates that Lea knows where the cups belong.
+  - id: organiser-familiarity
+    instruction: Communicates that Lea is now somewhat familiar with Mari and Arne.
+  - id: schedule-information
+    instruction: Communicates the fact that Mari is on the work schedule.
+  - id: tea-ability
+    instruction: Communicates that Lea can make tea with the machine.
+  - id: message-purpose
+    instruction: Produces a coherent 35–60-word message to Ingrid about Lea's day.
+  - id: verb-choice-observation
+    instruction: Uses vite for facts, kjenne for familiarity and kunne for practical ability. This distinction
+      is required.
+- handle: further_practice_visiting_another_town
+  op: write
+  objective: obj-knowing-verbs-vite-kjenne-kunne-01
+  bloom: apply
+  prompt_md: Write a 25–55-word Norwegian reply to the travel group. Explain who has the hotel location
+    fact, who is familiar with Bergen, and who has the relevant driving ability. Use vite, kjenne and
+    kunne correctly.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Eva
+      text_md: «Hotellet ligger i Strandgaten 8. Jeg har vært i Bergen mange ganger, men jeg har ikke
+        førerkort.»
+    - speaker: Jon
+      text_md: «Jeg vet ikke hvor hotellet ligger. Jeg har aldri vært i Bergen, men jeg har kjørt trygt
+        i tett bytrafikk i ti år.»
+  derived_from:
+  - section_id: further-practice-in-new-situations
+  response_language: 'no'
+  min_words: 25
+  max_words: 55
+  judge_prompt: Evaluate hotel-fact, bergen-familiarity, driving-ability, correct use of vite, kjenne
+    and kunne, and group-reply. Require the reply to use vite for the hotel fact, kjenne for familiarity
+    with Bergen, and kunne for driving ability, while accurately distinguishing the three meanings.
+  criteria:
+  - id: hotel-fact
+    instruction: States that Eva knows the hotel's address or location using vite.
+  - id: bergen-familiarity
+    instruction: States that Eva is familiar with Bergen using kjenne and does not attribute that familiarity
+      to Jon.
+  - id: driving-ability
+    instruction: States that Jon can drive in heavy city traffic using kunne and does not attribute that
+      ability to Eva.
+  - id: group-reply
+    instruction: Produces a coherent 25–55-word reply for the travel group.
+  - id: target-verbs-observation
+    instruction: Requires that the location fact uses vite, city familiarity uses kjenne and driving ability
+      uses kunne.
+- handle: further_practice_planning_a_concert
+  op: write
+  objective: obj-knowing-verbs-vite-kjenne-kunne-01
+  bloom: apply
+  prompt_md: Write a 30–60-word Norwegian exchange between Per and Liv. Per must ask Liv when the concert
+    starts using «vite», whether she knows Ada personally using «kjenne», and whether she can operate
+    the sound equipment using «kunne»; Liv must answer all three. The concert starts at 19.30; Liv and
+    Ada have worked together before, and Liv has used the sound equipment at three concerts.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Per
+      text_md: «Per vil planlegge konsertkvelden sammen med Liv og trenger informasjon om tidspunkt, Ada
+        og lydutstyret.»
+    - speaker: Liv
+      text_md: «Liv er klar til å svare på spørsmålene og fortelle om erfaringene sine.»
+  derived_from:
+  - section_id: further-practice-in-new-situations
+  response_language: 'no'
+  min_words: 30
+  max_words: 60
+  judge_prompt: Evaluate time-exchange, singer-exchange, equipment-exchange and exchange-form. Require
+    the target verbs for factual knowledge, personal acquaintance and practical ability.
+  criteria:
+  - id: time-exchange
+    instruction: Includes Per's question about the starting time and Liv's answer that it is 19.30.
+  - id: singer-exchange
+    instruction: Includes a question about personal acquaintance with Ada and an affirmative answer supported
+      by their earlier work together.
+  - id: equipment-exchange
+    instruction: Includes a question about operating the sound equipment and an affirmative answer supported
+      by Liv's prior experience.
+  - id: exchange-form
+    instruction: Produces a coherent 30–60-word exchange between Per and Liv.
+  - id: verb-selection-observation
+    instruction: Uses vite for the time question, kjenne for acquaintance and kunne for equipment ability.
+- handle: revise_lea_message
+  op: write
+  objective: obj-knowing-verbs-vite-kjenne-kunne-01
+  bloom: apply
+  prompt_md: 'Rewrite the draft as a natural 20–40-word Norwegian message that preserves all three facts:
+    Lea has worked with Mari, Arne showed her where the cups belong, and Lea successfully used the tea
+    machine. Use kjenne for Mari, vite for where the cups belong, and kunne for making tea.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Ingrid
+      text_md: «Kan du sende meg en naturlig versjon av meldingen?»
+    - speaker: Lea
+      text_md: «Jeg har jobbet sammen med Mari. Arne viste meg hvor koppene skal stå, og jeg brukte temaskinen.»
+  derived_from:
+  - section_id: common-mistakes
+  response_language: 'no'
+  min_words: 20
+  max_words: 40
+  judge_prompt: Evaluate mari-fact, cup-fact, tea-fact and revised-message. Require the correct target
+    distinctions and a natural coherent message.
+  criteria:
+  - id: mari-fact
+    instruction: Preserves that Lea has become personally familiar with Mari through working together.
+  - id: cup-fact
+    instruction: Preserves that Lea knows where the cups belong because Arne showed her.
+  - id: tea-fact
+    instruction: Preserves that Lea has the practical ability to use the machine for tea.
+  - id: revised-message
+    instruction: Produces a natural, coherent 20–40-word message rather than comments about the draft.
+  - id: corrected-forms-observation
+    instruction: Uses kjenne for Mari, vite for the cup location and kunne for making tea.
+- handle: review_vite_fact
+  op: recall_fill
+  objective: obj-knowing-verbs-vite-kjenne-kunne-01
+  bloom: apply
+  prompt_md: Complete the sentence with the verb that expresses factual information.
+  stimulus: []
+  explanation_md: A departure time shown on a board is factual information, so the present form is vet.
+  derived_from:
+  - section_id: retrieval-and-review
+  audio_target: Mina vet når den siste bussen går.
+  segments:
+  - text_md: 'Mina '
+  - blank_id: review-departure-fact
+    options:
+    - kjenner
+    - vet
+    - kan
+    answer_index: 1
+  - text_md: ' når den siste bussen går.'
+- handle: review_kjenne_familiarity
+  op: write
+  objective: obj-knowing-verbs-vite-kjenne-kunne-01
+  bloom: apply
+  prompt_md: 'Ali and Nora have worked together every day for two years. Complete the Norwegian sentence
+    with the verb that expresses personal familiarity: «Ali ___ Nora godt.»'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Vi har jobbet sammen hver dag i to år.»
+    - speaker: Ali
+      text_md: «Jeg ___ Nora godt.»
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  min_words: 1
+  max_words: 4
+  judge_prompt: Evaluate completed-chunk and require the form that expresses established personal familiarity.
+  criteria:
+  - id: completed-chunk
+    instruction: Supplies kjenner, optionally with harmless punctuation, so the sentence states Ali's
+      established familiarity with Nora.
+- handle: review_kunne_skill
+  op: recall_fill
+  objective: obj-knowing-verbs-vite-kjenne-kunne-01
+  bloom: apply
+  prompt_md: Complete the sentence with the verb that expresses a learned practical ability.
+  stimulus: []
+  explanation_md: Training followed by successful performance establishes a learned ability, so the present
+    form is kan.
+  derived_from:
+  - section_id: retrieval-and-review
+  audio_target: Selma kan reparere sykler.
+  segments:
+  - text_md: 'Selma '
+  - blank_id: review-repair-skill
+    options:
+    - vet
+    - kan
+    - kjenner
+    answer_index: 1
+  - text_md: ' reparere sykler.'
+- handle: review_vite_or_kjenne
+  op: recall_fill
+  objective: obj-knowing-verbs-vite-kjenne-kunne-01
+  bloom: apply
+  prompt_md: Complete both sentences by distinguishing identity knowledge from personal familiarity.
+  stimulus: []
+  explanation_md: Nora har informasjon om journalistens identitet, uttrykt med vet hvem; siden hun aldri
+    har snakket med ham, kjenner hun ham ikke.
+  derived_from:
+  - section_id: retrieval-and-review
+  audio_target: Nora vet hvem journalisten er, men hun kjenner ham ikke.
+  segments:
+  - text_md: 'Nora '
+  - blank_id: review-author-identity
+    options:
+    - vet
+    - kjenner
+    answer_index: 0
+  - text_md: ' hvem journalisten er, men hun '
+  - blank_id: review-author-familiarity
+    options:
+    - vet
+    - kjenner
+    answer_index: 1
+  - text_md: ' ham ikke.'
+- handle: review_vite_or_kunne
+  op: recall_fill
+  objective: obj-knowing-verbs-vite-kjenne-kunne-01
+  bloom: apply
+  prompt_md: Fullfør begge setningene ved å skille mellom faktakunnskap og praktisk evne.
+  stimulus: []
+  explanation_md: Rutetabellen viser hvilken buss som går til sentrum, men den sier ikke om personen kan
+    finne fram dit alene.
+  derived_from:
+  - section_id: retrieval-and-review
+  audio_target: Nora vet hvilken buss som går til sentrum, men det er uklart om hun kan finne fram dit
+    alene.
+  segments:
+  - text_md: 'Nora '
+  - blank_id: review-oven-information
+    options:
+    - vet
+    - kan
+    answer_index: 0
+  - text_md: ' hvilken buss som går til sentrum, men det er uklart om hun '
+  - blank_id: review-oven-ability
+    options:
+    - vet
+    - kan
+    answer_index: 1
+  - text_md: ' finne fram dit alene.'

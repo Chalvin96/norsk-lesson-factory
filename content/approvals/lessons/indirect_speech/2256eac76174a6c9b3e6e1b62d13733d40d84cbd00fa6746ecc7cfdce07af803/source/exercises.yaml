@@ -1,0 +1,811 @@
+- handle: anchor-message-map
+  op: categorize
+  objective: obj-indirect-speech-01
+  bloom: analyze
+  prompt_md: Sorter hver gjengivelse etter hvem som snakker og hvilken type
+    ytring som gjengis. Marker også om mottakeren er nevnt. I disse setningene
+    viser «hun» til Liv, «han» til Amir og «meg» til Jonas.
+  explanation_md: Utsagn innledes med «at», ja/nei-spørsmål med «om», og
+    indirekte spørreord beholdes. En indirekte oppfordring kan bruke «ba noen om
+    å». Mottakeren regnes bare som nevnt når det står hvem som skal utføre
+    handlingen.
+  derived_from:
+  - section_id: a-missed-meeting
+  buckets:
+  - bucket_id: liv-statement-no-recipient
+    label: Liv — utsagn (ingen mottaker nevnt)
+  - bucket_id: liv-question-no-recipient
+    label: Liv — spørsmål (ingen mottaker nevnt)
+  - bucket_id: liv-request-jonas
+    label: Liv — oppfordring med navngitt mottaker (Jonas)
+  - bucket_id: liv-request-no-recipient
+    label: Liv — oppfordring uten navngitt mottaker
+  - bucket_id: amir-statement-no-recipient
+    label: Amir — utsagn (ingen mottaker nevnt)
+  - bucket_id: amir-question-no-recipient
+    label: Amir — spørsmål (ingen mottaker nevnt)
+  items:
+  - item_id: item-1
+    text: Hun sa at toget til Bergen var innstilt.
+    bucket_id: liv-statement-no-recipient
+  - item_id: item-2
+    text: Hun spurte om vi kunne flytte presentasjonen.
+    bucket_id: liv-question-no-recipient
+  - item_id: item-3
+    text: Hun ba meg om å sende kundene en melding.
+    bucket_id: liv-request-jonas
+  - item_id: item-4
+    text: Han sa at han allerede hadde snakket med dem.
+    bucket_id: amir-statement-no-recipient
+  - item_id: item-5
+    text: Han spurte når Liv kom tilbake til kontoret.
+    bucket_id: amir-question-no-recipient
+  - item_id: item-6
+    text: Hun ba om å få tilsendt referatet.
+    bucket_id: liv-request-no-recipient
+- handle: statement-word-order
+  op: build
+  objective: obj-indirect-speech-01
+  bloom: apply
+  prompt_md: 'Liv sier: «Jeg jobber ikke hjemme.» Jonas forteller hva Liv sa. Bygg
+    gjengivelsen.'
+  explanation_md: Et gjengitt utsagn innledes med «at». I leddsetningen står
+    «ikke» foran det finitte verbet.
+  derived_from:
+  - section_id: reporting-statements-with-at
+  tokens:
+  - token_id: tok-1
+    text: Jonas
+  - token_id: tok-2
+    text: sa
+  - token_id: tok-3
+    text: at
+  - token_id: tok-4
+    text: Liv
+  - token_id: tok-5
+    text: ikke
+  - token_id: tok-6
+    text: jobbet
+  - token_id: tok-7
+    text: hjemme.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+- handle: yes-no-question-report
+  op: build
+  objective: obj-indirect-speech-01
+  bloom: apply
+  prompt_md: 'Sara spør: «Har Amir ringt kundene?» Senere forteller Jonas hva Sara
+    spurte om. Bygg gjengivelsen.'
+  explanation_md: Et gjengitt ja/nei-spørsmål innledes med «om» og har
+    subjekt–verb-ordstilling i leddsetningen.
+  derived_from:
+  - section_id: reporting-yes-or-no-questions-with-om
+  tokens:
+  - token_id: tok-1
+    text: Sara
+  - token_id: tok-2
+    text: spurte
+  - token_id: tok-3
+    text: om
+  - token_id: tok-4
+    text: Amir
+  - token_id: tok-5
+    text: hadde
+  - token_id: tok-6
+    text: ringt
+  - token_id: tok-7
+    text: kundene.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+- handle: question-word-order
+  op: build
+  objective: obj-indirect-speech-01
+  bloom: apply
+  prompt_md: 'Amir spør: «Når kommer Liv tilbake? Hva skjedde på møtet?» Sara gjengir
+    begge spørsmålene. Bygg gjengivelsen.'
+  explanation_md: Et spørreord som ikke er subjekt, etterfølges av subjektet.
+    Når «hva» er subjekt, bruker vi «som».
+  derived_from:
+  - section_id: reporting-questions-with-a-question-word
+  tokens:
+  - token_id: tok-1
+    text: Sara
+  - token_id: tok-2
+    text: fortalte
+  - token_id: tok-3
+    text: at
+  - token_id: tok-4
+    text: Amir
+  - token_id: tok-5
+    text: spurte
+  - token_id: tok-6
+    text: når
+  - token_id: tok-7
+    text: Liv
+  - token_id: tok-8
+    text: kom
+  - token_id: tok-9
+    text: tilbake
+  - token_id: tok-10
+    text: og
+  - token_id: tok-11
+    text: hva
+  - token_id: tok-12
+    text: som
+  - token_id: tok-13
+    text: skjedde
+  - token_id: tok-14
+    text: på
+  - token_id: tok-15
+    text: møtet.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+  - tok-11
+  - tok-12
+  - tok-13
+  - tok-14
+  - tok-15
+- handle: command-recipient-action
+  op: build
+  objective: obj-indirect-speech-01
+  bloom: apply
+  prompt_md: 'Liv sier til Jonas: «Vent på meg utenfor stasjonen.» Amir sier til deg:
+    «Ikke ring kundene ennå.» Skriv begge gjengivelsene.'
+  explanation_md: Personen etter «ba» utfører handlingen. En negativ oppfordring
+    innledes med «om ikke å».
+  derived_from:
+  - section_id: reporting-commands-and-requests
+  tokens:
+  - token_id: tok-1
+    text: Liv
+  - token_id: tok-2
+    text: ba
+  - token_id: tok-3
+    text: Jonas
+  - token_id: tok-4
+    text: om
+  - token_id: tok-5
+    text: å
+  - token_id: tok-6
+    text: vente
+  - token_id: tok-7
+    text: på
+  - token_id: tok-8
+    text: henne
+  - token_id: tok-9
+    text: utenfor
+  - token_id: tok-10
+    text: stasjonen
+  - token_id: tok-11
+    text: og
+  - token_id: tok-12
+    text: Amir
+  - token_id: tok-13
+    text: ba
+  - token_id: tok-14
+    text: meg
+  - token_id: tok-15
+    text: om
+  - token_id: tok-16
+    text: ikke
+  - token_id: tok-17
+    text: å
+  - token_id: tok-18
+    text: ringe
+  - token_id: tok-19
+    text: kundene
+  - token_id: tok-20
+    text: ennå.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+  - tok-11
+  - tok-12
+  - tok-13
+  - tok-14
+  - tok-15
+  - tok-16
+  - tok-17
+  - tok-18
+  - tok-19
+  - tok-20
+- handle: report-time-viewpoint
+  op: choose
+  objective: obj-indirect-speech-01
+  bloom: analyze
+  prompt_md: Velg gjengivelsen som stemmer med tidslinjen.
+  stem_md: Kontoret stenger fortsatt klokka fem. Liv var syk i går, men er frisk
+    nå. Amir snakket med kundene før han ga oppdateringen i går.
+  explanation_md: Tidsformen i indirekte tale følger tidspunktet vi forteller
+    fra. En generell sannhet kan stå i presens, en tidligere tilstand i
+    preteritum, og noe som skjedde før en fortelling i fortid kan stå i
+    pluskvamperfektum.
+  derived_from:
+  - section_id: choosing-tense-in-a-report
+  options:
+  - id: automatic-backshift
+    text: Amir sa at kontoret stenger klokka seks. Liv sa at hun var syk. Amir
+      sa at han allerede hadde snakket med kundene.
+    correct: false
+    why: Kontoret stenger fortsatt klokka fem, ikke seks.
+  - id: viewpoint-preserved
+    text: Amir sa at kontoret stenger klokka fem. Liv sa at hun var syk. Amir sa
+      at han allerede hadde snakket med kundene.
+    correct: true
+    why: The tenses distinguish the current fact, the earlier illness, and the
+      still earlier client conversation.
+  - id: all-current
+    text: Amir sa at kontoret stenger klokka fem. Liv sa at hun er syk. Amir sa
+      at han allerede har snakket med kundene.
+    correct: false
+    why: This incorrectly presents the finished illness and earlier client
+      conversation as current.
+- handle: perspective-shift
+  op: build
+  objective: obj-indirect-speech-01
+  bloom: apply
+  prompt_md: 'Mandag hjemme sier Liv til Jonas: «Jeg sender deg fila herfra i morgen.»
+    Onsdag forteller Jonas dette til Sara på kontoret. Bygg Jonas’ gjengivelse.'
+  explanation_md: Den nye taleren, dagen og stedet fører til endringer i «hun»,
+    «meg», «dagen etter» og «derfra».
+  derived_from:
+  - section_id: shifting-pronouns-time-and-place
+  tokens:
+  - token_id: tok-1
+    text: Liv
+  - token_id: tok-2
+    text: sa
+  - token_id: tok-3
+    text: at
+  - token_id: tok-4
+    text: hun
+  - token_id: tok-5
+    text: skulle
+  - token_id: tok-6
+    text: sende
+  - token_id: tok-7
+    text: meg
+  - token_id: tok-8
+    text: filen
+  - token_id: tok-9
+    text: derfra
+  - token_id: tok-10
+    text: dagen
+  - token_id: tok-11
+    text: etter.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+  - tok-11
+- handle: office-message-relay
+  op: write
+  objective: obj-indirect-speech-01
+  bloom: apply
+  prompt_md: 'Du er Sara. Skriv en melding på 35–60 ord til Liv og gjengi alt Jonas
+    fortalte: toget hennes ble innstilt, hun jobbet hjemmefra, hun ba Jonas sende
+    kundene en melding, og Amir spurte når hun kom tilbake til kontoret. Ta med spørsmålet
+    fra Amir.'
+  explanation_md: En tydelig videresendt melding tar med alle fire opplysningene
+    og tilpasser referansene til Saras egen samtale med Liv.
+  derived_from:
+  - section_id: back-at-the-office
+  response_language: "no"
+  min_words: 35
+  max_words: 60
+  judge_prompt: 'Evaluate only criteria reports-all-messages, message-to-liv, word-bound,
+    viewpoint-coherence, and indirect-forms-observation as gating criteria. Log one
+    verdict per criterion id. Anchors: PASS: «Hei Liv! Jonas sa at toget ditt var
+    innstilt, og at du jobbet hjemmefra. Han fortalte også at du hadde bedt ham sende
+    kundene en melding. Til slutt sa han at Amir hadde spurt når du kom tilbake til
+    kontoret.» FAIL reports-all-messages: «Hei Liv! Jonas sa at toget ditt var innstilt.»
+    FAIL indirect-forms-observation: A message that relays all four facts but contains
+    incorrect reporting markers, subordinate word order, tense, or pronoun forms.'
+  criteria:
+  - id: reports-all-messages
+    instruction: Relays the cancelled train, work from home, client message, and
+      Amir's return-time question.
+  - id: message-to-liv
+    instruction: Is a message addressed to Liv for the purpose of relaying
+      Jonas's account.
+  - id: word-bound
+    instruction: Contains 35–60 words.
+  - id: viewpoint-coherence
+    instruction: Keeps Liv, Jonas, Amir, and their roles identifiable from
+      Sara's viewpoint.
+  - id: indirect-forms-observation
+    instruction: Accurately uses reporting markers, subordinate word order,
+      tense, and pronoun forms.
+- handle: delivery-report-statements
+  op: build
+  objective: obj-indirect-speech-01
+  bloom: apply
+  prompt_md: 'Sjåføren sier: «Pakken er ikke på riktig adresse, og den er allerede
+    levert.» Nora gjengir opplysningene. Bygg svaret hennes.'
+  explanation_md: Etter «at» står «ikke» og «allerede» foran de finitte verbene.
+  derived_from:
+  - section_id: transfer-a-delivery-at-the-wrong-address
+  tokens:
+  - token_id: tok-1
+    text: Nora
+  - token_id: tok-2
+    text: fortalte
+  - token_id: tok-3
+    text: at
+  - token_id: tok-4
+    text: pakken
+  - token_id: tok-5
+    text: ikke
+  - token_id: tok-6
+    text: var
+  - token_id: tok-7
+    text: på
+  - token_id: tok-8
+    text: riktig
+  - token_id: tok-9
+    text: adresse
+  - token_id: tok-10
+    text: og
+  - token_id: tok-11
+    text: at
+  - token_id: tok-12
+    text: den
+  - token_id: tok-13
+    text: allerede
+  - token_id: tok-14
+    text: var
+  - token_id: tok-15
+    text: levert.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+  - tok-11
+  - tok-12
+  - tok-13
+  - tok-14
+  - tok-15
+- handle: delivery-report-questions
+  op: build
+  objective: obj-indirect-speech-01
+  bloom: apply
+  prompt_md: 'Sjåføren spør Nora: «Er pakken på riktig adresse? Hvem leverte den?
+    Hvor bodde Emil?» Nora forteller Emil hva sjåføren spurte om. Bygg gjengivelsen.'
+  explanation_md: Bruk «om» til ja/nei-spørsmålet, «hvem som» når «hvem» er
+    subjekt, og «hvor» med subjekt–verb-ordstilling i det siste spørsmålet.
+  derived_from:
+  - section_id: transfer-a-delivery-at-the-wrong-address
+  tokens:
+  - token_id: tok-1
+    text: Nora
+  - token_id: tok-2
+    text: fortalte
+  - token_id: tok-3
+    text: at
+  - token_id: tok-4
+    text: sjåføren
+  - token_id: tok-5
+    text: spurte
+  - token_id: tok-6
+    text: om
+  - token_id: tok-7
+    text: pakken
+  - token_id: tok-8
+    text: var
+  - token_id: tok-9
+    text: på
+  - token_id: tok-10
+    text: riktig
+  - token_id: tok-11
+    text: adresse,
+  - token_id: tok-12
+    text: hvem
+  - token_id: tok-13
+    text: som
+  - token_id: tok-14
+    text: leverte
+  - token_id: tok-15
+    text: den
+  - token_id: tok-16
+    text: og
+  - token_id: tok-17
+    text: hvor
+  - token_id: tok-18
+    text: Emil
+  - token_id: tok-19
+    text: bodde.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+  - tok-11
+  - tok-12
+  - tok-13
+  - tok-14
+  - tok-15
+  - tok-16
+  - tok-17
+  - tok-18
+  - tok-19
+- handle: delivery-report-instruction
+  op: build
+  objective: obj-indirect-speech-01
+  bloom: apply
+  prompt_md: 'Sjåføren sier til Nora: «Legg pakken ved døra.» Nora gjengir beskjeden.
+    Bygg svaret hennes.'
+  explanation_md: Mottakeren Nora står etter «ba», og «om å» innleder handlingen
+    hun blir bedt om å gjøre.
+  derived_from:
+  - section_id: transfer-a-delivery-at-the-wrong-address
+  tokens:
+  - token_id: tok-1
+    text: Sjåføren
+  - token_id: tok-2
+    text: ba
+  - token_id: tok-3
+    text: Nora
+  - token_id: tok-4
+    text: om
+  - token_id: tok-5
+    text: å
+  - token_id: tok-6
+    text: legge
+  - token_id: tok-7
+    text: pakken
+  - token_id: tok-8
+    text: ved
+  - token_id: tok-9
+    text: døren.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+- handle: delivery-report-shifts
+  op: build
+  objective: obj-indirect-speech-01
+  bloom: apply
+  prompt_md: 'Mandag sier sjåføren til Nora: «Jeg skal legge pakken her i morgen.»
+    Tirsdag kveld forteller Nora dette til Emil et annet sted. Bygg gjengivelsen hennes.'
+  explanation_md: Når Nora forteller senere, blir sjåføren til «sjåføren», det
+    opprinnelige stedet til «der» og den planlagte dagen til «i dag».
+  derived_from:
+  - section_id: transfer-a-delivery-at-the-wrong-address
+  tokens:
+  - token_id: tok-1
+    text: Nora
+  - token_id: tok-2
+    text: sa
+  - token_id: tok-3
+    text: til
+  - token_id: tok-4
+    text: Emil
+  - token_id: tok-5
+    text: at
+  - token_id: tok-6
+    text: sjåføren
+  - token_id: tok-7
+    text: skulle
+  - token_id: tok-8
+    text: legge
+  - token_id: tok-9
+    text: pakken
+  - token_id: tok-10
+    text: der
+  - token_id: tok-11
+    text: i
+  - token_id: tok-12
+    text: dag.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+  - tok-11
+  - tok-12
+- handle: final-indirect-speech-retrieval
+  op: write
+  objective: obj-indirect-speech-01
+  bloom: apply
+  prompt_md: 'Du er Mina. Skriv Erik en melding på 45–75 ord og gjengi det museumsverten fortalte deg i går. Ta med opplysningen om åpningstiden, spørsmålene om billetten, forsinkelsen og billettene, og oppfordringen om å vente utenfor.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Museumsvert
+      text_md: «Utstillingen åpner klokka ti.»
+    - speaker: Museumsvert
+      text_md: «Har du bestilt billett?»
+    - speaker: Museumsvert
+      text_md: «Hvorfor kom dere så sent til museet?»
+    - speaker: Museumsvert
+      text_md: «Hvem tok med billettene?»
+    - speaker: Museumsvert
+      text_md: «Vent utenfor.»
+  explanation_md: En god gjengivelse tar med alle fem beskjedene fra Minas
+    senere ståsted og bruker passende innledningsord, ordstilling og en naturlig
+    måte å gjengi en oppfordring på.
+  derived_from:
+  - section_id: short-retrieval-review
+  response_language: "no"
+  min_words: 45
+  max_words: 75
+  judge_prompt: 'Vurder alle kriteriene som krav for å bestå: message-to-erik, reports-all-five,
+    word-bound, coherent-roles-and-time, markers-and-order-observation og request-form-observation.
+    Logg én vurdering per kriterie-id. For å bestå må svaret være en sammenhengende
+    melding på 45–75 ord som inneholder alle fem budskapene, bruker indirekte spørsmålsform
+    med riktige spørreord og underordnet ordstilling, og gjengir instruksjonen
+    naturlig. Godta både «om» og «hvorvidt» i indirekte ja/nei-spørsmål, og godta
+    både en naturlig anmodning og en gjengitt instruksjon som «verten sa at jeg
+    skulle vente utenfor». Forankring: PASS: «Hei Erik! Museumsverten sa at utstillingen
+    åpner klokka ti. Hun spurte om jeg hadde bestilt billett, og hvorfor vi kom så
+    sent til museet. Hun spurte også hvem som hadde tatt med billettene. Til slutt ba hun
+    meg om å vente utenfor. Nå vet du hva hun tok opp i går, Erik.» FAIL reports-all-five:
+    En melding som utelater instruksjonen eller ett av spørsmålene. FAIL markers-and-order-observation:
+    En melding med feil indirekte spørsmålsform, manglende underordnet ordstilling
+    eller feil bruk av at, om/hvorvidt, spørreord eller som. FAIL request-form-observation:
+    En melding som ikke gjengir instruksjonen på en naturlig måte.'
+  criteria:
+  - id: message-to-erik
+    instruction: Is a message to Erik whose purpose is to relay the museum host's
+      messages.
+  - id: reports-all-five
+    instruction: Communicates the statement, all three questions, and the
+      instruction.
+  - id: word-bound
+    instruction: Contains 45–75 words.
+  - id: coherent-roles-and-time
+    instruction: Keeps Mina, Erik, the museum host, and the yesterday timeline
+      understandable.
+  - id: markers-and-order-observation
+    instruction: Uses appropriate introductory words (including «om» or «hvorvidt»
+      for a yes-or-no question), question words, «som» where needed, and subordinate
+      word order accurately in the indirect report.
+  - id: request-form-observation
+    instruction: Reports the instruction naturally, either as a request or as a
+      reported instruction such as «verten sa at jeg skulle vente utenfor».
+- handle: review_statement-word-order
+  op: choose
+  objective: obj-indirect-speech-01
+  bloom: apply
+  prompt_md: Velg gjengivelsen med vanlig ordstilling i leddsetningen.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Oda
+      text_md: «Jeg kommer kanskje ikke i dag.»
+  explanation_md: I nøytral leddsetningsordstilling står «kanskje» og «ikke»
+    foran det finitte verbet. Etter uttrykksverb som «sa» brukes også
+    hovedsetningsordstilling av noen, men her øver vi på nøytral
+    leddsetningsordstilling.
+  derived_from:
+  - section_id: reporting-statements-with-at
+  options:
+  - id: report-1
+    text: Per sa at Oda kom kanskje ikke den dagen.
+    correct: false
+    why: Embedded main-clause order can occur after some assertive speech verbs,
+      but it is not the neutral subordinate order requested here.
+  - id: report-2
+    text: Per sa at Oda kanskje ikke kom den dagen.
+    correct: true
+    why: The sentence adverbs precede the finite verb in the subordinate clause.
+  - id: report-3
+    text: Per sa at kom Oda kanskje ikke den dagen.
+    correct: false
+    why: This incorrectly uses verb–subject inversion.
+  stem_md: Per forteller senere hva Oda sa.
+- handle: review_yes-no-question-report
+  op: choose
+  objective: obj-indirect-speech-01
+  bloom: apply
+  prompt_md: Velg den indirekte gjengivelsen av Saras spørsmål.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Sara
+      text_md: «Bor Eva her?»
+  explanation_md: Et indirekte ja/nei-spørsmål innledes med «om» og har vanlig
+    subjekt–verb-ordstilling. Den som stilte det opprinnelige spørsmålet, står
+    fortsatt som subjekt for «spurte».
+  derived_from:
+  - section_id: reporting-yes-or-no-questions-with-om
+  options:
+  - id: report-1
+    text: Sara spurte, «Bodde Eva der?»
+    correct: false
+    why: This remains a direct quotation rather than an indirect report.
+  - id: report-2
+    text: Sara spurte om bodde Eva der.
+    correct: false
+    why: This combines om with direct-question inversion.
+  - id: report-3
+    text: Sara spurte om Eva bodde der.
+    correct: true
+    why: This keeps Sara as the asker and uses the indirect-question marker with
+      subordinate order.
+  stem_md: Lars forteller senere hva Sara spurte om.
+- handle: review_question-word-order
+  op: choose
+  objective: obj-indirect-speech-01
+  bloom: apply
+  prompt_md: Velg det naturlige paret av gjengivelser av Amirs spørsmål.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Amir
+      text_md: «Hva forsvant?»
+    - speaker: Amir
+      text_md: «Hva mistet Eva?»
+  explanation_md: Når «hva» er subjekt, bruker vi «som». Når «hva» er objekt,
+    kommer subjektet rett etter spørreordet. Amir står fortsatt som subjekt for
+    «spurte».
+  derived_from:
+  - section_id: reporting-questions-with-a-question-word
+  options:
+  - id: report-3
+    text: Amir spurte hva forsvant, og hva Eva mistet.
+    correct: false
+    why: The first clause lacks som after subject hva.
+  - id: report-1
+    text: Amir spurte hva som forsvant, og hva Eva mistet.
+    correct: true
+    why: The first hva is the subject, while Eva is the subject of the second
+      clause.
+  - id: report-2
+    text: Amir spurte hva som forsvant, og hva som Eva mistet.
+    correct: false
+    why: The second som wrongly treats hva as the subject.
+  stem_md: Lars gjengir senere begge spørsmålene.
+- handle: review_command-recipient-action
+  op: choose
+  objective: obj-indirect-speech-01
+  bloom: apply
+  prompt_md: Ali forteller Mia hva sykepleieren ba ham om. Velg gjengivelsen av
+    oppfordringen.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Sykepleieren
+      text_md: «Ali, ikke spis før undersøkelsen.»
+    - speaker: Ali
+      text_md: «Jeg skal vente med å spise.»
+  explanation_md: Sykepleieren henvender seg til Ali, så han bruker «meg» etter
+    «ba». «Om ikke å» innleder den negative handlingen.
+  derived_from:
+  - section_id: reporting-commands-and-requests
+  options:
+  - id: report-1
+    text: Sykepleieren ba henne om ikke å spise før undersøkelsen.
+    correct: false
+    why: This assigns the requested action to a female referent rather than to
+      Ali.
+  - id: report-2
+    text: Sykepleieren ba meg om å spise før undersøkelsen.
+    correct: false
+    why: This reverses the negative request and reports that Ali was asked to
+      eat.
+  - id: report-3
+    text: Sykepleieren ba meg om ikke å spise før undersøkelsen.
+    correct: true
+    why: Ali is the person the nurse addressed, so he reports the request about
+      himself with meg.
+- handle: review_report-time-viewpoint
+  op: choose
+  objective: obj-indirect-speech-01
+  bloom: analyze
+  prompt_md: Velg rapporten som stemmer med faktaene.
+  explanation_md: Den generelle sannheten kan stå i presens, mens det tidligere
+    avsluttede forsøket bruker pluskvamperfektum.
+  derived_from:
+  - section_id: choosing-tense-in-a-report
+  options:
+  - id: report-1
+    text: Læreren sa at vann fryser ved null grader, og at forsøket fortsatt
+      pågikk.
+    correct: false
+    why: Forsøket var avsluttet før læreren snakket.
+  - id: report-2
+    text: Læreren sa at vann fryser ved null grader, og at forsøket allerede
+      hadde sluttet.
+    correct: true
+    why: Formene bevarer både den aktuelle sannheten og den tidligere avsluttede
+      hendelsen.
+  - id: report-3
+    text: Læreren sa at vann fryser ved null grader, og at forsøket allerede
+      slutter.
+    correct: false
+    why: Forsøket blir feilaktig framstilt som pågående.
+  stem_md: Vann fryser fortsatt ved null grader. Forsøket var avsluttet før
+    læreren snakket i går.
+- handle: review_perspective-shift
+  op: choose
+  objective: obj-indirect-speech-01
+  bloom: apply
+  prompt_md: Velg Noras naturlige gjengivelse av Emils melding.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Emil
+      text_md: «Jeg møter deg her i morgen.»
+  explanation_md: Noras senere gjengivelse endrer taler, lytter, sted og relativ
+    dag.
+  derived_from:
+  - section_id: shifting-pronouns-time-and-place
+  options:
+  - id: report-2
+    text: Nora sa at jeg skulle møte deg her i morgen.
+    correct: false
+    why: Dette bevarer den opprinnelige talerens ord selv om Nora gjengir
+      meldingen.
+  - id: report-3
+    text: Emil sa at han skulle møte Lea der dagen etter.
+    correct: false
+    why: Dette endrer den opprinnelige lytteren fra Nora til Lea.
+  - id: report-1
+    text: Emil sa at han skulle møte meg der dagen etter.
+    correct: true
+    why: Nora gjengir Emils melding til seg selv mens hun forteller Lea om den.
+      Derfor viser «meg» til Nora, «der» til kaféen og «dagen etter» til tirsdag.
+  stem_md: Mandag sender Emil meldingen til Nora fra kafeen. Onsdag forteller
+    Nora Lea om meldingen hjemme.

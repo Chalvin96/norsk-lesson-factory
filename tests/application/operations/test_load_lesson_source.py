@@ -76,6 +76,28 @@ def test_load_lesson_source_given_explicit_heading_role_attribute_expect_clean_s
     assert [section.role for section in sections] == ["orient", "model", "recap"]
 
 
+def test_load_lesson_source_given_standalone_incorrect_label_expect_typed_example_without_label_block(
+    tmp_path: Path,
+):
+    lesson_md = K_TEST_LESSON_SOURCE.replace(
+        "[God morgen]{lang=nb} means good morning.",
+        "**Incorrect:**\n\n"
+        "::: examples\n"
+        "- no: I dag kommer ikke hun.\n"
+        "- en: Intended neutral meaning: Today she isn’t coming.\n"
+        ":::",
+    )
+    lesson = load_lesson_files(write_lesson_source(tmp_path, lesson_text=lesson_md))
+
+    model_section = next(
+        section for section in lesson.elements if section.element_kind == "section" and section.id == "sec-model"
+    )
+
+    assert [block.kind for block in model_section.blocks] == ["examples"]
+    assert model_section.blocks[0].items[0].teaching_role == "incorrect"
+    assert model_section.blocks[0].items[0].en[0].value == "Today she isn’t coming."
+
+
 def test_load_lesson_source_given_demo_fixture_expect_interleaved_order(tmp_path: Path):
     src = write_lesson_source(tmp_path)
     lesson = load_lesson_files(src)

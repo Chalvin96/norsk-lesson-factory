@@ -1,8 +1,9 @@
-"""Entry points: `response_contract`, `validate_review_edit_handle_coverage`, and `validate_review_edit_replacements`."""
+"""Entry points: `response_contract`, `validate_normalization_negative_markers`, `validate_review_edit_handle_coverage`, and `validate_review_edit_replacements`."""
 
 from __future__ import annotations
 
 import json
+import re
 from collections import Counter
 from collections.abc import Mapping
 from typing import Any
@@ -10,6 +11,7 @@ from typing import Any
 from pydantic import ValidationError
 
 from lesson_builder.clients.llm.base import extract_json_object
+from lesson_builder.domain.lesson.models.rich_authoring import NormalizedPackage
 from lesson_builder.domain.lesson.models.source_audit import MechanicalAudit
 from lesson_builder.workflow.lesson_generation.review_edit import ReviewEditPackage
 
@@ -19,6 +21,16 @@ except ModuleNotFoundError:
     from prompts import K_PROMPTFOO_RESPONSE_SCHEMAS
 
 K_PROMPTFOO_REVIEW_EDIT_SURFACE = "review_edit"
+K_PROMPTFOO_NORMALIZATION_SURFACE = "normalization"
+K_PROMPTFOO_INCORRECT_ROLE_RE = re.compile(
+    r"^:::\s+\{\.examples?\s+[^}]*\bteaching_role=incorrect\b[^}]*\}\s*$",
+    re.MULTILINE,
+)
+K_PROMPTFOO_LEGACY_EXAMPLE_MARKER_RE = re.compile(
+    r"^\s*-\s+(?:no|en):\s*['\"]?[*_`]*\s*"
+    r"(?:✗|incorrect:|wrong:|intended meaning:|not standard:|not normally:|not:)",
+    re.IGNORECASE | re.MULTILINE,
+)
 
 
 def response_contract(output: str, context: Mapping[str, Any]) -> dict[str, object]:
@@ -38,6 +50,24 @@ def response_contract(output: str, context: Mapping[str, Any]) -> dict[str, obje
     except (TypeError, ValueError, ValidationError) as exc:
         return _failure(f"{surface} response failed the production JSON/Pydantic contract: {exc}")
     return _success(f"{surface} response passed production JSON extraction and schema validation")
+
+
+def validate_normalization_negative_markers(output: str, context: Mapping[str, Any]) -> dict[str, object]:
+    """Require typed incorrect-example roles without legacy inline markers."""
+    variables = _context_variables(context)
+    if variables.get("surface") != K_PROMPTFOO_NORMALIZATION_SURFACE:
+        return _success("not applicable: this case is not a normalization response")
+    if not isinstance(output, str):
+        return _failure("normalization response is not text")
+    try:
+        package = NormalizedPackage.model_validate(extract_json_object(output))
+    except (TypeError, ValueError, ValidationError) as exc:
+        return _failure(f"normalization response cannot be checked for negative markers: {exc}")
+    if K_PROMPTFOO_LEGACY_EXAMPLE_MARKER_RE.search(package.lesson_md):
+        return _failure("normalized lesson retains a legacy inline incorrect-example marker")
+    if not K_PROMPTFOO_INCORRECT_ROLE_RE.search(package.lesson_md):
+        return _failure("normalized lesson does not encode the supplied negative example as teaching_role=incorrect")
+    return _success("normalized lesson uses the typed incorrect-example role without inline status text")
 
 
 def validate_review_edit_handle_coverage(output: str, context: Mapping[str, Any]) -> dict[str, object]:
@@ -126,4 +156,9 @@ def _failure(reason: str) -> dict[str, object]:
     return {"pass": False, "score": 0.0, "reason": reason}
 
 
-__all__ = ["response_contract", "validate_review_edit_handle_coverage", "validate_review_edit_replacements"]
+__all__ = [
+    "response_contract",
+    "validate_normalization_negative_markers",
+    "validate_review_edit_handle_coverage",
+    "validate_review_edit_replacements",
+]

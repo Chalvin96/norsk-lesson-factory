@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "legge_vs_ligge",
   "kind": "phraseology",
   "language": "nb-NO",
@@ -108,6 +108,22 @@
     {
       "kind": "section",
       "id": "quick-retrieval-review"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_complete_cabin_preparations"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_past_placement_or_location"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_completed_placement_or_location"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_command_and_location_question"
     }
   ],
   "sections": [
@@ -1685,15 +1701,16 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Jeg ligger boka på bordet."
+                  "value": "Jeg ligger boka på bordet."
                 }
               ],
               "en": [
                 {
                   "kind": "text",
-                  "value": "✗ I put the book on the table."
+                  "value": "I put the book on the table."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "mistake-ligge-for-action-block-2"
@@ -1784,15 +1801,16 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Boka legger på bordet."
+                  "value": "Boka legger på bordet."
                 }
               ],
               "en": [
                 {
                   "kind": "text",
-                  "value": "✗ The book is on the table."
+                  "value": "The book is on the table."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "mistake-legge-for-location-block-2"
@@ -2003,15 +2021,16 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Jeg legger på kjøkkenbordet."
+                  "value": "Jeg legger på kjøkkenbordet."
                 }
               ],
               "en": [
                 {
                   "kind": "text",
-                  "value": "✗ I put on the kitchen table."
+                  "value": "I put on the kitchen table."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "missing-object-block-2"
@@ -2693,13 +2712,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Classify each cabin sentence by its meaning: someone puts an object somewhere, or something is located somewhere. Do not change the sentences."
+          "value": "Sorter setningene etter om de beskriver at noe blir lagt et sted, eller hvor noe befinner seg."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Legge describes causing something to change location and normally takes an object; ligge describes the resulting location."
+          "value": "«Legge» beskriver at noen plasserer noe. «Ligge» beskriver hvor noe befinner seg."
         }
       ],
       "payload": {
@@ -2715,32 +2734,32 @@
         ],
         "items": [
           {
-            "item_id": "towels-action",
+            "item_id": "towels-senga",
             "text": "Maja legger håndklærne på senga.",
             "bucket_id": "placement-action"
           },
           {
-            "item_id": "keys-location",
+            "item_id": "keys-bordet",
             "text": "Nøklene ligger på bordet.",
             "bucket_id": "location"
           },
           {
-            "item_id": "food-action",
-            "text": "Henrik legger maten i kjøleskapet.",
-            "bucket_id": "placement-action"
-          },
-          {
-            "item_id": "clothes-location",
+            "item_id": "clothes-skapet",
             "text": "Klærne ligger i skapet.",
             "bucket_id": "location"
           },
           {
-            "item_id": "jackets-action",
+            "item_id": "food-kjoleskapet",
+            "text": "Henrik legger maten i kjøleskapet.",
+            "bucket_id": "placement-action"
+          },
+          {
+            "item_id": "jackets-benken",
             "text": "Maja legger jakkene på benken.",
             "bucket_id": "placement-action"
           },
           {
-            "item_id": "towels-location",
+            "item_id": "towels-badet",
             "text": "Håndklærne ligger på badet.",
             "bucket_id": "location"
           }
@@ -2755,10 +2774,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each cabin exchange with the correct supplied form of legge or ligge."
+          "value": "Fullfør replikkene med «legge» eller «ligge»."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Bruk «legge» når noen plasserer en gjenstand, og «ligge» når gjenstanden er subjekt i en setning om hvor den befinner seg."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -2872,93 +2896,122 @@
     {
       "kind": "exercise",
       "id": "repair_the_misunderstanding",
-      "operation": "find_fix",
+      "operation": "write",
       "objective_id": "obj-legge-vs-ligge-01",
       "prompt": [
         {
           "kind": "text",
-          "value": "Select the verb that confuses placement with location. The feedback gives the corrected form."
+          "value": "Skriv om de fire beskjedene på norsk slik at de uttrykker den oppgitte meningen. Noen verbformer kan allerede være riktige. Endre bare formene som ikke passer. Skriv setningene i rekkefølge."
         }
       ],
       "explanation": null,
       "payload": {
-        "tokens": [
+        "response_language": "no",
+        "min_words": 18,
+        "max_words": 50,
+        "judge_prompt": "Evaluate the four sentences against their supplied meanings. Require Henrik's present placement of the keys to use a form of legge; the towels' and groceries' locations to use a form of ligge; and Henrik's present placement of the jackets to use a form of legge. Accept natural punctuation and equivalent wording that preserves each fact. Do not require the learner to change sentences whose verb already matches the meaning.",
+        "criteria": [
           {
-            "token_id": "subject-henrik",
-            "text": "Henrik"
+            "id": "keys-placement",
+            "instruction": "Correctly states that Henrik places the keys on the table now using a form of legge."
           },
           {
-            "token_id": "incorrect-placement-verb",
-            "text": "ligger"
+            "id": "towels-location",
+            "instruction": "Correctly states that the towels are on the bed using a form of ligge."
           },
           {
-            "token_id": "keys-object",
-            "text": "nøklene"
+            "id": "groceries-location",
+            "instruction": "Correctly states that the groceries are in the fridge using a form of ligge."
           },
           {
-            "token_id": "keys-place-preposition",
-            "text": "på"
+            "id": "jackets-placement",
+            "instruction": "Correctly states that Henrik places the jackets in the hallway now using a form of legge."
           },
           {
-            "token_id": "keys-place",
-            "text": "bordet,"
-          },
-          {
-            "token_id": "towels-subject",
-            "text": "håndklærne"
-          },
-          {
-            "token_id": "towels-verb",
-            "text": "ligger"
-          },
-          {
-            "token_id": "towels-place-preposition",
-            "text": "på"
-          },
-          {
-            "token_id": "towels-place",
-            "text": "senga,"
-          },
-          {
-            "token_id": "groceries-subject",
-            "text": "dagligvarene"
-          },
-          {
-            "token_id": "groceries-verb",
-            "text": "ligger"
-          },
-          {
-            "token_id": "groceries-place-preposition",
-            "text": "i"
-          },
-          {
-            "token_id": "groceries-place",
-            "text": "kjøleskapet,"
-          },
-          {
-            "token_id": "conjunction",
-            "text": "og"
-          },
-          {
-            "token_id": "jackets-subject",
-            "text": "jakkene"
-          },
-          {
-            "token_id": "jackets-verb",
-            "text": "ligger"
-          },
-          {
-            "token_id": "jackets-place-preposition",
-            "text": "i"
-          },
-          {
-            "token_id": "jackets-place",
-            "text": "gangen."
+            "id": "preserves-meanings",
+            "instruction": "Preserves all four supplied action or location meanings without contradiction."
           }
-        ],
-        "error_token_id": "incorrect-placement-verb",
-        "feedback": "Replace ligger with legger: Henrik is the subject and moves the keys to the table. The corrected opening is Henrik legger nøklene på bordet."
-      }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Situasjon",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Henrik plasserer nøklene på bordet nå."
+                }
+              ]
+            },
+            {
+              "speaker": "Henrik",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Henrik ligger nøklene på bordet.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Situasjon",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Håndklærne er på senga fra før; ingen flytter dem."
+                }
+              ]
+            },
+            {
+              "speaker": "Henrik",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Håndklærne legger på senga.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "The groceries are in the fridge now."
+                }
+              ]
+            },
+            {
+              "speaker": "Henrik",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Dagligvarene ligger i kjøleskapet.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Henrik is putting the jackets in the hallway now."
+                }
+              ]
+            },
+            {
+              "speaker": "Henrik",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Henrik legger jakkene i gangen.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2968,35 +3021,39 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Choose one object that naturally follows the legge–ligge pattern, such as a passport during a journey or a contract at an office. Write four connected Norwegian sentences about the same situation: first a present placement using legger, then its present location using ligger, one past placement using la, and one past location using lå."
+          "value": "Velg en gjenstand som naturlig kan beskrives med «legge» og «ligge». Skriv en oppdatering på norsk til en kollega om den samme gjenstanden. Fortell at noen legger den et sted nå, hvor den ligger nå, hvor noen la den tidligere, og hvor den lå på et bestemt tidspunkt. Velg selv stedene og tidspunktene."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 20,
-        "max_words": 60,
-        "judge_prompt": "Check whether the learner follows one compatible object through present and past placement and location. Report evidence for every criterion and accept natural Bokmål variation that preserves the requested forms and situation.",
+        "min_words": 25,
+        "max_words": 55,
+        "judge_prompt": "Evaluate whether the response follows the visible task. Accept any suitable object, coherent places and times, and natural Norwegian wording. Require two distinct placement actions, two corresponding location statements about the same object, present and past time reference, and the requested length. Do not require a particular object, person, place, or sentence template.",
         "criteria": [
           {
-            "id": "present-placement",
-            "instruction": "Describes someone putting the object somewhere in the present using **legger**."
+            "id": "present-action-and-location",
+            "instruction": "Describes a present placement action and the current location of the chosen object."
           },
           {
-            "id": "present-location",
-            "instruction": "Describes the object's compatible present location using **ligger**."
+            "id": "past-action-and-location",
+            "instruction": "Describes an earlier placement action and the object's location at a specific past time."
           },
           {
-            "id": "past-placement",
-            "instruction": "Describes a past act of putting the object somewhere using **la**."
+            "id": "placement-verbs",
+            "instruction": "Uses a form of legge for each placement action."
           },
           {
-            "id": "past-location",
-            "instruction": "Describes the object's compatible past location using **lå**."
+            "id": "location-verbs",
+            "instruction": "Uses a form of ligge for each compatible location statement."
           },
           {
-            "id": "same-situation",
-            "instruction": "Keeps the same object and a coherent basic situation across all four sentences."
+            "id": "consistent-object-and-details",
+            "instruction": "Keeps the chosen object, placements, and locations coherent without contradicting itself."
+          },
+          {
+            "id": "message-purpose",
+            "instruction": "Produces a coherent Norwegian update addressed to a colleague."
           }
         ]
       }
@@ -3009,35 +3066,367 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write a short connected continuation about the group looking for one more cabin object needed for the evening. Choose an object that naturally follows the legge–ligge pattern. Include a question about its location, an explanation of where someone put it, a statement about where it is now, and a final instruction to put it in a useful place. Use forms of legge for placement and forms of ligge for location."
+          "value": "Skriv en kort fortsettelse der gruppen leter etter én ting til i hytta. Ta med et spørsmål om hvor tingen ligger, hvor noen la den, hvor den ligger nå, og en avsluttende beskjed om å legge den et nyttig sted. Velg en ny ting."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 25,
-        "max_words": 70,
-        "judge_prompt": "Check the continuation for all four requested parts, connected cabin context, and consistent use of legge for placement actions and ligge for compatible locations. Report evidence for every criterion and accept natural Bokmål variants.",
+        "min_words": 30,
+        "max_words": 65,
+        "judge_prompt": "Evaluate the visible continuation task. Accept any new suitable object, plausible locations, and coherent invented details; do not require fixed wording or locations. Require all four requested communicative moves, and natural target forms for placement and location. The object must differ from the preceding deck-of-cards example; keep the continuation in a coherent cabin setting.",
         "criteria": [
           {
             "id": "location-question",
-            "instruction": "Includes a question about the object's location using an appropriate form of **ligge**."
+            "instruction": "Asks where the newly chosen object is."
           },
           {
-            "id": "placement-explanation",
-            "instruction": "Explains where someone put the object using an appropriate form of **legge**."
+            "id": "earlier-action",
+            "instruction": "Explains where someone put the chosen object earlier."
           },
           {
             "id": "current-location",
-            "instruction": "States where the object is now using an appropriate form of **ligge**."
+            "instruction": "Reports where the chosen object is now."
           },
           {
             "id": "final-instruction",
-            "instruction": "Ends with an instruction to put the object in a useful place using an appropriate form of **legge**."
+            "instruction": "Gives someone a useful instruction to put the chosen object somewhere."
           },
           {
-            "id": "connected-continuation",
-            "instruction": "Presents all four parts as connected language in the cabin situation with one compatible object."
+            "id": "legge-ligge",
+            "instruction": "Uses a form of legge for placement actions and a compatible form of ligge for location statements."
+          },
+          {
+            "id": "fresh-coherent-scenario",
+            "instruction": "Uses a new object and coherent invented details rather than repeating the deck-of-cards example."
+          },
+          {
+            "id": "reply-purpose",
+            "instruction": "Produces a coherent Norwegian continuation for the group."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_complete_cabin_preparations",
+      "operation": "recall_fill",
+      "objective_id": "obj-legge-vs-ligge-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fullfør samtalen med riktig verbform."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Den som plasserer en gjenstand, bruker «legge». Når vi forteller hvor gjenstanden er, bruker vi «ligge»."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Jonas: Hvor skal jeg"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-firewood-placement",
+            "options": [
+              "legge",
+              "ligge"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "veden? Ingrid: I vedskjulet. Jonas: Hvor skal kartet"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-map-location",
+            "options": [
+              "legge",
+              "ligge"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "? Ingrid: På bordet."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_past_placement_or_location",
+      "operation": "recall_fill",
+      "objective_id": "obj-legge-vs-ligge-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fullfør hver setning med riktig fortidsform."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«La» forteller om en plassering i fortida. «Lå» forteller hvor noe befant seg."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "I går"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "past-placement",
+            "options": [
+              "la",
+              "lå"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "Sara passet i sidelomma. Det"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "past-location",
+            "options": [
+              "la",
+              "lå"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "der hele reisen."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_completed_placement_or_location",
+      "operation": "recall_fill",
+      "objective_id": "obj-legge-vs-ligge-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fullfør setningene med riktig verbform."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Har lagt» forteller om en fullført plassering. «Har ligget» beskriver hvor noe har befunnet seg over tid."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Noen har"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "completed-placement",
+            "options": [
+              "lagt",
+              "ligget"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "sekken ved døra. Den har"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "completed-location",
+            "options": [
+              "lagt",
+              "ligget"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "der siden i morges."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_command_and_location_question",
+      "operation": "recall_fill",
+      "objective_id": "obj-legge-vs-ligge-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fullfør samtalen med riktig verbform."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Bruk «ligge» når du spør hvor kartet bør være, og «legge» når noen plasserer det."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "A: Hvor skal kartet"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "location-question",
+            "options": [
+              "legge",
+              "ligge"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "? B: Det er på stolen. A: Så skal jeg"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "placement-command",
+            "options": [
+              "legge",
+              "ligge"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "det i skuffen etterpå."
+              }
+            ]
           }
         ]
       }
@@ -3052,7 +3441,11 @@
         "complete_cabin_preparations",
         "repair_the_misunderstanding",
         "follow_one_object",
-        "final_guided_practice"
+        "final_guided_practice",
+        "review_complete_cabin_preparations",
+        "review_past_placement_or_location",
+        "review_completed_placement_or_location",
+        "review_command_and_location_question"
       ]
     }
   ],

@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "vaere_or_bli_for_state_and_change",
   "kind": "phraseology",
   "language": "nb-NO",
@@ -112,6 +112,18 @@
     {
       "kind": "exercise",
       "id": "retrieval_explain_contrast"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_choose_viewpoint_mixed"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_temporary_state_vs_transition"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_change_then_state"
     }
   ],
   "sections": [
@@ -2463,7 +2475,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write one Norwegian sentence describing the already noisy concert room now."
+          "value": "Mina går inn i konsertsalen og merker at det allerede er støyende. Skriv en kort melding til Jonas om hvordan rommet er nå. Bruk er om tilstanden."
         }
       ],
       "explanation": null,
@@ -2471,11 +2483,19 @@
         "response_language": "no",
         "min_words": 3,
         "max_words": 60,
-        "judge_prompt": "Check the Norwegian response against the task and report evidence for each criterion.",
+        "judge_prompt": "Check that the response describes the current room and uses er to express the existing adjective state.",
         "criteria": [
           {
-            "id": "criterion-1",
-            "instruction": "describes the current room with the taught temporary-state pattern"
+            "id": "describes-current-room",
+            "instruction": "Describes the room as already noisy at the moment of speaking."
+          },
+          {
+            "id": "uses-er",
+            "instruction": "Uses er to express the room's existing adjective state."
+          },
+          {
+            "id": "er-state-observation",
+            "instruction": "Observation only: note whether the response uses the taught er form; do not fail a natural equivalent."
           }
         ]
       }
@@ -2488,23 +2508,27 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write one connected Norwegian description of the heater and lamps being turned on, the tables being washed, and the curtains being opened. Use the taught result-of-change pattern for each resulting state."
+          "value": "Jonas slår på ovnen og lampene, vasker bordene og åpner gardinene. Skriv en kort melding på norsk til Mina med fire setninger. Beskriv hvordan rommet blir etter hver handling."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 3,
+        "min_words": 5,
         "max_words": 60,
-        "judge_prompt": "Check the Norwegian response against the task and report evidence for each criterion.",
+        "judge_prompt": "Check that the response covers all four actions and presents each result as a change into a new adjective state with blir.",
         "criteria": [
           {
-            "id": "criterion-1",
-            "instruction": "includes all three supplied actions"
+            "id": "covers-all-actions",
+            "instruction": "Describes a plausible result of turning on the heater, turning on the lamps, washing the tables, and opening the curtains."
           },
           {
-            "id": "criterion-2",
-            "instruction": "uses the taught result-of-change pattern for each resulting adjective state"
+            "id": "uses-blir-for-each-change",
+            "instruction": "For each of the four actions, uses blir to present the result as a change into a new adjective state."
+          },
+          {
+            "id": "blir-change-observation",
+            "instruction": "Observation only: note variation in adjective choice and wording; do not fail a natural equivalent."
           }
         ]
       }
@@ -2517,13 +2541,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Fill each blank with er or blir. Use each surrounding situation to choose the correct verb: some sentences describe a state, while others describe movement into a new state."
+          "value": "Fullfør hver replikk med verbet som passer til situasjonen."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Use være for a state that holds now; use bli when the subject enters or changes into that state."
+          "value": "Bruk er om en tilstand som gjelder på det aktuelle tidspunktet, og blir når noen eller noe går over i en ny tilstand."
         }
       ],
       "payload": {
@@ -2533,7 +2557,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Under pausen"
+                "value": "«Det har vært stille i salen en stund, og publikum venter uten musikk. Rommet"
               },
               {
                 "kind": "text",
@@ -2559,11 +2583,7 @@
               },
               {
                 "kind": "text",
-                "value": "rommet støyende. Når konserten begynner,"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "stille. Når orkesteret begynner å spille,"
               }
             ]
           },
@@ -2571,34 +2591,8 @@
             "kind": "blank",
             "blank_id": "room-change",
             "options": [
-              "er",
-              "blir"
-            ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "rommet stille. Før opptredenen"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "performer-current",
-            "options": [
-              "er",
-              "blir"
+              "blir",
+              "er"
             ],
             "answer_index": 0
           },
@@ -2611,7 +2605,33 @@
               },
               {
                 "kind": "text",
-                "value": "sangeren nervøs. Når sangeren roer seg på scenen,"
+                "value": "rommet støyende. Hun har vært nervøs hele dagen. Før hun går på scenen,"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "performer-current",
+            "options": [
+              "blir",
+              "er"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "hun fortsatt nervøs mens hun venter bak scenen. Etter hvert som hun roer seg på scenen,"
               },
               {
                 "kind": "text",
@@ -2637,12 +2657,55 @@
               },
               {
                 "kind": "text",
-                "value": "hun rolig."
+                "value": "hun roligere.»"
               }
             ]
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Mina",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hva skjer i salen under pausen?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Jonas",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Det har vært stille i salen en stund, og publikum venter uten musikk. Rommet ___ stille. Når orkesteret begynner å spille, ___ rommet støyende.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Mina",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hvordan er sangeren før og under konserten?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Jonas",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hun har vært nervøs hele dagen. Før hun går på scenen, venter hun fortsatt bak scenen.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2652,23 +2715,27 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write four Norwegian pairs in order: say that you are hungry before lunch and become hungry when you wait too long to eat; say that she is nervous before a performance and becomes nervous when she is about to perform; say that you are wet after a walk in the rain and become wet while walking in the rain; say that you are tired after work and become tired when you work for a long time."
+          "value": "Skriv en melding til en venn om fire situasjoner: noen er sulten før lunsj og blir mett etterpå; en sanger er nervøs før hun går på scenen og blir rolig underveis; jakka er våt etter gårsdagens regntur og blir tørr inne; du er trøtt etter gårsdagens arbeid og blir enda trøttere under dagens lange vakt. Bruk er om tilstander og blir om overganger."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 3,
-        "max_words": 60,
-        "judge_prompt": "Check the Norwegian response against the task and report evidence for each criterion.",
+        "min_words": 20,
+        "max_words": 100,
+        "judge_prompt": "Se etter alle fire situasjonsparene. Godta er for tilstander og blir for overganger, også når eleven uttrykker faktaene med naturlige, tilsvarende formuleringer.",
         "criteria": [
           {
-            "id": "criterion-1",
-            "instruction": "writes all four supplied situations"
+            "id": "covers-four-pairs",
+            "instruction": "Covers all four supplied pairs of situations."
           },
           {
-            "id": "criterion-2",
-            "instruction": "uses the temporary-state form first and the onset form second in every pair"
+            "id": "state-then-change",
+            "instruction": "For each pair, describe the existing state with er and the later change into or away from that state with blir."
+          },
+          {
+            "id": "er-blir-observation",
+            "instruction": "Observation only: note lexical and stylistic variation; do not fail a natural equivalent."
           }
         ]
       }
@@ -2681,27 +2748,27 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write in Norwegian a connected three-stage timeline about one concert-room element: the temperature, tables, lighting, hall, or Mina's mood. Describe its initial adjective state, the event that causes a change, and its resulting adjective state. Use er for the existing state before and after the transition, and blir for the transition into the new state."
+          "value": "Velg temperaturen, bordene, lyset, salen eller Minas humør. Skriv en kort melding til arrangøren med tre ledd: utgangstilstanden, det som endrer den, og tilstanden etterpå. Bruk er om tilstandene og blir om overgangen."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": null,
-        "max_words": null,
-        "judge_prompt": "Check the response against the task and report evidence for each criterion. Accept natural Bokmål wording that preserves the required er and blir contrast.",
+        "min_words": 10,
+        "max_words": 60,
+        "judge_prompt": "Check that the response gives a coherent three-stage timeline and uses er for both states and blir for the transition.",
         "criteria": [
           {
-            "id": "state-on-both-sides",
-            "instruction": "Uses er to describe the selected element's initial state and resulting state."
-          },
-          {
-            "id": "transition",
-            "instruction": "Uses blir for the event's transition into the new adjective state."
-          },
-          {
             "id": "coherent-timeline",
-            "instruction": "Connects the initial state, the event, the transition, and the resulting state in a coherent timeline."
+            "instruction": "Describes the selected element's initial state, the event, and the resulting state in a coherent timeline."
+          },
+          {
+            "id": "er-blir-sequence",
+            "instruction": "Uses er for the initial state, blir for the transition, and er for the resulting state."
+          },
+          {
+            "id": "er-blir-sequence-observation",
+            "instruction": "Observation only: note the selected element and adjective choices; do not fail a natural equivalent."
           }
         ]
       }
@@ -2714,27 +2781,27 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write short connected descriptions in Norwegian for at least two of these new everyday situations: a cold drink warming on a table, a quiet station becoming busy, or a worried friend calming down. In each description, state an existing adjective condition with er and describe a change into another adjective condition with blir. Include enough Norwegian surrounding context for each choice to be understood from the situation rather than from an English translation."
+          "value": "Skriv en sammenhengende beskrivelse av minst to situasjoner: en kald drikk som blir varmere på bordet, en stille stasjon som blir travel, eller en bekymret venn som roer seg. Bruk er om tilstanden som allerede gjelder, og blir om endringen."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": null,
-        "max_words": null,
-        "judge_prompt": "Check the response against the task and report evidence for each criterion. Accept natural Bokmål descriptions with equivalent contextual wording.",
+        "min_words": 20,
+        "max_words": 80,
+        "judge_prompt": "Check that the response covers at least two situations and uses er for each existing condition and blir for each change.",
         "criteria": [
           {
-            "id": "state-and-change",
-            "instruction": "Includes both an existing adjective state and a change into another adjective state in each description."
+            "id": "covers-two-situations",
+            "instruction": "Covers at least two of the three supplied situations."
           },
           {
-            "id": "contextual-choice",
-            "instruction": "Makes the choice of er or blir understandable from the surrounding Norwegian context."
+            "id": "includes-state-and-change",
+            "instruction": "In each description, states the existing adjective condition with er and the change into another adjective condition with blir."
           },
           {
-            "id": "not-translation-only",
-            "instruction": "Uses Norwegian situational wording to convey the contrast rather than relying only on memorized English translation."
+            "id": "er-blir-context-observation",
+            "instruction": "Observation only: note the variety of situations and vocabulary; do not fail a natural equivalent."
           }
         ]
       }
@@ -2747,30 +2814,478 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write three Norwegian descriptions: one of a current adjective state, one of a change into a new adjective state, and one that shows the change followed by its resulting state. In the Norwegian descriptions, use er for the existing state and blir for the transition."
+          "value": "Skriv tre setninger i språkdagboka: én om en tilstand nå med er, én om en overgang til en ny tilstand med blir, og én der du bruker begge formene om en endring og resultatet etterpå."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": null,
-        "max_words": null,
-        "judge_prompt": "Check the response against the task and report evidence for each criterion covering the three Norwegian descriptions.",
+        "min_words": 10,
+        "max_words": 60,
+        "judge_prompt": "Check that the response includes the three requested sentence types and uses er for states and blir for the change.",
         "criteria": [
           {
-            "id": "current-state",
-            "instruction": "Uses er, the finite form of være, for the current adjective state."
+            "id": "three-descriptions",
+            "instruction": "Includes three sentences: a current state expressed with er, a change expressed with blir, and a change followed by its resulting state expressed with blir and er."
           },
           {
-            "id": "transition",
-            "instruction": "Uses blir, the finite form of bli, for the transition into the adjective state."
-          },
-          {
-            "id": "change-and-result",
-            "instruction": "Shows a change with blir followed by its resulting state with er in one Norwegian description."
+            "id": "er-blir-retrieval-observation",
+            "instruction": "Observation only: note whether the examples use varied subjects and adjectives; do not fail a natural equivalent."
           }
         ]
       }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_choose_viewpoint_mixed",
+      "operation": "recall_fill",
+      "objective_id": "obj-vaere-or-bli-for-state-and-change-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fullfør den nye dialogen med verbet som passer til hver situasjon."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Bruk er om tilstanden slik den er nå, og blir når den endrer seg."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "«Akkurat nå"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "state-dark",
+            "options": [
+              "er",
+              "blir"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "korridoren mørk. Vakten har slått av lyset. Når hun åpner døren og slår på lampene,"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "change-light",
+            "options": [
+              "blir",
+              "er"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "korridoren mer opplyst. Etter en lang løpetur, mens jeg fortsatt sitter og hviler,"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "state-tired",
+            "options": [
+              "blir",
+              "er"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "jeg utslitt. Når jeg fortsetter treningen etter hvilen,"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "change-tired",
+            "options": [
+              "er",
+              "blir"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "jeg enda mer utmattet.»"
+              }
+            ]
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Lea",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hvorfor virker korridoren så mørk?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Omar",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Akkurat nå ___ korridoren mørk. Vakten har slått av lyset. Når hun åpner døren og slår på lampene, ___ korridoren mer opplyst.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Lea",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hvordan har du det etter løpeturen?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Omar",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Etter en lang løpetur hviler jeg før jeg skal fortsette treningen. Nå sitter jeg stille.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_temporary_state_vs_transition",
+      "operation": "recall_fill",
+      "objective_id": "obj-vaere-or-bli-for-state-and-change-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fullfør den nye dialogen med verbet som passer til hver situasjon."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Bruk er når tilstanden allerede gjelder, og blir når overgangen skjer."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "«Etter turen"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "jacket-state",
+            "options": [
+              "er",
+              "blir"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "frakken gjennomvåt. Når jeg henger den opp,"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "bag-change",
+            "options": [
+              "er",
+              "blir"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "frakken tørr igjen. Før møtet"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "nervous-state",
+            "options": [
+              "blir",
+              "er"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "jeg spent. Når jeg får beskjed om at møtet er avlyst, slipper spenningen med en gang, og da"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "calm-change",
+            "options": [
+              "blir",
+              "er"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "jeg roligere.»"
+              }
+            ]
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Amir",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hva skjedde med frakken etter turen?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Nora",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Den drypper fortsatt etter turen, og jeg henger den opp til tørk.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Amir",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hvordan har du det før møtet, og hva skjer med planene deres?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Nora",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Møtet nærmer seg, og jeg venter spent på beskjed. Når jeg får høre at det er avlyst, slipper spenningen med en gang.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_change_then_state",
+      "operation": "recall_fill",
+      "objective_id": "obj-vaere-or-bli-for-state-and-change-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fullfør den nye dialogen med verbet som passer til hver situasjon."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Velg først verbet for overgangen til den nye tilstanden, og deretter verbet for tilstanden som varer."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "«Når vinden fortsatt blåser kraftig, er innsjøen urolig. Når vinden gir seg,"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "lake-change",
+            "options": [
+              "blir",
+              "er"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "innsjøen rolig. Litt senere"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "lake-state",
+            "options": [
+              "blir",
+              "er"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "innsjøen rolig.»"
+              }
+            ]
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Nora",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hvordan endrer innsjøen seg etter vinden?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Eli",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Når vinden fortsatt blåser kraftig, er innsjøen urolig. Etter at vinden løyer, begynner bølgene å legge seg.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "practice_groups": [
@@ -2784,7 +3299,10 @@
         "checkpoint_correct_permanence_shortcut",
         "guided_practice_follow_one_object_through_time",
         "broader_practice_apply_the_contrast_in_new_situations",
-        "retrieval_explain_contrast"
+        "retrieval_explain_contrast",
+        "review_choose_viewpoint_mixed",
+        "review_temporary_state_vs_transition",
+        "review_change_then_state"
       ]
     }
   ],

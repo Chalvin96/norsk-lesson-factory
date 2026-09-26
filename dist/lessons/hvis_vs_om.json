@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "hvis_vs_om",
   "kind": "grammar",
   "language": "nb-NO",
@@ -84,6 +84,14 @@
     {
       "kind": "exercise",
       "id": "retrieval_and_review"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_hvis_condition"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_om_embedded_question"
     }
   ],
   "sections": [
@@ -1809,35 +1817,35 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Classify each sentence's clause introduced by hvis or om. Use its communicative function: a condition or an unanswered yes/no question."
+          "value": "Sorter leddsetningene etter om de uttrykker et vilkår eller et indirekte ja/nei-spørsmål."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Use «hvis» for a condition whose result follows, and «om» for an unresolved embedded yes/no question meaning whether."
+          "value": "«Hvis» innleder et vilkår som påvirker resultatet. «Om» innleder et ubesvart ja/nei-spørsmål."
         }
       ],
       "payload": {
         "buckets": [
           {
             "bucket_id": "condition",
-            "label": "Condition"
+            "label": "Vilkår"
           },
           {
             "bucket_id": "embedded-yes-no-question",
-            "label": "Embedded yes/no question"
+            "label": "Indirekte ja/nei-spørsmål"
           }
         ],
         "items": [
           {
             "item_id": "anchor-1",
-            "text": "Hvis Nora trenger skyss, kan Henrik hente henne.",
+            "text": "Hvis fergen blir innstilt, ringer Oda hotellet.",
             "bucket_id": "condition"
           },
           {
             "item_id": "anchor-2",
-            "text": "Maja vet ikke om Nora trenger skyss.",
+            "text": "Elias lurer på om fergen går i kveld.",
             "bucket_id": "embedded-yes-no-question"
           }
         ]
@@ -1851,10 +1859,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each message with hvis or om. Decide whether the first clause sets a condition or reports an unresolved yes/no question."
+          "value": "Fyll ut hver melding med «hvis» eller «om». Bruk det tydelige standardvalget for vilkår."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Taxisvaret og måltidet inne avhenger av vilkår, så leddsetningene innledes med «hvis». Maja gjengir det ubesvarte spørsmålet «Er toget forsinket?», så leddsetningen innledes med «om»."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -1862,11 +1875,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Sentence 1:"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "Henrik: «"
               }
             ]
           },
@@ -1888,7 +1897,7 @@
               },
               {
                 "kind": "text",
-                "value": "det blir sent, tar Henrik en taxi. Sentence 2: Maja vet ikke"
+                "value": "det blir sent, tar jeg en taxi.» Maja: «Jeg vet ikke"
               },
               {
                 "kind": "text",
@@ -1914,11 +1923,7 @@
               },
               {
                 "kind": "text",
-                "value": "toget er forsinket. Sentence 3:"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "toget er forsinket.» Henrik: «"
               }
             ]
           },
@@ -1940,7 +1945,7 @@
               },
               {
                 "kind": "text",
-                "value": "det regner, spiser vi inne."
+                "value": "det regner, spiser vi inne.»"
               }
             ]
           }
@@ -1955,35 +1960,35 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Build the complete Norwegian sentence. Use the supplied clause order: the condition first and the result second. The condition is that it gets late; Henrik takes a taxi as the result."
+          "value": "Kafeen er stengt, og Henrik lager te hjemme. Skriv én setning som begynner med vilkåret."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Hvis kafeen er stengt, lager Henrik te hjemme. Etter den innledende hvis-setningen står det finitte verbet «lager» foran «Henrik»."
+        }
+      ],
       "payload": {
         "tokens": [
           {
-            "token_id": "conditional-1",
-            "text": "Hvis",
-            "fixed": false
-          },
-          {
-            "token_id": "conditional-2",
-            "text": "det",
+            "token_id": "conditional-5",
+            "text": "lager",
             "fixed": false
           },
           {
             "token_id": "conditional-3",
-            "text": "blir",
+            "text": "er",
             "fixed": false
           },
           {
-            "token_id": "conditional-4",
-            "text": "sent,",
+            "token_id": "conditional-7",
+            "text": "te",
             "fixed": false
           },
           {
-            "token_id": "conditional-5",
-            "text": "tar",
+            "token_id": "conditional-1",
+            "text": "Hvis",
             "fixed": false
           },
           {
@@ -1992,13 +1997,18 @@
             "fixed": false
           },
           {
-            "token_id": "conditional-7",
-            "text": "en",
+            "token_id": "conditional-2",
+            "text": "kafeen",
             "fixed": false
           },
           {
             "token_id": "conditional-8",
-            "text": "taxi.",
+            "text": "hjemme.",
+            "fixed": false
+          },
+          {
+            "token_id": "conditional-4",
+            "text": "stengt,",
             "fixed": false
           }
         ],
@@ -2022,15 +2032,20 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Build the complete Norwegian embedded yes/no question. Keep the direct question content inside the supplied larger sentence."
+          "value": "Maja tror kanskje Ali har nøkkelen hjemme, men må spørre Henrik. Bygg spørsmålet hennes med utgangspunkt i det direkte spørsmålet."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Det ubesvarte spørsmålet «Har Ali nøkkelen hjemme?» innledes med «om» etter «Vet du»."
+        }
+      ],
       "payload": {
         "tokens": [
           {
-            "token_id": "embedding-1",
-            "text": "Vet",
+            "token_id": "embedding-4",
+            "text": "Ali",
             "fixed": false
           },
           {
@@ -2039,28 +2054,28 @@
             "fixed": false
           },
           {
+            "token_id": "embedding-7",
+            "text": "hjemme?",
+            "fixed": false
+          },
+          {
             "token_id": "embedding-3",
             "text": "om",
             "fixed": false
           },
           {
-            "token_id": "embedding-4",
-            "text": "Nora",
+            "token_id": "embedding-5",
+            "text": "har",
             "fixed": false
           },
           {
-            "token_id": "embedding-5",
-            "text": "kommer",
+            "token_id": "embedding-1",
+            "text": "Vet",
             "fixed": false
           },
           {
             "token_id": "embedding-6",
-            "text": "i",
-            "fixed": false
-          },
-          {
-            "token_id": "embedding-7",
-            "text": "kveld?",
+            "text": "nøkkelen",
             "fixed": false
           }
         ],
@@ -2083,7 +2098,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Choose the Norwegian pair that preserves both meanings of English “if.”"
+          "value": "Velg svarparet som passer til begge situasjonene."
         }
       ],
       "explanation": null,
@@ -2092,24 +2107,24 @@
           {
             "option_id": "connectors-reversed",
             "text": "Jeg vet ikke hvis butikken er åpen. Om butikken er åpen, går jeg inn.",
-            "why": "The connectors are reversed for these two meanings."
+            "why": "«Jeg vet ikke hvis ...» is wrong for the unresolved question. Conditional «om» in the second sentence is possible, but it does not rescue the first sentence."
           },
           {
             "option_id": "correct-contrast",
-            "text": "Jeg vet ikke om butikken er åpen. Hvis butikken er åpen, går jeg inn.",
-            "why": "Om introduces the unresolved yes/no question; hvis introduces the condition for going inside."
+            "text": "Jeg må finne ut om butikken er åpen. Hvis butikken er åpen, går jeg inn.",
+            "why": "The first sentence says the speaker needs to find out the answer to a yes/no question; the second makes entering depend on the shop being open."
           },
           {
             "option_id": "both-hvis",
-            "text": "Jeg vet ikke hvis butikken er åpen. Hvis butikken er åpen, går jeg inn.",
-            "why": "The first sentence embeds a yes/no question and therefore needs om."
+            "text": "Jeg må finne ut hvis butikken er åpen. Hvis butikken er åpen, går jeg inn.",
+            "why": "The second connector fits its condition, but the first clause is an unresolved question rather than a condition."
           }
         ],
         "answer_id": "correct-contrast",
         "stem": [
           {
             "kind": "text",
-            "value": "You need to find out if the shop is open. If it is open, you will go inside. Which pair expresses the unresolved question first and the condition second?"
+            "value": "Du kjenner ikke åpningstiden. Du går inn dersom butikken er åpen."
           }
         ]
       }
@@ -2117,132 +2132,61 @@
     {
       "kind": "exercise",
       "id": "paired_meaning_contrast",
-      "operation": "recall_fill",
+      "operation": "write",
       "objective_id": "obj-hvis-vs-om-01",
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each sentence with hvis or om. Choose from the relationship in each sentence: a condition or an embedded yes/no question, not from the repeated vocabulary."
+          "value": "Skriv hva som må skje før dere tar bussen, og hva dere fortsatt må finne ut."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Forklar hva som utløser bussplanen, og hvilket spørsmål som fortsatt er ubesvart."
+        }
+      ],
       "payload": {
-        "segments": [
+        "response_language": "no",
+        "min_words": 12,
+        "max_words": 28,
+        "judge_prompt": "Check that the response explains the practical condition for taking the bus and identifies the unresolved yes/no information about the train. Accept natural Norwegian paraphrases; do not require the learner to repeat connector names.",
+        "criteria": [
           {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": "Pair 1A:"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
+            "id": "bus-condition",
+            "instruction": "Explains that taking the bus depends on the train being delayed."
           },
           {
-            "kind": "blank",
-            "blank_id": "paired-1a",
-            "options": [
-              "Hvis",
-              "Om"
-            ],
-            "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "Lea er hjemme, ringer jeg henne. Pair 1B: Jeg vet ikke"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "paired-1b",
-            "options": [
-              "hvis",
-              "om"
-            ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "Lea er hjemme. Pair 2A:"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "paired-2a",
-            "options": [
-              "Hvis",
-              "Om"
-            ],
-            "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "møtet slutter tidlig, tar vi toget. Pair 2B: Vi må finne ut"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "paired-2b",
-            "options": [
-              "hvis",
-              "om"
-            ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "møtet slutter tidlig."
-              }
-            ]
+            "id": "unresolved-information",
+            "instruction": "Explains that Maja still does not know whether the train is delayed."
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Henrik",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hvis toget er forsinket, tar vi bussen.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Vi må finne ut om toget er forsinket.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2252,23 +2196,28 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Correct this Norwegian message by replacing the connector: «Jeg vet ikke hvis bussen er forsinket.» Then explain in Norwegian whether the corrected clause is a condition or an embedded yes/no question."
+          "value": "Mina skriver: «Jeg vet ikke hvis apoteket er åpent ennå.» Rett feilordet i meldingen, og forklar hva slags leddsetning det innleder."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Taleren spør om et ubesvart ja/nei-spørsmål, så den indirekte spørresetningen innledes med «om»."
+        }
+      ],
       "payload": {
         "response_language": "no",
         "min_words": null,
         "max_words": null,
-        "judge_prompt": "Check the corrected connector and Norwegian classification against every criterion. Accept natural wording when the clause meaning is clear.",
+        "judge_prompt": "Evaluate corrected-connector and clause-classification. Both are gating because the task explicitly requests the correction and explanation. Accept natural Norwegian wording.",
         "criteria": [
           {
             "id": "corrected-connector",
-            "instruction": "Replaces hvis with om in the supplied message, producing «Jeg vet ikke om bussen er forsinket»."
+            "instruction": "Replaces «hvis» with «om», marking the embedded yes/no question whether the pharmacy is still open."
           },
           {
             "id": "clause-classification",
-            "instruction": "Explains in Norwegian that the corrected clause is an embedded yes/no question, not a condition."
+            "instruction": "Explains in Norwegian that the corrected clause is an embedded yes/no question rather than a condition."
           }
         ]
       }
@@ -2281,27 +2230,40 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write a short, connected continuation in Norwegian as Henrik's message to Maja after Nora's bus message. Ask Maja whether she needs anything, then explain what you will do if she needs something. Use om in the embedded yes/no question and hvis in the condition."
+          "value": "Nora skriver til Henrik: «Jeg vet ikke om jeg rekker bussen klokka seks. Kan du spørre Maja om jeg skal ta med noe?» Skriv en melding til Maja. Spør med «om» hun skal ta med noe, og si hva du vil fortelle Nora hvis Maja svarer."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "En naturlig melding gjengir ja/nei-spørsmålet med «om» og innleder omstendigheten for Henriks svar med «hvis»."
+        }
+      ],
       "payload": {
         "response_language": "no",
-        "min_words": 12,
-        "max_words": 30,
-        "judge_prompt": "Accept natural Norwegian wording and clear pronoun choices. Check the response against the task and report evidence for each criterion.",
+        "min_words": 18,
+        "max_words": 35,
+        "judge_prompt": "Evaluate audience-purpose, requested-content, connected-message, om-observation, hvis-observation as gating.",
         "criteria": [
           {
-            "id": "embedded-question-om",
-            "instruction": "Asks, in an embedded yes/no question, whether Maja needs something, using om."
+            "id": "audience-purpose",
+            "instruction": "The response functions as Henrik's message to Maja about Nora."
           },
           {
-            "id": "condition-hvis",
-            "instruction": "Includes a condition introduced by hvis and a result that depends on Maja needing something."
+            "id": "requested-content",
+            "instruction": "The message asks Maja whether Nora should bring anything and states what Henrik will tell Nora if Maja answers."
           },
           {
             "id": "connected-message",
-            "instruction": "Connects the question and condition in a coherent message from Henrik to Maja."
+            "instruction": "The requested ideas form one coherent message in understandable Norwegian."
+          },
+          {
+            "id": "om-observation",
+            "instruction": "The learner must use om to embed the yes/no question about whether Nora should bring anything."
+          },
+          {
+            "id": "hvis-observation",
+            "instruction": "The learner must use hvis to introduce the circumstance controlling Henrik's reply to Nora."
           }
         ]
       }
@@ -2314,31 +2276,48 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write a short, connected plan in Norwegian for Emil and Sara's Sunday walk. Include information Sara needs to discover: whether the café is open on Sunday. Include what they will do if it is open, and what they will do if it rains. Use om for the embedded yes/no question and hvis for each condition. Phrase the plan in your own words; do not copy a complete lesson sentence."
+          "value": "Mina og Ali planlegger spillkveld fredag, men samfunnshusets tilgjengelighet er ikke undersøkt ennå. Skriv en melding til dem. Si at du skal undersøke saken, at gruppa møtes der dersom lokalet er ledig, og tar trikken dersom det snør kraftig. Bruk «om» for det ubesvarte spørsmålet og «hvis» for begge vilkårene."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Først er det et ubesvart spørsmål om samfunnshuset er ledig; deretter blir tilgjengeligheten et vilkår for planen. Kraftig snøvær gir et nytt vilkår."
+        }
+      ],
       "payload": {
         "response_language": "no",
         "min_words": 20,
         "max_words": 45,
-        "judge_prompt": "Accept natural Norwegian wording and equivalent natural variants. Check the response against the task and report evidence for each criterion.",
+        "judge_prompt": "Evaluate audience-purpose, hall-question, hall-outcome, snow-outcome, connected-plan, om-usage, and hvis-usage as gating.",
         "criteria": [
           {
-            "id": "om-discovery",
-            "instruction": "States what Sara needs to discover with an embedded yes/no question introduced by om."
+            "id": "audience-purpose",
+            "instruction": "The response is a plan addressed or suitable for Mina and Ali's game-night group."
           },
           {
-            "id": "hvis-cafe",
-            "instruction": "States what they will do if the café is open, using a condition introduced by hvis."
+            "id": "hall-question",
+            "instruction": "The plan communicates that someone in the group needs to find out whether the community hall is available."
           },
           {
-            "id": "hvis-rain",
-            "instruction": "States what they will do if it rains, using a condition introduced by hvis."
+            "id": "hall-outcome",
+            "instruction": "The plan says that the group will meet at the hall if it is available."
+          },
+          {
+            "id": "snow-outcome",
+            "instruction": "The plan says that the group will take the tram if it snows heavily."
           },
           {
             "id": "connected-plan",
-            "instruction": "Connects the discovery and both conditions into a coherent Sunday-walk plan."
+            "instruction": "The supplied facts are connected into a coherent plan in understandable Norwegian."
+          },
+          {
+            "id": "om-usage",
+            "instruction": "The plan uses om for the unresolved question about whether the hall is available."
+          },
+          {
+            "id": "hvis-usage",
+            "instruction": "The plan uses hvis for the hall-availability and heavy-snow conditions."
           }
         ]
       }
@@ -2351,27 +2330,130 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Without looking back, write a short connected review in Norwegian about a new everyday plan. State one unresolved yes/no issue someone needs to find out using om. Then state what will happen under one condition based on that issue using hvis. Use a new lexical frame and do not copy a complete sentence from the lesson."
+          "value": "Biblioteket er kanskje åpent i kveld. Skriv en melding til en venn. Bruk «om» i spørsmålet om åpningstiden og «hvis» i planen om å møtes inne."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Åpningstiden er et ubesvart spørsmål, mens planen om å møtes inne avhenger av at biblioteket er åpent."
+        }
+      ],
       "payload": {
         "response_language": "no",
         "min_words": 12,
         "max_words": 30,
-        "judge_prompt": "Accept any natural Norwegian wording and lexical choice that satisfies the task. Check the response against the task and report evidence for each criterion.",
+        "judge_prompt": "Evaluate audience-purpose, unknown-fact, dependent-plan, coherent-review, om-usage, hvis-usage as gating.",
         "criteria": [
           {
-            "id": "unresolved-om-issue",
-            "instruction": "Reports an unresolved yes/no issue inside a larger sentence, introduced by om."
+            "id": "audience-purpose",
+            "instruction": "The response functions as a short message to a friend."
           },
           {
-            "id": "hvis-condition-result",
-            "instruction": "States a result that depends on the same issue, with a condition introduced by hvis."
+            "id": "unknown-fact",
+            "instruction": "The message communicates the unresolved question of whether the library is open tonight."
+          },
+          {
+            "id": "dependent-plan",
+            "instruction": "The message says that the friends will meet inside when the library is open."
           },
           {
             "id": "coherent-review",
-            "instruction": "Connects the issue and condition in a coherent short plan."
+            "instruction": "The unknown fact and dependent plan form one coherent message in understandable Norwegian."
+          },
+          {
+            "id": "om-usage",
+            "instruction": "The learner introduces the unresolved question with «om»."
+          },
+          {
+            "id": "hvis-usage",
+            "instruction": "The learner introduces the condition for meeting inside with «hvis»."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_hvis_condition",
+      "operation": "choose",
+      "objective_id": "obj-hvis-vs-om-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg svaret der kjøreturen avhenger av om veiene er trygge."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "review-hvis-reversed",
+            "text": "Hvis vi kjører, er veiene trygge.",
+            "why": "This reverses the dependency by making road safety the result of driving."
+          },
+          {
+            "option_id": "review-hvis-correct",
+            "text": "Hvis veiene er trygge, kjører vi.",
+            "why": "Hvis introduces the condition that controls whether they drive."
+          },
+          {
+            "option_id": "review-hvis-om",
+            "text": "Om veiene er trygge?",
+            "why": "This asks whether the roads are safe but does not state a plan that depends on that condition."
+          }
+        ],
+        "answer_id": "review-hvis-correct",
+        "stem": [
+          {
+            "kind": "strong",
+            "value": "Ida:"
+          },
+          {
+            "kind": "text",
+            "value": " «Det kan bli glatt i kveld.»"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_om_embedded_question",
+      "operation": "choose",
+      "objective_id": "obj-hvis-vs-om-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Aksel må avklare museets åpningstid før klokka elleve. Velg spørsmålet han kan sende."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "review-om-hvis",
+            "text": "Kan du sjekke hvis museet åpner før elleve?",
+            "why": "«Hvis» innleder et vilkår, ikke det indirekte ja/nei-spørsmålet han vil stille."
+          },
+          {
+            "option_id": "review-om-condition",
+            "text": "Hvis museet åpner før elleve, går vi inn.",
+            "why": "Dette sier hva som skjer hvis museet åpner tidlig, men spør ikke om åpningstiden."
+          },
+          {
+            "option_id": "review-om-correct",
+            "text": "Kan du sjekke om museet åpner før elleve?",
+            "why": "«Om» innleder det ubesvarte ja/nei-spørsmålet om museet åpner før klokka elleve."
+          }
+        ],
+        "answer_id": "review-om-correct",
+        "stem": [
+          {
+            "kind": "strong",
+            "value": "Aksel:"
+          },
+          {
+            "kind": "text",
+            "value": " «Jeg vil gjerne besøke museet før lunsj.»"
           }
         ]
       }
@@ -2391,7 +2473,9 @@
         "translation_error_repair",
         "dialogue_continuation",
         "new_plan_transfer",
-        "retrieval_and_review"
+        "retrieval_and_review",
+        "review_hvis_condition",
+        "review_om_embedded_question"
       ]
     }
   ],

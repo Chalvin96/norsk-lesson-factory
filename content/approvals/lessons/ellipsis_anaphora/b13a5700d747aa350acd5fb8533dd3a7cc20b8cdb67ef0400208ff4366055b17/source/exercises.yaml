@@ -1,0 +1,343 @@
+- handle: recover_omitted_meaning
+  op: recall_fill
+  objective: obj-ellipsis-anaphora-01
+  bloom: apply
+  prompt_md: Complete the shortened reply.
+  explanation_md: The repeated action is clear, so «kan ikke» keeps the modal and negation while omitting
+    «ta imot gjestene». «Skal ikke» changes ability to intention, while «vil ikke» changes it to willingness.
+  derived_from:
+  - section_id: omission
+  segments:
+  - text_md: 'Mina: Sanna kan levere nøkkelen etter møtet. Eirik: Omar har ikke anledning. Mina: Sanna kan levere
+      nøkkelen, men Omar '
+  - blank_id: omitted-action
+    options:
+    - kan ikke
+    - skal ikke
+    - vil ikke
+    answer_index: 0
+  - text_md: .
+  audio_target: 'Mina: Sanna kan levere nøkkelen etter møtet.
+
+    Eirik: Omar har ikke anledning.
+
+    Mina: Sanna kan levere nøkkelen, men Omar kan ikke.'
+- handle: package_fact_with_det
+  op: recall_fill
+  objective: obj-ellipsis-anaphora-01
+  bloom: apply
+  prompt_md: Complete the reaction.
+  explanation_md: «Det overrasket meg» reacts to the whole fact that everyone arrived on time. «Den» would
+    normally point to a masculine noun, while «gjorde det» would refer to carrying out an action.
+  derived_from:
+  - section_id: det-reference
+  segments:
+  - text_md: 'Mina: Møtet begynner en time tidligere enn planlagt. Eirik:'
+  - blank_id: fact-reaction
+    options:
+    - Det overrasket meg.
+    - Den overrasket meg.
+    - Jeg gjorde det.
+    answer_index: 0
+  audio_target: 'Mina: Møtet begynner en time tidligere enn planlagt.
+
+    Eirik: Det overrasket meg.'
+- handle: choose_det_or_gjore_det
+  op: recall_fill
+  objective: obj-ellipsis-anaphora-01
+  bloom: apply
+  prompt_md: Complete the two replies.
+  explanation_md: «Det» packages information that someone knows. «Gjør det» takes responsibility for the
+    named action; using only «det» would not express that commitment.
+  derived_from:
+  - section_id: gjore-det
+  segments:
+  - text_md: 'Mina: Arrangementet er avlyst. Eirik: Jeg vet '
+  - blank_id: information-reference
+    options:
+    - slik
+    - gjerne
+    - det
+    answer_index: 2
+  - text_md: '. Mina: Kan du avlyse reservasjonen også? Eirik: Jeg '
+  - blank_id: action-reference
+    options:
+    - er det nå
+    - gjør det nå
+    - vet det nå
+    answer_index: 1
+  - text_md: .
+  audio_target: 'Mina: Arrangementet er avlyst.
+
+    Eirik: Jeg vet det.
+
+    Mina: Kan du avlyse reservasjonen også?
+
+    Eirik: Jeg gjør det nå.'
+- handle: accept_with_gjerne
+  op: recall_fill
+  objective: obj-ellipsis-anaphora-01
+  bloom: apply
+  prompt_md: Complete the willing acceptance.
+  explanation_md: «Gjerne» willingly accepts the suggestion. «Samme her» shares a statement, while «det
+    tror jeg» agrees with information rather than accepting an activity.
+  derived_from:
+  - section_id: gjerne
+  segments:
+  - text_md: 'Eirik: Skal vi ta en kort pause før vi fortsetter? Mina:'
+  - blank_id: willing-acceptance
+    options:
+    - Gjerne.
+    - Samme her.
+    - Det tror jeg.
+    answer_index: 0
+  audio_target: 'Eirik: Skal vi ta en kort pause før vi fortsetter?
+
+    Mina: Gjerne.'
+- handle: share_reaction_with_samme_her
+  op: recall_fill
+  objective: obj-ellipsis-anaphora-01
+  bloom: apply
+  prompt_md: Complete the shared reaction.
+  explanation_md: «Samme her» says that the preference also applies to the second speaker. «Gjerne» accepts
+    an offer or suggestion, while «jeg gjør det» undertakes an action.
+  derived_from:
+  - section_id: samme-her
+  segments:
+  - text_md: 'Mina: Jeg liker best å jobbe tidlig om morgenen. Eirik:'
+  - blank_id: shared-preference
+    options:
+    - Samme her.
+    - Gjerne.
+    - Jeg gjør det.
+    answer_index: 0
+  audio_target: 'Mina: Jeg liker best å jobbe tidlig om morgenen.
+
+    Eirik: Samme her.'
+- handle: refer_to_method_with_slik
+  op: recall_fill
+  objective: obj-ellipsis-anaphora-01
+  bloom: apply
+  prompt_md: Complete the reply so it explicitly refers to the way the tables should be arranged, not just
+    to repeating the activity.
+  explanation_md: «Det slik igjen» viser tilbake til måten bordene ble satt på i fjor. Her brukes nye bord,
+    og prompten ber om et uttrykk som viser til plasseringen. «Det igjen» gjentar handlingen uten å angi
+    plasseringen like tydelig; «det annerledes» peker på en annen måte.
+  derived_from:
+  - section_id: slik
+  segments:
+  - text_md: 'Mina: I fjor satte vi de lange bordene langs veggene. I år bruker vi små, runde bord, men vil
+      ha dem på de samme stedene. Eirik: Da bør vi gjøre '
+  - blank_id: method-reference
+    options:
+    - det slik igjen
+    - det igjen
+    - det annerledes
+    answer_index: 0
+  - text_md: .
+  audio_target: 'Mina: I fjor satte vi de lange bordene langs veggene. I år bruker vi små, runde bord, men vil ha dem på de samme stedene. Eirik: Da bør vi gjøre det slik igjen.'
+- handle: integrated_cohesive_conversation
+  op: write
+  objective: obj-ellipsis-anaphora-01
+  bloom: apply
+  prompt_md: 'Melding fra Mina til Eirik: «Maten er bestilt. Kan du hente nøkkelen etter jobb? Jeg kan
+    gjøre det hvis du ikke har tid. I fjor satte vi langbord langs veggene. La oss bruke samme løsning.
+    Jeg er litt nervøs før middagen. Vil du gå gjennom planen sammen klokka fire?» Skriv Eiriks svar til
+    Mina i en melding på 55–80 ord: bekreft hva du vet, si hvem som henter nøkkelen, reager på nervøsiteten
+    med «samme her», godta planmøtet med «gjerne», og omtal bordløsningen med «slik» uten unødvendig gjentakelse.'
+  response_language: 'no'
+  judge_prompt: 'Vurder svaret bare etter kriteriene nedenfor. Et svar består når alle kriterier uten
+    suffikset «-observation» er oppfylt. Kriterier med «-observation» er diagnostiske og kan aldri føre
+    til underkjenning. Ankereksempler: Må bestå: «Takk for meldingen. Jeg vet at maten er bestilt, og
+    jeg henter nøkkelen etter jobb, så du slipper. Samme her, men det går nok fint. Jeg kan også ta med
+    serviettene. Klokka fire passer fint, og jeg blir gjerne med på å gå gjennom planen. Bordene
+    kan stå på samme måte som i fjor, og vi gjør det slik igjen.» Må underkjennes på content-coverage:
+    «Takk for meldingen. Vi snakkes senere.» Må underkjennes på no-repetition eller slik-reference: en
+    melding som gjentar hele bordoppsettet fra i fjor i stedet for å vise tilbake til det med «slik».
+    Rapporter en dom for hvert kriterium-id og legg ikke til andre krav.'
+  criteria:
+  - id: audience-purpose
+    instruction: Svaret er Eiriks melding til Mina som følger opp planleggingen.
+  - id: content-coverage
+    instruction: Svaret bekrefter matopplysningen, fordeler henting av nøkkelen, reagerer på nervøsiteten,
+      svarer på møtet klokka fire og omtaler bordløsningen.
+  - id: word-bound
+    instruction: Svaret inneholder 55–80 ord.
+  - id: clear-references
+    instruction: Det er tydelig hvilke opplysninger, handlinger og løsninger svaret viser tilbake til.
+  - id: no-repetition
+    instruction: Svaret viser tilbake til bordløsningen med en kort referanse i stedet for å gjenta hele
+      oppsettet.
+  - id: gjerne-acceptance
+    instruction: Svaret godtar planmøtet med «gjerne».
+  - id: samme-her
+    instruction: Svaret deler reaksjonen på nervøsiteten med «samme her».
+  - id: slik-reference
+    instruction: Svaret viser tilbake til måten bordene skal ordnes på med «slik».
+  - id: omission-observation
+    instruction: Registrer om svaret naturlig utelater en tydelig forstått handling; dette påvirker ikke
+      bestått.
+  - id: det-observation
+    instruction: Registrer om «det» naturlig viser tilbake til delt informasjon; dette påvirker ikke bestått.
+  - id: gjore-det-observation
+    instruction: Registrer om en form av «gjøre det» naturlig viser tilbake til en handling; dette påvirker
+      ikke bestått.
+  derived_from:
+  - section_id: back-at-community-centre
+- handle: retrieval_and_review
+  op: write
+  objective: obj-ellipsis-anaphora-01
+  bloom: apply
+  prompt_md: 'At a new volunteer event, briefly explain what each compact form refers to. Then write six short Norwegian replies, using omission, det, gjøre det, gjerne, samme her, and slik once each. Situations: Nora can arrange the chairs but Emil cannot; the organizer announces that doors open at ten; a volunteer asks you to carry the sign-in box after lunch; a friend suggests preparing name badges together; another volunteer says they feel nervous about welcoming new families; the team agrees to register guests before handing out badges and wants to use that same method at the next event. Keep each reference clear and natural.'
+  response_language: 'no'
+  min_words: 45
+  max_words: 100
+  judge_prompt: Evaluate form-explanation, omitted-action, det-fact, gjore-det-action, willing-acceptance, shared-reaction, manner-reference, and word-bound. Require six written responses with each target form used naturally once, and a brief accurate explanation of what each form refers to. Accept natural Bokmål variants; do not require exact model sentences.
+  criteria:
+  - id: form-explanation
+    instruction: Briefly explains that omission recovers an action from context; det points to shared information; gjøre det refers back to an action; gjerne accepts a suggestion; samme her shares a reaction; and slik refers to a method.
+  - id: omitted-action
+    instruction: Says Nora can arrange the chairs but Emil cannot, using a natural modal with the understood action omitted.
+  - id: det-fact
+    instruction: Reacts naturally to the announcement that the doors open at ten, using det to refer to that shared information.
+  - id: gjore-det-action
+    instruction: Accepts the request to carry the sign-in box after lunch and uses a natural form of gjøre det to refer to the action.
+  - id: willing-acceptance
+    instruction: Accepts the suggestion to prepare name badges together with a natural willing response.
+  - id: shared-reaction
+    instruction: Responds to the volunteer's nervousness with a natural expression that shares the same reaction.
+  - id: manner-reference
+    instruction: Refers to the agreed registration-and-badge sequence as a method to use again, with a natural form of slik and without repeating all the steps.
+  - id: word-bound
+    instruction: Contains 45–100 words.
+  explanation_md: The learner must retrieve each form and keep its reference clear in a new volunteer-event context.
+  derived_from:
+  - section_id: retrieval-review
+- handle: review_omission_modal
+  op: recall_fill
+  objective: obj-ellipsis-anaphora-01
+  bloom: apply
+  prompt_md: Complete the reply in 1–4 words.
+  explanation_md: The action «rydde lageret» is recoverable from the repeated clause, while «vil ikke»
+    expresses unwillingness and keeps the negation. «Kan ikke» would claim inability, and «må ikke» would
+    express a prohibition rather than unwillingness.
+  derived_from:
+  - section_id: omission
+  segments:
+  - text_md: 'Mina har tenkt å rydde lageret på fredag. Nora har lyst til å reise bort i stedet. Mina
+      har tenkt å rydde lageret på fredag, men Nora '
+  - blank_id: review-omission
+    options:
+    - vil ikke
+    - kan ikke
+    - må ikke
+    answer_index: 0
+  - text_md: .
+  audio_target: 'Mina har tenkt å rydde lageret på fredag.
+
+    Nora har lyst til å reise bort i stedet.
+
+    Mina har tenkt å rydde lageret på fredag, men Nora vil ikke.'
+- handle: review_det_fact
+  op: recall_fill
+  objective: obj-ellipsis-anaphora-01
+  bloom: apply
+  prompt_md: Complete the reply with one word.
+  explanation_md: The speaker knows the whole fact that the room is available. «Det» packages that shared
+    information.
+  derived_from:
+  - section_id: det-reference
+  segments:
+  - text_md: 'Eirik: Rommet er ledig fra klokka tre. Mina: Jeg vet '
+  - blank_id: review-det
+    options:
+    - det
+    - slik
+    - gjerne
+    answer_index: 0
+  - text_md: .
+  audio_target: 'Eirik: Rommet er ledig fra klokka tre.
+
+    Mina: Jeg vet det.'
+- handle: review_gjore_det_action
+  op: recall_fill
+  objective: obj-ellipsis-anaphora-01
+  bloom: apply
+  prompt_md: Complete the commitment in 1–4 words.
+  explanation_md: The cue names an unfinished action, and «gjør det» commits the speaker to carrying it
+    out now.
+  derived_from:
+  - section_id: gjore-det
+  segments:
+  - text_md: 'Mina: Ingen har ringt vaktmesteren ennå. Eirik: Jeg '
+  - blank_id: review-gjore-det
+    options:
+    - gjør det nå
+    - vet det nå
+    - gjorde det før
+    answer_index: 0
+  - text_md: .
+  audio_target: 'Mina: Ingen har ringt vaktmesteren ennå.
+
+    Eirik: Jeg gjør det nå.'
+- handle: review_gjerne_acceptance
+  op: recall_fill
+  objective: obj-ellipsis-anaphora-01
+  bloom: apply
+  prompt_md: Complete the willing acceptance in 1–4 words.
+  explanation_md: The first speaker makes an invitation, so «Ja, gjerne» accepts it willingly. The other
+    alternatives describe agreement or a shared state.
+  derived_from:
+  - section_id: gjerne
+  segments:
+  - text_md: 'Nora: Vil du spise sammen med oss etter dugnaden? Mina:'
+  - blank_id: review-gjerne
+    options:
+    - Ja, gjerne.
+    - Samme her.
+    - Det vet jeg.
+    answer_index: 0
+  audio_target: 'Nora: Vil du spise sammen med oss etter dugnaden?
+
+    Mina: Ja, gjerne.'
+- handle: review_samme_her_reaction
+  op: recall_fill
+  objective: obj-ellipsis-anaphora-01
+  bloom: apply
+  prompt_md: Complete the shared reaction in 1–4 words.
+  explanation_md: «Samme her» says the positive experience also applies to the second speaker; it does
+    not accept a request or undertake an action.
+  derived_from:
+  - section_id: samme-her
+  segments:
+  - text_md: 'Eirik: Jeg trives godt med denne gruppa. Mina:'
+  - blank_id: review-samme-her
+    options:
+    - Samme her.
+    - Gjerne.
+    - Jeg gjør det.
+    answer_index: 0
+  audio_target: 'Eirik: Jeg trives godt med denne gruppa.
+
+    Mina: Samme her.'
+- handle: review_slik_method
+  op: recall_fill
+  objective: obj-ellipsis-anaphora-01
+  bloom: apply
+  prompt_md: Complete the method reference with one word.
+  explanation_md: The preceding sentence describes how the guests are registered, so «slik» points to
+    that procedure.
+  derived_from:
+  - section_id: slik
+  segments:
+  - text_md: 'Nora skriver navnene på kort og sorterer kortene alfabetisk. Vi bør registrere gjestene '
+  - blank_id: review-slik
+    options:
+    - slik
+    - det
+    - gjerne
+    answer_index: 0
+  - text_md: ' igjen.'
+  audio_target: 'Nora skriver navnene på kort og sorterer kortene alfabetisk.
+
+    Vi bør registrere gjestene slik igjen.'

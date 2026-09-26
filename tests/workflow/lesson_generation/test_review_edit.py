@@ -250,6 +250,21 @@ def test_build_review_edit_prompt_given_minor_evidence_finding_expect_independen
     assert "Do not propose an edit merely because an `evidence-` finding appears" in normalized_prompt
 
 
+def test_build_review_edit_prompt_given_mechanical_preflight_expect_no_reconstruction_request() -> None:
+    prompt = review_module.build_review_edit_prompt(
+        lesson_md="# Lesson\n\nA short Norwegian lesson.",
+        exercises_yaml='- handle: recall-one\n  op: recall_fill\n  prompt_md: "Complete it."',
+        mechanical_audit=MechanicalAudit(
+            status="clean",
+            exercise_handles=["recall-one"],
+            marker_handles=["recall-one"],
+        ),
+    )
+
+    assert "Render every keyed recall answer" not in prompt
+    assert "Read every choose/recall/build/find_fix answer in its full visible context" in prompt
+
+
 def test_review_existing_package_given_pass_expect_safe_source_repair_only(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ):

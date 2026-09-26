@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "fordi_derfor_sa",
   "kind": "grammar",
   "language": "nb-NO",
@@ -70,10 +70,6 @@
       "id": "returning-to-mina-and-jonas"
     },
     {
-      "kind": "exercise",
-      "id": "dialogue_reconstruction"
-    },
-    {
       "kind": "section",
       "id": "transfer-to-a-new-situation"
     },
@@ -87,7 +83,39 @@
     },
     {
       "kind": "exercise",
-      "id": "final_three_form_retrieval"
+      "id": "follow_up_response_discrimination"
+    },
+    {
+      "kind": "exercise",
+      "id": "revise_dinner_message"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_fordi_word_order"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_derfor_inversion"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_sa_result_order"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_connector_meaning_choice"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_fordi_retrieval"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_derfor_retrieval"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_sa_retrieval"
     }
   ],
   "sections": [
@@ -2749,36 +2777,61 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Read three everyday cause-and-result situations. Choose the set that puts each result first, places the information answering why after fordi, and begins each reason clause at fordi. The scored evidence is cause-and-result meaning and connector choice; word order is context only."
+          "value": "Velg setningen som forklarer årsaken til det som skjer i dialogen."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Fordi» innleder årsaken til resultatet som står først."
+        }
+      ],
       "payload": {
         "options": [
           {
-            "option_id": "therefore-set",
-            "text": "Mina tok taxi. Derfor kom ikke bussen. Det regnet. Derfor ble vi hjemme. Nora følte seg ikke bra. Derfor dro hun tidlig. ",
-            "why": "This set uses derfor instead of a postposed fordi clause and reverses the first cause-and-result relation."
+            "option_id": "cause-reversed",
+            "text": "Den siste bussen skulle gå snart fordi Mina dro tidligere.",
+            "why": "This makes Mina's early departure the cause of the bus schedule."
           },
           {
-            "option_id": "correct-cause-set",
-            "text": "Mina tok taxi fordi bussen ikke kom. Vi ble hjemme fordi det regnet. Nora dro tidlig fordi hun ikke følte seg bra. ",
-            "why": "Each line puts the result first, then uses fordi to begin the reason that answers why."
+            "option_id": "result-instead",
+            "text": "Mina rakk møtet etter at hun dro tidligere.",
+            "why": "This describes a later event rather than the reason she left early."
           },
           {
-            "option_id": "so-set",
-            "text": "Mina tok taxi, så bussen ikke kom. Det regnet, så vi ble hjemme. Nora følte seg ikke bra, så hun dro tidlig. ",
-            "why": "This set uses så with cause-first order instead of the requested result-first fordi pattern."
+            "option_id": "cause-correct",
+            "text": "Mina dro tidligere fordi den siste bussen skulle gå snart.",
+            "why": "Fordi introduces the reason for the result stated before it."
           }
         ],
-        "answer_id": "correct-cause-set",
-        "stem": [
-          {
-            "kind": "text",
-            "value": "Which set correctly expresses these three relationships in Norwegian? 1. Mina took a taxi because the bus did not come. 2. We stayed home because it was raining. 3. Nora left early because she did not feel well."
-          }
-        ]
-      }
+        "answer_id": "cause-correct",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Jonas",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hvorfor dro du tidligere fra kurset?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Mina",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Den siste bussen skulle gå snart.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2788,13 +2841,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each Norwegian sentence. The meanings are: I took a taxi because the bus did not come; We ate at home because the restaurant was not open. Choose the subordinate clause after fordi. The scored form is fordi + subject + ikke + finite verb."
+          "value": "Fullfør setningene med årsaken etter «fordi»."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "After «fordi», use subordinate order with «ikke» before the finite verb. Sentence-initial «derfor» triggers verb–subject inversion, while result-linking «så» is followed by ordinary subject–verb order."
+          "value": "Etter «fordi» står «ikke» vanligvis foran det finitte verbet."
         }
       ],
       "payload": {
@@ -2804,7 +2857,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Jeg tok taxi fordi"
+                "value": "Bilen startet ikke. Vi tok ikke bilen fordi"
               },
               {
                 "kind": "text",
@@ -2816,8 +2869,8 @@
             "kind": "blank",
             "blank_id": "because-bus-clause",
             "options": [
-              "bussen ikke kom",
-              "bussen kom ikke"
+              "bilen ikke startet",
+              "bilen startet ikke"
             ],
             "answer_index": 0
           },
@@ -2826,7 +2879,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": ". Vi spiste hjemme fordi"
+                "value": ". Det var glatt. Hun gikk sakte fordi"
               },
               {
                 "kind": "text",
@@ -2838,10 +2891,10 @@
             "kind": "blank",
             "blank_id": "because-restaurant-clause",
             "options": [
-              "restauranten ikke var åpen",
-              "restauranten var ikke åpen"
+              "det var ikke strødd",
+              "det ikke var strødd"
             ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
@@ -2863,10 +2916,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each result sentence. The meanings are: The road was closed; therefore Mina took a taxi. The hotel was full; therefore we booked another room. After initial derfor, place the finite verb before the subject."
+          "value": "Fullfør setningene med konsekvensen etter «derfor»."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Når setningen begynner med «derfor», står det finitte verbet foran subjektet."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -2874,7 +2932,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Veien var stengt. Derfor"
+                "value": "Regnet økte. Derfor"
               },
               {
                 "kind": "text",
@@ -2886,8 +2944,8 @@
             "kind": "blank",
             "blank_id": "therefore-taxi-result",
             "options": [
-              "tok Mina taxi",
-              "Mina tok taxi"
+              "avlyste arrangøren konserten",
+              "arrangøren avlyste konserten"
             ],
             "answer_index": 0
           },
@@ -2896,7 +2954,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": ". Hotellet var fullt. Derfor"
+                "value": ". Alarmen gikk. Derfor"
               },
               {
                 "kind": "text",
@@ -2908,10 +2966,10 @@
             "kind": "blank",
             "blank_id": "therefore-room-result",
             "options": [
-              "bestilte vi et annet rom",
-              "vi bestilte et annet rom"
+              "alle forlot bygningen",
+              "forlot alle bygningen"
             ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
@@ -2923,7 +2981,23 @@
             ]
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Lærer",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hva ble konsekvensen i hver situasjon?»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2933,10 +3007,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each cause-and-result sentence. The meanings are: It was raining, so we took the bus. He could not find the keys, so he could not lock the door. After result-linking så, keep the subject before the finite verb and keep the finite verb before ikke in the result clause."
+          "value": "Fullfør setningene slik at «så» knytter situasjonen til resultatet."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Etter «så» som binder sammen årsak og resultat, står subjektet foran verbet i hovedsetningen."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -2944,7 +3023,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Det regnet, så"
+                "value": "Butikken stengte tidlig, så"
               },
               {
                 "kind": "text",
@@ -2956,8 +3035,8 @@
             "kind": "blank",
             "blank_id": "so-bus-result",
             "options": [
-              "vi tok bussen",
-              "tok vi bussen"
+              "vi kjøpte ikke melk",
+              "kjøpte vi ikke melk"
             ],
             "answer_index": 0
           },
@@ -2966,7 +3045,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": ". Han fant ikke nøklene, så"
+                "value": ". Sofie mistet stemmen, så"
               },
               {
                 "kind": "text",
@@ -2978,10 +3057,10 @@
             "kind": "blank",
             "blank_id": "so-key-result",
             "options": [
-              "han kunne ikke låse døra",
-              "han ikke kunne låse døra"
+              "hun ikke kunne synge",
+              "hun kunne ikke synge"
             ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
@@ -2993,7 +3072,23 @@
             ]
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Lærer",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hva skjedde som følge av hver situasjon?»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -3003,36 +3098,61 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Choose the set that matches each information order: result plus reason with fordi; cause plus a separate result beginning with Derfor; cause plus a directly linked result with så. Score connector meaning and information order; the verb positions are shown but are not the primary evidence."
+          "value": "Velg alternativet der setningene uttrykker riktig årsak eller konsekvens. Her skal «så» knytte årsak til resultat."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Fordi» innleder årsaken etter resultatet. «Derfor» først gir inversjon i den nye hovedsetningen. «Så» binder årsak og resultat sammen med vanlig hovedsetningsordstilling."
+        }
+      ],
       "payload": {
         "options": [
           {
+            "option_id": "sa-order-error",
+            "text": "Vi flyttet møtet fordi rommet var dobbeltbooket. Rommet var dobbeltbooket. Derfor flyttet vi møtet. Rommet var dobbeltbooket, så flyttet vi møtet.",
+            "why": "After result-linking så, the result clause keeps subject–verb order."
+          },
+          {
             "option_id": "correct-three-connectors",
-            "text": "Vi avlyste turen fordi været var dårlig. Været var dårlig. Derfor avlyste vi turen. Været var dårlig, så vi avlyste turen. ",
-            "why": "The three lines use fordi for a following reason, derfor for a separate consequence, and så for a directly linked result."
+            "text": "Vi flyttet møtet fordi rommet var dobbeltbooket. Rommet var dobbeltbooket. Derfor flyttet vi møtet. Rommet var dobbeltbooket, så vi flyttet møtet.",
+            "why": "Fordi gives the reason after the result, sentence-initial derfor takes verb–subject order, and så links the cause to its result with subject–verb order."
           },
           {
-            "option_id": "swapped-result-connectors",
-            "text": "Vi avlyste turen fordi været var dårlig. Været var dårlig, så vi avlyste turen. Været var dårlig. Derfor avlyste vi turen. ",
-            "why": "The second and third lines assign så and derfor to the wrong information orders."
-          },
-          {
-            "option_id": "reversed-reason",
-            "text": "Været var dårlig fordi vi avlyste turen. Været var dårlig. Derfor avlyste vi turen. Været var dårlig, så vi avlyste turen. ",
-            "why": "The first line reverses the intended result-and-reason relationship instead of placing the result before its fordi-clause."
+            "option_id": "derfor-order-error",
+            "text": "Vi flyttet møtet fordi rommet var dobbeltbooket. Rommet var dobbeltbooket. Derfor vi flyttet møtet. Rommet var dobbeltbooket, så vi flyttet møtet.",
+            "why": "After sentence-initial derfor the finite verb must come before the subject."
           }
         ],
         "answer_id": "correct-three-connectors",
-        "stem": [
-          {
-            "kind": "text",
-            "value": "Which set correctly expresses these three relationships in Norwegian? 1. We canceled the trip because the weather was bad. 2. The weather was bad. Therefore, we canceled the trip. 3. The weather was bad, so we canceled the trip."
-          }
-        ]
-      }
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Jonas",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hvorfor flyttet dere møtet?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Mina",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Rommet var dobbeltbooket.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -3042,35 +3162,30 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Build the Norwegian sentence meaning I went home because I did not feel well. Use every token exactly once. Show the postposed reason with fordi and subordinate order with ikke before the finite verb."
+          "value": "Sett sammen én setning på norsk av ordene du får. Den skal forklare hvorfor jeg var trøtt, med opplysningen om for lite søvn."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Resultatet kommer først. «Fordi» innleder årsaken, der «ikke» står foran det finitte verbet."
+        }
+      ],
       "payload": {
         "tokens": [
           {
-            "token_id": "c-1",
-            "text": "Jeg",
-            "fixed": false
-          },
-          {
-            "token_id": "c-2",
-            "text": "gikk",
-            "fixed": false
-          },
-          {
-            "token_id": "c-3",
-            "text": "hjem",
-            "fixed": false
-          },
-          {
-            "token_id": "c-4",
-            "text": "fordi",
-            "fixed": false
-          },
-          {
             "token_id": "c-5",
             "text": "jeg",
+            "fixed": false
+          },
+          {
+            "token_id": "c-8",
+            "text": "sovet",
+            "fixed": false
+          },
+          {
+            "token_id": "c-1",
+            "text": "Jeg",
             "fixed": false
           },
           {
@@ -3079,18 +3194,28 @@
             "fixed": false
           },
           {
-            "token_id": "c-7",
-            "text": "følte",
-            "fixed": false
-          },
-          {
-            "token_id": "c-8",
-            "text": "meg",
+            "token_id": "c-3",
+            "text": "trøtt",
             "fixed": false
           },
           {
             "token_id": "c-9",
-            "text": "bra.",
+            "text": "nok.",
+            "fixed": false
+          },
+          {
+            "token_id": "c-2",
+            "text": "var",
+            "fixed": false
+          },
+          {
+            "token_id": "c-7",
+            "text": "hadde",
+            "fixed": false
+          },
+          {
+            "token_id": "c-4",
+            "text": "fordi",
             "fixed": false
           }
         ],
@@ -3109,390 +3234,725 @@
     },
     {
       "kind": "exercise",
-      "id": "dialogue_reconstruction",
-      "operation": "build",
-      "objective_id": "obj-fordi-derfor-sa-01",
-      "prompt": [
-        {
-          "kind": "text",
-          "value": "Reconstruct four Norwegian utterances from Mina and Jonas's follow-up exchange in this order: Mina gives a reason for being nervous; Jonas links a clear explanation to its result; Mina states that the client asked questions; Mina highlights the consequence with a sentence-initial result marker. Use every token exactly once. Preserve the appropriate connector and verb position in each utterance. Punctuation is attached to tokens."
-        }
-      ],
-      "explanation": null,
-      "payload": {
-        "tokens": [
-          {
-            "token_id": "d-1",
-            "text": "Ja,",
-            "fixed": false
-          },
-          {
-            "token_id": "d-2",
-            "text": "men",
-            "fixed": false
-          },
-          {
-            "token_id": "d-3",
-            "text": "jeg",
-            "fixed": false
-          },
-          {
-            "token_id": "d-4",
-            "text": "var",
-            "fixed": false
-          },
-          {
-            "token_id": "d-5",
-            "text": "nervøs",
-            "fixed": false
-          },
-          {
-            "token_id": "d-6",
-            "text": "fordi",
-            "fixed": false
-          },
-          {
-            "token_id": "d-7",
-            "text": "jeg",
-            "fixed": false
-          },
-          {
-            "token_id": "d-8",
-            "text": "ikke",
-            "fixed": false
-          },
-          {
-            "token_id": "d-9",
-            "text": "hadde",
-            "fixed": false
-          },
-          {
-            "token_id": "d-10",
-            "text": "lest",
-            "fixed": false
-          },
-          {
-            "token_id": "d-11",
-            "text": "den",
-            "fixed": false
-          },
-          {
-            "token_id": "d-12",
-            "text": "siste",
-            "fixed": false
-          },
-          {
-            "token_id": "d-13",
-            "text": "rapporten.",
-            "fixed": false
-          },
-          {
-            "token_id": "d-14",
-            "text": "Du",
-            "fixed": false
-          },
-          {
-            "token_id": "d-15",
-            "text": "forklarte",
-            "fixed": false
-          },
-          {
-            "token_id": "d-16",
-            "text": "prosjektet",
-            "fixed": false
-          },
-          {
-            "token_id": "d-17",
-            "text": "tydelig,",
-            "fixed": false
-          },
-          {
-            "token_id": "d-18",
-            "text": "så",
-            "fixed": false
-          },
-          {
-            "token_id": "d-19",
-            "text": "alle",
-            "fixed": false
-          },
-          {
-            "token_id": "d-20",
-            "text": "forsto",
-            "fixed": false
-          },
-          {
-            "token_id": "d-21",
-            "text": "planen.",
-            "fixed": false
-          },
-          {
-            "token_id": "d-22",
-            "text": "Kunden",
-            "fixed": false
-          },
-          {
-            "token_id": "d-23",
-            "text": "stilte",
-            "fixed": false
-          },
-          {
-            "token_id": "d-24",
-            "text": "mange",
-            "fixed": false
-          },
-          {
-            "token_id": "d-25",
-            "text": "spørsmål.",
-            "fixed": false
-          },
-          {
-            "token_id": "d-26",
-            "text": "Derfor",
-            "fixed": false
-          },
-          {
-            "token_id": "d-27",
-            "text": "varte",
-            "fixed": false
-          },
-          {
-            "token_id": "d-28",
-            "text": "møtet",
-            "fixed": false
-          },
-          {
-            "token_id": "d-29",
-            "text": "lenger",
-            "fixed": false
-          },
-          {
-            "token_id": "d-30",
-            "text": "enn",
-            "fixed": false
-          },
-          {
-            "token_id": "d-31",
-            "text": "planlagt.",
-            "fixed": false
-          }
-        ],
-        "answer_order": [
-          "d-1",
-          "d-2",
-          "d-3",
-          "d-4",
-          "d-5",
-          "d-6",
-          "d-7",
-          "d-8",
-          "d-9",
-          "d-10",
-          "d-11",
-          "d-12",
-          "d-13",
-          "d-14",
-          "d-15",
-          "d-16",
-          "d-17",
-          "d-18",
-          "d-19",
-          "d-20",
-          "d-21",
-          "d-22",
-          "d-23",
-          "d-24",
-          "d-25",
-          "d-26",
-          "d-27",
-          "d-28",
-          "d-29",
-          "d-30",
-          "d-31"
-        ]
-      }
-    },
-    {
-      "kind": "exercise",
       "id": "dinner_plan_transfer",
       "operation": "write",
       "objective_id": "obj-fordi-derfor-sa-01",
       "prompt": [
         {
           "kind": "text",
-          "value": "Emil planned to cook dinner, but his oven stopped working. He ordered food from a restaurant. The delivery arrived late, and dinner was delayed. The guests were hungry and ate bread while they waited. Write three connected Norwegian sentences about these events. Use each of fordi, derfor, and så once, and begin one sentence with derfor. Decide which connector fits each relationship and form the complete clauses yourself."
+          "value": "Skriv en melding til gjestene om forsinkelsen og middagsplanen. Bruk minst to av «fordi», «derfor» og «så»."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 20,
-        "max_words": 65,
-        "judge_prompt": "Check three connected Norwegian sentences against the supplied dinner facts. Require fordi to express a coherent reason with subordinate-clause word order, sentence-initial derfor with main-clause V2 to express a consequence, and så linking a subject-first result clause. Accept any factually coherent mapping among the supplied events and natural Bokmål lexical variants.",
+        "min_words": 35,
+        "max_words": 55,
+        "judge_prompt": "Check criteria message-purpose, uses-connectors, supplied-facts, and connector word order. A response fails if it uses fordi, derfor, or så with incorrect word order.",
         "criteria": [
           {
-            "id": "reason-with-fordi",
-            "instruction": "Uses fordi with correct subordinate-clause order to express a coherent reason relationship among the supplied facts."
+            "id": "message-purpose",
+            "instruction": "The response is a message to the guests that explains the delay and communicates the dinner plan."
           },
           {
-            "id": "consequence-with-derfor",
-            "instruction": "Begins one sentence with derfor and uses correct V2 order to express a coherent consequence of a preceding supplied fact."
+            "id": "uses-connectors",
+            "instruction": "The response uses at least two of fordi, derfor, and så to connect the reason and the result."
           },
           {
-            "id": "result-with-sa",
-            "instruction": "Uses så with a subject-first result clause to connect two supplied facts coherently."
+            "id": "supplied-facts",
+            "instruction": "The response remains consistent with the supplied facts and does not invent a conflicting account."
           },
           {
-            "id": "connected-factual-account",
-            "instruction": "Keeps the three-sentence account coherent and consistent with the supplied dinner facts."
+            "id": "fordi-order-observation",
+            "instruction": "If the learner uses fordi, its clause must have appropriate subordinate-clause word order."
+          },
+          {
+            "id": "derfor-order-observation",
+            "instruction": "If the learner uses sentence-initial derfor, the finite verb must precede the subject."
+          },
+          {
+            "id": "sa-order-observation",
+            "instruction": "If the learner uses result-linking så, the following result clause must have appropriate main-clause word order."
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Gjest",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Når blir middagen klar? Vi er sultne.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Emil",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Ovnen sluttet å virke. Jeg bestilte mat fra en restaurant, men leveringen kom sent.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "follow_up_response_discrimination",
+      "operation": "choose",
+      "objective_id": "obj-fordi-derfor-sa-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg svaret som passer til Eriks spørsmål."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Svaret gir den oppgitte årsaken. I en fordi-setning står «ikke» foran det finitte verbet."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "follow-up-reversed",
+            "text": "Jeg kom for sent fordi jeg måtte ta en omvei.",
+            "why": "This says the detour caused lateness, rather than giving the reason for the detour."
+          },
+          {
+            "option_id": "follow-up-correct",
+            "text": "Jeg måtte ta en omvei fordi brua ikke var åpen.",
+            "why": "The reply states the result and gives the reason with subordinate-clause word order."
+          },
+          {
+            "option_id": "follow-up-main-order",
+            "text": "Jeg måtte ta en omvei fordi brua var ikke åpen.",
+            "why": "This preserves main-clause placement of ikke after var inside the fordi-clause."
+          }
+        ],
+        "answer_id": "follow-up-correct",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Erik",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hvorfor måtte du ta en omvei?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Liv",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Brua var stengt.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "revise_dinner_message",
+      "operation": "choose",
+      "objective_id": "obj-fordi-derfor-sa-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg den rettede meldingen. Her skal «så» knytte årsak til resultat."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Med «derfor» først står det finitte verbet foran subjektet. Etter «så» i betydningen «derfor» følger subjektet før det finitte verbet."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "revise-sa-only",
+            "text": "Ovnen virker ikke. Derfor jeg bestilte mat. Leveringen er sen, så middagen blir forsinket.",
+            "why": "The så-clause is repaired, but the sentence beginning with derfor still lacks V2 inversion."
+          },
+          {
+            "option_id": "revise-correct",
+            "text": "Ovnen virker ikke. Derfor bestilte jeg mat. Leveringen er sen, så middagen blir forsinket.",
+            "why": "Derfor has verb–subject order, while the result clause after så has subject–verb order."
+          },
+          {
+            "option_id": "revise-derfor-only",
+            "text": "Ovnen virker ikke. Derfor bestilte jeg mat. Leveringen er sen, så blir middagen forsinket.",
+            "why": "The derfor-clause is repaired, but the result clause after så still has inversion."
+          }
+        ],
+        "answer_id": "revise-correct",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "«Ovnen virker ikke. Derfor jeg bestilte mat. Leveringen er sen, så blir middagen forsinket.»"
           }
         ]
       }
     },
     {
       "kind": "exercise",
-      "id": "final_three_form_retrieval",
-      "operation": "build",
+      "id": "review_fordi_word_order",
+      "operation": "recall_fill",
       "objective_id": "obj-fordi-derfor-sa-01",
       "prompt": [
         {
           "kind": "text",
-          "value": "Build one Norwegian retrieval response expressing the same transport relationship in three forms: first Jonas arrived late because the train was delayed; next state the cause and consequence with a separate sentence followed by sentence-initial Derfor; finally connect the cause and result with så. Use every token exactly once and preserve each word-order pattern. Punctuation is attached to tokens."
+          "value": "Fullfør setningene med årsaken etter «fordi»."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "I en fordi-setning står «ikke» vanligvis foran det finitte verbet."
+        }
+      ],
       "payload": {
-        "tokens": [
+        "segments": [
           {
-            "token_id": "f-1",
-            "text": "Jonas",
-            "fixed": false
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Møtet ble kort. Hun gikk tidlig fordi"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
           },
           {
-            "token_id": "f-2",
-            "text": "kom",
-            "fixed": false
+            "kind": "blank",
+            "blank_id": "review-because-meeting-clause",
+            "options": [
+              "møtet ikke varte lenge",
+              "møtet varte ikke lenge"
+            ],
+            "answer_index": 0
           },
           {
-            "token_id": "f-3",
-            "text": "sent",
-            "fixed": false
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Regnet sluttet aldri. Vi ventet inne fordi"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
           },
           {
-            "token_id": "f-4",
-            "text": "fordi",
-            "fixed": false
+            "kind": "blank",
+            "blank_id": "review-because-rain-clause",
+            "options": [
+              "regnet ga seg ikke",
+              "regnet ikke ga seg"
+            ],
+            "answer_index": 1
           },
           {
-            "token_id": "f-5",
-            "text": "toget",
-            "fixed": false
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "."
+              }
+            ]
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Lærer",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hvorfor gikk hun tidlig, og hvorfor ventet de inne?»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_derfor_inversion",
+      "operation": "recall_fill",
+      "objective_id": "obj-fordi-derfor-sa-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fullfør setningene med konsekvensen etter «derfor»."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Setningsinitialt «derfor» gir V2-ordstilling: det finitte verbet står foran subjektet."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Solen var sterk. Derfor"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
           },
           {
-            "token_id": "f-6",
-            "text": "var",
-            "fixed": false
+            "kind": "blank",
+            "blank_id": "review-therefore-ice-result",
+            "options": [
+              "kjøpte vi is",
+              "vi kjøpte is"
+            ],
+            "answer_index": 0
           },
           {
-            "token_id": "f-7",
-            "text": "forsinket.",
-            "fixed": false
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Butikken var stengt. Derfor"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
           },
           {
-            "token_id": "f-8",
-            "text": "Toget",
-            "fixed": false
+            "kind": "blank",
+            "blank_id": "review-therefore-home-result",
+            "options": [
+              "vi dro hjem",
+              "dro vi hjem"
+            ],
+            "answer_index": 1
           },
           {
-            "token_id": "f-9",
-            "text": "var",
-            "fixed": false
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "."
+              }
+            ]
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Lærer",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hva gjorde dere på grunn av solen og den stengte butikken?»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_sa_result_order",
+      "operation": "recall_fill",
+      "objective_id": "obj-fordi-derfor-sa-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fullfør setningene slik at «så» knytter situasjonen til resultatet."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Etter «så» som innleder et resultat, følger hovedsetningen med subjekt først."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Bilen var gammel, så"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
           },
           {
-            "token_id": "f-10",
-            "text": "forsinket.",
-            "fixed": false
+            "kind": "blank",
+            "blank_id": "review-so-car-result",
+            "options": [
+              "den startet ikke",
+              "startet den ikke"
+            ],
+            "answer_index": 0
           },
           {
-            "token_id": "f-11",
-            "text": "Derfor",
-            "fixed": false
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Kaffen var kald, så"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
           },
           {
-            "token_id": "f-12",
-            "text": "kom",
-            "fixed": false
+            "kind": "blank",
+            "blank_id": "review-so-coffee-result",
+            "options": [
+              "lagde vi ny",
+              "vi lagde ny"
+            ],
+            "answer_index": 1
           },
           {
-            "token_id": "f-13",
-            "text": "Jonas",
-            "fixed": false
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "."
+              }
+            ]
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Lærer",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hva skjedde med bilen og kaffen?»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_connector_meaning_choice",
+      "operation": "choose",
+      "objective_id": "obj-fordi-derfor-sa-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg alternativet der setningene uttrykker riktig årsak eller konsekvens. Her skal «så» knytte årsak til resultat."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Fordi» innleder årsaken etter resultatet. Med «derfor» først står verbet foran subjektet. «Så» binder sammen årsak og resultat med vanlig hovedsetningsordstilling."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "review-derfor-order-error",
+            "text": "Vi kjøpte en ny bil fordi den gamle bilen brøt sammen. Den gamle bilen brøt sammen. Derfor vi kjøpte en ny bil. Den gamle bilen brøt sammen, så vi kjøpte en ny bil.",
+            "why": "After sentence-initial derfor the finite verb must come before the subject."
           },
           {
-            "token_id": "f-14",
-            "text": "sent.",
-            "fixed": false
+            "option_id": "review-sa-order-error",
+            "text": "Vi kjøpte en ny bil fordi den gamle bilen brøt sammen. Den gamle bilen brøt sammen. Derfor kjøpte vi en ny bil. Den gamle bilen brøt sammen, så kjøpte vi en ny bil.",
+            "why": "After result-linking så the clause keeps subject–verb order, so kjøpte vi is wrong."
           },
           {
-            "token_id": "f-15",
-            "text": "Toget",
-            "fixed": false
-          },
-          {
-            "token_id": "f-16",
-            "text": "var",
-            "fixed": false
-          },
-          {
-            "token_id": "f-17",
-            "text": "forsinket,",
-            "fixed": false
-          },
-          {
-            "token_id": "f-18",
-            "text": "så",
-            "fixed": false
-          },
-          {
-            "token_id": "f-19",
-            "text": "Jonas",
-            "fixed": false
-          },
-          {
-            "token_id": "f-20",
-            "text": "kom",
-            "fixed": false
-          },
-          {
-            "token_id": "f-21",
-            "text": "sent.",
-            "fixed": false
+            "option_id": "review-correct-three-connectors",
+            "text": "Vi kjøpte en ny bil fordi den gamle bilen brøt sammen. Den gamle bilen brøt sammen. Derfor kjøpte vi en ny bil. Den gamle bilen brøt sammen, så vi kjøpte en ny bil.",
+            "why": "Fordi gives the reason after the result, sentence-initial derfor takes verb–subject order, and så links the cause to its result with subject–verb order."
           }
         ],
-        "answer_order": [
-          "f-1",
-          "f-2",
-          "f-3",
-          "f-4",
-          "f-5",
-          "f-6",
-          "f-7",
-          "f-8",
-          "f-9",
-          "f-10",
-          "f-11",
-          "f-12",
-          "f-13",
-          "f-14",
-          "f-15",
-          "f-16",
-          "f-17",
-          "f-18",
-          "f-19",
-          "f-20",
-          "f-21"
+        "answer_id": "review-correct-three-connectors",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Jonas",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hvorfor kjøpte dere en ny bil?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Mina",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Den gamle bilen brøt sammen.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_fordi_retrieval",
+      "operation": "recall_fill",
+      "objective_id": "obj-fordi-derfor-sa-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fullfør setningen med årsaken etter «fordi»."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "I fordi-setningen står «ikke» foran det finitte verbet «gikk»."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Jonas kom sent. Toget var forsinket. Jonas kom sent fordi"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-train-reason",
+            "options": [
+              "toget ikke gikk i tide",
+              "toget gikk ikke i tide"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "."
+              }
+            ]
+          }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Lærer",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hvorfor kom Jonas sent?»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_derfor_retrieval",
+      "operation": "recall_fill",
+      "objective_id": "obj-fordi-derfor-sa-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fullfør setningen med konsekvensen etter «derfor»."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Når derfor står først, kommer det finitte verbet rakk før subjektet Sara."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Bussen var forsinket. Derfor"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-train-consequence",
+            "options": [
+              "rakk Sara ikke møtet",
+              "Sara rakk ikke møtet"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "."
+              }
+            ]
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Lærer",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hva ble konsekvensen av forsinkelsen?»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_sa_retrieval",
+      "operation": "recall_fill",
+      "objective_id": "obj-fordi-derfor-sa-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fullfør setningen slik at «så» knytter situasjonen til resultatet."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Etter «så» som innleder et resultat, kommer subjektet først i hovedsetningen."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Bussen var forsinket, så"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-train-linked-result",
+            "options": [
+              "Mari kom sent",
+              "kom Mari sent"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "."
+              }
+            ]
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Lærer",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hva skjedde som følge av forsinkelsen?»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "practice_groups": [
@@ -3506,9 +3966,16 @@
         "sa_result_order",
         "connector_meaning_choice",
         "connector_and_verb_position",
-        "dialogue_reconstruction",
         "dinner_plan_transfer",
-        "final_three_form_retrieval"
+        "follow_up_response_discrimination",
+        "revise_dinner_message",
+        "review_fordi_word_order",
+        "review_derfor_inversion",
+        "review_sa_result_order",
+        "review_connector_meaning_choice",
+        "review_fordi_retrieval",
+        "review_derfor_retrieval",
+        "review_sa_retrieval"
       ]
     }
   ],

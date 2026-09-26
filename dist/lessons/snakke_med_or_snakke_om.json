@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "snakke_med_or_snakke_om",
   "kind": "phraseology",
   "language": "nb-NO",
@@ -96,6 +96,42 @@
     {
       "kind": "exercise",
       "id": "retrieval_and_review"
+    },
+    {
+      "kind": "exercise",
+      "id": "contrast_same_person_role"
+    },
+    {
+      "kind": "exercise",
+      "id": "full_response_role_discrimination"
+    },
+    {
+      "kind": "exercise",
+      "id": "question_role_recognition"
+    },
+    {
+      "kind": "exercise",
+      "id": "question_contrast_supported"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_partner_med"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_topic_om"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_combined_roles"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_partner_question"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_topic_question"
     }
   ],
   "sections": [
@@ -2882,13 +2918,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Classify each Norwegian sentence as naming a conversation partner or a topic. Use the role introduced by med or om."
+          "value": "Sort the sentences by whether they show who the conversation is with or what it is about."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Snakke med names the conversation partner; snakke om names the topic."
+          "value": "«Med» viser hvem som deltar i samtalen. «Om» viser hva eller hvem samtalen handler om."
         }
       ],
       "payload": {
@@ -2905,32 +2941,32 @@
         "items": [
           {
             "item_id": "item-1",
-            "text": "Mina snakker med Ingrid.",
+            "text": "Mina snakker med [Ingrid].",
             "bucket_id": "conversation-partner"
           },
           {
             "item_id": "item-2",
-            "text": "Jonas snakker om rommet.",
+            "text": "Jonas snakker om [rommet].",
             "bucket_id": "topic"
           },
           {
             "item_id": "item-3",
-            "text": "Mina snakker om Jonas.",
+            "text": "Mina snakker om [Jonas].",
             "bucket_id": "topic"
           },
           {
             "item_id": "item-4",
-            "text": "Vi snakker med frivillige.",
+            "text": "Vi snakker med [de frivillige].",
             "bucket_id": "conversation-partner"
           },
           {
             "item_id": "item-5",
-            "text": "Vi snakker om maten.",
+            "text": "Ingrid snakker om [vaktmesteren].",
             "bucket_id": "topic"
           },
           {
             "item_id": "item-6",
-            "text": "Jonas snakker med Ingrid.",
+            "text": "Jonas snakker med [vaktmesteren].",
             "bucket_id": "conversation-partner"
           }
         ]
@@ -2944,10 +2980,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each event-planning sentence by choosing med or om in every blank. Use the role in the sentence, not the type of noun."
+          "value": "Fill in «med» or «om» in each sentence."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Bruk «med» om en deltaker i samtalen og «om» om temaet. Se på Ingrids rolle i situasjonen."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -2955,7 +2996,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Mina snakker"
+                "value": "Ingrid deltar i samtalen. Mina snakker"
               },
               {
                 "kind": "text",
@@ -2981,7 +3022,7 @@
               },
               {
                 "kind": "text",
-                "value": "Ingrid. Jonas snakker"
+                "value": "Ingrid. Rommet er temaet. Jonas snakker"
               },
               {
                 "kind": "text",
@@ -3007,7 +3048,7 @@
               },
               {
                 "kind": "text",
-                "value": "rommet. Mina snakker"
+                "value": "rommet. Jonas er ikke til stede, men de diskuterer ham. Mina snakker"
               },
               {
                 "kind": "text",
@@ -3033,7 +3074,7 @@
               },
               {
                 "kind": "text",
-                "value": "Jonas. Vi snakker"
+                "value": "Jonas. De frivillige deltar i samtalen. Maten er temaet. Vi snakker"
               },
               {
                 "kind": "text",
@@ -3059,7 +3100,7 @@
               },
               {
                 "kind": "text",
-                "value": "frivillige"
+                "value": "de frivillige"
               },
               {
                 "kind": "text",
@@ -3100,23 +3141,31 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write two questions in Norwegian. First, Mina is speaking, but the conversation partner is unknown: ask who she is speaking with. Second, Jonas is speaking, but the topic is unknown: ask what or whom he is speaking about. Use natural Bokmål and the taught question patterns."
+          "value": "Message from Mina: «Jeg snakker med noen om rommet. Jonas snakker med Ingrid om noe annet.» Reply to Mina with two questions to find out who she is speaking with and what Jonas is talking about."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 6,
+        "min_words": 8,
         "max_words": 20,
-        "judge_prompt": "Check for two natural Bokmål questions and report evidence for each criterion. Accept natural word order and inflection. The first question must ask for a partner with hvem ... med? The second may ask for a thing with hva ... om? or a person with hvem ... om?.",
+        "judge_prompt": "Evaluate partner-question-form, topic-question-form as gating criteria. Record partner-information-observation and topic-information-observation diagnostically; an observation must not make an otherwise successful answer fail.",
         "criteria": [
           {
-            "id": "partner-question",
-            "instruction": "Uses hvem ... med? to ask for Mina's missing conversation partner."
+            "id": "partner-question-form",
+            "instruction": "The reply asks who Mina is speaking with using a natural hvem ... med pattern."
           },
           {
-            "id": "topic-question",
-            "instruction": "Uses hva ... om? or hvem ... om? to ask for Jonas's missing topic."
+            "id": "topic-question-form",
+            "instruction": "The reply asks what or whom Jonas is discussing using a natural hva/hvem ... om pattern."
+          },
+          {
+            "id": "partner-information-observation",
+            "instruction": "Observe whether the reply asks Mina who her conversation partner is; this is diagnostic only."
+          },
+          {
+            "id": "topic-information-observation",
+            "instruction": "Observe whether the reply asks what or whom Jonas is discussing; this is diagnostic only."
           }
         ]
       }
@@ -3129,10 +3178,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Select the one token that is wrong/needs changing."
+          "value": "The sentence should mean that Mina is speaking with Jonas and the conversation is about Ingrid. Choose the word that needs to change."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Jonas deltar i samtalen, mens Ingrid er personen de snakker om. Derfor må det andre «med» endres til «om»."
+        }
+      ],
       "payload": {
         "tokens": [
           {
@@ -3161,7 +3215,7 @@
           }
         ],
         "error_token_id": "tok-5",
-        "feedback": "Replace the second med with om. Correct sentence: Mina snakker med Jonas om Ingrid."
+        "feedback": "Replace the second med with om: Mina snakker med Jonas om Ingrid."
       }
     },
     {
@@ -3172,31 +3226,31 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write three short Norwegian messages for these new situations. First, arrange a meeting and say that you need to speak with Ingrid. Second, contact a teacher about the schedule and identify the topic with snakke om. Third, ask a colleague for information about a household problem and show both roles with snakke med ... om .... Keep each message focused on its situation."
+          "value": "Write a message to your colleague Sara. Ask for help before a meeting. You are meeting the principal to discuss the new timetable. Tuesday works best. Ask if Sara can come."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 18,
-        "max_words": 50,
-        "judge_prompt": "Check all three Norwegian messages against the situations and report evidence for each criterion. Accept natural Bokmål wording and equivalent inflection, but require the requested partner and topic roles to remain clear.",
+        "min_words": 30,
+        "max_words": 55,
+        "judge_prompt": "Evaluate audience-purpose, required-facts, request, and partner-topic-marking criteria as gating criteria. Require natural Norwegian forms that mark the principal as a conversation participant and the new schedule as the topic; accept natural word order and inflection.",
         "criteria": [
           {
-            "id": "message-one-partner",
-            "instruction": "Message 1 clearly identifies Ingrid as the conversation partner with snakke med."
+            "id": "audience-purpose",
+            "instruction": "The response is a coherent Norwegian message to Sara asking for help before a meeting."
           },
           {
-            "id": "message-two-topic",
-            "instruction": "Message 2 clearly identifies timeplanen as the topic with snakke om."
+            "id": "required-facts",
+            "instruction": "The message conveys that the writer needs a conversation with the principal about the new schedule and prefers Tuesday."
           },
           {
-            "id": "message-three-both",
-            "instruction": "Message 3 clearly identifies a colleague as partner and a household problem as topic with snakke med ... om ...."
+            "id": "request",
+            "instruction": "The message asks whether Sara can join."
           },
           {
-            "id": "role-clarity",
-            "instruction": "Across the messages, clearly shows who participates, what the conversation concerns, or both, without confusing med and om."
+            "id": "partner-topic-marking",
+            "instruction": "The message clearly marks the principal as the conversation partner and the new schedule as the topic, using appropriate forms of snakke with the appropriate prepositions."
           }
         ]
       }
@@ -3209,39 +3263,411 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write five short Norwegian lines: one sentence naming only a conversation partner with snakke med; one sentence naming only a topic with snakke om; one sentence combining both roles with snakke med ... om ..., using a person as both partner and topic; one question asking who someone is speaking with; and one question asking what or whom someone is speaking about. Keep partner and topic distinct."
+          "value": "Write five short lines in Norwegian to a classmate: one sentence with only a conversation partner, one with only a topic, one with both, one question asking who someone is speaking with, and one asking what or who someone is speaking about. Use «snakke med» and «snakke om»."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 15,
+        "min_words": 20,
         "max_words": 50,
-        "judge_prompt": "Check for five separate Norwegian lines and report evidence for each criterion. Accept natural Bokmål wording and equivalent names or topics. Require med to introduce the partner and om to introduce the topic, including when both are people.",
+        "judge_prompt": "Evaluate five-lines, partner-only-sentence, topic-only-sentence, combined-sentence, partner-question, topic-question, role-distinction as gating criteria.",
         "criteria": [
           {
+            "id": "five-lines",
+            "instruction": "The response contains five identifiable Norwegian lines in the requested order."
+          },
+          {
             "id": "partner-only-sentence",
-            "instruction": "Line 1 names only a conversation partner with snakke med."
+            "instruction": "Line 1 uses snakke med to name only a conversation partner."
           },
           {
             "id": "topic-only-sentence",
-            "instruction": "Line 2 names only a topic with snakke om."
+            "instruction": "Line 2 uses snakke om to name only a topic."
           },
           {
             "id": "combined-sentence",
-            "instruction": "Line 3 combines a conversation partner and a person as topic with snakke med ... om ...."
+            "instruction": "Line 3 uses snakke med ... om ... with a conversation partner and a suitable topic."
           },
           {
             "id": "partner-question",
-            "instruction": "Line 4 asks who someone is speaking with using hvem ... med?."
+            "instruction": "Line 4 asks who participates by using hvem ... med."
           },
           {
             "id": "topic-question",
-            "instruction": "Line 5 asks what or whom someone is speaking about using hva ... om? or hvem ... om?."
+            "instruction": "Line 5 asks what or whom is discussed by using hva/hvem ... om."
           },
           {
             "id": "role-distinction",
-            "instruction": "Across all five lines, keeps partner and topic distinct even when both roles are people."
+            "instruction": "The five lines consistently distinguish a participant from a topic."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "contrast_same_person_role",
+      "operation": "categorize",
+      "objective_id": "obj-snakke-med-or-snakke-om-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Sort the messages by Ingrid's role."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Ingrid kan delta i samtalen («med Ingrid») eller være temaet («om Ingrid»)."
+        }
+      ],
+      "payload": {
+        "buckets": [
+          {
+            "bucket_id": "ingrid-participates",
+            "label": "Ingrid participates"
+          },
+          {
+            "bucket_id": "ingrid-is-discussed",
+            "label": "Ingrid is discussed"
+          }
+        ],
+        "items": [
+          {
+            "item_id": "item-1",
+            "text": "Jonas: Jeg snakker med Ingrid nå.",
+            "bucket_id": "ingrid-participates"
+          },
+          {
+            "item_id": "item-2",
+            "text": "Mina: Jeg snakker om Ingrid med Jonas.",
+            "bucket_id": "ingrid-is-discussed"
+          },
+          {
+            "item_id": "item-4",
+            "text": "Jonas: Vi snakket om Ingrid på møtet.",
+            "bucket_id": "ingrid-is-discussed"
+          },
+          {
+            "item_id": "item-3",
+            "text": "Vaktmesteren: Jeg må snakke med Ingrid.",
+            "bucket_id": "ingrid-participates"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "full_response_role_discrimination",
+      "operation": "choose",
+      "objective_id": "obj-snakke-med-or-snakke-om-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the reply that correctly says who Erik will talk to and what the conversation will be about."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "topic-erik-partner-budget",
+            "text": "Jeg skal snakke om Erik og budsjettet etter møtet.",
+            "why": "This reverses the roles: Erik is the conversation partner, while both Erik and the budget are presented as topics."
+          },
+          {
+            "option_id": "both-as-topics",
+            "text": "Jeg skal snakke om Erik samt budsjettet etter møtet.",
+            "why": "This reports both Erik and the budget as topics instead of making Erik the conversation partner."
+          },
+          {
+            "option_id": "erik-only",
+            "text": "Jeg skal snakke med Erik, men ikke om budsjettet.",
+            "why": "This identifies the conversation partner but leaves out the required subject."
+          },
+          {
+            "option_id": "partner-erik-topic-budget",
+            "text": "Jeg skal snakke med Erik etter møtet om budsjettet.",
+            "why": "Erik will participate in the conversation, and the budget will be its subject."
+          }
+        ],
+        "answer_id": "partner-erik-topic-budget",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Lederen",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Kan du snakke med Erik om budsjettet etter møtet?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Kollegaen",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hva skal du gjøre etter møtet?»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "question_role_recognition",
+      "operation": "categorize",
+      "objective_id": "obj-snakke-med-or-snakke-om-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Sort the questions by whether they ask for a conversation partner or a topic."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Spørsmål som slutter med «med», spør etter en samtalepartner. Spørsmål med «om» spør etter temaet, som kan være en ting eller en person."
+        }
+      ],
+      "payload": {
+        "buckets": [
+          {
+            "bucket_id": "asks-partner",
+            "label": "Asks for the conversation partner"
+          },
+          {
+            "bucket_id": "asks-topic",
+            "label": "Asks for the topic"
+          }
+        ],
+        "items": [
+          {
+            "item_id": "item-1",
+            "text": "Hvem snakker Mina med?",
+            "bucket_id": "asks-partner"
+          },
+          {
+            "item_id": "item-2",
+            "text": "Hva snakker Jonas om?",
+            "bucket_id": "asks-topic"
+          },
+          {
+            "item_id": "item-3",
+            "text": "Hvem snakker de om?",
+            "bucket_id": "asks-topic"
+          },
+          {
+            "item_id": "item-4",
+            "text": "Hvem skal vi snakke med?",
+            "bucket_id": "asks-partner"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "question_contrast_supported",
+      "operation": "recall_fill",
+      "objective_id": "obj-snakke-med-or-snakke-om-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fill in «med» or «om» in each question."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Det første spørsmålet gjelder den andre deltakeren i Minas samtale. Det andre spør etter temaet for Jonas’ samtale."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Notat: Mina og en ukjent person snakker sammen på telefonen. Hvem snakker Mina"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "question-partner",
+            "options": [
+              "med",
+              "om"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "? Notat: Jonas har en samtale, og du vil vite hva den gjelder. Hva snakker Jonas"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "question-topic",
+            "options": [
+              "med",
+              "om"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "?"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_partner_med",
+      "operation": "write",
+      "objective_id": "obj-snakke-med-or-snakke-om-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Ingrid will join the conversation. Complete the sentence: «Jeg må snakke ___ Ingrid.»"
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "response_language": "no",
+        "min_words": 1,
+        "max_words": 1,
+        "judge_prompt": "Evaluate partner-word as the only gating criterion.",
+        "criteria": [
+          {
+            "id": "partner-word",
+            "instruction": "The answer is med; capitalization or surrounding punctuation does not matter."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_topic_om",
+      "operation": "write",
+      "objective_id": "obj-snakke-med-or-snakke-om-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "The room is the topic. Complete the sentence: «Vi må snakke ___ rommet.»"
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "response_language": "no",
+        "min_words": 1,
+        "max_words": 1,
+        "judge_prompt": "Evaluate topic-word as the only gating criterion.",
+        "criteria": [
+          {
+            "id": "topic-word",
+            "instruction": "The answer is om; capitalization or surrounding punctuation does not matter."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_combined_roles",
+      "operation": "write",
+      "objective_id": "obj-snakke-med-or-snakke-om-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "The teacher will join the conversation. The test is the topic. Write the two missing words in order: «Jeg må snakke ___ læreren ___ prøven.»"
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "response_language": "no",
+        "min_words": 2,
+        "max_words": 2,
+        "judge_prompt": "Evaluate combined-words as the only gating criterion.",
+        "criteria": [
+          {
+            "id": "combined-words",
+            "instruction": "The response gives med followed by om; commas or surrounding punctuation are acceptable."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_partner_question",
+      "operation": "write",
+      "objective_id": "obj-snakke-med-or-snakke-om-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Mina is going to talk with someone she does not know. Write a question where she asks who she will talk to."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "response_language": "no",
+        "min_words": null,
+        "max_words": null,
+        "judge_prompt": "Require a natural Norwegian question using «snakke med» to ask who Mina will speak with. Accept grammatical direct or embedded question forms.",
+        "criteria": [
+          {
+            "id": "partner-question",
+            "instruction": "The response is a natural Norwegian question using «snakke med» to ask who Mina will speak with."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_topic_question",
+      "operation": "write",
+      "objective_id": "obj-snakke-med-or-snakke-om-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "You are going to have a conversation, but you do not know the topic. Write a question asking what Jonas is going to talk about."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "response_language": "no",
+        "min_words": null,
+        "max_words": null,
+        "judge_prompt": "Require a natural Norwegian question using «snakke om» to ask for the topic of Jonas's conversation. Accept grammatical direct or embedded question forms.",
+        "criteria": [
+          {
+            "id": "topic-question",
+            "instruction": "The response is a natural Norwegian question using «snakke om» to ask for the topic."
           }
         ]
       }
@@ -3257,7 +3683,16 @@
         "third_checkpoint_ask_right_question",
         "fourth_checkpoint_correct_intended_meaning",
         "final_practice_build_complete_messages",
-        "retrieval_and_review"
+        "retrieval_and_review",
+        "contrast_same_person_role",
+        "full_response_role_discrimination",
+        "question_role_recognition",
+        "question_contrast_supported",
+        "review_partner_med",
+        "review_topic_om",
+        "review_combined_roles",
+        "review_partner_question",
+        "review_topic_question"
       ]
     }
   ],

@@ -600,6 +600,7 @@ def _normalize_second_opinion(
         )
         errors.extend(finding_errors)
         findings.append(normalized_finding)
+    errors.extend(_second_opinion_coverage_errors(findings, proposed_edges))
     record = DependencySecondOpinionRecord(
         status="completed",
         job="curriculum_reviewer",
@@ -608,6 +609,29 @@ def _normalize_second_opinion(
         findings=findings,
     )
     return record, errors
+
+
+def _second_opinion_coverage_errors(
+    findings: Sequence[DependencySecondOpinionFinding],
+    proposed_edges: Sequence[DependencyEdge],
+) -> list[str]:
+    """Require exactly one disposition for each proposed edge."""
+    expected = {(edge.prerequisite_id, edge.dependent_id) for edge in proposed_edges}
+    addressed = [
+        (finding.prerequisite_id, finding.dependent_id)
+        for finding in findings
+        if (finding.prerequisite_id, finding.dependent_id) in expected
+    ]
+    errors = [
+        f"second-opinion omitted proposed edge: {prerequisite_id} -> {dependent_id}"
+        for prerequisite_id, dependent_id in sorted(expected - set(addressed))
+    ]
+    errors.extend(
+        f"second-opinion reviewed proposed edge more than once: {prerequisite_id} -> {dependent_id}"
+        for prerequisite_id, dependent_id in sorted(expected)
+        if addressed.count((prerequisite_id, dependent_id)) > 1
+    )
+    return errors
 
 
 def _normalize_second_opinion_finding(

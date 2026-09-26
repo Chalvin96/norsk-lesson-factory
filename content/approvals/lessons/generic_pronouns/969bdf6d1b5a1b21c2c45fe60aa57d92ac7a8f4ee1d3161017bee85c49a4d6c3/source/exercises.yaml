@@ -1,0 +1,262 @@
+- handle: notice-general-man
+  op: choose
+  objective: obj-generic-pronouns-01
+  bloom: understand
+  prompt_md: "Velg rådet som gjelder alle som går på fjellet."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Vi skal gå på fjellet i morgen. Hva bør vi gjøre før turen?»
+    - speaker: Elias
+      text_md: «Vi bør sjekke værmeldingen først.»
+  options:
+  - id: nora
+    text: Nora sjekker værmeldingen før turen.
+    correct: false
+    why: This describes one specific person.
+  - id: guest
+    text: Elias spør en gjest om kartet.
+    correct: false
+    why: This describes a specific exchange, not advice for anyone in the situation.
+  - id: generic
+    text: Når man går på fjellet, bør man sjekke værmeldingen.
+    correct: true
+    why: The sentence gives advice that applies to any person in that situation.
+  explanation_md: "«Man» brukes i råd som gjelder enhver person i situasjonen."
+  derived_from:
+  - section_id: checkpoint-notice-general-man
+- handle: notice-singular-agreement
+  op: choose
+  objective: obj-generic-pronouns-01
+  bloom: understand
+  prompt_md: "Velg setningen med riktig samsvar."
+  stem_md: 'Språknotat: «Man» viser til mennesker generelt, men er grammatisk entall.'
+  options:
+  - id: plural
+    text: Man blir ofte trøtte etter en lang tur.
+    correct: false
+    why: Trøtte treats man as grammatically plural because it refers broadly to people.
+  - id: noun-group
+    text: Folk blir ofte trøtt etter en lang tur.
+    correct: false
+    why: Folk is a collective noun here and normally takes plural predicative agreement.
+  - id: singular
+    text: Man blir ofte trøtt etter en lang tur.
+    correct: true
+    why: Trøtt has singular agreement with man.
+  explanation_md: "Selv om «man» viser til mennesker generelt, er «man» grammatisk entall, og et predikativt adjektiv bøyes derfor i entall."
+  derived_from:
+  - section_id: man-for-a-general-person
+- handle: choose-form-by-sentence-role
+  op: recall_fill
+  objective: obj-generic-pronouns-01
+  bloom: apply
+  prompt_md: "Fyll inn riktig generisk pronomen i fjellvettreglene."
+  audio_target: På fjellet bør man følge merkingen. I høyfjellet må en være forberedt på raske
+    værskifter. Dårlig vær kan overraske en på vei hjem.
+  segments:
+  - text_md: 'På fjellet bør '
+  - blank_id: mountain-subject-man
+    options:
+    - man
+    - meg
+    answer_index: 0
+  - text_md: ' følge merkingen. I høyfjellet må '
+  - blank_id: mountain-subject-en
+    options:
+    - meg
+    - en
+    answer_index: 1
+  - text_md: ' være forberedt på raske værskifter. Dårlig vær kan overraske '
+  - blank_id: mountain-object-en
+    options:
+    - en
+    - man
+    answer_index: 0
+  - text_md: ' på vei hjem.'
+  explanation_md: "«Man» og «en» kan stå som generisk subjekt. I det upersonlige mønsteret kan «man» ikke stå som objekt."
+  derived_from:
+  - section_id: checkpoint-choose-form-by-sentence-role
+- handle: recognize-generic-en-subject
+  op: choose
+  objective: obj-generic-pronouns-01
+  bloom: analyze
+  prompt_md: "Velg riktig forklaring til setningen i reisehåndboka."
+  stem_md: 'Reisehåndbok: «Når en reiser alene, må en planlegge økonomien nøye.»'
+  options:
+  - id: subject-then-object
+    text: «En» er generisk subjekt i den første delen, men objekt for «planlegge» i den andre.
+    correct: false
+    why: Den andre delen har sitt eget subjekt, «en». «Økonomien» er objekt for «planlegge».
+  - id: generic-subject
+    text: «En» er generisk subjekt i begge delene av setningen.
+    correct: true
+    why: Begge forekomstene står som subjekt og viser til en generell person.
+  - id: article
+    text: «En» er ubestemt artikkel, så setningen mangler et eksplisitt subjekt.
+    correct: false
+    why: «En» står foran et verb og viser til en person, så ordet har subjektfunksjon.
+  explanation_md: "«En» kan være generisk subjekt. Begrensningen til subjekt gjelder «man», ikke «en»."
+  derived_from:
+  - section_id: generic-en-as-a-subject
+- handle: discriminate-man-en-full-response
+  op: choose
+  objective: obj-generic-pronouns-01
+  bloom: analyze
+  prompt_md: "Velg det riktige svaret til redaktøren."
+  stem_md: 'Redaktør: «Vi beskriver en generell person. Kan jeg skrive: “Sterk varme kan gjøre man svimmel”?»'
+  options:
+  - id: change-meaning
+    text: Nei. Skriv «Sterk varme kan gjøre folk svimmel», fordi folk alltid betyr det samme som man.
+    correct: false
+    why: This changes the representative-person meaning to a group reading and also mismatches agreement.
+  - id: correct-reply
+    text: Nei. Skriv «Sterk varme kan gjøre en svimmel», fordi personen er objekt.
+    correct: true
+    why: The reply preserves the impersonal reference and places en in the object role.
+  - id: subject-confusion
+    text: Ja. «Man» kan stå i alle roller når betydningen er generell.
+    correct: false
+    why: This confuses broad meaning with the grammatical role restriction on man.
+  explanation_md: "I det upersonlige mønsteret står «man» bare som subjekt. «En» brukes i objektsform."
+  derived_from:
+  - section_id: sentence-role-man-cannot-be-an-object
+- handle: choose-direct-or-detached-tone
+  op: write
+  objective: obj-generic-pronouns-01
+  bloom: apply
+  prompt_md: >-
+    Før fjellturen bør værmeldingen sjekkes. Skriv to korte meldinger på til sammen 14–34 ord: Gi
+    turistene et direkte råd med «du», og skriv en nøytral regel til kollegene med «man» eller
+    generisk «en».
+  response_language: 'no'
+  min_words: 14
+  max_words: 34
+  judge_prompt: Evaluate direct-guidance, detached-rule, direct-form, detached-form, same-fact, and word-bound.
+  criteria:
+  - id: direct-guidance
+    instruction: The first message addresses tourists as actionable, direct guidance.
+  - id: detached-rule
+    instruction: The second message presents the same information as a detached general rule for colleagues.
+  - id: direct-form
+    instruction: The first message explicitly uses the pronoun «du».
+  - id: detached-form
+    instruction: The second message uses man or generic en to express detached generalization.
+  - id: same-fact
+    instruction: Both messages communicate that the weather forecast should be checked before a mountain
+      trip.
+  - id: word-bound
+    instruction: The combined response contains 14–34 words.
+  derived_from:
+  - section_id: checkpoint-choose-direct-or-detached-tone
+- handle: distinguish-individual-generalization-from-group
+  op: categorize
+  objective: obj-generic-pronouns-01
+  bloom: analyze
+  prompt_md: "Sorter utsagnene etter betydning."
+  stem_md: "Turistkontorets tekster om arbeid og besøkende."
+  buckets:
+  - bucket_id: representative-person
+    label: En representativ person
+  - bucket_id: observed-group
+    label: Mennesker som gruppe
+  items:
+  - item_id: representative-work
+    text: Når man arbeider på turistkontoret, får man mange spørsmål.
+    bucket_id: representative-person
+  - item_id: group-weather
+    text: Folk spør ofte om værmeldingen før fjellturen.
+    bucket_id: observed-group
+  - item_id: representative-help
+    text: Når man hjelper besøkende, må man lytte nøye.
+    bucket_id: representative-person
+  - item_id: group-rain
+    text: Folk venter ved skranken når det begynner å regne.
+    bucket_id: observed-group
+  explanation_md: "«Man» kan vise til en representativ person. «Folk» kan vise til en faktisk eller tenkt gruppe."
+  derived_from:
+  - section_id: checkpoint-distinguish-individual-generalization-from-group
+- handle: discriminate-man-folk-full-response
+  op: choose
+  objective: obj-generic-pronouns-01
+  bloom: analyze
+  prompt_md: "Velg fortsettelsen som passer til rapporten."
+  stem_md: 'Forsker: «Vi registrerte spørsmål fra 240 faktiske besøkende denne måneden.» Rapport: «_____»'
+  options:
+  - id: direct-du
+    text: Du spør oftest om kart og vær.
+    correct: false
+    why: Du retter rapporten mot leseren og kan høres personlig anklagende ut.
+  - id: folk
+    text: Folk spør oftest om kart og vær.
+    correct: true
+    why: Folk passer i en rapport om en observert gruppe besøkende.
+  - id: man
+    text: Man spør oftest om kart og vær når man planlegger en reise.
+    correct: false
+    why: Man uttrykker en generell vane under reiseplanlegging, ikke et funn om de observerte besøkende.
+  explanation_md: "Når rapporten gjelder faktiske besøkende, passer gruppebetydningen «folk»."
+  derived_from:
+  - section_id: folk-for-people-as-a-group
+- handle: revise-generic-pronoun-message
+  op: write
+  objective: obj-generic-pronouns-01
+  bloom: analyze
+  prompt_md: >-
+    Rett meldingen til turgåerne. Behold én generell person som referanse i alle tre setningene. Skriv 14–28 ord.
+    Tekst: «Når man går alene, bør man si fra om ruta. Dårlig vær kan gjøre man utrygg. Man bør også ha med ekstra klær.»
+  response_language: 'no'
+  min_words: 14
+  max_words: 28
+  judge_prompt: Evaluate representative-meaning, object-repair, consistent-reference, and word-bound.
+    Apply no unstated style requirements.
+  criteria:
+  - id: representative-meaning
+    instruction: The first and last sentences describe a representative generic person rather than an
+      observed group.
+  - id: object-repair
+    instruction: The affected generic person in the middle sentence is expressed as an object within the
+      same impersonal reference.
+  - id: consistent-reference
+    instruction: The revision keeps a coherent impersonal man/en reference across the three statements.
+  - id: word-bound
+    instruction: The response contains 14–28 words.
+  derived_from:
+  - section_id: returning-to-nora-and-elias
+- handle: transfer-generic-choices-to-pool-context
+  op: write
+  objective: obj-generic-pronouns-01
+  bloom: apply
+  prompt_md: >-
+    I svømmehallen skal gjestene dusje før de bader. Våte gulv kan gjøre en besøkende usikker.
+    Personalet har sett at mange kunder glemmer håndkle. Skriv tre korte tekster på til sammen 24–55
+    ord: Gi gjestene et direkte råd med «du» og «deg», skriv en nøytral sikkerhetsregel med «man»
+    eller generisk «en» om hvordan våte gulv kan påvirke den besøkende, og fortell hva personalet
+    har observert om kundene med «folk».
+  response_language: 'no'
+  min_words: 24
+  max_words: 55
+  judge_prompt: Evaluate direct-advice, neutral-safety, observed-group, affected-person-form, du-form,
+    man-en-form, folk-form, supplied-facts, and word-bound.
+  criteria:
+  - id: direct-advice
+    instruction: The first text gives swimming-pool visitors direct advice to shower before bathing.
+  - id: neutral-safety
+    instruction: The second text states the wet-floor risk as a neutral general safety rule.
+  - id: observed-group
+    instruction: The third text reports the staff's observation about customers as a group.
+  - id: affected-person-form
+    instruction: The wet-floor sentence expresses the affected generic person in a non-subject role.
+  - id: du-form
+    instruction: The direct advice uses both du and deg to address the visitors directly.
+  - id: man-en-form
+    instruction: The neutral rule uses man or generic en as subject and en in the non-subject role.
+  - id: folk-form
+    instruction: The staff report uses folk for the observed group.
+  - id: supplied-facts
+    instruction: The response uses the supplied facts without inventing a conflicting rule.
+  - id: word-bound
+    instruction: The combined response contains 24–55 words.
+  derived_from:
+  - section_id: cumulative-transfer-request

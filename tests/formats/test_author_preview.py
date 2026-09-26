@@ -167,8 +167,17 @@ def test_preview_renders_every_public_operation_given_packet_expect_authored_evi
         }
         for op, payload in payloads.items()
     ]
+    exercises[0]["stimulus"] = [
+        {
+            "kind": "dialogue",
+            "turns": [
+                {"speaker": "Lea", "text": [{"kind": "text", "value": "Kanskje."}]},
+                {"speaker": "Jonas", "text": [{"kind": "text", "value": "Da er det avtalt."}]},
+            ],
+        }
+    ]
     packet = {
-        "schema_version": "4.0",
+        "schema_version": "4.1",
         "id": "demo",
         "kind": "communicative",
         "language": "nb-NO",
@@ -211,6 +220,9 @@ def test_preview_renders_every_public_operation_given_packet_expect_authored_evi
         subtree = html[subtree_start : html.index("</article>", subtree_start)]
         assert 'lang="nb"' in subtree
     assert '<h2 lang="en">' in choose_subtree
+    assert 'aria-label="Dialogue"' in choose_subtree
+    assert choose_subtree.index("Lea") < choose_subtree.index("Kanskje.") < choose_subtree.index("Jonas")
+    assert '<div lang="nb">Kanskje.</div>' in choose_subtree
 
 
 def test_preview_given_mixed_choose_text_expect_no_vocabulary_inference() -> None:
@@ -253,7 +265,7 @@ def test_preview_given_mixed_choose_text_expect_no_vocabulary_inference() -> Non
 
 
 def test_preview_escapes_authored_html_given_untrusted_text_expect_inert_markup() -> None:
-    """Authored markup is inert and the server refuses network interfaces."""
+    """Authored markup is inert and wildcard binding remains unavailable."""
     packet = {
         "title": "<script>alert(1)</script>",
         "cefr_level": "A1",
@@ -266,7 +278,7 @@ def test_preview_escapes_authored_html_given_untrusted_text_expect_inert_markup(
 
     assert "<script>alert(1)</script>" not in html
     assert "&lt;script&gt;alert(1)&lt;/script&gt;" in html
-    with pytest.raises(ValueError, match="loopback"):
+    with pytest.raises(ValueError, match="concrete IPv4"):
         create_preview_server("0.0.0.0", 0, html)
 
 
@@ -325,22 +337,35 @@ def test_preview_server_rejects_untrusted_authorities_given_http_headers_expect_
         server.server_close()
 
 
-def test_preview_server_accepts_bracketed_ipv6_authority_given_loopback_request_expect_200() -> None:
-    """IPv6 loopback authorities use the exact bracketed Host form."""
-    try:
-        server = create_preview_server("::1", 0, "<html>source</html>")
-    except OSError as exc:
-        pytest.skip(f"IPv6 loopback unavailable: {exc}")
+def test_preview_server_accepts_configured_address_given_matching_authority_expect_200() -> None:
+    """A LAN-style bind accepts only its exact Host and Origin authority."""
+    server = create_preview_server("127.0.0.2", 0, "<html>source</html>")
     thread = threading.Thread(target=server.serve_forever, daemon=True)
     thread.start()
     try:
-        connection = HTTPConnection("::1", server.server_port)
-        connection.request("GET", "/", headers={"Host": f"[::1]:{server.server_port}"})
+        port = server.server_port
+        connection = HTTPConnection("127.0.0.2", port)
+        connection.request(
+            "GET",
+            "/",
+            headers={"Host": f"127.0.0.2:{port}", "Origin": f"http://127.0.0.2:{port}"},
+        )
         assert connection.getresponse().status == 200
+        connection.close()
+
+        connection = HTTPConnection("127.0.0.2", port)
+        connection.request("GET", "/", headers={"Host": f"127.0.0.1:{port}"})
+        assert connection.getresponse().status == 403
         connection.close()
     finally:
         server.shutdown()
         server.server_close()
+
+
+def test_preview_server_rejects_non_ipv4_host_given_colon_address_expect_value_error() -> None:
+    """The author preview supports concrete IPv4 binds only."""
+    with pytest.raises(ValueError, match="IPv4 address"):
+        create_preview_server("192.0.2.1:8080", 0, "<html>source</html>")
 
 
 def test_preview_server_rebuilds_document_for_each_get_given_factory_expect_fresh_content() -> None:

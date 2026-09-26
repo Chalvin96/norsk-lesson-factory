@@ -1,0 +1,391 @@
+- handle: notice-earlier-plans
+  op: choose
+  objective: obj-skulle-vs-ville-01
+  bloom: understand
+  prompt_md: Choose the best interpretation.
+  derived_from:
+  - section_id: skulle-for-an-earlier-plan
+  stem_md: 'Mandag avtalte Emil at han skulle hente bordene. Lørdag sier han: «Jeg skulle hente bordene,
+    men bilen starter ikke.»'
+  options:
+  - id: willingness
+    text: Emil tilbød seg frivillig å hente bordene da noen ba om hjelp.
+    correct: false
+    why: 'Dette skiller seg bare på drivkraften: situasjonen viser en tidligere avtale, ikke et nytt tilbud
+      om hjelp.'
+  - id: hypothetical-result
+    text: Emil ville ha hentet bordene dersom bilen hadde startet.
+    correct: false
+    why: 'Dette skiller seg bare på realitetsstatusen: utsagnet rapporterer en faktisk tidligere avtale,
+      ikke et tenkt resultat.'
+  - id: earlier-arrangement
+    text: Hentingen var avtalt tidligere, men setningen bekrefter ikke at den skjedde.
+    correct: true
+    why: Skulle viser tilbake til den tidligere avtalen; fortsettelsen viser at gjennomføringen er usikker.
+  - id: completed-action
+    text: Emil hentet bordene som avtalt.
+    correct: false
+    why: 'Dette skiller seg bare på utfallet: skulle viser planen, ikke at Emil faktisk gjennomførte den.'
+- handle: complete-planned-actions
+  op: recall_fill
+  objective: obj-skulle-vs-ville-01
+  bloom: apply
+  prompt_md: Fill the blank.
+  derived_from:
+  - section_id: skulle-for-an-earlier-plan
+  segments:
+  - text_md: 'Tirsdag avtalte Nora og Emil: «Vi skal møtes ved samfunnshuset på lørdag.» Lørdag forklarer
+      Nora: «Vi '
+  - blank_id: planned-meeting
+    options:
+    - skulle
+    - ville
+    answer_index: 0
+  - text_md: ' møtes ved samfunnshuset.»'
+  audio_target: 'Tirsdag avtalte Nora og Emil: «Vi skal møtes ved samfunnshuset på lørdag.» Lørdag forklarer
+    Nora: «Vi skulle møtes ved samfunnshuset.»'
+- handle: report-future-from-past
+  op: write
+  objective: obj-skulle-vs-ville-01
+  bloom: apply
+  prompt_md: 'Jonas skrev i går: «Jeg skal sende dokumentet i kveld.» I dag spør kollegaen din hva Jonas
+    lovet. Write a 20–35-word Norwegian reply to your colleague that reports the promise. Bruk *skulle*
+    fulgt av en grunninfinitiv.'
+  derived_from:
+  - section_id: skulle-for-future-viewed-from-the-past
+  response_language: 'no'
+  min_words: 20
+  max_words: 35
+  judge_prompt: 'Evaluate only the visible reply task. Criterion reports-promise, criterion word-bound,
+    and criterion modal-choice-observation are gating. Accept natural wording and pronoun reference. Anchor
+    that must pass: «Jonas lovet i går at han skulle sende dokumentet samme kveld. Du kan derfor trygt
+    vente på det her i dag.» Anchor that must fail reports-promise: «Jeg vet ikke hva Jonas sa om dokumentet.»
+    A reply that reports the promise but uses a different modal or does not use *skulle* followed by a
+    bare infinitive fails modal-choice-observation.'
+  criteria:
+  - id: reports-promise
+    instruction: Replies to the colleague and clearly reports Jonas’s stated promise to send the document.
+  - id: word-bound
+    instruction: Contains 20–35 words.
+  - id: modal-choice-observation
+    instruction: Preserves the earlier *skal*-type commitment with *skulle* followed by a bare infinitive.
+      Replies that do not make this modal distinction fail.
+- handle: recognize-willingness
+  op: recall_fill
+  objective: obj-skulle-vs-ville-01
+  bloom: apply
+  prompt_md: Fill the blank.
+  derived_from:
+  - section_id: ville-for-past-willingness
+  segments:
+  - text_md: 'Ingen andre kunne kjøre Emil. Nora rakte opp hånden og tilbød seg å hjelpe. Senere fortalte
+      Emil: «Nora '
+  - blank_id: offered-ride
+    options:
+    - ville
+    - skulle
+    answer_index: 0
+  - text_md: ' kjøre meg.»'
+  audio_target: 'Ingen andre kunne kjøre Emil. Nora rakte opp hånden og tilbød seg å hjelpe. Senere fortalte
+    Emil: «Nora ville kjøre meg.»'
+- handle: contrast-plan-and-willingness
+  op: write
+  objective: obj-skulle-vs-ville-01
+  bloom: apply
+  prompt_md: 'Melding fra Emil: «Var kjøringen avtalt på forhånd, eller tilbød Nora seg først da bilen
+    min stoppet?» Fakta: Fredag avtalte Nora å kjøre Emil til markedet lørdag. Da bilen stoppet søndag,
+    trengte Emil hjelp. Nora tilbød seg da å kjøre ham. Write a 35–55-word Norwegian reply that distinguishes
+    the two situations, using skulle for the earlier planned drive and ville for Nora’s later willingness.'
+  derived_from:
+  - section_id: ville-for-past-willingness
+  response_language: 'no'
+  min_words: 35
+  max_words: 55
+  judge_prompt: 'Evaluate only the visible reply task. Criteria distinguishes-situations, uses-given-facts,
+    and word-bound are gating. The two criteria ending in -observation are diagnostic and never fail the
+    reply. Accept natural paraphrases. Anchor that must pass: «På lørdag var kjøringen avtalt allerede
+    fredag, da Nora skulle kjøre Emil til markedet. På søndag tilbød Nora seg først da bilen hans stoppet,
+    og han trengte akutt hjelp; da ville hun kjøre ham videre.» Anchor that must fail distinguishes-situations:
+    «Nora kjørte Emil både lørdag og søndag.» A reply that exchanges skulle and ville fails distinguishes-situations,
+    even if it otherwise states the factual contrast.'
+  criteria:
+  - id: distinguishes-situations
+    instruction: Clearly distinguishes the earlier arrangement from the later voluntary offer, using skulle
+      for the earlier planned drive and ville for Nora’s later willingness.
+  - id: uses-given-facts
+    instruction: Uses the supplied facts without contradicting them.
+  - id: word-bound
+    instruction: Contains 35–55 words.
+  - id: arrangement-modal-observation
+    instruction: Observe whether the earlier arrangement is naturally expressed with *skulle* and a bare
+      infinitive; report problems diagnostically.
+  - id: willingness-modal-observation
+    instruction: Observe whether Nora’s readiness after the stated need is naturally expressed with *ville*
+      and a bare infinitive; report problems diagnostically.
+- handle: build-hypothetical-results
+  op: recall_fill
+  objective: obj-skulle-vs-ville-01
+  bloom: apply
+  prompt_md: Fill the blank.
+  derived_from:
+  - section_id: ville-for-hypothetical-results
+  segments:
+  - text_md: 'Det regner, så bordene står inne. Gruppen forestiller seg en annen situasjon: «Hvis været
+      var bedre, '
+  - blank_id: imagined-weather-result
+    options:
+    - ville
+    - skulle
+    answer_index: 0
+  - text_md: ' vi sette bordene ute.»'
+  audio_target: 'Det regner, så bordene står inne. Gruppen forestiller seg en annen situasjon: «Hvis været
+    var bedre, ville vi sette bordene ute.»'
+- handle: distinguish-reported-and-hypothetical-would
+  op: write
+  objective: obj-skulle-vs-ville-01
+  bloom: apply
+  prompt_md: 'Du kan allerede bruke modalverb + infinitiv. Nå sammenligner du det forvekslingsparet *skulle*
+    og *ville*. Fakta til en markedsoppdatering: Maja sa tidligere: «Jeg skal kjøpe huset.» Kjøpet er
+    derfor planen hennes. Leiligheten er for dyr for gruppen. Gruppen forestiller seg at den er billigere;
+    da leier de den. Skriv en norsk oppdatering på 35–55 ord til markedsgruppen. Bruk *skulle* etterfulgt
+    av en bare infinitiv for å rapportere Majas plan, og *ville* etterfulgt av en bare infinitiv for å
+    uttrykke hva gruppen ville gjøre hvis leiligheten var billigere.'
+  derived_from:
+  - section_id: ville-for-hypothetical-results
+  response_language: 'no'
+  min_words: 35
+  max_words: 55
+  judge_prompt: 'Vurder bare den synlige oppdateringen. Kriteriene reports-majas-plan, conveys-imagined-result,
+    addresses-group, word-bound, reported-plan-modal-observation og hypothetical-modal-observation er
+    avgjørende. Eksempel som må bestå: «Maja sa tidligere at hun skulle kjøpe huset, og derfor regner
+    vi kjøpet som planen hennes. Leiligheten er for dyr for gruppen vår akkurat nå. Hvis den var billigere,
+    ville vi leie den. Dette er dagens oppdatering til markedsgruppen.» Eksempel som må stryke på conveys-imagined-result:
+    «Leiligheten er billig, og vi leier den nå.» En feil i modalverbet gir stryk på det tilhørende modalverbkriteriet.'
+  criteria:
+  - id: reports-majas-plan
+    instruction: Reports Maja’s stated plan to buy the house.
+  - id: conveys-imagined-result
+    instruction: Conveys that renting the flat is the result of imagining a lower price, not a current
+      fact.
+  - id: addresses-group
+    instruction: Reads as an update relevant to the market group.
+  - id: word-bound
+    instruction: Contains 35–55 words.
+  - id: reported-plan-modal-observation
+    instruction: Requires that Maja’s earlier *skal*-type plan is reported with *skulle* and a bare infinitive.
+  - id: hypothetical-modal-observation
+    instruction: Requires that the imagined result is expressed with *ville* and a bare infinitive.
+- handle: interpret-market-follow-up
+  op: choose
+  objective: obj-skulle-vs-ville-01
+  bloom: understand
+  prompt_md: Choose the interpretation that matches every line.
+  derived_from:
+  - section_id: back-at-the-market
+  stem_md: 'Nora: «Vi trodde at du skulle komme senere.» Sara: «Det trodde jeg også, men jeg trengte skyss,
+    og naboen min sa at han gjerne ville kjøre meg.» Sara: «Hvis dere fant en stor termos, ville jeg lage
+    kaffe til alle.» Emil: «Jakob sa at han skulle ta termosen med.»'
+  options:
+  - id: drive-as-arrangement
+    text: Sara’s arrival was expected; the neighbour’s drive was arranged earlier; the coffee is imagined;
+      Jakob’s commitment is reported.
+    correct: false
+    why: 'This differs only on the drive: Sara describes the neighbour’s readiness to help, not a previously
+      fixed arrangement.'
+  - id: expected-willing-hypothetical-commitment
+    text: Sara’s later arrival was expected; the neighbour was willing to drive; making coffee is an imagined
+      result; Jakob’s earlier commitment is reported.
+    correct: true
+    why: 'Each interpretation follows the evidence in its own dialogue line: expectation, readiness to
+      help, condition-dependent result, and reported commitment.'
+  - id: all-arrangements
+    text: All four lines describe arrangements fixed before the conversation.
+    correct: false
+    why: 'This differs on the two ville lines: the drive shows willingness, and the coffee depends on
+      an imagined condition.'
+  - id: all-willingness
+    text: All four lines describe people who were willing to act.
+    correct: false
+    why: 'This differs on the skulle lines and the conditional: they express an expectation, a reported
+      commitment, and an imagined result.'
+- handle: transfer-cabin-plans
+  op: write
+  objective: obj-skulle-vs-ville-01
+  bloom: apply
+  prompt_md: 'E-post fra Ida: «Hva skjedde med hytteturen, og hva ville dere gjort hvis været ble verre?»
+    Fakta: Gruppen hadde avtalt å reise fredag klokka 17. Lars hadde sagt: «Jeg skal ta med nøkkelen.»
+    Da bilen brøt sammen, tilbød Mina seg å kjøre. Værmeldingen var usikker. Skriv et svar på 55–85 ord
+    på norsk. Forklar planen, Lars’ tidligere utsagn, Minas tilbud etter sammenbruddet og alternativet
+    ved verre vær. Bruk *skulle* med infinitiv for den planlagte avreisen og Lars’ utsagn, og *ville*
+    med infinitiv for Minas tilbud og det tenkte væralternativet.'
+  derived_from:
+  - section_id: cumulative-transfer-a-delayed-cabin-trip
+  response_language: 'no'
+  min_words: 55
+  max_words: 85
+  judge_prompt: 'Vurder bare den synlige e-postoppgaven. Kriteriene answers-ida, includes-cabin-facts,
+    explains-alternative, word-bound og alle fire kriteriene som slutter på -observation er obligatoriske.
+    Godta sammenhengende, naturlige varianter. Ankeret som må godkjennes er: «Hei Ida! Vi skulle reise
+    fredag klokka fem. Lars hadde sagt at han skulle ta med nøkkelen. Da bilen stoppet, ville Mina kjøre
+    oss videre. Hvis været ble verre, ville vi bli hjemme, men først skulle vi prøve å finne en annen
+    bil. Jeg håper hytteturen fortsatt kan gjennomføres. Turen er planlagt og ville vært hyggelig for
+    alle i gruppen.» Et svar som ikke inneholder de nødvendige hyttefaktaene, skal underkjennes, for eksempel:
+    «Hei! Planene endret seg, men alt ordnet seg til slutt.» Modalformene skal uttrykke henholdsvis planlagt
+    avreise med skulle og infinitiv, Lars’ tidligere utsagn med skulle og infinitiv, Minas tilbud med
+    ville og infinitiv, og det tenkte værutfallet med ville og infinitiv.'
+  criteria:
+  - id: answers-ida
+    instruction: Replies to Ida and explains what happened with the cabin trip.
+  - id: includes-cabin-facts
+    instruction: Includes the arranged departure, Lars’s earlier statement, and Mina’s offer after the
+      breakdown.
+  - id: explains-alternative
+    instruction: States the imagined bad-weather alternative.
+  - id: word-bound
+    instruction: Contains 55–85 words.
+  - id: cabin-arrangement-observation
+    instruction: Must express the arranged departure naturally with *skulle* and a bare infinitive.
+  - id: cabin-report-observation
+    instruction: Must report Lars’s earlier *skal*-type commitment with *skulle* and a bare infinitive.
+  - id: cabin-willingness-observation
+    instruction: Must express Mina’s readiness after the breakdown with *ville* and a bare infinitive.
+  - id: cabin-hypothetical-observation
+    instruction: Must express the imagined weather result with *ville* and a bare infinitive.
+- handle: retrieve-skulle-versus-ville
+  op: write
+  objective: obj-skulle-vs-ville-01
+  bloom: apply
+  prompt_md: 'Draft to the neighbourhood group: «Vi ville møtes klokka ni; det var avtalt tirsdag. Sara
+    skulle hjelpe da vi manglet folk, og hun tilbød seg frivillig. Jakob sa tidligere: “Jeg skal ta med
+    termosen”, så han ville ta den med. Hvis det regnet, skulle vi flytte bordene inn.» Write a corrected
+    45–70-word Norwegian message that preserves all four stated meanings.'
+  derived_from:
+  - section_id: final-retrieval
+  response_language: 'no'
+  min_words: 45
+  max_words: 70
+  judge_prompt: 'Evaluate only the visible revision task. Criteria preserves-four-meanings, produces-clear-message,
+    and word-bound are gating. Criteria ending in -observation are diagnostic and never fail an otherwise
+    adequate revision. The learner need not retain the draft’s sentence order. Anchor that must pass:
+    «Vi skulle møtes klokka ni, slik vi hadde avtalt. Sara ville hjelpe da vi manglet folk, fordi hun
+    tilbød seg frivillig. Jakob hadde sagt at han skulle ta med termosen. Hvis det regnet, ville vi flytte
+    bordene inn, slik at markedet kunne fortsette uten problemer. Alle i gruppa fikk beskjed om planen
+    på forhånd.» Anchor that must fail preserves-four-meanings: «Planene for markedet var uklare, men
+    alle prøvde å hjelpe.» A message that retains one wrong modal fails the preserves-four-meanings gating
+    criterion; the corresponding observation may also be flagged.'
+  criteria:
+  - id: preserves-four-meanings
+    instruction: Preserves the earlier meeting arrangement, Sara’s voluntary offer, Jakob’s earlier commitment,
+      and the imagined rain result.
+  - id: produces-clear-message
+    instruction: Produces a coherent message suitable for the neighbourhood group.
+  - id: word-bound
+    instruction: Contains 45–70 words.
+  - id: revised-modal-choices-observation
+    instruction: Observe whether *skulle* is used for the arrangement and reported commitment and *ville*
+      for willingness and the imagined result; report remaining problems diagnostically.
+  - id: bare-infinitive-observation
+    instruction: Observe whether modal complements use bare infinitives without *å*; report problems diagnostically.
+- handle: review_complete_planned_actions
+  op: recall_fill
+  objective: obj-skulle-vs-ville-01
+  bloom: apply
+  prompt_md: Complete the report about the agreed departure.
+  derived_from:
+  - section_id: skulle-for-an-earlier-plan
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Liv
+      text_md: «På torsdag ble vi enige om avreise søndag morgen.»
+    - speaker: Oskar
+      text_md: «Ja, vi ___ tidlig.»
+  segments:
+  - text_md: '«Ja, vi '
+  - blank_id: agreed-departure
+    options:
+    - skulle reise
+    - ville reise
+    - måtte reise
+    answer_index: 0
+  - text_md: ' tidlig.»'
+  audio_target: Ja, vi skulle reise tidlig.
+  explanation_md: The first speaker describes an agreement made before the reported departure.
+- handle: review_report_future_from_past
+  op: recall_fill
+  objective: obj-skulle-vs-ville-01
+  bloom: apply
+  prompt_md: Fullfør Mortens gjengivelse av det tidligere løftet.
+  derived_from:
+  - section_id: skulle-for-future-viewed-from-the-past
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Silje
+      text_md: «Jonas lovet i går at han skal ordne alt i kveld.»
+    - speaker: Morten
+      text_md: «Ja, han ___ i kveld.»
+  segments:
+  - text_md: '«Ja, han '
+  - blank_id: reported-document-commitment
+    options:
+    - skulle ordne alt
+    - ville ordne alt
+    - måtte ordne alt
+    answer_index: 0
+  - text_md: ' i kveld.»'
+  audio_target: Ja, han skulle ordne alt i kveld.
+  explanation_md: Rapporten ser tilbake på Jonas’ tidligere løfte, så *skulle* presenterer handlingen
+    som framtidig fra dette fortidsperspektivet.
+- handle: review_recognize_willingness
+  op: recall_fill
+  objective: obj-skulle-vs-ville-01
+  bloom: apply
+  prompt_md: Complete the report about the voluntary offer.
+  derived_from:
+  - section_id: ville-for-past-willingness
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Aksel
+      text_md: «Jeg trengte hjelp til hundepass, og Mari sa tydelig at hun hadde lyst til å ta seg av
+        hunden.»
+    - speaker: Siri
+      text_md: «Så Mari ___ hunden?»
+  segments:
+  - text_md: '«Så Mari '
+  - blank_id: voluntary-dog-care
+    options:
+    - ville passe
+    - likte å passe
+    - måtte passe
+    answer_index: 0
+  - text_md: ' hunden?»'
+  audio_target: Så Mari ville passe hunden?
+  explanation_md: Mari volunteered after Aksel needed help, so the report describes willingness.
+- handle: review_build_hypothetical_results
+  op: recall_fill
+  objective: obj-skulle-vs-ville-01
+  bloom: apply
+  prompt_md: Complete the imagined result.
+  derived_from:
+  - section_id: ville-for-hypothetical-results
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Ingrid
+      text_md: «Hytta er for liten for hele gruppen.»
+    - speaker: Pål
+      text_md: «Hvis den var større, ___»
+  segments:
+  - text_md: «Hvis den var større,
+  - blank_id: imagined-cabin-result
+    options:
+    - ville vi alle bo der
+    - skulle vi alle bo der
+    - måtte vi alle bo der
+    answer_index: 0
+  - text_md: .»
+  audio_target: Hvis den var større, ville vi alle bo der.
+  explanation_md: The larger cabin is imagined rather than real, and the second clause gives the result
+    in that hypothetical situation.

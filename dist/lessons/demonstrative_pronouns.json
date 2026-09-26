@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "demonstrative_pronouns",
   "kind": "grammar",
   "language": "nb-NO",
@@ -92,6 +92,22 @@
     {
       "kind": "exercise",
       "id": "final_demonstrative_retrieval"
+    },
+    {
+      "kind": "exercise",
+      "id": "full_reference_discrimination"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_demonstrative_agreement_selection"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_pattern_through_description"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_final_demonstrative_retrieval"
     }
   ],
   "sections": [
@@ -2022,15 +2038,16 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ denne stol"
+                  "value": "denne stol"
                 }
               ],
               "en": [
                 {
                   "kind": "text",
-                  "value": "Intended meaning: this chair"
+                  "value": "this chair"
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "the-noun-must-be-definite-block-9"
@@ -2084,15 +2101,16 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ det bord"
+                  "value": "det bord"
                 }
               ],
               "en": [
                 {
                   "kind": "text",
-                  "value": "Intended meaning: that table"
+                  "value": "that table"
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "the-noun-must-be-definite-block-13"
@@ -3234,33 +3252,33 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "The shop has objects beside Maja and Jonas and objects farther away. Choose the interpretation that correctly identifies the close and far demonstratives. Focus on distance, not noun gender or number."
+          "value": "Choose the interpretation that fits the conversation."
         }
       ],
       "explanation": null,
       "payload": {
         "options": [
           {
-            "option_id": "reversed",
-            "text": "Beside the speakers: den lampa, det speilet, de stolene. Farther away: denne lampa, dette speilet, disse stolene.",
-            "why": "The close and far sets are reversed."
+            "option_id": "same-distance",
+            "text": "Both demonstrative sets identify objects at the same distance.",
+            "why": "This overlooks the contrast between objects «her» and objects by the window or door."
           },
           {
-            "option_id": "close-far",
-            "text": "Beside the speakers: denne lampa, dette speilet, disse stolene. Farther away: den lampa, det speilet, de stolene.",
-            "why": "The close set is denne/dette/disse; the far set is den/det/de."
+            "option_id": "close-versus-far",
+            "text": "«Denne/dette» identifies the nearby objects; «den/det» identifies the farther-away objects.",
+            "why": "The location cues «her», «ved vinduet», and «ved døra» establish the close–far contrast."
           },
           {
-            "option_id": "mixed",
-            "text": "Beside the speakers: denne lampa, det speilet, disse stolene. Farther away: den lampa, dette speilet, de stolene.",
-            "why": "The neuter forms are assigned to the wrong distance."
+            "option_id": "far-versus-close",
+            "text": "«Denne/dette» identifies the farther-away objects; «den/det» identifies the nearby objects.",
+            "why": "This reverses the single contrast shown by the location cues."
           }
         ],
-        "answer_id": "close-far",
+        "answer_id": "close-versus-far",
         "stem": [
           {
             "kind": "text",
-            "value": "Which interpretation matches the shop scene?"
+            "value": "Maja: «Se på denne lampa her.» Jonas: «Hva med den lampa ved vinduet?» Maja: «Jeg liker dette speilet her.» Jonas: «Jeg foretrekker det speilet ved døra.»"
           }
         ]
       }
@@ -3273,13 +3291,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Fill each blank with the demonstrative that matches the noun. Close or far is already stated; focus on noun gender or number."
+          "value": "Complete the phrases with the correct demonstrative pronoun."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Use denne/den for common singular, dette/det for neuter singular, and disse/de for plural; the noun remains definite after the demonstrative."
+          "value": "Bruk ulike former i felleskjønn entall, intetkjønn entall og flertall."
         }
       ],
       "payload": {
@@ -3289,11 +3307,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Close objects:"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "På disken her:"
               }
             ]
           },
@@ -3301,9 +3315,9 @@
             "kind": "blank",
             "blank_id": "close-common-singular",
             "options": [
-              "disse",
+              "dette",
               "denne",
-              "dette"
+              "disse"
             ],
             "answer_index": 1
           },
@@ -3317,10 +3331,6 @@
               {
                 "kind": "text",
                 "value": "lampa,"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -3329,10 +3339,10 @@
             "blank_id": "close-neuter-singular",
             "options": [
               "denne",
-              "disse",
-              "dette"
+              "dette",
+              "disse"
             ],
-            "answer_index": 2
+            "answer_index": 1
           },
           {
             "kind": "span",
@@ -3343,7 +3353,7 @@
               },
               {
                 "kind": "text",
-                "value": "speilet,"
+                "value": "speilet og"
               },
               {
                 "kind": "text",
@@ -3356,8 +3366,8 @@
             "blank_id": "close-plural",
             "options": [
               "disse",
-              "denne",
-              "dette"
+              "dette",
+              "denne"
             ],
             "answer_index": 0
           },
@@ -3370,11 +3380,7 @@
               },
               {
                 "kind": "text",
-                "value": "stolene. Far objects:"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "stolene. Ved veggen der borte:"
               }
             ]
           },
@@ -3382,36 +3388,9 @@
             "kind": "blank",
             "blank_id": "far-common-singular",
             "options": [
+              "det",
               "de",
-              "den",
-              "det"
-            ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "lampa,"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "far-neuter-singular",
-            "options": [
-              "de",
-              "den",
-              "det"
+              "den"
             ],
             "answer_index": 2
           },
@@ -3424,7 +3403,30 @@
               },
               {
                 "kind": "text",
-                "value": "speilet,"
+                "value": "lampa,"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "far-neuter-singular",
+            "options": [
+              "den",
+              "det",
+              "de"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "speilet og"
               },
               {
                 "kind": "text",
@@ -3437,8 +3439,8 @@
             "blank_id": "far-plural",
             "options": [
               "de",
-              "det",
-              "den"
+              "den",
+              "det"
             ],
             "answer_index": 0
           },
@@ -3466,7 +3468,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Select the one token that is wrong/needs changing."
+          "value": "Which word must change to make the phrase «denne stol her» grammatically correct?"
         }
       ],
       "explanation": null,
@@ -3479,10 +3481,14 @@
           {
             "token_id": "tok-2",
             "text": "stol"
+          },
+          {
+            "token_id": "tok-3",
+            "text": "her"
           }
         ],
         "error_token_id": "tok-2",
-        "feedback": "The noun after a demonstrative must be definite: change «stol» to «stolen»."
+        "feedback": "Etter det påpekende pronomenet bruker vi substantivet i bestemt form: «denne stolen her»."
       }
     },
     {
@@ -3493,33 +3499,33 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Choose the labels that correctly distinguish all three nearby items."
+          "value": "Choose the complete answer."
         }
       ],
       "explanation": null,
       "payload": {
         "options": [
           {
-            "option_id": "correct-set",
-            "text": "denne lampa · dette bordet · disse stolene",
-            "why": "The nearby common singular, neuter singular, and plural forms are denne, dette, and disse, each followed by a definite noun."
+            "option_id": "close-table-indefinite-chairs",
+            "text": "«Dette bord her og de stoler der borte.»",
+            "why": "The distances are represented, but both nouns incorrectly remain indefinite."
           },
           {
-            "option_id": "indefinite-nouns",
-            "text": "denne lampe · dette bord · disse stoler",
-            "why": "A demonstrative requires the definite noun forms lampa, bordet, and stolene."
+            "option_id": "close-table-far-chairs",
+            "text": "«Dette bordet her og de stolene der borte.»",
+            "why": "The reply combines the close neuter form with the far plural form, and both nouns are definite."
           },
           {
-            "option_id": "agreement-mismatch",
-            "text": "dette lampa · denne bordet · de stolene",
-            "why": "Dette is neuter, denne is common singular, and de points to farther-away plural items."
+            "option_id": "far-table-close-chairs",
+            "text": "«Det bordet her og disse stolene der borte.»",
+            "why": "The noun agreement is possible, but both distance choices contradict the location cues."
           }
         ],
-        "answer_id": "correct-set",
+        "answer_id": "close-table-far-chairs",
         "stem": [
           {
             "kind": "text",
-            "value": "Maja points to one lamp, one table, and several chairs beside her. Which set uses the right demonstrative and noun form for every item?"
+            "value": "Maja is standing by a table. Three chairs are on the other side of the room. Jonas: «Hvilke møbler mener du?»"
           }
         ]
       }
@@ -3532,7 +3538,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete the phrase for the small table. Choose the demonstrative and the definite noun, keeping the supplied adjective between them."
+          "value": "Complete the phrase."
         }
       ],
       "explanation": null,
@@ -3543,11 +3549,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Small table:"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "Maja peker på et lite møbel ved siden av seg:"
               }
             ]
           },
@@ -3555,11 +3557,11 @@
             "kind": "blank",
             "blank_id": "description-demonstrative",
             "options": [
+              "denne",
               "disse",
-              "dette",
-              "denne"
+              "dette"
             ],
-            "answer_index": 1
+            "answer_index": 2
           },
           {
             "kind": "span",
@@ -3582,11 +3584,11 @@
             "kind": "blank",
             "blank_id": "description-noun",
             "options": [
-              "bordene",
+              "bordet",
               "bord",
-              "bordet"
+              "bordene"
             ],
-            "answer_index": 2
+            "answer_index": 0
           },
           {
             "kind": "span",
@@ -3608,31 +3610,35 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write one short Norwegian counter summary with four complete noun phrases: the selected lamp, selected mirror, selected chairs, and rejected chairs at the back. Use the taught demonstrative plus definite-noun pattern, and include bakerst with the rejected chairs."
+          "value": "Write a short message to the sales assistant. Ask for the lamp and mirror on the counter here and the chairs by Maja, but not the chairs at the back. Use a demonstrative pronoun and a definite noun for each item."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": null,
-        "max_words": null,
-        "judge_prompt": "Check the response against the task and report evidence for every criterion. Accept normal capitalization and punctuation, but require each listed demonstrative to be followed by its definite noun.",
+        "min_words": 12,
+        "max_words": 25,
+        "judge_prompt": "Assess only criteria selected-common-singular, selected-neuter-singular, selected-plural, rejected-plural-far, audience-purpose. A response passes when every listed criterion is met.",
         "criteria": [
           {
             "id": "selected-common-singular",
-            "instruction": "Uses «denne lampa» for the selected lamp, with definite noun «lampa»."
+            "instruction": "Identifies the selected nearby lamp with «denne lampa» or «denne lampen»."
           },
           {
             "id": "selected-neuter-singular",
-            "instruction": "Uses «dette speilet» for the selected mirror, with definite noun «speilet»."
+            "instruction": "Identifies the selected nearby mirror with «dette speilet»."
           },
           {
             "id": "selected-plural",
-            "instruction": "Uses «disse stolene» for the selected chairs, with definite noun «stolene»."
+            "instruction": "Identifies the selected nearby chairs with «disse stolene»."
           },
           {
             "id": "rejected-plural-far",
-            "instruction": "Uses «de stolene bakerst» for the rejected chairs at the back."
+            "instruction": "Identifies the rejected chairs with «de stolene» and a clear far-location phrase, such as «bakerst» or «der borte»."
+          },
+          {
+            "id": "audience-purpose",
+            "instruction": "Functions as a clear note telling the shop assistant what is and is not being bought."
           }
         ]
       }
@@ -3645,39 +3651,35 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "In the unpacking scene, write six short Norwegian placement statements, one for each cue: a box beside Jonas (close), a box near the door (far), a picture in Maja's hands (close), a picture on the far wall (far), books on the nearby table (close), and books across the room (far). Use a complete demonstrative noun phrase in every statement. Use new wording rather than copying any complete sentence from the lesson."
+          "value": "Write a message to Jonas. You are standing with him by the door. The box by you should go to the kitchen, and the box farthest away should go to the bathroom. The picture you are holding should go to the bedroom; the picture at the other end of the room should go to the living room. The books by you should go on the shelf, and the books by Maja, on the other side of the room, should go to the office. Use demonstrative pronouns and definite nouns."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": null,
-        "max_words": null,
-        "judge_prompt": "Check all six cues and report evidence for every criterion. Accept varied natural Norwegian placement verbs and normal capitalization or punctuation. Require the listed demonstrative plus definite noun for the matching cue.",
+        "min_words": 35,
+        "max_words": 60,
+        "judge_prompt": "Assess only criteria all-six-items, destinations, audience-purpose, demonstrative-agreement, and definite-nouns. A response passes when every listed criterion is met.",
         "criteria": [
           {
-            "id": "close-box",
-            "instruction": "Uses «denne esken» for the box beside Jonas, with definite noun «esken»."
+            "id": "all-six-items",
+            "instruction": "Refers clearly to all six rows in the supplied facts list."
           },
           {
-            "id": "far-box",
-            "instruction": "Uses «den esken» for the box near the door, with definite noun «esken»."
+            "id": "destinations",
+            "instruction": "Assigns each item to the destination shown for it."
           },
           {
-            "id": "close-picture",
-            "instruction": "Uses «dette bildet» for the picture in Maja’s hands, with definite noun «bildet»."
+            "id": "audience-purpose",
+            "instruction": "Functions as a practical message to Jonas about where the belongings should go."
           },
           {
-            "id": "far-picture",
-            "instruction": "Uses «det bildet» for the picture on the far wall, with definite noun «bildet»."
+            "id": "demonstrative-agreement",
+            "instruction": "Uses «denne/den» for each box, «dette/det» for each picture, and «disse/de» for the books, choosing the close form for items marked «nær deg» and the far form for items marked «lenger borte» or «langt borte»."
           },
           {
-            "id": "close-books",
-            "instruction": "Uses «disse bøkene» for the books on the nearby table, with definite noun «bøkene»."
-          },
-          {
-            "id": "far-books",
-            "instruction": "Uses «de bøkene» for the books across the room, with definite noun «bøkene»."
+            "id": "definite-nouns",
+            "instruction": "Uses the definite forms «esken», «bildet», and «bøkene» after the demonstratives."
           }
         ]
       }
@@ -3690,7 +3692,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete three short descriptions. For each one, retrieve both the demonstrative and the definite noun form: one nearby singular lamp, one farther-away neuter table, and several nearby books."
+          "value": "Complete the three descriptions."
         }
       ],
       "explanation": null,
@@ -3701,7 +3703,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Nearby lamp:"
+                "value": "En lampe ved deg:"
               },
               {
                 "kind": "text",
@@ -3713,55 +3715,9 @@
             "kind": "blank",
             "blank_id": "nearby-lamp-demonstrative",
             "options": [
-              "denne",
               "dette",
-              "disse"
-            ],
-            "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "nearby-lamp-noun",
-            "options": [
-              "lampene",
-              "lampa",
-              "lamper"
-            ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": ". Farther-away table:"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "far-table-demonstrative",
-            "options": [
-              "de",
-              "den",
-              "det"
+              "disse",
+              "denne"
             ],
             "answer_index": 2
           },
@@ -3780,20 +3736,66 @@
           },
           {
             "kind": "blank",
-            "blank_id": "far-table-noun",
+            "blank_id": "nearby-lamp-noun",
             "options": [
-              "bordet",
-              "bord",
-              "bordene"
+              "lamper",
+              "lampa",
+              "lampene"
             ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
             "spans": [
               {
                 "kind": "text",
-                "value": ". Nearby books:"
+                "value": ". Et vindu på andre siden av rommet:"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "far-window-demonstrative",
+            "options": [
+              "den",
+              "det",
+              "de"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "far-window-noun",
+            "options": [
+              "vinduer",
+              "vinduene",
+              "vinduet"
+            ],
+            "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Flere bøker ved deg:"
               },
               {
                 "kind": "text",
@@ -3805,9 +3807,9 @@
             "kind": "blank",
             "blank_id": "nearby-books-demonstrative",
             "options": [
-              "dette",
+              "denne",
               "disse",
-              "denne"
+              "dette"
             ],
             "answer_index": 1
           },
@@ -3829,10 +3831,362 @@
             "blank_id": "nearby-books-noun",
             "options": [
               "boka",
-              "bøker",
+              "bok",
               "bøkene"
             ],
             "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "full_reference_discrimination",
+      "operation": "choose",
+      "objective_id": "obj-demonstrative-pronouns-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the reply that shows which chairs Maja means."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "near-singular-chair",
+            "text": "«Jeg mener denne stolen ved siden av meg.»",
+            "why": "This is a grammatical phrase for one nearby chair, but Maja means several chairs."
+          },
+          {
+            "option_id": "nearby-old-chairs",
+            "text": "«Jeg mener disse stolene her.»",
+            "why": "The plural demonstrative marks the chairs as nearby, and the definite noun remains visible."
+          },
+          {
+            "option_id": "distant-old-chairs",
+            "text": "«Jeg mener de stolene bakerst.»",
+            "why": "The noun phrase is well formed, but «de» selects the farther-away set."
+          }
+        ],
+        "answer_id": "nearby-old-chairs",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Sales assistant: «Mener du de gamle stolene bakerst?» Maja: «Nei, jeg mener stolene ved siden av meg.»"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_demonstrative_agreement_selection",
+      "operation": "recall_fill",
+      "objective_id": "obj-demonstrative-pronouns-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Complete the phrases in the new scene."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Disse viser til flertall nær Maja, og de viser til flertall lenger unna."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Maja tar på eplene ved seg:"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-close-plural",
+            "options": [
+              "dette",
+              "de",
+              "disse"
+            ],
+            "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "eplene her. Jonas ser på eplene ved veggen:"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-far-plural",
+            "options": [
+              "de",
+              "den",
+              "disse"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "eplene der borte."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_pattern_through_description",
+      "operation": "recall_fill",
+      "objective_id": "obj-demonstrative-pronouns-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Complete the description of the lamp."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Jonas peker på en liten lampe ved siden av seg:"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-description-demonstrative",
+            "options": [
+              "disse",
+              "denne",
+              "dette"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "lille"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-description-noun",
+            "options": [
+              "lampa",
+              "lamper",
+              "lampene"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_final_demonstrative_retrieval",
+      "operation": "recall_fill",
+      "objective_id": "obj-demonstrative-pronouns-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Complete the three descriptions of the new items."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "En stol ved deg:"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-nearby-chair-demonstrative",
+            "options": [
+              "dette",
+              "disse",
+              "denne"
+            ],
+            "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-nearby-chair-noun",
+            "options": [
+              "stoler",
+              "stolen",
+              "stolene"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Et bilde på andre siden av rommet:"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-far-picture-demonstrative",
+            "options": [
+              "den",
+              "det",
+              "de"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-far-picture-noun",
+            "options": [
+              "bilder",
+              "bildene",
+              "bildet"
+            ],
+            "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Flere trær der borte:"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-far-trees-demonstrative",
+            "options": [
+              "denne",
+              "disse",
+              "de"
+            ],
+            "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-far-trees-noun",
+            "options": [
+              "treet",
+              "trærne",
+              "tre"
+            ],
+            "answer_index": 1
           },
           {
             "kind": "span",
@@ -3859,7 +4213,11 @@
         "pattern_through_description",
         "counter_summary",
         "moving_day_transfer",
-        "final_demonstrative_retrieval"
+        "final_demonstrative_retrieval",
+        "full_reference_discrimination",
+        "review_demonstrative_agreement_selection",
+        "review_pattern_through_description",
+        "review_final_demonstrative_retrieval"
       ]
     }
   ],

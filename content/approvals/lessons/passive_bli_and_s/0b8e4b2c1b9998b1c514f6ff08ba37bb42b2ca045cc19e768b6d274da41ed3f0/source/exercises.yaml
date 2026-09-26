@@ -1,0 +1,396 @@
+- handle: notice_passive_focus
+  op: choose
+  objective: obj-passive-bli-and-s-02
+  bloom: understand
+  prompt_md: Velg den beste forklaringen.
+  stem_md: 'Offentlig beskjed: «Bord ryddes etter bruk.» Intern oppdatering: «Det nye skiltet blir hengt
+    opp i kveld.»'
+  options:
+  - id: agent-focus
+    text: Begge beskjedene framhever den ansatte som utfører arbeidet, selv om personen ikke er nevnt.
+    correct: false
+    why: Dette forveksler den underforståtte utøveren med informasjonen som faktisk står i fokus.
+  - id: reversed-focus
+    text: Den første beskriver én bestemt hendelse, og den andre beskriver en fast rutine.
+    correct: false
+    why: Tidsuttrykkene «etter bruk» og «i kveld» gir motsatt skille.
+  - id: affected-focus
+    text: Den første framhever en rutine, og den andre framhever en bestemt hendelse. Den som gjør arbeidet,
+      er ikke viktig i noen av beskjedene.
+    correct: true
+    why: Mottakerne trenger å vite hva som skjer med bordene og skiltet, ikke hvem som utfører arbeidet.
+  derived_from:
+  - section_id: checkpoint-noticing-passive-focus
+- handle: form_s_passive_for_procedures
+  op: recall_fill
+  objective: obj-passive-bli-and-s-01
+  bloom: apply
+  prompt_md: Fullfør den offentlige beskjeden med s-passiv av «åpne».
+  stem_md: Bibliotekarene åpner dørene hver morgen klokka ti. Publikum trenger ikke å vite hvem som gjør jobben.
+  audio_target: Dørene åpnes hver morgen klokka ti.
+  segments:
+  - text_md: 'Dørene '
+  - blank_id: form-s-passive
+    options:
+    - åpnes
+    - åpner
+    answer_index: 0
+  - text_md: ' hver morgen klokka ti.'
+  explanation_md: '«Åpner» mister presens-r før passiv-s legges til: «åpnes».'
+  derived_from:
+  - section_id: checkpoint-form-s-passive
+- handle: form_bli_passive_for_events
+  op: build
+  objective: obj-passive-bli-and-s-01
+  bloom: apply
+  prompt_md: Bygg de to hendelsesoppdateringene.
+  stem_md: 'To beskjeder til mottakere: nye lamper skal opp i morgen, og døra ble reparert på fredag.
+    Arbeiderne er ikke relevante for mottakeren.'
+  tokens:
+  - token_id: b-1
+    text: Lampene
+  - token_id: b-2
+    text: blir
+  - token_id: b-3
+    text: montert
+  - token_id: b-4
+    text: i
+  - token_id: b-5
+    text: morgen,
+  - token_id: b-6
+    text: og
+  - token_id: b-7
+    text: døra
+  - token_id: b-8
+    text: ble
+  - token_id: b-9
+    text: reparert
+  - token_id: b-10
+    text: på
+  - token_id: b-11
+    text: fredag.
+  answer_order:
+  - b-1
+  - b-2
+  - b-3
+  - b-4
+  - b-5
+  - b-6
+  - b-7
+  - b-8
+  - b-9
+  - b-10
+  - b-11
+  explanation_md: «Blir» viser den planlagte hendelsen, mens «ble» viser den avsluttede hendelsen.
+  derived_from:
+  - section_id: checkpoint-form-bli-passive
+- handle: choose_passive_for_routine_or_event
+  op: choose
+  objective: obj-passive-bli-and-s-01
+  bloom: apply
+  prompt_md: Velg kombinasjonen som følger den vanligste tendensen for rutiner og bestemte hendelser.
+  stem_md: 'Biblioteket skal informere besøkende om to ting: De ansatte tømmer bokluka hver kveld, og montøren
+    setter opp det nye skiltet i kveld.'
+  options:
+  - id: routine-bli-event-s
+    text: Bokluka blir tømt hver kveld, og det nye skiltet henges opp i kveld.
+    correct: false
+    why: S-passiv kan også være naturlig om en planlagt hendelse i en beskjed, men bli-passiv er den vanligere
+      tendensen for kveldens bestemte oppsetting.
+  - id: both-active
+    text: Bokluka blir tømt hver kveld, og det nye skiltet blir hengt opp i kveld.
+    correct: false
+    why: Bli-passiv kan også beskrive en rutine, men s-passiv er vanligvis den kortere formen i en offentlig
+      beskjed.
+  - id: routine-s-event-bli
+    text: Bokluka tømmes hver kveld, og det nye skiltet blir hengt opp i kveld.
+    correct: true
+    why: Dette følger den vanlige tendensen, med s-passiv for rutinen og bli-passiv for kveldens bestemte hendelse.
+  derived_from:
+  - section_id: checkpoint-choose-passive-pattern
+- handle: omit_irrelevant_agent
+  op: write
+  objective: obj-passive-bli-and-s-02
+  bloom: apply
+  prompt_md: 'Mottaker: besøkende ved biblioteket. Formål: gi bare informasjonen de trenger. Fakta: Renholderen
+    rydder bord etter bruk; Teknikeren henger opp det nye skiltet i kveld; Bibliotekar Nora møter skoleklassen
+    ved inngangen klokka fem. Skriv en offentlig beskjed på 20–40 ord. Utelat de ansatte i de to første
+    punktene, men navngi Nora som kontakt for skoleklassen.'
+  response_language: 'no'
+  min_words: 20
+  max_words: 40
+  judge_prompt: Vurder svaret etter kriteriene public-facts, contact-named, agent-omission, word-bound
+    og passive-choice-observation. Registrer observasjonen diagnostisk.
+  criteria:
+  - id: public-facts
+    instruction: Beskjeden bevarer rutinen med bordene og kveldens skiltoppsetting.
+  - id: contact-named
+    instruction: Beskjeden navngir Nora som kontakt for skoleklassen ved inngangen klokka fem.
+  - id: agent-omission
+    instruction: Beskjeden utelater renholderen og teknikeren i de to første punktene.
+  - id: word-bound
+    instruction: Beskjeden inneholder 20–40 ord.
+  - id: passive-choice-observation
+    instruction: 'Observation only: registrer diagnostisk om rutinen uttrykkes med s-passiv og kveldshendelsen
+      med bli-passiv.'
+  explanation_md: En offentlig beskjed kan utelate ukjente eller irrelevante arbeidere, men bør beholde
+    navnet når mottakeren trenger det.
+  derived_from:
+  - section_id: checkpoint-omit-irrelevant-agent
+- handle: discriminate_passive_response
+  op: choose
+  objective: obj-passive-bli-and-s-01
+  bloom: analyze
+  prompt_md: Velg svaret som passer begge situasjonene.
+  stem_md: 'Kunde: «Hvordan leverer jeg lånte bøker når hoveddøra er stengt?» Leder: «Er reparasjonen
+    av luka ferdig? Den sto på planen for i går.»'
+  options:
+  - id: time-mismatch
+    text: «Bøkene blir levert i luka i går.» / «Ja, luka repareres hver kveld.»
+    correct: false
+    why: Tidsformene gjør kundens prosedyre til en avsluttet handling og gårsdagens reparasjon til en
+      rutine.
+  - id: procedure-then-report
+    text: «Bøkene leveres i luka.» / «Ja, luka ble reparert i går.»
+    correct: true
+    why: Første svar gir en generell prosedyre; andre rapporterer én avsluttet hendelse.
+  - id: wrong-second
+    text: «Bøkene legges i luka.» / «Ja, luka repareres i går.»
+    correct: false
+    why: S-passiven «repareres» kan ikke beskrive én fullført reparasjon i går.
+  derived_from:
+  - section_id: checkpoint-choose-passive-pattern
+- handle: revise_library_reopening_notice
+  op: write
+  objective: obj-passive-bli-and-s-01
+  bloom: analyze
+  prompt_md: 'Mottaker: bibliotekets besøkende. Formål: rette og publisere Marius sin beskjed. Utkast:
+    «Bøkene blir leveres i luka. Luka blir tømt hver kveld. Det nye skiltet henges opp hver kveld. Døra
+    ble repareres på fredag.» Utkastet har to dobbel passiv-feil som skal rettes. Fakta: Lånerne leverer bøker i luka mens hoveddøra er
+    stengt hver kveld; Ansatte tømmer luka hver kveld; Det nye skiltet skal opp én gang i kveld; En vaktmester reparerte
+    døra på fredag. Bruk s-passiv for den gjentatte bokleveringen og bli-passiv for minst én enkelt hendelse. Skriv en rettet beskjed på 20–45 ord.'
+  response_language: 'no'
+  min_words: 20
+  max_words: 45
+  judge_prompt: Vurder svaret etter kriteriene passive-contrast, content-preserved, errors-repaired og word-bound.
+  criteria:
+  - id: passive-contrast
+    instruction: Uses a natural s-passive for a recurring routine and a natural bli-passive for at least one particular event, as requested.
+  - id: content-preserved
+    instruction: Den rettede beskjeden bevarer de fire oppgitte faktaene og skiller den faste kveldsrutinen
+      fra skiltoppsettingen som skjer én gang i kveld.
+  - id: errors-repaired
+    instruction: «Bøkene blir leveres» er rettet med en naturlig s-passiv for den gjentatte bokleveringen, «ble repareres» er rettet til «ble reparert», og ingen dobbel passiv står igjen.
+  - id: word-bound
+    instruction: Beskjeden inneholder 20–45 ord.
+  explanation_md: Bli-passiv bruker partisipp etter «blir» eller «ble», mens s-passiv passer en fast rutine. Tidsuttrykkene må fortsatt skille rutiner fra enkelthendelser.
+  derived_from:
+  - section_id: checkpoint-revise-library-reopening-notice
+- handle: create_cafe_opening_update
+  op: write
+  objective: obj-passive-bli-and-s-02
+  bloom: apply
+  prompt_md: 'Mottaker: kafékunder. Formål: forklare den daglige ordningen og morgendagens åpning. Fakta:
+    Hver dag bestiller kundene maten ved disken; etter bruk setter de koppene på tralla; i morgen installerer
+    en tekniker den nye kaffemaskinen; på fredag kontrollerte en montør ventilasjonen. Gjør hvert faktum
+    om til en passiv beskjed med riktige tidsforhold, og utelat de ansatte. Skriv en kundeoppdatering
+    på 25–50 ord.'
+  response_language: 'no'
+  min_words: 25
+  max_words: 50
+  judge_prompt: Vurder cafe-facts, audience-purpose, agent-omission, passive-use og word-bound som bindende.
+    Rapporter passive-transfer-observation diagnostisk; naturlige s- og bli-passiver kan begge uttrykke
+    flere av de oppgitte tidsforholdene og skal ikke underkjennes bare for valg av passivtype.
+  criteria:
+  - id: cafe-facts
+    instruction: Oppdateringen gjengir alle fire fakta med riktige tidsforhold.
+  - id: audience-purpose
+    instruction: Teksten fungerer som en tydelig oppdatering til kafékunder om ordningen og åpningen.
+  - id: agent-omission
+    instruction: Oppdateringen utelater teknikeren og montøren.
+  - id: passive-use
+    instruction: Hvert av de fire faktaene uttrykkes med en naturlig passivkonstruksjon, slik oppgaven ber om.
+  - id: word-bound
+    instruction: Oppdateringen inneholder 25–50 ord.
+  - id: passive-transfer-observation
+    instruction: 'Bare observasjon: Noter om svaret bruker s-passiv om rutiner og bli-passiv om bestemte hendelser; ikke underkjenn en naturlig passivvariant på dette grunnlaget.'
+  explanation_md: Kundeinformasjon framhever normalt ordningen og hendelsene, ikke hvilke ansatte som
+    utfører arbeidet.
+  derived_from:
+  - section_id: cafe-opening-transfer
+- handle: retrieve_bli_and_s_passive
+  op: write
+  objective: obj-passive-bli-and-s-02
+  bloom: apply
+  prompt_md: Forklar kort den praktiske tendensen for når man velger s-passiv, og når man velger bli-passiv.
+    Skriv deretter én rutinesetning med s-passiv og én hendelsessetning med bli-passiv. Begge setningene
+    skal utelate den som utfører arbeidet. Bruk 20–45 ord.
+  response_language: 'no'
+  min_words: 20
+  max_words: 45
+  judge_prompt: Vurder svaret etter kriteriene states-tendency, routine-s-passive, event-bli-passive,
+    agent-omission og word-bound.
+  criteria:
+  - id: states-tendency
+    instruction: Svaret sier at s-passiv brukes om faste rutiner og prosedyrer, mens bli-passiv brukes
+      om én bestemt hendelse.
+  - id: routine-s-passive
+    instruction: Svaret inneholder én rutinesetning med en naturlig s-passiv.
+  - id: event-bli-passive
+    instruction: Svaret inneholder én hendelsessetning med bli-passiv og partisipp.
+  - id: agent-omission
+    instruction: Begge setningene utelater den som utfører arbeidet.
+  - id: word-bound
+    instruction: Svaret inneholder 20–45 ord.
+  explanation_md: S-passiv kjennetegner rutiner og prosedyrer, bli-passiv kjennetegner bestemte hendelser,
+    og utøveren utelates når mottakeren ikke trenger den.
+  derived_from:
+  - section_id: short-retrieval-review
+- handle: review_form_s_apnes
+  op: choose
+  objective: obj-passive-bli-and-s-01
+  bloom: apply
+  prompt_md: Velg den riktige beskjeden.
+  stem_md: 'Fast ordning: Biblioteket viser nye utstillinger for publikum hver tirsdag. Den som viser
+    utstillingen, skal ikke nevnes.'
+  options:
+  - id: visesr
+    text: Nye utstillinger visesr hver tirsdag.
+    correct: false
+    why: Presens-r er feilaktig beholdt foran passiv-s.
+  - id: blir-vises
+    text: Nye utstillinger blir vises hver tirsdag.
+    correct: false
+    why: «Blir» kan ikke kombineres med s-passiven «vises».
+  - id: vises
+    text: Nye utstillinger vises hver tirsdag.
+    correct: true
+    why: «Vises» er s-passiven som passer den faste institusjonelle rutinen.
+  derived_from:
+  - section_id: short-retrieval-review
+- handle: review_form_bli_future
+  op: choose
+  objective: obj-passive-bli-and-s-01
+  bloom: apply
+  prompt_md: Velg den riktige oppdateringen.
+  stem_md: 'Plan for én bestemt jobb i morgen: nye lamper. Teknikeren skal ikke nevnes.'
+  options:
+  - id: blir-leveres
+    text: De nye lampene blir leveres i morgen.
+    correct: false
+    why: Etter «blir» trengs partisipp, ikke s-passiv.
+  - id: blir-levert
+    text: De nye lampene blir levert i morgen.
+    correct: true
+    why: «Blir» og partisippet «levert» uttrykker den planlagte enkelthendelsen.
+  - id: ble-levert
+    text: De nye lampene ble levert i morgen.
+    correct: false
+    why: «Ble» viser fortid og passer derfor ikke med planen for i morgen.
+  derived_from:
+  - section_id: short-retrieval-review
+- handle: review_form_bli_past
+  op: choose
+  objective: obj-passive-bli-and-s-01
+  bloom: apply
+  prompt_md: Velg den riktige rapporten.
+  stem_md: 'Ferdig arbeid på tirsdag: porten. Vaktmesteren skal ikke nevnes.'
+  options:
+  - id: blir-lukket
+    text: Porten blir lukket på tirsdag.
+    correct: false
+    why: «Blir» presenterer arbeidet som aktuelt eller planlagt, ikke som ferdig.
+  - id: ble-lukkes
+    text: Porten ble lukkes på tirsdag.
+    correct: false
+    why: S-passiven «lukkes» kan ikke stå etter «ble».
+  - id: ble-lukket
+    text: Porten ble lukket på tirsdag.
+    correct: true
+    why: «Ble» bærer fortiden, og «lukket» står som partisipp.
+  derived_from:
+  - section_id: short-retrieval-review
+- handle: review_choose_routine_s
+  op: choose
+  objective: obj-passive-bli-and-s-01
+  bloom: analyze
+  prompt_md: Velg den korteste naturlige offentlige formuleringen for den faste prosedyren.
+  stem_md: 'Kunderegel: Ansatte sjekker alle kvitteringer ved utgangen. Dette skjer som fast prosedyre.'
+  options:
+  - id: ble-kontrollert
+    text: Alle kvitteringer ble kontrollert ved utgangen i går.
+    correct: false
+    why: Dette gjør prosedyren om til én avsluttet kontroll.
+  - id: kontrolleres
+    text: Alle kvitteringer kontrolleres ved utgangen.
+    correct: true
+    why: S-passiven gir en kort institusjonell prosedyre uten å framheve en kontrollør.
+  - id: kontrolloren
+    text: Alle kvitteringer blir kontrollert ved utgangen.
+    correct: false
+    why: Bli-passiv er også naturlig, men s-passiv er den kortere formen som passer den faste prosedyren her.
+  derived_from:
+  - section_id: short-retrieval-review
+- handle: review_choose_event_bli
+  op: choose
+  objective: obj-passive-bli-and-s-01
+  bloom: analyze
+  prompt_md: Velg den mest naturlige interne oppdateringen om en bestemt reparasjon.
+  stem_md: Et vindu på kontoret har fått en sprekk. Reparasjonen er avtalt til i morgen, og kollegene vil vite hva som skjer med akkurat dette vinduet.
+  options:
+  - id: besvares-generelt
+    text: Vinduer kontrolleres hver vår.
+    correct: false
+    why: Dette uttrykker en generell vedlikeholdsrutine og mister den konkrete reparasjonen i morgen.
+  - id: ble-besvart
+    text: Vinduet ble reparert i morgen.
+    correct: false
+    why: Fortidsformen «ble» kolliderer med framtidsuttrykket «i morgen».
+  - id: blir-besvart
+    text: Vinduet blir reparert i morgen.
+    correct: true
+    why: Bli-passiven framhever den planlagte reparasjonen av det bestemte vinduet.
+  derived_from:
+  - section_id: short-retrieval-review
+- handle: review_omit_irrelevant_agent
+  op: choose
+  objective: obj-passive-bli-and-s-02
+  bloom: analyze
+  prompt_md: Velg meldingen som bare forteller kundene hva som skjer med tjenesten og når.
+  stem_md: 'Kundemelding: Teknikeren oppgraderer serverne onsdag kveld, og systemet blir utilgjengelig fra klokka 20 til 22. Kundene trenger å vite hva som skjer og når.'
+  options:
+  - id: municipality-active
+    text: Teknikeren setter systemet ut av drift onsdag kveld fra klokka 20 til 22.
+    correct: false
+    why: Innholdet er sant, men avsenderen framhever teknikeren i stedet for informasjonen kundene trenger.
+  - id: road-passive
+    text: Systemet blir satt ut av drift onsdag kveld fra klokka 20 til 22.
+    correct: true
+    why: Beskjeden framhever hva som skjer med tjenesten og tidspunktet kundene trenger.
+  - id: routine-road
+    text: Systemet settes ut av drift hver onsdag kveld fra klokka 20 til 22.
+    correct: false
+    why: Dette endrer én planlagt driftsstans til en ukentlig rutine.
+  derived_from:
+  - section_id: short-retrieval-review
+- handle: review_keep_relevant_agent
+  op: choose
+  objective: obj-passive-bli-and-s-02
+  bloom: analyze
+  prompt_md: Velg beskjeden som beholder informasjonen klassen trenger.
+  stem_md: Klassen trenger navn, rolle, sted og tidspunkt for å finne riktig person.
+  options:
+  - id: omit-nora
+    text: Dere blir møtt ved inngangen klokka fem.
+    correct: false
+    why: Hendelsen og tidspunktet bevares, men klassen får ikke vite hvem den skal se etter.
+  - id: routine-meeting
+    text: Skoleklasser møtes ved inngangen hver dag.
+    correct: false
+    why: Dette endrer den konkrete avtalen til en generell rutine.
+  - id: keep-nora
+    text: Nora, bibliotekaren, venter på dere ved inngangen klokka fem.
+    correct: true
+    why: Navnet og rollen lar klassen kjenne igjen riktig person ved inngangen.
+  derived_from:
+  - section_id: short-retrieval-review

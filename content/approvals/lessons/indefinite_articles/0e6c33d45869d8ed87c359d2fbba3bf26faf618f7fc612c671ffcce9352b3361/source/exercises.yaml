@@ -1,0 +1,464 @@
+- handle: gender_phrase_discrimination
+  op: choose
+  objective: obj-indefinite-articles-01
+  bloom: understand
+  prompt_md: Using the lesson's mandatory three-gender Bokmål convention, choose the article phrase that
+    matches each noun card's definite form.
+  stem_md: 'Noun cards: sengen · hylla · skrivebordet'
+  options:
+  - id: gender-labels-feminine-as-masculine
+    text: en seng · en hylle · et skrivebord
+    correct: false
+    why: The lesson's three-gender convention uses ei with hylle.
+  - id: gender-labels-neuter-as-masculine
+    text: en seng · ei hylle · en skrivebord
+    correct: false
+    why: Skrivebord is neuter and requires et.
+  - id: gender-labels-masculine-as-neuter
+    text: et seng · ei hylle · et skrivebord
+    correct: false
+    why: Seng is masculine and requires en.
+  - id: gender-labels-correct
+    text: en seng · ei hylle · et skrivebord
+    correct: true
+    why: The three-gender convention maps -en to en, -a to ei, and -et to et.
+  derived_from:
+  - section_id: one-thing-en-ei-et
+- handle: room_article_hunt
+  op: recall_fill
+  objective: obj-indefinite-articles-01
+  bloom: understand
+  prompt_md: Using the lesson's mandatory three-gender Bokmål convention, fill in en, ei, or et.
+  audio_target: Jeg ser en seng, ei hylle og et skrivebord.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Amina
+      text_md: «Jeg ser ___ seng, ___ hylle og ___ skrivebord.»
+  segments:
+  - text_md: '«Jeg ser '
+  - blank_id: room-seng-article
+    options:
+    - en
+    - et
+    - ei
+    answer_index: 0
+  - text_md: ' seng,'
+  - blank_id: room-hylle-article
+    options:
+    - et
+    - ei
+    - en
+    answer_index: 1
+  - text_md: ' hylle og '
+  - blank_id: room-skrivebord-article
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 2
+  - text_md: ' skrivebord.»'
+  explanation_md: Under the lesson's mandatory three-gender convention, seng is masculine, hylle is feminine,
+    and skrivebord is neuter.
+  derived_from:
+  - section_id: one-thing-en-ei-et
+- handle: furnishing_the_room
+  op: recall_fill
+  objective: obj-indefinite-articles-01
+  bloom: apply
+  prompt_md: Using the lesson's mandatory three-gender Bokmål convention, fill in en, ei, or et.
+  audio_target: Til rommet trenger jeg en stol, ei bok og et kart.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Amina
+      text_md: «Til rommet trenger jeg ___ stol, ___ bok og ___ kart.»
+  segments:
+  - text_md: '«Til rommet trenger jeg '
+  - blank_id: furnishing-stol-article
+    options:
+    - en
+    - et
+    - ei
+    answer_index: 0
+  - text_md: ' stol,'
+  - blank_id: furnishing-bok-article
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 1
+  - text_md: ' bok og '
+  - blank_id: furnishing-kart-article
+    options:
+    - ei
+    - en
+    - et
+    answer_index: 2
+  - text_md: ' kart.»'
+  explanation_md: Under the lesson's mandatory three-gender convention, stol is masculine, bok is feminine,
+    and kart is neuter.
+  derived_from:
+  - section_id: choosing-the-article-in-a-sentence
+- handle: role_or_person
+  op: recall_fill
+  objective: obj-indefinite-articles-01
+  bloom: apply
+  prompt_md: Complete each reply.
+  audio_target: Hun er lærer. Hun møter en lærer. Han er lege. Han ringer en lege. Jeg er student. Jeg
+    kjenner en student.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Ingrid
+      text_md: «Hva jobber hun som?»
+    - speaker: Amina
+      text_md: «Hun er ___.»
+    - speaker: Per
+      text_md: «Hvem møter hun?»
+    - speaker: Amina
+      text_md: «Hun møter ___.»
+    - speaker: Ingrid
+      text_md: «Hva jobber han som?»
+    - speaker: Amina
+      text_md: «Han er ___.»
+    - speaker: Per
+      text_md: «Hvem ringer han?»
+    - speaker: Amina
+      text_md: «Han ringer ___.»
+    - speaker: Ingrid
+      text_md: «Hva er du?»
+    - speaker: Amina
+      text_md: «Jeg er ___.»
+    - speaker: Per
+      text_md: «Hvem kjenner du?»
+    - speaker: Amina
+      text_md: «Jeg kjenner ___.»
+  segments:
+  - text_md: '«Hun er '
+  - blank_id: role-laerer-role-phrase
+    options:
+    - lærer
+    - en lærer
+    answer_index: 0
+  - text_md: '. Hun møter '
+  - blank_id: role-laerer-person-phrase
+    options:
+    - en lærer
+    - lærer
+    answer_index: 0
+  - text_md: '. Han er '
+  - blank_id: role-lege-role-phrase
+    options:
+    - en lege
+    - lege
+    answer_index: 1
+  - text_md: '. Han ringer '
+  - blank_id: role-lege-person-phrase
+    options:
+    - lege
+    - en lege
+    answer_index: 1
+  - text_md: '. Jeg er '
+  - blank_id: role-student-role-phrase
+    options:
+    - student
+    - en student
+    answer_index: 0
+  - text_md: '. Jeg kjenner '
+  - blank_id: role-student-person-phrase
+    options:
+    - en student
+    - student
+    answer_index: 0
+  - text_md: .
+  explanation_md: A simple profession after er has no article; a specific person takes en.
+  derived_from:
+  - section_id: no-article-for-a-role-after-vaere
+- handle: drink_or_serving
+  op: choose
+  objective: obj-indefinite-articles-01
+  bloom: understand
+  prompt_md: Choose the sentence that matches the order for one serving.
+  stem_md: At the café, the cashier asks what Amina wants. She orders one cup of coffee to take away.
+  options:
+  - id: definite-serving
+    text: Jeg vil gjerne ha kaffen.
+    correct: false
+    why: This refers to particular coffee already known.
+  - id: serving
+    text: Jeg vil gjerne ha en kaffe.
+    correct: true
+    why: En kaffe presents the order as one countable serving.
+  - id: substance
+    text: Jeg vil gjerne ha litt kaffe.
+    correct: false
+    why: The reply asks for some coffee as a substance, not one countable serving.
+  - id: wrong-gender-serving
+    text: Jeg vil gjerne ha et kaffe.
+    correct: false
+    why: The article does not match the taught form for one serving of coffee.
+  derived_from:
+  - section_id: no-article-for-a-substance
+- handle: full_response_choice
+  op: choose
+  objective: obj-indefinite-articles-01
+  bloom: analyze
+  prompt_md: 'Choose the message that matches the facts and follows the lesson’s three-gender pattern.
+    Use ei for the feminine noun here; en is also accepted with many feminine nouns in Bokmål.'
+  stem_md: Omar is packing for a weekend trip. He has one cup, one book, and one map in his bag. His roommate
+    is a doctor. At home they drink tea as a beverage, not as one serving.
+  options:
+  - id: cup-wrong-gender
+    text: I sekken har jeg ei kopp, ei bok og et kart. Romkameraten min er lege. Vi drikker te hjemme.
+    correct: false
+    why: Kopp is masculine in the lesson’s convention and takes en.
+  - id: role-treated-as-person
+    text: I sekken har jeg en kopp, ei bok og et kart. Romkameraten min er en lege. Vi drikker te hjemme.
+    correct: false
+    why: In this neutral description, lege names a role after er and is normally bare.
+  - id: substance-treated-as-serving
+    text: I sekken har jeg en kopp, ei bok og et kart. Romkameraten min er lege. Vi drikker en te hjemme.
+    correct: false
+    why: The stem means tea as a beverage; en te would mean one serving.
+  - id: all-facts-correct
+    text: I sekken har jeg en kopp, ei bok og et kart. Romkameraten min er lege. Vi drikker te hjemme.
+    correct: true
+    why: The message matches the facts, uses the lesson’s three-gender pattern, and treats lege as a role
+      and tea as a substance.
+  explanation_md: The countable objects take en kopp, ei bok, and et kart in the lesson’s three-gender
+    pattern. A neutral role after er and tea as a beverage are bare.
+  derived_from:
+  - section_id: bringing-the-choices-together
+- handle: new_kitchen_transfer
+  op: recall_fill
+  objective: obj-indefinite-articles-01
+  bloom: apply
+  prompt_md: Using the lesson's mandatory three-gender Bokmål convention, complete the account with the
+    matching noun phrase.
+  audio_target: I butikken kjøper vi en stol og ei bok. Vi finner også et kart. Ingrid jobber som lærer.
+    På kafeen bestiller jeg en kopp kaffe.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Amina
+      text_md: «I butikken kjøper vi ___ stol og ___ bok. Vi finner også ___ kart.»
+    - speaker: Ingrid
+      text_md: «Jeg jobber som ___.»
+    - speaker: Amina
+      text_md: «På kafeen bestiller jeg ___.»
+  segments:
+  - text_md: '«I butikken kjøper vi '
+  - blank_id: kitchen-stol-article
+    options:
+    - ei
+    - en
+    - et
+    answer_index: 1
+  - text_md: ' stol og '
+  - blank_id: kitchen-bok-article
+    options:
+    - et
+    - en
+    - ei
+    answer_index: 2
+  - text_md: ' bok. Vi finner også '
+  - blank_id: kitchen-kart-article
+    options:
+    - et
+    - en
+    - ei
+    answer_index: 0
+  - text_md: ' kart.» Ingrid: «Jeg jobber som '
+  - blank_id: kitchen-role-phrase
+    options:
+    - en lærer
+    - lærer
+    answer_index: 1
+  - text_md: '.» Amina: «På kafeen bestiller jeg '
+  - blank_id: kitchen-serving-phrase
+    options:
+    - et kaffe
+    - en kopp kaffe
+    answer_index: 1
+  - text_md: .»
+  explanation_md: Countable objects use the lesson's gender-matching articles, a profession after jobber
+    som is bare, and the cup is countable so it takes en.
+  derived_from:
+  - section_id: back-at-the-flat
+- handle: review_room_article_hunt
+  op: recall_fill
+  objective: obj-indefinite-articles-01
+  bloom: apply
+  prompt_md: Using the lesson's three-gender Bokmål convention, complete the dialogue with familiar nouns.
+  audio_target: På bildet ser jeg en seng, ei dør og et skrivebord.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Amina
+      text_md: «På bildet ser jeg ___ seng, ___ dør og ___ skrivebord.»
+  segments:
+  - text_md: '«På bildet ser jeg '
+  - blank_id: review-room-seng-article
+    options:
+    - en
+    - et
+    - ei
+    answer_index: 0
+  - text_md: ' seng, '
+  - blank_id: review-room-dor-article
+    options:
+    - et
+    - ei
+    - en
+    answer_index: 1
+  - text_md: ' dør og '
+  - blank_id: review-room-skrivebord-article
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 2
+  - text_md: ' skrivebord.»'
+  explanation_md: Under the lesson’s three-gender convention, seng is masculine, dør is feminine here,
+    and skrivebord is neuter. Bokmål also accepts en dør, but this review follows the three-gender pattern
+    with ei.
+  derived_from:
+  - section_id: one-thing-en-ei-et
+- handle: four_way_retrieval_review
+  op: write
+  objective: obj-indefinite-articles-01
+  bloom: analyze
+  prompt_md: Write 20–40 Norwegian words about your kitchen and workday. Include one singular phrase with
+    en for a countable object, one with ei for a countable object, one with et for a countable object,
+    and one bare profession after er or jobber som.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Marta
+      text_md: «Hva har du på kjøkkenet, og hva jobber du som?»
+    - speaker: Jon
+      text_md: «Jeg forteller om tingene og jobben min.»
+  response_language: 'no'
+  judge_prompt: Check the visible criteria uses-en, uses-ei, uses-et, bare-profession, comprehensible-message,
+    and word-bound. All listed criteria gate. Report a verdict for every criterion id.
+  criteria:
+  - id: uses-en
+    instruction: The response includes at least one correct singular noun phrase with en for a countable
+      object.
+  - id: uses-ei
+    instruction: The response includes at least one correct singular noun phrase with ei for a countable
+      object.
+  - id: uses-et
+    instruction: The response includes at least one correct singular noun phrase with et for a countable
+      object.
+  - id: bare-profession
+    instruction: The response includes a profession used without an article after er or jobber som.
+  - id: comprehensible-message
+    instruction: The Norwegian is comprehensible enough for the listener to understand the description.
+  - id: word-bound
+    instruction: The response contains 20–40 words.
+  derived_from:
+  - section_id: bringing-the-choices-together
+- handle: room_reply_message
+  op: write
+  objective: obj-indefinite-articles-01
+  bloom: apply
+  prompt_md: 'Nora asks about your new shared flat. Reply in 25–45 Norwegian words. Mention a neighbor,
+    a lamp in your room, and a shared kitchen; say your flatmate is a cook and that you drink coffee at
+    home. Use en, ei, and et at least once with singular countable nouns following the lesson’s three-gender
+    pattern; en is also accepted with many feminine nouns in Bokmål, but use ei for the feminine noun here.
+    The shared-kitchen fact may use bare «kjøkken» after the verb «dele».'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Hei! Hvordan er det nye kollektivet? Hvem bor der, og hvordan er kjøkkenet?»
+  response_language: 'no'
+  judge_prompt: Evaluate only the listed criteria. The criteria reply-purpose, supplied-facts, article-forms,
+    supplied-noun-forms, word-bound, and comprehensible-message are gating. Criteria whose ids end in -observation are diagnostic
+    and must never make the response fail. Report a verdict for every criterion id.
+  criteria:
+  - id: reply-purpose
+    instruction: The response is a message to Nora describing the new shared flat.
+  - id: supplied-facts
+    instruction: The response mentions a neighbor, a lamp in the room, and a shared kitchen; says the flatmate
+      is a cook; and says coffee is drunk at home, either as a beverage without an article or as one serving with «en kaffe».
+  - id: article-forms
+    instruction: The response uses en with a masculine countable noun, ei with a feminine countable noun,
+      and et with a neuter countable noun, following the requested lesson pattern. Treat accepted en forms
+      for feminine nouns as linguistically valid, though the prompt asks for ei here to demonstrate the pattern.
+  - id: supplied-noun-forms
+    instruction: The neighbor and lamp are expressed with suitable articles if phrased as singular countable
+      nouns. The shared kitchen may naturally be expressed with bare «kjøkken» after «dele» or as «et kjøkken».
+      The flatmate's role as cook is expressed without an indefinite article. Coffee may be expressed as the
+      beverage without an article or as one serving with «en kaffe». Accept natural rephrasing that preserves
+      those meanings.
+  - id: word-bound
+    instruction: The response contains 25–45 words.
+  - id: comprehensible-message
+    instruction: The Norwegian is comprehensible enough for Nora to understand the description.
+  - id: count-articles-observation
+    instruction: 'Observation only: report the article used with each supplied singular countable noun and
+      whether it matches the noun''s gender, including accepted feminine en variants; bare «kjøkken» after
+      «dele» is also natural; do not fail the response.'
+  - id: role-form-observation
+    instruction: 'Observation only: report whether kokk is a bare role noun after være;
+      do not fail the response.'
+  - id: substance-form-observation
+    instruction: 'Observation only: report whether coffee at home is presented as a beverage without an
+      article or as a serving with «en kaffe»; do not fail the response.'
+  derived_from:
+  - section_id: back-at-the-flat
+- handle: first_day_exchange
+  op: write
+  objective: obj-indefinite-articles-01
+  bloom: apply
+  prompt_md: Skriv en dialog på 15–30 ord mellom Amina, som er ny i kollektivet, og Lars, som bor der. De
+    hilser, Lars ønsker henne velkommen og spør hva slags rom hun ser etter, og Amina svarer med en riktig
+    artikkel foran et substantiv.
+  response_language: 'no'
+  min_words: 15
+  max_words: 30
+  judge_prompt: Check criteria welcome, room-question, room-answer, article-usage, and word-bound. All
+    listed criteria gate. Report a verdict for every criterion id.
+  criteria:
+  - id: welcome
+    instruction: The exchange begins with a greeting and a natural welcome.
+  - id: room-question
+    instruction: One speaker asks what kind of room the other person is looking for.
+  - id: room-answer
+    instruction: The other speaker answers with a natural description of the room they are looking for.
+  - id: article-usage
+    instruction: The reply includes at least one correct en, ei, or et before a singular countable noun.
+  - id: word-bound
+    instruction: The exchange contains 15–30 words.
+  derived_from:
+  - section_id: one-thing-en-ei-et
+- handle: review_complete_meeting
+  op: write
+  objective: obj-indefinite-articles-01
+  bloom: apply
+  prompt_md: Skriv en dialog på 12–24 ord mellom to personer som ser på et rom i et kollektiv. Den ene
+    spør hva rommet har, den andre svarer med to møbler og bruker riktige artikler foran substantivene.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Amina
+      text_md: «Hva har rommet?»
+    - speaker: Lars
+      text_md: «Det er plass til flere ting.»
+  response_language: 'no'
+  judge_prompt: Check criteria question, furnished-answer, two-articles, and word-bound. All listed criteria
+    gate. Report a verdict for every criterion id.
+  criteria:
+  - id: question
+    instruction: One speaker asks what the room has.
+  - id: furnished-answer
+    instruction: The other speaker names two pieces of furniture that fit naturally in a room.
+  - id: two-articles
+    instruction: Both singular countable furniture nouns have a correct en, ei, or et article.
+  - id: word-bound
+    instruction: The exchange contains 12–24 words.
+  derived_from:
+  - section_id: choosing-the-article-in-a-sentence

@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "generic_pronouns",
   "kind": "grammar",
   "language": "nb-NO",
@@ -83,7 +83,23 @@
     },
     {
       "kind": "exercise",
-      "id": "retrieve-generic-pronoun-rule"
+      "id": "notice-singular-agreement"
+    },
+    {
+      "kind": "exercise",
+      "id": "recognize-generic-en-subject"
+    },
+    {
+      "kind": "exercise",
+      "id": "discriminate-man-en-full-response"
+    },
+    {
+      "kind": "exercise",
+      "id": "discriminate-man-folk-full-response"
+    },
+    {
+      "kind": "exercise",
+      "id": "revise-generic-pronoun-message"
     }
   ],
   "sections": [
@@ -1050,24 +1066,14 @@
           "id": "sentence-role-man-cannot-be-an-object-block-12"
         },
         {
-          "kind": "paragraph",
-          "spans": [
-            {
-              "kind": "text",
-              "value": "Not:"
-            }
-          ],
-          "id": "sentence-role-man-cannot-be-an-object-block-13"
-        },
-        {
           "kind": "examples",
           "items": [
             {
-              "id": "sentence-role-man-cannot-be-an-object-block-14-item-1",
+              "id": "sentence-role-man-cannot-be-an-object-block-13-item-1",
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Denne erfaringen lærer man å være forsiktig."
+                  "value": "Denne erfaringen lærer man å være forsiktig."
                 }
               ],
               "en": [
@@ -1075,10 +1081,11 @@
                   "kind": "text",
                   "value": "This experience teaches one to be careful."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
-          "id": "sentence-role-man-cannot-be-an-object-block-14"
+          "id": "sentence-role-man-cannot-be-an-object-block-13"
         },
         {
           "kind": "paragraph",
@@ -1096,7 +1103,7 @@
               "value": " as the subject of what follows."
             }
           ],
-          "id": "sentence-role-man-cannot-be-an-object-block-15"
+          "id": "sentence-role-man-cannot-be-an-object-block-14"
         }
       ]
     },
@@ -2415,36 +2422,61 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Examine statements from the visitor information and select the one that describes any person in the situation, not a named or specific individual. Sentence role and tone are context only, not scoring targets."
+          "value": "Velg rådet som gjelder alle som går på fjellet."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Man» brukes i råd som gjelder enhver person i situasjonen."
+        }
+      ],
       "payload": {
         "options": [
           {
-            "option_id": "named-individual",
-            "text": "Nora sjekker værmeldingen før fjellturen.",
-            "why": "The statement refers to the named individual Nora."
+            "option_id": "nora",
+            "text": "Nora sjekker værmeldingen før turen.",
+            "why": "This describes one specific person."
           },
           {
-            "option_id": "specific-individual",
-            "text": "Elias snakker med en bestemt besøkende om sikkerhet.",
-            "why": "The statement refers to Elias and one specific visitor."
+            "option_id": "guest",
+            "text": "Elias spør en gjest om kartet.",
+            "why": "This describes a specific exchange, not advice for anyone in the situation."
           },
           {
-            "option_id": "generic-subject",
-            "text": "Når man besøker fjellene, bør man sjekke værmeldingen.",
-            "why": "Man refers to any person in a general rule or consequence."
+            "option_id": "generic",
+            "text": "Når man går på fjellet, bør man sjekke værmeldingen.",
+            "why": "The sentence gives advice that applies to any person in that situation."
           }
         ],
-        "answer_id": "generic-subject",
-        "stem": [
-          {
-            "kind": "text",
-            "value": "Choose the statement that uses man as a generic subject."
-          }
-        ]
-      }
+        "answer_id": "generic",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Nora",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Vi skal gå på fjellet i morgen. Hva bør vi gjøre før turen?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Elias",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Vi bør sjekke værmeldingen først.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2454,13 +2486,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each mountain-safety sentence with an impersonal form from its offered options. Both man and en can be generic subjects, but only en can be an impersonal object. Tone is context, not scored."
+          "value": "Fyll inn riktig generisk pronomen i fjellvettreglene."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "«man» and «en» can both be generic subjects, but only «en» can be the object. «folk» presents people as an observed group rather than one representative person."
+          "value": "«Man» og «en» kan stå som generisk subjekt. I det upersonlige mønsteret kan «man» ikke stå som objekt."
         }
       ],
       "payload": {
@@ -2508,10 +2540,10 @@
             "kind": "blank",
             "blank_id": "mountain-subject-en",
             "options": [
-              "en",
-              "meg"
+              "meg",
+              "en"
             ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
@@ -2522,7 +2554,7 @@
               },
               {
                 "kind": "text",
-                "value": "være forberedt på raskt værskifte. Dårlig vær kan overraske"
+                "value": "være forberedt på raske værskifter. Dårlig vær kan overraske"
               },
               {
                 "kind": "text",
@@ -2563,27 +2595,35 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write two short Norwegian tourist-office messages about checking the weather before mountain travel. Give the same information twice: first as direct visitor guidance, then as a neutral report about safe travel. Change the generic subject while keeping its sentence position constant in both messages."
+          "value": "Før fjellturen bør værmeldingen sjekkes. Skriv to korte meldinger: Gi turistene et direkte råd med «du», og skriv en nøytral regel til kollegene med «man» eller generisk «en»."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 12,
-        "max_words": 32,
-        "judge_prompt": "Check both messages against the task and report evidence for each criterion.",
+        "min_words": 14,
+        "max_words": 34,
+        "judge_prompt": "Evaluate direct-guidance, detached-rule, direct-form, detached-form, same-fact.",
         "criteria": [
           {
-            "id": "direct-du",
-            "instruction": "Uses du for deliberate reader involvement in the first message."
+            "id": "direct-guidance",
+            "instruction": "The first message addresses tourists as actionable, direct guidance."
           },
           {
-            "id": "detached-man",
-            "instruction": "Uses man for detached generalization in the second message."
+            "id": "detached-rule",
+            "instruction": "The second message presents the same information as a detached general rule for colleagues."
           },
           {
-            "id": "same-information-role",
-            "instruction": "Keeps the underlying information the same and keeps the generic subject in the same sentence position in both messages."
+            "id": "direct-form",
+            "instruction": "The first message explicitly uses the pronoun «du»."
+          },
+          {
+            "id": "detached-form",
+            "instruction": "The second message uses man or generic en to express detached generalization."
+          },
+          {
+            "id": "same-fact",
+            "instruction": "Both messages communicate that the weather forecast should be checked before a mountain trip."
           }
         ]
       }
@@ -2596,19 +2636,24 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Classify each observation by meaning: representative individual generalization or behavior observed among visitors as a group. Use meaning, not formality, as the deciding factor."
+          "value": "Sorter utsagnene etter betydning."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Man» kan vise til en representativ person. «Folk» kan vise til en faktisk eller tenkt gruppe."
+        }
+      ],
       "payload": {
         "buckets": [
           {
             "bucket_id": "representative-person",
-            "label": "A representative generic individual"
+            "label": "En representativ person"
           },
           {
             "bucket_id": "observed-group",
-            "label": "A collective or observed group"
+            "label": "Mennesker som gruppe"
           }
         ],
         "items": [
@@ -2643,60 +2688,256 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write three short Norwegian statements for a public swimming pool: direct guidance for visitors, a neutral explanation of general safety, and a staff note about behavior observed among customers. Across the statements, use all four forms man, en, du, and folk according to meaning, tone, and sentence role. Include at least one generic person in a non-subject role. Keep swimming-pool vocabulary incidental; it is not being assessed."
+          "value": "I svømmehallen skal gjestene dusje før de bader. Våte gulv kan gjøre en besøkende usikker. Personalet har sett at mange kunder glemmer håndkle. Skriv tre korte tekster: Gi gjestene et direkte råd med «du» og «deg», skriv en nøytral sikkerhetsregel med «man» eller generisk «en» om hvordan våte gulv kan påvirke den besøkende, og fortell hva personalet har observert om kundene med «folk»."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 20,
-        "max_words": 60,
-        "judge_prompt": "Check the three statements against the task and report evidence for each criterion. Score pronoun choices, meanings, tones, and sentence roles; do not score swimming vocabulary beyond whether it remains incidental.",
+        "min_words": 24,
+        "max_words": 55,
+        "judge_prompt": "Evaluate direct-advice, neutral-safety, observed-group, affected-person-form, du-form, man-en-form, folk-form, supplied-facts.",
         "criteria": [
           {
-            "id": "integrated-pronoun-choice",
-            "instruction": "Uses man for detached generalization, en in an appropriate non-subject role within the impersonal man/en reference, du for direct visitor involvement, and folk for a collective group."
+            "id": "direct-advice",
+            "instruction": "The first text gives swimming-pool visitors direct advice to shower before bathing."
           },
           {
-            "id": "non-subject-role",
-            "instruction": "Includes at least one generic person in a non-subject role."
+            "id": "neutral-safety",
+            "instruction": "The second text states the wet-floor risk as a neutral general safety rule."
           },
           {
-            "id": "incidental-pool-vocabulary",
-            "instruction": "Keeps swimming-pool vocabulary incidental rather than making it the scored evidence."
+            "id": "observed-group",
+            "instruction": "The third text reports the staff's observation about customers as a group."
+          },
+          {
+            "id": "affected-person-form",
+            "instruction": "The wet-floor sentence expresses the affected generic person in a non-subject role."
+          },
+          {
+            "id": "du-form",
+            "instruction": "The direct advice uses both du and deg to address the visitors directly."
+          },
+          {
+            "id": "man-en-form",
+            "instruction": "The neutral rule uses man or generic en as subject and en in the non-subject role."
+          },
+          {
+            "id": "folk-form",
+            "instruction": "The staff report uses folk for the observed group."
+          },
+          {
+            "id": "supplied-facts",
+            "instruction": "The response uses the supplied facts without inventing a conflicting rule."
           }
         ]
       }
     },
     {
       "kind": "exercise",
-      "id": "retrieve-generic-pronoun-rule",
+      "id": "notice-singular-agreement",
+      "operation": "choose",
+      "objective_id": "obj-generic-pronouns-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg setningen med riktig samsvar."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Selv om «man» viser til mennesker generelt, er «man» grammatisk entall, og et predikativt adjektiv bøyes derfor i entall."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "plural",
+            "text": "Man blir ofte trøtte etter en lang tur.",
+            "why": "Trøtte treats man as grammatically plural because it refers broadly to people."
+          },
+          {
+            "option_id": "noun-group",
+            "text": "Folk blir ofte trøtt etter en lang tur.",
+            "why": "Folk is a collective noun here and normally takes plural predicative agreement."
+          },
+          {
+            "option_id": "singular",
+            "text": "Man blir ofte trøtt etter en lang tur.",
+            "why": "Trøtt has singular agreement with man."
+          }
+        ],
+        "answer_id": "singular",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Språknotat: «Man» viser til mennesker generelt, men er grammatisk entall."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "recognize-generic-en-subject",
+      "operation": "choose",
+      "objective_id": "obj-generic-pronouns-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg riktig forklaring til setningen i reisehåndboka."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«En» kan være generisk subjekt. Begrensningen til subjekt gjelder «man», ikke «en»."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "subject-then-object",
+            "text": "«En» er generisk subjekt i den første delen, men objekt for «planlegge» i den andre.",
+            "why": "Den andre delen har sitt eget subjekt, «en». «Økonomien» er objekt for «planlegge»."
+          },
+          {
+            "option_id": "generic-subject",
+            "text": "«En» er generisk subjekt i begge delene av setningen.",
+            "why": "Begge forekomstene står som subjekt og viser til en generell person."
+          },
+          {
+            "option_id": "article",
+            "text": "«En» er ubestemt artikkel, så setningen mangler et eksplisitt subjekt.",
+            "why": "«En» står foran et verb og viser til en person, så ordet har subjektfunksjon."
+          }
+        ],
+        "answer_id": "generic-subject",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Reisehåndbok: «Når en reiser alene, må en planlegge økonomien nøye.»"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "discriminate-man-en-full-response",
+      "operation": "choose",
+      "objective_id": "obj-generic-pronouns-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg det riktige svaret til redaktøren."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "I det upersonlige mønsteret står «man» bare som subjekt. «En» brukes i objektsform."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "change-meaning",
+            "text": "Nei. Skriv «Sterk varme kan gjøre folk svimmel», fordi folk alltid betyr det samme som man.",
+            "why": "This changes the representative-person meaning to a group reading and also mismatches agreement."
+          },
+          {
+            "option_id": "correct-reply",
+            "text": "Nei. Skriv «Sterk varme kan gjøre en svimmel», fordi personen er objekt.",
+            "why": "The reply preserves the impersonal reference and places en in the object role."
+          },
+          {
+            "option_id": "subject-confusion",
+            "text": "Ja. «Man» kan stå i alle roller når betydningen er generell.",
+            "why": "This confuses broad meaning with the grammatical role restriction on man."
+          }
+        ],
+        "answer_id": "correct-reply",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Redaktør: «Vi beskriver en generell person. Kan jeg skrive: “Sterk varme kan gjøre man svimmel”?»"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "discriminate-man-folk-full-response",
+      "operation": "choose",
+      "objective_id": "obj-generic-pronouns-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg fortsettelsen som passer til rapporten."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Når rapporten gjelder faktiske besøkende, passer gruppebetydningen «folk»."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "direct-du",
+            "text": "Du spør oftest om kart og vær.",
+            "why": "Du retter rapporten mot leseren og kan høres personlig anklagende ut."
+          },
+          {
+            "option_id": "folk",
+            "text": "Folk spør oftest om kart og vær.",
+            "why": "Folk passer i en rapport om en observert gruppe besøkende."
+          },
+          {
+            "option_id": "man",
+            "text": "Man spør oftest om kart og vær når man planlegger en reise.",
+            "why": "Man uttrykker en generell vane under reiseplanlegging, ikke et funn om de observerte besøkende."
+          }
+        ],
+        "answer_id": "folk",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Forsker: «Vi registrerte spørsmål fra 240 faktiske besøkende denne måneden. Flest spørsmål gjaldt kart og vær.» Rapport: «_____»"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "revise-generic-pronoun-message",
       "operation": "write",
       "objective_id": "obj-generic-pronouns-01",
       "prompt": [
         {
           "kind": "text",
-          "value": "Write a brief Norwegian rule summary and four new everyday sentences. In the summary, state the distinctions among the impersonal man/en pair, direct du and non-subject deg, and collective folk. Then apply each distinction in a new sentence, using each target form in an appropriate grammatical role."
+          "value": "Rett meldingen til turgåerne. Behold én generell person som referanse i alle tre setningene. Tekst: «Når man går alene, bør man si fra om ruta. Dårlig vær kan gjøre man utrygg. Man bør også ha med ekstra klær.»"
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 35,
-        "max_words": 85,
-        "judge_prompt": "Check the rule summary and four new everyday sentences against the task and report evidence for each criterion.",
+        "min_words": 14,
+        "max_words": 28,
+        "judge_prompt": "Evaluate representative-meaning, object-repair, consistent-reference. Apply no unstated style requirements.",
         "criteria": [
           {
-            "id": "man-en-rule",
-            "instruction": "States that man is subject-only and en is the object form within an impersonal man/en reference, and applies this distinction in a new sentence."
+            "id": "representative-meaning",
+            "instruction": "The first and last sentences describe a representative generic person rather than an observed group."
           },
           {
-            "id": "du-deg-rule",
-            "instruction": "States that du is used for direct listener involvement and uses deg outside subject position in a new sentence."
+            "id": "object-repair",
+            "instruction": "The affected generic person in the middle sentence is expressed as an object within the same impersonal reference."
           },
           {
-            "id": "collective-folk-rule",
-            "instruction": "States that folk refers to a collective and uses folk unchanged as an object in a new sentence."
+            "id": "consistent-reference",
+            "instruction": "The revision keeps a coherent impersonal man/en reference across the three statements."
           }
         ]
       }
@@ -2712,7 +2953,11 @@
         "choose-direct-or-detached-tone",
         "distinguish-individual-generalization-from-group",
         "transfer-generic-choices-to-pool-context",
-        "retrieve-generic-pronoun-rule"
+        "notice-singular-agreement",
+        "recognize-generic-en-subject",
+        "discriminate-man-en-full-response",
+        "discriminate-man-folk-full-response",
+        "revise-generic-pronoun-message"
       ]
     }
   ],

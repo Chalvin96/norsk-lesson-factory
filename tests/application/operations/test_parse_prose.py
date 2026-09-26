@@ -167,6 +167,83 @@ def test_parse_prose_given_example_div_expect_example_block():
     en_text = " ".join(s.value for s in block.en if s.kind == "text")
     assert "Nora har en bok." in no_text
     assert "Nora has a book." in en_text
+    assert block.teaching_role == "model"
+
+
+def test_parse_prose_given_explicit_incorrect_role_expect_typed_clean_example():
+    body = (
+        "::: {.example teaching_role=incorrect}\n"
+        "- no: Jeg har sett filmen i går.\n"
+        "- en: Intended meaning: I watched the film yesterday.\n"
+        ":::\n"
+    )
+
+    block = require_block(parse_prose(lesson_source(body)))
+
+    assert block.kind == "example"
+    assert block.teaching_role == "incorrect"
+    assert block.no[0].value == "Jeg har sett filmen i går."
+    assert block.en[0].value == "I watched the film yesterday."
+
+
+def test_parse_prose_given_legacy_marker_expect_incorrect_role_and_clean_text():
+    body = "::: example\n- no: ✗ Jeg har sett filmen i går.\n- en: I watched the film yesterday.\n:::\n"
+
+    block = require_block(parse_prose(lesson_source(body)))
+
+    assert block.kind == "example"
+    assert block.teaching_role == "incorrect"
+    assert block.no[0].value == "Jeg har sett filmen i går."
+
+
+def test_parse_prose_given_quoted_legacy_marker_expect_clean_incorrect_example():
+    body = (
+        "::: example\n"
+        "- no: Jeg kjenner en mann som han jobber her.\n"
+        "- en: 'Incorrect: I know a man who he works here.'\n"
+        ":::\n"
+    )
+
+    block = require_block(parse_prose(lesson_source(body)))
+
+    assert block.kind == "example"
+    assert block.teaching_role == "incorrect"
+    assert block.en[0].value == "I know a man who he works here."
+
+
+def test_parse_prose_given_stacked_formatted_markers_expect_all_status_text_removed():
+    body = "::: example\n- no: ✗ **Not normally:** Denne sykkelen er mer rask.\n- en: This bicycle is more fast.\n:::\n"
+
+    block = require_block(parse_prose(lesson_source(body)))
+
+    assert block.kind == "example"
+    assert block.teaching_role == "incorrect"
+    assert block.no[0].value == "Denne sykkelen er mer rask."
+
+
+def test_parse_prose_given_standalone_incorrect_label_expect_typed_example_without_label_block():
+    body = (
+        "**Incorrect:**\n\n"
+        "::: examples\n"
+        "- no: I dag kommer ikke hun.\n"
+        "- en: Intended neutral meaning: Today she isn’t coming.\n"
+        ":::\n"
+    )
+
+    result = parse_prose(lesson_source(body))
+
+    assert len(result.blocks) == 1
+    block = require_block(result)
+    assert block.kind == "examples"
+    assert block.items[0].teaching_role == "incorrect"
+    assert block.items[0].en[0].value == "Today she isn’t coming."
+
+
+def test_parse_prose_given_unknown_example_role_expect_rejection():
+    body = "::: {.example teaching_role=warning}\n- no: Norsk.\n- en: English.\n:::\n"
+
+    with pytest.raises(ValueError, match="teaching_role must be one of"):
+        parse_prose(lesson_source(body))
 
 
 # ── Block kind: examples ─────────────────────────────────────────────────
@@ -178,6 +255,7 @@ def test_parse_prose_given_examples_div_expect_examples_block():
     block = require_block(result)
     assert block.kind == "examples"
     assert len(block.items) == 2
+    assert [item.teaching_role for item in block.items] == ["model", "model"]
 
 
 # ── Block kind: word_list ────────────────────────────────────────────────

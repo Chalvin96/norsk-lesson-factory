@@ -322,6 +322,7 @@ def failed_exercise_handles(report: dict[str, Any]) -> list[str]:
     mismatches = report.get("mismatches")
     if isinstance(mismatches, list):
         handles.update(item["id"] for item in mismatches if isinstance(item, dict) and isinstance(item.get("id"), str))
+    handles.update(_semantic_failed_handles(report.get("semantic_issues")))
     return sorted(handles)
 
 
@@ -380,6 +381,17 @@ def unaffected_exercise_hashes(exercises_yaml: str, failed_handles: list[str]) -
         if handle not in failed:
             hashes[handle] = _canonical_item_hash(item)
     return hashes
+
+
+def _semantic_failed_handles(semantic_issues: object) -> set[str]:
+    """Return IDs with concrete semantic issues, leaving unsupported evidence to the verifier."""
+    if not isinstance(semantic_issues, list):
+        return set()
+    return {
+        item["id"]
+        for item in semantic_issues
+        if isinstance(item, dict) and isinstance(item.get("id"), str) and item.get("issues")
+    }
 
 
 def _lesson_edit_replacements(

@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "arrange_and_confirm_an_appointment",
   "kind": "communicative",
   "language": "nb-NO",
@@ -111,7 +111,39 @@
     },
     {
       "kind": "exercise",
-      "id": "retrieval_review"
+      "id": "understand_offered_time"
+    },
+    {
+      "kind": "exercise",
+      "id": "appointment_message"
+    },
+    {
+      "kind": "exercise",
+      "id": "revise_confirmation"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_state_purpose"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_ask_availability"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_understand_offered_time"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_accept_precisely"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_reject_and_counter"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_confirm_full_appointment"
     }
   ],
   "sections": [
@@ -2796,41 +2828,51 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Mina has trouble reading distant text and calls an optician. Choose the appointment purpose that fits her need."
+          "value": "Choose the request that matches the note."
         }
       ],
-      "explanation": [
-        {
-          "kind": "text",
-          "value": "En synstest fits Mina's vision problem; a brake check or haircut would address a different need."
-        }
-      ],
+      "explanation": null,
       "payload": {
         "options": [
           {
             "option_id": "brake-check",
             "text": "Jeg vil gjerne bestille en time for en bremsesjekk.",
-            "why": "A brake check is for a bicycle or vehicle."
+            "why": "The service concerns bicycle brakes rather than eyesight."
           },
           {
             "option_id": "haircut",
             "text": "Jeg vil gjerne bestille en time for en hårklipp.",
-            "why": "A haircut does not address a vision problem."
+            "why": "The service concerns hair rather than eyesight."
           },
           {
             "option_id": "eye-test",
             "text": "Jeg vil gjerne bestille en time for en synstest.",
-            "why": "An eye test is the service for trouble seeing distant text."
+            "why": "A synstest matches the stated problem and the optician."
           }
         ],
         "answer_id": "eye-test",
-        "stem": [
-          {
-            "kind": "text",
-            "value": "Which request matches Mina's need?"
-          }
-        ]
-      }
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "strong",
+                  "value": "Notat fra Mina"
+                },
+                {
+                  "kind": "text",
+                  "value": " Problem: jeg ser dårlig på avstand. Sted: optiker."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2840,41 +2882,51 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "The optician's calendar is full Monday and Tuesday morning, but Tuesday afternoon is open. Choose the question that asks about the open period."
+          "value": "Choose the question that asks the business about the available time."
         }
       ],
-      "explanation": [
-        {
-          "kind": "text",
-          "value": "The calendar shows Tuesday afternoon as open, so the question asks whether the business has anything available then."
-        }
-      ],
+      "explanation": null,
       "payload": {
         "options": [
           {
-            "option_id": "occupied-period",
+            "option_id": "wrong-period",
             "text": "Har dere noe ledig tirsdag morgen?",
-            "why": "Tuesday morning is shown as full."
+            "why": "It asks about the same business availability but names a full period."
           },
           {
-            "option_id": "personal-fit",
+            "option_id": "personal-suitability",
             "text": "Passer tirsdag ettermiddag for deg?",
-            "why": "This asks whether one person is free, not whether the business has an appointment."
+            "why": "It asks whether Tuesday suits one person rather than whether the business has an open appointment."
           },
           {
             "option_id": "open-period",
             "text": "Har dere noe ledig tirsdag ettermiddag?",
-            "why": "It asks the business about the period shown as open."
+            "why": "It asks the business about the period marked open."
           }
         ],
         "answer_id": "open-period",
-        "stem": [
-          {
-            "kind": "text",
-            "value": "Which question fits the calendar?"
-          }
-        ]
-      }
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "strong",
+                  "value": "Optikerens kalender"
+                },
+                {
+                  "kind": "text",
+                  "value": " | Periode | Status | |---|---| | Mandag | Full | | Tirsdag morgen | Full | | Tirsdag ettermiddag | Ledig |"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2884,41 +2936,60 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "The receptionist offers Wednesday at ten. Mina finishes work at nine and can attend. Choose the precise acceptance."
+          "value": "Choose the reply that accepts the offered appointment and repeats both the day and time."
         }
       ],
-      "explanation": [
-        {
-          "kind": "text",
-          "value": "A precise acceptance repeats the offered day and time so both speakers confirm the same slot."
-        }
-      ],
+      "explanation": null,
       "payload": {
         "options": [
           {
-            "option_id": "wrong-slot",
-            "text": "Ja, tirsdag klokka ett passer fint.",
-            "why": "It changes both the day and time."
+            "option_id": "vague-acceptance",
+            "text": "Ja, onsdag passer fint.",
+            "why": "It confirms only the day and leaves the two offered times unresolved, so it does not name the offered time."
           },
           {
             "option_id": "precise-acceptance",
             "text": "Ja, onsdag klokka ti passer fint.",
-            "why": "It accepts and repeats the exact offered slot."
+            "why": "It accepts and repeats the offered day and time."
           },
           {
-            "option_id": "rejection",
-            "text": "Nei, onsdag klokka ti passer ikke.",
-            "why": "It rejects a slot Mina can attend."
+            "option_id": "other-slot",
+            "text": "Ja, onsdag klokka ett passer fint.",
+            "why": "It accepts the other Wednesday slot."
           }
         ],
         "answer_id": "precise-acceptance",
-        "stem": [
-          {
-            "kind": "text",
-            "value": "Which response accepts the offered slot precisely?"
-          }
-        ]
-      }
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Resepsjonisten",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Vi har to timer på onsdag: klokka ti og klokka ett. Passer klokka ti?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "strong",
+                  "value": "Mina sin kalender"
+                },
+                {
+                  "kind": "text",
+                  "value": " Ledig etter klokka ni."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2928,41 +2999,60 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "The workshop offers Tuesday at one. Mina's calendar shows work Tuesday from nine to four and a free Wednesday morning. Choose the response that rejects the conflict and proposes a possible alternative."
+          "value": "Choose the reply that declines the time that does not work and suggests a possible alternative."
         }
       ],
-      "explanation": [
-        {
-          "kind": "text",
-          "value": "The response uses da for the offered time and proposes the free period shown in Mina's calendar."
-        }
-      ],
+      "explanation": null,
       "payload": {
         "options": [
           {
             "option_id": "repeats-conflict",
-            "text": "Dessverre passer ikke det. Hva med tirsdag klokka ett?",
-            "why": "It proposes the same conflicting time again."
+            "text": "Dessverre passer ikke det. Jeg er på jobb da. Hva med tirsdag klokka ett?",
+            "why": "It rejects the offer and then proposes the same conflicting slot."
           },
           {
             "option_id": "valid-counterproposal",
             "text": "Dessverre passer ikke det. Jeg er på jobb da. Hva med onsdag morgen?",
-            "why": "It rejects the work conflict and proposes Mina's free period."
+            "why": "It rejects the work conflict and proposes the available period."
           },
           {
-            "option_id": "wrong-reason",
-            "text": "Dessverre passer ikke det. Jeg er på jobb onsdag morgen. Hva med tirsdag klokka ett?",
-            "why": "It reverses the calendar facts and repeats the unavailable slot."
+            "option_id": "rejects-without-alternative",
+            "text": "Dessverre passer ikke det. Jeg er på jobb da. Jeg kan ikke komme.",
+            "why": "It explains the rejection but does not make the requested counterproposal."
           }
         ],
         "answer_id": "valid-counterproposal",
-        "stem": [
-          {
-            "kind": "text",
-            "value": "Which response fits both the offer and Mina's calendar?"
-          }
-        ]
-      }
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Verkstedet",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Passer tirsdag klokka ett?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "strong",
+                  "value": "Mina sin kalender"
+                },
+                {
+                  "kind": "text",
+                  "value": " | Tid | Status | |---|---| | Tirsdag 09.00–16.00 | På jobb | | Onsdag morgen | Ledig |"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2972,41 +3062,51 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Mina's appointment card says bicycle brake check, Friday 14 March at 16:15. Choose the confirmation that matches every detail."
+          "value": "Choose the confirmation with all the details correct."
         }
       ],
-      "explanation": [
-        {
-          "kind": "text",
-          "value": "A complete confirmation preserves the service, date, and time from the appointment card."
-        }
-      ],
+      "explanation": null,
       "payload": {
         "options": [
           {
-            "option_id": "complete-match",
-            "text": "Ja, det stemmer, fredag 14. mars klokka 16.15 for en bremsesjekk.",
-            "why": "The purpose, date, and time all match the card."
-          },
-          {
             "option_id": "wrong-time",
-            "text": "Ja, det stemmer, fredag 14. mars klokka 15.15 for en bremsesjekk.",
-            "why": "The time is one hour earlier than the card."
+            "text": "Ja, det stemmer: fredag 14. mars klokka 15.15 for en bremsesjekk.",
+            "why": "The purpose and date match, but the time is one hour early."
           },
           {
             "option_id": "wrong-purpose",
-            "text": "Ja, det stemmer, fredag 14. mars klokka 16.15 for en synstest.",
-            "why": "The date and time match, but the service does not."
+            "text": "Ja, det stemmer: fredag 14. mars klokka 16.15 for en synstest.",
+            "why": "The date and time match, but the service is different."
+          },
+          {
+            "option_id": "complete-match",
+            "text": "Ja, det stemmer: fredag 14. mars klokka 16.15 for en bremsesjekk.",
+            "why": "The purpose, date, and time all match the card."
           }
         ],
         "answer_id": "complete-match",
-        "stem": [
-          {
-            "kind": "text",
-            "value": "Which confirmation matches the card?"
-          }
-        ]
-      }
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "strong",
+                  "value": "Timekortet"
+                },
+                {
+                  "kind": "text",
+                  "value": " | Formål | Dato | Tid | |---|---|---| | Bremsesjekk | Fredag 14. mars | 16.15 |"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -3016,83 +3116,588 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write a short Norwegian exchange arranging one practical appointment. Begin with a clear purpose, ask what is available, reject the first proposed slot, offer another possibility, accept a workable slot, and finish by confirming the purpose, date, and time."
+          "value": "Write a chat in Norwegian where Nora books a haircut with the salon. Use the information in the table."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": null,
-        "max_words": null,
-        "judge_prompt": "Check whether the Norwegian exchange completes one coherent appointment negotiation and report evidence for every criterion. Accept natural Bokmål variants when they perform the requested communicative functions and keep all booking details consistent.",
+        "min_words": 70,
+        "max_words": 110,
+        "judge_prompt": "Evaluate criteria [chat-genre], [states-purpose], [asks-availability], [handles-first-offer], [makes-counterproposal], [accepts-final-slot], [confirms-full-booking], [consistent-booking], and []. Criterion [target-forms-observation] is diagnostic only and cannot make the answer fail.",
         "criteria": [
           {
-            "id": "clear-purpose",
-            "instruction": "Begins the exchange by stating a clear appointment purpose."
+            "id": "chat-genre",
+            "instruction": "The response is a Norwegian chat exchange between Nora and the salon."
+          },
+          {
+            "id": "states-purpose",
+            "instruction": "Nora communicates that the appointment is for a haircut."
           },
           {
             "id": "asks-availability",
-            "instruction": "Asks what appointment time is available."
+            "instruction": "Nora asks about availability Friday afternoon."
           },
           {
-            "id": "rejects-first-slot",
-            "instruction": "Rejects the first proposed slot as unsuitable."
+            "id": "handles-first-offer",
+            "instruction": "Nora rejects Friday 2 October at 13.00 because she works until 14.00."
           },
           {
-            "id": "offers-alternative",
-            "instruction": "Offers another possible slot."
+            "id": "makes-counterproposal",
+            "instruction": "Nora asks for or proposes a time after 15.00."
           },
           {
-            "id": "accepts-workable-slot",
-            "instruction": "Accepts a workable slot."
+            "id": "accepts-final-slot",
+            "instruction": "Nora accepts Friday 2 October at 15.30."
           },
           {
             "id": "confirms-full-booking",
-            "instruction": "Finishes by confirming the appointment purpose, date, and time."
+            "instruction": "The exchange confirms the haircut, Friday 2 October, and 15.30."
           },
           {
-            "id": "one-appointment",
-            "instruction": "Keeps the exchange focused on arranging one appointment with consistent details."
+            "id": "consistent-booking",
+            "instruction": "The exchange concerns one appointment and does not contradict the supplied facts."
+          },
+          {
+            "id": "target-forms-observation",
+            "instruction": "Observe the naturalness of the availability, rejection, counterproposal, acceptance, and confirmation forms; report issues diagnostically without failing the answer."
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "strong",
+                  "value": "Salongfakta"
+                },
+                {
+                  "kind": "text",
+                  "value": " | Detalj | Informasjon | |---|---| | Kunde | Nora | | Formål | Hårklipp | | Ønsket periode | Fredag ettermiddag | | Første tilbud | Fredag 2. oktober klokka 13.00 | | Konflikt | Nora jobber til klokka 14.00 | | Noras alternativ | Etter klokka 15.00 | | Avtalt tid | Fredag 2. oktober klokka 15.30 |"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
-      "id": "retrieval_review",
+      "id": "understand_offered_time",
+      "operation": "choose",
+      "objective_id": "obj-arrange-and-confirm-an-appointment-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the time the receptionist offers."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "thursday-1530",
+            "text": "Torsdag klokka 15.30",
+            "why": "This treats halv tre as half past three."
+          },
+          {
+            "option_id": "thursday-1415",
+            "text": "Torsdag klokka 14.15",
+            "why": "This interprets the expression as quarter past two."
+          },
+          {
+            "option_id": "thursday-1430",
+            "text": "Torsdag klokka 14.30",
+            "why": "Halv tre is half past two."
+          }
+        ],
+        "answer_id": "thursday-1430",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Verkstedet",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Vi har en ledig time torsdag klokka halv tre.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "appointment_message",
       "operation": "write",
       "objective_id": "obj-arrange-and-confirm-an-appointment-01",
       "prompt": [
         {
           "kind": "text",
-          "value": "You call a bicycle workshop for a brake check. Write your three short Norwegian turns in order. First ask when the workshop has an available appointment. The workshop offers Tuesday 6 October at 10.00, but you are working then; decline by stating that work prevents you from attending and suggest Thursday 8 October at 15.30 instead. The workshop accepts Thursday at 15.30; confirm the brake check, date, and time."
+          "value": "Reply to the clinic. Decline the appointment on Tuesday, May 12 at 10 because you are at work. Accept the appointment on Thursday, May 14 at 3:30, and confirm the purpose, date, and time."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 15,
-        "max_words": 65,
-        "judge_prompt": "Check that the three Norwegian customer turns respond to the supplied workshop offers and acceptance. Accept natural Bokmål variants. The rejection must address Tuesday 6 October at 10.00, the counterproposal must be Thursday 8 October at 15.30, and the final confirmation must identify the brake check and accepted Thursday slot.",
+        "min_words": 25,
+        "max_words": 45,
+        "judge_prompt": "Evaluate criteria [addresses-clinic-message], [rejects-conflict], [accepts-workable-slot], [confirms-details], and []. Criterion [accepts-workable-slot] fails if the reply only asks about or requests the Thursday slot instead of accepting it. Criterion [appointment-language-observation] is diagnostic only and cannot make the answer fail.",
         "criteria": [
           {
-            "id": "availability-turn",
-            "instruction": "Includes a turn asking whether a time is available."
+            "id": "addresses-clinic-message",
+            "instruction": "The reply is written to Fjordklinikken as a response to its appointment offer."
           },
           {
-            "id": "rejection-turn",
-            "instruction": "Rejects the offered Tuesday 6 October at 10.00 because it conflicts with work."
+            "id": "rejects-conflict",
+            "instruction": "The reply states that Tuesday 12 May at 10.00 does not work because the writer is at work or has a work commitment then."
           },
           {
-            "id": "counterproposal-turn",
-            "instruction": "Suggests Thursday 8 October at 15.30 in the same reply as the rejection."
+            "id": "accepts-workable-slot",
+            "instruction": "The reply accepts Thursday 14 May at 15.30 as the chosen appointment, rather than merely asking whether that slot is available."
           },
           {
-            "id": "confirmation-turn",
-            "instruction": "Confirms the brake check for Thursday 8 October at 15.30 after the workshop accepts it."
+            "id": "confirms-details",
+            "instruction": "The reply identifies the synstest, Thursday 14 May, and 15.30 consistently."
+          },
+          {
+            "id": "appointment-language-observation",
+            "instruction": "Observe whether the learner uses natural language for rejecting, accepting, or confirming an appointment; report issues diagnostically without failing the answer."
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Fjordklinikken",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hei! Vi kan tilby synstest tirsdag 12. mai klokka 10.00. Hvis det ikke passer, har vi også torsdag 14. mai klokka 15.30.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "strong",
+                  "value": "Kalenderen din"
+                },
+                {
+                  "kind": "text",
+                  "value": " Tirsdag klokka 10.00: på jobb. Torsdag klokka 15.30: ledig."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "revise_confirmation",
+      "operation": "write",
+      "objective_id": "obj-arrange-and-confirm-an-appointment-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Rewrite the reply so the dental office can confirm the purpose, date, and time."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "response_language": "no",
+        "min_words": 12,
+        "max_words": 25,
+        "judge_prompt": "Evaluate criteria [reply-to-office], [complete-correction], [consistent-details], and []. Criterion [confirmation-form-observation] is diagnostic only and cannot make the answer fail.",
+        "criteria": [
+          {
+            "id": "reply-to-office",
+            "instruction": "The response functions as a reply confirming the dental appointment."
+          },
+          {
+            "id": "complete-correction",
+            "instruction": "The revised reply includes the control appointment, Monday 7 September, and 08.30."
+          },
+          {
+            "id": "consistent-details",
+            "instruction": "No appointment detail contradicts the dental office's message."
+          },
+          {
+            "id": "confirmation-form-observation",
+            "instruction": "Observe whether the learner uses a natural confirmation expression; report issues diagnostically without failing the answer."
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Tannlegen",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Da er du satt opp for kontroll mandag 7. september klokka 08.30.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "strong",
+                  "value": "Ditt utkast"
+                },
+                {
+                  "kind": "text",
+                  "value": " Ja, mandag stemmer."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_state_purpose",
+      "operation": "write",
+      "objective_id": "obj-arrange-and-confirm-an-appointment-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "State the purpose of the appointment."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "response_language": "no",
+        "min_words": 1,
+        "max_words": 4,
+        "judge_prompt": "Evaluate criteria [purpose-match] and [].",
+        "criteria": [
+          {
+            "id": "purpose-match",
+            "instruction": "The response identifies a brake check or checking the brakes as the appointment purpose."
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "strong",
+                  "value": "Behov"
+                },
+                {
+                  "kind": "text",
+                  "value": " Bremsene på sykkelen lager en høy lyd. "
+                },
+                {
+                  "kind": "strong",
+                  "value": "Sted"
+                },
+                {
+                  "kind": "text",
+                  "value": " Et sykkelverksted."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_ask_availability",
+      "operation": "write",
+      "objective_id": "obj-arrange-and-confirm-an-appointment-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Write the question you ask the business."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "response_language": "no",
+        "min_words": 3,
+        "max_words": 6,
+        "judge_prompt": "Evaluate criteria [asks-availability] and [].",
+        "criteria": [
+          {
+            "id": "asks-availability",
+            "instruction": "The question asks whether the business has any appointment availability next week, using natural Norwegian."
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "strong",
+                  "value": "Situasjon"
+                },
+                {
+                  "kind": "text",
+                  "value": " Du trenger en time neste uke, men du vet ikke når bedriften kan ta deg imot."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_understand_offered_time",
+      "operation": "choose",
+      "objective_id": "obj-arrange-and-confirm-an-appointment-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the time the receptionist offers."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "time-1615",
+            "text": "16.15",
+            "why": "This means kvart over fire."
+          },
+          {
+            "option_id": "time-1645",
+            "text": "16.45",
+            "why": "This is fifteen minutes before five."
+          },
+          {
+            "option_id": "time-1745",
+            "text": "17.45",
+            "why": "This places the appointment one hour too late."
+          }
+        ],
+        "answer_id": "time-1645",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Resepsjonisten",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Du kan komme klokka kvart på fem.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_accept_precisely",
+      "operation": "write",
+      "objective_id": "obj-arrange-and-confirm-an-appointment-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Write a reply. Accept the appointment and repeat the day and time."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "response_language": "no",
+        "min_words": 1,
+        "max_words": 4,
+        "judge_prompt": "Evaluate criteria [accepts-exact-slot] and []. Criterion [accepts-exact-slot] fails unless the reply names both the offered day and the offered time.",
+        "criteria": [
+          {
+            "id": "accepts-exact-slot",
+            "instruction": "The response accepts the appointment and names both the offered day (torsdag) and the offered time (klokka ni)."
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Resepsjonisten",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Vi har en ledig time torsdag klokka ni.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "strong",
+                  "value": "Kalenderen din"
+                },
+                {
+                  "kind": "text",
+                  "value": " Ledig torsdag klokka ni."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_reject_and_counter",
+      "operation": "choose",
+      "objective_id": "obj-arrange-and-confirm-an-appointment-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the reply that declines the time that does not work and suggests an available alternative."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "accepts-conflict",
+            "text": "Ja, det passer fint, jeg er ledig mandag morgen.",
+            "why": "It accepts a period marked unavailable."
+          },
+          {
+            "option_id": "rejection-only",
+            "text": "Nei, jeg kan dessverre ikke, jeg har eksamen da.",
+            "why": "It rejects the conflict but gives no alternative."
+          },
+          {
+            "option_id": "reject-and-counter",
+            "text": "Nei, det passer ikke. Har dere noe etter klokka to?",
+            "why": "It rejects the conflict and asks about the available period."
+          }
+        ],
+        "answer_id": "reject-and-counter",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Klinikken",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Kan du komme mandag morgen?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "strong",
+                  "value": "Kalenderen din"
+                },
+                {
+                  "kind": "text",
+                  "value": " | Periode | Status | |---|---| | Mandag morgen | Eksamen | | Mandag etter 14.00 | Ledig |"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_confirm_full_appointment",
+      "operation": "choose",
+      "objective_id": "obj-arrange-and-confirm-an-appointment-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the reply that corrects the booking."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "accepts-wrong-day",
+            "text": "Ja, det stemmer.",
+            "why": "It accepts Wednesday even though the booking says Thursday."
+          },
+          {
+            "option_id": "corrects-day",
+            "text": "Nei, det er torsdag 22. oktober klokka 11.30 for en synstest.",
+            "why": "It corrects the mismatched day and confirms the remaining details."
+          },
+          {
+            "option_id": "changes-time",
+            "text": "Nei, det er torsdag 22. oktober klokka 10.30 for en synstest.",
+            "why": "It corrects the day but introduces a different time."
+          }
+        ],
+        "answer_id": "corrects-day",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "strong",
+                  "value": "Din bestilling"
+                },
+                {
+                  "kind": "text",
+                  "value": " Synstest — torsdag 22. oktober klokka 11.30."
+                }
+              ]
+            },
+            {
+              "speaker": "Optikeren",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Da sees vi onsdag 22. oktober klokka 11.30 for en synstest.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "practice_groups": [
@@ -3106,7 +3711,15 @@
         "reject_and_counter",
         "confirm_full_appointment",
         "integrated_transfer",
-        "retrieval_review"
+        "understand_offered_time",
+        "appointment_message",
+        "revise_confirmation",
+        "review_state_purpose",
+        "review_ask_availability",
+        "review_understand_offered_time",
+        "review_accept_precisely",
+        "review_reject_and_counter",
+        "review_confirm_full_appointment"
       ]
     }
   ],

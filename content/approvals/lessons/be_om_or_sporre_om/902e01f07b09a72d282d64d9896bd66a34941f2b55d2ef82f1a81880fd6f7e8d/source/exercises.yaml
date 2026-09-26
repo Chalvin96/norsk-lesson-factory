@@ -1,0 +1,275 @@
+- handle: first_checkpoint_intended_result
+  op: choose
+  objective: obj-be-om-or-sporre-om-01
+  bloom: understand
+  prompt_md: Velg svaret som passer til begge Noras behov.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Nora vil vite når frokosten begynner, og hun vil ha et ekstra
+        håndkle.
+    - speaker: Nora
+      text_md: «Hva sier jeg?»
+  options:
+  - id: both-information
+    text: Kan jeg spørre om frokosttidene? Kan jeg spørre når håndkleet kommer?
+    correct: false
+    why: The second line asks when the towel will arrive instead of requesting
+      an extra towel.
+  - id: correct
+    text: Kan jeg spørre om frokosttidene? Kan jeg be om et ekstra håndkle?
+    correct: true
+    why: Spørre om frames the topic Nora wants information about, and be om
+      requests the towel as an item.
+  - id: reversed-forms
+    text: Kan jeg be om frokosttidene? Kan jeg spørre om det finnes ekstra
+      håndklær?
+    correct: false
+    why: 'The first line requests information as if it were an item, and the second
+      asks whether extra towels are available instead of requesting one.'
+  derived_from:
+  - section_id: first-checkpoint-intended-result
+- handle: controlled_practice_requesting_things_and_actions
+  op: write
+  objective: obj-be-om-or-sporre-om-01
+  bloom: apply
+  prompt_md: "Kafévert: «Hva kan jeg hjelpe deg med?» Du vil ha regningen, og kollegaen din skal sende en e-post til kunden. Skriv to nummererte forespørsler: be om regningen, og be en person om å sende e-posten."
+  min_words: 12
+  max_words: 28
+  response_language: 'no'
+  judge_prompt: "Check the response against cafe-bill, colleague-email. Accept natural Bokmål variants that preserve the supplied facts."
+  criteria:
+  - id: cafe-bill
+    instruction: The first request asks for the bill with be om.
+  - id: colleague-email
+    instruction: The second request asks the colleague to send an email, using
+      be plus the person plus om å and the action.
+  explanation_md: 'Etter «be om» kommer tingen. Når en person skal gjøre noe, står personen foran «om å».'
+  derived_from:
+  - section_id: controlled-practice-requesting-things-and-actions
+- handle: second_checkpoint_formulate_information_questions
+  op: write
+  objective: obj-be-om-or-sporre-om-01
+  bloom: apply
+  prompt_md: "Resepsjonist: «Hva vil du vite?» Skriv fire nummererte innledninger til spørsmålene: Når begynner frokosten? Hvor mye koster en togbillett? Når åpner museet? Når begynner kurset? Bruk «spørre om»."
+  min_words: 20
+  max_words: 44
+  response_language: 'no'
+  judge_prompt: "Check the response against breakfast-topic, train-price-topic, museum-hours-topic, course-start-topic. Assess only the four requested topic introductions."
+  criteria:
+  - id: breakfast-topic
+    instruction: The first introduction uses spørre om to introduce breakfast as
+      the topic; the supplied direct question provides the specific information
+      need.
+  - id: train-price-topic
+    instruction: The second introduction uses spørre om to introduce the train
+      ticket or ticket price as the topic; the supplied direct question provides
+      the specific information need.
+  - id: museum-hours-topic
+    instruction: The third introduction uses spørre om to introduce the museum
+      as the topic; the supplied direct question provides the specific
+      information need.
+  - id: course-start-topic
+    instruction: The fourth introduction uses spørre om to introduce the course
+      as the topic; the supplied direct question provides the specific
+      information need.
+  explanation_md: '«Spørre om» innleder temaet. Det direkte spørsmålet viser hvilken opplysning du trenger.'
+  derived_from:
+  - section_id: second-checkpoint-formulate-information-questions
+- handle: contrast_practice_change_intended_result
+  op: write
+  objective: obj-be-om-or-sporre-om-01
+  bloom: apply
+  prompt_md: "Servitør: «Hva ønsker du?» Først vil du ha menyen, og deretter vil du vite om den har vegetarretter. Svar i to setninger."
+  min_words: 12
+  max_words: 26
+  response_language: 'no'
+  judge_prompt: "Check the response against menu-item, menu-information, order. Accept natural Bokmål variants that communicate the supplied facts."
+  criteria:
+  - id: menu-item
+    instruction: The first sentence requests the physical menu with be om.
+  - id: menu-information
+    instruction: The second sentence asks about vegetarian options with spørre
+      om.
+  - id: order
+    instruction: The item request comes before the information question.
+  explanation_md: 'Uttrykket avgjøres av hva du vil oppnå, ikke av substantivet dere snakker om.'
+  derived_from:
+  - section_id: contrast-practice-change-intended-result
+- handle: guided_correction_activity
+  op: write
+  objective: obj-be-om-or-sporre-om-01
+  bloom: apply
+  prompt_md: "Resepsjonist: «Hva trenger du?» Du vil ha en nøkkel til rom 12 og vite når frokosten begynner. Svar i to setninger."
+  min_words: 12
+  max_words: 28
+  response_language: 'no'
+  judge_prompt: "Check the response against key-request, breakfast-information. Accept natural Bokmål variants that communicate both supplied intentions."
+  criteria:
+  - id: key-request
+    instruction: One sentence uses be om to request the key.
+  - id: breakfast-information
+    instruction: One sentence uses spørre om to ask specifically when breakfast
+      begins or what time it starts.
+  explanation_md: 'Nøkkelen er noe du vil få. Frokosttidspunktet er en opplysning du vil vite.'
+  derived_from:
+  - section_id: guided-correction-activity
+- handle: final_contextual_practice
+  op: write
+  objective: obj-be-om-or-sporre-om-01
+  bloom: apply
+  prompt_md: "Du er gjest i hotellresepsjonen. Be høflig om et trykt bykart, og be deretter resepsjonisten bestille vekking klokka seks i morgen. Skriv to replikker på norsk."
+  response_language: 'no'
+  min_words: 12
+  max_words: 24
+  judge_prompt: >-
+    Check that the response has two natural guest requests: one requesting a printed
+    city map as an item, and one asking the receptionist to arrange a wake-up call
+    for six tomorrow morning. The item request should use be om; the action request
+    should use a natural form of be + the person or pronoun + om å + infinitive. Accept
+    natural Bokmål variants and direct-address pronouns.
+  criteria:
+  - id: map-request
+    instruction: One line requests a printed city map with a form of be om.
+  - id: wake-up-action
+    instruction: One line asks the receptionist to arrange a wake-up call for
+      six tomorrow morning, using a form of be followed by the addressee or a
+      coherent noun for the receptionist, then om å and an infinitive.
+  - id: two-lines
+    instruction: The response contains two guest lines suitable for a hotel
+      reception.
+  explanation_md: 'Den ene replikken ber om en ting. Den andre ber en bestemt person om å gjøre noe.'
+  derived_from:
+  - section_id: final-contextual-practice
+- handle: retrieval_and_review
+  op: write
+  objective: obj-be-om-or-sporre-om-01
+  bloom: apply
+  prompt_md: "Amir skriver: «Jeg er på biblioteket. Jeg trenger en kopi av artikkelen, bibliotekaren skal finne den, og jeg vil vite når biblioteket stenger.» Forklar forskjellen mellom «be om» og «spørre om», og skriv én passende setning for hvert behov: be om kopien, be bibliotekaren om å finne den, og spørre om stengetiden."
+  min_words: 28
+  max_words: 50
+  response_language: 'no'
+  judge_prompt: "Check the response against distinction-explanation, copy-request, librarian-action, closing-information. Accept natural Bokmål variants grounded in Amir's message."
+  criteria:
+  - id: distinction-explanation
+    instruction: The reply explains that be om requests an item or action, while
+      spørre om seeks information about a topic.
+  - id: copy-request
+    instruction: The reply includes a suitable be om request for a copy of the
+      article.
+  - id: librarian-action
+    instruction: The reply includes a suitable request for the librarian to find
+      the article, using be plus the person plus om å.
+  - id: closing-information
+    instruction: The reply includes a suitable use of spørre om for the library
+      closing time.
+  explanation_md: 'De tre behovene krever henholdsvis en forespørsel om en ting, en forespørsel om en handling og et spørsmål om informasjon.'
+  derived_from:
+  - section_id: retrieval-and-review
+- handle: review_item_request
+  op: write
+  objective: obj-be-om-or-sporre-om-01
+  bloom: apply
+  prompt_md: "Be om en brus på norsk."
+  min_words: 4
+  max_words: 7
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Servitør
+      text_md: «Hva trenger du?»
+    - speaker: Context
+      text_md: Du er tørst, og du vil ha en brus.
+  response_language: 'no'
+  judge_prompt: "Check the response against uses-be-om, item-request. Accept any natural inflected form of be om."
+  criteria:
+  - id: uses-be-om
+    instruction: The response uses a form of be om to request the item.
+  - id: item-request
+    instruction: The response asks the server for a soda.
+  explanation_md: 'Når du ber om en fysisk ting, bruker du uttrykket for å be om noe.'
+  derived_from:
+  - section_id: retrieval-and-review
+- handle: review_person_action_request
+  op: write
+  objective: obj-be-om-or-sporre-om-01
+  bloom: apply
+  prompt_md: "Du snakker med sjåføren og vil at hun skal vente. Be henne vente på norsk med uttrykket for å be en person gjøre noe."
+  min_words: 4
+  max_words: 7
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Du sitter i taxien og vil at sjåføren skal vente mens du henter
+        noe.
+  response_language: 'no'
+  judge_prompt: "Check the response against uses-be-om-aa, action-request. Accept a natural inflected form of be followed by om å, with either direct-address deg or a coherent noun for the driver as the requested person."
+  criteria:
+  - id: uses-be-om-aa
+    instruction: The response uses a form of be followed by om å and an
+      infinitive, with deg or a coherent noun for the driver as the requested
+      person.
+  - id: action-request
+    instruction: The response asks the driver to wait.
+  explanation_md: 'Når en annen person skal gjøre noe, står personen mellom forespørselsverbet og infinitivsmerket «å».'
+  derived_from:
+  - section_id: retrieval-and-review
+- handle: review_information_question
+  op: write
+  objective: obj-be-om-or-sporre-om-01
+  bloom: apply
+  prompt_md: "Spør om åpningstiden til museet."
+  min_words: 4
+  max_words: 7
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Museumsvert
+      text_md: «Hva vil du vite?»
+    - speaker: Context
+      text_md: Du vil vite når museet åpner.
+  response_language: 'no'
+  judge_prompt: "Check the response against uses-sporre-om, information-topic. Accept any natural inflected form of spørre om with the opening-time topic."
+  criteria:
+  - id: uses-sporre-om
+    instruction: The response uses a form of spørre om to introduce the
+      opening-time topic.
+  - id: information-topic
+    instruction: The response asks about the museum's opening time.
+  explanation_md: 'Når du ønsker informasjon, bruker du uttrykket for å spørre om et tema.'
+  derived_from:
+  - section_id: retrieval-and-review
+- handle: review_menu_result_contrast
+  op: choose
+  objective: obj-be-om-or-sporre-om-01
+  bloom: apply
+  prompt_md: 'Velg svaret som passer til gjestens ønsker.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Servitør
+      text_md: «Menyen ligger på bordet. Hva ønsker du?»
+    - speaker: Context
+      text_md: Gjesten vil først vite om suppen er vegetarisk, og deretter vil
+        gjesten få regningen.
+  options:
+  - id: correct
+    text: Jeg spør om suppen er vegetarisk. Så ber jeg om regningen.
+    correct: true
+    why: Spørre om introduces the soup as an information topic, while be om
+      requests the bill as an item to be provided.
+  - id: both-request
+    text: Jeg ber om suppen. Så ber jeg om regningen.
+    correct: false
+    why: The first line requests the soup itself instead of the information
+      about whether it is vegetarian, so it does not match the first wish.
+  - id: both-information
+    text: Jeg spør om suppen er vegetarisk. Så spør jeg hvor stor regningen er.
+    correct: false
+    why: The first expression fits, but the second asks for information about
+      the bill's amount instead of requesting the bill.
+  explanation_md: 'Velg uttrykk etter hva gjesten ønsker å oppnå, selv om begge ønskene kommer opp i samme samtale.'
+  derived_from:
+  - section_id: retrieval-and-review

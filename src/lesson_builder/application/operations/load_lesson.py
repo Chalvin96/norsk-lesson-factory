@@ -107,46 +107,13 @@ def load_lesson_source(
     warnings: list[str] = []
     exercises_list, exercise_by_handle = _load_exercise_source(exercises_text, parsed_exercises, warnings)
     declared_objective_ids = {objective.id for objective in frontmatter.objectives}
-
-    elements: list[dict[str, Any]] = []
-    exercise_record: list[tuple[str, str]] = []
-    current_section: dict[str, Any] | None = None
-    has_recap = False
-
-    for element in parse_markdown(body).content:
-        if isinstance(element, panflute.Header):
-            current_section = _section_from_heading(
-                element,
-                warnings,
-                frontmatter.default_lang,
-            )
-            elements.append(current_section)
-            has_recap = has_recap or current_section["role"] == "recap"
-            continue
-
-        if isinstance(element, panflute.Para):
-            handle = _exercise_marker(element)
-            if handle is not None:
-                current_section = None
-                exercise = _require_exercise(exercise_by_handle, handle)
-                _require_known_objective(
-                    exercise.objective_id,
-                    declared_objective_ids,
-                    handle,
-                )
-                elements.append(exercise.model_dump(mode="json"))
-                exercise_record.append((exercise.objective_id, exercise.id))
-                continue
-
-        block = convert_blocks([element], warnings, frontmatter.default_lang)[0]
-        if current_section is not None:
-            current_section["blocks"].append(block.model_dump(mode="json"))
-
-    if not has_recap:
-        raise ValueError(
-            "missing recap section — every lesson requires a '## recap: ...' "
-            "section in lesson.md. Fix: add a recap section to lesson.md."
-        )
+    elements, exercise_record = _load_lesson_body(
+        body,
+        warnings,
+        frontmatter.default_lang,
+        exercise_by_handle,
+        declared_objective_ids,
+    )
 
     lesson_data: dict[str, Any] = {
         "key": frontmatter.slug,
@@ -164,6 +131,57 @@ def load_lesson_source(
         return Lesson.model_validate(lesson_data)
     except Exception as exc:
         raise ValueError(f"loaded lesson failed Lesson.model_validate: {exc}") from exc
+
+
+def _load_lesson_body(
+    body: str,
+    warnings: list[str],
+    default_lang: str,
+    exercise_by_handle: dict[str, Exercise],
+    declared_objective_ids: set[str],
+) -> tuple[list[dict[str, Any]], list[tuple[str, str]]]:
+    """Convert body blocks while preserving adjacent legacy example labels."""
+    elements: list[dict[str, Any]] = []
+    exercise_record: list[tuple[str, str]] = []
+    current_section: dict[str, Any] | None = None
+    has_recap = False
+
+    pending_blocks: list[object] = []
+
+    def flush_pending_blocks() -> None:
+        """Convert the current contiguous prose run so adjacent labels migrate."""
+        if not pending_blocks:
+            return
+        converted_blocks = convert_blocks(pending_blocks, warnings, default_lang)
+        if current_section is not None:
+            current_section["blocks"].extend(block.model_dump(mode="json") for block in converted_blocks)
+        pending_blocks.clear()
+
+    for element in parse_markdown(body).content:
+        if isinstance(element, panflute.Header):
+            flush_pending_blocks()
+            current_section = _section_from_heading(element, warnings, default_lang)
+            elements.append(current_section)
+            has_recap = has_recap or current_section["role"] == "recap"
+        elif isinstance(element, panflute.Para) and (handle := _exercise_marker(element)) is not None:
+            flush_pending_blocks()
+            current_section = None
+            exercise = _require_exercise(exercise_by_handle, handle)
+            _require_known_objective(exercise.objective_id, declared_objective_ids, handle)
+            elements.append(exercise.model_dump(mode="json"))
+            exercise_record.append((exercise.objective_id, exercise.id))
+        else:
+            pending_blocks.append(element)
+
+    flush_pending_blocks()
+
+    if not has_recap:
+        raise ValueError(
+            "missing recap section — every lesson requires a '## recap: ...' "
+            "section in lesson.md. Fix: add a recap section to lesson.md."
+        )
+
+    return elements, exercise_record
 
 
 def _load_exercise_source(

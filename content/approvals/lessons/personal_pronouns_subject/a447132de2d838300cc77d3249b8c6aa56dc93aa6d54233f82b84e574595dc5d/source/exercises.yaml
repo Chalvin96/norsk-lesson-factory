@@ -1,0 +1,528 @@
+- handle: identify_pronoun_reference_in_cafe
+  op: choose
+  objective: obj-personal-pronouns-subject-01
+  bloom: understand
+  prompt_md: Choose the correct reference mapping.
+  derived_from:
+  - section_id: replacing-a-name-with-a-subject-pronoun
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: «Ja, jeg jobber her i dag.»
+    - speaker: Ali
+      text_md: «Maja, jobber du her i dag?»
+    - speaker: Emil
+      text_md: «Nora og Ali lager kaffe. De er raske!»
+  options:
+  - id: mapping-b
+    text: «jeg» = Maja, «du» = Nora og Ali, «de» = Maja
+    correct: false
+    why: «Du» addresses one listener here, while «de» refers to the two people being discussed.
+  - id: mapping-c
+    text: «jeg» = Ali, «du» = Maja, «de» = Nora og Ali
+    correct: false
+    why: The first line is spoken by Maja, so «jeg» refers to Maja.
+  - id: mapping-a
+    text: «jeg» = Maja, «du» = Maja, «de» = Nora og Ali
+    correct: true
+    why: Maja refers to herself with «jeg», Ali addresses Maja with «du», and Emil discusses Nora and
+      Ali with «de».
+  explanation_md: The speaker uses «jeg», one listener is addressed with «du», and a discussed group is
+    referred to with «de».
+- handle: recognize_all_subject_pronouns
+  op: choose
+  objective: obj-personal-pronouns-subject-01
+  bloom: understand
+  prompt_md: Choose the complete pronoun mapping.
+  derived_from:
+  - section_id: a-useful-perspective-map
+  stem_md: 'Speaker alone: ___; one listener: ___; Emil, discussed: ___; Sara, discussed: ___; speaker
+    with Sara: ___; Nora and Ali, addressed: ___; Nora and Ali, discussed: ___.'
+  options:
+  - id: all-pronouns-b
+    text: jeg, du, han, hun, vi, de, dere
+    correct: false
+    why: This reverses the forms for a group being addressed and a group being discussed.
+  - id: all-pronouns-c
+    text: vi, du, han, hun, jeg, dere, de
+    correct: false
+    why: This reverses the forms for the speaker alone and the speaker with another person.
+  - id: all-pronouns-a
+    text: jeg, du, han, hun, vi, dere, de
+    correct: true
+    why: The forms match speaker inclusion, addressee number, and the people being discussed.
+  explanation_md: Choose pronouns from conversational role first, then number and gender where relevant.
+- handle: choose_jeg_or_vi_for_speaker
+  op: recall_fill
+  objective: obj-personal-pronouns-subject-01
+  bloom: apply
+  prompt_md: Complete the quotations with jeg or vi.
+  derived_from:
+  - section_id: the-speaker-jeg-and-vi
+  audio_target: 'Sara sier: «Jeg jobber alene i dag.» Sara og Emil sier: «Vi åpner kafeen sammen.»'
+  segments:
+  - text_md: 'Sara sier om sin egen oppgave: «'
+  - blank_id: speaker-alone
+    options:
+    - Vi
+    - Jeg
+    answer_index: 1
+  - text_md: ' jobber alene i dag.» Sara og Emil sier om fellesarbeidet: «'
+  - blank_id: speaker-with-other
+    options:
+    - Vi
+    - Jeg
+    answer_index: 0
+  - text_md: ' åpner kafeen sammen.»'
+  explanation_md: «Jeg» means the speaker alone; «vi» includes the speaker and at least one other person.
+- handle: distinguish_du_and_dere_by_addressee_count
+  op: recall_fill
+  objective: obj-personal-pronouns-subject-01
+  bloom: apply
+  prompt_md: Complete the instructions with du or dere.
+  derived_from:
+  - section_id: the-person-or-people-addressed-du-and-dere
+  audio_target: 'Jonas sier til Emil: «Du setter koppene her.» Jonas sier til Nora og Ali: «Dere setter
+    koppene her.»'
+  segments:
+  - text_md: 'Jonas sier til Emil: «'
+  - blank_id: one-addressee
+    options:
+    - Dere
+    - Du
+    answer_index: 1
+  - text_md: ' setter koppene her.» Jonas sier til Nora og Ali: «'
+  - blank_id: several-addressees
+    options:
+    - Dere
+    - Du
+    answer_index: 0
+  - text_md: ' setter koppene her.»'
+  explanation_md: Use «du» for one listener and «dere» for two or more listeners.
+- handle: choose_han_or_hun_for_named_person
+  op: recall_fill
+  objective: obj-personal-pronouns-subject-01
+  bloom: apply
+  prompt_md: Complete the updates with han or hun.
+  derived_from:
+  - section_id: one-person-being-discussed-han-and-hun
+  audio_target: 'Oppdatering om Emil: «Han jobber på kafeen i dag.» Oppdatering om Sara: «Hun kommer klokka
+    ni i dag.»'
+  segments:
+  - text_md: 'Oppdatering om Emil: «'
+  - blank_id: emil-pronoun
+    options:
+    - Hun
+    - Han
+    answer_index: 1
+  - text_md: ' jobber på kafeen i dag.» Oppdatering om Sara: «'
+  - blank_id: sara-pronoun
+    options:
+    - Hun
+    - Han
+    answer_index: 0
+  - text_md: ' kommer klokka ni i dag.»'
+  explanation_md: Use «han» for Emil and «hun» for Sara when each person is being discussed.
+- handle: shift_from_direct_address_to_discussion
+  op: recall_fill
+  objective: obj-personal-pronouns-subject-01
+  bloom: apply
+  prompt_md: Complete the statements with du or hun.
+  derived_from:
+  - section_id: one-person-being-discussed-han-and-hun
+  audio_target: 'Jonas sier direkte til Sara: «Du jobber her i dag.» Senere sier Jonas til Maja om Sara:
+    «Hun jobber her i dag.»'
+  segments:
+  - text_md: 'Jonas sier direkte til Sara: «'
+  - blank_id: direct-address
+    options:
+    - Hun
+    - Du
+    answer_index: 1
+  - text_md: ' jobber her i dag.» Senere sier Jonas til Maja om Sara: «'
+  - blank_id: person-discussed
+    options:
+    - Hun
+    - Du
+    answer_index: 0
+  - text_md: ' jobber her i dag.»'
+  explanation_md: Sara is «du» while being addressed and «hun» while being discussed.
+- handle: distinguish_dere_and_de_by_conversation_role
+  op: recall_fill
+  objective: obj-personal-pronouns-subject-01
+  bloom: apply
+  prompt_md: Complete the statements with dere or de.
+  derived_from:
+  - section_id: dere-or-de
+  audio_target: 'Sara sier til Maja og Jonas: «Dere setter koppene her.» Sara sier til Emil om Maja og
+    Jonas: «De setter koppene her.»'
+  segments:
+  - text_md: 'Sara sier til Maja og Jonas: «'
+  - blank_id: group-addressed
+    options:
+    - De
+    - Dere
+    answer_index: 1
+  - text_md: ' setter koppene her.» Sara sier til Emil om Maja og Jonas: «'
+  - blank_id: group-discussed
+    options:
+    - De
+    - Dere
+    answer_index: 0
+  - text_md: ' setter koppene her.»'
+  explanation_md: Use «dere» for a group being addressed and «de» for a group being discussed.
+- handle: select_subject_pronoun_from_perspective
+  op: recall_fill
+  objective: obj-personal-pronouns-subject-01
+  bloom: apply
+  prompt_md: Complete each quotation with a subject pronoun.
+  derived_from:
+  - section_id: a-useful-perspective-map
+  audio_target: 'Sara snakker bare om seg selv: «Jeg baker i dag.» Maja snakker om seg selv og Sara: «Vi
+    jobber her i dag.» Jonas snakker direkte til Emil: «Du lager kaffe i dag.» Maja snakker om Emil til
+    Sara: «Han kommer i morgen.» Emil snakker om Sara til Jonas: «Hun baker i dag.» Jonas snakker direkte
+    til Maja og Ali: «Dere setter koppene her.» Emil snakker om Maja og Ali til Sara: «De setter koppene
+    her.»'
+  segments:
+  - text_md: 'Sara snakker bare om seg selv: «'
+  - blank_id: perspective-jeg
+    options:
+    - Du
+    - De
+    - Han
+    - Vi
+    - Jeg
+    - Hun
+    - Dere
+    answer_index: 4
+  - text_md: ' baker i dag.» Maja snakker om seg selv og Sara: «'
+  - blank_id: perspective-vi
+    options:
+    - Du
+    - De
+    - Han
+    - Jeg
+    - Hun
+    - Vi
+    - Dere
+    answer_index: 5
+  - text_md: ' jobber her i dag.» Jonas snakker direkte til Emil: «'
+  - blank_id: perspective-du
+    options:
+    - Jeg
+    - De
+    - Dere
+    - Vi
+    - Hun
+    - Han
+    - Du
+    answer_index: 6
+  - text_md: ' lager kaffe i dag.» Maja snakker om Emil til Sara: «'
+  - blank_id: perspective-han
+    options:
+    - Han
+    - Hun
+    - Du
+    - Dere
+    - Jeg
+    - De
+    - Vi
+    answer_index: 0
+  - text_md: ' kommer i morgen.» Emil snakker om Sara til Jonas: «'
+  - blank_id: perspective-hun
+    options:
+    - Jeg
+    - Hun
+    - De
+    - Vi
+    - Du
+    - Dere
+    - Han
+    answer_index: 1
+  - text_md: ' baker i dag.» Jonas snakker direkte til Maja og Ali: «'
+  - blank_id: perspective-dere
+    options:
+    - Du
+    - Vi
+    - Dere
+    - Han
+    - De
+    - Jeg
+    - Hun
+    answer_index: 2
+  - text_md: ' setter koppene her.» Emil snakker om Maja og Ali til Sara: «'
+  - blank_id: perspective-de
+    options:
+    - Vi
+    - Hun
+    - Jeg
+    - De
+    - Du
+    - Dere
+    - Han
+    answer_index: 3
+  - text_md: ' setter koppene her.»'
+  explanation_md: The correct form depends on who is speaking, addressed, or discussed.
+- handle: replace_repeated_names_with_pronouns
+  op: recall_fill
+  objective: obj-personal-pronouns-subject-01
+  bloom: apply
+  prompt_md: Replace each repeated name with han or hun.
+  derived_from:
+  - section_id: returning-to-the-cafe
+  audio_target: Nora baker i dag. Hun jobber også på kafeen. Ali lager kaffe. Han er snart ferdig.
+  segments:
+  - text_md: 'Nora baker i dag. '
+  - blank_id: nora-replacement
+    options:
+    - Hun
+    - Han
+    answer_index: 0
+  - text_md: ' jobber også på kafeen. Ali lager kaffe. '
+  - blank_id: ali-replacement
+    options:
+    - Hun
+    - Han
+    answer_index: 1
+  - text_md: ' er snart ferdig.'
+  explanation_md: «Hun» replaces Nora, and «han» replaces Ali.
+- handle: use_subject_pronouns_at_the_library
+  op: write
+  objective: obj-personal-pronouns-subject-01
+  bloom: apply
+  prompt_md: 'You are Nora. Write a 40–70-word Bokmål message to your class group so everyone knows the
+    library plan. Include every fact: you are at the library; Ali is ready, and Sara is also ready; ask
+    Maja whether she is ready; tell Maja and Jonas to put the books on the table; report that Maja and
+    Jonas are working quickly; you and Ali are making the class display. Use the subject pronouns «jeg»,
+    «han», «hun», «du», «dere», «de» and «vi» where appropriate.'
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+  response_language: 'no'
+  judge_prompt: Evaluate only the listed criteria. The response passes when message-purpose, supplied-facts,
+    word-bound, bokmal-comprehensibility, and all pronoun criteria pass. Accept natural Bokmål variants
+    and minor language errors when the message remains comprehensible.
+  criteria:
+  - id: message-purpose
+    instruction: The response is a message to the class group that communicates the library plan.
+  - id: supplied-facts
+    instruction: The message communicates all six supplied facts without materially changing them.
+  - id: word-bound
+    instruction: The message contains 40–70 words.
+  - id: bokmal-comprehensibility
+    instruction: The message is comprehensible Bokmål.
+  - id: jeg-pronomen
+    instruction: The response refers to Nora with «jeg» where appropriate.
+  - id: han-hun-pronomen
+    instruction: The response refers to Ali and Sara with suitable singular subject pronouns where appropriate.
+  - id: du-pronomen
+    instruction: The response addresses Maja with «du» where appropriate.
+  - id: dere-pronomen
+    instruction: The response addresses Maja and Jonas with «dere» where appropriate.
+  - id: de-pronomen
+    instruction: The response discusses Maja and Jonas with «de» where appropriate.
+  - id: vi-pronomen
+    instruction: The response includes Nora with Ali by using «vi» where appropriate.
+- handle: review_choose_jeg_or_vi_for_speaker
+  op: choose
+  objective: obj-personal-pronouns-subject-01
+  bloom: understand
+  prompt_md: Choose who is included in Liv's statement.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Omar
+      text_md: «Liv, skal vi rydde kjøkkenet etter lunsj?»
+    - speaker: Liv
+      text_md: «Ja, vi rydder kjøkkenet etter lunsj.»
+  options:
+  - id: liv-only
+    text: Only Liv.
+    correct: false
+    why: This would treat Liv's reply as referring only to its speaker, not to the shared task Omar proposed.
+  - id: omar-only
+    text: Only Omar.
+    correct: false
+    why: Liv includes herself in the agreed task rather than assigning it only to Omar.
+  - id: liv-and-omar
+    text: Liv and Omar.
+    correct: true
+    why: Liv's reply includes herself and the person who proposed the shared task.
+  derived_from:
+  - section_id: the-speaker-jeg-and-vi
+- handle: review_distinguish_du_and_dere_by_addressee_count
+  op: recall_fill
+  objective: obj-personal-pronouns-subject-01
+  bloom: apply
+  prompt_md: Complete each question for the addressee or addressees named before the quotation.
+  audio_target: 'Mina sier til Lea: «Kommer du i morgen?» Mina sier til Lea og Per: «Kommer dere i morgen?»'
+  segments:
+  - text_md: 'Mina sier til Lea: «Kommer '
+  - blank_id: single-listener
+    options:
+    - du
+    - dere
+    answer_index: 0
+  - text_md: ' i morgen?» Mina sier til Lea og Per: «Kommer '
+  - blank_id: multiple-listeners
+    options:
+    - du
+    - dere
+    answer_index: 1
+  - text_md: ' i morgen?»'
+  explanation_md: The form changes when Mina moves from one listener to two listeners.
+  derived_from:
+  - section_id: the-person-or-people-addressed-du-and-dere
+- handle: review_choose_han_or_hun_for_named_person
+  op: choose
+  objective: obj-personal-pronouns-subject-01
+  bloom: apply
+  prompt_md: Choose Ina's natural next sentence about Henrik.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Ina
+      text_md: «Henrik arbeider på biblioteket.»
+  options:
+  - id: henrik-female
+    text: Hun hjelper studentene.
+    correct: false
+    why: This singular subject pronoun would normally refer to a female person, not Henrik.
+  - id: address-henrik
+    text: Du hjelper studentene.
+    correct: false
+    why: This changes from discussing Henrik to addressing a listener.
+  - id: henrik-male
+    text: Han hjelper studentene.
+    correct: true
+    why: Ina continues discussing Henrik with the masculine singular subject pronoun.
+  derived_from:
+  - section_id: one-person-being-discussed-han-and-hun
+- handle: review_shift_from_direct_address_to_discussion
+  op: choose
+  objective: obj-personal-pronouns-subject-01
+  bloom: apply
+  prompt_md: Choose Eirik's reply to Pia.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Eirik
+      text_md: «Lise, du har nøkkelen.»
+    - speaker: Lise
+      text_md: «Ja, jeg låser døra. Ha det!»
+    - speaker: Pia
+      text_md: «Vent, hvem har nøkkelen?»
+  options:
+  - id: address-pia
+    text: Pia har nøkkelen.
+    correct: false
+    why: This would tell Pia that Pia has the key, which conflicts with the preceding exchange.
+  - id: include-eirik
+    text: Vi har nøkkelen.
+    correct: false
+    why: This would say that Eirik and at least one other person have the key.
+  - id: discuss-lise
+    text: Hun har nøkkelen.
+    correct: true
+    why: Eirik answers Pia's question by referring back to Lise.
+  derived_from:
+  - section_id: one-person-being-discussed-han-and-hun
+- handle: review_distinguish_dere_and_de_by_conversation_role
+  op: choose
+  objective: obj-personal-pronouns-subject-01
+  bloom: apply
+  prompt_md: Choose the manager's next line.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Aksel
+      text_md: «God morgen! Runa og jeg er klare.»
+    - speaker: Runa
+      text_md: «Når åpner vi kafeen?»
+    - speaker: Manager
+      text_md: «Aksel og Runa, hør her.»
+  options:
+  - id: discuss-workers
+    text: De åpner kafeen klokka åtte.
+    correct: false
+    why: This would describe another group instead of continuing to address Aksel and Runa.
+  - id: address-one
+    text: Du åpner kafeen klokka åtte.
+    correct: false
+    why: This would address only one of the two workers named by the manager.
+  - id: address-workers
+    text: Dere åpner kafeen klokka åtte.
+    correct: true
+    why: The manager's next line addresses Aksel and Runa together.
+  derived_from:
+  - section_id: dere-or-de
+- handle: review_select_subject_pronoun_from_perspective
+  op: recall_fill
+  objective: obj-personal-pronouns-subject-01
+  bloom: apply
+  prompt_md: Complete the three replies by tracking who speaks and who is addressed or discussed.
+  audio_target: 'Oda sier: «Jeg tar bussen.» Oda spør Ivar: «Tar du toget?» Ivar sier om Oda og Mina:
+    «De går sammen.»'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Oda
+      text_md: «___ tar bussen.»
+    - speaker: Oda
+      text_md: «Tar ___ toget, Ivar?»
+    - speaker: Ivar
+      text_md: «Oda og Mina? ___ går sammen.»
+  segments:
+  - text_md: 'Oda sier om seg selv: «'
+  - blank_id: oda-self
+    options:
+    - Jeg
+    - Du
+    - De
+    answer_index: 0
+  - text_md: ' tar bussen.» Oda spør Ivar: «Tar '
+  - blank_id: ivar-addressed
+    options:
+    - jeg
+    - du
+    - de
+    answer_index: 1
+  - text_md: ' toget?» Ivar sier om Oda og Mina: «'
+  - blank_id: oda-mina-discussed
+    options:
+    - Jeg
+    - Du
+    - De
+    answer_index: 2
+  - text_md: ' går sammen.»'
+  explanation_md: The three blanks test the speaker, one listener, and a group being discussed.
+  derived_from:
+  - section_id: a-useful-perspective-map
+- handle: review_replace_repeated_names_with_pronouns
+  op: recall_fill
+  objective: obj-personal-pronouns-subject-01
+  bloom: apply
+  prompt_md: Complete the second sentence about each person with a subject pronoun.
+  audio_target: Sofie leser menyen. Hun velger suppen. Martin finner et bord. Han setter seg ved vinduet.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Forteller
+      text_md: «Sofie leser menyen. ___ velger suppen. Martin finner et bord. ___ setter seg ved vinduet.»
+  segments:
+  - text_md: 'Sofie leser menyen. '
+  - blank_id: sofie-reference
+    options:
+    - Han
+    - Hun
+    answer_index: 1
+  - text_md: ' velger suppen. Martin finner et bord. '
+  - blank_id: martin-reference
+    options:
+    - Han
+    - Hun
+    answer_index: 0
+  - text_md: ' setter seg ved vinduet.'
+  explanation_md: Each pronoun keeps the reference established by the name in the preceding sentence.
+  derived_from:
+  - section_id: returning-to-the-cafe

@@ -1,0 +1,320 @@
+- handle: recognize_exchange_shape
+  op: choose
+  objective: obj-make-weather-small-talk-01
+  bloom: understand
+  prompt_md: Velg beskrivelsen som passer til samtalen.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Det regner mye i dag.»
+    - speaker: Amir
+      text_md: «Ja, men det er ikke særlig kaldt.»
+    - speaker: Nora
+      text_md: «Tror du det blir bedre snart?»
+    - speaker: Amir
+      text_md: «Kanskje. Der kommer bussen min. Ha det!»
+  options:
+  - id: forecast-response-repetition-closing
+    text: Værvarsel, svar med enighet, gjentatt observasjon og invitasjon.
+    correct: false
+    why: Den første replikken beskriver været nå, svaret inneholder en kontrast, og samtalen ender med et farvel.
+  - id: opening-response-question-closing
+    text: Observasjon, svar med kontrast, oppfølgingsspørsmål og avslutning.
+    correct: true
+    why: Nora observerer været, Amir svarer med en kontrast, Nora følger opp, og Amir avslutter.
+  - id: opening-correction-question-closing
+    text: Observasjon, korrigering, navnespørsmål og avslutning.
+    correct: false
+    why: Amir korrigerer ikke Nora, og spørsmålet handler om været, ikke om navn.
+  explanation_md: Samtalen følger mønsteret observasjon → svar med kontrast → oppfølgingsspørsmål → avslutning.
+  derived_from:
+  - section_id: at-the-bus-stop
+- handle: notice_shared_weather_opening
+  op: choose
+  objective: obj-make-weather-small-talk-01
+  bloom: understand
+  prompt_md: 'Velg den mest naturlige åpningen i situasjonen.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Situasjon
+      text_md: Du og en nabo venter utenfor en butikk mens det regner jevnt.
+  options:
+  - id: private-plan
+    text: Jeg skal kjøpe kaffe senere.
+    correct: false
+    why: It gives a personal plan rather than opening with the shared weather.
+  - id: shared-weather
+    text: Det regner mye i dag.
+    correct: true
+    why: The line comments directly on weather that both people can observe.
+  - id: old-weather
+    text: Det regnet mye forrige måned.
+    correct: false
+    why: It refers to a different time instead of the weather shared now.
+  explanation_md: 'En naturlig væråpning viser til noe begge kan se eller kjenne.'
+  derived_from:
+  - section_id: opening-shared-observation
+- handle: select_connected_reply
+  op: choose
+  objective: obj-make-weather-small-talk-01
+  bloom: apply
+  prompt_md: 'Velg svaret fra Amir som anerkjenner Nora og nevner det andre været de merker.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Situasjon
+      text_md: Nora og Amir står under et takskjegg. Det regner, men lufta er mild.
+    - speaker: Nora
+      text_md: «Det regner mye i dag.»
+  options:
+  - id: disconnected-detail
+    text: Jeg skal hjem etterpå.
+    correct: false
+    why: It does not acknowledge Nora's comment or add the other weather detail.
+  - id: acknowledge-contrast
+    text: Ja, dessverre, men det er ikke særlig kaldt.
+    correct: true
+    why: The reply acknowledges the rain and connects the mild temperature with men.
+  - id: contradict-rain
+    text: Nei, det regner ikke, og det er ikke særlig kaldt.
+    correct: false
+    why: It denies the rain that Nora mentions and that both speakers can see.
+  explanation_md: 'En bekreftelse fulgt av en annen relevant værdetalj gjør at svaret passer inn i samtalen.'
+  derived_from:
+  - section_id: second-checkpoint-acknowledge-add-detail
+- handle: select_relevant_follow_up
+  op: choose
+  objective: obj-make-weather-small-talk-01
+  bloom: apply
+  prompt_md: 'Velg det mest naturlige oppfølgingsspørsmålet fra Amir.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Situasjon
+      text_md: Nora og Amir står ute i regnet, et stykke fra nærmeste ly.
+    - speaker: Nora
+      text_md: «Det regner mye nå.»
+    - speaker: Amir
+      text_md: «Ja, virkelig.»
+  options:
+  - id: visible-weather-question
+    text: Hvordan er været?
+    correct: false
+    why: Both speakers can already see the weather, so the broad question adds little.
+  - id: unrelated-question
+    text: Hva spiste du til frokost?
+    correct: false
+    why: It changes to an unrelated personal topic before the weather exchange develops.
+  - id: umbrella-question
+    text: Har du paraply?
+    correct: true
+    why: The practical question follows directly from their being outside in the rain.
+  explanation_md: 'Et nyttig oppfølgingsspørsmål holder seg til været og gjør det lett for den andre å svare.'
+  derived_from:
+  - section_id: asking-one-follow-up-question
+- handle: first_checkpoint_opening
+  op: write
+  objective: obj-make-weather-small-talk-01
+  bloom: apply
+  prompt_md: 'Skriv en værbemerkning på norsk på 3–10 ord til Nora for å starte en samtale.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Situasjon
+      text_md: Du og Nora venter utenfor en stengt kafé mens det regner kraftig.
+  derived_from:
+  - section_id: first-checkpoint-make-opening
+  response_language: 'no'
+  min_words: 3
+  max_words: 10
+  judge_prompt: Evaluate criterion opening-observation and report its verdict with evidence.
+  criteria:
+  - id: opening-observation
+    instruction: Opens the conversation with a natural Norwegian observation about the current heavy rain.
+- handle: second_checkpoint_acknowledge_contrast
+  op: write
+  objective: obj-make-weather-small-talk-01
+  bloom: apply
+  prompt_md: 'Nora: «Det regner mye i dag.» Svar Nora på norsk med 5–12 ord. Vis at du er enig i at det regner, og nevn at det ikke er særlig kaldt.'
+  derived_from:
+  - section_id: second-checkpoint-acknowledge-add-detail
+  response_language: 'no'
+  min_words: 5
+  max_words: 12
+  judge_prompt: Evaluate criteria acknowledges-rain and adds-contrasting-fact and report each verdict with evidence.
+  criteria:
+  - id: acknowledges-rain
+    instruction: Acknowledges Nora's observation that it is raining heavily.
+  - id: adds-contrasting-fact
+    instruction: Adds that it is not particularly cold as a connected contrast.
+- handle: third_checkpoint_middle_exchange
+  op: write
+  objective: obj-make-weather-small-talk-01
+  bloom: apply
+  prompt_md: 'Amir: «Det blåser kraftig her ved fergekaia.» Svar på norsk med 10–25 ord. Bekreft at det blåser, nevn at sola skinner, og still et oppfølgingsspørsmål om været som Amir kan svare på. Dere vet ennå ikke om vinden løyer.'
+  derived_from:
+  - section_id: third-checkpoint-build-middle
+  response_language: 'no'
+  min_words: 10
+  max_words: 25
+  judge_prompt: Evaluate criteria acknowledges-wind, adds-sunny-contrast, and asks-weather-follow-up and report each verdict with evidence.
+  criteria:
+  - id: acknowledges-wind
+    instruction: Acknowledges Amir's observation about the strong wind.
+  - id: adds-sunny-contrast
+    instruction: Adds the supplied fact that the sun is shining as a connected contrast.
+  - id: asks-weather-follow-up
+    instruction: Asks a relevant weather question that Amir can answer.
+- handle: discriminate_close_or_continue
+  op: choose
+  objective: obj-make-weather-small-talk-01
+  bloom: apply
+  prompt_md: 'Nora må gå når bussen kommer. Velg det mest naturlige neste svaret fra Amir.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Det regner fortsatt. Tror du det blir bedre snart?»
+    - speaker: Situasjon
+      text_md: Bussen til Nora kommer, og hun må gå.
+  options:
+  - id: abrupt-topic
+    text: Hva skal du spise til middag?
+    correct: false
+    why: It changes topic just as the situation calls for a brief farewell.
+  - id: weather-close
+    text: Vi får håpe det blir bedre. Ha en fin dag!
+    correct: true
+    why: It answers within the weather topic and closes naturally because Nora must leave.
+  - id: weather-continue
+    text: Har du paraply, og liker du regnvær?
+    correct: false
+    why: It opens two new questions even though Nora's arriving bus calls for a closing.
+  explanation_md: 'Når situasjonen endrer seg, passer det å avslutte med en kort kommentar om været og et farvel.'
+  derived_from:
+  - section_id: closing-or-continuing
+- handle: revise_weather_exchange
+  op: write
+  objective: obj-make-weather-small-talk-01
+  bloom: apply
+  prompt_md: 'Nora: «Det er kaldt i dag.» Amir: «Det regner. Hva jobber du med?» Skriv om Amirs replikk på norsk med 6–14 ord. Svar Nora, behold opplysningen om regnet og spør om hun har paraply.'
+  response_language: 'no'
+  min_words: 6
+  max_words: 14
+  judge_prompt: Evaluate criteria responds-to-nora, uses-rain-fact, and keeps-weather-focus and report each verdict with evidence.
+  criteria:
+  - id: responds-to-nora
+    instruction: Clearly responds to Nora's comment about the cold.
+  - id: uses-rain-fact
+    instruction: Incorporates the supplied fact that it is raining.
+  - id: keeps-weather-focus
+    instruction: Uses the supplied umbrella question instead of the unrelated work question.
+  derived_from:
+  - section_id: common-problems
+- handle: final_guided_exchange
+  op: write
+  objective: obj-make-weather-small-talk-01
+  bloom: apply
+  prompt_md: 'Nora og Amir møtes utenfor en dagligvarebutikk en varm ettermiddag. Sola skinner, Amir har en flaske vann, og Nora skal snart inn. Skriv en dialog på norsk på 25–60 ord. Start med været, svar med en bekreftelse eller en mild kontrast, still et relevant oppfølgingsspørsmål og avslutt eller fortsett samtalen naturlig.'
+  response_language: 'no'
+  min_words: 25
+  max_words: 60
+  judge_prompt: Evaluate criteria brief-exchange, weather-opening, connected-response, related-follow-up, and clear-ending and report each verdict with evidence. Accept natural Bokmål variants that preserve the visible facts and requested sequence.
+  criteria:
+  - id: brief-exchange
+    instruction: Presents a dialogue of 25–60 words between Nora and Amir.
+  - id: weather-opening
+    instruction: Opens with an observation connected to the hot, sunny afternoon.
+  - id: connected-response
+    instruction: Follows the opening with a natural acknowledgement or gentle contrast.
+  - id: related-follow-up
+    instruction: Includes one follow-up question related to the weather or the supplied immediate situation.
+  - id: clear-ending
+    instruction: Ends with a polite closing or a sentence that clearly continues the exchange.
+  derived_from:
+  - section_id: final-guided-practice
+- handle: retrieval_review_weather_exchange
+  op: write
+  objective: obj-make-weather-small-talk-01
+  bloom: apply
+  prompt_md: 'To naboer møtes ute mens det snør. Begge skal snart videre. Skriv en kort dialog på fire replikker på norsk, 16–45 ord til sammen, med en værbemerkning, et relevant svar, et oppfølgingsspørsmål og en avslutning.'
+  response_language: 'no'
+  min_words: 16
+  max_words: 45
+  judge_prompt: Evaluate criteria four-lines, weather-opening, acknowledgement-or-contrast, follow-up-question, closing-sentence, and same-weather-situation and report each verdict with evidence. Accept natural Bokmål variants that satisfy the visible task.
+  criteria:
+  - id: four-lines
+    instruction: Contains exactly four dialogue lines.
+  - id: weather-opening
+    instruction: Includes a weather observation that opens the exchange.
+  - id: acknowledgement-or-contrast
+    instruction: Includes a natural response that acknowledges or gently contrasts the opening.
+  - id: follow-up-question
+    instruction: Includes one relevant follow-up question.
+  - id: closing-sentence
+    instruction: Includes a natural closing sentence.
+  - id: same-weather-situation
+    instruction: Keeps all four lines connected to the snowy situation.
+  derived_from:
+  - section_id: retrieval-and-review
+- handle: review_weather_opening
+  op: write
+  objective: obj-make-weather-small-talk-01
+  bloom: apply
+  prompt_md: 'Skriv en værbemerkning på norsk på 3–4 ord til naboen.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: You and a neighbour stand outside the library as the first snowflakes of the season begin to fall around you.
+  response_language: 'no'
+  min_words: 3
+  max_words: 4
+  judge_prompt: Evaluate criterion opening-chunk and report its verdict with evidence.
+  criteria:
+  - id: opening-chunk
+    instruction: Gives a natural 3–4-word Norwegian opening about the snow beginning now; accept natural variants such as comments that it is snowing or beginning to snow.
+  derived_from:
+  - section_id: opening-shared-observation
+- handle: review_acknowledge_weather
+  op: write
+  objective: obj-make-weather-small-talk-01
+  bloom: apply
+  prompt_md: 'Nabo: «Det blåser kraftig i dag.» Du opplever det samme. Svar på norsk med 1–3 ord.'
+  response_language: 'no'
+  min_words: 1
+  max_words: 3
+  judge_prompt: Evaluate criterion acknowledgement-chunk and report its verdict with evidence.
+  criteria:
+  - id: acknowledgement-chunk
+    instruction: Gives a natural 1–3-word Norwegian acknowledgement of the neighbour's observation; accept brief agreement variants.
+- handle: review_weather_follow_up
+  op: write
+  objective: obj-make-weather-small-talk-01
+  bloom: apply
+  prompt_md: 'Amir sier at det regner, og du vet ikke om han har noe å beskytte seg med. Spør ham om det på norsk med 3–4 ord.'
+  response_language: 'no'
+  min_words: 3
+  max_words: 4
+  judge_prompt: Evaluate criterion follow-up-chunk and report its verdict with evidence.
+  criteria:
+  - id: follow-up-chunk
+    instruction: Asks a natural 3–4-word Norwegian question about whether Amir has protection from the rain.
+  derived_from:
+  - section_id: asking-one-follow-up-question
+- handle: review_weather_closing
+  op: write
+  objective: obj-make-weather-small-talk-01
+  bloom: apply
+  prompt_md: 'Du har snakket med en nabo om regnet. Bussen din kommer, og du må gå. Si ha det på norsk med 3–4 ord.'
+  response_language: 'no'
+  min_words: 3
+  max_words: 4
+  judge_prompt: Evaluate criterion closing-chunk and report its verdict with evidence.
+  criteria:
+  - id: closing-chunk
+    instruction: Gives a natural 3–4-word Norwegian farewell appropriate when the speaker must leave; accept polite farewell variants.
+  derived_from:
+  - section_id: closing-or-continuing

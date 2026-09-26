@@ -1,0 +1,383 @@
+- handle: notice_the_earlier_event
+  op: choose
+  objective: obj-pluperfect-01
+  bloom: understand
+  prompt_md: Choose the timeline described by both sentences.
+  stem_md: «Da Mari kom, hadde vi bestilt mat.» «Da Mari kom, hadde servitøren satt maten på bordet.»
+  options:
+  - id: both-after
+    text: Bestillingen og serveringen skjedde etter at Mari kom.
+    correct: false
+    why: This reverses the relationship expressed by the past-perfect phrases.
+  - id: order-split
+    text: Bestillingen skjedde før Mari kom, men serveringen skjedde etterpå.
+    correct: false
+    why: This treats identical timeline marking differently in the two sentences.
+  - id: both-before
+    text: Bestillingen og serveringen skjedde før Mari kom.
+    correct: true
+    why: The two past-perfect phrases present completed events before Mari’s arrival.
+  explanation_md: «Hadde bestilt» and «hadde satt» both look back from the moment Mari arrived.
+  derived_from:
+  - section_id: late-arrival
+- handle: contrast_the_timeline
+  op: build
+  objective: obj-pluperfect-01
+  bloom: apply
+  prompt_md: 'Facts: First: Vi vasket gulvet. Later: Gjestene kom. Build the sentence with the later event
+    first.'
+  tokens:
+  - token_id: tok-1
+    text: Da
+  - token_id: tok-2
+    text: gjestene
+  - token_id: tok-3
+    text: kom,
+  - token_id: tok-4
+    text: hadde
+  - token_id: tok-5
+    text: vi
+  - token_id: tok-6
+    text: vasket
+  - token_id: tok-7
+    text: gulvet.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  explanation_md: «Hadde vasket» marks the cleaning as complete before the guests arrived.
+  derived_from:
+  - section_id: what-happened-first
+- handle: build_hadde_plus_participle
+  op: recall_fill
+  objective: obj-pluperfect-01
+  bloom: apply
+  prompt_md: 'Facts: Vi tok frokost. Senere kom gjestene. Fill the blank.'
+  audio_target: Da gjestene kom, hadde vi allerede spist frokost.
+  segments:
+  - text_md: 'Da gjestene kom, hadde vi allerede '
+  - blank_id: eat-participle
+    options:
+    - spist
+    - spise
+    - å spise
+    answer_index: 0
+  - text_md: ' frokost.'
+  explanation_md: After «hadde», the verb «spise» appears as the past participle «spist».
+  derived_from:
+  - section_id: building-the-form
+- handle: link_completion_to_past_point
+  op: recall_fill
+  objective: obj-pluperfect-01
+  bloom: apply
+  prompt_md: 'Merk: Nøklene var borte, men vi lokaliserte dem før konserten begynte. Fyll inn det manglende
+    ordet.'
+  audio_target: Konserten begynte klokka ni. Vi hadde allerede funnet nøklene.
+  segments:
+  - text_md: 'Konserten begynte klokka ni. Vi hadde allerede '
+  - blank_id: collect-participle
+    options:
+    - funnet
+    - finne
+    - fant
+    answer_index: 0
+  - text_md: ' nøklene.'
+  explanation_md: The concert time supplies the later past point, so the earlier completed action uses
+    «hadde funnet».
+  derived_from:
+  - section_id: making-the-earlier-completion-clear
+- handle: discriminate_past_sequence
+  op: choose
+  objective: obj-pluperfect-01
+  bloom: analyze
+  prompt_md: Choose the sentence that matches the facts.
+  stem_md: 'Facts: First: Filmen begynte. Later: Vi kom til kinoen. By that later moment, the film was
+    already over.'
+  options:
+  - id: both-main-sequence
+    text: Da vi kom til kinoen, begynte filmen.
+    correct: false
+    why: This places the film’s beginning at the time of arrival, while the facts say it was already over.
+  - id: film-earlier
+    text: Da vi kom til kinoen, hadde filmen begynt.
+    correct: true
+    why: The past perfect marks the film’s beginning as earlier than the arrival.
+  - id: arrival-earlier
+    text: Vi kom til kinoen før filmen begynte.
+    correct: false
+    why: This reverses the stated order.
+  explanation_md: Choose the sentence that places the film’s beginning before the arrival.
+  derived_from:
+  - section_id: likely-misconception-not-every-earlier-event-needs-hadde
+- handle: reconstruct_maris_delay
+  op: write
+  objective: obj-pluperfect-01
+  bloom: apply
+  prompt_md: 'Message from Jonas: «Hvorfor kom du så sent til kafeen?» Facts in order: Mari sjekket den
+    nye bussruta på forhånd, men lagret likevel den gamle ruta på telefonen. Hun fulgte den gamle bussruta
+    og gikk derfor til feil holdeplass. Da hun oppdaget feilen, var bussen fra riktig holdeplass allerede
+    borte. Hun ventet på neste buss. Write a 45–65-word message to Jonas explaining why Mari was late.
+    Your message must use «hadde» with at least one past participle for an earlier fact.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Jonas
+      text_md: «Hvorfor kom du så sent til kafeen?»
+    - speaker: Mari
+      text_md: «Jeg skal forklare hva som skjedde.»
+  response_language: 'no'
+  min_words: 45
+  max_words: 65
+  judge_prompt: Evaluate the gating criteria main-events, earlier-facts, explanation-purpose, pluperfect-form,
+    and word-bound when deciding whether the response passes.
+  criteria:
+  - id: main-events
+    instruction: States that Mari followed the old route to the wrong stop, discovered the problem, and
+      waited for the next bus.
+  - id: earlier-facts
+    instruction: Includes the supplied facts about checking the new route, saving the old route, and the
+      bus already being gone.
+  - id: explanation-purpose
+    instruction: Gives Jonas a coherent explanation of why Mari was late.
+  - id: pluperfect-form
+    instruction: Uses «hadde» with a correct past participle to mark an earlier fact.
+  - id: word-bound
+    instruction: Contains 45–65 words.
+  derived_from:
+  - section_id: returning-to-mari-jonas-and-amina
+- handle: repair_the_reversed_timeline
+  op: find_fix
+  objective: obj-pluperfect-01
+  bloom: analyze
+  prompt_md: 'Fakta: Gjestene kom først. Vi ryddet kjøkkenet etterpå. Finn token-gruppen som gjør setningen
+    feil: «Da gjestene kom, hadde vi ryddet kjøkkenet.»'
+  tokens:
+  - token_id: tok-1
+    text: Da
+  - token_id: tok-2
+    text: gjestene
+  - token_id: tok-3
+    text: kom,
+  - token_id: tok-4
+    text: hadde vi ryddet
+  - token_id: tok-5
+    text: kjøkkenet.
+  error_token_id: tok-4
+  feedback: 'Bytt «hadde vi ryddet» med «ryddet vi»: «Da gjestene kom, ryddet vi kjøkkenet.»'
+  derived_from:
+  - section_id: likely-misconception-not-every-earlier-event-needs-hadde
+- handle: cabin_arrival_transfer
+  op: write
+  objective: obj-pluperfect-01
+  bloom: apply
+  prompt_md: 'Message from the cabin owner: «Var hytta klar da Henrik og Lea kom fram fredag kveld?» Preparation
+    log: 17.10: Vennene fant nøkkelen. 17.25: De kjøpte mat. 18.00: De redde opp sengene. 18.20: De tente
+    opp i peisen. 20.45: Henrik og Lea kom fram. Write a 35–55-word reply explaining what was ready before
+    the guests arrived. Use «hadde» with past participles for the earlier preparations.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Eieren
+      text_md: «Var hytta klar da Henrik og Lea kom fram fredag kveld?»
+    - speaker: Vennen
+      text_md: «Ja, jeg forteller hva vi gjorde før de kom.»
+  response_language: 'no'
+  min_words: 35
+  max_words: 55
+  judge_prompt: Evaluate the gating criteria preparation-facts, arrival-relationship, reply-purpose, pluperfect-form,
+    and word-bound when deciding whether the response passes.
+  criteria:
+  - id: preparation-facts
+    instruction: Covers finding the key, buying food, making the beds, and lighting the fire.
+  - id: arrival-relationship
+    instruction: Makes clear that all four preparations were complete before Henrik og Lea arrived.
+  - id: reply-purpose
+    instruction: Answers the owner’s question as a coherent reply.
+  - id: pluperfect-form
+    instruction: Uses «hadde» with correct past participles for the earlier preparations.
+  - id: word-bound
+    instruction: Contains 35–55 words.
+  derived_from:
+  - section_id: transfer-arriving-at-a-holiday-cabin
+- handle: what_had_already_happened
+  op: write
+  objective: obj-pluperfect-01
+  bloom: apply
+  prompt_md: 'Message from Sara: «Jeg kom til stasjonen klokka 08.15. Hvorfor var perrongen tom?» Station
+    log: 08.05: Toget dro fra stasjonen. 08.10: Kiosken stengte. 08.15: Sara kom. Write a 20–35-word reply
+    explaining what happened before she arrived. Use «hadde» with past participles for both earlier events.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Sara
+      text_md: «Jeg kom til stasjonen klokka 08.15. Hvorfor var perrongen tom?»
+    - speaker: Vennen
+      text_md: «Jeg forklarer hva som hadde skjedd før du kom.»
+  response_language: 'no'
+  min_words: 20
+  max_words: 35
+  judge_prompt: Evaluate the gating criteria station-events, earlier-than-arrival, reply-purpose, pluperfect-form,
+    and word-bound when deciding whether the response passes.
+  criteria:
+  - id: station-events
+    instruction: States that the train left and the kiosk closed.
+  - id: earlier-than-arrival
+    instruction: Makes both events clearly earlier than Sara’s 08.15 arrival.
+  - id: reply-purpose
+    instruction: Gives Sara a coherent explanation of the empty platform.
+  - id: pluperfect-form
+    instruction: Uses «hadde» with correct past participles for both earlier events.
+  - id: word-bound
+    instruction: Contains 20–35 words.
+  derived_from:
+  - section_id: final-retrieval
+- handle: review_notice_the_earlier_event
+  op: choose
+  objective: obj-pluperfect-01
+  bloom: understand
+  prompt_md: Choose what had already happened when Nora arrived.
+  stem_md: «Da Nora kom, hadde vi ryddet rommet.» «Da Nora kom, hadde kokken varmet suppen.»
+  options:
+  - id: only-room
+    text: Vi hadde ryddet rommet, men suppen ble varmet etter at Nora kom.
+    correct: false
+    why: This overlooks the same earlier-event marking on «hadde varmet».
+  - id: room-and-soup
+    text: Rommet var allerede ryddet, og suppen var allerede varmet da Nora kom.
+    correct: true
+    why: Both completed actions are presented as earlier than Nora’s arrival.
+  - id: nora-earlier
+    text: Nora hadde kommet før vi ryddet rommet og varmet suppen.
+    correct: false
+    why: This reverses which event is the later reference point.
+  explanation_md: Both past-perfect phrases identify completed background events.
+  derived_from:
+  - section_id: late-arrival
+- handle: review_contrast_the_timeline
+  op: choose
+  objective: obj-pluperfect-01
+  bloom: apply
+  prompt_md: Choose the sentence that matches the facts.
+  stem_md: 'Facts: First: Vi pakket sekkene. Later: Bussen kom.'
+  options:
+  - id: packing-later
+    text: Da bussen kom, pakket vi sekkene.
+    correct: false
+    why: This does not show that packing was already complete.
+  - id: packing-first
+    text: Da bussen kom, hadde vi pakket sekkene.
+    correct: true
+    why: The completed packing is placed before the bus arrived.
+  - id: bus-first
+    text: Da vi hadde kommet til bussen, pakket vi sekkene.
+    correct: false
+    why: This changes the timeline and makes arrival precede packing.
+  explanation_md: The earlier completed event takes the past perfect.
+  derived_from:
+  - section_id: what-happened-first
+- handle: review_build_hadde_plus_participle
+  op: recall_fill
+  objective: obj-pluperfect-01
+  bloom: apply
+  prompt_md: 'Facts: Vi malte et rom. Senere kom gjestene. Fill the blank.'
+  audio_target: Da gjestene kom, hadde vi allerede malt et rom.
+  segments:
+  - text_md: 'Da gjestene kom, hadde vi allerede '
+  - blank_id: review-paint-participle
+    options:
+    - malt
+    - male
+    - å male
+    answer_index: 0
+  - text_md: ' et rom.'
+  explanation_md: «Malt» is the past participle required after «hadde».
+  derived_from:
+  - section_id: building-the-form
+- handle: review_link_completion_to_past_point
+  op: recall_fill
+  objective: obj-pluperfect-01
+  bloom: apply
+  prompt_md: 'Merk: Vi kjøpte billetter før teaterforestillingen. Forestillingen begynte klokka sju. Fyll
+    inn det som mangler.'
+  audio_target: Forestillingen begynte klokka sju. Vi hadde allerede kjøpt billetter.
+  segments:
+  - text_md: 'Forestillingen begynte klokka sju. Vi hadde allerede '
+  - blank_id: review-buy-participle
+    options:
+    - kjøpt
+    - kjøpe
+    - kjøpte
+    answer_index: 0
+  - text_md: ' billetter.'
+  explanation_md: «Kjøpt» is the past participle required after «hadde».
+  derived_from:
+  - section_id: making-the-earlier-completion-clear
+- handle: review_repair_the_reversed_timeline
+  op: choose
+  objective: obj-pluperfect-01
+  bloom: analyze
+  prompt_md: Choose the corrected sentence.
+  stem_md: 'Facts: Flyet landet først. Vi hentet bagasjen etterpå.'
+  options:
+  - id: luggage-first
+    text: Da flyet landet, hadde vi hentet bagasjen.
+    correct: false
+    why: This places the luggage collection before the landing.
+  - id: both-background
+    text: Da flyet hadde landet, hadde vi hentet bagasjen.
+    correct: false
+    why: This presents the later action as completed background.
+  - id: landing-first
+    text: Da flyet hadde landet, hentet vi bagasjen.
+    correct: true
+    why: The landing is marked as earlier and the later collection advances the story.
+  explanation_md: Past perfect marks the earlier landing; simple past advances the story with the collection.
+  derived_from:
+  - section_id: likely-misconception-not-every-earlier-event-needs-hadde
+- handle: review_cabin_arrival_transfer
+  op: recall_fill
+  objective: obj-pluperfect-01
+  bloom: apply
+  prompt_md: 'Cabin log: 18.10: Vennene bar veden inn. 20.30: Henrik og Lea kom. Fill the two blanks.'
+  audio_target: Da Henrik og Lea kom, hadde vennene båret inn veden.
+  segments:
+  - text_md: Da Henrik og Lea kom,
+  - blank_id: cabin-auxiliary
+    options:
+    - hadde
+    - har
+    - skal
+    answer_index: 0
+  - text_md: ' vennene '
+  - blank_id: cabin-participle
+    options:
+    - bære
+    - båret
+    - bar
+    answer_index: 1
+  - text_md: ' inn veden.'
+  explanation_md: «Hadde båret» presents the carrying as complete before the arrival.
+  derived_from:
+  - section_id: transfer-arriving-at-a-holiday-cabin
+- handle: review_what_had_already_happened
+  op: recall_fill
+  objective: obj-pluperfect-01
+  bloom: apply
+  prompt_md: 'Workshop log: 09.00: Teknikeren slo på projektoren. 09.15: Kurset begynte. Fill the blank.'
+  audio_target: Da kurset begynte, hadde teknikeren slått på projektoren.
+  segments:
+  - text_md: 'Da kurset begynte, '
+  - blank_id: earlier-event
+    options:
+    - hadde teknikeren slått på projektoren
+    - slår teknikeren på projektoren
+    - har teknikeren slått på projektoren
+    answer_index: 0
+  - text_md: .
+  explanation_md: The technician switched on the projector before the course began.
+  derived_from:
+  - section_id: final-retrieval

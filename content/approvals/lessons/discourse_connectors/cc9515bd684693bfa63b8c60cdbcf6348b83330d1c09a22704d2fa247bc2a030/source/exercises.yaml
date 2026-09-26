@@ -1,0 +1,247 @@
+- handle: notice_sentence_structure
+  op: categorize
+  objective: obj-discourse-connectors-02
+  bloom: analyze
+  prompt_md: 'Sorter tekstutdragene etter ordstilling: hovedsetning, leddsetning eller sideordnet setning. I utdrag 2 og 3 hører delene sammen. Finn det finitte verbet og subjektet, og se hvilket som kommer først.'
+  explanation_md: Når et adverbial eller en leddsetning står først i en hovedsetning, kommer det finitte verbet etterpå. I en leddsetning står subjektet før det finitte verbet.
+  derived_from:
+  - section_id: connectors-v2-rule
+  buckets:
+  - bucket_id: connector_initial_v2
+    label: Hovedsetning med innledende adverbial og verb før subjekt
+  - bucket_id: selv_om_subordinate_order
+    label: Leddsetning med subjekt før verb
+  - bucket_id: selv_om_following_main_v2
+    label: Hovedsetning etter innledende leddsetning, med verb før subjekt
+  - bucket_id: men_subject_verb
+    label: Sideordnet setning med subjekt før verb
+  items:
+  - item_id: structure-1
+    text: Først kom det bare seks frivillige.
+    bucket_id: connector_initial_v2
+  - item_id: structure-2
+    text: Selv om butikken lå langt unna
+    bucket_id: selv_om_subordinate_order
+  - item_id: structure-3
+    text: hentet Nora malingen.
+    bucket_id: selv_om_following_main_v2
+  - item_id: structure-4
+    text: men vi begynte som planlagt.
+    bucket_id: men_subject_verb
+- handle: build_clear_timeline
+  op: write
+  objective: obj-discourse-connectors-01
+  bloom: apply
+  prompt_md: 'Skriv fire korte setninger på 15–50 ord om arbeidsdagen i hagen. Notater: klokka ni kom seks frivillige; senere kom skoleklassen; etter besøket malte gruppa benkene; til slutt ryddet de området. Sett hendelsene i rekkefølge. Begynn hver setning med et passende tidsbindeord, og følg norsk V2-ordstilling.'
+  derived_from:
+  - section_id: showing-sequence
+  response_language: "no"
+  min_words: 15
+  max_words: 50
+  judge_prompt: >-
+    Evaluate the response against the four-event retelling, chronological order, sequence-connectors,
+    V2,
+    and word-bound criteria. Accept natural Bokmål wording and suitable sequence connectors.
+    Each of the
+    four events must be stated, and each sentence must place its finite verb immediately
+    after the fronted
+    connector.
+  criteria:
+  - id: four-events
+    instruction: Includes the arrival of the six volunteers, the school class, the bench painting, and the area cleanup.
+  - id: chronological-order
+    instruction: Presents the four events in the supplied chronological order.
+  - id: sequence-connectors
+    instruction: Begins each stage with an appropriate sequence connector.
+  - id: v2-after-connector
+    instruction: Places the finite verb directly after each fronted sequence connector.
+  - id: word-bound
+    instruction: Contains 15–50 Norwegian words.
+- handle: strengthen_report
+  op: write
+  objective: obj-discourse-connectors-01
+  bloom: apply
+  prompt_md: 'Skriv 35–70 ord til Ingrid og Samirs rapport til kommunen. Ta med to støttende opplysninger. Begynn én setning med «I tillegg» og én med «Dessuten». Svar også på «Skoleklassen kom» med en opplysning om lærerens utstyr; vis om dette er en tilleggsopplysning eller noe som skjedde etterpå. Forklar kort hvordan et annet bindeord ville endret betydningen. Bruk omvendt ordstilling etter innledende adverbial.'
+  derived_from:
+  - section_id: adding-another-point
+  response_language: "no"
+  min_words: 35
+  max_words: 70
+  judge_prompt: Check the response against the task and report evidence for every criterion. Accept natural Bokmål variants, but require both added facts with I tillegg and Dessuten each beginning a sentence, the follow-up about the teacher's tools, the requested connector choices, the explanation of the alternative interpretation, and correct verb–subject order after each fronted adverbial connector.
+  criteria:
+  - id: coherent-supporting-details
+    instruction: Adds two coherent supporting facts to the council report.
+  - id: i-tillegg-sentence
+    instruction: Begins one sentence with I tillegg to add a supporting fact.
+  - id: dessuten-sentence
+    instruction: Begins one sentence with Dessuten to add a supporting fact.
+  - id: follow-up-tools
+    instruction: Responds to Skoleklassen kom. with a follow-up about the teacher's tools.
+  - id: relationship-choice
+    instruction: Selects i tillegg or deretter to match the intended addition or sequence relationship.
+  - id: alternative-interpretation
+    instruction: Explains in Norwegian how the alternative connector would change the listener's interpretation.
+  - id: fronted-adverbial-order
+    instruction: Uses verb–subject order after each fronted adverbial connector.
+- handle: present_obstacle_response
+  op: write
+  objective: obj-discourse-connectors-02
+  bloom: apply
+  prompt_md: Skriv et kort svar om arbeidsdagen. Nevn regnet som ett problem og den fjerne butikken som et annet. Bruk «likevel» først i en setning for å knytte et problem til løsningen. Begynn en annen setning med en «selv om»-leddsetning. Vis også en tydelig kontrast med «men» eller «derimot». Bruk omvendt ordstilling i hovedsetningene etter innledende ledd.
+  derived_from:
+  - section_id: expressing-contrast-concession
+  response_language: "no"
+  max_words: 65
+  judge_prompt: Check the response against the task and report evidence for every criterion. Require a clear rain response, a clear distant-shop response, one direct contrast, the requested likevel and selv om constructions, and correct inversion in both relevant main clauses.
+  criteria:
+  - id: clear-relationships
+    instruction: Makes the rain response, distant-shop response, and direct contrast clear.
+  - id: direct-contrast
+    instruction: Uses men or derimot for the direct contrast.
+  - id: likevel-concession
+    instruction: Uses likevel for one concession.
+  - id: opening-selv-om
+    instruction: Begins one sentence with a selv om clause.
+  - id: main-clause-inversion
+    instruction: Uses inversion in the main clauses after fronted likevel and an opening selv om clause.
+- handle: distinguish_cause_contrast
+  op: build
+  objective: obj-discourse-connectors-02
+  bloom: apply
+  prompt_md: 'Sett ordene sammen til to versjoner av samme årsak og resultat. Først: årsak, så resultat i en ny hovedsetning. Deretter: resultat først, med årsaken som forklaring. Bruk alle ordene én gang og riktig ordstilling.'
+  derived_from:
+  - section_id: linking-cause-result
+  tokens:
+  - token_id: cause-01
+    text: Det regnet kraftig.
+  - token_id: cause-02
+    text: vi under tak.
+  - token_id: cause-03
+    text: fordi
+  - token_id: cause-04
+    text: Derfor
+  - token_id: cause-05
+    text: arbeidet
+  - token_id: cause-06
+    text: Vi arbeidet under tak
+  - token_id: cause-07
+    text: det
+  - token_id: cause-08
+    text: regnet kraftig.
+  answer_order:
+  - cause-01
+  - cause-04
+  - cause-05
+  - cause-02
+  - cause-06
+  - cause-03
+  - cause-07
+  - cause-08
+- handle: end_council_report
+  op: write
+  objective: obj-discourse-connectors-01
+  bloom: apply
+  prompt_md: Avslutt rapporten om arbeidsdagen med 12–35 ord. Fortell først om den siste hendelsen med «Til slutt». Vurder deretter dagen som helhet med «Alt i alt», eller gi en vurdering med «altså». Bruk uttrykkene riktig og pass på ordstillingen.
+  derived_from:
+  - section_id: drawing-a-conclusion
+  response_language: "no"
+  min_words: 12
+  max_words: 35
+  judge_prompt: Check the response against the task and report evidence for every criterion. Accept either the taught overall-conclusion form with alt i alt or a natural conclusion containing altså, provided the two connectors have distinct chronological and evaluative functions.
+  criteria:
+  - id: final-event
+    instruction: Uses til slutt for the final event.
+  - id: overall-conclusion
+    instruction: Uses alt i alt for an overall evaluation, or uses altså for an evaluative conclusion about the day.
+  - id: connector-functions
+    instruction: Uses each connector for its intended chronological or evaluative purpose.
+  - id: correct-word-order
+    instruction: Maintains correct word order.
+- handle: repair_fronted_connector
+  op: choose
+  objective: obj-discourse-connectors-01
+  bloom: analyze
+  prompt_md: Velg setningen med riktig ordstilling etter det innledende tidsuttrykket.
+  stem_md: Vaktmesteren reparerte porten først. Elevene malte den etterpå.
+  derived_from:
+  - section_id: common-mistakes-to-avoid
+  options:
+  - id: correct-v2
+    text: Deretter malte elevene porten.
+    correct: true
+    why: Deretter is in first position, followed by the finite verb malte and then the subject elevene.
+  - id: subject-before-verb
+    text: Deretter elevene malte porten.
+    correct: false
+    why: A fronted Deretter requires the finite verb before the subject in a main clause.
+  - id: verb-at-end
+    text: Deretter elevene porten malte.
+    correct: false
+    why: The finite verb cannot remain at the end of this main clause after a fronted connector.
+- handle: coherent_project_update
+  op: write
+  objective: obj-discourse-connectors-01
+  bloom: apply
+  prompt_md: 'Skriv en oppdatering på 80–130 ord til kommunen etter en arbeidsdag i hagen. Begynn med planen, fortell i rekkefølge hva dere gjorde, og ta også med én detalj om arbeidet med «i tillegg» eller «dessuten». Forklar et problem og hvordan dere løste det. Vis årsaken til en endring med «fordi» og resultatet med «derfor». Bruk «selv om» først i en setning om et hinder. Vis to kontraster med «men»: én der helsetningen etter «men» begynner med subjektet, og én der den begynner med «deretter» eller «likevel». Avslutt med den siste hendelsen og en samlet vurdering av dagen.'
+  derived_from:
+  - section_id: extended-practice
+  response_language: "no"
+  min_words: 80
+  max_words: 130
+  judge_prompt: Check one coherent garden-work update against the task. Require the stated plan, chronological events, one relevant detail, an obstacle and response, the cause and result of a change, and a final event with an overall assessment. Check that the specified connectors express those relationships. For word order, check the clause following «selv om», the subject-first clause after one «men», and the finite-verb-before-subject order after «deretter» or «likevel» following the other «men».
+  criteria:
+  - id: coherent-report
+    instruction: Reads as one coherent report rather than isolated sentences.
+  - id: opening-initial-situation
+    instruction: Begins the report with the initial situation.
+  - id: sequence
+    instruction: Organizes the work in a clear chronological sequence.
+  - id: supporting-information
+    instruction: Adds one relevant detail about the work beyond the main sequence.
+  - id: obstacle-and-response
+    instruction: Mentions an obstacle and the response to it.
+  - id: cause-and-result
+    instruction: Explains a clear cause-and-result relationship.
+  - id: final-event-and-conclusion
+    instruction: Ends with the final event and an overall assessment of the day.
+  - id: distinct-connector-functions
+    instruction: Uses sequence and addition connectors to guide the report, and «fordi» and «derfor» to show cause and result.
+  - id: fronted-adverbial-v2
+    instruction: Places the finite verb before the subject after a fronted adverbial connector.
+  - id: opening-selv-om-inversion
+    instruction: Uses inversion in the main clause following an opening selv om clause.
+  - id: subordinate-order
+    instruction: Retains subject-before-verb order inside the modeled fordi and selv om clauses.
+  - id: men-subject-verb
+    instruction: Uses subject–verb order after men when the subject is the coordinated clause's first constituent.
+  - id: men-fronted-adverbial-v2
+    instruction: Includes one men clause beginning with «deretter» or «likevel», followed by the finite verb before the subject.
+- handle: short_retrieval_review
+  op: write
+  objective: obj-discourse-connectors-02
+  bloom: apply
+  prompt_md: 'Skriv seks nummererte setninger på norsk fra nye situasjoner. La dem uttrykke rekkefølge, tillegg, direkte kontrast, innrømmelse, årsak og konklusjon. Legg tilleggsetningen til en dagligvaresituasjon. Bruk «men» eller «derimot» ved direkte kontrast og «likevel» eller «selv om» ved innrømmelse. Bruk «fordi» i årsakssetningen. Begynn minst fire setninger med et bindeord som tar førsteplassen i hovedsetningen, og bruk «i tillegg» eller «dessuten» i tilleggsetningen.'
+  derived_from:
+  - section_id: short-retrieval-review
+  response_language: "no"
+  max_words: 90
+  judge_prompt: Check the response against the task and report evidence for every criterion. Verify six distinct relationship sentences, the grocery-shopping addition context, the required connector choices, at least four sentences with a fronted adverbial connector, and the separate main-clause and subordinate-clause word-order rules. Reject copied complete lesson sentences.
+  criteria:
+  - id: six-relationships
+    instruction: Produces one sentence for each of the six relationships.
+  - id: direct-contrast
+    instruction: Uses men or derimot for direct contrast.
+  - id: concession
+    instruction: Uses likevel or selv om for concession.
+  - id: fordi-order
+    instruction: Uses fordi with the modeled subordinate-clause word order.
+  - id: fronted-four
+    instruction: Uses a fronted adverbial connector in at least four sentences.
+  - id: grocery-addition
+    instruction: Sets the addition sentence in an everyday grocery-shopping context outside the garden report.
+  - id: second-position-check
+    instruction: Keeps finite verbs in second position after fronted adverbial connectors.
+  - id: men-not-fronted
+    instruction: Does not treat men itself as a fronted adverbial connector.
+  - id: selv-om-boundary
+    instruction: Does not apply the main-clause V2 check inside a selv om subordinate clause.

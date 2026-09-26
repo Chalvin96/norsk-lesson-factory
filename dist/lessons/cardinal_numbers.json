@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "cardinal_numbers",
   "kind": "grammar",
   "language": "nb-NO",
@@ -80,6 +80,26 @@
     {
       "kind": "exercise",
       "id": "final-counting-review"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_number-sequence-recall"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_contrast-one-and-more"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_answer-how-many"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_complete-the-checkout-quantities"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_repair-the-one-form"
     }
   ],
   "sections": [
@@ -1884,15 +1904,16 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Jeg trenger ett pose."
+                  "value": "Jeg trenger ett pose."
                 }
               ],
               "en": [
                 {
                   "kind": "text",
-                  "value": "Intended meaning: I need one bag."
+                  "value": "I need one bag."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "common-mistake-block-2"
@@ -1954,15 +1975,16 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Hun kjøper en brød."
+                  "value": "Hun kjøper en brød."
                 }
               ],
               "en": [
                 {
                   "kind": "text",
-                  "value": "Intended meaning: She is buying one loaf of bread."
+                  "value": "She is buying one loaf of bread."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "common-mistake-block-6"
@@ -2640,13 +2662,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Fill each blank with the Norwegian number matching the stated group size."
+          "value": "Fill in the Norwegian number word for each quantity."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Use en before a common-gender noun such as kopp and ett before a neuter noun; higher numbers do not carry that gender contrast."
+          "value": "Koble hver mengde til riktig norsk tallord. For én ting må du også ta hensyn til substantivets kjønn."
         }
       ],
       "payload": {
@@ -2657,10 +2679,6 @@
               {
                 "kind": "text",
                 "value": "8 books:"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -2683,11 +2701,7 @@
               },
               {
                 "kind": "text",
-                "value": "bøker 3 apples:"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "bøker; 3 apples:"
               }
             ]
           },
@@ -2710,11 +2724,7 @@
               },
               {
                 "kind": "text",
-                "value": "epler 10 tables:"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "epler; 10 tables:"
               }
             ]
           },
@@ -2737,11 +2747,7 @@
               },
               {
                 "kind": "text",
-                "value": "bord 6 eggs:"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "bord; 6 eggs:"
               }
             ]
           },
@@ -2764,11 +2770,7 @@
               },
               {
                 "kind": "text",
-                "value": "egg 1 cup:"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "egg; 1 cup:"
               }
             ]
           },
@@ -2806,10 +2808,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Classify each grocery noun by the form of one required before it. Base the choice on the noun."
+          "value": "Sort the nouns by whether they take «en» or «ett» in the singular."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Bruk «en» med en-ordene og «ett» med ett-ordene."
+        }
+      ],
       "payload": {
         "buckets": [
           {
@@ -2873,10 +2880,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each quantity phrase for the stated kitchen group. Choose en or ett only for one; use the stated higher number otherwise."
+          "value": "Complete the quantities on the shopping and post list."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Ved én ting velger du «en» eller «ett» etter substantivets kjønn. Ved større mengder bruker du tallordet og flertallsformen."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -2884,47 +2896,16 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "1 cup:"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "1 orange:"
               }
             ]
           },
           {
             "kind": "blank",
-            "blank_id": "one-cup",
+            "blank_id": "one-orange",
             "options": [
-              "ett",
-              "en"
-            ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "kopp 3 cups:"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "three-cups",
-            "options": [
-              "tre",
-              "to",
-              "fire"
+              "en",
+              "ett"
             ],
             "answer_index": 0
           },
@@ -2937,20 +2918,17 @@
               },
               {
                 "kind": "text",
-                "value": "kopper 1 glass:"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "appelsin; 5 oranges:"
               }
             ]
           },
           {
             "kind": "blank",
-            "blank_id": "one-glass",
+            "blank_id": "five-oranges",
             "options": [
-              "en",
-              "ett"
+              "fire",
+              "fem",
+              "seks"
             ],
             "answer_index": 1
           },
@@ -2963,23 +2941,18 @@
               },
               {
                 "kind": "text",
-                "value": "glass 3 glasses:"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "appelsiner; 1 letter:"
               }
             ]
           },
           {
             "kind": "blank",
-            "blank_id": "three-glasses",
+            "blank_id": "one-letter",
             "options": [
               "ett",
-              "fem",
-              "tre"
+              "en"
             ],
-            "answer_index": 2
+            "answer_index": 0
           },
           {
             "kind": "span",
@@ -2990,7 +2963,30 @@
               },
               {
                 "kind": "text",
-                "value": "glass"
+                "value": "brev; 3 letters:"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "three-letters",
+            "options": [
+              "tre",
+              "fire",
+              "to"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "brev"
               }
             ]
           }
@@ -3005,10 +3001,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each answer to Hvor mange …? with the full Norwegian quantity phrase matching the stated visible amount."
+          "value": "Answer each new question with the quantity shown."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Lag et mengdeuttrykk som svarer på spørsmålet. Bruk «en» eller «ett» ved én ting; andre tallord endres ikke."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -3016,7 +3017,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "There is 1 bag. Hvor mange poser trenger du? – Jeg trenger"
+                "value": "1 chair — Hvor mange stoler er ledige? – Det er"
               },
               {
                 "kind": "text",
@@ -3026,11 +3027,11 @@
           },
           {
             "kind": "blank",
-            "blank_id": "one-bag",
+            "blank_id": "one-chair",
             "options": [
-              "en pose",
-              "ett pose",
-              "to poser"
+              "en stol",
+              "ett stol",
+              "to stoler"
             ],
             "answer_index": 0
           },
@@ -3039,7 +3040,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": ". There is 1 loaf. Hvor mange brød har dere? – Vi har"
+                "value": ". 1 table — Hvor mange bord står i rommet? – Det står"
               },
               {
                 "kind": "text",
@@ -3049,11 +3050,11 @@
           },
           {
             "kind": "blank",
-            "blank_id": "one-loaf",
+            "blank_id": "one-table",
             "options": [
-              "en brød",
-              "ett brød",
-              "tre brød"
+              "en bord",
+              "ett bord",
+              "to bord"
             ],
             "answer_index": 1
           },
@@ -3062,7 +3063,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": ". There are 4 cups. Hvor mange kopper? –"
+                "value": ". 7 tomatoes — Hvor mange tomater skal vi kjøpe? – Vi skal kjøpe"
               },
               {
                 "kind": "text",
@@ -3072,20 +3073,20 @@
           },
           {
             "kind": "blank",
-            "blank_id": "four-cups",
+            "blank_id": "seven-tomatoes",
             "options": [
-              "to kopper",
-              "fem kopper",
-              "fire kopper"
+              "sju tomater",
+              "seks tomater",
+              "åtte tomater"
             ],
-            "answer_index": 2
+            "answer_index": 0
           },
           {
             "kind": "span",
             "spans": [
               {
                 "kind": "text",
-                "value": ". There are 3 apples. Hvor mange epler trenger du? – Jeg trenger"
+                "value": ". 1 letter — Hvor mange brev ligger på bordet? – Det ligger"
               },
               {
                 "kind": "text",
@@ -3095,13 +3096,13 @@
           },
           {
             "kind": "blank",
-            "blank_id": "three-apples",
+            "blank_id": "one-letter",
             "options": [
-              "tre epler",
-              "seks epler",
-              "ett eple"
+              "en brev",
+              "ett brev",
+              "tre brev"
             ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
@@ -3123,10 +3124,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Select the one token that is wrong/needs changing."
+          "value": "A customer needs one drinking glass. Choose the word that must be changed in the sentence so the customer is still asking for a glass."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Glass» er et ett-ord, så entallsformen bruker «ett»."
+        }
+      ],
       "payload": {
         "tokens": [
           {
@@ -3151,7 +3157,7 @@
           }
         ],
         "error_token_id": "tok-3",
-        "feedback": "Replace en with ett because glass is an ett-word: Vi trenger ett glass."
+        "feedback": "The one-form must match the noun's gender; glass takes the ett form."
       }
     },
     {
@@ -3162,10 +3168,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete the checkout turns with quantity phrases matching Mina's groceries: four apples, two bananas, six eggs, one loaf of bread, and one bag."
+          "value": "Nora and Emil are packing food for a trip. Complete the dialogue with these quantities: tomatoes 7, bananas 5, eggs 3, milk 1 carton, and bags 2."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Velg mengdeuttrykk som passer. Ved én ting må «en» eller «ett» passe til substantivets kjønn; ved flere bruker du tallord og flertallsform."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -3173,7 +3184,635 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Jonas: Du har"
+                "value": "Nora: Vi pakker turmat. Jeg tar med"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "tomatoes",
+            "options": [
+              "sju tomater",
+              "seks tomater",
+              "ett tomat"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "og"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "bananas",
+            "options": [
+              "fire bananer",
+              "fem bananer",
+              "en banan"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Emil: Bra. Jeg pakker"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "eggs",
+            "options": [
+              "fire egg",
+              "tre egg",
+              "ett egg"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Nora: Vi trenger melk også. Jeg tar med"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "milk",
+            "options": [
+              "ett kartong med melk",
+              "en kartong med melk",
+              "to kartonger med melk"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Emil: Hvor mange poser skal vi bruke? Nora:"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "bags",
+            "options": [
+              "to poser",
+              "en pose",
+              "ett pose"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "set-the-table-transfer",
+      "operation": "write",
+      "objective_id": "obj-cardinal-numbers-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Mina is setting the table: 2 chairs, 1 table, 1 cup, and 3 glasses. Write a message in Norwegian and say what is available. Use the correct quantity expressions and «en» or «ett» for a singular item."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "En fullstendig melding oppgir alle fire mengdene med norske mengdeuttrykk og riktig «en» eller «ett»."
+        }
+      ],
+      "payload": {
+        "response_language": "no",
+        "min_words": 10,
+        "max_words": 30,
+        "judge_prompt": "Evaluate only criteria chairs-quantity, table-quantity, cup-quantity, glasses-quantity. Report a verdict and evidence for every criterion. A quantity stated with the wrong one-form gender fails its criterion: «en bord» fails table-quantity and «ett kopp» fails cup-quantity. Accept natural sentence order and punctuation. Anchors: Must pass: \"Hei Mina! Du har to stoler, ett bord, en kopp og tre glass.\" Must fail: \"Hei Mina! Du har to stoler, ett bord og en kopp.\" It omits the glasses. Must fail: \"Hei Mina! Du har tre stoler, ett bord, en kopp og tre glass.\" The chair quantity is wrong. Must fail: \"Hei Mina! Du har to stoler, en bord, ett kopp og tre glass.\" The table and cup one-forms use the wrong gender.",
+        "criteria": [
+          {
+            "id": "chairs-quantity",
+            "instruction": "States that two chairs are available using a Norwegian quantity phrase (to stoler)."
+          },
+          {
+            "id": "table-quantity",
+            "instruction": "States that one table is available using the correct Norwegian one-form (ett bord)."
+          },
+          {
+            "id": "cup-quantity",
+            "instruction": "States that one cup is available using the correct Norwegian one-form (en kopp)."
+          },
+          {
+            "id": "glasses-quantity",
+            "instruction": "States that three glasses are available using a Norwegian quantity phrase (tre glass)."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "final-counting-review",
+      "operation": "write",
+      "objective_id": "obj-cardinal-numbers-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "There is 1 banana, 2 apples, 3 cups, 1 glass, 4 eggs, and 1 loaf of bread on the breakfast table. Write a message in Norwegian to a guest about what is on the table. Use the correct quantity expressions and «en» or «ett» for a singular item."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "En fullstendig melding oppgir alle seks mengdene med norske mengdeuttrykk og riktig «en» eller «ett»."
+        }
+      ],
+      "payload": {
+        "response_language": "no",
+        "min_words": 12,
+        "max_words": 35,
+        "judge_prompt": "Evaluate only criteria banana-quantity, apples-quantity, cups-quantity, glass-quantity, eggs-quantity, bread-quantity. Report a verdict and evidence for every criterion. A quantity stated with the wrong one-form gender fails its criterion: «ett banan» fails banana-quantity, «en glass» fails glass-quantity and «en brød» fails bread-quantity. Accept natural sentences, list-like phrasing and equivalent punctuation. Anchors: Must pass: \"Hei! På bordet er det en banan, to epler, tre kopper, ett glass, fire egg og ett brød.\" Must fail: \"Hei! På bordet er det en banan, to epler, tre kopper og fire egg.\" It omits the glass and bread. Must fail: \"Hei! På bordet er det en banan, tre epler, tre kopper, ett glass, fire egg og ett brød.\" The apple quantity is wrong. Must fail: \"Hei! På bordet er det ett banan, to epler, tre kopper, en glass, fire egg og en brød.\" The banana, glass and bread one-forms use the wrong gender.",
+        "criteria": [
+          {
+            "id": "banana-quantity",
+            "instruction": "States that the table has one banana using the correct Norwegian one-form (en banan)."
+          },
+          {
+            "id": "apples-quantity",
+            "instruction": "States that the table has two apples using a Norwegian quantity phrase (to epler)."
+          },
+          {
+            "id": "cups-quantity",
+            "instruction": "States that the table has three cups using a Norwegian quantity phrase (tre kopper)."
+          },
+          {
+            "id": "glass-quantity",
+            "instruction": "States that the table has one glass using the correct Norwegian one-form (ett glass)."
+          },
+          {
+            "id": "eggs-quantity",
+            "instruction": "States that the table has four eggs using a Norwegian quantity phrase (fire egg)."
+          },
+          {
+            "id": "bread-quantity",
+            "instruction": "States that the table has one loaf of bread using the correct Norwegian one-form (ett brød)."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_number-sequence-recall",
+      "operation": "recall_fill",
+      "objective_id": "obj-cardinal-numbers-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the correct number word for each quantity."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Koble hver mengde til riktig norsk tallord. Ved én ting må du også ta hensyn til substantivets kjønn."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "7 chairs:"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "seven-chairs",
+            "options": [
+              "seks",
+              "sju",
+              "ni"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "stoler; 4 apples:"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "four-apples",
+            "options": [
+              "fire",
+              "to",
+              "fem"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "epler; 9 cups:"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "nine-cups",
+            "options": [
+              "ti",
+              "ni",
+              "åtte"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "kopper; 5 eggs:"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "five-eggs",
+            "options": [
+              "seks",
+              "fire",
+              "fem"
+            ],
+            "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "egg; 1 glass:"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "one-glass",
+            "options": [
+              "en",
+              "ett",
+              "to"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "glass"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_contrast-one-and-more",
+      "operation": "recall_fill",
+      "objective_id": "obj-cardinal-numbers-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Complete the quantity expressions with the correct number word."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Ved én ting velger du «en» eller «ett» etter substantivets kjønn. De andre tallordene endres ikke."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "1 glass:"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "one-glass",
+            "options": [
+              "en",
+              "ett"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "glass; 2 glasses:"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "two-glasses",
+            "options": [
+              "to",
+              "tre",
+              "en"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "glass; 1 cup:"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "one-cup",
+            "options": [
+              "ett",
+              "en"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "kopp; 4 cups:"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "four-cups",
+            "options": [
+              "to",
+              "fem",
+              "fire"
+            ],
+            "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "kopper"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_answer-how-many",
+      "operation": "recall_fill",
+      "objective_id": "obj-cardinal-numbers-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Answer each question with the quantity shown."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Substantivets kjønn avgjør om du bruker «en» eller «ett» ved én ting. Større tallord endres ikke."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "2 bags — Hvor mange poser trenger du? – Jeg trenger"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "two-bags",
+            "options": [
+              "to poser",
+              "en pose",
+              "tre poser"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". 1 glass — Hvor mange glass har dere? – Vi har"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "one-glass",
+            "options": [
+              "en glass",
+              "ett glass",
+              "to glass"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". 5 cups — Hvor mange kopper? –"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "five-cups",
+            "options": [
+              "to kopper",
+              "fem kopper",
+              "tre kopper"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". 3 apples — Hvor mange epler trenger du? – Jeg trenger"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "three-apples",
+            "options": [
+              "ett eple",
+              "seks epler",
+              "tre epler"
+            ],
+            "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_complete-the-checkout-quantities",
+      "operation": "recall_fill",
+      "objective_id": "obj-cardinal-numbers-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Complete the checkout dialogue with these quantities: apples 2, bananas 5, eggs 8, bread 1, and bags 3."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Ved én ting velger du «en» eller «ett» etter substantivets kjønn. De andre tallordene endres ikke."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Kari: Jeg har"
               },
               {
                 "kind": "text",
@@ -3185,8 +3824,8 @@
             "kind": "blank",
             "blank_id": "apples",
             "options": [
-              "tre epler",
               "fire epler",
+              "to epler",
               "ett eple"
             ],
             "answer_index": 1
@@ -3214,16 +3853,16 @@
             "options": [
               "fem bananer",
               "en banan",
-              "to bananer"
+              "tre bananer"
             ],
-            "answer_index": 2
+            "answer_index": 0
           },
           {
             "kind": "span",
             "spans": [
               {
                 "kind": "text",
-                "value": ". Stemmer det? Mina: Ja. Og jeg har"
+                "value": ". Har du mer? Ola: Ja, jeg har"
               },
               {
                 "kind": "text",
@@ -3236,17 +3875,17 @@
             "blank_id": "eggs",
             "options": [
               "seks egg",
-              "sju egg",
+              "åtte egg",
               "ett egg"
             ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
             "spans": [
               {
                 "kind": "text",
-                "value": ". Jonas: Her er det bare"
+                "value": ". Kari: Fint. Og her er"
               },
               {
                 "kind": "text",
@@ -3258,22 +3897,18 @@
             "kind": "blank",
             "blank_id": "bread",
             "options": [
+              "to brød",
               "en brød",
-              "ett brød",
-              "to brød"
+              "ett brød"
             ],
-            "answer_index": 1
+            "answer_index": 2
           },
           {
             "kind": "span",
             "spans": [
               {
                 "kind": "text",
-                "value": ". Og hvor mange poser vil du ha? Mina:"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": ". Ola: Hvor mange poser? Kari:"
               }
             ]
           },
@@ -3281,11 +3916,11 @@
             "kind": "blank",
             "blank_id": "bag",
             "options": [
-              "fire poser",
+              "tre poser",
               "ett pose",
               "en pose"
             ],
-            "answer_index": 2
+            "answer_index": 0
           },
           {
             "kind": "span",
@@ -3301,82 +3936,58 @@
     },
     {
       "kind": "exercise",
-      "id": "set-the-table-transfer",
-      "operation": "write",
+      "id": "review_repair-the-one-form",
+      "operation": "recall_fill",
       "objective_id": "obj-cardinal-numbers-01",
       "prompt": [
         {
           "kind": "text",
-          "value": "Mina is setting a table for visitors. Write 2–4 Norwegian sentences stating that she has two chairs, one table, one cup, and three glasses. Use the correct quantity phrase for every item, including both en and ett for the one-item groups."
+          "value": "Complete the sentence with the correct singular form."
         }
       ],
-      "explanation": null,
-      "payload": {
-        "response_language": "no",
-        "min_words": 10,
-        "max_words": 30,
-        "judge_prompt": "Check that the response describes the stated table-setting quantities in natural Norwegian. Report evidence for each criterion and accept natural sentence variants.",
-        "criteria": [
-          {
-            "id": "chairs-quantity",
-            "instruction": "States the quantity two chairs as to stoler."
-          },
-          {
-            "id": "table-ett",
-            "instruction": "States the quantity one table as ett bord."
-          },
-          {
-            "id": "cup-en",
-            "instruction": "States the quantity one cup as en kopp."
-          },
-          {
-            "id": "glasses-quantity",
-            "instruction": "States the quantity three glasses as tre glass."
-          }
-        ]
-      }
-    },
-    {
-      "kind": "exercise",
-      "id": "final-counting-review",
-      "operation": "write",
-      "objective_id": "obj-cardinal-numbers-01",
-      "prompt": [
+      "explanation": [
         {
           "kind": "text",
-          "value": "Describe this breakfast table in Norwegian: one banana, two apples, three cups, one glass, four eggs, and one loaf of bread. Produce all six quantity phrases and use the correct forms of one."
+          "value": "Velg «en» eller «ett» etter substantivets kjønn. «Brød» er et ett-ord."
         }
       ],
-      "explanation": null,
       "payload": {
-        "response_language": "no",
-        "min_words": 12,
-        "max_words": 35,
-        "judge_prompt": "Check that the response gives every stated breakfast-table quantity in natural Norwegian. Report evidence for each criterion and accept natural sentence or list variants with equivalent punctuation.",
-        "criteria": [
+        "segments": [
           {
-            "id": "banana-en",
-            "instruction": "Uses en banan for one banana."
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Hun kjøper"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
           },
           {
-            "id": "apples-count",
-            "instruction": "Uses to epler for two apples."
+            "kind": "blank",
+            "blank_id": "corrected-bread",
+            "options": [
+              "en brød",
+              "ett brød",
+              "to brød"
+            ],
+            "answer_index": 1
           },
           {
-            "id": "cups-count",
-            "instruction": "Uses tre kopper for three cups."
-          },
-          {
-            "id": "glass-ett",
-            "instruction": "Uses ett glass for one glass."
-          },
-          {
-            "id": "eggs-count",
-            "instruction": "Uses fire egg for four eggs."
-          },
-          {
-            "id": "bread-ett",
-            "instruction": "Uses ett brød for one loaf of bread."
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "på butikken."
+              }
+            ]
           }
         ]
       }
@@ -3394,7 +4005,12 @@
         "repair-the-one-form",
         "complete-the-checkout-quantities",
         "set-the-table-transfer",
-        "final-counting-review"
+        "final-counting-review",
+        "review_number-sequence-recall",
+        "review_contrast-one-and-more",
+        "review_answer-how-many",
+        "review_complete-the-checkout-quantities",
+        "review_repair-the-one-form"
       ]
     }
   ],

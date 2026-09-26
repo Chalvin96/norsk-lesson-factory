@@ -1,0 +1,398 @@
+- handle: notice_embedded_question_order
+  op: choose
+  objective: obj-embedded-questions-01
+  bloom: understand
+  prompt_md: 'Velg setningen med riktig ordstilling i det indirekte spørsmålet.'
+  stem_md: 'Direkte spørsmål: «Når begynner omvisningen?» Mina spør Jonas det samme etter «Vet du …».'
+  options:
+  - id: direct-order
+    text: Vet du når begynner omvisningen?
+    correct: false
+    why: This keeps direct-question word order inside the embedded question.
+  - id: subject-before-verb
+    text: Vet du når omvisningen begynner?
+    correct: true
+    why: The subject precedes the finite verb inside the embedded question.
+  explanation_md: 'I et indirekte spørsmål står subjektet foran det finitte verbet når spørreordet ikke er subjektet.'
+  derived_from:
+  - section_id: direct-and-embedded-questions
+- handle: discriminate_direct_and_embedded_order
+  op: choose
+  objective: obj-embedded-questions-01
+  bloom: analyze
+  prompt_md: 'Velg dialogen med riktig ordstilling i det indirekte spørsmålet.'
+  stem_md: 'Resepsjonisten ber Mina spørre hvor flybussen stopper. Senere forteller Mina hva hun fant ut.'
+  options:
+  - id: orders-reversed
+    text: «Hvor flybussen stopper?» / «Jeg vet hvor stopper flybussen.»
+    correct: false
+    why: It uses embedded order in the direct question and direct-question order in the report.
+  - id: both-contexts-correct
+    text: «Hvor stopper flybussen?» / «Jeg vet hvor flybussen stopper.»
+    correct: true
+    why: The direct question has inversion, while the embedded question has subject-before-verb order.
+  explanation_md: 'Situasjonen viser om personen trenger et direkte eller et indirekte spørsmål.'
+  derived_from:
+  - section_id: common-mistake-direct-question-inversion
+- handle: change_direct_to_embedded_question
+  op: build
+  objective: obj-embedded-questions-01
+  bloom: apply
+  prompt_md: "Sett sammen Jonas sitt spørsmål av ordene du får. Han vil vite ankomsttiden og hvilket tog som har stopp på Hamar."
+  tokens:
+  - token_id: tok-1
+    text: Vet
+  - token_id: tok-2
+    text: du
+  - token_id: tok-3
+    text: når
+  - token_id: tok-4
+    text: toget
+  - token_id: tok-5
+    text: kommer
+  - token_id: tok-6
+    text: og
+  - token_id: tok-7
+    text: hvilket
+  - token_id: tok-8
+    text: tog
+  - token_id: tok-9
+    text: som
+  - token_id: tok-10
+    text: stopper
+  - token_id: tok-11
+    text: på
+  - token_id: tok-12
+    text: Hamar?
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+  - tok-11
+  - tok-12
+  explanation_md: 'Etter «når» kommer subjektet før verbet. Når «hvilket tog» er subjektet, bruker vi «som» foran verbet.'
+  derived_from:
+  - section_id: common-mistake-direct-question-inversion
+- handle: select_question_word_or_om
+  op: choose
+  objective: obj-embedded-questions-01
+  bloom: understand
+  prompt_md: "Mina trenger to opplysninger: hotellets beliggenhet og om frokost serveres på søndager. Velg spørsmålsparret som passer."
+  stem_md: ""
+  options:
+  - id: wrong-introducer
+    text: Vet du om hotellet ligger i sentrum? / Kan du sjekke hvor hotellet serverer frokost på søndager?
+    correct: false
+    why: These are complete questions, but they ask whether the hotel is in the centre and where it serves breakfast, rather than asking for its location and whether it serves breakfast on Sundays.
+  - id: location-then-confirmation
+    text: Vet du hvor hotellet er? / Kan du sjekke om hotellet serverer frokost på søndager?
+    correct: true
+    why: «Hvor» introduces the location question and «om» introduces the yes-or-no question.
+  explanation_md: Bruk spørreord når du ber om en bestemt opplysning, og «om» i et indirekte ja/nei-spørsmål.
+  derived_from:
+  - section_id: questions-answered-with-yes-or-no-use-om
+- handle: place_negation_in_embedded_question
+  op: build
+  objective: obj-embedded-questions-01
+  bloom: apply
+  prompt_md: "Sett sammen hele spørsmålet til Mina av ordene du får. Hun spør om årsaken til at toget ikke stanser ved Hamar, og om hotellets frokost på søndager."
+  tokens:
+  - token_id: tok-1
+    text: Kan
+  - token_id: tok-2
+    text: du
+  - token_id: tok-3
+    text: sjekke
+  - token_id: tok-4
+    text: hvorfor
+  - token_id: tok-5
+    text: toget
+  - token_id: tok-6
+    text: ikke
+  - token_id: tok-7
+    text: stopper
+  - token_id: tok-8
+    text: ved
+  - token_id: tok-9
+    text: Hamar
+  - token_id: tok-10
+    text: og
+  - token_id: tok-11
+    text: om
+  - token_id: tok-12
+    text: hotellet
+  - token_id: tok-13
+    text: aldri
+  - token_id: tok-14
+    text: serverer
+  - token_id: tok-15
+    text: frokost
+  - token_id: tok-16
+    text: på
+  - token_id: tok-17
+    text: søndager?
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+  - tok-11
+  - tok-12
+  - tok-13
+  - tok-14
+  - tok-15
+  - tok-16
+  - tok-17
+  explanation_md: 'I et indirekte spørsmål står «ikke» foran det finitte verbet.'
+  derived_from:
+  - section_id: negation-inside-an-embedded-question
+- handle: complete_embedded_information_statement
+  op: recall_fill
+  objective: obj-embedded-questions-01
+  bloom: apply
+  prompt_md: 'Fullfør de tre reisebeskjedene.'
+  audio_target: 'Mina: «Er lunsjen bestilt, eller må vi ordne det selv?» Jonas: «Det vet jeg ikke. Og møterommet har jeg glemt.» Kari: «Åpningstidene for resepsjonen er ikke oppgitt.»'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Mina
+      text_md: «Er lunsjen bestilt, eller må vi ordne det selv?»
+    - speaker: Jonas
+      text_md: «Det vet jeg ikke. Og møterommet har jeg glemt.»
+    - speaker: Kari
+      text_md: «Åpningstidene for resepsjonen er ikke oppgitt.»
+  segments:
+  - text_md: 'Mina er usikker på '
+  - blank_id: mina-clause
+    options:
+    - at de har bestilt lunsj
+    - om de har bestilt lunsj
+    answer_index: 1
+  - text_md: '. Jonas husker ikke '
+  - blank_id: jonas-clause
+    options:
+    - hvilket rom møtet er i
+    - hvilket rom er møtet i
+    answer_index: 0
+  - text_md: '. Vi må finne ut '
+  - blank_id: reception-clause
+    options:
+    - når stenger resepsjonen
+    - når resepsjonen stenger
+    answer_index: 1
+  - text_md: .
+  explanation_md: 'Dette er indirekte spørsmål, så leddsetningen har leddsetningsordstilling.'
+  derived_from:
+  - section_id: statements-that-contain-questions
+- handle: repair_embedded_question_word_order
+  op: find_fix
+  objective: obj-embedded-questions-01
+  bloom: analyze
+  prompt_md: 'Velg ordgruppen som må rettes.'
+  tokens:
+  - token_id: tok-1
+    text: Vet
+  - token_id: tok-2
+    text: du
+  - token_id: tok-3
+    text: om
+  - token_id: tok-4
+    text: bussen
+  - token_id: tok-5
+    text: går ikke
+  - token_id: tok-6
+    text: til
+  - token_id: tok-7
+    text: hotellet?
+  error_token_id: tok-5
+  feedback: 'Bytt ut «går ikke» med «ikke går»: «Vet du om bussen ikke går til hotellet?»'
+  explanation_md: 'I det indirekte spørsmålet står nektelsen foran «går».'
+  derived_from:
+  - section_id: a-practical-editing-check
+- handle: use_embedded_questions_at_hotel_reception
+  op: write
+  objective: obj-embedded-questions-01
+  bloom: apply
+  prompt_md: "Skriv en høflig melding på 30–55 ord til hotellresepsjonen. Bruk indirekte spørsmål for å finne ut hvilken etasje vaskerommet ligger i, når det stenger, om gjester kan bruke bakgården om kvelden, og hvorfor termostaten ikke virker."
+  response_language: 'no'
+  min_words: 30
+  max_words: 55
+  judge_prompt: 'Judge the response against the listed criteria. Criteria whose ids end in -observation are diagnostic: flag them when relevant, but do not treat them as failure conditions.'
+  criteria:
+  - id: content-needs
+    instruction: The message intelligibly requests the laundry room's floor and closing time, evening access to the courtyard, and the reason the thermostat does not respond.
+  - id: message-purpose
+    instruction: The response is a recognizable polite message to hotel reception whose purpose is to request information. It phrases the requests in the learner's own words instead of copying complete example sentences from the lesson.
+  - id: word-bound
+    instruction: The response contains 30–55 words.
+  - id: embedded-form
+    instruction: Every request is phrased as an embedded question with the subject before the finite verb.
+  - id: introducer-choice
+    instruction: Specific-information requests use a suitable question word, and the yes-or-no request is introduced by «om».
+  - id: internal-negation
+    instruction: In the negative clause about the thermostat, «ikke» stands immediately before the finite verb.
+  - id: polite-tone
+    instruction: The message is polite.
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+- handle: retrieve_embedded_question_pattern
+  op: write
+  objective: obj-embedded-questions-01
+  bloom: apply
+  prompt_md: 'Forklar kort hvordan subjekt og finitt verb står i et indirekte spørsmål. Skriv også to egne setninger med indirekte spørsmål, hvorav minst ett innledes med «om». Skriv 25–70 ord til sammen.'
+  response_language: 'no'
+  min_words: 25
+  max_words: 70
+  judge_prompt: Assess the response against pattern-explanation, two-original-sentences, and om-choice. Report subordinate-order-observation separately.
+  criteria:
+  - id: pattern-explanation
+    instruction: The response explains, in plain language, that inside an embedded question the subject precedes the finite verb.
+  - id: two-original-sentences
+    instruction: The response contains two original Norwegian sentences, each containing an embedded question whose subject precedes the finite verb.
+  - id: om-choice
+    instruction: At least one yes-or-no embedded question appears, and it is introduced by «om».
+  - id: subordinate-order-observation
+    instruction: 'Observation only: report whether subjects precede finite verbs inside the embedded questions.'
+  derived_from:
+  - section_id: short-retrieval-review
+- handle: review_wh_embedded_order
+  op: recall_fill
+  objective: obj-embedded-questions-01
+  bloom: apply
+  prompt_md: "Fullfør Minas melding om neste ferge."
+  audio_target: 'Mina: «Jeg har ikke rutetabellen.» Jonas: «Når går neste ferge?»'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Mina
+      text_md: «Jeg har ikke rutetabellen.»
+    - speaker: Jonas
+      text_md: «Når går neste ferge?»
+    - speaker: Mina
+      text_md: «Jeg vet ikke, men jeg kan finne ut ___.»
+  segments:
+  - text_md: 'Mina: «Jeg vet ikke, men jeg kan finne ut '
+  - blank_id: wh-order
+    options:
+    - når neste ferge går
+    - når går neste ferge
+    answer_index: 0
+  - text_md: '.»'
+  explanation_md: 'I et indirekte spørsmål står subjektet foran det finitte verbet.'
+  derived_from:
+  - section_id: short-retrieval-review
+- handle: review_question_word_or_om
+  op: recall_fill
+  objective: obj-embedded-questions-01
+  bloom: apply
+  prompt_md: "Fullfør Minas replikk."
+  audio_target: 'Mina: «Er frokost inkludert?» Jonas: «Det vet jeg ikke.»'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Mina
+      text_md: «Er frokost inkludert?»
+    - speaker: Jonas
+      text_md: «Det vet jeg ikke.»
+    - speaker: Mina
+      text_md: «Kan du sjekke ___?»
+  segments:
+  - text_md: 'Mina: «Er frokost inkludert?» Jonas: «Det vet jeg ikke.» Mina: «Kan du sjekke '
+  - blank_id: breakfast-confirmation
+    options:
+    - om frokost er inkludert
+    - når frokost er inkludert
+    answer_index: 0
+  - text_md: ?»'
+  explanation_md: Et indirekte spørsmål som kan bekreftes eller avkreftes, innledes med «om».
+  derived_from:
+  - section_id: short-retrieval-review
+- handle: review_subject_question_som
+  op: recall_fill
+  objective: obj-embedded-questions-01
+  bloom: apply
+  prompt_md: Fullfør Minas spørsmål om bussruten til museet.
+  audio_target: 'Jonas: «Jeg må ta buss til museet.»'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Jonas
+      text_md: «Jeg må ta buss til museet.»
+    - speaker: Mina
+      text_md: «Kan du se ___?»
+  segments:
+  - text_md: 'Jonas: «Jeg må ta buss til museet.» Mina: «Kan du se '
+  - blank_id: subject-som
+    options:
+    - hvilken buss som går til museet
+    - hvilken buss går til museet
+    answer_index: 0
+  - text_md: ?»'
+  explanation_md: 'Når spørreordet er subjekt, bruker vi «som» foran verbet i leddsetningen.'
+  derived_from:
+  - section_id: short-retrieval-review
+- handle: review_internal_ikke
+  op: recall_fill
+  objective: obj-embedded-questions-01
+  bloom: apply
+  prompt_md: "Fullfør Minas indirekte spørsmål med naturlig ordstilling."
+  audio_target: 'Silje: «Båten er innstilt i dag.» Mina vil gjerne vite grunnen og spør hvorfor båten ikke går til øya.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Silje
+      text_md: «Båten er innstilt i dag.»
+    - speaker: Mina
+      text_md: «Jeg vil gjerne vite grunnen.»
+  segments:
+  - text_md: 'Silje: «Båten er innstilt i dag.» Mina vil vite grunnen og spør hvorfor båten '
+  - blank_id: internal-ikke
+    options:
+    - ikke går
+    - går ikke
+    answer_index: 0
+  - text_md: ' til øya.'
+  explanation_md: I et indirekte spørsmål står subjektet før det finitte verbet, og «ikke» står foran verbet.
+  derived_from:
+  - section_id: short-retrieval-review
+- handle: review_whole_sentence_punctuation
+  op: choose
+  objective: obj-embedded-questions-01
+  bloom: understand
+  prompt_md: 'Velg paret med riktig ordstilling og tegnsetting.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Jonas
+      text_md: «Kan du undersøke om verkstedet åpner på lørdag»
+    - speaker: Mina
+      text_md: «Jeg undersøker om det er ledige plasser»
+  options:
+  - id: punctuation-follows-embedded-content
+    text: «Kan du undersøke om verkstedet åpner på lørdag.» / «Jeg undersøker om det er ledige plasser?»
+    correct: false
+    why: It punctuates according to the embedded content instead of each whole sentence.
+  - id: main-clause-order-inside-embedded-question
+    text: «Kan du undersøke om åpner verkstedet på lørdag?» / «Jeg undersøker om det er ledige plasser.»
+    correct: false
+    why: The embedded question must keep the subject before the finite verb.
+  - id: punctuation-follows-whole-sentence
+    text: «Kan du undersøke om verkstedet åpner på lørdag?» / «Jeg undersøker om det er ledige plasser.»
+    correct: true
+    why: The first whole sentence is a question, while the second is a statement.
+  explanation_md: 'Tegnsettingen følger hovedsetningen, ikke spørreordet i det indirekte spørsmålet.'
+  derived_from:
+  - section_id: short-retrieval-review

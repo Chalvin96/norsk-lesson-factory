@@ -42,6 +42,7 @@ class FakeCatalogServices:
         resolution_existing_slug: str | None = None,
         resolution_teaching_point: str = "",
         dimension_scores: dict[str, float] | None = None,
+        evaluation_slugs: list[str] | None = None,
     ) -> None:
         self.explorer_candidates = explorer_candidates
         self.reviewer_candidates = reviewer_candidates
@@ -58,6 +59,7 @@ class FakeCatalogServices:
         self.resolution_existing_slug = resolution_existing_slug
         self.resolution_teaching_point = resolution_teaching_point
         self.dimension_scores = dimension_scores or {}
+        self.evaluation_slugs = evaluation_slugs
         self.discovery_calls = {"explorer": 0, "reviewer": 0}
         self.resolve_calls = 0
         self.evaluate_calls = 0
@@ -134,7 +136,11 @@ class FakeCatalogServices:
                     status=self.evaluation_status,  # type: ignore[arg-type]
                     hard_failures=self.evaluation_hard_failures,
                 )
-                for resolution in _resolutions
+                for resolution in (
+                    _resolutions
+                    if self.evaluation_slugs is None
+                    else [_resolutions[0].model_copy(update={"canonical_slug": slug}) for slug in self.evaluation_slugs]
+                )
             ],
             coverage_complete=self.coverage_complete,
         )

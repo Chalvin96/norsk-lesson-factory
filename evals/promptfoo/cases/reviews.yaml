@@ -3,6 +3,68 @@
 # wrong-but-right-looking verdict is a distinct failure, the grounding of that
 # decision). Judge job: curriculum_reviewer, independent from the live target job.
 
+- description: Blinded answer review flags a compound mapping choice
+  metadata:
+    surface: answer
+    cefr: A1
+    kind: communicative
+    source_lesson: synthetic composite-choice regression
+  vars:
+    surface: answer
+    lesson: |
+      {
+        "title":"A first meeting",
+        "cefr_level":"A1",
+        "goal":"Recognize first-meeting expressions.",
+        "objectives":[{"id":"o1","statement":"Recognize first-meeting expressions."}],
+        "elements":[
+          {"element_kind":"exercise","id":"complete-map","operation":"choose","objective_id":"o1","bloom":"understand","prompt":[{"kind":"text","value":"Choose the complete mapping."}],"payload":{"options":[{"option_id":"swapped","text":"Hei! = greeting; Jeg heter Mina. = asks a name; Hva heter du? = states a name; Ha det! = close."},{"option_id":"correct","text":"Hei! = greeting; Jeg heter Mina. = states a name; Hva heter du? = asks a name; Ha det! = close."}],"answer_id":"correct"}}
+        ]
+      }
+  assert:
+    - type: llm-rubric
+      metric: evidence_claim
+      value: |
+        The keyed option is solvable, but every option bundles four independent
+        form-to-function decisions. Return pass=true only when complete-map is
+        solved as `correct` and includes a grounded composite_decision_load issue.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: curriculum_reviewer
+          json_response: true
+
+- description: Blinded answer review accepts explicit pair matching as separable responses
+  metadata:
+    surface: answer
+    cefr: A1
+    kind: communicative
+    source_lesson: synthetic composite-choice control
+  vars:
+    surface: answer
+    lesson: |
+      {
+        "title":"A first meeting",
+        "cefr_level":"A1",
+        "goal":"Recognize first-meeting expressions.",
+        "objectives":[{"id":"o1","statement":"Recognize first-meeting expressions."}],
+        "elements":[
+          {"element_kind":"exercise","id":"match-functions","operation":"match_pairs","objective_id":"o1","bloom":"understand","prompt":[{"kind":"text","value":"Match each expression to its function."}],"payload":{"left":[{"left_id":"hei","text":"Hei!"},{"left_id":"bye","text":"Ha det!"}],"right":[{"right_id":"greeting","text":"greeting"},{"right_id":"closing","text":"closing"}],"pairs":[{"left_id":"hei","right_id":"greeting"},{"left_id":"bye","right_id":"closing"}]}}
+        ]
+      }
+  assert:
+    - type: llm-rubric
+      metric: evidence_claim
+      value: |
+        The match_pairs task represents each response independently. Return
+        pass=true only when the review gives the correct two pairs and reports
+        no composite_decision_load issue.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: curriculum_reviewer
+          json_response: true
+
 - description: Lesson review catches a meaning-changing explanation
   metadata:
     surface: lesson_review

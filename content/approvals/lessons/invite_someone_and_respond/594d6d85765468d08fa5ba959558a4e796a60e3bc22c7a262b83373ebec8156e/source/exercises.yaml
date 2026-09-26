@@ -1,0 +1,374 @@
+- handle: build_invitations
+  op: build
+  objective: obj-invite-someone-and-respond-01
+  bloom: apply
+  stimulus: []
+  explanation_md: Etter «har du lyst» bruker vi «til å». «Vil du» og «skal vi»
+    etterfølges av infinitiv uten «å».
+  derived_from:
+  - section_id: checkpoint-build-the-invitation
+  prompt_md: 'Bygg tre invitasjoner i denne rekkefølgen: kaffe i morgen med «Har du
+    lyst til å …?», kino fredag med «Vil du …?» og lunsj sammen med «Skal vi …?».'
+  tokens:
+  - token_id: tok-har
+    text: Har
+  - token_id: tok-du
+    text: du
+  - token_id: tok-lyst
+    text: lyst
+  - token_id: tok-til
+    text: til
+  - token_id: tok-a
+    text: å
+  - token_id: tok-drikke
+    text: drikke
+  - token_id: tok-kaffe
+    text: kaffe
+  - token_id: tok-i
+    text: i
+  - token_id: tok-morgen
+    text: morgen?
+  - token_id: tok-vil
+    text: Vil du
+  - token_id: tok-ga
+    text: gå
+  - token_id: tok-pa
+    text: på kino
+  - token_id: tok-pa-2
+    text: på
+  - token_id: tok-fredag
+    text: fredag?
+  - token_id: tok-skal
+    text: Skal
+  - token_id: tok-vi
+    text: vi
+  - token_id: tok-spise
+    text: spise
+  - token_id: tok-lunsj
+    text: lunsj
+  - token_id: tok-sammen
+    text: sammen?
+  answer_order:
+  - tok-har
+  - tok-du
+  - tok-lyst
+  - tok-til
+  - tok-a
+  - tok-drikke
+  - tok-kaffe
+  - tok-i
+  - tok-morgen
+  - tok-vil
+  - tok-ga
+  - tok-pa
+  - tok-pa-2
+  - tok-fredag
+  - tok-skal
+  - tok-vi
+  - tok-spise
+  - tok-lunsj
+  - tok-sammen
+- handle: respond_warmly
+  op: write
+  objective: obj-invite-someone-and-respond-01
+  bloom: apply
+  derived_from:
+  - section_id: checkpoint-respond-warmly
+  prompt_md: 'Lea spør: «Har du lyst til å ta en kaffe på lørdag?» Du vil gjerne bli
+    med, men vet ikke når eller hvor. Svar varmt og spør når eller hvor dere skal
+    møtes.'
+  response_language: "no"
+  min_words: 4
+  max_words: 20
+  judge_prompt: 'Evaluate criteria clear-acceptance and meeting-question. Pass only
+    when both are met. Valid variant that must pass: «Ja, gjerne! Når passer det?»
+    Near-miss that must fail meeting-question: «Ja, gjerne!» A warm, understandable
+    message with a minor form error must pass the gating criteria; report the error
+    only under language-form-observation.'
+  criteria:
+  - id: clear-acceptance
+    instruction: Clearly accepts Lea's invitation.
+  - id: meeting-question
+    instruction: Asks when or where they should meet.
+  - id: language-form-observation
+    instruction: 'Observation only: diagnostically note a Norwegian form error, if
+      present; this criterion never causes failure.'
+- handle: decline_and_offer_saturday
+  op: write
+  objective: obj-invite-someone-and-respond-01
+  bloom: apply
+  derived_from:
+  - section_id: checkpoint-decline-and-keep-plan-open
+  prompt_md: 'Nora spør: «Vil du bli med på kino på fredag?» Du kan ikke fredag, men
+    lørdag passer. Svar høflig og foreslå lørdag.'
+  response_language: "no"
+  min_words: 4
+  max_words: 20
+  judge_prompt: 'Evaluate criteria courteous-refusal and saturday-alternative. Pass
+    only when both are met. Valid variant that must pass: «Beklager, jeg kan ikke
+    på fredag. Hva med lørdag?» Near-miss that must fail saturday-alternative: «Beklager,
+    jeg kan ikke på fredag.» A courteous message that communicates both facts but
+    contains a minor form error must pass the gating criteria; report the error only
+    under language-form-observation.'
+  criteria:
+  - id: courteous-refusal
+    instruction: Clearly and courteously declines Friday.
+  - id: saturday-alternative
+    instruction: Offers Saturday as the replacement.
+  - id: language-form-observation
+    instruction: 'Observation only: diagnostically note a Norwegian form error, if
+      present; this criterion never causes failure.'
+- handle: propose_seven
+  op: write
+  objective: obj-invite-someone-and-respond-01
+  bloom: apply
+  derived_from:
+  - section_id: checkpoint-decline-and-keep-plan-open
+  prompt_md: 'Ali spør: «Skal vi møtes klokka seks?» Klokka seks passer ikke, men
+    sju passer. Si fra og foreslå sju med «Hva med …?» eller «men».'
+  response_language: "no"
+  min_words: 4
+  max_words: 20
+  judge_prompt: 'Evaluate criteria six-does-not-work and seven-proposal. Pass only
+    when both are met. Valid variant that must pass: «Klokka seks passer ikke. Hva
+    med klokka sju?» Near-miss that must fail seven-proposal: «Klokka seks passer
+    ikke.» A clear message with a minor form error must pass the gating criteria;
+    report the error only under language-form-observation.'
+  criteria:
+  - id: six-does-not-work
+    instruction: Makes clear that six does not work.
+  - id: seven-proposal
+    instruction: Proposes seven using «Hva med …?» or a construction with «men».
+  - id: language-form-observation
+    instruction: 'Observation only: diagnostically note a Norwegian form error, if
+      present; this criterion never causes failure.'
+- handle: repair_the_exchange
+  op: find_fix
+  objective: obj-invite-someone-and-respond-01
+  bloom: analyze
+  stimulus: []
+  prompt_md: Velg ordet som skal bort fra Minas invitasjon.
+  derived_from:
+  - section_id: checkpoint-repair-the-exchange
+  explanation_md: 'Etter «vil du» står infinitiven uten «å»: «Vil du gå på kino i
+    kveld?»'
+  tokens:
+  - token_id: tok-vil
+    text: Vil
+  - token_id: tok-du
+    text: du
+  - token_id: tok-a
+    text: å
+  - token_id: tok-ga
+    text: gå
+  - token_id: tok-pa
+    text: på
+  - token_id: tok-kino
+    text: kino
+  - token_id: tok-i
+    text: i
+  - token_id: tok-kveld
+    text: kveld?
+  error_token_id: tok-a
+  feedback: 'Remove «å» after «Vil du». The corrected invitation is: «Vil du gå på
+    kino i kveld?»'
+- handle: complete_social_exchange
+  op: write
+  objective: obj-invite-someone-and-respond-01
+  bloom: apply
+  derived_from:
+  - section_id: extended-practice-complete-a-social-exchange
+  prompt_md: "Sara foreslår lunsj fredag klokka 12. Emil jobber da og foreslår lørdag klokka 13. Sara kan da. Skriv en meldingsutveksling der de avtaler lunsjen."
+  response_language: "no"
+  min_words: 20
+  max_words: 50
+  judge_prompt: 'Evaluate criteria named-participants, activity-clear, original-time-problem,
+    alternative-clear, final-confirmation, and invitation-form. Pass only when all
+    six are met. Valid variant that must pass: «Sara: Har du lyst til å spise lunsj
+    fredag klokka tolv? Emil: Beklager, jeg jobber da. Hva med lørdag klokka ett?
+    Sara: Ja, det passer bra!» Near-miss that must fail final-confirmation: the exchange
+    ends immediately after Emil proposes Saturday. «Vil du å spise lunsj?» must fail
+    invitation-form because the taught invitation construction is malformed. Other
+    minor errors may be noted diagnostically.'
+  criteria:
+  - id: named-participants
+    instruction: Presents the exchange as messages between Sara and Emil.
+  - id: activity-clear
+    instruction: Invites Emil to lunch.
+  - id: original-time-problem
+    instruction: States that Friday at 12.00 does not work because Emil is
+      working.
+  - id: alternative-clear
+    instruction: Offers Saturday at 13.00.
+  - id: final-confirmation
+    instruction: Shows Sara accepting or confirming the alternative.
+  - id: invitation-form
+    instruction: Sara's invitation uses a grammatical Norwegian invitation
+      construction, such as «Har du lyst til å ...?» or «Vil du ...?» without an
+      extra «å» after «vil du».
+  - id: invitation-form-observation
+    instruction: 'Observation only: diagnostically note minor wording errors outside
+      the taught invitation construction; never fail a natural invitation variant.'
+- handle: accept_immediately
+  op: write
+  objective: obj-invite-someone-and-respond-01
+  bloom: apply
+  derived_from:
+  - section_id: extended-practice-complete-a-social-exchange
+  prompt_md: "Sara inviterer Emil på lunsj fredag klokka 12. Emil kan, men spør hvor de skal møtes. Sara velger Kafé Sol. Skriv en meldingsutveksling: Sara inviterer, Emil takker ja og spør hvor, og Sara bekrefter stedet."
+  response_language: "no"
+  min_words: 20
+  max_words: 40
+  judge_prompt: 'Evaluate criteria revised-exchange, immediate-acceptance, warm-tone,
+    practical-detail, and invitation-form. Pass only when all five are met. Valid
+    variant that must pass: «Sara: Har du lyst til å spise lunsj fredag klokka tolv?
+    Emil: Ja, gjerne! Hvor skal vi møtes? Sara: På Kafé Sol.» Near-miss that must
+    fail practical-detail: Emil accepts but neither person settles where to meet.
+    «Vil du å spise lunsj?» must fail invitation-form; report unrelated minor language
+    errors only under language-form-observation.'
+  criteria:
+  - id: revised-exchange
+    instruction: Writes a Sara–Emil lunch exchange for Friday at 12.00.
+  - id: immediate-acceptance
+    instruction: Emil accepts the Friday invitation without declining or
+      proposing Saturday.
+  - id: warm-tone
+    instruction: Expresses a warm, willing response.
+  - id: practical-detail
+    instruction: Emil asks where to meet, and Sara names Kafé Sol.
+  - id: invitation-form
+    instruction: Sara's invitation uses a grammatical Norwegian invitation
+      construction, allowing natural variants but rejecting «Vil du å ...?».
+  - id: language-form-observation
+    instruction: 'Observation only: diagnostically note a Norwegian form error, if
+      present; this criterion never causes failure.'
+- handle: retrieve_core_responses
+  op: recall_fill
+  objective: obj-invite-someone-and-respond-01
+  bloom: remember
+  stimulus: []
+  prompt_md: Fyll ut invitasjonene og svarene med uttrykket som passer.
+  explanation_md: Uttrykkene brukes til å invitere, takke ja, avslå høflig og
+    foreslå et bestemt alternativ.
+  derived_from:
+  - section_id: retrieval-and-review
+  audio_target: Har du lyst til å gå på kino? 2. Ja, det vil jeg gjerne. 3. Takk
+    for invitasjonen, men jeg kan ikke. 4. Jeg kan ikke på fredag. Hva med
+    lørdag?
+  segments:
+  - text_md: 'Har du lyst '
+  - blank_id: invitation-connector
+    options:
+    - til å
+    - å til
+    answer_index: 0
+  - text_md: ' gå på kino? 2. Ja, det '
+  - blank_id: warm-acceptance
+    options:
+    - vil jeg gjerne
+    - kan jeg ikke
+    answer_index: 0
+  - text_md: '. 3. Takk for invitasjonen, men jeg '
+  - blank_id: courteous-decline
+    options:
+    - vil gjerne
+    - kan ikke
+    answer_index: 1
+  - text_md: '. 4. Jeg kan ikke på fredag. Hva med '
+  - blank_id: alternative-day
+    options:
+    - fredag
+    - lørdag
+    answer_index: 1
+  - text_md: '?'
+- handle: combine_two_exchanges
+  op: write
+  objective: obj-invite-someone-and-respond-01
+  bloom: apply
+  derived_from:
+  - section_id: retrieval-and-review
+  prompt_md: "Eva inviterer Per på kaffe tirsdag. Per takker ja og spør hvor de skal møtes. Lise foreslår en tur klokka 17, men Kim kan ikke da og foreslår klokka 18. Lise takker ja. Skriv begge meldingsutvekslingene."
+  response_language: "no"
+  min_words: 20
+  max_words: 50
+  judge_prompt: Evaluate criteria accepted-exchange, declined-exchange,
+    proposed-time, and clear-plans. Pass only when all four are met. Valid
+    variants may use any natural invitation, acceptance, courteous refusal, and
+    confirmation wording that preserves the supplied facts. A response must fail
+    the relevant criterion if Per does not accept or if Kim does not replace
+    17.00 with 18.00. Complete, understandable exchanges with a minor form error
+    must pass the gating criteria; report the error only under
+    language-form-observation.
+  criteria:
+  - id: accepted-exchange
+    instruction: Shows Per accepting coffee on Tuesday and asking where.
+  - id: declined-exchange
+    instruction: Shows Kim declining the suggested time of 17.00.
+  - id: proposed-time
+    instruction: Shows Kim proposing 18.00 and Lise accepting it.
+  - id: clear-plans
+    instruction: Communicates the people, activities, and resulting plans
+      clearly.
+  - id: language-form-observation
+    instruction: 'Observation only: diagnostically note a Norwegian form error, if
+      present; this criterion never causes failure.'
+- handle: review_invitation_connector
+  op: write
+  objective: obj-invite-someone-and-respond-01
+  bloom: apply
+  derived_from:
+  - section_id: retrieval-and-review
+  prompt_md: 'Skriv ordet som mangler: «Har du lyst til ___ komme på besøk?»'
+  response_language: "no"
+  min_words: 1
+  max_words: 1
+  judge_prompt: Vurder invitasjonsordet. Godkjenn bare hvis svaret er nøyaktig
+    «å», som kreves før infinitiven «komme».
+  criteria:
+  - id: invitation-connector
+    instruction: Skriver «å» i mellomrommet før «komme».
+- handle: review_warm_acceptance
+  op: write
+  objective: obj-invite-someone-and-respond-01
+  bloom: apply
+  derived_from:
+  - section_id: retrieval-and-review
+  prompt_md: "Ida spør: «Vil du spise middag med meg?» Du vil gjerne bli med. Svar varmt."
+  response_language: "no"
+  min_words: 1
+  max_words: 4
+  judge_prompt: Evaluate warm-acceptance. Pass for a clear warm acceptance such
+    as «Ja, gjerne!» or «Gjerne!».
+  criteria:
+  - id: warm-acceptance
+    instruction: Gives a clear, warm acceptance.
+- handle: review_courteous_decline
+  op: write
+  objective: obj-invite-someone-and-respond-01
+  bloom: apply
+  derived_from:
+  - section_id: retrieval-and-review
+  prompt_md: "Bo spør: «Kan du komme i kveld?» Du kan ikke komme. Svar høflig."
+  response_language: "no"
+  min_words: 1
+  max_words: 4
+  judge_prompt: Evaluate courteous-decline. Pass for a clear courteous decline
+    such as «Beklager, jeg kan ikke.»
+  criteria:
+  - id: courteous-decline
+    instruction: Gives a clear, courteous decline.
+- handle: review_offer_alternative
+  op: write
+  objective: obj-invite-someone-and-respond-01
+  bloom: apply
+  derived_from:
+  - section_id: retrieval-and-review
+  prompt_md: "Mandag passer ikke, men tirsdag passer. Foreslå tirsdag."
+  response_language: "no"
+  min_words: 1
+  max_words: 4
+  judge_prompt: Evaluate tuesday-alternative. Pass for a clear Tuesday
+    alternative such as «Hva med tirsdag?» or «Jeg kan tirsdag.»
+  criteria:
+  - id: tuesday-alternative
+    instruction: Offers Tuesday as the alternative.

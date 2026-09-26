@@ -1,0 +1,547 @@
+- handle: identify_central_message
+  op: choose
+  objective: obj-report-workplace-absence-01
+  bloom: understand
+  prompt_md: "Velg setningen som forteller at Sara er borte, og hvilken dag det gjelder."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Tirsdag klokka 07.15 sier Sara: «Hei, Henrik. Det er Sara. Jeg er dessverre syk og kan
+        ikke komme på jobb i dag.»'
+  derived_from:
+  - section_id: sec-essential-absence-message
+  stem_md: "Hva er hovedbudskapet i Saras melding?"
+  options:
+  - id: absent-unknown
+    text: Sara må holde seg hjemme fra arbeid.
+    correct: false
+    why: This states the absence, but leaves its timing unclear.
+  - id: absent-tomorrow
+    text: Sara blir hjemme fra arbeid onsdag.
+    correct: false
+    why: This changes the absence from today to Wednesday.
+  - id: central-today
+    text: Sara kan ikke komme på jobb tirsdag.
+    correct: true
+    why: Sara says she cannot come to work today, which is Tuesday in the stated context.
+  - id: sick-today
+    text: Sara kommer på jobb senere denne tirsdagen.
+    correct: false
+    why: This says Sara will attend later that day rather than that she will be absent.
+  explanation_md: The central message combines the absence with the day it applies.
+- handle: notice_timing_contrast
+  op: choose
+  objective: obj-report-workplace-absence-01
+  bloom: understand
+  prompt_md: "Velg setningen som oppgir hvor lenge Emil er borte."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Onsdag lager lederen vaktplanen for torsdag: Emil kan ikke arbeide noen del av vakten 08.00–16.00.'
+  derived_from:
+  - section_id: sec-giving-useful-timing
+  stem_md: "Hvor lenge kan ikke Emil arbeide?"
+  options:
+  - id: daytime
+    text: Jeg blir borte på dagen.
+    correct: false
+    why: This describes a general part of the day rather than identifying the Thursday shift.
+  - id: whole-day
+    text: Jeg blir borte hele dagen på torsdag.
+    correct: true
+    why: This covers the full Thursday shift.
+  - id: today
+    text: Jeg blir borte hele dagen i dag.
+    correct: false
+    why: This changes the stated day from Thursday to today.
+  - id: after-lunch
+    text: Jeg kommer på jobb etter lunsj.
+    correct: false
+    why: This says Emil will attend part of the shift.
+  explanation_md: Useful timing identifies both the relevant day and the known duration.
+- handle: make_timing_precise
+  op: build
+  objective: obj-report-workplace-absence-01
+  bloom: apply
+  prompt_md: "Skriv en oppdatering på to setninger fra Sara om hvor lenge hun blir borte."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Tirsdag: Sara blir hjemme hele dagen. Hun vet ikke ennå om hun kan arbeide onsdag.'
+  derived_from:
+  - section_id: sec-giving-useful-timing
+  tokens:
+  - token_id: tok-1
+    text: Jeg
+  - token_id: tok-2
+    text: blir
+  - token_id: tok-3
+    text: hjemme
+  - token_id: tok-4
+    text: i
+  - token_id: tok-5
+    text: dag.
+  - token_id: tok-6
+    text: Jeg
+  - token_id: tok-7
+    text: vet
+  - token_id: tok-8
+    text: ikke
+  - token_id: tok-9
+    text: ennå
+  - token_id: tok-10
+    text: om
+  - token_id: tok-11
+    text: jeg
+  - token_id: tok-12
+    text: kan
+  - token_id: tok-13
+    text: komme
+  - token_id: tok-14
+    text: i
+  - token_id: tok-15
+    text: morgen.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+  - tok-11
+  - tok-12
+  - tok-13
+  - tok-14
+  - tok-15
+- handle: notice_contact_deadline
+  op: choose
+  objective: obj-report-workplace-absence-01
+  bloom: understand
+  prompt_md: "Velg løftet som sier når Henrik senest får en oppdatering, uten å love at han får den akkurat da."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Tirsdag morgen: Sara vet ikke om hun kan arbeide onsdag. Henrik trenger svar senest klokka
+        15.00 tirsdag.'
+  derived_from:
+  - section_id: sec-saying-what-happens-next
+  stem_md: "Hvilket svar lover Henrik en frist uten å angi et nøyaktig tidspunkt?"
+  options:
+  - id: at-three
+    text: Jeg gir deg beskjed klokka tre.
+    correct: false
+    why: This promises contact at exactly three rather than no later than three.
+  - id: later
+    text: Jeg gir deg beskjed senere.
+    correct: false
+    why: This promises contact but gives no useful deadline.
+  - id: tomorrow
+    text: Jeg gir deg beskjed i morgen.
+    correct: false
+    why: This places the update after Henrik's Tuesday deadline.
+  - id: by-three
+    text: Jeg gir deg beskjed innen klokka tre.
+    correct: true
+    why: This names the contact action and sets three o'clock as the latest time.
+  explanation_md: Innen klokka tre means that the update will arrive no later than three.
+- handle: add_next_contact
+  op: build
+  objective: obj-report-workplace-absence-01
+  bloom: apply
+  prompt_md: "Skriv Saras løfte om å kontakte Henrik innen fristen."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: "Mottaker: Henrik. Frist for oppdatering: tirsdag klokka 15.00."
+  derived_from:
+  - section_id: sec-saying-what-happens-next
+  tokens:
+  - token_id: contact-01
+    text: Jeg
+  - token_id: contact-02
+    text: gir
+  - token_id: contact-03
+    text: deg
+  - token_id: contact-04
+    text: beskjed
+  - token_id: contact-05
+    text: innen
+  - token_id: contact-06
+    text: klokka
+  - token_id: contact-07
+    text: tre.
+  answer_order:
+  - contact-01
+  - contact-02
+  - contact-03
+  - contact-04
+  - contact-05
+  - contact-06
+  - contact-07
+- handle: notice_resolved_handover
+  op: choose
+  objective: obj-report-workplace-absence-01
+  bloom: understand
+  prompt_md: "Velg svaret som løser den viktige oppgaven."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Klokka 10.00: Sara skulle lede et kundemøte. Nora kan lede møtet. Nora har fått notatene.'
+  derived_from:
+  - section_id: sec-arranging-a-handover
+  stem_md: "Hvilket svar forteller Henrik hvem som leder møtet og har notatene?"
+  options:
+  - id: task-only
+    text: Jeg har et kundemøte klokka ti.
+    correct: false
+    why: This identifies the urgent task but does not say who will handle it.
+  - id: person-only
+    text: Nora er på jobb i dag.
+    correct: false
+    why: This identifies an available colleague but does not assign the meeting.
+  - id: notes-only
+    text: Notatene er ferdige.
+    correct: false
+    why: This describes the notes but does not resolve responsibility for the meeting.
+  - id: resolved
+    text: Nora kan ta kundemøtet, og hun har fått notatene.
+    correct: true
+    why: This names the replacement, the task, and access to the needed information.
+  explanation_md: A useful handover says what will happen to the task, not only that the task exists.
+- handle: complete_handover
+  op: build
+  objective: obj-report-workplace-absence-01
+  bloom: apply
+  prompt_md: "Skriv setningen som gjør overleveringen tydelig."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Oppgave: møtet klokka 10.00 Overtar: Nora Notater: sendt til Nora'
+  derived_from:
+  - section_id: sec-arranging-a-handover
+  tokens:
+  - token_id: handover-01
+    text: Nora
+  - token_id: handover-02
+    text: kan
+  - token_id: handover-03
+    text: ta
+  - token_id: handover-04
+    text: møtet
+  - token_id: handover-05
+    text: klokka
+  - token_id: handover-06
+    text: ti,
+  - token_id: handover-07
+    text: og
+  - token_id: handover-08
+    text: jeg
+  - token_id: handover-09
+    text: har
+  - token_id: handover-10
+    text: sendt
+  - token_id: handover-11
+    text: henne
+  - token_id: handover-12
+    text: notatene.
+  answer_order:
+  - handover-01
+  - handover-02
+  - handover-03
+  - handover-04
+  - handover-05
+  - handover-06
+  - handover-07
+  - handover-08
+  - handover-09
+  - handover-10
+  - handover-11
+  - handover-12
+- handle: build_central_absence_message
+  op: build
+  objective: obj-report-workplace-absence-01
+  bloom: apply
+  prompt_md: "Skriv Emils beskjed om fraværet."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Vakt: Ansatt: Emil Dag: torsdag Emil kan ikke møte. Fravær: hele vakten'
+  derived_from:
+  - section_id: sec-practice-build-a-message-in-stages
+  tokens:
+  - token_id: central-01
+    text: Jeg
+  - token_id: central-02
+    text: kan
+  - token_id: central-03
+    text: ikke
+  - token_id: central-04
+    text: komme
+  - token_id: central-05
+    text: på
+  - token_id: central-06
+    text: jobb
+  - token_id: central-07
+    text: på
+  - token_id: central-08
+    text: torsdag
+  - token_id: central-09
+    text: og
+  - token_id: central-10
+    text: blir
+  - token_id: central-11
+    text: borte
+  - token_id: central-12
+    text: hele
+  - token_id: central-13
+    text: dagen.
+  answer_order:
+  - central-01
+  - central-02
+  - central-03
+  - central-04
+  - central-05
+  - central-06
+  - central-07
+  - central-08
+  - central-09
+  - central-10
+  - central-11
+  - central-12
+  - central-13
+- handle: add_handover_to_message
+  op: build
+  objective: obj-report-workplace-absence-01
+  bloom: apply
+  prompt_md: "Skriv én setning om at Lise tar imot leveringen."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Levering torsdag: Emil er borte. Lise er kontaktpersonen for sjåføren.'
+  derived_from:
+  - section_id: sec-practice-build-a-message-in-stages
+  tokens:
+  - token_id: lise-01
+    text: Lise
+  - token_id: lise-02
+    text: kan
+  - token_id: lise-03
+    text: ta
+  - token_id: lise-04
+    text: imot
+  - token_id: lise-05
+    text: leveransen.
+  answer_order:
+  - lise-01
+  - lise-02
+  - lise-03
+  - lise-04
+  - lise-05
+- handle: discriminate_complete_absence_message
+  op: choose
+  objective: obj-report-workplace-absence-01
+  bloom: apply
+  prompt_md: "Velg meldingen som gir lederen all nødvendig informasjon."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Torsdag morgen: Emil kan ikke arbeide torsdag. Han blir borte hele dagen. Lise kan ta
+        imot leveransen.'
+  derived_from:
+  - section_id: sec-practice-build-a-message-in-stages
+  stem_md: "Hvilken melding sier at Emil er borte hele torsdagen, og at Lise tar imot leveringen?"
+  options:
+  - id: no-duration
+    text: Jeg kan ikke komme på jobb på torsdag. Lise kan ta imot leveransen.
+    correct: false
+    why: This gives the day and handover but omits the known full-day duration.
+  - id: no-absence
+    text: Leveransen kommer på torsdag. Lise kan ta imot den.
+    correct: false
+    why: This gives the delivery handover but does not state Emil's absence or how long it lasts.
+  - id: unresolved-task
+    text: Jeg kan ikke komme på jobb på torsdag og blir borte hele dagen. Det kommer en levering.
+    correct: false
+    why: This mentions the delivery but does not say who will receive it.
+  - id: complete
+    text: Jeg kan ikke komme på jobb på torsdag og blir borte hele dagen. Lise kan ta imot leveransen.
+    correct: true
+    why: This covers the absence, its full-day timing, and the practical handover.
+  explanation_md: A complete message lets the manager understand what is happening, when it applies, and
+    what happens next.
+- handle: add_next_contact_to_staged_message
+  op: write
+  objective: obj-report-workplace-absence-01
+  bloom: apply
+  prompt_md: "Til Emils leder: Emil kan ikke komme på jobb torsdag og blir borte hele dagen. Han vet ikke ennå om han kan arbeide fredag, og sender en oppdatering senest torsdag klokka 16.00. Skriv en kort, tydelig melding på norsk."
+  derived_from:
+  - section_id: sec-practice-build-a-message-in-stages
+  response_language: 'no'
+  min_words: 15
+  max_words: 35
+  judge_prompt: Evaluate criteria emil-absence, emil-timing, and emil-next-contact from the visible task.
+    Record emil-wording-observation diagnostically; it must not affect the pass result. Accept equivalent
+    natural Bokmål and one or more short sentences.
+  criteria:
+  - id: emil-absence
+    instruction: States that Emil cannot come to work on Thursday.
+  - id: emil-timing
+    instruction: States that Emil will be away all day Thursday.
+  - id: emil-next-contact
+    instruction: States that Emil will provide an update by four on Thursday about Friday.
+  - id: emil-wording-observation
+    instruction: Records whether the message uses a clear workplace-absence expression such as «kan ikke
+      komme på jobb»; this criterion is diagnostic only.
+- handle: revise_vague_absence_message
+  op: write
+  objective: obj-report-workplace-absence-01
+  bloom: apply
+  prompt_md: "Skriv meldingen til Henrik på nytt, slik at fraværet og fristen blir tydelige. Utkast: «Hei. Jeg kan ikke komme på jobb. Jeg sier fra senere.» Sara er borte hele tirsdagen og sender en oppdatering senest klokka 15.00."
+  derived_from:
+  - section_id: sec-common-mistakes-in-a-complete-message
+  response_language: 'no'
+  min_words: 14
+  max_words: 32
+  judge_prompt: Evaluate criteria revision-absence, revision-timing, and revision-contact from the visible
+    task. Record revision-style-observation diagnostically; it must not affect the pass result. Accept
+    natural Bokmål variants that preserve the supplied facts.
+  criteria:
+  - id: revision-absence
+    instruction: Clearly states that Sara cannot attend work.
+  - id: revision-timing
+    instruction: Makes clear that the absence covers all of Tuesday.
+  - id: revision-contact
+    instruction: Promises the next update no later than three o'clock on Tuesday.
+  - id: revision-style-observation
+    instruction: Records whether the revision is concise and professionally phrased; this criterion is
+      diagnostic only.
+- handle: final_retrieval_and_review
+  op: write
+  objective: obj-report-workplace-absence-01
+  bloom: apply
+  prompt_md: "Du kan ikke arbeide fredagsvakten og blir borte hele dagen. Jonas kan åpne biblioteket og har fått nøkkelen. Skriv en kort fraværsmelding på norsk til Anne, lederen din."
+  derived_from:
+  - section_id: sec-final-retrieval-and-review
+  response_language: 'no'
+  min_words: 18
+  max_words: 40
+  judge_prompt: Evaluate criteria library-absence, library-timing, and library-handover from the visible
+    task. Record library-form-observation diagnostically; it must not affect the pass result. Accept equivalent
+    natural Bokmål and do not require exact lesson wording.
+  criteria:
+  - id: library-absence
+    instruction: States that the writer cannot attend the Friday shift.
+  - id: library-timing
+    instruction: Makes clear that the absence applies all day Friday.
+  - id: library-handover
+    instruction: States that Jonas can open the library and has received the key.
+  - id: library-form-observation
+    instruction: Records whether the message uses «på jobb» correctly if that expression appears; this
+      criterion is diagnostic only.
+- handle: review_state_workplace_absence
+  op: write
+  objective: obj-report-workplace-absence-01
+  bloom: apply
+  prompt_md: "Du skulle arbeide i dag, men kan ikke møte. Skriv uttrykket som betyr at du uteblir fra jobb: «Jeg kan ____ i dag.»"
+  derived_from:
+  - section_id: sec-essential-absence-message
+  response_language: 'no'
+  min_words: 4
+  max_words: 4
+  judge_prompt: Evaluate criterion absence-chunk only. Accept capitalization and terminal-punctuation
+    variants.
+  criteria:
+  - id: absence-chunk
+    instruction: Supplies a natural expression for being absent from work, such as «ikke komme på jobb» or «ikke møte på jobb».
+- handle: review_make_timing_precise
+  op: write
+  objective: obj-report-workplace-absence-01
+  bloom: apply
+  prompt_md: "Vakten varer torsdag fra klokka 08.00 til 16.00. Du kan ikke arbeide i det hele tidsrommet. Fyll inn to ord: «Jeg blir borte ____.»"
+  derived_from:
+  - section_id: sec-giving-useful-timing
+  response_language: 'no'
+  min_words: 2
+  max_words: 2
+  judge_prompt: Evaluate criterion timing-chunk only. Accept capitalization and terminal-punctuation variants.
+  criteria:
+  - id: timing-chunk
+    instruction: Supplies a natural phrase for the full Thursday shift, such as «hele vakten» or «hele dagen».
+- handle: review_add_next_contact
+  op: write
+  objective: obj-report-workplace-absence-01
+  bloom: apply
+  prompt_md: "Det er torsdag morgen. Du sender neste oppdatering senest klokka 16.00. Fyll inn de tre manglende ordene: «Jeg sender en oppdatering ____.»"
+  derived_from:
+  - section_id: sec-saying-what-happens-next
+  response_language: 'no'
+  min_words: 3
+  max_words: 3
+  judge_prompt: Evaluate criterion deadline-chunk only. Accept «innen klokka fire» and «senest klokka
+    fire», with capitalization or terminal-punctuation variants.
+  criteria:
+  - id: deadline-chunk
+    instruction: Supplies a three-word phrase meaning no later than four o'clock.
+- handle: review_complete_handover
+  op: write
+  objective: obj-report-workplace-absence-01
+  bloom: apply
+  prompt_md: "Dagens varer må tas imot mens Emil er borte. Lise overtar oppgaven. Fyll inn de fire manglende ordene: «Lise ____.»"
+  derived_from:
+  - section_id: sec-arranging-a-handover
+  response_language: 'no'
+  min_words: 4
+  max_words: 4
+  judge_prompt: Evaluate criterion handover-chunk only. Accept capitalization and terminal-punctuation
+    variants.
+  criteria:
+  - id: handover-chunk
+    instruction: Says that Lise can receive today's goods or delivery. Accepts natural Bokmål such as «kan ta imot varene» or «kan ta imot leveransen».
+- handle: review_discriminate_complete_message
+  op: choose
+  objective: obj-report-workplace-absence-01
+  bloom: apply
+  prompt_md: "Velg meldingen som er klar til å sendes."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Til: Maja, butikksjef Fakta: Du kan ikke arbeide mandag. Du blir borte hele dagen. Du
+        ringer Maja senest klokka 14.00 om tirsdag.'
+  derived_from:
+  - section_id: sec-final-retrieval-and-review
+  stem_md: "Hvilken melding sier at du er borte hele mandagen og forteller når du kontakter Maja igjen?"
+  options:
+  - id: wrong-day
+    text: Jeg kan ikke komme på jobb tirsdag og blir borte hele dagen. Jeg ringer deg innen klokka to.
+    correct: false
+    why: This changes the absence from Monday to Tuesday.
+  - id: all-three
+    text: Jeg kan ikke komme på jobb mandag og blir borte hele dagen. Jeg ringer deg innen klokka to om
+      tirsdag.
+    correct: true
+    why: This includes the Monday absence, its duration, and the promised deadline for the next contact.
+  - id: missing-duration
+    text: Jeg kan ikke komme på jobb mandag. Jeg ringer deg innen klokka to om tirsdag.
+    correct: false
+    why: This omits the known fact that the absence lasts all day.
+  - id: vague-contact
+    text: Jeg kan ikke komme på jobb mandag og blir borte hele dagen. Jeg ringer deg senere.
+    correct: false
+    why: This makes the next contact vague instead of preserving the two o'clock deadline.
+  explanation_md: The ready-to-send message preserves every supplied fact without leaving the manager
+    to ask when or what happens next.

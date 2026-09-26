@@ -1,0 +1,471 @@
+- handle: notice_location_or_direction
+  op: choose
+  objective: obj-directional-vs-locative-adverbs-01
+  bloom: understand
+  prompt_md: Velg setningen som passer til situasjonen. Emil gikk inn i bygningen for ti minutter siden. Nå går han fortsatt langs korridoren i bygningen.
+  derived_from:
+  - section_id: sec-location-or-direction
+  stem_md: Emil kom inn i bygningen for ti minutter siden. Nå beveger han seg langs korridoren.
+  options:
+  - id: direction
+    text: Emil går inn.
+    correct: false
+    why: Inn would describe crossing from outside to inside.
+  - id: location
+    text: Emil går inne.
+    correct: true
+    why: Inne places the walking inside the building without describing entry.
+- handle: interpret_movement_in_context
+  op: choose
+  objective: obj-directional-vs-locative-adverbs-01
+  bloom: understand
+  prompt_md: Velg setningen som passer til situasjonen. Emil gikk ut av bygningen for ti minutter siden. Nå går han rundt på gårdsplassen.
+  derived_from:
+  - section_id: sec-movement-verb-meaning
+  stem_md: Emil forlot bygningen for ti minutter siden. Nå går han rundt på gårdsplassen.
+  options:
+  - id: change-of-place
+    text: Emil går ut.
+    correct: false
+    why: Ut describes a change from inside to outside.
+  - id: activity-location
+    text: Emil går ute.
+    correct: true
+    why: Ute identifies the place where the walking happens.
+- handle: track_inside_outside_change
+  op: recall_fill
+  objective: obj-directional-vs-locative-adverbs-01
+  bloom: apply
+  prompt_md: Fyll ut rekken med riktige former.
+  explanation_md: Ute and inne describe locations; inn and ut describe changes of location.
+  derived_from:
+  - section_id: sec-inside-outside-change
+  audio_target: Maja står ute. Så går hun inn. Etterpå sitter hun inne. Senere går hun ut.
+  segments:
+  - text_md: 'Maja venter foran bygningen. Maja står '
+  - blank_id: inside-outside-1
+    options:
+    - ute
+    - ut
+    answer_index: 0
+  - text_md: '. Døra åpner seg, og hun går '
+  - blank_id: inside-outside-2
+    options:
+    - inne
+    - inn
+    answer_index: 1
+  - text_md: '. Nå er hun i resepsjonen og sitter '
+  - blank_id: inside-outside-3
+    options:
+    - inn
+    - inne
+    answer_index: 1
+  - text_md: '. Etter møtet forlater hun bygningen og går '
+  - blank_id: inside-outside-4
+    options:
+    - ute
+    - ut
+    answer_index: 1
+  - text_md: .
+- handle: follow_vertical_direction
+  op: recall_fill
+  objective: obj-directional-vs-locative-adverbs-01
+  bloom: apply
+  prompt_md: Fyll ut rekken med riktige former.
+  explanation_md: «Nede» og «oppe» beskriver hvor noen befinner seg. «Opp» og «ned» beskriver bevegelse mellom etasjer.
+  derived_from:
+  - section_id: sec-upstairs-downstairs
+  audio_target: Barna er nede. Så går de opp. Nå leker de oppe. Senere løper de ned.
+  segments:
+  - text_md: 'Barna er i underetasjen. De er '
+  - blank_id: vertical-1
+    options:
+    - nede
+    - ned
+    answer_index: 0
+  - text_md: '. De vil til lekerommet i øverste etasje, så de går '
+  - blank_id: vertical-2
+    options:
+    - oppe
+    - opp
+    answer_index: 1
+  - text_md: '. I lekerommet blir de værende og leker '
+  - blank_id: vertical-3
+    options:
+    - opp
+    - oppe
+    answer_index: 1
+  - text_md: '. Senere vil de tilbake til underetasjen, og de løper '
+  - blank_id: vertical-4
+    options:
+    - nede
+    - ned
+    answer_index: 1
+  - text_md: .
+- handle: choose_home_location_or_direction
+  op: choose
+  objective: obj-directional-vs-locative-adverbs-01
+  bloom: understand
+  prompt_md: Velg setningen som passer til situasjonen. Møtet er ferdig. Personen forlater samfunnshuset og er på vei til boligen sin.
+  derived_from:
+  - section_id: sec-home-location-direction
+  stem_md: Møtet er ferdig. Personen forlater samfunnshuset og er på vei til boligen sin.
+  options:
+  - id: location
+    text: Jeg går hjemme.
+    correct: false
+    why: Hjemme would place the walking activity at home.
+  - id: direction
+    text: Jeg går hjem.
+    correct: true
+    why: Hjem expresses movement toward home.
+- handle: use_speaker_viewpoint
+  op: choose
+  objective: obj-directional-vs-locative-adverbs-01
+  bloom: analyze
+  prompt_md: Velg samtalen der begge personenes ståsted kommer fram.
+  derived_from:
+  - section_id: sec-here-there-viewpoint
+  stem_md: Aisha står ved bibliotekinngangen, og Per er ved fontenen på den andre siden av plassen. Aisha ber Per komme til seg. Per forteller hvor Aisha er fra hans ståsted, og hvor han skal.
+  options:
+  - id: location-direction-mismatch
+    text: 'Aisha: Jeg venter der ved biblioteket. Kom dit! Per: Du venter her borte. Jeg går hit nå.'
+    correct: false
+    why: The forms for Aisha's position, her invitation, and Per's destination do not match the speakers' viewpoints.
+  - id: consistent-viewpoints
+    text: 'Aisha: Jeg venter her ved biblioteket. Kom hit! Per: Du venter der borte. Jeg går dit nå.'
+    correct: true
+    why: Aisha locates herself where she is and directs Per toward her; Per locates her away from himself and names her place as his destination.
+  - id: swapped-directions
+    text: 'Aisha: Jeg venter her ved biblioteket. Kom dit! Per: Du venter der borte. Jeg går hit nå.'
+    correct: false
+    why: Aisha is inviting Per toward her, and Per is going away from his current location toward Aisha; the directional forms are reversed.
+- handle: distinguish_where_question_from_there_statement
+  op: choose
+  objective: obj-directional-vs-locative-adverbs-01
+  bloom: apply
+  prompt_md: Velg samtalen der noen spør hvor kafeen ligger og får vite hvor den er nå.
+  derived_from:
+  - section_id: sec-where-questions-statements
+  stem_md: Du vil vite hvor kafeen ligger akkurat nå, ikke hvilken vei du skal ta.
+  options:
+  - id: asks-current-location
+    text: Hvor er kafeen? Den ligger der borte.
+    correct: true
+    why: The question asks where the café currently is, and the reply gives its location.
+  - id: asks-for-destination
+    text: Hvor skal vi gå for å finne kafeen? Vi går dit, mot torget.
+    correct: false
+    why: The question asks for a route and the reply names a destination, not the café's present location.
+- handle: answer_where_with_location_or_direction
+  op: recall_fill
+  objective: obj-directional-vs-locative-adverbs-01
+  bloom: apply
+  prompt_md: Fyll ut hvert svar med riktig form.
+  explanation_md: Et spørsmål med «hvor» kan gjelde et sted noen er, eller et sted de skal. Svaret viser hvilken betydning som menes.
+  derived_from:
+  - section_id: sec-where-questions-statements
+  audio_target: Hvor er barna? Barna sitter ute. Hvor skal Emil? Emil kjører hjem. Hvor er Maja? Maja er oppe. Hvor går Emil? Emil går ned.
+  segments:
+  - text_md: 'Barna er i hagen. Hvor er barna? Barna sitter '
+  - blank_id: where-answer-1
+    options:
+    - ute
+    - ut
+    answer_index: 0
+  - text_md: '. Emil skal til huset sitt. Hvor skal Emil? Emil kjører '
+  - blank_id: where-answer-2
+    options:
+    - hjemme
+    - hjem
+    answer_index: 1
+  - text_md: '. Maja er i andre etasje. Hvor er Maja? Maja er '
+  - blank_id: where-answer-3
+    options:
+    - oppe
+    - opp
+    answer_index: 0
+  - text_md: '. Emil er i andre etasje og kafeen er i første etasje. Hvor går Emil? Emil går '
+  - blank_id: where-answer-4
+    options:
+    - nede
+    - ned
+    answer_index: 1
+  - text_md: .
+- handle: repair_location_direction_mistakes
+  op: find_fix
+  objective: obj-directional-vs-locative-adverbs-01
+  bloom: analyze
+  prompt_md: Personen spør etter et sted hen ikke kjenner. Velg ordet som må byttes ut.
+  derived_from:
+  - section_id: sec-common-mistakes
+  tokens:
+  - token_id: repair-1
+    text: Der
+  - token_id: repair-2
+    text: er
+  - token_id: repair-3
+    text: kafeen?
+  error_token_id: repair-1
+  feedback: Replace Der with Hvor. Hvor asks for an unknown place; der identifies a place.
+- handle: reconstruct_the_meeting_route
+  op: write
+  objective: obj-directional-vs-locative-adverbs-01
+  bloom: apply
+  prompt_md: 'En medelev spør hvor Emil var, og hvor han dro videre. Skriv en melding på 20–45 ord i riktig rekkefølge: Emil var i rom 204, gikk ned til kafeen ved inngangen og dro deretter hjem. Skriv også at kafeen ligger i etasjen under rommet. Bruk steds- og retningsadverb.'
+  derived_from:
+  - section_id: sec-returning-maja-emil
+  response_language: "no"
+  min_words: 20
+  max_words: 45
+  judge_prompt: 'Evaluate route-facts, route-order, message-purpose, and place-direction-observation as gating criteria. The response must report positions with location forms and movement with directional forms. Anchors: PASS — «Emil var i rom 204. Så gikk han ned til kafeen, som var nede ved inngangen. Etterpå gikk han hjem.» FAIL route-facts — «Emil var ved kafeen og gikk tilbake til rom 204.» PASS — «Emil var i rom 204. Så gikk han ned til kafeen. Kafeen var nede ved inngangen. Etterpå gikk han hjem.»'
+  criteria:
+  - id: route-facts
+    instruction: The message states that Emil was in room 204, went down to the café, states that the café was downstairs by the entrance, and later went home.
+  - id: route-order
+    instruction: The events appear in the order supplied in the task.
+  - id: message-purpose
+    instruction: The response is a Norwegian message to the classmate about Emil's route.
+  - id: place-direction-observation
+    instruction: The message must use location forms for positions and directional forms for movement; failure on this criterion fails the response.
+- handle: transfer_to_a_new_visit
+  op: write
+  objective: obj-directional-vs-locative-adverbs-01
+  bloom: apply
+  prompt_md: >-
+    Ida står utenfor en musikkskole. Per er i øvingsrommet i andre etasje. Ida spør
+    hvilken inngang hun skal bruke og hvilken etasje han er i. Hun går inn og opp
+    til ham. Senere går de ned, ut av bygningen og til bussholdeplassen. Skriv meldingsutvekslingen
+    på 25–60 ord. Bruk stedsadverb om plassering og retningsadverb om bevegelse, og
+    hold styr på hvem som snakker.
+  derived_from:
+  - section_id: sec-transfer-new-visit
+  response_language: "no"
+  min_words: 25
+  max_words: 60
+  judge_prompt: Evaluate whether the exchange asks for the entrance and floor, communicates Ida’s route inside and upstairs, and confirms their later trip to the bus stop. Check natural location-versus-direction forms and speaker viewpoint; accept coherent Bokmål wording without requiring fixed expressions.
+  criteria:
+  - id: visit-question
+    instruction: The exchange includes Ida asking Per which entrance to use and which floor he is on.
+  - id: arrival-route
+    instruction: The exchange communicates that Ida enters the building and reaches Per on the second floor.
+  - id: later-plan
+    instruction: The exchange communicates that they later leave the building and head to the bus stop.
+  - id: exchange-purpose
+    instruction: The response is a Norwegian text-message exchange that helps Ida arrive and confirms the later plan.
+  - id: place-direction-observation
+    instruction: Report whether location forms describe positions and directional forms describe movement; incorrect forms fail the response.
+  - id: viewpoint-observation
+    instruction: Report whether any her/hit and der/dit forms are consistent with each speaker's viewpoint; inconsistent forms fail the response.
+- handle: review_inne_inn
+  op: recall_fill
+  objective: obj-directional-vs-locative-adverbs-01
+  bloom: remember
+  prompt_md: Fullfør svaret.
+  explanation_md: «Inn» viser at noen beveger seg fra utsiden til innsiden.
+  derived_from:
+  - section_id: sec-short-retrieval-review
+  audio_target: Jeg går inn.
+  segments:
+  - text_md: 'Døra åpner seg foran deg, og du står fortsatt på gata. Hva gjør du? Jeg går '
+  - blank_id: review-inne-inn-1
+    options:
+    - inn
+    - inne
+    answer_index: 0
+  - text_md: .
+- handle: review_ute_ut
+  op: recall_fill
+  objective: obj-directional-vs-locative-adverbs-01
+  bloom: remember
+  prompt_md: Fullfør svaret.
+  explanation_md: «Ute» beskriver hvor en aktivitet skjer når man blir værende utendørs.
+  derived_from:
+  - section_id: sec-short-retrieval-review
+  audio_target: De leker ute.
+  segments:
+  - text_md: 'Barna leker i hagen i ettermiddag. Hvor leker de? De leker '
+  - blank_id: review-ute-ut-1
+    options:
+    - ut
+    - ute
+    answer_index: 1
+  - text_md: .
+- handle: review_oppe_opp
+  op: recall_fill
+  objective: obj-directional-vs-locative-adverbs-01
+  bloom: remember
+  prompt_md: Fullfør svaret.
+  explanation_md: «Opp» beskriver bevegelse fra en lavere til en høyere etasje.
+  derived_from:
+  - section_id: sec-short-retrieval-review
+  audio_target: Hun går opp.
+  segments:
+  - text_md: 'Liv er i første etasje og skal til timen sin i fjerde etasje. Hva gjør hun? Hun går '
+  - blank_id: review-oppe-opp-1
+    options:
+    - oppe
+    - opp
+    answer_index: 1
+  - text_md: .
+- handle: review_nede_ned
+  op: recall_fill
+  objective: obj-directional-vs-locative-adverbs-01
+  bloom: remember
+  prompt_md: Fullfør svaret.
+  explanation_md: «Nede» beskriver hvor noen befinner seg i en lavere etasje.
+  derived_from:
+  - section_id: sec-short-retrieval-review
+  audio_target: Kafeen er nede.
+  segments:
+  - text_md: 'Du er i tredje etasje. Kafeen er i første etasje. Hvor ligger kafeen? Kafeen er '
+  - blank_id: review-nede-ned-1
+    options:
+    - ned
+    - nede
+    answer_index: 1
+  - text_md: .
+- handle: review_hjemme_hjem
+  op: choose
+  objective: obj-directional-vs-locative-adverbs-01
+  bloom: remember
+  prompt_md: Velg svaret som passer til situasjonen. Konserten er ferdig. Ada setter seg i bilen for å kjøre til boligen sin.
+  derived_from:
+  - section_id: sec-short-retrieval-review
+  stem_md: Konserten er ferdig. Ada setter seg i bilen og kjører til boligen sin.
+  options:
+  - id: home-location
+    text: Ada kjører hjemme.
+    correct: false
+    why: Hjemme would place the driving activity at home.
+  - id: home-destination
+    text: Ada kjører hjem.
+    correct: true
+    why: Hjem makes the house Ada's destination.
+- handle: review_her_hit
+  op: choose
+  objective: obj-directional-vs-locative-adverbs-01
+  bloom: remember
+  prompt_md: Velg svaret som passer til situasjonen.
+  derived_from:
+  - section_id: sec-short-retrieval-review
+  stem_md: Ola står ved billettautomaten. Kari står noen skritt unna, og han ber henne komme bort til seg.
+  options:
+  - id: away-from-speaker
+    text: Kom dit.
+    correct: false
+    why: Dit expresses movement toward a place away from Ola, not toward the speaker who is beckoning.
+  - id: toward-speaker
+    text: Kom hit.
+    correct: true
+    why: Hit expresses movement toward Ola, the speaker.
+- handle: review_der_dit
+  op: choose
+  objective: obj-directional-vs-locative-adverbs-01
+  bloom: remember
+  prompt_md: Velg svaret som passer til situasjonen.
+  derived_from:
+  - section_id: sec-short-retrieval-review
+  stem_md: Sara peker på et ledig bord på den andre siden av rommet og forteller gruppa hvilket bord hun har valgt.
+  options:
+  - id: other-destination
+    text: Bordet er dit.
+    correct: false
+    why: Dit expresses a destination, not the table's current position.
+  - id: other-location
+    text: Bordet er der.
+    correct: true
+    why: Der identifies the table's current location away from the speaker.
+- handle: review_hvor_der
+  op: recall_fill
+  objective: obj-directional-vs-locative-adverbs-01
+  bloom: remember
+  prompt_md: Fullfør spørsmålet.
+  explanation_md: «Hvor» spør etter et ukjent sted, mens «der» viser til et sted.
+  derived_from:
+  - section_id: sec-short-retrieval-review
+  audio_target: Hvor er toalettet?
+  segments:
+  - text_md: 'Du har nettopp kommet til stasjonen, men ser ikke noe skilt til toalettet. '
+  - blank_id: review-hvor-der-1
+    options:
+    - Der
+    - Hvor
+    answer_index: 1
+  - text_md: ' er toalettet?'
+- handle: categorize_place_direction_forms
+  op: match_pairs
+  objective: obj-directional-vs-locative-adverbs-01
+  bloom: understand
+  prompt_md: 'Koble hvert uttrykk til stedsadverb, retningsadverb eller spørsmål med «hvor».'
+  left:
+  - left_id: form-inne
+    text: inne
+  - left_id: form-inn
+    text: inn
+  - left_id: form-ute
+    text: ute
+  - left_id: form-ut
+    text: ut
+  - left_id: form-oppe
+    text: oppe
+  - left_id: form-opp
+    text: opp
+  - left_id: form-nede
+    text: nede
+  - left_id: form-ned
+    text: ned
+  - left_id: form-hjemme
+    text: hjemme
+  - left_id: form-hjem
+    text: hjem
+  - left_id: form-her
+    text: her
+  - left_id: form-hit
+    text: hit
+  - left_id: form-der
+    text: der
+  - left_id: form-dit
+    text: dit
+  - left_id: form-hvor
+    text: hvor
+  right:
+  - right_id: cat-location
+    text: Stedsadverb – hvor noe er
+  - right_id: cat-direction
+    text: Retningsadverb – hvor noe beveger seg
+  - right_id: cat-question
+    text: Spørsmål med «hvor»
+  pairs:
+  - left_id: form-inne
+    right_id: cat-location
+  - left_id: form-inn
+    right_id: cat-direction
+  - left_id: form-ute
+    right_id: cat-location
+  - left_id: form-ut
+    right_id: cat-direction
+  - left_id: form-oppe
+    right_id: cat-location
+  - left_id: form-opp
+    right_id: cat-direction
+  - left_id: form-nede
+    right_id: cat-location
+  - left_id: form-ned
+    right_id: cat-direction
+  - left_id: form-hjemme
+    right_id: cat-location
+  - left_id: form-hjem
+    right_id: cat-direction
+  - left_id: form-her
+    right_id: cat-location
+  - left_id: form-hit
+    right_id: cat-direction
+  - left_id: form-der
+    right_id: cat-location
+  - left_id: form-dit
+    right_id: cat-direction
+  - left_id: form-hvor
+    right_id: cat-question
+  derived_from:
+  - section_id: sec-core-place-direction-pairs

@@ -34,6 +34,8 @@ K_EVIDENCE_ENGLISH_LEAD_RE = re.compile(
 K_EVIDENCE_MODAL_STEM_RE = re.compile(r"\b(?:skulle|kunne|ville|burde)\s+ha\s*$", re.IGNORECASE)
 K_EVIDENCE_PARENTHETICAL_RE = re.compile(r"\(([^()]*)\)")
 K_EVIDENCE_MIN_OPTIONS = 2
+K_EVIDENCE_COMPOSITE_MIN_OPTIONS = 2
+K_EVIDENCE_COMPOSITE_MIN_MAPPING_UNITS = 2
 
 
 def scan_exercise_evidence(raw: dict[str, Any], handle: str) -> list[MechanicalFinding]:
@@ -42,6 +44,7 @@ def scan_exercise_evidence(raw: dict[str, Any], handle: str) -> list[MechanicalF
     _scan_missing_source(raw, handle, findings)
     _scan_category_cues(raw, handle, findings)
     _scan_action_options(raw, handle, findings)
+    _scan_composite_choice_options(raw, handle, findings)
     return findings
 
 
@@ -53,6 +56,8 @@ def _scan_missing_source(raw: dict[str, Any], handle: str, findings: list[Mechan
         return
     match = K_EVIDENCE_SOURCE_ACTION_RE.search(prompt)
     if match is None:
+        return
+    if _has_stimulus(raw):
         return
     tail = prompt[match.end() :]
     if "«" in tail or "“" in tail or re.search(r":\s*\S.{7,}", tail):
@@ -67,6 +72,11 @@ def _scan_missing_source(raw: dict[str, Any], handle: str, findings: list[Mechan
             explanation="The task refers to a source sentence, text, or message, but the visible exercise may not supply it.",
         )
     )
+
+
+def _has_stimulus(raw: dict[str, Any]) -> bool:
+    """Report whether authored source supplies typed learner context."""
+    return bool(raw.get("stimulus"))
 
 
 def _scan_category_cues(raw: dict[str, Any], handle: str, findings: list[MechanicalFinding]) -> None:
@@ -168,6 +178,48 @@ def _find_action_option_evidence(preceding: str, segment: object) -> str | None:
     if len(option_tails) == 1:
         return None
     return " | ".join(options)
+
+
+def _scan_composite_choice_options(raw: dict[str, Any], handle: str, findings: list[MechanicalFinding]) -> None:
+    """Flag answer-sheet choose options that bundle several mapping units."""
+    if raw.get("op") != "choose" or not isinstance(raw.get("options"), list):
+        return
+    composite_options: list[str] = []
+    for index, option in enumerate(raw["options"]):
+        if not isinstance(option, dict) or not isinstance(option.get("text"), str):
+            continue
+        unit_count = _mapping_unit_count(option["text"])
+        if unit_count < K_EVIDENCE_COMPOSITE_MIN_MAPPING_UNITS:
+            continue
+        option_id = option.get("id")
+        label = option_id if isinstance(option_id, str) and option_id else f"options[{index}]"
+        composite_options.append(f"{label}={unit_count}")
+    if len(composite_options) < K_EVIDENCE_COMPOSITE_MIN_OPTIONS:
+        return
+    findings.append(
+        MechanicalFinding(
+            code="evidence-composite-choice-mapping",
+            severity="minor",
+            artifact=K_SOURCE_AUDIT_EXERCISES_FILE,
+            location=f"{handle}.options",
+            evidence="; ".join(composite_options),
+            explanation=(
+                "At least two options each bundle several `left = right` mapping units, so one "
+                "selection bundles several separately judgeable mappings; use one focused "
+                "decision, or `match_pairs` when the request route requires it."
+            ),
+        )
+    )
+
+
+def _mapping_unit_count(text: str) -> int:
+    """Count semicolon-separated `left = right` units in one option text."""
+    count = 0
+    for unit in text.split(";"):
+        left, separator, right = unit.partition("=")
+        if separator and left.strip() and right.strip():
+            count += 1
+    return count
 
 
 def _normalize_action_options(value: object) -> list[str] | None:

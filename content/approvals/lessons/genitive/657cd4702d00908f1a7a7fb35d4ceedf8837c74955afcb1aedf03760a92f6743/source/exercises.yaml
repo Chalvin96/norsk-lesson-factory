@@ -1,0 +1,368 @@
+- handle: identify_thing_and_connection
+  op: choose
+  objective: obj-genitive-01
+  bloom: understand
+  prompt_md: "Velg tolkningen som passer til alle fire etikettene."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: '«På denne etiketten står det: Noras bøker.»'
+    - speaker: Emil
+      text_md: '«Her står det: nøkkelen til leiligheten.»'
+    - speaker: Nora
+      text_md: '«Denne etiketten lyder: Noras bror.»'
+    - speaker: Emil
+      text_md: '«Jeg fant også etiketten: telefonen til Emil.»'
+  options:
+  - id: reversed-roles
+    text: 'Noras bøker: thing = Nora; connection = bøker. nøkkelen til leiligheten: thing = leiligheten;
+      connection = nøkkelen. Noras bror: thing = Nora; connection = bror. telefonen til Emil: thing =
+      Emil; connection = telefonen.'
+    correct: false
+    why: This reverses the identified thing and its connection in every phrase.
+  - id: mixed-roles
+    text: 'Noras bøker: thing = bøker; connection = Nora. nøkkelen til leiligheten: thing = leiligheten;
+      connection = nøkkelen. Noras bror: thing = bror; connection = Nora. telefonen til Emil: thing =
+      telefonen; connection = Emil.'
+    correct: false
+    why: It handles the s-phrases correctly but reverses the roles in the til-phrase.
+  - id: consistent-roles
+    text: 'Noras bøker: thing = bøker; connection = Nora. nøkkelen til leiligheten: thing = nøkkelen;
+      connection = leiligheten. Noras bror: thing = bror; connection = Nora. telefonen til Emil: thing
+      = telefonen; connection = Emil.'
+    correct: true
+    why: Each interpretation keeps the identified thing apart from the person or thing connected to it.
+  derived_from:
+  - section_id: sec-first-notice-who-or-what-is-connected-to-whom
+- handle: build_s_pattern
+  op: choose
+  objective: obj-genitive-01
+  bloom: apply
+  prompt_md: "Velg etiketten til flytteesken. Sett eieren først."
+  stem_md: "Eier: Nora. Innhold: bøker."
+  options:
+  - id: definite-head
+    text: Noras bøkene
+    correct: false
+    why: This wrongly keeps the definite ending on the noun after the s-form.
+  - id: english-apostrophe
+    text: Nora's bøker
+    correct: false
+    why: This imports the English apostrophe instead of attaching Norwegian s directly.
+  - id: owner-s-form
+    text: Noras bøker
+    correct: true
+    why: The owner-first pattern attaches s directly to the owner, and the contents stay in their plain
+      form.
+  derived_from:
+  - section_id: sec-the-s-pattern
+- handle: repair_s_pattern_errors
+  op: find_fix
+  objective: obj-genitive-01
+  bloom: analyze
+  prompt_md: "Velg ordet som må endres."
+  tokens:
+  - token_id: repair-owner
+    text: Nora’s
+  - token_id: repair-thing
+    text: bok.
+  error_token_id: repair-owner
+  feedback: 'Norwegian attaches s without an apostrophe: Noras bok.'
+  derived_from:
+  - section_id: sec-the-s-pattern
+- handle: build_til_pattern
+  op: choose
+  objective: obj-genitive-01
+  bloom: apply
+  prompt_md: "Velg etiketten der tingen står først."
+  stem_md: "Sykkelen tilhører Emil."
+  options:
+  - id: indefinite-object
+    text: sykkel til Emil
+    correct: false
+    why: This leaves the identified bicycle indefinite and can suggest a bicycle intended for Emil.
+  - id: definite-thing-til
+    text: sykkelen til Emil
+    correct: true
+    why: The thing-first pattern uses the definite form of the identified thing before til, with the same
+      person after it.
+  - id: reversed-order
+    text: Emil til sykkelen
+    correct: false
+    why: This puts the person where the identified thing must stand.
+  derived_from:
+  - section_id: sec-the-til-pattern
+- handle: contrast_noun_form_by_pattern
+  op: recall_fill
+  objective: obj-genitive-01
+  bloom: apply
+  prompt_md: "Fullfør uttrykket med begge formene."
+  explanation_md: "I eierformen står tingen i ubestemt form. I «til»-formen står tingen i bestemt form foran «til»."
+  audio_target: Emils sykkel og sykkelen til Emil.
+  segments:
+  - text_md: 'Emils '
+  - blank_id: s-thing-form
+    options:
+    - sykkel
+    - sykkelen
+    answer_index: 0
+  - text_md: ' og '
+  - blank_id: til-thing-form
+    options:
+    - sykkel
+    - sykkelen
+    answer_index: 1
+  - text_md: ' til Emil.'
+  derived_from:
+  - section_id: sec-the-til-pattern
+- handle: choose_s_or_til_for_context
+  op: build
+  objective: obj-genitive-01
+  bloom: apply
+  prompt_md: "Sett sammen svaret med begge uttrykksmåtene."
+  tokens:
+  - token_id: context-owner-form
+    text: Emils
+  - token_id: context-owner-thing
+    text: telefon
+  - token_id: context-link
+    text: er
+  - token_id: context-til-thing
+    text: telefonen
+  - token_id: context-til-word
+    text: til
+  - token_id: context-til-owner
+    text: Emil.
+  answer_order:
+  - context-owner-form
+  - context-owner-thing
+  - context-link
+  - context-til-thing
+  - context-til-word
+  - context-til-owner
+  derived_from:
+  - section_id: sec-choosing-between-s-and-til
+- handle: extend_ownership_to_connections
+  op: build
+  objective: obj-genitive-01
+  bloom: apply
+  prompt_md: "Sett sammen setningen med begge uttrykksmåtene."
+  tokens:
+  - token_id: connection-s-form
+    text: Skolens
+  - token_id: connection-s-thing
+    text: adresse
+  - token_id: connection-link
+    text: er
+  - token_id: connection-til-thing
+    text: adressen
+  - token_id: connection-til-word
+    text: til
+  - token_id: connection-til-owner
+    text: skolen.
+  answer_order:
+  - connection-s-form
+  - connection-s-thing
+  - connection-link
+  - connection-til-thing
+  - connection-til-word
+  - connection-til-owner
+  derived_from:
+  - section_id: sec-more-than-personal-possessions
+- handle: transform_between_patterns
+  op: build
+  objective: obj-genitive-01
+  bloom: apply
+  prompt_md: "Sett sammen setningen i begge formene."
+  tokens:
+  - token_id: transform-s-owner
+    text: Noras
+  - token_id: transform-s-thing
+    text: nøkkel
+  - token_id: transform-link
+    text: er
+  - token_id: transform-til-thing
+    text: nøkkelen
+  - token_id: transform-til-word
+    text: til
+  - token_id: transform-til-owner
+    text: Nora.
+  answer_order:
+  - transform-s-owner
+  - transform-s-thing
+  - transform-link
+  - transform-til-thing
+  - transform-til-word
+  - transform-til-owner
+  derived_from:
+  - section_id: sec-back-at-noras-apartment
+- handle: diagnose_pattern_mistake
+  op: find_fix
+  objective: obj-genitive-01
+  bloom: analyze
+  prompt_md: "Etiketten «bok til Nora» skal vise at boka tilhører Nora. Velg ordet som må endres."
+  tokens:
+  - token_id: diagnose-thing
+    text: bok
+  - token_id: diagnose-til
+    text: til
+  - token_id: diagnose-owner
+    text: Nora.
+  error_token_id: diagnose-thing
+  feedback: 'For this ownership reading, use the definite identified thing before til: boka til Nora.'
+  derived_from:
+  - section_id: sec-common-mistakes-to-avoid
+- handle: transfer_patterns_to_community_center
+  op: write
+  objective: obj-genitive-01
+  bloom: apply
+  prompt_md: >-
+    Skriv en melding på 35–55 ord til kveldsvaktene. Nøkkelen til ungdomsgruppa ligger på skrivebordet, bygningen heter Samfunnshuset, og lederens veske er på rom 2. Fortell hvor tingene er, og hva bygningen heter. Bruk både eierform med «s» og «til»-formen.
+  response_language: 'no'
+  judge_prompt: Evaluate the response only against criteria community-audience-purpose, community-facts,
+    community-pattern-range, and community-word-bound. Report a verdict for every criterion id.
+  criteria:
+  - id: community-audience-purpose
+    instruction: The response is a message to evening staff that helps them identify the supplied objects
+      and information.
+  - id: community-facts
+    instruction: The message accurately includes the youth group's key on the desk, the building's name
+      Samfunnshuset, and the manager's bag in room 2.
+  - id: community-pattern-range
+    instruction: The message expresses the connections using at least one s-pattern form and at least
+      one til-pattern form.
+  - id: community-word-bound
+    instruction: The message contains 35–55 words.
+  derived_from:
+  - section_id: sec-cumulative-transfer-at-a-community-center
+- handle: final_retrieval_s_and_til
+  op: write
+  objective: obj-genitive-01
+  bloom: apply
+  prompt_md: >-
+    Skriv en melding på 25–45 ord til Emil. Fortell hvor boka hans er, og at balkongen i huset er
+    stengt. Skriv hver tilknytning på to måter: først med eieren eller tilknytningen først, så med
+    tingen først.
+  response_language: 'no'
+  judge_prompt: Evaluate the response only against criteria final-message-purpose, final-book-pair, final-balcony-pair,
+    and final-word-bound. Report a verdict for every criterion id.
+  criteria:
+  - id: final-message-purpose
+    instruction: The response is a Norwegian message to Emil that states where Emil's book is and that
+      the house's balcony is closed.
+  - id: final-book-pair
+    instruction: The response expresses the Emil-and-book connection both as an s-pattern and as a definite-thing-plus-til
+      pattern.
+  - id: final-balcony-pair
+    instruction: The response expresses the house-and-balcony connection both as an s-pattern and as a
+      definite-thing-plus-til pattern.
+  - id: final-word-bound
+    instruction: The message contains 25–45 words.
+  derived_from:
+  - section_id: sec-retrieval-and-review
+- handle: review_identify_connection_roles
+  op: choose
+  objective: obj-genitive-01
+  bloom: understand
+  prompt_md: "Velg tolkningen som passer til etiketten på skrivebordet."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Mina
+      text_md: «Hva står det på etiketten?»
+    - speaker: Jonas
+      text_md: '«Det står: telefonen til Mari.»'
+  options:
+  - id: reading-two
+    text: 'Identified thing: Mari. Connection: telefonen.'
+    correct: false
+    why: This reverses the two roles.
+  - id: reading-three
+    text: The phrase lists a phone and Mari without connecting them.
+    correct: false
+    why: Til explicitly marks the relationship between the two nouns.
+  - id: reading-one
+    text: 'Identified thing: telefonen. Connection: Mari.'
+    correct: true
+    why: The phrase begins with the identified thing and places its connection after til.
+  derived_from:
+  - section_id: sec-retrieval-and-review
+- handle: review_form_s_label
+  op: recall_fill
+  objective: obj-genitive-01
+  bloom: apply
+  prompt_md: "Fullfør eierformen for en sekk som tilhører en person med navn som slutter på s."
+  audio_target: 'Etikett: Jonas’ sekk.'
+  segments:
+  - text_md: 'Etikett: '
+  - blank_id: review-s-owner
+    options:
+    - Jonas
+    - Jonas's
+    - Jonas’
+    answer_index: 2
+  - text_md: ' '
+  - blank_id: review-s-thing
+    options:
+    - sekken
+    - sekk
+    answer_index: 1
+  - text_md: .
+  explanation_md: Når et navn allerede ender på s, bruker eierformen apostrof, og tingen står i ubestemt
+    form.
+  derived_from:
+  - section_id: sec-retrieval-and-review
+- handle: review_form_til_label
+  op: recall_fill
+  objective: obj-genitive-01
+  bloom: apply
+  prompt_md: "Fullfør etiketten med tingen først og eieren etter «til»."
+  audio_target: 'Etikett: Jakka til Nora.'
+  segments:
+  - text_md: 'Etikett: '
+  - blank_id: review-til-thing
+    options:
+    - Jakka
+    - Jakke
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: review-til-link
+    options:
+    - av
+    - til
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: review-til-owner
+    options:
+    - Nora
+    - Noras
+    answer_index: 0
+  - text_md: .
+  explanation_md: "I «til»-formen står tingen i bestemt form først. Eieren står etter «til» i grunnform."
+  derived_from:
+  - section_id: sec-retrieval-and-review
+- handle: review_discriminate_s_and_til
+  op: choose
+  objective: obj-genitive-01
+  bloom: analyze
+  prompt_md: >-
+    Nora skal skrive etikett til lærerens kontor. Velg svaret som først bruker eierformen med «s» og
+    deretter «til»-formen.
+  options:
+  - id: til-twice
+    text: Kontoret til læreren er kontoret til læreren.
+    correct: false
+    why: This repeats the thing-first pattern and never uses the owner-first pattern.
+  - id: both-patterns
+    text: Lærerens kontor er kontoret til læreren.
+    correct: true
+    why: The first phrase uses the owner-first pattern, and the second uses the thing-first pattern for
+      the same relationship.
+  - id: definite-after-s
+    text: Lærerens kontoret er kontor til læreren.
+    correct: false
+    why: The owner-first phrase wrongly keeps the definite form, and the thing-first phrase wrongly drops
+      it.
+  derived_from:
+  - section_id: sec-retrieval-and-review

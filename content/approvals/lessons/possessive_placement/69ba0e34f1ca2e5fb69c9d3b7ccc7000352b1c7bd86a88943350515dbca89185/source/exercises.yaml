@@ -1,0 +1,373 @@
+- handle: notice_possessive_noun_pairing
+  op: categorize
+  objective: obj-possessive-placement-01
+  bloom: analyze
+  prompt_md: Sorter frasene etter plasseringen av eiendomsordet og substantivets form.
+  explanation_md: Etterstilt eiendomsord står med bestemt substantiv, mens foranstilt eiendomsord står med ubestemt substantiv.
+  derived_from:
+  - section_id: checkpoint-noticing-two-patterns
+  buckets:
+  - bucket_id: after-definite
+    label: Bestemt substantiv + eiendomsord
+  - bucket_id: before-indefinite
+    label: Eiendomsord + ubestemt substantiv
+  items:
+  - item_id: item-huset-mitt
+    text: huset mitt
+    bucket_id: after-definite
+  - item_id: item-sykkelen-min
+    text: sykkelen min
+    bucket_id: after-definite
+  - item_id: item-lua-mi
+    text: lua mi
+    bucket_id: after-definite
+  - item_id: item-mitt-hus
+    text: mitt hus
+    bucket_id: before-indefinite
+  - item_id: item-min-sykkel
+    text: min sykkel
+    bucket_id: before-indefinite
+  - item_id: item-mi-lue
+    text: mi lue
+    bucket_id: before-indefinite
+- handle: move_possessive_and_change_noun_form
+  op: build
+  objective: obj-possessive-placement-01
+  bloom: apply
+  prompt_md: Bygg Idas to svar.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Marius
+      text_md: «Hvor er telefonen din?»
+    - speaker: Ida
+      text_md: «…»
+    - speaker: Marius
+      text_md: «Er den hvite telefonen din?»
+    - speaker: Ida
+      text_md: «Nei, …»
+  explanation_md: Et nøytralt svar om plassering bruker «telefonen min». Når eieren framheves, kan vi si «min telefon» med ubestemt substantiv.
+  derived_from:
+  - section_id: checkpoint-changing-placement-and-noun-form
+  tokens:
+  - token_id: move-1
+    text: Telefonen
+  - token_id: move-2
+    text: min
+  - token_id: move-3
+    text: ligger
+  - token_id: move-4
+    text: her.
+  - token_id: move-5
+    text: Nei,
+  - token_id: move-6
+    text: min
+  - token_id: move-7
+    text: telefon
+  - token_id: move-8
+    text: er
+  - token_id: move-9
+    text: svart.
+  answer_order:
+  - move-1
+  - move-2
+  - move-3
+  - move-4
+  - move-5
+  - move-6
+  - move-7
+  - move-8
+  - move-9
+- handle: choose_placement_from_information_focus
+  op: recall_fill
+  objective: obj-possessive-placement-01
+  bloom: apply
+  prompt_md: Fyll ut begge svarene.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Ada
+      text_md: «Hvor står sykkelen din?»
+    - speaker: Leo
+      text_md: «… står ute.»
+  - kind: dialogue
+    turns:
+    - speaker: Ada
+      text_md: «Er det sykkelen hans?»
+    - speaker: Leo
+      text_md: «Nei, … er blå.»
+  explanation_md: Begge plasseringene er grammatiske. Her står det etterstilte eiendomsordet i det nøytrale svaret, og det foranstilte framhever eieren i det andre.
+  derived_from:
+  - section_id: checkpoint-neutral-information-or-owner-contrast
+  segments:
+  - text_md: 'Leo: «'
+  - blank_id: routine-bicycle
+    options:
+    - sykkelen min
+    - min sykkel
+    answer_index: 0
+  - text_md: ' står ute.» 2. Leo: «Nei,'
+  - blank_id: owner-bicycle
+    options:
+    - sykkelen min
+    - min sykkel
+    answer_index: 1
+  - text_md: ' er blå.»'
+  audio_target: 'Leo: «sykkelen min står ute.» 2. Leo: «Nei, min sykkel er blå.»'
+- handle: repair_possessive_placement_mismatches
+  op: find_fix
+  objective: obj-possessive-placement-01
+  bloom: analyze
+  prompt_md: Velg ordet som må endres.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Per
+      text_md: «Den blå sekken er din.»
+    - speaker: Ali
+      text_md: «Min sekken er grønn.»
+  explanation_md: 'Når eiendomsordet står først, bruker vi ubestemt substantiv: «Min sekk er grønn».'
+  derived_from:
+  - section_id: checkpoint-repair-possessive-placement-mismatches
+  tokens:
+  - token_id: repair-1
+    text: Min
+  - token_id: repair-2
+    text: sekken
+  - token_id: repair-3
+    text: er
+  - token_id: repair-4
+    text: grønn.
+  error_token_id: repair-2
+  feedback: Change sekken to sekk because a preposed possessive pairs with the indefinite noun in the taught pattern.
+- handle: complete_cabin_ownership_clarification
+  op: recall_fill
+  objective: obj-possessive-placement-01
+  bloom: apply
+  prompt_md: Fullfør Noras to svar. Bruk etterstilt eiendomsord først og foranstilt eiendomsord når hun framhever hvem skjerfet tilhører.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Emil
+      text_md: «Hvor ligger skjerfet ditt?»
+    - speaker: Emil
+      text_md: «Er det skjerfet til Emil?»
+  explanation_md: 'Nora bruker etterstilt eiendomsord i et nøytralt svar om plassering. Når hun framhever at skjerfet tilhører henne, står eiendomsordet først.'
+  derived_from:
+  - section_id: checkpoint-continue-cabin-exchange
+  segments:
+  - text_md: 'Nora: «'
+  - blank_id: cabin-routine
+    options:
+    - skjerfet mitt
+    - mitt skjerf
+    answer_index: 0
+  - text_md: ' ligger i sekken.» Nora: «Nei,'
+  - blank_id: cabin-emphasis
+    options:
+    - mitt skjerf
+    - skjerfet mitt
+    answer_index: 0
+  - text_md: ' er blått.»'
+  audio_target: 'Nora: «skjerfet mitt ligger i sekken.» Nora: «Nei, mitt skjerf er blått.»'
+- handle: sort_meeting_room_belongings
+  op: build
+  objective: obj-possessive-placement-01
+  bloom: apply
+  prompt_md: Liv tror at koppen ved vinduet og laderne på bordet tilhører henne. Begge deler er Amirs. Bygg Amirs svar.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Liv
+      text_md: «Koppen min står vel ved vinduet, og laderne er mine?»
+  explanation_md: Liv tar feil om begge tingene. I rettelsen setter Amir «mine» først for å framheve at laderne er hans, mens «koppen min» bruker det vanlige etterstilte mønsteret om hvor koppen står.
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+  tokens:
+  - token_id: meeting-1
+    text: Koppen
+  - token_id: meeting-2
+    text: min
+  - token_id: meeting-3
+    text: står
+  - token_id: meeting-4
+    text: ved
+  - token_id: meeting-5
+    text: vinduet,
+  - token_id: meeting-6
+    text: men
+  - token_id: meeting-7
+    text: mine
+  - token_id: meeting-8
+    text: ladere
+  - token_id: meeting-9
+    text: ligger
+  - token_id: meeting-10
+    text: på
+  - token_id: meeting-11
+    text: bordet.
+  answer_order:
+  - meeting-1
+  - meeting-2
+  - meeting-3
+  - meeting-4
+  - meeting-5
+  - meeting-6
+  - meeting-7
+  - meeting-8
+  - meeting-9
+  - meeting-10
+  - meeting-11
+- handle: message_about_meeting_room_belongings
+  op: write
+  objective: obj-possessive-placement-01
+  bloom: apply
+  prompt_md: "Liv skriver: «Den blå koppen er din, og begge laderne er mine. Hvor er notatboka di?» Koppen din er rød og står ved vinduet; den blå koppen er Livs. De to laderne dine ligger på bordet, og notatboka di er i veska. Svar Liv på norsk. Rett opp misforståelsen med eiendomsordet først, og bruk etterstilt eiendomsord når du forteller hvor tingene dine er."
+  explanation_md: En naturlig melding retter opp hvem som eier tingene og bruker etterstilte eiendomsord når den forteller hvor de står.
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+  response_language: "no"
+  min_words: 35
+  max_words: 55
+  judge_prompt: Evaluate every listed criterion as a gating criterion. Do not introduce any additional gating requirement.
+  criteria:
+  - id: reply-purpose
+    instruction: The response is a reply to Liv that corrects her ownership assumptions and reports where the learner’s things are.
+  - id: supplied-facts
+    instruction: The response uses the supplied facts without contradicting them.
+  - id: norwegian-reply
+    instruction: The response is written in understandable Norwegian.
+  - id: possessive-placement-observation
+    instruction: The response uses owner-first placement for the correction and postposed possessives for routine information about the learner’s things.
+  - id: noun-form-observation
+    instruction: Each possessive placement is paired with the taught noun form.
+- handle: revise_meeting_room_message
+  op: find_fix
+  objective: obj-possessive-placement-01
+  bloom: analyze
+  prompt_md: Velg ordet som må endres.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Liv
+      text_md: «Laderne er mine.»
+    - speaker: Amir
+      text_md: «Nei, mine laderne ligger på bordet. Koppen min står ved vinduet.»
+  explanation_md: Rettelsen krever «mine ladere». «Koppen min» er allerede riktig i et nøytralt utsagn.
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+  tokens:
+  - token_id: revise-1
+    text: Nei,
+  - token_id: revise-2
+    text: mine
+  - token_id: revise-3
+    text: laderne
+  - token_id: revise-4
+    text: ligger
+  - token_id: revise-5
+    text: på
+  - token_id: revise-6
+    text: bordet.
+  - token_id: revise-7
+    text: Koppen
+  - token_id: revise-8
+    text: min
+  - token_id: revise-9
+    text: står
+  - token_id: revise-10
+    text: ved
+  - token_id: revise-11
+    text: vinduet.
+  error_token_id: revise-3
+  feedback: Change laderne to ladere. The preposed possessive mine pairs with the indefinite plural noun.
+- handle: retrieve_possessive_placement_rule
+  op: write
+  objective: obj-possessive-placement-01
+  bloom: apply
+  prompt_md: "Skriv en melding til en medelev. Forklar begge plasseringene av eiendomsord, si når den foranstilte formen kan framheve eieren, og gi ett eksempel på hver."
+  explanation_md: Skill mellom bestemt substantiv med etterstilt eiendomsord og ubestemt substantiv med foranstilt eiendomsord. Den foranstilte formen kan framheve eller kontrastere eieren.
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: "no"
+  min_words: 30
+  max_words: 50
+  judge_prompt: "Evaluate rule-after-noun, rule-before-noun, two-examples, classmate-message, norwegian-message. Accept natural Bokmål gender variants when placement and noun form remain paired. Do not add further gating requirements."
+  criteria:
+  - id: rule-after-noun
+    instruction: Explains that the taught postposed pattern uses a definite common noun followed by the possessive.
+  - id: rule-before-noun
+    instruction: Explains that the taught preposed pattern uses the possessive followed by an indefinite common noun and can highlight or contrast the owner.
+  - id: two-examples
+    instruction: Gives one natural Norwegian example of each taught pattern.
+  - id: classmate-message
+    instruction: Functions as an explanatory message to the classmate.
+  - id: norwegian-message
+    instruction: The message is written in understandable Norwegian.
+- handle: review_postposed_definite_phrase
+  op: write
+  objective: obj-possessive-placement-01
+  bloom: apply
+  prompt_md: "På bordet ligger en bok som tilhører meg. Fullfør som betyr «my book», med bestemt substantiv og etterstilt eiendomsord: «___ ligger på bordet.»"
+  explanation_md: 'Et nøytralt svar om plassering har bestemt substantiv med etterstilt eiendomsord: «boka mi».'
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: "no"
+  min_words: 1
+  max_words: 4
+  judge_prompt: Vurder bare frasefullføring og antall ord. Godta «Boka mi» og den vanlige felleskjønnsvarianten «Boken min». Ikke legg til andre krav.
+  criteria:
+  - id: phrase-completion
+    instruction: Gir en samsvarende etterstilt frase som betyr «my book», for eksempel «Boka mi» eller «Boken min».
+- handle: review_preposed_indefinite_phrase
+  op: write
+  objective: obj-possessive-placement-01
+  bloom: apply
+  prompt_md: "Ola peker på en rød sykkel og sier at den er din. Din er blå. Skriv eierordet først. Fullfør: «Nei, ___ er blå.»"
+  explanation_md: 'Korreksjonen fremhever eieren med possessivet før det ubestemte substantivet: min sykkel.'
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: "no"
+  min_words: 1
+  max_words: 4
+  judge_prompt: "Evaluate phrase-completion only. The intended completion is min sykkel, with capitalization accepted. Do not add further gating requirements."
+  criteria:
+  - id: phrase-completion
+    instruction: Supplies min sykkel as the owner-first phrase required by the correction.
+- handle: review_choose_focus_response
+  op: recall_fill
+  objective: obj-possessive-placement-01
+  bloom: analyze
+  prompt_md: Velg svaret som tydelig framhever at koppen er min.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Eva
+      text_md: «Du mener at koppen er min?»
+  explanation_md: Ordstillingen framhever eieren som blir korrigert.
+  derived_from:
+  - section_id: retrieval-and-review
+  segments:
+  - text_md: 'Noor: «'
+  - blank_id: review-cup-contrast
+    options:
+    - Nei, min kopp er rød.
+    - Nei, koppen min er rød.
+    answer_index: 0
+  - text_md: »
+  audio_target: 'Noor: «Nei, min kopp er rød.»'
+- handle: review_repair_noun_form
+  op: write
+  objective: obj-possessive-placement-01
+  bloom: apply
+  prompt_md: "I familieoppslaget står det: «Våre foreldrene kommer klokka seks.» Skriv bare den rettede eiendomsfrasen."
+  explanation_md: 'Foranstilt eiendomsord står med ubestemt substantiv i flertall: «våre foreldre».'
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: "no"
+  min_words: 1
+  max_words: 4
+  judge_prompt: "Evaluate corrected-phrase only. The intended phrase is våre foreldre, with capitalization accepted. Do not add further gating requirements."
+  criteria:
+  - id: corrected-phrase
+    instruction: Supplies våre foreldre without the definite plural ending.

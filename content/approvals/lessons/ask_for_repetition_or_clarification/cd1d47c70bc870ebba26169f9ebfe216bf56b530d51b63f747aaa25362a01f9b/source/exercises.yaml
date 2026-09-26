@@ -1,0 +1,419 @@
+- handle: recognizing-hearing-problem
+  op: choose
+  objective: obj-ask-for-repetition-or-clarification-01
+  bloom: understand
+  prompt_md: Choose the reply that fits the situation.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Kaffekverna bråker slik at Mina ikke hører resten av beskjeden.
+    - speaker: Jonas
+      text_md: «Mina, kan du …»
+  options:
+  - id: ask-for-word-meaning
+    text: «Unnskyld, hva betyr “kan”?»
+    correct: false
+    why: This treats one word as unfamiliar, but the noise hid the whole message.
+  - id: check-a-detail
+    text: «Mener du bord fire?»
+    correct: false
+    why: This proposes a detail that Mina never heard.
+  - id: ask-for-repetition
+    text: «Unnskyld, kan du gjenta?»
+    correct: true
+    why: The whole message was lost in the noise, so Mina needs to hear it again.
+  explanation_md: Ask for repetition when noise hides the whole message.
+  derived_from:
+  - section_id: recognizing-hearing-problem
+- handle: choosing-help-that-matches-the-problem
+  op: choose
+  objective: obj-ask-for-repetition-or-clarification-01
+  bloom: understand
+  prompt_md: Choose the reply that fits the situation.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Jonas har gjentatt beskjeden to ganger, men snakker like fort hver gang; han gjentar alltid
+        ordene i samme høye tempo.
+    - speaker: Jonas
+      text_md: «Kunden vil ha to kaffe, ett glass vann og en bolle.»
+  options:
+  - id: ask-about-meaning
+    text: «Hva mener du, egentlig?»
+    correct: false
+    why: This asks about intended meaning, although the words are clear and only their speed is the obstacle.
+  - id: request-repetition
+    text: «Kan du gjenta beskjeden?»
+    correct: false
+    why: Jonas has already repeated the whole message twice at the same fast tempo, and he always repeats
+      at that tempo, so another repetition would still arrive too quickly.
+  - id: request-slower-speech
+    text: «Kan du snakke saktere?»
+    correct: true
+    why: Jonas always repeats the message at the same fast tempo, so Mina needs the same words delivered
+      more slowly.
+  explanation_md: Ask for slower speech when the words arrive too quickly, even when the message has already
+    been repeated.
+  derived_from:
+  - section_id: choosing-help-that-matches-the-problem
+- handle: clarification-word-or-meaning
+  op: choose
+  objective: obj-ask-for-repetition-or-clarification-01
+  bloom: understand
+  prompt_md: Mina understands the rest of the sentence but not the word «ledig». Choose the reply that
+    asks specifically what that word means.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Mina forstår «dette bordet er», men ikke ordet «ledig».
+    - speaker: Jonas
+      text_md: «Dette bordet er ledig.»
+  options:
+  - id: ask-speaker-intention
+    text: «Hva mener du?»
+    correct: false
+    why: This asks about Jonas's overall intention instead of the single word Mina has not learned.
+  - id: ask-for-slower-speech
+    text: «Kan du snakke litt saktere?»
+    correct: false
+    why: Slower speech would repeat the same unfamiliar word without explaining it.
+  - id: ask-word-meaning
+    text: «Hva betyr “ledig”?»
+    correct: true
+    why: This isolates the unfamiliar word and asks for its meaning.
+  explanation_md: Use «Hva betyr …?» for an unfamiliar word and «Hva mener du?» for unclear intent.
+  derived_from:
+  - section_id: ask-about-the-unclear-part
+- handle: isolating-an-unfamiliar-word
+  op: write
+  objective: obj-ask-for-repetition-or-clarification-01
+  bloom: apply
+  prompt_md: '**Til Jonas på jobb** Jonas sier: «Legg kvitteringen ved kassen.» Write Mina''s question
+    asking what *kvitteringen* means, and her confirming reply that states what a receipt shows the customer
+    paid, in 8–18 Norwegian words.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Jonas
+      text_md: «Legg kvitteringen ved kassen.»
+    - speaker: Jonas
+      text_md: «En kvittering viser hva kunden har betalt.»
+  response_language: 'no'
+  judge_prompt: Evaluate gating criteria focused-question and meaning-confirmed. Record understanding-observation
+    diagnostically; its verdict must never cause failure. Accept natural Bokmål variants and minor language
+    errors that preserve the message.
+  criteria:
+  - id: focused-question
+    instruction: Asks Jonas what «kvitteringen» means.
+  - id: meaning-confirmed
+    instruction: Acknowledges that a receipt shows what the customer paid.
+  - id: understanding-observation
+    instruction: 'Observation only: note whether Mina signals that she now understands; never gate on
+      this.'
+  explanation_md: A focused word question followed by a confirmation closes the repair.
+  derived_from:
+  - section_id: isolating-an-unfamiliar-word
+- handle: confirming-place-time-or-object
+  op: write
+  objective: obj-ask-for-repetition-or-clarification-01
+  bloom: apply
+  prompt_md: '**Melding til Aksel** Aksel says they will meet outside the station. Write Nora’s question checking whether he means outside the main entrance, then her reply after he corrects her to the east entrance, in 8–18 Norwegian words.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Aksel
+      text_md: «Vi møtes utenfor stasjonen.»
+    - speaker: Aksel
+      text_md: «Nei, ved østinngangen.»
+  response_language: 'no'
+  judge_prompt: Evaluate gating criteria detail-checked and correction-registered. Record meeting-continued-observation
+    diagnostically; its verdict must never cause failure. Accept natural Bokmål variants and minor language
+    errors that preserve the message.
+  criteria:
+  - id: detail-checked
+    instruction: Asks whether Aksel means outside the station's main entrance.
+  - id: correction-registered
+    instruction: Repeats or clearly acknowledges «ved østinngangen».
+  - id: meeting-continued-observation
+    instruction: 'Observation only: note whether the reply ends with a relevant continuation of the meeting
+      arrangement; never gate on this.'
+  explanation_md: A detail check proposes an interpretation; repeating the correction shows what was understood.
+  derived_from:
+  - section_id: confirming-place-time-or-object
+- handle: completing-repair-cycle
+  op: write
+  objective: obj-ask-for-repetition-or-clarification-01
+  bloom: apply
+  prompt_md: '**Til Jonas på kafeen** Jonas sier: «Ta to kopper kaffe til bord fire.» Write Mina''s request
+    to have the whole order repeated, her confirmation of it, and her next step, in 12–24 Norwegian words.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Kaffekverna overdøver hele bestillingen fra Jonas.
+    - speaker: Jonas
+      text_md: «Ta to kopper kaffe til bord fire.»
+  response_language: 'no'
+  judge_prompt: Evaluate criteria repetition-requested, order-confirmed, and cafe-task-continued. Every
+    criterion mirrors the visible task. Accept natural Bokmål variants and minor language errors that
+    preserve the repair sequence.
+  criteria:
+  - id: repetition-requested
+    instruction: Requests repetition because the whole order was missed.
+  - id: order-confirmed
+    instruction: Confirms two cups of coffee for table four.
+  - id: cafe-task-continued
+    instruction: States a relevant next action at the café.
+  explanation_md: A complete repair requests help, confirms the recovered information, and resumes the
+    task.
+  derived_from:
+  - section_id: completing-repair-cycle
+- handle: revise-repair-message
+  op: write
+  objective: obj-ask-for-repetition-or-clarification-01
+  bloom: apply
+  prompt_md: '**Mina’s draft reply to Jonas** Rewrite Mina’s reply in 4–10 Norwegian words so Jonas can
+    verify the corrected table. State the corrected table as the Norwegian word «fem», not a digit.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Jonas
+      text_md: «Bestillingen skal til bord 5.»
+    - speaker: Mina
+      text_md: «Greit, bord 6.»
+    - speaker: Jonas
+      text_md: «Nei, jeg mener bord 5.»
+  response_language: 'no'
+  judge_prompt: Evaluate gating criterion table-five-explicit, stated as a Norwegian word rather than
+    a digit. Record reply-closed-observation diagnostically; its verdict must never cause failure. Accept
+    concise natural Bokmål variants.
+  criteria:
+  - id: table-five-explicit
+    instruction: Makes table five explicit in Mina’s revised reply, using the Norwegian word «fem» rather
+      than a digit.
+  - id: reply-closed-observation
+    instruction: 'Observation only: note whether the reply also signals acceptance or readiness to continue;
+      never gate on this.'
+  explanation_md: Repeating the corrected detail gives the speaker evidence that the repair worked.
+  derived_from:
+  - section_id: failing-to-register-a-correction
+- handle: integrated-practice-repairing-complete-exchange
+  op: write
+  objective: obj-ask-for-repetition-or-clarification-01
+  bloom: apply
+  prompt_md: 'A phone call from a colleague at the library breaks up during two instructions. Write a short
+    three-turn Norwegian exchange: Mina asks for the unclear detail again, the colleague repeats it, and
+    Mina confirms the instructions and says what she will do next. Use 18–32 words.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Kollega
+      text_md: «Lesesalen må låses klokka atten tretti. Legg nøkkelen i den blå boksen ved personalinngangen.»
+    - speaker: Context
+      text_md: The call breaks up before Mina can make out where the key should be left.
+  response_language: 'no'
+  judge_prompt: Evaluate gating criteria message-repeated, instructions-confirmed, and next-step-stated.
+    Also check that the colleague's repeated detail matches the message. Record request-form-observation
+    diagnostically; its verdict must never cause failure. Accept natural Bokmål variants and minor form
+    errors when the communicative outcome is clear.
+  criteria:
+  - id: message-repeated
+    instruction: Requests that the colleague repeat the unclear instructions or the details that were missed.
+  - id: detail-repeated
+    instruction: Repeats that the key should be left in the blue box by the staff entrance.
+  - id: instructions-confirmed
+    instruction: Confirms that the reading room must be locked at 18:30 and the key belongs in the blue box by the staff entrance.
+  - id: next-step-stated
+    instruction: States a relevant next action, such as locking the reading room and leaving the key in the specified box.
+  - id: request-form-observation
+    instruction: 'Observation only: note whether the reply uses a conventional repetition or slower-speech request naturally;
+      never gate on this.'
+  explanation_md: The interrupted call leaves one detail unclear; the exchange should repair that gap,
+    confirm the instructions, and continue with the relevant task.
+  derived_from:
+  - section_id: integrated-practice-repairing-complete-exchange
+- handle: short-retrieval-review
+  op: write
+  objective: obj-ask-for-repetition-or-clarification-01
+  bloom: apply
+  prompt_md: '**Kort repetisjon:** Write one natural Norwegian request for each situation: you missed a whole
+    message; the speaker is talking too fast; one word is unfamiliar; you think one detail may be wrong.
+    Then complete a repair sequence for this call: the connection cuts out as the bus employee gives the
+    departure details. Ask for help, acknowledge the repeated information, and continue the call naturally.
+    Write 45–85 Norwegian words in total.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Forbindelsen blir brutt idet den ansatte forteller om avgangen.
+    - speaker: Ansatt
+      text_md: «Bussen går fra plattform ni klokka 17.10.»
+  response_language: 'no'
+  judge_prompt: Evaluate whether the response includes an appropriate, distinct Norwegian request for each
+    of the four listed situations and completes the bus-call repair sequence. Accept natural Bokmål variants;
+    do not require fixed phrases. For the call, require a request suited to missing information, a clear
+    acknowledgment of the repeated platform and time, and a relevant continuation.
+  criteria:
+  - id: four-repair-requests
+    instruction: Provides an appropriate Norwegian request for a missed message, speech that is too fast,
+      an unfamiliar word, and a possibly incorrect detail.
+  - id: call-repair-sequence
+    instruction: In the bus call, requests help with the missed departure information and acknowledges the
+      repeated platform nine and 17.10.
+  - id: call-continued
+    instruction: Continues or closes the bus call naturally after acknowledging the information.
+  explanation_md: The changed context tests transfer of the full repair cycle.
+  derived_from:
+  - section_id: short-retrieval-review
+- handle: review_request_repetition
+  op: write
+  objective: obj-ask-for-repetition-or-clarification-01
+  bloom: apply
+  prompt_md: A train passes while a colleague gives a whole instruction, so you catch none of it. Write
+    the Norwegian line that asks for the whole message again, in 1–4 words.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Toget overdøver hele beskjeden fra kollegaen.
+  response_language: 'no'
+  judge_prompt: Evaluate whole-message-repair. Accept concise natural Bokmål variants such as «Kan du
+    gjenta?» and polite variants with «Unnskyld».
+  criteria:
+  - id: whole-message-repair
+    instruction: Requests that the missed whole message be repeated.
+  explanation_md: The cue requires recovery of a whole missed message.
+  derived_from:
+  - section_id: first-repair-move-ask-for-repetition
+- handle: review_request_slower_speech
+  op: write
+  objective: obj-ask-for-repetition-or-clarification-01
+  bloom: apply
+  prompt_md: You hear every word, but the cashier speaks too quickly. Write the Norwegian line that asks
+    for slower speech, in 1–6 words.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Kassereren snakker så fort at du ikke rekker å følge med.
+  response_language: 'no'
+  judge_prompt: Evaluate speed-repair. Accept concise natural Bokmål variants, including «Kan du snakke litt saktere?», «Snakk litt saktere» and «Litt saktere, takk», within the 1–6-word limit.
+  criteria:
+  - id: speed-repair
+    instruction: Requests slower speech.
+  explanation_md: The speed cue distinguishes slower speech from ordinary repetition.
+  derived_from:
+  - section_id: when-repetition-is-not-enough-ask-for-slower-speech
+- handle: review_ask_word_meaning
+  op: write
+  objective: obj-ask-for-repetition-or-clarification-01
+  bloom: apply
+  prompt_md: 'Colleague: «Legg vekselpengene i skuffen.» You understand the instruction except for *vekselpengene*.
+    Write the Norwegian question that asks for the meaning of *vekselpengene*, in 1–4 words.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Kollega
+      text_md: «Legg vekselpengene i skuffen.»
+  response_language: 'no'
+  judge_prompt: Evaluate word-meaning-repair. Accept concise natural Bokmål variants that ask what «vekselpengene»
+    means.
+  criteria:
+  - id: word-meaning-repair
+    instruction: Asks for the meaning of «vekselpengene».
+  explanation_md: Isolating the unknown word is more precise than repeating the whole instruction.
+  derived_from:
+  - section_id: ask-about-the-unclear-part
+- handle: review_check_uncertain_detail
+  op: write
+  objective: obj-ask-for-repetition-or-clarification-01
+  bloom: apply
+  prompt_md: 'Friend: «Vi møtes neste uke.» You think the friend means Thursday. Write the Norwegian question
+    that checks whether Thursday is right, in 1–4 words.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Venn
+      text_md: «Vi møtes neste uke.»
+  response_language: 'no'
+  judge_prompt: Evaluate detail-repair. Accept concise natural Bokmål variants that ask whether Thursday
+    is intended.
+  criteria:
+  - id: detail-repair
+    instruction: Checks whether the friend means Thursday.
+  explanation_md: The learner proposes one interpretation for confirmation or correction.
+  derived_from:
+  - section_id: check-a-detail-with-mener-du
+- handle: review_confirm_correction
+  op: write
+  objective: obj-ask-for-repetition-or-clarification-01
+  bloom: apply
+  prompt_md: You guessed table eight. The colleague corrects you. Write the Norwegian line that registers
+    the corrected table, using the Norwegian word «sju» rather than a digit, in 1–4 words.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Kollega
+      text_md: «Nei, vi skal sitte ved bord 7.»
+  response_language: 'no'
+  judge_prompt: Evaluate correction-confirmed. Accept concise natural Bokmål variants that explicitly
+    acknowledge table seven in words, for example «Bord sju» or «Å, bord sju».
+  criteria:
+  - id: correction-confirmed
+    instruction: Explicitly acknowledges table seven, using the Norwegian word «sju» rather than a digit.
+  explanation_md: Repeating the corrected detail demonstrates successful understanding.
+  derived_from:
+  - section_id: failing-to-register-a-correction
+- handle: review_continue_after_repair
+  op: write
+  objective: obj-ask-for-repetition-or-clarification-01
+  bloom: apply
+  prompt_md: 'Colleague: «Ja, kunden venter ved døra.» You now understand and will help immediately. Write
+    the Norwegian line that says you will help now, in 1–4 words.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Kollega
+      text_md: «Ja, kunden venter ved døra.»
+  response_language: 'no'
+  judge_prompt: Evaluate task-resumed. Accept concise natural Bokmål variants that state an immediate
+    relevant next action.
+  criteria:
+  - id: task-resumed
+    instruction: States that the learner will help or act now.
+  explanation_md: A next step returns the speakers to their shared task.
+  derived_from:
+  - section_id: continuing-without-closing-repair
+- handle: review_discriminate_complete_response
+  op: choose
+  objective: obj-ask-for-repetition-or-clarification-01
+  bloom: apply
+  prompt_md: Choose the reply that registers the corrected time and continues the arrangement.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Resepsjonist
+      text_md: «Avtalen er klokka tre.»
+    - speaker: Ringende
+      text_md: «Mener du klokka to?»
+    - speaker: Resepsjonist
+      text_md: «Nei, klokka tre.»
+  options:
+  - id: continue-with-wrong-time
+    text: «Greit, da kommer jeg klokka to.»
+    correct: false
+    why: It continues without adopting the corrected time.
+  - id: confirm-and-continue
+    text: «Å, klokka tre. Da kommer jeg litt før.»
+    correct: true
+    why: It registers the corrected time and continues the arrangement.
+  - id: acknowledge-only
+    text: «Å, klokka tre.»
+    correct: false
+    why: It registers the time but gives no evidence of continuing the arrangement.
+  explanation_md: A complete response confirms the final information before moving on.
+  derived_from:
+  - section_id: short-retrieval-review

@@ -1,0 +1,389 @@
+- handle: checkpoint_identify_current_situation
+  op: recall_fill
+  objective: obj-ha-or-fa-for-possession-and-acquisition-01
+  bloom: apply
+  prompt_md: "Fullfør de tre setningene etter samtalene."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Jeg kan låse opp. Nøkkelen ligger her i hånden min.»
+    - speaker: Henrik
+      text_md: «Jeg har lett i alle lommene, men nøkkelen er borte.»
+    - speaker: Fatima
+      text_md: «Jeg kan åpne døren. Adgangskortet ligger i veska mi.»
+  explanation_md: "«Har» og «har ikke» viser hva en person har eller mangler nå."
+  derived_from:
+  - section_id: checkpoint-identify-current-situation
+  audio_target: Nora har nøkkelen. Henrik har ikke nøkkelen. Fatima har adgangskortet.
+  segments:
+  - text_md: 'Nora '
+  - blank_id: nora-key-state
+    options:
+    - har
+    - har ikke
+    answer_index: 0
+  - text_md: ' nøkkelen. Henrik '
+  - blank_id: henrik-key-state
+    options:
+    - får
+    - har ikke
+    answer_index: 1
+  - text_md: ' nøkkelen. Fatima '
+  - blank_id: fatima-card-state
+    options:
+    - har
+    - har ikke
+    answer_index: 0
+  - text_md: ' adgangskortet.'
+- handle: checkpoint_notice_transfer
+  op: recall_fill
+  objective: obj-ha-or-fa-for-possession-and-acquisition-01
+  bloom: apply
+  prompt_md: "Fullfør setningene med verbet som viser at noe kommer til Nora."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Kollega
+      text_md: «Vær så god, Nora. Her er nøkkelen din.»
+    - speaker: Nora
+      text_md: «Takk. Da kan jeg låse opp.»
+    - speaker: Kollega
+      text_md: «Jeg sender dokumentet til deg nå.»
+    - speaker: Nora
+      text_md: «Flott, jeg åpner det når det kommer.»
+    - speaker: Kollega
+      text_md: «Den nye stolen kommer til kontoret ditt i ettermiddag.»
+    - speaker: Nora
+      text_md: «Bra, da kan jeg bruke den etter lunsj.»
+  explanation_md: "«Får» viser at noe kommer til Nora. «Har» viser hva hun allerede eier eller disponerer."
+  derived_from:
+  - section_id: checkpoint-notice-transfer
+  audio_target: Nora får en nøkkel. Nora får et dokument. Nora får en ny stol.
+  segments:
+  - text_md: 'Nora '
+  - blank_id: key-transfer
+    options:
+    - får
+    - har
+    answer_index: 0
+  - text_md: ' en nøkkel. Nora '
+  - blank_id: document-transfer
+    options:
+    - har
+    - får
+    answer_index: 1
+  - text_md: ' et dokument. Nora '
+  - blank_id: chair-transfer
+    options:
+    - får
+    - har
+    answer_index: 0
+  - text_md: ' en ny stol.'
+- handle: checkpoint_switch_viewpoint
+  op: recall_fill
+  objective: obj-ha-or-fa-for-possession-and-acquisition-01
+  bloom: apply
+  prompt_md: "Fullfør setningene ut fra overleveringen og situasjonen etterpå."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Kasserer
+      text_md: «Her er pengene dine, Nora.»
+    - speaker: Nora
+      text_md: «Takk. Nå ligger de i lommeboka mi.»
+    - speaker: Resepsjonist
+      text_md: «Rom 214 er klart. Her er nøkkelkortet.»
+    - speaker: Nora
+      text_md: «Flott. Nå kan jeg gå opp på rommet mitt.»
+    - speaker: Leder
+      text_md: «Jeg sender rapporten til deg nå.»
+    - speaker: Nora
+      text_md: «Der kom den. Nå ligger den åpen på skjermen min.»
+    - speaker: Venn
+      text_md: «Denne pakken er til deg.»
+    - speaker: Nora
+      text_md: «Tusen takk. Nå ligger gaven i veska mi.»
+    - speaker: Konduktør
+      text_md: «Du kan sitte ved vinduet.»
+    - speaker: Nora
+      text_md: Fint, da tar jeg vindusplassen.
+  explanation_md: "«Får» viser overgangen til ny besittelse. «Har» beskriver situasjonen etterpå."
+  derived_from:
+  - section_id: checkpoint-switch-viewpoint
+  audio_target: Nora får penger. Etterpå har hun penger. Nora får et hotellrom. Etterpå har hun et hotellrom.
+    Nora får rapporten. Etterpå har hun rapporten. Nora får en gave. Etterpå har hun gaven. Nora får
+    en sitteplass. Etterpå har hun en sitteplass.
+  segments:
+  - text_md: 'Nora '
+  - blank_id: money-receiving
+    options:
+    - får
+    - har
+    answer_index: 0
+  - text_md: ' penger. Etterpå '
+  - blank_id: money-possession
+    options:
+    - har
+    - får
+    answer_index: 0
+  - text_md: ' hun penger. Nora '
+  - blank_id: room-receiving
+    options:
+    - har
+    - får
+    answer_index: 1
+  - text_md: ' et hotellrom. Etterpå '
+  - blank_id: room-possession
+    options:
+    - får
+    - har
+    answer_index: 1
+  - text_md: ' hun et hotellrom. Nora '
+  - blank_id: report-receiving
+    options:
+    - har
+    - får
+    answer_index: 1
+  - text_md: ' rapporten. Etterpå '
+  - blank_id: report-possession
+    options:
+    - har
+    - får
+    answer_index: 0
+  - text_md: ' hun rapporten. Nora '
+  - blank_id: gift-receiving
+    options:
+    - har
+    - får
+    answer_index: 1
+  - text_md: ' en gave. Etterpå '
+  - blank_id: gift-possession
+    options:
+    - får
+    - har
+    answer_index: 1
+  - text_md: ' hun fortsatt gaven. Nora '
+  - blank_id: seat-receiving
+    options:
+    - får
+    - har
+    answer_index: 0
+  - text_md: ' en sitteplass. Etterpå '
+  - blank_id: seat-possession
+    options:
+    - har
+    - får
+    answer_index: 0
+  - text_md: ' hun en sitteplass.'
+- handle: practice_follow_object_through_a_day
+  op: write
+  objective: obj-ha-or-fa-for-possession-and-acquisition-01
+  bloom: apply
+  prompt_md: >-
+    Melding til reisefølget: Elias mangler romnøkkelen om morgenen. Resepsjonisten gir ham nøkkelen
+    ved innsjekking. Senere ligger den i jakkelomma hans. Om kvelden finner han den ikke og spør
+    reisefølget om de har den. Skriv en melding på 25–55 ord og fortell hva som skjer fra morgenen
+    til kvelden. Bruk «har ikke» om morgenen, «får» ved innsjekking og «har» senere.
+  derived_from:
+  - section_id: practice-follow-object-through-a-day
+  response_language: 'no'
+  min_words: 25
+  max_words: 55
+  judge_prompt: Vurder svaret mot kriterie-idene. Alle kriteriene er bindende fordi de gjentar synlige
+    krav i oppgaven. Ikke legg til andre bindende krav.
+  criteria:
+  - id: audience-and-purpose
+    instruction: Meldingen er rettet til reisefølget og forklarer hva som skjer med romnøkkelen.
+  - id: supplied-facts
+    instruction: Meldingen bruker morgenens mangel, overrekkelsen ved innsjekking, plasseringen i jakkelomma
+      og kveldens spørsmål uten å motsi tidsforløpet.
+  - id: possession-forms
+    instruction: Meldingen bruker har ikke om morgenen og har senere om besittelse.
+  - id: acquisition-form
+    instruction: Meldingen bruker får om mottakelsen i resepsjonen.
+  - id: evening-question
+    instruction: Meldingen sier at Elias om kvelden ikke finner nøkkelen og spør reisefølget om de har
+      den.
+  - id: word-bound
+    instruction: Meldingen inneholder 25–55 ord.
+- handle: practice_ask_the_useful_question
+  op: write
+  objective: obj-ha-or-fa-for-possession-and-acquisition-01
+  bloom: apply
+  prompt_md: >-
+    Chat med Henrik: Nora har allerede fått parkeringskortet. Datamaskinen kommer i morgen.
+    Kontraktskopien ligger kanskje hos Nora, men Henrik vet ikke sikkert. Skriv en chat på 20–60 ord
+    med tre spørsmål og korte svar om hva Nora har nå og hva hun får senere. Bruk minst ett spørsmål
+    som begynner med «Har Nora …?» og ett med «Får Nora …?».
+  derived_from:
+  - section_id: practice-ask-the-useful-question
+  response_language: 'no'
+  min_words: 20
+  max_words: 60
+  judge_prompt: Vurder svaret mot kriterie-idene. Alle kriteriene er bindende fordi de gjentar synlige
+    krav i oppgaven. Ikke legg til andre bindende krav.
+  criteria:
+  - id: three-items
+    instruction: Chatten omtaler parkeringskortet, datamaskinen og kontraktskopien.
+  - id: information-needs
+    instruction: Spørsmålene og svarene avklarer både nåværende besittelse og senere mottakelse.
+  - id: three-questions-short-answers
+    instruction: Chatten inneholder nøyaktig tre spørsmål, og hvert spørsmål har et kort svar.
+  - id: possession-question
+    instruction: Chatten inneholder et spørsmål som begynner med Har Nora …? om nåværende besittelse.
+  - id: acquisition-question
+    instruction: Chatten inneholder et spørsmål som begynner med Får Nora …? om senere mottakelse.
+  - id: word-bound
+    instruction: Chatten inneholder 20–60 ord.
+- handle: practice_repair_unclear_messages
+  op: find_fix
+  objective: obj-ha-or-fa-for-possession-and-acquisition-01
+  bloom: analyze
+  prompt_md: >-
+    Resepsjonisten gir Nora dokumentet om et øyeblikk, og hun får nøkkelen i morgen. Velg verbet som
+    ikke passer til situasjonen.
+  explanation_md: Resepsjonisten overrekker dokumentet til Nora om et øyeblikk, så første ledd trenger
+    får. Andre ledd bruker allerede får riktig om mottakelsen i morgen.
+  derived_from:
+  - section_id: practice-repair-unclear-messages
+  tokens:
+  - token_id: tok-nora
+    text: Nora
+  - token_id: tok-verb
+    text: har
+  - token_id: tok-document
+    text: dokumentet
+  - token_id: tok-comma
+    text: ','
+  - token_id: tok-og
+    text: og
+  - token_id: tok-hun
+    text: hun
+  - token_id: tok-faar
+    text: får
+  - token_id: tok-key
+    text: nøkkelen
+  - token_id: tok-i
+    text: i
+  - token_id: tok-morgen
+    text: morgen
+  - token_id: tok-period
+    text: .
+  error_token_id: tok-verb
+  feedback: 'Bytt ut har med får: Nora får dokumentet, og hun får nøkkelen i morgen.'
+- handle: retrieval_and_review
+  op: write
+  objective: obj-ha-or-fa-for-possession-and-acquisition-01
+  bloom: apply
+  prompt_md: 'Situasjon: En ny kollega mangler et adgangskort. Resepsjonisten gir kollegaen kortet. Etterpå
+    ligger det i lommeboka. Skriv 25–60 norske ord: forklar forskjellen mellom ha og få, og beskriv situasjonen
+    i rekkefølgen har ikke, får, har.'
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  min_words: 25
+  max_words: 60
+  judge_prompt: Vurder svaret mot kriterie-idene. Alle kriteriene er bindende fordi de gjentar synlige
+    krav i oppgaven. Ikke legg til andre bindende krav.
+  criteria:
+  - id: meaning-explanation
+    instruction: Den norske forklaringen skiller besittelse fra mottakelse eller anskaffelse.
+  - id: consistent-sequence
+    instruction: Sekvensen beholder den samme kollegaen, det samme adgangskortet og det oppgitte hendelsesforløpet.
+  - id: viewpoint-order
+    instruction: Sekvensen bruker har ikke først, får deretter og har til slutt, med riktig betydning
+      på hvert stadium.
+  - id: word-bound
+    instruction: Svaret inneholder 25–60 ord.
+- handle: review_current_possession
+  op: recall_fill
+  objective: obj-ha-or-fa-for-possession-and-acquisition-01
+  bloom: apply
+  prompt_md: Fullfør utvekslingen med formen som beskriver situasjonen nå.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Mikkel
+      text_md: Har du kvitteringen?
+    - speaker: Tora
+      text_md: «Ja, den ligger i mappa mi.»
+  explanation_md: Tora beskriver hvor kvitteringen er nå.
+  derived_from:
+  - section_id: possession-with-ha
+  audio_target: Tora har kvitteringen.
+  segments:
+  - text_md: 'Tora '
+  - blank_id: review-report-state
+    options:
+    - har
+    - får
+    answer_index: 0
+  - text_md: ' kvitteringen.'
+- handle: review_receiving_event
+  op: recall_fill
+  objective: obj-ha-or-fa-for-possession-and-acquisition-01
+  bloom: apply
+  prompt_md: Fullfør utvekslingen med formen som beskriver den planlagte overleveringen.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Tora
+      text_md: «Når kommer adgangskortet mitt?»
+    - speaker: Resepsjonist
+      text_md: «Adgangskortet blir levert hit i morgen, og du kan hente det etter lunsj.»
+    - speaker: Tora
+      text_md: «Fint, da kan jeg hente det etter lunsj.»
+  explanation_md: Samtalen handler om at adgangskortet kommer til Tora senere.
+  derived_from:
+  - section_id: receiving-or-acquiring-with-fa
+  audio_target: Tora får adgangskortet i morgen.
+  segments:
+  - text_md: 'Tora '
+  - blank_id: review-report-transfer
+    options:
+    - har
+    - får
+    answer_index: 1
+  - text_md: ' adgangskortet i morgen.'
+- handle: review_viewpoint_sequence
+  op: recall_fill
+  objective: obj-ha-or-fa-for-possession-and-acquisition-01
+  bloom: apply
+  prompt_md: "Fyll inn de tre tomrommene om Aminas nøkkel før, under og etter overleveringen."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Amina
+      text_md: «Nøkkelen min er fortsatt hos resepsjonisten.»
+    - speaker: Resepsjonisten
+      text_md: «Vær så god, Amina.»
+    - speaker: Amina
+      text_md: «Takk. Nå kan jeg låse meg inn.»
+  explanation_md: "Setningene følger situasjonen før overleveringen, selve overleveringen og resultatet etterpå."
+  derived_from:
+  - section_id: same-object-two-viewpoints
+  audio_target: Først har Amina ikke nøkkelen. Så får hun nøkkelen. Etterpå har hun nøkkelen.
+  segments:
+  - text_md: 'Først '
+  - blank_id: review-before-state
+    options:
+    - har Amina ikke
+    - får Amina
+    - har Amina
+    answer_index: 0
+  - text_md: ' nøkkelen. Så '
+  - blank_id: review-transfer-event
+    options:
+    - har hun ikke
+    - får hun
+    - har hun
+    answer_index: 1
+  - text_md: ' nøkkelen. Etterpå '
+  - blank_id: review-after-state
+    options:
+    - får hun
+    - har hun ikke
+    - har hun
+    answer_index: 2
+  - text_md: ' nøkkelen.'

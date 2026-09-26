@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "ellipsis_anaphora",
   "kind": "communicative",
   "language": "nb-NO",
@@ -88,6 +88,30 @@
     {
       "kind": "exercise",
       "id": "retrieval_and_review"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_omission_modal"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_det_fact"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_gjore_det_action"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_gjerne_acceptance"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_samme_her_reaction"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_slik_method"
     }
   ],
   "sections": [
@@ -2557,15 +2581,16 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Jeg skal gjøre det bestille maten i kveld."
+                  "value": "Jeg skal gjøre det bestille maten i kveld."
                 }
               ],
               "en": [
                 {
                   "kind": "text",
-                  "value": "Incorrect: I’m going to do it order the food tonight."
+                  "value": "I’m going to do it order the food tonight."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "common-mistakes-block-10"
@@ -3012,13 +3037,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete both blanks. Keep the necessary modal or auxiliary verb and negation in the shortened response, then identify only the verb phrase left unspoken."
+          "value": "Fullfør det korte svaret."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Keep the modal, auxiliary, tense, and negation that carry the contrast, and omit only the repeated action. Use «det» for a fact, «gjøre det» for an action, and «slik» for a method."
+          "value": "Den gjentatte handlingen er tydelig, så «kan ikke» beholder mulighet og nektelse mens handlingen «levere nøkkelen» utelates. «Skal ikke» uttrykker hensikt, mens «vil ikke» uttrykker manglende vilje."
         }
       ],
       "payload": {
@@ -3028,7 +3053,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Nora kan ta imot gjestene, men Lars"
+                "value": "Mina: Sanna kan levere nøkkelen etter møtet. Eirik: Omar har ikke anledning. Mina: Sanna kan levere nøkkelen, men Omar"
               },
               {
                 "kind": "text",
@@ -3038,34 +3063,11 @@
           },
           {
             "kind": "blank",
-            "blank_id": "modal-response",
+            "blank_id": "omitted-action",
             "options": [
               "kan ikke",
               "skal ikke",
-              "ville ikke"
-            ],
-            "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": ". The omitted verb phrase is"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "omitted-phrase",
-            "options": [
-              "ta imot gjestene",
-              "bestille maten",
-              "rydde kjøkkenet"
+              "vil ikke"
             ],
             "answer_index": 0
           },
@@ -3089,10 +3091,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete the blank with a reaction expressing surprise. Use det to refer to the preceding fact without restating it."
+          "value": "Fullfør reaksjonen."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Det overrasket meg» viser til opplysningen om at møtet begynner en time tidligere enn planlagt. «Den» viser vanligvis til et substantiv i hankjønn, mens «gjorde det» viser til at en handling blir utført."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -3100,32 +3107,19 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Alle gjestene kom i tide, og"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "Mina: Møtet begynner en time tidligere enn planlagt. Eirik:"
               }
             ]
           },
           {
             "kind": "blank",
-            "blank_id": "surprise-reaction",
+            "blank_id": "fact-reaction",
             "options": [
-              "det overrasket meg",
-              "jeg tror også det",
-              "jeg skal snakke med vaktmesteren om det"
+              "Det overrasket meg.",
+              "Den overrasket meg.",
+              "Jeg gjorde det."
             ],
             "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": "."
-              }
-            ]
           }
         ]
       }
@@ -3138,10 +3132,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete four blanks. Use det for the fact, then use present, past, and perfect forms of gjøre det for the three actions in sequence."
+          "value": "Fullfør de to svarene."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Det» viser til en opplysning noen kjenner til. «Gjør det» viser at personen tar på seg å utføre handlingen; «det» alene uttrykker ikke dette."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -3149,7 +3148,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Arrangementet er avlyst. Jeg vet"
+                "value": "Mina: Arrangementet er avlyst. Eirik: Jeg vet"
               },
               {
                 "kind": "text",
@@ -3159,20 +3158,20 @@
           },
           {
             "kind": "blank",
-            "blank_id": "fact-reference",
+            "blank_id": "information-reference",
             "options": [
-              "det",
-              "gjorde det",
-              "gjør det"
+              "slik",
+              "gjerne",
+              "det"
             ],
-            "answer_index": 0
+            "answer_index": 2
           },
           {
             "kind": "span",
             "spans": [
               {
                 "kind": "text",
-                "value": ". Kan du avlyse arrangementet? Jeg"
+                "value": ". Mina: Kan du avlyse reservasjonen også? Eirik: Jeg"
               },
               {
                 "kind": "text",
@@ -3182,59 +3181,13 @@
           },
           {
             "kind": "blank",
-            "blank_id": "present-action",
+            "blank_id": "action-reference",
             "options": [
+              "er det nå",
               "gjør det nå",
-              "vet det",
-              "har gjort det"
+              "vet det nå"
             ],
-            "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": ". Hvem flyttet bordene? Nora"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "past-action",
-            "options": [
-              "gjorde det",
-              "gjør det nå",
-              "har gjort det"
-            ],
-            "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": ". Har noen ringt vaktmesteren? Jeg har"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "perfect-action",
-            "options": [
-              "gjort det",
-              "det",
-              "gjorde det"
-            ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
@@ -3256,10 +3209,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete both responses. Use gjerne for willing acceptance of a suggestion, and do not use it as a general substitute for agreement with a fact."
+          "value": "Fullfør det positive svaret."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Gjerne» godtar forslaget med glede. «Samme her» deler en opplevelse, mens «det tror jeg» uttrykker enighet i en opplysning."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -3267,54 +3225,19 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Skal vi gå gjennom planen én gang til?"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "Eirik: Skal vi ta en kort pause før vi fortsetter? Mina:"
               }
             ]
           },
           {
             "kind": "blank",
-            "blank_id": "accepting-suggestion",
+            "blank_id": "willing-acceptance",
             "options": [
               "Gjerne.",
-              "Ja, det tror jeg også.",
-              "Samme her."
+              "Samme her.",
+              "Det tror jeg."
             ],
             "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "Det blir mange gjester i kveld."
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "agreeing-with-fact",
-            "options": [
-              "Ja, det tror jeg også.",
-              "Ja, gjerne.",
-              "Gjerne."
-            ],
-            "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": []
           }
         ]
       }
@@ -3327,10 +3250,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete both responses. Use samme her to share the first speaker's preference, and use an accepting response for the request."
+          "value": "Fullfør svaret som viser at du føler det samme."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Samme her» viser at den andre personen også har den samme preferansen. «Gjerne» godtar et forslag, mens «jeg gjør det» påtar seg en handling."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -3338,11 +3266,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Jeg foretrekker små arrangementer."
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "Mina: Jeg liker best å jobbe tidlig om morgenen. Eirik:"
               }
             ]
           },
@@ -3351,41 +3275,10 @@
             "blank_id": "shared-preference",
             "options": [
               "Samme her.",
-              "Ja, gjerne.",
-              "Jeg gjør det nå."
+              "Gjerne.",
+              "Jeg gjør det."
             ],
             "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "Kan du skjære brødet?"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "accepted-request",
-            "options": [
-              "Ja, gjerne.",
-              "Samme her.",
-              "Ja, det tror jeg også."
-            ],
-            "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": []
           }
         ]
       }
@@ -3398,10 +3291,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete both sentences. In each, use slik to point to the method or arrangement, rather than det for a fact or gjerne for acceptance."
+          "value": "Velg uttrykket som best knytter svaret til Minas opplysning om bordplasseringen."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Gjøre det slik igjen» viser til plasseringen fra i fjor, selv om bordene er nye. «Gjøre det et annet sted» og «gjøre det annerledes» strider mot ønsket om å beholde plasseringen."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -3409,7 +3307,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Vi satte bordene langs veggene. Vi bør gjøre det"
+                "value": "Mina: I fjor satte vi de lange bordene langs veggene. I år bruker vi små, runde bord, men vil ha dem på de samme stedene. Eirik: Da bør vi gjøre"
               },
               {
                 "kind": "text",
@@ -3419,7 +3317,420 @@
           },
           {
             "kind": "blank",
-            "blank_id": "arrangement-method",
+            "blank_id": "method-reference",
+            "options": [
+              "det slik igjen",
+              "det et annet sted",
+              "det annerledes"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "integrated_cohesive_conversation",
+      "operation": "write",
+      "objective_id": "obj-ellipsis-anaphora-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Melding fra Mina til Eirik: «Maten er bestilt. Kan du hente nøkkelen etter jobb? Jeg kan gjøre det hvis du ikke har tid. I fjor satte vi langbord langs veggene. La oss bruke samme løsning. Jeg er litt nervøs før middagen. Vil du gå gjennom planen sammen klokka fire?» Skriv Eiriks svar til Mina i en melding: bekreft hva du vet, si hvem som henter nøkkelen, reager på nervøsiteten med «samme her», godta planmøtet med «gjerne», og omtal bordløsningen med «slik» uten unødvendig gjentakelse."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "response_language": "no",
+        "min_words": 55,
+        "max_words": 80,
+        "judge_prompt": "Vurder svaret bare etter kriteriene nedenfor. Et svar består når alle kriterier uten suffikset «-observation» er oppfylt. Kriterier med «-observation» er diagnostiske og kan aldri føre til underkjenning. Ankereksempler: Må bestå: «Takk for meldingen. Jeg vet at maten er bestilt, og jeg henter nøkkelen etter jobb, så du slipper. Samme her, men det går nok fint. Jeg kan også ta med serviettene. Klokka fire passer fint, og jeg blir gjerne med på å gå gjennom planen. Bordene kan stå på samme måte som i fjor, og vi gjør det slik igjen.» Må underkjennes på content-coverage: «Takk for meldingen. Vi snakkes senere.» Må underkjennes på no-repetition eller slik-reference: en melding som gjentar hele bordoppsettet fra i fjor i stedet for å vise tilbake til det med «slik». Rapporter en dom for hvert kriterium-id og legg ikke til andre krav.",
+        "criteria": [
+          {
+            "id": "audience-purpose",
+            "instruction": "Svaret er Eiriks melding til Mina som følger opp planleggingen."
+          },
+          {
+            "id": "content-coverage",
+            "instruction": "Svaret bekrefter matopplysningen, fordeler henting av nøkkelen, reagerer på nervøsiteten, svarer på møtet klokka fire og omtaler bordløsningen."
+          },
+          {
+            "id": "clear-references",
+            "instruction": "Det er tydelig hvilke opplysninger, handlinger og løsninger svaret viser tilbake til."
+          },
+          {
+            "id": "no-repetition",
+            "instruction": "Svaret viser tilbake til bordløsningen med en kort referanse i stedet for å gjenta hele oppsettet."
+          },
+          {
+            "id": "gjerne-acceptance",
+            "instruction": "Svaret godtar planmøtet med «gjerne»."
+          },
+          {
+            "id": "samme-her",
+            "instruction": "Svaret deler reaksjonen på nervøsiteten med «samme her»."
+          },
+          {
+            "id": "slik-reference",
+            "instruction": "Svaret viser tilbake til måten bordene skal ordnes på med «slik»."
+          },
+          {
+            "id": "omission-observation",
+            "instruction": "Registrer om svaret naturlig utelater en tydelig forstått handling; dette påvirker ikke bestått."
+          },
+          {
+            "id": "det-observation",
+            "instruction": "Registrer om «det» naturlig viser tilbake til delt informasjon; dette påvirker ikke bestått."
+          },
+          {
+            "id": "gjore-det-observation",
+            "instruction": "Registrer om en form av «gjøre det» naturlig viser tilbake til en handling; dette påvirker ikke bestått."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "retrieval_and_review",
+      "operation": "write",
+      "objective_id": "obj-ellipsis-anaphora-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "På et nytt frivilligarrangement forklar kort hva hvert uttrykk viser til. Skriv deretter seks korte svar på norsk, og bruk én gang hver: utelatelse, «det», «gjøre det», «gjerne», «samme her» og «slik». Nora ordner stolene før gjestene kommer, mens Emil henter utstyr et annet sted og ikke rekker å ordne stolene. Arrangøren sier at dørene åpner klokka ti. En frivillig ber deg bære registreringsboksen etter lunsj. En venn foreslår å lage navneskilt sammen. En annen frivillig er nervøs for å møte nye familier. Laget vil registrere gjestene før utdelingen av navneskilt og bruke samme framgangsmåte neste gang."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Bruk hvert uttrykk i en ny situasjon, og gjør det tydelig hva det viser til."
+        }
+      ],
+      "payload": {
+        "response_language": "no",
+        "min_words": 45,
+        "max_words": 100,
+        "judge_prompt": "Evaluate form-explanation, omitted-action, det-fact, gjore-det-action, willing-acceptance, shared-reaction, manner-reference. Require six written responses with each target form used naturally once, and a brief accurate explanation of what each form refers to. Accept natural Bokmål variants; do not require exact model sentences.",
+        "criteria": [
+          {
+            "id": "form-explanation",
+            "instruction": "Briefly explains that omission recovers an action from context; det points to shared information; gjøre det refers back to an action; gjerne accepts a suggestion; samme her shares a reaction; and slik refers to a method."
+          },
+          {
+            "id": "omitted-action",
+            "instruction": "Says Nora can arrange the chairs but Emil cannot, using a natural modal with the understood action omitted."
+          },
+          {
+            "id": "det-fact",
+            "instruction": "Reacts naturally to the announcement that the doors open at ten, using det to refer to that shared information."
+          },
+          {
+            "id": "gjore-det-action",
+            "instruction": "Accepts the request to carry the sign-in box after lunch and uses a natural form of gjøre det to refer to the action."
+          },
+          {
+            "id": "willing-acceptance",
+            "instruction": "Accepts the suggestion to prepare name badges together with a natural willing response."
+          },
+          {
+            "id": "shared-reaction",
+            "instruction": "Responds to the volunteer's nervousness with a natural expression that shares the same reaction."
+          },
+          {
+            "id": "manner-reference",
+            "instruction": "Refers to the agreed registration-and-badge sequence as a method to use again, with a natural form of slik and without repeating all the steps."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_omission_modal",
+      "operation": "recall_fill",
+      "objective_id": "obj-ellipsis-anaphora-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fullfør svaret med 1–4 ord."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Handlingen «rydde lageret» kan forstås ut fra resten av setningen. «Vil ikke» uttrykker manglende vilje; «kan ikke» uttrykker manglende mulighet, og «må ikke» er et forbud."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Mina har tenkt å rydde lageret på fredag. Nora har lyst til å reise bort i stedet. Mina har tenkt å rydde lageret på fredag, men Nora"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-omission",
+            "options": [
+              "vil ikke",
+              "kan ikke",
+              "må ikke"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_det_fact",
+      "operation": "recall_fill",
+      "objective_id": "obj-ellipsis-anaphora-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fullfør svaret med ett ord."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Personen kjenner til hele opplysningen om at rommet er ledig. «Det» viser til denne opplysningen."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Eirik: Rommet er ledig fra klokka tre. Mina: Jeg vet"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-det",
+            "options": [
+              "det",
+              "slik",
+              "gjerne"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_gjore_det_action",
+      "operation": "recall_fill",
+      "objective_id": "obj-ellipsis-anaphora-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fullfør svaret med 1–4 ord."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Situasjonen nevner en handling som ikke er utført ennå. «Gjør det» viser at personen påtar seg å utføre den nå."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Mina: Ingen har ringt vaktmesteren ennå. Eirik: Jeg"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-gjore-det",
+            "options": [
+              "gjør det nå",
+              "vet det nå",
+              "gjorde det før"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_gjerne_acceptance",
+      "operation": "recall_fill",
+      "objective_id": "obj-ellipsis-anaphora-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fullfør det positive svaret med 1–4 ord."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Den første personen inviterer, så «Ja, gjerne» godtar invitasjonen. De andre alternativene uttrykker enighet eller en delt tilstand."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Nora: Vil du spise sammen med oss etter dugnaden? Mina:"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-gjerne",
+            "options": [
+              "Ja, gjerne.",
+              "Samme her.",
+              "Det vet jeg."
+            ],
+            "answer_index": 0
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_samme_her_reaction",
+      "operation": "recall_fill",
+      "objective_id": "obj-ellipsis-anaphora-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fullfør svaret som viser at du føler det samme. Skriv 1–4 ord."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Samme her» viser at den positive opplevelsen også gjelder den andre personen. Det godtar ikke en forespørsel eller påtar seg en handling."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Eirik: Jeg trives godt med denne gruppa. Mina:"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-samme-her",
+            "options": [
+              "Samme her.",
+              "Gjerne.",
+              "Jeg gjør det."
+            ],
+            "answer_index": 0
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_slik_method",
+      "operation": "recall_fill",
+      "objective_id": "obj-ellipsis-anaphora-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fullfør henvisningen til framgangsmåten med ett ord."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Setningen før beskriver hvordan gjestene registreres. «Slik» viser til denne framgangsmåten."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Nora skriver navnene på kort og sorterer kortene alfabetisk. Vi bør registrere gjestene"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-slik",
             "options": [
               "slik",
               "det",
@@ -3436,98 +3747,9 @@
               },
               {
                 "kind": "text",
-                "value": "igjen. Først teller vi gjestene, og deretter bestiller vi maten."
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "igjen."
               }
             ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "procedure-method",
-            "options": [
-              "Slik",
-              "Det",
-              "Gjerne"
-            ],
-            "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "unngår vi å bestille for mye."
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "kind": "exercise",
-      "id": "integrated_cohesive_conversation",
-      "operation": "write",
-      "objective_id": "obj-ellipsis-anaphora-01",
-      "prompt": [
-        {
-          "kind": "text",
-          "value": "Rewrite the following short planning conversation in natural Norwegian. For each repeated part, replace only unnecessary repetition with the appropriate choice among omission, det, gjøre det, gjerne, samme her, and slik. Keep enough detail for every reference to remain clear. Make the result sound connected and economical. Source conversation: - Mina: Jeg skal sette ut koppene hvis ingen andre skal sette ut koppene. - Eirik: Møtet er flyttet til lørdag. Jeg vet at møtet er flyttet til lørdag. - Mina: Kan du sende invitasjonene? Jeg skal sende invitasjonene etter lunsj. - Eirik: Skal vi invitere Kari til dugnaden? Ja, jeg vil gjerne invitere Kari til dugnaden. - Mina: Jeg er litt stresset før dugnaden. Jeg er også litt stresset før dugnaden. - Eirik: Vi setter stolene langs veggen og bordene ved vinduet. Vi bør sette stolene langs veggen og bordene ved vinduet på samme måte igjen."
-        }
-      ],
-      "explanation": null,
-      "payload": {
-        "response_language": "no",
-        "min_words": null,
-        "max_words": null,
-        "judge_prompt": "Check the rewritten dialogue against the task and report evidence for each criterion. Accept natural Bokmål variants when they preserve the requested functions and clear references; do not require exact lexical wording. Verify that repetition is reduced only when the omitted or pointed-to meaning is recoverable, and that each target form fits its discourse function.",
-        "criteria": [
-          {
-            "id": "economical-target-use",
-            "instruction": "Replaces unnecessary repeated material with an appropriate target device from the task so the conversation sounds connected and economical."
-          },
-          {
-            "id": "clear-references",
-            "instruction": "Keeps enough context for every omitted or backward-pointing meaning to remain immediately understandable."
-          }
-        ]
-      }
-    },
-    {
-      "kind": "exercise",
-      "id": "retrieval_and_review",
-      "operation": "write",
-      "objective_id": "obj-ellipsis-anaphora-01",
-      "prompt": [
-        {
-          "kind": "text",
-          "value": "Write in natural Norwegian. Part 1: Briefly explain what each target form points to: an omitted action, shared information, a repeated action, willing acceptance, a shared reaction, or a manner of doing something. Part 2: Continue each of the six new volunteer-event exchanges in Norwegian. Use omission, standalone det, gjøre det, gjerne, samme her, and slik exactly once each across the six replies. Count standalone det separately from the det inside gjøre det. Make every reference clear and each reply natural. 1. A volunteer says: Jeg kan bære kassene hvis du ikke kan bære kassene. Reply with omission when the second volunteer cannot carry the boxes. 2. A volunteer says: Leveransen til frivilligsentralen kommer på tirsdag. Reply with standalone det to show relief or knowledge. 3. A volunteer asks: Kan du ringe de nye frivillige? Reply with an inflected form of gjøre det to say you will do it now. 4. A volunteer asks: Skal vi spørre Liv om å registrere gjestene? Reply with gjerne to accept willingly. 5. A volunteer says: Jeg blir litt nervøs før dugnaden. Reply with samme her to share the feeling. 6. A volunteer says: Vi skriver fargene på kassene og setter dem ved døren. Reply with slik to point to this method."
-        }
-      ],
-      "explanation": null,
-      "payload": {
-        "response_language": "no",
-        "min_words": null,
-        "max_words": null,
-        "judge_prompt": "Check both parts against the task and report evidence for each criterion. For the six replies, count standalone det separately from the fixed construction gjøre det. Accept natural Bokmål variants when they preserve the requested reference and discourse function. Verify that omission keeps the necessary modal or auxiliary and leaves only the shared action unspoken, and verify that each other target construction has its requested function and occurs once across the six replies.",
-        "criteria": [
-          {
-            "id": "function-explanations",
-            "instruction": "Explains in Norwegian what omission, det, gjøre det, gjerne, samme her, and slik point to, covering omitted action, shared information, repeated action, willing acceptance, shared reaction, and method."
-          },
-          {
-            "id": "six-natural-replies",
-            "instruction": "Uses omission, standalone det, gjøre det, gjerne, samme her, and slik exactly once in six natural replies about the new volunteer event."
-          },
-          {
-            "id": "clear-references",
-            "instruction": "Makes each omitted action, shared fact or reaction, repeated action, and method recoverable from its exchange."
           }
         ]
       }
@@ -3545,7 +3767,13 @@
         "share_reaction_with_samme_her",
         "refer_to_method_with_slik",
         "integrated_cohesive_conversation",
-        "retrieval_and_review"
+        "retrieval_and_review",
+        "review_omission_modal",
+        "review_det_fact",
+        "review_gjore_det_action",
+        "review_gjerne_acceptance",
+        "review_samme_her_reaction",
+        "review_slik_method"
       ]
     }
   ],

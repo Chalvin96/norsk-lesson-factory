@@ -1,0 +1,468 @@
+- handle: future_completion_timeline
+  op: choose
+  objective: obj-future-perfect-01
+  bloom: understand
+  prompt_md: Choose the sentence that presents the report as already complete before the meeting.
+  stem_md: 'Akkurat nå arbeider Maja med rapporten. Kl. 14: Møtet begynner.'
+  options:
+  - id: present-activity
+    text: Maja skriver rapporten nå.
+    correct: false
+    why: Dette plasserer skrivingen i nåtiden i stedet for å framstille rapporten som ferdig før et senere
+      tidspunkt.
+  - id: present-perfect
+    text: Maja har skrevet deler av rapporten.
+    correct: false
+    why: Dette viser at bare deler av rapporten er skrevet, ikke at hele rapporten er ferdig.
+  - id: ordinary-future
+    text: Maja skal skrive rapporten etter møtet.
+    correct: false
+    why: Dette planlegger skrivingen etter møtet og viser derfor ikke at rapporten er ferdig før møtet.
+  - id: future-completion
+    text: Maja skal ha skrevet rapporten før møtet.
+    correct: true
+    why: «Skal ha» sammen med perfektum partisipp framstiller rapporten som ferdig før det senere møtet.
+  derived_from:
+  - section_id: first-checkpoint-finding-time-points
+- handle: future_completion_form
+  op: recall_fill
+  objective: obj-future-perfect-01
+  bloom: apply
+  prompt_md: Complete each verb phrase with the correct participle form.
+  explanation_md: A future expression is followed by ha and a past participle when the action will be
+    complete before a later point.
+  derived_from:
+  - section_id: form-checkpoint
+  segments:
+  - text_md: 'Før møtet skal jeg ha '
+  - blank_id: form-written
+    options:
+    - skrev
+    - skrive
+    - skrevet
+    answer_index: 2
+  - text_md: ' rapporten. Ved lunsj vil Eirik ha '
+  - blank_id: form-sent
+    options:
+    - sende
+    - sendt
+    - sendte
+    answer_index: 1
+  - text_md: ' planen. Før fredag kommer vi til å ha '
+  - blank_id: form-done
+    options:
+    - gjorde
+    - gjøre
+    - gjort
+    answer_index: 2
+  - text_md: ' ferdig oppgaven.'
+  audio_target: Før møtet skal jeg ha skrevet rapporten. Ved lunsj vil Eirik ha sendt planen. Før fredag
+    kommer vi til å ha gjort ferdig oppgaven.
+- handle: skal_ha_deadline_commitment
+  op: write
+  objective: obj-future-perfect-01
+  bloom: apply
+  prompt_md: 'Arbeidsplan: Du har ansvar for søknaden, og fristen er mandag. Skriv én norsk setning der
+    du med framtidsfullført form lover at søknaden er ferdig sendt innen fristen.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Du har ansvar for søknaden i arbeidsplanen. Fristen er mandag.
+  response_language: 'no'
+  judge_prompt: 'Check criterion promise-completion. Record future-form-observation diagnostically. Anchor
+    that must pass: «Jeg skal ha sendt søknaden innen mandag.» Anchor that must fail: «Jeg sender søknaden
+    på mandag.»'
+  criteria:
+  - id: promise-completion
+    instruction: The sentence is a personal commitment that the application will already have been sent
+      by Monday, expressed with a future-completion form (a future marker plus ha plus a past participle).
+  - id: future-form-observation
+    instruction: 'Observation only: note the exact form used; never fail a natural equivalent.'
+  derived_from:
+  - section_id: plan-and-deadline-checkpoint
+- handle: vil_ha_future_viewpoint
+  op: write
+  objective: obj-future-perfect-01
+  bloom: apply
+  prompt_md: 'Program: Sara leser teksten nå, og filmen begynner kl. 20. Teksten forventes ferdig før
+    filmen. Skriv én norsk setning som med framtidsfullført form forutsier at Sara er ferdig med teksten
+    når filmen begynner.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Sara leser teksten nå. Filmen begynner kl. 20, og teksten forventes ferdig før filmen.
+  response_language: 'no'
+  judge_prompt: 'Check criterion prediction-completion. Record future-form-observation diagnostically.
+    Anchor that must pass: «Når filmen begynner, vil Sara ha lest teksten.» Anchor that must fail: «Når
+    filmen begynner, leser Sara teksten.»'
+  criteria:
+  - id: prediction-completion
+    instruction: The sentence predicts, from the later viewpoint of the film starting, that Sara will
+      already have read the text, expressed with a future-completion form (a future marker plus ha plus
+      a past participle).
+  - id: future-form-observation
+    instruction: 'Observation only: note the exact form used; never fail a natural equivalent.'
+  derived_from:
+  - section_id: prediction-checkpoint
+- handle: kommer_til_aa_ha_expected_result
+  op: write
+  objective: obj-future-perfect-01
+  bloom: apply
+  prompt_md: 'Status: Bilen lader raskt nå, og avreise er kl. 10. Skriv én norsk setning som med framtidsfullført
+    form viser at bilen er ferdigladet før vi drar, som en forventet følge av hvor raskt den lader nå.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Bilen lader raskt nå. Avreise er kl. 10.
+  response_language: 'no'
+  judge_prompt: 'Check criterion evidence-expectation. Record future-form-observation diagnostically.
+    Anchor that must pass: «Bilen lader raskt, så den kommer til å ha ladet ferdig før vi drar.» Anchor
+    that must fail: «Bilen lader raskt, så den lader ferdig før vi drar.»'
+  criteria:
+  - id: evidence-expectation
+    instruction: The sentence presents the car as already charged before departure as an expected result
+      of the current charging evidence, expressed with an evidence-based future-completion form (kommer
+      til å ha plus a past participle).
+  - id: future-form-observation
+    instruction: 'Observation only: note the exact form used; never fail a natural equivalent.'
+  derived_from:
+  - section_id: evidence-based-expectation-checkpoint
+- handle: future_completion_viewpoint_choice
+  op: choose
+  objective: obj-future-perfect-01
+  bloom: analyze
+  prompt_md: Choose the reply that best continues the exchange.
+  stem_md: 'Maja: Vi har bare ti sider igjen, og vi leser ti sider i timen. Tror du boka er ferdig før
+    klokka seks?'
+  options:
+  - id: planned-reading
+    text: Ja, vi skal ha lest boka før klokka seks.
+    correct: false
+    why: This presents completion as a plan or commitment, while the reply builds on the current reading
+      pace.
+  - id: future-activity
+    text: Ja, vi skal lese boka før klokka seks.
+    correct: false
+    why: This schedules the reading before six but does not present the book as already read from the
+      later viewpoint.
+  - id: evidence-reading
+    text: Ja, vi kommer til å ha lest boka før klokka seks.
+    correct: true
+    why: Kommer til å ha presents completion as an expected result supported by the current pace.
+  - id: ordinary-reading
+    text: Ja, vi kommer til å lese boka etter klokka seks.
+    correct: false
+    why: This describes later activity rather than completion before six.
+  derived_from:
+  - section_id: meaning-choice-checkpoint
+- handle: project_deadline_future_completion
+  op: write
+  objective: obj-future-perfect-01
+  bloom: apply
+  prompt_md: 'Prosjektmøte: Maja skal gi prosjektlederen en oppdatering. Hun har lovet å sende framdriftsrapporten
+    innen fredag; prosjektlederen forventer at Eirik tester systemet før lansering; og testene går raskt
+    nå, så de vil være ferdige før lansering. Skriv Majas oppdatering på 25–45 norske ord der hun med
+    framtidsfullført form uttrykker det hun har lovet, det prosjektlederen forventer, og det som følger
+    av at testene går raskt.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Prosjektleder
+      text_md: «Maja, kan du love at framdriftsrapporten er ferdig innen fredag?»
+    - speaker: Maja
+      text_md: «Ja, det lover jeg. Og Eirik tester systemet før lansering, ikke sant?»
+    - speaker: Prosjektleder
+      text_md: «Nettopp, og testene går raskt nå, så de vil være ferdige før lansering.»
+  response_language: 'no'
+  min_words: 25
+  max_words: 45
+  judge_prompt: 'Evaluate gating criteria project-update, supplied-project-facts, word-bound, three-future-completion-forms,
+    and viewpoint-match. Record future-marker-variety-observation diagnostically. Anchor that must pass:
+    «Hei! Jeg skal ha sendt framdriftsrapporten før fredag. Når lanseringen skjer, vil Eirik ha testet
+    systemet. Testene går raskt, så vi kommer til å ha fullført testene før lansering.» Anchor that must
+    fail: «Hei! Jeg sender rapporten fredag, og Eirik tester systemet. Alt går bra.»'
+  criteria:
+  - id: project-update
+    instruction: The response is a coherent Norwegian status update addressed to the project leader.
+  - id: supplied-project-facts
+    instruction: The update uses the three supplied project facts without contradicting them.
+  - id: word-bound
+    instruction: The response contains 25–45 words.
+  - id: three-future-completion-forms
+    instruction: The update expresses all three viewpoints with future-completion forms (a future marker
+      plus ha plus a past participle).
+  - id: viewpoint-match
+    instruction: The promised item uses a commitment form, the expected item uses a neutral prediction
+      form, and the evidence item uses an evidence-based expectation form.
+  - id: future-marker-variety-observation
+    instruction: 'Observation only: note which future markers appear; never fail the response on this
+      criterion.'
+  derived_from:
+  - section_id: integrated-project-checkpoint
+- handle: present_future_and_future_completion_contrast
+  op: categorize
+  objective: obj-future-perfect-01
+  bloom: analyze
+  prompt_md: Place each sentence in the matching time category.
+  explanation_md: The confusable pair is ordinary future skal + infinitive versus future-perfect skal
+    ha + past participle; the prerequisite contrasts are future expressions and the present perfect.
+  derived_from:
+  - section_id: contrast-checkpoint
+  buckets:
+  - bucket_id: happening-now
+    label: Activity happening now
+  - bucket_id: complete-now
+    label: Completed now
+  - bucket_id: ordinary-future
+    label: Ordinary future activity
+  - bucket_id: future-completion
+    label: Complete before a later point
+  items:
+  - item_id: contrast-1
+    text: Jeg skriver rapporten nå.
+    bucket_id: happening-now
+  - item_id: contrast-2
+    text: Jeg har skrevet rapporten.
+    bucket_id: complete-now
+  - item_id: contrast-3
+    text: Jeg skal skrive rapporten.
+    bucket_id: ordinary-future
+  - item_id: contrast-4
+    text: Jeg skal ha skrevet rapporten innen fredag.
+    bucket_id: future-completion
+  - item_id: contrast-5
+    text: Nora vil kontrollere tallene.
+    bucket_id: ordinary-future
+  - item_id: contrast-6
+    text: Nora vil ha kontrollert tallene innen fredag.
+    bucket_id: future-completion
+- handle: weekend_trip_future_completion_transfer
+  op: write
+  objective: obj-future-perfect-01
+  bloom: apply
+  prompt_md: 'Situasjon: Familien drar til hytta lørdag kl. 10. Mottaker: familien. Fakta: Du har ansvar
+    for maten; Sara sjekker værmeldingen; bilen lader raskt nå; naboen trenger nøkkelen før avreise. Skriv
+    en praktisk melding på 35–60 norske ord om hva som blir ferdig før avreise, og bruk framtidsfullført
+    form for hvert punkt.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Familien drar til hytta lørdag kl. 10.
+  response_language: 'no'
+  min_words: 35
+  max_words: 60
+  judge_prompt: 'Evaluate gating criteria message-purpose, supplied-facts, word-bound, and future-completion-form.
+    Record future-marker-variety-observation diagnostically. Anchor that must pass: «Hei! Før vi drar
+    klokka ti, skal jeg ha pakket maten og gitt nøkkelen til naboen. Når vi reiser, vil Sara ha sjekket
+    været. Bilen lader raskt, så den kommer til å ha ladet ferdig. Da er alt klart.» Anchor that must
+    fail: «Hei! Vi ordner alt en gang i helga.»'
+  criteria:
+  - id: message-purpose
+    instruction: The response is a practical Norwegian message to the family about preparations completed
+      before the Saturday departure.
+  - id: supplied-facts
+    instruction: The message uses the supplied trip facts without contradicting them.
+  - id: word-bound
+    instruction: The response contains 35–60 words.
+  - id: future-completion-form
+    instruction: Each preparation is expressed with a future-completion form (a future marker plus ha
+      plus a past participle).
+  - id: future-marker-variety-observation
+    instruction: 'Observation only: note which future markers appear; never fail the response on this
+      criterion.'
+  derived_from:
+  - section_id: transfer-preparing-for-a-weekend-trip
+- handle: future_completion_final_retrieval
+  op: write
+  objective: obj-future-perfect-01
+  bloom: apply
+  prompt_md: 'Situasjon: Et arrangement begynner fredag kl. 18. Mottaker: koordinatoren. Fakta: Du har
+    lovet å sende programmet; koordinatoren forventer at Liv leser talen; billettsalget går raskt og blir
+    avsluttet før start. Skriv en statusmelding på 30–50 norske ord der du med framtidsfullført form uttrykker
+    det du har lovet, det koordinatoren forventer, og det som følger av at billettsalget går raskt.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Et arrangement begynner fredag kl. 18.
+  response_language: 'no'
+  min_words: 30
+  max_words: 50
+  judge_prompt: 'Evaluate gating criteria coordinator-message, supplied-event-facts, word-bound, three-future-completion-forms,
+    viewpoint-match, and future-completion-meaning. Anchor that must pass: «Hei! Jeg skal ha sendt programmet
+    før fredag klokka 18. Når arrangementet begynner, vil Liv ha lest talen. Billettsalget går raskt,
+    så vi kommer til å ha avsluttet salget før start. Da har du en oppdatert status.» Anchor that must
+    fail: «Hei! Jeg sender programmet fredag. Liv leser talen, og vi selger billetter etter start.»'
+  criteria:
+  - id: coordinator-message
+    instruction: The response is a coherent Norwegian status message addressed to the coordinator.
+  - id: supplied-event-facts
+    instruction: The message uses the three supplied event facts without contradicting them.
+  - id: word-bound
+    instruction: The response contains 30–50 words.
+  - id: three-future-completion-forms
+    instruction: The message expresses all three viewpoints with future-completion forms (a future marker
+      plus ha plus a past participle).
+  - id: viewpoint-match
+    instruction: The promised item uses a commitment form, the expected item uses a neutral prediction
+      form, and the evidence item uses an evidence-based expectation form.
+  - id: future-completion-meaning
+    instruction: Each preparation is presented as complete before the event or another clear later reference
+      point.
+  derived_from:
+  - section_id: short-retrieval-review
+- handle: review_future_completion_timeline
+  op: choose
+  objective: obj-future-perfect-01
+  bloom: understand
+  prompt_md: Choose the sentence that says the work will already be finished when the deadline arrives.
+  stem_md: 'Nå: Kl. 09. Arbeidet begynner kl. 10. Frist: kl. 12.'
+  options:
+  - id: review-now-complete
+    text: Arbeidet er ferdig nå.
+    correct: false
+    why: This makes completion present rather than before the later deadline.
+  - id: review-during-work
+    text: Vi skal arbeide klokka ti.
+    correct: false
+    why: This locates the activity but does not present it as complete.
+  - id: review-before-deadline
+    text: Vi skal ha gjort arbeidet ferdig før klokka tolv.
+    correct: true
+    why: Skal ha plus the past participle presents the work as complete before the deadline.
+  - id: review-after-deadline
+    text: Vi skal ha gjort arbeidet ferdig etter klokka tolv.
+    correct: false
+    why: This places completion after the deadline.
+  derived_from:
+  - section_id: short-retrieval-review
+- handle: review_future_completion_form
+  op: recall_fill
+  objective: obj-future-perfect-01
+  bloom: apply
+  prompt_md: Complete the verb phrase with the correct participle form.
+  explanation_md: Use ha followed by the past participle after the supplied future marker.
+  derived_from:
+  - section_id: short-retrieval-review
+  segments:
+  - text_md: 'Innen klokka fire vil hun ha '
+  - blank_id: review-form-sent
+    options:
+    - sendt
+    - sendte
+    - sende
+    answer_index: 0
+  - text_md: ' dokumentet.'
+  audio_target: Innen klokka fire vil hun ha sendt dokumentet.
+- handle: review_skal_ha_deadline_commitment
+  op: recall_fill
+  objective: obj-future-perfect-01
+  bloom: apply
+  prompt_md: Du lover at nøkkelen er levert innen torsdag. Fullfør setningen.
+  explanation_md: Formen skal ha levert uttrykker at taleren forplikter seg til å ha levert nøkkelen innen
+    fristen.
+  derived_from:
+  - section_id: short-retrieval-review
+  segments:
+  - text_md: 'Ansvar: Jeg leverer nøkkelen. Frist: torsdag. Jeg '
+  - blank_id: review-skal-delivered
+    options:
+    - skal ha levert
+    - vil ha levert
+    - kommer til å ha levert
+    answer_index: 0
+  - text_md: ' nøkkelen innen torsdag.'
+  audio_target: 'Ansvar: Jeg leverer nøkkelen. Frist: torsdag. Jeg skal ha levert nøkkelen innen torsdag.'
+- handle: review_vil_ha_future_viewpoint
+  op: recall_fill
+  objective: obj-future-perfect-01
+  bloom: apply
+  prompt_md: Complete with vil + ha + a past participle.
+  explanation_md: A completed situation viewed from a later point can be expressed with vil ha plus a
+    past participle.
+  derived_from:
+  - section_id: short-retrieval-review
+  segments:
+  - text_md: 'Nå: Omar leser kapittel fem. Senere: Kurset slutter i juni. Når kurset slutter,'
+  - blank_id: review-vil-read
+    options:
+    - vil Omar ha lest
+    - vil Omar lese
+    - vil Omar ha lese
+    answer_index: 0
+  - text_md: ' hele boka.'
+  audio_target: 'Nå: Omar leser kapittel fem. Senere: Kurset slutter i juni. Når kurset slutter, vil Omar
+    ha lest hele boka.'
+- handle: review_kommer_til_aa_ha_expected_result
+  op: recall_fill
+  objective: obj-future-perfect-01
+  bloom: apply
+  prompt_md: Fullfør den evidensbaserte forventningen med «kommer til å ha».
+  explanation_md: Situasjonen nå kan motivere «kommer til å ha» pluss perfektum partisipp.
+  derived_from:
+  - section_id: short-retrieval-review
+  segments:
+  - text_md: 'Status: Snøen smelter raskt i sola. Om fem dager '
+  - blank_id: review-evidence-melted
+    options:
+    - kommer snøen til å ha smeltet
+    - vil snøen ha smeltet
+    - skal snøen ha smeltet
+    answer_index: 0
+  - text_md: .
+  audio_target: 'Status: Snøen smelter raskt i sola. Om fem dager kommer snøen til å ha smeltet.'
+- handle: review_future_completion_viewpoint_choice
+  op: choose
+  objective: obj-future-perfect-01
+  bloom: analyze
+  prompt_md: Choose the reply that best fits the exchange.
+  stem_md: 'Leder: Kan du love at kontrakten er sendt før klokka tre? Nora: ___'
+  options:
+  - id: review-neutral-prediction
+    text: Ja, jeg vil ha sendt den før klokka tre.
+    correct: false
+    why: Dette forutsier at arbeidet blir ferdig, men er ikke den personlige forpliktelsen lederen ber
+      om.
+  - id: review-evidence-result
+    text: Ja, jeg kommer til å ha sendt den før klokka tre.
+    correct: false
+    why: Dette framstiller ferdigstillelsen som et forventet resultat, ikke som en forpliktelse.
+  - id: review-commitment
+    text: Ja, jeg skal ha sendt den før klokka tre.
+    correct: true
+    why: «Skal ha» uttrykker den ønskede personlige forpliktelsen.
+  - id: review-present-complete
+    text: Ja, jeg sendte den før klokka tre i går.
+    correct: false
+    why: Dette viser til en avsluttet handling i fortiden og svarer ikke på løftet om framtidig ferdigstillelse.
+  derived_from:
+  - section_id: short-retrieval-review
+- handle: review_present_future_and_future_completion_contrast
+  op: choose
+  objective: obj-future-perfect-01
+  bloom: analyze
+  prompt_md: Choose the sentence that expresses an ordinary future activity, not completion before a later
+    point.
+  options:
+  - id: review-present-activity
+    text: Nora arbeider på rapporten nå.
+    correct: false
+    why: This places the activity in the present.
+  - id: review-present-perfect
+    text: Nora har arbeidet på rapporten.
+    correct: false
+    why: This looks back on work completed before the present.
+  - id: review-ordinary-future-activity
+    text: Nora skal arbeide på rapporten fredag.
+    correct: true
+    why: Skal plus the infinitive schedules the activity in the future without claiming prior completion.
+  - id: review-future-completion
+    text: Nora skal ha skrevet rapporten innen fredag.
+    correct: false
+    why: This presents the report as complete by a future deadline.
+  derived_from:
+  - section_id: short-retrieval-review

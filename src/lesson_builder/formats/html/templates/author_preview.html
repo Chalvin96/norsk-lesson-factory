@@ -1,4 +1,4 @@
-{% from "macros.html" import spans, blocks, payload, finding %}
+{% from "macros.html" import spans, blocks, stimulus, payload, finding %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -42,7 +42,7 @@
       {% if item.get("kind") == "section" %}
       <article class="section-card" id="{{ item.get("anchor_id", "section") }}"><div class="section-meta"><span class="section-role">{{ humanize_identifier(item.get("role", "section")) }}</span><span class="muted">Authored section</span></div><h2 lang="en">{{ item.get("title", "") }}</h2>{{ blocks(item.get("blocks", [])) }}</article>
       {% else %}
-      <article class="exercise-card" id="{{ item.get("anchor_id", "exercise") }}"><div class="exercise-meta"><span class="exercise-tag">{{ item.get("operation", "exercise") }}</span><span class="muted">{{ humanize_identifier(item.get("objective_id", "")) }}</span></div><h2 lang="en">{{ spans(item.get("prompt", [])) }}</h2>{{ payload(item.get("operation", "exercise"), item.get("payload", {})) }}{% if item.get("explanation") %}<details class="author-details" open><summary>Author explanation</summary><div>{{ spans(item.get("explanation", [])) }}</div></details>{% endif %}</article>
+      <article class="exercise-card" id="{{ item.get("anchor_id", "exercise") }}"><div class="exercise-meta"><span class="exercise-tag">{{ item.get("operation", "exercise") }}</span><span class="muted">{{ humanize_identifier(item.get("objective_id", "")) }}</span></div>{{ stimulus(item.get("stimulus", [])) }}<h2 lang="en">{{ spans(item.get("prompt", [])) }}</h2>{{ payload(item.get("operation", "exercise"), item.get("payload", {})) }}{% if item.get("explanation") %}<details class="author-details" open><summary>Author explanation</summary><div>{{ spans(item.get("explanation", [])) }}</div></details>{% endif %}</article>
       {% endif %}
       {% endfor %}
     {% else %}

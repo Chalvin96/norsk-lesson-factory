@@ -35,6 +35,16 @@
 {%- endfor -%}
 {%- endmacro %}
 
+{% macro stimulus(items) -%}
+{%- for item in items if item.get("kind") == "dialogue" -%}
+<section class="exercise-dialogue" aria-label="Dialogue">
+  {%- for turn in item.get("turns", []) -%}
+  <div class="exercise-dialogue-turn"><span class="exercise-dialogue-speaker">{{ turn.get("speaker", "") }}</span><div lang="nb">{{ spans(turn.get("text", [])) }}</div></div>
+  {%- endfor -%}
+</section>
+{%- endfor -%}
+{%- endmacro %}
+
 {% macro payload(operation, data) -%}
 {# Choose option.text is mixed authored content under the public schema; the schema has no per-fragment language field, so the preview deliberately leaves it untagged instead of inferring language from vocabulary. #}
 {%- if operation == "choose" -%}<div class="answer-panel"><strong>Author answer</strong>{% if data.get("stem") %}<div class="exercise-stem" lang="en"><span class="field-label">Question stem</span>{{ spans(data.get("stem", [])) }}</div>{% endif %}<ul>{% for option in data.get("options", []) %}<li class="{{ "answer" if option.get("option_id") == data.get("answer_id") else "" }}">{{ option.get("text", "") }}{% if option.get("option_id") == data.get("answer_id") %} · Answer{% endif %}{% if option.get("why") %}<small lang="en">Why: {{ option.get("why") }}</small>{% endif %}</li>{% endfor %}</ul></div>

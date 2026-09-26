@@ -143,15 +143,20 @@
         evidence_route: meaning_selection
         evidence: Distinguish the discouraged direct request from the polite request.
   assert:
+    - type: python
+      metric: negative_example_source_contract
+      value: file://assertions.py:validate_normalization_negative_markers
     - type: llm-rubric
       metric: negative_example_encoding
       value: |
         Return pass=true only when every examples block uses immediate no/en pairs,
-        with each `- no:` directly followed by its matching `- en:` line, and the
-        discouraged sentence is marked inline as `Incorrect:` (or `Not:`/`✗`) in
-        that same English value. A preceding phrase such as “less useful” does not
-        encode negative status and cannot replace the inline marker. Return pass=false
-        for grouped no values, a missing marker, or a marker moved into prose.
+        with each `- no:` directly followed by its matching `- en:` line. Put the
+        discouraged pair in its own `::: {.examples teaching_role=incorrect}` block,
+        and keep the model pair in a separate ordinary examples block. Remove inline
+        status text such as `✗` and `Incorrect:` from the authored sentences; Norsk
+        renders the role itself. A preceding phrase such as “less useful” does not
+        encode negative status. Return pass=false for grouped no values, a missing
+        typed role, a mixed-role block, or status text left in either sentence.
       provider:
         id: file://provider.py:call_api
         config:

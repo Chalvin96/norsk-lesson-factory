@@ -103,6 +103,7 @@ def extract_open_rubric_questions(lesson: dict[str, Any]) -> list[ExerciseQuesti
                 "id": exercise.get("id"),
                 "operation": "write",
                 "prompt": _spans_text(exercise.get("prompt", [])),
+                "stimulus": _project_stimulus(exercise.get("stimulus")),
                 "response_language": payload.get("response_language", "no"),
                 "min_words": payload.get("min_words"),
                 "max_words": payload.get("max_words"),
@@ -212,6 +213,8 @@ def _question_for_exercise(exercise: dict[str, Any]) -> ExerciseQuestion | None:
         "operation": operation,
         "prompt": _spans_text(exercise.get("prompt", [])),
     }
+    stimulus = _project_stimulus(exercise.get("stimulus"))
+    _add_nonempty(question, "stimulus", stimulus)
     handlers = {
         "choose": _populate_choose_question,
         "judge": _populate_judge_question,
@@ -228,6 +231,30 @@ def _question_for_exercise(exercise: dict[str, Any]) -> ExerciseQuestion | None:
         return None
     handler(question, payload)
     return question
+
+
+def _project_stimulus(value: object) -> list[dict[str, Any]]:
+    """Project typed learner context without reviewer-irrelevant span mechanics."""
+    if not isinstance(value, list):
+        return []
+    projected: list[dict[str, Any]] = []
+    for block in value:
+        if not isinstance(block, dict) or block.get("kind") != "dialogue":
+            continue
+        turns = [
+            {"speaker": turn.get("speaker"), "text": _spans_text(turn.get("text", []))}
+            for turn in block.get("turns", [])
+            if isinstance(turn, dict)
+        ]
+        if turns:
+            projected.append({"kind": "dialogue", "turns": turns})
+    return projected
+
+
+def _add_nonempty(target: dict[str, Any], key: str, value: object) -> None:
+    """Add one optional reviewer field only when learner content exists."""
+    if value:
+        target[key] = value
 
 
 def _blind_option_ids(question: ExerciseQuestion, option_id_map: dict[str, dict[str, str]]) -> None:

@@ -1,0 +1,357 @@
+- handle: notice_presentational_frames
+  op: choose
+  objective: obj-presentational-det-with-delayed-subjects-01
+  bloom: understand
+  prompt_md: Choose the best description of the three det-sentences.
+  stem_md: 'Maja: «Det står en varebil utenfor nå. Det kommer et bud opp trappa også. Det ligger en ny
+    pakke ved døra.»'
+  options:
+  - id: place-only
+    text: The det in each sentence refers to a place, and no participant is introduced.
+    correct: false
+    why: The place phrases utenfor, opp trappa and ved døra are adverbials; the participants are the noun
+      phrases after the verb.
+  - id: indefinite-presentation
+    text: Each det-sentence has an indefinite noun phrase after the verb, so it presents a participant
+      for the first time.
+    correct: true
+    why: The noun phrases after det are en varebil, et bud and en ny pakke, all indefinite forms.
+  - id: definite-reference
+    text: Each det-sentence has a definite noun phrase after the verb, so it points back to a participant
+      already mentioned.
+    correct: false
+    why: Definite forms such as varebilen or budet do not follow det in this dialogue.
+  derived_from:
+  - section_id: checkpoint-noticing-presentation
+- handle: choose_new_participant_presentation
+  op: categorize
+  objective: obj-presentational-det-with-delayed-subjects-01
+  bloom: analyze
+  prompt_md: Sort each Norwegian sentence by information status.
+  explanation_md: Presentational det introduces a new indefinite participant; a familiar participant can
+    be the ordinary subject.
+  derived_from:
+  - section_id: checkpoint-choosing-message-shape
+  buckets:
+  - bucket_id: new-participant
+    label: New participant
+  - bucket_id: familiar-participant
+    label: Familiar participant
+  items:
+  - item_id: det-van
+    text: «Det står en varebil utenfor.»
+    bucket_id: new-participant
+  - item_id: def-van
+    text: «Varebilen står utenfor.»
+    bucket_id: familiar-participant
+  - item_id: det-courier
+    text: «Det kommer et bud opp trappa.»
+    bucket_id: new-participant
+  - item_id: def-courier
+    text: «Budet kommer opp trappa.»
+    bucket_id: familiar-participant
+- handle: build_presentational_word_order
+  op: recall_fill
+  objective: obj-presentational-det-with-delayed-subjects-01
+  bloom: apply
+  prompt_md: Complete the three reports with the presentational frame.
+  derived_from:
+  - section_id: checkpoint-constructing-frame
+  audio_target: Det sitter en person på kjøkkenet. Det kommer en nabo opp trappa. Det ligger en nøkkel
+    ved døra.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Maja går inn på kjøkkenet. Hun legger merke til tre ting og forteller hva som er der.
+  segments:
+  - text_md: «
+  - blank_id: community-1-det
+    options:
+    - Det
+    - Personen
+    answer_index: 0
+  - text_md: ''
+  - blank_id: community-1-verb
+    options:
+    - sitter
+    - kommer
+    answer_index: 0
+  - text_md: ''
+  - blank_id: community-1-subject
+    options:
+    - personen
+    - en person
+    answer_index: 1
+  - text_md: ' på kjøkkenet. '
+  - blank_id: community-2-det
+    options:
+    - Naboen
+    - Det
+    answer_index: 1
+  - text_md: ''
+  - blank_id: community-2-verb
+    options:
+    - kommer
+    - ligger
+    answer_index: 0
+  - text_md: ''
+  - blank_id: community-2-subject
+    options:
+    - en nabo
+    - naboen
+    answer_index: 0
+  - text_md: ' opp trappa. '
+  - blank_id: community-3-det
+    options:
+    - Nøkkelen
+    - Det
+    answer_index: 1
+  - text_md: ''
+  - blank_id: community-3-verb
+    options:
+    - står
+    - ligger
+    answer_index: 1
+  - text_md: ''
+  - blank_id: community-3-subject
+    options:
+    - en nøkkel
+    - nøkkelen
+    answer_index: 0
+  - text_md: ' ved døra.»'
+- handle: repair_presentational_sentences
+  op: find_fix
+  objective: obj-presentational-det-with-delayed-subjects-01
+  bloom: analyze
+  prompt_md: Select the word that must change.
+  derived_from:
+  - section_id: checkpoint-repairing-errors
+  stem_md: 'Jonas har ikke hørt om dette før. Maja sier: «Det kommer budet opp trappa også.»'
+  tokens:
+  - token_id: repair-det
+    text: Det
+  - token_id: repair-verb
+    text: kommer
+  - token_id: repair-subject
+    text: budet
+  - token_id: repair-place
+    text: opp
+  - token_id: repair-stairs
+    text: trappa
+  - token_id: repair-also
+    text: også.
+  error_token_id: repair-subject
+  feedback: A first mention needs the indefinite phrase et bud, not the definite form budet.
+- handle: complete_reception_updates
+  op: recall_fill
+  objective: obj-presentational-det-with-delayed-subjects-01
+  bloom: apply
+  prompt_md: Complete Maja's reception updates.
+  derived_from:
+  - section_id: back-at-reception
+  audio_target: Det sitter en person på kjøkkenet. Det kommer en nabo opp trappa. Det ligger en nøkkel
+    ved døra.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Jonas er oppe. Maja går inn og oppdager en hun ikke kjenner og noe hun ikke har sett før.
+        Hun forteller hva hun ser, først på kjøkkenet, så opp trappa, og til slutt ved døra. Personen
+        sitter på en stol, og hun ser en nøkkel på gulvet.
+  segments:
+  - text_md: '«Det '
+  - blank_id: reception-1-verb
+    options:
+    - sitter
+    - ligger
+    answer_index: 0
+  - text_md: ''
+  - blank_id: reception-1-subject
+    options:
+    - en person
+    - personen
+    answer_index: 0
+  - text_md: ' på kjøkkenet. Det '
+  - blank_id: reception-2-verb
+    options:
+    - sitter
+    - kommer
+    answer_index: 1
+  - text_md: ''
+  - blank_id: reception-2-subject
+    options:
+    - naboen
+    - en nabo
+    answer_index: 1
+  - text_md: ' opp trappa. Det '
+  - blank_id: reception-3-verb
+    options:
+    - ligger
+    - står
+    answer_index: 0
+  - text_md: ''
+  - blank_id: reception-3-subject
+    options:
+    - en nøkkel
+    - nøkkelen
+    answer_index: 0
+  - text_md: ' ved døra.»'
+- handle: transfer_to_new_flat
+  op: recall_fill
+  objective: obj-presentational-det-with-delayed-subjects-01
+  bloom: apply
+  prompt_md: Complete Nora's reports.
+  derived_from:
+  - section_id: transfer-moving-into-a-new-flat
+  audio_target: Det står et gammelt bord på kjøkkenet. Det står en lampe på soverommet. Det sitter en
+    katt på balkongen. Det kommer en nabo bort til døra.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Emil er på vei inn i leiligheten. Nora forteller hva som finnes i de ulike rommene.
+  segments:
+  - text_md: '«Det '
+  - blank_id: flat-1-verb
+    options:
+    - ligger
+    - står
+    answer_index: 1
+  - text_md: ''
+  - blank_id: flat-1-subject
+    options:
+    - bordet
+    - et gammelt bord
+    answer_index: 1
+  - text_md: ' på kjøkkenet. Det '
+  - blank_id: flat-2-verb
+    options:
+    - kommer
+    - står
+    answer_index: 1
+  - text_md: ''
+  - blank_id: flat-2-subject
+    options:
+    - lampen
+    - en lampe
+    answer_index: 1
+  - text_md: ' på soverommet. Det '
+  - blank_id: flat-3-verb
+    options:
+    - sitter
+    - kommer
+    answer_index: 0
+  - text_md: ''
+  - blank_id: flat-3-subject
+    options:
+    - katten
+    - en katt
+    answer_index: 1
+  - text_md: ' på balkongen. Det '
+  - blank_id: flat-4-verb
+    options:
+    - står
+    - kommer
+    answer_index: 1
+  - text_md: ''
+  - blank_id: flat-4-subject
+    options:
+    - naboen
+    - en nabo
+    answer_index: 1
+  - text_md: ' bort til døra.»'
+- handle: retrieve_presentational_det
+  op: recall_fill
+  objective: obj-presentational-det-with-delayed-subjects-01
+  bloom: remember
+  prompt_md: Complete the report.
+  derived_from:
+  - section_id: retrieval-and-review
+  audio_target: Det ligger en nøkkel ved døra.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: «Jeg åpner klasserommet og ser meg rundt.»
+    - speaker: Jonas
+      text_md: «Oppdager du noe ved døra?»
+    - speaker: Maja
+      text_md: '«Ja: ___ ___ ___ ved døra.»'
+  segments:
+  - text_md: «
+  - blank_id: retrieval-det
+    options:
+    - Det
+    - Nøkkelen
+    answer_index: 0
+  - text_md: ''
+  - blank_id: retrieval-verb
+    options:
+    - kommer
+    - ligger
+    answer_index: 1
+  - text_md: ''
+  - blank_id: retrieval-subject
+    options:
+    - en nøkkel
+    - nøkkelen
+    answer_index: 0
+  - text_md: ' ved døra.»'
+- handle: review_retrieve_presentational_det
+  op: recall_fill
+  objective: obj-presentational-det-with-delayed-subjects-01
+  bloom: remember
+  prompt_md: Complete the two observations.
+  derived_from:
+  - section_id: retrieval-and-review
+  audio_target: Det henger en jakke på veggen. Det står en katt ved vinduet.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Jeg låser opp klasserommet og kikker inn.»
+    - speaker: Emil
+      text_md: «Ser du noe der inne?»
+    - speaker: Nora
+      text_md: '«Ja: ___ ___ ___ på veggen, og ___ ___ ___ ved vinduet.»'
+  segments:
+  - text_md: '«Ja:'
+  - blank_id: review-vegg-det
+    options:
+    - Det
+    - Jakken
+    answer_index: 0
+  - text_md: ''
+  - blank_id: review-vegg-verb
+    options:
+    - ligger
+    - henger
+    answer_index: 1
+  - text_md: ''
+  - blank_id: review-vegg-subject
+    options:
+    - jakken
+    - en jakke
+    answer_index: 1
+  - text_md: ' på veggen, og '
+  - blank_id: review-vindu-det
+    options:
+    - Katten
+    - Det
+    answer_index: 1
+  - text_md: ''
+  - blank_id: review-vindu-verb
+    options:
+    - sitter
+    - står
+    answer_index: 1
+  - text_md: ''
+  - blank_id: review-vindu-subject
+    options:
+    - katten
+    - en katt
+    answer_index: 1
+  - text_md: ' ved vinduet.»'
+  explanation_md: Presentational det presents a new indefinite participant, en jakke or en katt, and henger
+    and sitter describe where the participant is.

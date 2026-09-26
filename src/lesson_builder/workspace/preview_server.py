@@ -5,27 +5,20 @@ from __future__ import annotations
 from collections.abc import Callable
 from http.server import BaseHTTPRequestHandler
 from http.server import ThreadingHTTPServer
-from socket import AF_INET6
 from typing import ClassVar
 from typing import cast
 from urllib.parse import urlsplit
 
 K_LOOPBACK_HOSTS = frozenset({"127.0.0.1", "localhost"})
-K_LOOPBACK_IPV6 = "::1"
+K_WILDCARD_HOST = "0.0.0.0"
 K_MAX_PORT = 65535
 
 
 class PreviewServer(ThreadingHTTPServer):
-    """Threaded loopback server whose only resource is the rendered preview."""
+    """Threaded server whose only resource is the rendered preview."""
 
     allow_reuse_address = True
     daemon_threads = True
-
-
-class PreviewServerIPv6(PreviewServer):
-    """Threaded IPv6 loopback server for the bracketed ``[::1]`` authority."""
-
-    address_family = AF_INET6
 
 
 def create_preview_server(
@@ -34,21 +27,21 @@ def create_preview_server(
     document: str,
     document_factory: Callable[[], str] | None = None,
 ) -> PreviewServer:
-    """Create a loopback-only server, optionally rebuilding HTML for every GET."""
-    if host not in K_LOOPBACK_HOSTS and host != K_LOOPBACK_IPV6:
-        raise ValueError("preview server host must be a loopback address")
+    """Create an IPv4 server, optionally rebuilding HTML for every GET."""
+    if not host or host == K_WILDCARD_HOST:
+        raise ValueError("preview server host must be a concrete IPv4 bind address")
+    if ":" in host:
+        raise ValueError("preview server host must be an IPv4 address")
     if not 0 <= port <= K_MAX_PORT:
         raise ValueError("preview server port must be between 0 and 65535")
     handler = _build_preview_handler(document, document_factory)
-    server_type = PreviewServerIPv6 if host == K_LOOPBACK_IPV6 else PreviewServer
-    return server_type((host, port), handler)
+    return PreviewServer((host, port), handler)
 
 
 def build_preview_url(server: PreviewServer) -> str:
-    """Return the safe local URL for a running preview server."""
+    """Return the URL for a running preview server."""
     host = str(server.server_address[0])
-    authority = f"[{host}]" if host == K_LOOPBACK_IPV6 else host
-    return f"http://{authority}:{server.server_port}/"
+    return f"http://{host}:{server.server_port}/"
 
 
 def _build_preview_handler(document: str, document_factory: Callable[[], str] | None) -> type[BaseHTTPRequestHandler]:
@@ -107,11 +100,12 @@ def _rebuild_error_document() -> bytes:
 
 
 def _validate_request_authority(handler: BaseHTTPRequestHandler) -> tuple[int, str] | None:
-    """Return an HTTP error for an untrusted Host or Origin authority."""
+    """Return an HTTP error for an authority other than the bound address."""
     address = cast(tuple[str, int], handler.server.server_address)
+    bound_host = str(address[0])
     bound_port = address[1]
     host = handler.headers.get("Host")
-    if host is None or not _is_allowed_authority(host, bound_port):
+    if host is None or not _is_allowed_authority(host, bound_host, bound_port):
         return 403, "untrusted Host authority"
     origin = handler.headers.get("Origin")
     if origin is None:
@@ -126,13 +120,13 @@ def _validate_request_authority(handler: BaseHTTPRequestHandler) -> tuple[int, s
         return 400, "malformed Origin"
     if hostname is None or port is None:
         return 400, "malformed Origin"
-    if not _is_allowed_host(hostname) or port != bound_port:
+    if not _is_allowed_host(hostname, bound_host) or port != bound_port:
         return 403, "untrusted Origin authority"
     return None
 
 
-def _is_allowed_authority(authority: str, bound_port: int) -> bool:
-    """Validate a Host header's exact loopback name/IP and bound port."""
+def _is_allowed_authority(authority: str, bound_host: str, bound_port: int) -> bool:
+    """Validate a Host header against the bound host and port."""
     try:
         parsed = urlsplit(f"//{authority}")
         return (
@@ -143,16 +137,19 @@ def _is_allowed_authority(authority: str, bound_port: int) -> bool:
             and not parsed.fragment
             and parsed.hostname is not None
             and parsed.port == bound_port
-            and _is_allowed_host(parsed.hostname)
+            and _is_allowed_host(parsed.hostname, bound_host)
         )
     except ValueError:
         return False
 
 
-def _is_allowed_host(host: str) -> bool:
-    """Allow exact local authorities without accepting DNS aliases."""
+def _is_allowed_host(host: str, bound_host: str) -> bool:
+    """Allow the bound address without accepting unrelated DNS aliases."""
     normalized = host.lower()
-    return normalized in {*K_LOOPBACK_HOSTS, K_LOOPBACK_IPV6}
+    bound_normalized = bound_host.lower()
+    if bound_normalized in K_LOOPBACK_HOSTS:
+        return normalized in K_LOOPBACK_HOSTS
+    return normalized == bound_normalized
 
 
 __all__ = ["K_LOOPBACK_HOSTS", "PreviewServer", "create_preview_server", "build_preview_url"]

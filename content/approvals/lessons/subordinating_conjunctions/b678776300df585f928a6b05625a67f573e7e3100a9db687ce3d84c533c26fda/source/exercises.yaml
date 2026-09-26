@@ -1,0 +1,577 @@
+- handle: identify_at_content_clause
+  op: choose
+  objective: obj-subordinating-conjunctions-01
+  bloom: understand
+  prompt_md: Velg markeringen som viser hele innholdet i hver «at»-setning.
+  derived_from:
+  - section_id: reporting-a-thought-or-statement-with-at
+  stem_md: Maja tror at bussen kommer snart. Jonas sier at han er klar. Vi vet at veien er åpen.
+  options:
+  - id: conjunction-only
+    text: 'Maja tror [at bussen kommer] snart; Jonas sier [at han er] klar; Vi vet [at veien er] åpen.'
+    correct: false
+    why: Each marked span stops before the full reported content is complete.
+  - id: complete-content-clauses
+    text: 'Maja tror [at bussen kommer snart]; Jonas sier [at han er klar]; Vi vet [at veien er åpen].'
+    correct: true
+    why: Each span contains the conjunction and the complete reported content.
+  - id: whole-sentences
+    text: '[Maja tror at bussen kommer] snart; [Jonas sier at han er] klar; [Vi vet at veien er] åpen.'
+    correct: false
+    why: These spans include the reporting clause instead of isolating only its content.
+- handle: choose_at_for_reported_content
+  op: recall_fill
+  objective: obj-subordinating-conjunctions-01
+  bloom: remember
+  prompt_md: Fyll inn bindeordet som innleder det noen sier, tror eller håper.
+  audio_target: Før turen sier Jonas at bussen kommer snart. Maja tror at det blir regn. Henrik håper at butikken ikke er stengt.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Jonas
+      text_md: «Bussen kommer snart, så rekker vi starten på turen.»
+    - speaker: Maja
+      text_md: «Jeg tror det kommer til å regne.»
+  segments:
+  - text_md: 'Før turen sier Jonas '
+  - blank_id: report-content-1
+    options:
+    - når
+    - at
+    - fordi
+    - hvis
+    answer_index: 1
+  - text_md: ' bussen kommer snart. Maja tror '
+  - blank_id: report-content-2
+    options:
+    - hvis
+    - når
+    - at
+    - fordi
+    answer_index: 2
+  - text_md: ' det blir regn. Henrik håper '
+  - blank_id: report-content-3
+    options:
+    - når
+    - at
+    - fordi
+    - hvis
+    answer_index: 1
+  - text_md: ' butikken ikke er stengt.'
+  explanation_md: «At» innleder innholdet i det noen sier, tror eller håper.
+  derived_from:
+  - section_id: reporting-a-thought-or-statement-with-at
+- handle: match_reason_to_fordi_clause
+  op: match_pairs
+  objective: obj-subordinating-conjunctions-01
+  bloom: remember
+  prompt_md: Koble hver hendelse til grunnen som passer.
+  left:
+  - left_id: event-1
+    text: Maja tar med støvler.
+  - left_id: event-2
+    text: Jonas ringer.
+  - left_id: event-3
+    text: Vi ser film inne.
+  - left_id: event-4
+    text: De vurderer å avlyse turen.
+  right:
+  - right_id: reason-1
+    text: fordi hun skal vade over bekken.
+  - right_id: reason-2
+    text: fordi han trenger et svar.
+  - right_id: reason-3
+    text: fordi vi har planlagt en innendørs filmkveld.
+  - right_id: reason-4
+    text: fordi arrangøren har meldt om rasfare på turstien.
+  pairs:
+  - left_id: event-1
+    right_id: reason-1
+  - left_id: event-2
+    right_id: reason-2
+  - left_id: event-3
+    right_id: reason-3
+  - left_id: event-4
+    right_id: reason-4
+  derived_from:
+  - section_id: giving-a-reason-with-fordi
+- handle: complete_trip_reasons_with_fordi
+  op: recall_fill
+  objective: obj-subordinating-conjunctions-01
+  bloom: apply
+  prompt_md: Fyll inn bindeordet som innleder grunnen til handlingen.
+  audio_target: Lina tørker gulvet fordi noen har sølt vann. Per åpner vinduet fordi rommet er varmt. Vi tar trikken fordi bilen står på verksted. De flytter møtet inn fordi det regner nå.
+  segments:
+  - text_md: 'Lina tørker gulvet '
+  - blank_id: trip-reason-1
+    options:
+    - fordi
+    - hvis
+    answer_index: 0
+  - text_md: ' noen har sølt vann. Per åpner vinduet '
+  - blank_id: trip-reason-2
+    options:
+    - fordi
+    - hvis
+    answer_index: 0
+  - text_md: ' rommet er varmt. Vi tar trikken '
+  - blank_id: trip-reason-3
+    options:
+    - hvis
+    - fordi
+    answer_index: 1
+  - text_md: ' bilen står på verksted. De flytter møtet inn '
+  - blank_id: trip-reason-4
+    options:
+    - hvis
+    - fordi
+    answer_index: 1
+  - text_md: ' det regner nå.'
+  explanation_md: «Fordi» innleder grunnen til handlingen.
+  derived_from:
+  - section_id: giving-a-reason-with-fordi
+- handle: contrast_fordi_and_hvis
+  op: recall_fill
+  objective: obj-subordinating-conjunctions-01
+  bloom: understand
+  prompt_md: 'Fyll inn «fordi» eller «hvis» etter om setningen uttrykker en kjent grunn eller en mulig betingelse.'
+  audio_target: Vi blir inne fordi det blåser mye. Vi drar hvis veien er åpen. Jeg tar med mat hvis butikken ved hytta er stengt. Jonas ringer fordi han har et spørsmål.
+  segments:
+  - text_md: 'Vinden blåser allerede kraftig. Vi blir inne '
+  - blank_id: reason-condition-1
+    options:
+    - fordi
+    - hvis
+    answer_index: 0
+  - text_md: ' det blåser mye. Veien kan være åpen. Vi drar '
+  - blank_id: reason-condition-2
+    options:
+    - fordi
+    - hvis
+    answer_index: 1
+  - text_md: ' veien er åpen. Butikken kan være stengt. Jeg tar med mat '
+  - blank_id: reason-condition-3
+    options:
+    - fordi
+    - hvis
+    answer_index: 1
+  - text_md: ' butikken ved hytta er stengt. Et spørsmål forklarer hvorfor han ringer. Jonas ringer '
+  - blank_id: reason-condition-4
+    options:
+    - fordi
+    - hvis
+    answer_index: 0
+  - text_md: ' han har et spørsmål.'
+  explanation_md: «Fordi» viser en faktisk grunn. «Hvis» innleder en mulig betingelse.
+  derived_from:
+  - section_id: stating-a-condition-with-hvis
+- handle: locate_hvis_dependency
+  op: choose
+  objective: obj-subordinating-conjunctions-01
+  bloom: understand
+  prompt_md: Velg markeringen av hver fullstendige «hvis»-setning.
+  stem_md: Hvis det blir kaldt, tar Jonas med ved. Hvis butikken ved hytta er stengt, kan vi handle på veien. Hvis veien er åpen, drar vi.
+  options:
+  - id: conjunctions-only
+    text: '[Hvis det blir] kaldt, tar Jonas med ved; [Hvis butikken ved hytta er] stengt, kan vi handle på veien; [Hvis veien er] åpen, drar vi.'
+    correct: false
+    why: Each marked span stops before the condition is complete.
+  - id: whole-sentences
+    text: 'Hvis det blir kaldt, [tar Jonas med ved]; Hvis butikken ved hytta er stengt, [kan vi handle på veien]; Hvis veien er åpen, [drar vi].'
+    correct: false
+    why: These spans mark only the event and leave out the condition it depends on.
+  - id: full-conditions-and-dependent-events
+    text: '[Hvis det blir kaldt], tar Jonas med ved; [Hvis butikken ved hytta er stengt], kan vi handle på veien; [Hvis veien er åpen], drar vi.'
+    correct: true
+    why: Each span contains the complete condition and identifies the event depending on it.
+  derived_from:
+  - section_id: stating-a-condition-with-hvis
+- handle: recognize_time_clause_boundaries
+  op: choose
+  objective: obj-subordinating-conjunctions-01
+  bloom: understand
+  prompt_md: Velg markeringen av hver fullstendige tidssetning.
+  stem_md: Når vi kommer fram, lager vi middag. Vi kjøper mat før vi kjører til hytta. Mens Jonas pakker, sjekker Maja butikken.
+  options:
+  - id: conjunctions-only
+    text: 'Når [vi kommer fram, lager vi] middag; Vi kjøper mat [før vi kjører] til hytta; Mens Jonas [pakker, sjekker Maja] butikken.'
+    correct: false
+    why: The marked spans combine incomplete clauses with part of the main event.
+  - id: whole-sentences
+    text: '[Når vi kommer fram, lager] vi middag; [Vi kjøper mat før vi kjører til] hytta; [Mens Jonas pakker, sjekker] Maja butikken.'
+    correct: false
+    why: Each span includes only part of the main event and leaves the event incomplete.
+  - id: full-time-clauses-and-events
+    text: '[Når vi kommer fram], lager vi middag; Vi kjøper mat [før vi kjører til hytta]; [Mens Jonas pakker], sjekker Maja butikken.'
+    correct: true
+    why: Each span contains a complete time clause and its associated event.
+  derived_from:
+  - section_id: placing-events-in-time
+- handle: choose_time_relationship_conjunction
+  op: recall_fill
+  objective: obj-subordinating-conjunctions-01
+  bloom: understand
+  prompt_md: 'Fyll inn bindeordet som passer i hver setning.'
+  audio_target: Vi kjøper mat før vi kjører til hytta. Vi lager middag når vi kommer fram. Maja sjekker butikken mens Jonas pakker.
+  segments:
+  - text_md: 'Matkjøp klokka ti, avreise klokka elleve: Vi kjøper mat '
+  - blank_id: time-relationship-1
+    options:
+    - før
+    - når
+    - mens
+    answer_index: 0
+  - text_md: ' vi kjører til hytta. Middag ved ankomst: Vi lager middag '
+  - blank_id: time-relationship-2
+    options:
+    - før
+    - når
+    - mens
+    answer_index: 1
+  - text_md: ' vi kommer fram. Samtidig: Maja sjekker butikken '
+  - blank_id: time-relationship-3
+    options:
+    - før
+    - når
+    - mens
+    answer_index: 2
+  - text_md: ' Jonas pakker.'
+  explanation_md: «Før» viser hva som skjer først, «når» knytter en handling til et tidspunkt, og «mens» viser at handlinger skjer samtidig.
+  derived_from:
+  - section_id: placing-events-in-time
+- handle: distinguish_reason_and_unexpected_contrast
+  op: recall_fill
+  objective: obj-subordinating-conjunctions-01
+  bloom: understand
+  prompt_md: 'Fyll inn bindeordet som viser en kjent grunn eller at handlingen skjer til tross for en hindring.'
+  audio_target: Vi blir inne fordi det regner. De går en liten tur selv om det regner. Vi tar med støvler fordi det har regnet.
+  segments:
+  - text_md: 'Det regner, så vi blir inne. Vi blir inne '
+  - blank_id: reason-contrast-1
+    options:
+    - fordi
+    - selv om
+    answer_index: 0
+  - text_md: ' det regner. Det regner, men de går tur likevel. De går en liten tur '
+  - blank_id: reason-contrast-2
+    options:
+    - fordi
+    - selv om
+    answer_index: 1
+  - text_md: ' det regner. Stien er våt etter regnet. Vi tar med støvler '
+  - blank_id: reason-contrast-3
+    options:
+    - fordi
+    - selv om
+    answer_index: 0
+  - text_md: ' det har regnet.'
+  explanation_md: «Fordi» viser grunnen til handlingen. «Selv om» viser at den skjer til tross for en hindring.
+  derived_from:
+  - section_id: expressing-an-unexpected-contrast-with-selv-om
+- handle: identify_selv_om_clause
+  op: choose
+  objective: obj-subordinating-conjunctions-01
+  bloom: understand
+  prompt_md: Marker hver fullstendige «selv om»-setning.
+  stem_md: Jonas pakker regnjakka selv om han håper på sol. Selv om det regner, går de en liten tur.
+  options:
+  - id: conjunction-only
+    text: Jonas pakker [regnjakka selv om han] håper på sol; [Selv om det regner], går de en liten tur.
+    correct: false
+    why: The first marked span includes part of the main clause and omits part of the dependent clause.
+  - id: first-word-only
+    text: Jonas pakker regnjakka selv om [han håper på sol]; Selv om [det regner], går de en liten tur.
+    correct: false
+    why: These spans omit the conjunction that introduces each dependent clause.
+  - id: complete-selv-om-clauses
+    text: Jonas pakker regnjakka [selv om han håper på sol]; [Selv om det regner], går de en liten tur.
+    correct: true
+    why: Each span contains the complete conjunction and dependent clause.
+  derived_from:
+  - section_id: expressing-an-unexpected-contrast-with-selv-om
+- handle: contrast_at_and_om
+  op: recall_fill
+  objective: obj-subordinating-conjunctions-01
+  bloom: understand
+  prompt_md: 'Fyll inn «at» eller «om» der det passer.'
+  audio_target: Jeg vet at butikken er åpen. Jeg vet ikke om butikken er åpen. Jonas spør om veien er åpen. Maja sier at bussen kommer snart.
+  segments:
+  - text_md: 'Jeg kjenner svaret: Butikken er åpen. Jeg vet '
+  - blank_id: at-om-1
+    options:
+    - at
+    - om
+    answer_index: 0
+  - text_md: ' butikken er åpen. Ingen har fortalt meg åpningstida. Jeg vet ikke '
+  - blank_id: at-om-2
+    options:
+    - at
+    - om
+    answer_index: 1
+  - text_md: ' butikken er åpen. Jonas spør '
+  - blank_id: at-om-3
+    options:
+    - at
+    - om
+    answer_index: 1
+  - text_md: ' veien er åpen. Maja sier '
+  - blank_id: at-om-4
+    options:
+    - at
+    - om
+    answer_index: 0
+  - text_md: ' bussen kommer snart.'
+  explanation_md: «At» innleder noe som blir fortalt. «Om» innleder et indirekte ja/nei-spørsmål.
+  derived_from:
+  - section_id: asking-indirectly-with-om
+- handle: build_bicycle_plan_connections
+  op: recall_fill
+  objective: obj-subordinating-conjunctions-01
+  bloom: apply
+  prompt_md: 'Fyll inn bindeordet som passer i hver setning.'
+  audio_target: Amina sier at de sykler på søndag. Henrik pakker regnjakka fordi det regner. De kan sykle til kafeen hvis veien er åpen. De starter turen når Amina kommer fram. På den lange strekningen hører de på radio mens de sykler fra start til slutt. De sykler videre selv om det regner. Amina lurer på om kafeen er åpen.
+  segments:
+  - text_md: 'Amina sier '
+  - blank_id: bicycle-connection-1
+    options:
+    - at
+    - fordi
+    - hvis
+    - når
+    - mens
+    - selv om
+    - om
+    answer_index: 0
+  - text_md: ' de sykler på søndag. Henrik pakker regnjakka '
+  - blank_id: bicycle-connection-2
+    options:
+    - at
+    - fordi
+    - hvis
+    - når
+    - mens
+    - selv om
+    - om
+    answer_index: 1
+  - text_md: ' det regner. De vet ennå ikke om veien er åpen. De kan sykle til kafeen '
+  - blank_id: bicycle-connection-3
+    options:
+    - at
+    - fordi
+    - hvis
+    - når
+    - mens
+    - selv om
+    - om
+    answer_index: 2
+  - text_md: ' veien er åpen. Amina har avtalt å møte dem klokka ti, og de venter på henne. De starter turen '
+  - blank_id: bicycle-connection-4
+    options:
+    - at
+    - fordi
+    - hvis
+    - når
+    - mens
+    - selv om
+    - om
+    answer_index: 3
+  - text_md: ' Amina kommer fram. På den lange strekningen hører de på radio '
+  - blank_id: bicycle-connection-5
+    options:
+    - at
+    - fordi
+    - hvis
+    - mens
+    - selv om
+    - om
+    answer_index: 3
+  - text_md: ' de sykler. De sykler videre '
+  - blank_id: bicycle-connection-6
+    options:
+    - at
+    - fordi
+    - hvis
+    - når
+    - mens
+    - selv om
+    - om
+    answer_index: 5
+  - text_md: ' det regner. Amina lurer på '
+  - blank_id: bicycle-connection-7
+    options:
+    - at
+    - fordi
+    - hvis
+    - når
+    - mens
+    - selv om
+    - om
+    answer_index: 6
+  - text_md: ' kafeen er åpen.'
+  explanation_md: Velg bindeord etter forholdet mellom de to setningene.
+  derived_from:
+  - section_id: cumulative-transfer
+- handle: mark_dependent_clauses_in_bicycle_message
+  op: choose
+  objective: obj-subordinating-conjunctions-01
+  bloom: understand
+  prompt_md: Velg markeringen som viser alle leddsetningene og hvordan de henger sammen med hovedsetningen.
+  stem_md: Amina sier at de sykler på søndag. Henrik tar med en regnjakke fordi værmeldingen melder regn. Hvis kafeen er åpen, stopper de når de kommer fram. De hører på radio mens de sykler, selv om det regner.
+  options:
+  - id: conjunctions-only
+    text: Amina sier [at] de sykler på søndag. Henrik tar med en regnjakke [fordi] værmeldingen melder regn. [Hvis] kafeen er åpen, stopper de [når] de kommer fram. De hører på radio [mens] de sykler, [selv om] det regner.
+    correct: false
+    why: Her er bare bindeordene markert.
+  - id: all-boundaries-and-functions
+    text: Amina sier [at de sykler på søndag] — det hun forteller; Henrik tar med en regnjakke [fordi værmeldingen melder regn] — grunn; [Hvis kafeen er åpen] — vilkår for stopp; de stopper [når de kommer fram] — tidspunkt for stopp; de hører på radio [mens de sykler] — samtidige handlinger; de hører på radio [selv om det regner] — uventet motsetning.
+    correct: true
+    why: Alle leddsetningene er hele og knyttet til riktig funksjon.
+  - id: wrong-functions
+    text: Amina sier [at de sykler på søndag] — grunn; Henrik tar med en regnjakke [fordi værmeldingen melder regn] — det han forteller; [Hvis kafeen er åpen] — tidspunkt for stopp; de stopper [når de kommer fram] — vilkår; de hører på radio [mens de sykler] — uventet motsetning; de hører på radio [selv om det regner] — samtidige handlinger.
+    correct: false
+    why: Leddsetningene er delt riktig, men forholdet mellom dem og hovedsetningene er feil.
+  derived_from:
+  - section_id: cumulative-transfer
+- handle: review_at_reported_content
+  op: recall_fill
+  objective: obj-subordinating-conjunctions-01
+  bloom: remember
+  prompt_md: Nora tror noe om togtidene. Fyll inn bindeordet som innleder det hun tror.
+  audio_target: Nora tror at toget går klokka åtte.
+  segments:
+  - text_md: 'Nora tror '
+  - blank_id: review-at-1
+    options:
+    - at
+    - om
+    - fordi
+    answer_index: 0
+  - text_md: ' toget går klokka åtte.'
+  explanation_md: Verbet «tror» innleder det Nora tror.
+  derived_from:
+  - section_id: reporting-a-thought-or-statement-with-at
+- handle: review_fordi_reason
+  op: recall_fill
+  objective: obj-subordinating-conjunctions-01
+  bloom: remember
+  prompt_md: Sykkelen til Leo har punktert, så han tar bussen. Fyll inn bindeordet som viser grunnen.
+  audio_target: Leo tar bussen fordi sykkelen har punktert.
+  segments:
+  - text_md: 'Leo tar bussen '
+  - blank_id: review-fordi-1
+    options:
+    - fordi
+    - hvis
+    - selv om
+    answer_index: 0
+  - text_md: ' sykkelen har punktert.'
+  explanation_md: Den andre setningen gir grunnen til at Leo tar bussen.
+  derived_from:
+  - section_id: giving-a-reason-with-fordi
+- handle: review_hvis_condition
+  op: recall_fill
+  objective: obj-subordinating-conjunctions-01
+  bloom: remember
+  prompt_md: Turen avhenger av om været endrer seg. Fyll inn bindeordet som uttrykker betingelsen.
+  audio_target: Vi går en tur hvis regnet stopper.
+  segments:
+  - text_md: 'Vi går en tur '
+  - blank_id: review-hvis-1
+    options:
+    - hvis
+    - fordi
+    - når
+    answer_index: 0
+  - text_md: ' regnet stopper.'
+  explanation_md: Turen avhenger av om regnet gir seg.
+  derived_from:
+  - section_id: stating-a-condition-with-hvis
+- handle: review_time_relationships
+  op: recall_fill
+  objective: obj-subordinating-conjunctions-01
+  bloom: remember
+  prompt_md: 'Fyll inn bindeordene i setningene.'
+  audio_target: Sara låser døra før hun går. Hun sender en melding når hun kommer fram. Amir lager mat mens Sara dekker bordet.
+  segments:
+  - text_md: 'Døra låses klokka åtte, og Sara går fem minutter senere. Sara låser døra '
+  - blank_id: review-time-1
+    options:
+    - før
+    - når
+    - mens
+    answer_index: 0
+  - text_md: ' hun går. Sara kommer fram klokka 12.05 og sender meldingen da. Hun sender en melding '
+  - blank_id: review-time-2
+    options:
+    - før
+    - når
+    - mens
+    answer_index: 1
+  - text_md: ' hun kommer fram. De begynner begge klokka seks. Amir lager mat '
+  - blank_id: review-time-3
+    options:
+    - før
+    - når
+    - mens
+    answer_index: 2
+  - text_md: ' Sara dekker bordet.'
+  explanation_md: «Før» viser hva som skjer først, «når» knytter en handling til et tidspunkt, og «mens» viser at handlinger skjer samtidig.
+  derived_from:
+  - section_id: placing-events-in-time
+- handle: review_selv_om_contrast
+  op: recall_fill
+  objective: obj-subordinating-conjunctions-01
+  bloom: remember
+  prompt_md: Det er kaldt, men de går tur likevel. Fyll inn bindeordet som passer.
+  audio_target: De går en tur selv om det er kaldt.
+  segments:
+  - text_md: 'De går en tur '
+  - blank_id: review-selv-om-1
+    options:
+    - selv om
+    - fordi
+    - hvis
+    answer_index: 0
+  - text_md: ' det er kaldt.'
+  explanation_md: De går tur til tross for kulda.
+  derived_from:
+  - section_id: expressing-an-unexpected-contrast-with-selv-om
+- handle: review_om_indirect_question
+  op: recall_fill
+  objective: obj-subordinating-conjunctions-01
+  bloom: remember
+  prompt_md: Emil er usikker på om biblioteket er åpent. Fyll inn bindeordet i det indirekte spørsmålet.
+  audio_target: Emil vet ikke om biblioteket er åpent.
+  segments:
+  - text_md: 'Emil vet ikke '
+  - blank_id: review-om-1
+    options:
+    - om
+    - at
+    - når
+    answer_index: 0
+  - text_md: ' biblioteket er åpent.'
+  explanation_md: «Vet ikke» viser at Emil er usikker på om biblioteket er åpent.
+  derived_from:
+  - section_id: asking-indirectly-with-om
+- handle: review_clause_boundary
+  op: choose
+  objective: obj-subordinating-conjunctions-01
+  bloom: understand
+  prompt_md: 'Marker hele leddsetningen: «Ida tar med kaffe fordi kiosken er stengt.»'
+  stem_md: Ida tar med kaffe fordi kiosken er stengt.
+  options:
+  - id: boundary-conjunction
+    text: '[Ida tar med kaffe fordi kiosken] er stengt.'
+    correct: false
+    why: The marked span crosses the boundary between the main and dependent clauses.
+  - id: boundary-dependent
+    text: Ida tar med kaffe [fordi kiosken er stengt].
+    correct: true
+    why: The brackets mark the complete dependent clause.
+  - id: boundary-whole
+    text: 'Ida [tar med kaffe fordi kiosken er] stengt.'
+    correct: false
+    why: The marked span omits the start of the dependent clause and includes part of the main clause.
+  derived_from:
+  - section_id: cumulative-transfer

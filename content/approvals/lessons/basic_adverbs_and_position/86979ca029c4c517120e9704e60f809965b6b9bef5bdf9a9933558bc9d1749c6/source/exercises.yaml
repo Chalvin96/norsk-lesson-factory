@@ -1,0 +1,582 @@
+- handle: anchor_adverb_noticing
+  op: match_pairs
+  objective: obj-basic-adverbs-and-position-01
+  bloom: remember
+  prompt_md: Match each sentence to the kind of information its target adverb adds.
+  explanation_md: Ofte gir frekvens, ikke gir nektelse, langsomt gir måte, og nå gir tid.
+  derived_from:
+  - section_id: what-an-adverb-does
+  left:
+  - left_id: adverb-ofte
+    text: ofte — Jeg kommer ofte sent.
+  - left_id: adverb-ikke
+    text: ikke — Jeg er ikke sen i dag.
+  - left_id: adverb-langsomt
+    text: langsomt — Jeg arbeider langsomt.
+  - left_id: adverb-naa
+    text: nå — Jeg drar hjem nå.
+  right:
+  - right_id: meaning-frequency
+    text: Frekvens
+  - right_id: meaning-negation
+    text: Nektelse
+  - right_id: meaning-manner
+    text: Måte
+  - right_id: meaning-time
+    text: Tid
+  pairs:
+  - left_id: adverb-ofte
+    right_id: meaning-frequency
+  - left_id: adverb-ikke
+    right_id: meaning-negation
+  - left_id: adverb-langsomt
+    right_id: meaning-manner
+  - left_id: adverb-naa
+    right_id: meaning-time
+- handle: quality_or_action_form
+  op: recall_fill
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Complete each sentence with the correct form of the adjective.
+  explanation_md: Etter er beskriver ordet subjektet og står i adjektivform; sammen med en handling brukes
+    adverbialformen, ofte med -t.
+  derived_from:
+  - section_id: using-an-adjective-to-describe-an-action
+  audio_target: Bilen er rask. Bilen kjører raskt. Sangeren er god. Sangeren synger godt.
+  segments:
+  - text_md: 'Bilen er '
+  - blank_id: rask-quality
+    options:
+    - rask
+    - raskt
+    answer_index: 0
+  - text_md: '. Bilen kjører '
+  - blank_id: rask-action
+    options:
+    - rask
+    - raskt
+    answer_index: 1
+  - text_md: '. Sangeren er '
+  - blank_id: god-quality
+    options:
+    - godt
+    - god
+    answer_index: 1
+  - text_md: '. Sangeren synger '
+  - blank_id: god-action
+    options:
+    - god
+    - godt
+    answer_index: 1
+  - text_md: .
+- handle: unchanged_adverbial_form
+  op: recall_fill
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Complete each sentence with the correct form of the word.
+  explanation_md: Rolig og forsiktig beholder samme form enten de beskriver subjektet eller handlingen.
+  derived_from:
+  - section_id: using-an-adjective-to-describe-an-action
+  audio_target: Barnet er rolig. Barnet sover rolig. Anna er forsiktig. Anna setter glasset forsiktig
+    på bordet.
+  segments:
+  - text_md: 'Barnet er '
+  - blank_id: rolig-quality
+    options:
+    - rolig
+    - roligt
+    answer_index: 0
+  - text_md: '. Barnet sover '
+  - blank_id: rolig-action
+    options:
+    - roligt
+    - rolig
+    answer_index: 1
+  - text_md: '. Anna er '
+  - blank_id: forsiktig-quality
+    options:
+    - forsiktig
+    - forsiktigt
+    answer_index: 0
+  - text_md: '. Anna setter glasset '
+  - blank_id: forsiktig-action
+    options:
+    - forsiktigt
+    - forsiktig
+    answer_index: 1
+  - text_md: ' på bordet.'
+- handle: frequency_and_negation_position
+  op: build
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Build the sentence meaning «Erik always arrives late.»
+  explanation_md: 'I en hovedsetning med enkelt verb følger alltid etter det finitte verbet: Erik kommer
+    alltid sent.'
+  derived_from:
+  - section_id: position-of-frequency-and-negative-adverbs
+  tokens:
+  - token_id: tok-kommer
+    text: kommer
+  - token_id: tok-alltid
+    text: alltid
+  - token_id: tok-sent
+    text: sent.
+  - token_id: tok-erik
+    text: Erik
+  answer_order:
+  - tok-erik
+  - tok-kommer
+  - tok-alltid
+  - tok-sent
+- handle: simple_clause_position_repair
+  op: find_fix
+  objective: obj-basic-adverbs-and-position-01
+  bloom: analyze
+  prompt_md: One word is in the wrong position. Select the word that must be moved to make the sentence
+    natural.
+  derived_from:
+  - section_id: position-of-frequency-and-negative-adverbs
+  tokens:
+  - token_id: tok-han
+    text: Han
+  - token_id: tok-naa
+    text: nå
+  - token_id: tok-arbeider
+    text: arbeider
+  - token_id: tok-ikke
+    text: ikke.
+  error_token_id: tok-naa
+  feedback: 'Move nå to the end: Han arbeider ikke nå.'
+- handle: manner_adverb_position
+  op: build
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: 'Build the Norwegian sentence from these meanings: slowly (manner), the message (object),
+    Nora (subject), and reads (verb).'
+  explanation_md: 'Når et måtesadverb beskriver hvordan handlingen utføres, står det etter objektet: leser
+    meldingen langsomt.'
+  derived_from:
+  - section_id: position-of-manner-adverbs
+  tokens:
+  - token_id: tok-leser
+    text: leser
+  - token_id: tok-meldingen
+    text: meldingen
+  - token_id: tok-langsomt
+    text: langsomt.
+  - token_id: tok-nora
+    text: Nora
+  answer_order:
+  - tok-nora
+  - tok-leser
+  - tok-meldingen
+  - tok-langsomt
+- handle: two_adverb_position_contrast
+  op: build
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Build the sentence meaning «Erik always carries the glasses carefully.»
+  explanation_md: 'Alltid følger etter det finitte verbet, mens måtesadverbiet forsiktig står etter objektet:
+    bærer alltid glassene forsiktig.'
+  derived_from:
+  - section_id: position-of-manner-adverbs
+  tokens:
+  - token_id: tok-baerer
+    text: bærer
+  - token_id: tok-alltid
+    text: alltid
+  - token_id: tok-glassene
+    text: glassene
+  - token_id: tok-forsiktig
+    text: forsiktig.
+  - token_id: tok-erik
+    text: Erik
+  answer_order:
+  - tok-erik
+  - tok-baerer
+  - tok-alltid
+  - tok-glassene
+  - tok-forsiktig
+- handle: adjective_adverb_misconception_repair
+  op: find_fix
+  objective: obj-basic-adverbs-and-position-01
+  bloom: analyze
+  prompt_md: One word has the wrong form. Select the word that must be corrected.
+  derived_from:
+  - section_id: do-you-need-an-adjective-or-an-adverb
+  tokens:
+  - token_id: tok-bilen
+    text: Bilen
+  - token_id: tok-kjorer
+    text: kjører
+  - token_id: tok-rask
+    text: rask
+  - token_id: tok-og
+    text: og
+  - token_id: tok-forsiktig
+    text: forsiktig.
+  error_token_id: tok-rask
+  feedback: 'Replace rask with raskt because it describes the action: Bilen kjører raskt og forsiktig.'
+- handle: anchor_scene_completion_by_form
+  op: recall_fill
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Complete each sentence with the correct form of the word.
+  explanation_md: Langsom og lav får -t når de beskriver en handling, mens forsiktig beholder samme form.
+  derived_from:
+  - section_id: back-at-annas-apartment
+  audio_target: Nora leser meldingen langsomt. Anna bærer glassene forsiktig. Erik snakker lavt.
+  segments:
+  - text_md: 'Nora leser meldingen '
+  - blank_id: langsom-action
+    options:
+    - langsomt
+    - langsom
+    answer_index: 0
+  - text_md: '. Anna bærer glassene '
+  - blank_id: forsiktig-action
+    options:
+    - forsiktigt
+    - forsiktig
+    answer_index: 1
+  - text_md: '. Erik snakker '
+  - blank_id: lav-action
+    options:
+    - lavt
+    - lav
+    answer_index: 0
+  - text_md: .
+- handle: anchor_scene_completion_by_position
+  op: build
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Build the sentence meaning «Erik does not carry the glasses at all.»
+  explanation_md: 'I en hovedsetning står ikke etter det finitte verbet, og overhodet uttrykker «at all»:
+    Erik bærer overhodet ikke glassene.'
+  derived_from:
+  - section_id: back-at-annas-apartment
+  tokens:
+  - token_id: tok-baerer
+    text: bærer
+  - token_id: tok-ikke
+    text: ikke
+  - token_id: tok-glassene
+    text: glassene.
+  - token_id: tok-overhodet
+    text: overhodet
+  - token_id: tok-erik
+    text: Erik
+  answer_order:
+  - tok-erik
+  - tok-baerer
+  - tok-overhodet
+  - tok-ikke
+  - tok-glassene
+- handle: school_event_adverb_form_transfer
+  op: recall_fill
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Complete each sentence with the correct form of the word.
+  derived_from:
+  - section_id: transfer-helping-at-a-school-event
+  audio_target: Mina er rask. Mina lager drikkene raskt. Jonas er forsiktig. Jonas bærer stolene forsiktig.
+  segments:
+  - text_md: 'Mina er '
+  - blank_id: rask-quality
+    options:
+    - raskt
+    - rask
+    answer_index: 1
+  - text_md: '. Mina lager drikkene '
+  - blank_id: rask-action
+    options:
+    - raskt
+    - rask
+    answer_index: 0
+  - text_md: '. Jonas er '
+  - blank_id: forsiktig-quality
+    options:
+    - forsiktig
+    - forsiktigt
+    answer_index: 0
+  - text_md: '. Jonas bærer stolene '
+  - blank_id: forsiktig-action
+    options:
+    - forsiktigt
+    - forsiktig
+    answer_index: 1
+  - text_md: .
+- handle: school_event_adverb_position_transfer
+  op: build
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Build the sentence meaning «Jonas always carries the chairs carefully.»
+  derived_from:
+  - section_id: transfer-helping-at-a-school-event
+  tokens:
+  - token_id: tok-baerer
+    text: bærer
+  - token_id: tok-alltid
+    text: alltid
+  - token_id: tok-stolene
+    text: stolene
+  - token_id: tok-forsiktig
+    text: forsiktig.
+  - token_id: tok-jonas
+    text: Jonas
+  answer_order:
+  - tok-jonas
+  - tok-baerer
+  - tok-alltid
+  - tok-stolene
+  - tok-forsiktig
+- handle: final_position_retrieval
+  op: recall_fill
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Complete each morning-routine clause.
+  derived_from:
+  - section_id: short-retrieval-review
+  audio_target: Jeg kommer ofte tidlig. Jeg arbeider ikke nå. Jeg spiser fort.
+  segments:
+  - text_md: 'Jeg '
+  - blank_id: frequency-position
+    options:
+    - ofte kommer
+    - kommer ofte
+    answer_index: 1
+  - text_md: ' tidlig. Jeg '
+  - blank_id: negative-position
+    options:
+    - arbeider ikke
+    - ikke arbeider
+    answer_index: 0
+  - text_md: ' nå. Jeg '
+  - blank_id: manner-position
+    options:
+    - fort spiser
+    - spiser fort
+    answer_index: 1
+  - text_md: .
+- handle: review_state_name
+  op: recall_fill
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Complete the line with the Norwegian verb.
+  audio_target: Hei! Jeg heter Live.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Live
+      text_md: «Hei! Jeg ___ Live.»
+  segments:
+  - text_md: '«Hei! Jeg '
+  - blank_id: name-verb
+    options:
+    - heter
+    - har
+    - het
+    answer_index: 0
+  - text_md: ' Live.»'
+  explanation_md: Jeg heter states the speaker's name.
+  derived_from:
+  - section_id: saying-your-name-with-jeg-heter
+- handle: review_friendly_line
+  op: recall_fill
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Complete the friendly meeting line.
+  audio_target: Hyggelig å møte deg.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Jeg heter Nora.»
+    - speaker: Eli
+      text_md: «Hyggelig å ___ deg.»
+  segments:
+  - text_md: '«Hyggelig å '
+  - blank_id: friendly-verb
+    options:
+    - møte
+    - møter
+    - ha
+    answer_index: 0
+  - text_md: ' deg.»'
+  explanation_md: Hyggelig å møte deg marks the meeting as friendly.
+  derived_from:
+  - section_id: marking-the-meeting-as-friendly
+- handle: review_ask_name
+  op: write
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Ask the new classmate for their name. Write only the Norwegian question.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Classmate
+      text_md: «Hei!»
+  response_language: 'no'
+  judge_prompt: Check criteria asks-name. Record taught-question-observation diagnostically.
+  criteria:
+  - id: asks-name
+    instruction: The response asks for the other person's name in natural Norwegian.
+  - id: taught-question-observation
+    instruction: 'Observation only: note whether Hva heter du? appears; do not fail a natural equivalent.'
+  derived_from:
+  - section_id: asking-the-other-persons-name
+- handle: review_closing_function
+  op: choose
+  objective: obj-basic-adverbs-and-position-01
+  bloom: understand
+  prompt_md: Choose the job of the final line.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: A
+      text_md: «Jeg heter Eline.»
+    - speaker: B
+      text_md: «Hyggelig å møte deg. Ha det bra!»
+  options:
+  - id: state-name
+    text: It states the speaker's name.
+    correct: false
+    why: The line gives no speaker name.
+  - id: close
+    text: It closes the conversation.
+    correct: true
+    why: Ha det bra is a farewell at the end of the exchange.
+  - id: ask-name
+    text: It asks for the other person's name.
+    correct: false
+    why: The line contains a farewell, not a name question.
+  derived_from:
+  - section_id: closing-the-exchange
+- handle: review_opening_greeting
+  op: recall_fill
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Complete the opening line of this exchange.
+  audio_target: Hei! Jeg heter Omar.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Omar
+      text_md: «___! Jeg heter Omar.»
+  segments:
+  - text_md: «
+  - blank_id: greeting
+    options:
+    - Hei
+    - Ha det
+    - Takk
+    answer_index: 0
+  - text_md: '! Jeg heter Omar.»'
+  explanation_md: This short word opens an everyday first meeting.
+  derived_from:
+  - section_id: greeting-with-hei
+- handle: review_name_answer
+  op: write
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Write a short Norwegian reply to Maja.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: «Hva heter du?»
+  response_language: 'no'
+  judge_prompt: Check gives-name. Record name-form-observation diagnostically.
+  criteria:
+  - id: gives-name
+    instruction: The response gives the speaker's name.
+  - id: name-form-observation
+    instruction: 'Observation only: note whether Jeg heter appears; do not fail a natural equivalent.'
+  derived_from:
+  - section_id: responding-to-the-name-question
+- handle: review_return_friendly
+  op: choose
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Choose B's next line after A says «Hva heter du?»
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: A
+      text_md: «Hva heter du?»
+  options:
+  - id: question
+    text: Hvor kommer du fra?
+    correct: false
+    why: Dette stiller et nytt spørsmål i stedet for å svare på spørsmålet.
+  - id: also
+    text: Hyggelig å møte deg også.
+    correct: false
+    why: Dette uttrykker vennlighet, men svarer ikke på hva personen heter.
+  - id: name
+    text: Jeg heter Liv.
+    correct: true
+    why: Dette svarer direkte på spørsmålet med et navn.
+  derived_from:
+  - section_id: marking-the-meeting-as-friendly
+- handle: review_name_contrast
+  op: choose
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Choose the line that asks B for B's name.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: A
+      text_md: «Hei! Jeg heter Runa.»
+    - speaker: B
+      text_md: «Hei!»
+  options:
+  - id: wellbeing
+    text: Hvordan har du det?
+    correct: false
+    why: This asks how B is doing, not what B is called.
+  - id: state
+    text: Jeg er Runa.
+    correct: false
+    why: This states A's name again instead of asking for B's name.
+  - id: close
+    text: Vi ses!
+    correct: false
+    why: This closes the meeting without asking for B's name.
+  - id: ask
+    text: Hva heter du?
+    correct: true
+    why: This asks B for B's name.
+  derived_from:
+  - section_id: asking-the-other-persons-name
+- handle: review_complete_meeting
+  op: write
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: 'Write a 12–24-word Norwegian exchange for the café: greet, ask and answer names, say something
+    friendly, and close. Include the visible dialogue in your submitted exchange and word count.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Person A
+      text_md: «Hei! Vi skal jobbe sammen på kaféen i dag.»
+    - speaker: Person B
+      text_md: «Hei, så hyggelig!»
+  response_language: 'no'
+  judge_prompt: Check criteria greeting, name-question, name-answer, friendly-line, closing, and word-count.
+  criteria:
+  - id: greeting
+    instruction: The exchange contains a Norwegian greeting.
+  - id: name-question
+    instruction: One speaker asks for the other person's name.
+  - id: name-answer
+    instruction: The other speaker answers by giving their name.
+  - id: friendly-line
+    instruction: The exchange contains a natural friendly meeting expression.
+  - id: closing
+    instruction: The exchange ends with a natural closing.
+  - id: word-count
+    instruction: The submitted exchange, including the visible dialogue, is between 12 and 24 words long.
+  derived_from:
+  - section_id: building-the-complete-first-meeting

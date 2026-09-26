@@ -1,0 +1,372 @@
+- handle: recognize_proposal
+  op: choose
+  objective: obj-agree-on-informal-plans-01
+  bloom: understand
+  prompt_md: Velg tolkningen som viser hva Mina foreslår, og hvilken aktivitet
+    og tid hun nevner.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Mina og Jonas snakker om hva de kan gjøre etter jobb.
+    - speaker: Mina
+      text_md: «Skal vi gå en tur etter jobb?»
+    - speaker: Jonas
+      text_md: «Ja, det passer fint.»
+  options:
+  - id: confirms-existing-plan
+    text: Mina spør om den avtalte gåturen etter jobb fortsatt gjelder, og Jonas
+      bekrefter avtalen.
+    correct: false
+    why: De har ikke avtalt en tur ennå, så Mina spør ikke om en eksisterende
+      avtale.
+  - id: shared-proposal
+    text: Mina foreslår at de går en tur etter jobb, og Jonas takker ja.
+    correct: true
+    why: «Skal vi …?» foreslår en aktivitet sammen som Jonas kan takke ja eller
+      nei til.
+  - id: obligation
+    text: Mina sier at Jonas må gå en tur etter jobb, og han godtar kravet.
+    correct: false
+    why: Ingenting tyder på at Mina kan pålegge Jonas å gå tur; de er venner.
+  - id: reports-own-plan
+    text: Mina forteller at hun har bestemt seg for å gå en tur etter jobb.
+    correct: false
+    why: Mina spør om en felles aktivitet i stedet for bare å fortelle om sin
+      egen plan.
+  derived_from:
+  - section_id: proposing-an-activity
+- handle: distinguish_activity_acceptance
+  op: choose
+  objective: obj-agree-on-informal-plans-01
+  bloom: understand
+  prompt_md: Velg tolkningen som passer til svaret til Jonas.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Mina
+      text_md: «Skal vi ta en kaffe på fredag klokka tre?»
+    - speaker: Jonas
+      text_md: «Kaffen er jeg med på, men klokka tre er uaktuell for meg.»
+  options:
+  - id: activity-and-time
+    text: Jonas vil være med på kaffen, og tidspunktet passer ham.
+    correct: false
+    why: Han sier at klokka tre er uaktuell, så tidspunktet er ikke akseptert.
+  - id: rejects-activity
+    text: Jonas vil ikke være med på kaffen, men tidspunktet passer ham.
+    correct: false
+    why: «Kaffen er jeg med på» viser at han sier ja til kaffen.
+  - id: alternative-given
+    text: Jonas vil være med på kaffen og foreslår et nytt tidspunkt.
+    correct: false
+    why: Han nevner ikke noe nytt tidspunkt i denne dialogen.
+  - id: activity-only
+    text: Jonas vil være med på kaffen, men tidspunktet passer ikke for ham.
+    correct: true
+    why: «Kaffen er jeg med på» viser at han sier ja til kaffen, mens «uaktuell»
+      viser at tidspunktet ikke passer.
+  derived_from:
+  - section_id: responding-to-a-proposal
+- handle: select_cooperative_alternative
+  op: choose
+  objective: obj-agree-on-informal-plans-01
+  bloom: apply
+  prompt_md: Velg svaret som holder fast ved aktiviteten og foreslår ett mulig
+    alternativ.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Skal vi gå en tur på lørdag formiddag?»
+    - speaker: Context
+      text_md: Emil vil gjerne bli med. Han jobber lørdag formiddag, men er
+        ledig søndag ettermiddag.
+  options:
+  - id: rejects-activity
+    text: Nei, jeg vil ikke gå en tur. Men søndag ettermiddag passer.
+    correct: false
+    why: Den avviser selve turen, som Emil gjerne vil være med på.
+  - id: vague-alternative
+    text: Gjerne, men jeg kan ikke da. Kanskje en annen gang.
+    correct: false
+    why: Den gir ingen brukbar tid.
+  - id: one-alternative
+    text: Gjerne, men lørdag formiddag passer ikke. Hva med søndag ettermiddag?
+    correct: true
+    why: Den beholder turen, avviser bare den opptatte tiden og gir ett konkret
+      alternativ.
+  - id: too-many-alternatives
+    text: Gjerne! Hva med søndag ettermiddag eller lørdag kveld?
+    correct: false
+    why: Den gir flere alternativer, men Emil er bare ledig søndag ettermiddag.
+  derived_from:
+  - section_id: offering-one-alternative
+- handle: select_final_confirmation
+  op: choose
+  objective: obj-agree-on-informal-plans-01
+  bloom: apply
+  prompt_md: Velg svaret som bekrefter planen uten å endre den.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Mina
+      text_md: «Skal vi se en film på Kino Nova søndag klokka sju?»
+    - speaker: Jonas
+      text_md: «Ja, det passer fint.»
+  options:
+  - id: wrong-place
+    text: Flott! Da møtes vi på kafeen søndag klokka sju.
+    correct: false
+    why: Den bekrefter dagen og klokkeslettet, men flytter møtet fra Kino Nova
+      til en kafé.
+  - id: confirm-plan
+    text: Flott! Da møtes vi på Kino Nova søndag klokka sju.
+    correct: true
+    why: Den bekrefter avtalt aktivitet, sted, dag og klokkeslett uten å endre
+      dem.
+  - id: wrong-time
+    text: Søndag passer, men jeg kommer først klokka åtte.
+    correct: false
+    why: Den endrer klokkeslettet fra sju til åtte.
+  - id: wrong-day
+    text: Gjerne! Da ses vi fredag klokka sju på Kino Nova.
+    correct: false
+    why: Den endrer avtalt dag fra søndag til fredag.
+  derived_from:
+  - section_id: agreeing-and-stating-the-final-plan
+- handle: respond_to_availability
+  op: write
+  objective: obj-agree-on-informal-plans-01
+  bloom: apply
+  prompt_md: "Du vil gjerne ta kaffe, men hjelper søsteren din da. Svar at du vil ta kaffe, men ikke kan klokka to. Ikke foreslå et annet tidspunkt."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Mina
+      text_md: «Skal vi ta en kaffe på lørdag klokka to?»
+  response_language: "no"
+  min_words: 8
+  max_words: 24
+  judge_prompt: 'Evaluate only the visible reply task. Report verdicts for activity-accepted,
+    time-unavailable, no-alternative-time, and cooperative-language-observation. The
+    first three criteria are gating. Any criterion whose id ends in «-observation»
+    is diagnostic and must not fail an otherwise valid reply. Anchors: PASS: «Ja,
+    gjerne! Jeg vil gjerne ta en kaffe, men jeg kan ikke klokka to.» PASS: «Ja, gjerne!
+    Jeg hjelper søsteren min da, så klokka to passer ikke.» FAIL time-unavailable:
+    «Ja, gjerne! Klokka to passer fint.»'
+  criteria:
+  - id: activity-accepted
+    instruction: The reply communicates that the writer wants to join the coffee
+      plan.
+  - id: time-unavailable
+    instruction: The reply communicates that the writer cannot meet at two
+      o'clock, for example by saying they are busy or unavailable.
+  - id: no-alternative-time
+    instruction: The reply does not propose a different time or day; it accepts
+      the coffee plan and explains the conflict without suggesting a
+      replacement.
+  - id: cooperative-language-observation
+    instruction: 'Observation only: note whether the reply uses a warm or cooperative
+      tone; this is diagnostic only.'
+  derived_from:
+  - section_id: saying-when-you-are-available
+- handle: offer_one_alternative
+  op: write
+  objective: obj-agree-on-informal-plans-01
+  bloom: apply
+  prompt_md: "Du vil gjerne bli med, men jobber lørdag formiddag. Du er ledig søndag ettermiddag. Svar Nora: si ja til turen, si at lørdag ikke passer, og foreslå søndag."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Skal vi gå en tur på lørdag formiddag?»
+  response_language: "no"
+  min_words: 12
+  max_words: 35
+  judge_prompt: 'Evaluate only the visible reply task. Report verdicts for accepts-walk,
+    saturday-unavailable, one-sunday-alternative, and alternative-form-observation.
+    The first three criteria are gating. Any criterion whose id ends in «-observation»
+    is diagnostic and must not fail an otherwise valid reply. Anchors: PASS: «Jeg
+    blir gjerne med, men jeg jobber lørdag formiddag. Kan vi gå søndag ettermiddag
+    i stedet?» FAIL one-sunday-alternative: «Jeg blir gjerne med, men jeg kan ikke
+    på lørdag. Kanskje en annen gang.» PASS with alternative-form-observation flagged:
+    «Turen høres hyggelig ut. Jeg jobber lørdag formiddag, men søndag ettermiddag
+    passer for meg.»'
+  criteria:
+  - id: accepts-walk
+    instruction: The reply communicates that the writer wants to join the walk.
+  - id: saturday-unavailable
+    instruction: The reply communicates that Saturday morning is unavailable.
+  - id: one-sunday-alternative
+    instruction: The reply offers Sunday afternoon as exactly one alternative
+      time.
+  - id: alternative-form-observation
+    instruction: 'Observation only: note whether the alternative is framed as a proposal
+      rather than a bare statement; this is diagnostic only.'
+  derived_from:
+  - section_id: offering-one-alternative
+- handle: build_complete_exchange
+  op: write
+  objective: obj-agree-on-informal-plans-01
+  bloom: apply
+  prompt_md: "Skriv en meldingsutveksling på norsk mellom Ada og Leo. Ada foreslår kino lørdag klokka 18. Leo vil gjerne bli med, men jobber da. Han er ledig søndag klokka 19. Ada godtar forslaget og bekrefter kino på Kino Nova søndag klokka 19. Avslutt med at Ada bekrefter planen."
+  response_language: "no"
+  min_words: 35
+  max_words: 70
+  judge_prompt: 'Evaluate only the visible message task. Report verdicts for initial-cinema-proposal,
+    leo-time-problem, one-alternative, final-cinema-confirmation, and target-forms-observation.
+    The first four criteria are gating. Any criterion whose id ends in «-observation»
+    is diagnostic and must not fail an otherwise valid exchange. Anchors: PASS: «Ada:
+    Skal vi gå på Kino Nova på lørdag klokka seks? Leo: Gjerne, men jeg jobber da.
+    Hva med søndag klokka sju? Ada: Ja, det passer. Da ser vi filmen på Kino Nova
+    søndag klokka sju.» FAIL final-cinema-confirmation: «Ada: Skal vi gå på kino lørdag
+    klokka seks? Leo: Jeg jobber da. Hva med søndag klokka sju? Ada: Ja, fint.» PASS
+    with target-forms-observation flagged: «Ada: Kino Nova lørdag klokka seks? Leo:
+    Det vil jeg, men jeg jobber. Søndag klokka sju passer. Ada: Avtale. Vi ser film
+    på Kino Nova søndag klokka sju.»'
+  criteria:
+  - id: initial-cinema-proposal
+    instruction: Ada proposes going to the cinema on Saturday at 18:00.
+  - id: leo-time-problem
+    instruction: Leo communicates that he wants to join but works at the
+      initially proposed time.
+  - id: one-alternative
+    instruction: Leo offers Sunday at 19:00 as exactly one alternative.
+  - id: final-cinema-confirmation
+    instruction: Ada accepts and clearly confirms the cinema plan for Sunday at
+      19:00, restating the activity, place, day, and time.
+  - id: target-forms-observation
+    instruction: 'Observation only: note whether the exchange uses the practiced proposal
+      and confirmation patterns; this is diagnostic only.'
+  derived_from:
+  - section_id: back-to-mina-and-jonas
+- handle: final_retrieval_review
+  op: write
+  objective: obj-agree-on-informal-plans-01
+  bloom: apply
+  prompt_md: "Skriv en meldingsutveksling mellom Sara og Amir. Sara foreslår bowling på Lucky Strike torsdag klokka 19. Amir vil gjerne bli med, men har kveldskurs da. Han foreslår fredag klokka 18. Sara godtar og bekrefter aktivitet, sted, dag og tid."
+  response_language: "no"
+  min_words: 35
+  max_words: 70
+  judge_prompt: 'Evaluate only the visible message task. Report verdicts for bowling-proposal,
+    class-conflict, one-alternative, final-bowling-plan, and practiced-language-observation.
+    The first four criteria are gating. Any criterion whose id ends in «-observation»
+    is diagnostic and must not fail an otherwise valid exchange. PASS: «Sara: Skal
+    vi bowle på Lucky Strike på torsdag klokka sju? Amir: Gjerne, men jeg har undervisning
+    da. Hva med fredag klokka seks? Sara: Ja, det passer. Da bowler vi på Lucky Strike
+    på fredag klokka seks.»'
+  criteria:
+  - id: bowling-proposal
+    instruction: Sara proposes bowling at Lucky Strike on Thursday at 19:00.
+  - id: class-conflict
+    instruction: Amir communicates that he wants to join but has an evening
+      class at the proposed time.
+  - id: one-alternative
+    instruction: Amir suggests one alternative time, Friday at 18:00, for the
+      same bowling plan.
+  - id: final-bowling-plan
+    instruction: Sara accepts and clearly confirms bowling at Lucky Strike on
+      Friday at 18:00, restating the activity, place, day, and time.
+  - id: practiced-language-observation
+    instruction: 'Observation only: note whether the exchange uses the practiced proposal
+      and confirmation patterns; this is diagnostic only.'
+  derived_from:
+  - section_id: final-retrieval-and-review
+- handle: review_propose_activity
+  op: write
+  objective: obj-agree-on-informal-plans-01
+  bloom: apply
+  prompt_md: "Foreslå en aktivitet for i kveld."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Friend
+      text_md: «Jeg har lyst til å gjøre noe i kveld. Hva foreslår du?»
+  response_language: "no"
+  min_words: 1
+  max_words: 4
+  judge_prompt: Report the verdict for proposes-activity. Accept any natural
+    suggestion of an activity, such as «Hva med kino?», «En tur?» or «Kaffe?».
+    Add no requirements beyond the criterion.
+  criteria:
+  - id: proposes-activity
+    instruction: The response proposes an activity for tonight.
+  derived_from:
+  - section_id: final-retrieval-and-review
+- handle: review_respond_to_time
+  op: write
+  objective: obj-agree-on-informal-plans-01
+  bloom: apply
+  prompt_md: "Svar vennen din. Si ja til kaffe, men nei til tidspunktet."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Friend
+      text_md: «Skal vi ta en kaffe klokka to?»
+    - speaker: Context
+      text_md: Du har lyst til å ta kaffe. Klokka to er et dårlig tidspunkt for
+        deg.
+  response_language: "no"
+  min_words: 1
+  max_words: 4
+  judge_prompt: 'Report the verdict for accepts-but-unavailable. The reply must both
+    accept the coffee and say that the time does not work. PASS: «Gjerne, men ikke
+    da.» PASS: «Ja, men ikke da.» FAIL accepts-but-unavailable: «Det passer dessverre
+    ikke.» (it rejects the time but never accepts the coffee). FAIL accepts-but-unavailable:
+    «Ja, gjerne!» (it accepts the coffee but never rejects the time). Add no requirements
+    beyond the criterion.'
+  criteria:
+  - id: accepts-but-unavailable
+    instruction: The response accepts the activity while communicating that the
+      proposed time is unavailable.
+  derived_from:
+  - section_id: final-retrieval-and-review
+- handle: review_offer_alternative
+  op: write
+  objective: obj-agree-on-informal-plans-01
+  bloom: apply
+  prompt_md: "Foreslå søndag som det eneste alternativet til lørdag."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Friend
+      text_md: «Kan vi møtes på lørdag?»
+    - speaker: Context
+      text_md: Du kan ikke på lørdag, men du er ledig dagen etter.
+  response_language: "no"
+  min_words: 1
+  max_words: 4
+  judge_prompt: Report the verdict for offers-sunday. Accept natural variants
+    such as «Hva med søndag?» and «Søndag passer bra.» Add no requirements
+    beyond the criterion.
+  criteria:
+  - id: offers-sunday
+    instruction: The response offers Sunday as the alternative.
+  derived_from:
+  - section_id: final-retrieval-and-review
+- handle: review_state_agreed_plan
+  op: write
+  objective: obj-agree-on-informal-plans-01
+  bloom: apply
+  prompt_md: "Vennen din foreslår en tur på et tidspunkt dere er enige om. Bekreft planen ved å gjenta aktiviteten og tidspunktet."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Friend
+      text_md: «Skal vi gå en tur på søndag klokka tre?»
+    - speaker: You
+      text_md: «Ja, det passer.»
+  response_language: "no"
+  min_words: 6
+  max_words: 10
+  judge_prompt: 'Report the verdict for confirms-plan. The reply must clearly confirm
+    the settled walk and restate Sunday at three. PASS: «Flott, da går vi tur søndag
+    klokka tre.» FAIL confirms-plan: «Avtale!» (it confirms agreement but omits the
+    activity and time). Add no requirements beyond the criterion.'
+  criteria:
+  - id: confirms-plan
+    instruction: The response functions as a final confirmation and restates the
+      agreed activity and time.
+  derived_from:
+  - section_id: final-retrieval-and-review

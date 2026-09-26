@@ -1,0 +1,307 @@
+- handle: hotel-meaning-notice
+  op: choose
+  objective: obj-det-er-vs-det-finnes-01
+  bloom: understand
+  prompt_md: Velg forklaringen som passer til alle tre beskjedene.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Ingrid
+      text_md: «Det er rom 214.»
+    - speaker: Ingrid
+      text_md: «Det finnes et bagasjerom ved resepsjonen.»
+    - speaker: Sara
+      text_md: «Finnes det en restaurant på hotellet?»
+  options:
+  - id: notice-shift-purpose
+    text: The first line asks whether a room exists; the second names a specific luggage room; the third says a restaurant is available.
+    correct: false
+    why: The first line is a statement rather than a question, the second announces the luggage room rather than naming it, and the third asks about the restaurant rather than announcing it.
+  - id: notice-correct
+    text: The first line names a specific room; the second says a luggage room is available; the third asks whether a restaurant exists.
+    correct: true
+    why: Det er rom 214 names a particular room, det finnes et bagasjerom announces something available, and finnes det en restaurant? asks whether it exists.
+  - id: notice-swap-first
+    text: The first line says a room is available; the second names a specific luggage room; the third asks whether a restaurant exists.
+    correct: false
+    why: 'The first two jobs are swapped: the opening line names room 214, while the luggage-room line announces availability.'
+  derived_from:
+  - section_id: first-checkpoint-notice-speakers-purpose
+- handle: known-thing-description
+  op: recall_fill
+  objective: obj-det-er-vs-det-finnes-01
+  bloom: understand
+  prompt_md: Fullfør svarene.
+  explanation_md: Når noe allerede er nevnt, beskriver eller lokaliserer vi det i stedet for å presentere det som noe nytt.
+  derived_from:
+  - section_id: identifying-and-describing-with-det-er
+  audio_target: 'Gjesten: Hvordan er rom 214? Ingrid: Det er ganske lyst og stille. Gjesten: Hvor er nøkkelkortet? Ingrid: Det er på rommet. Gjesten: Hvilket rom er dette? Ingrid: Det er rommet ved heisen.'
+  segments:
+  - text_md: 'Gjesten: Hvordan er rom 214? Ingrid:'
+  - blank_id: blank-known-room-description
+    options:
+    - Det er
+    - Det finnes
+    answer_index: 0
+  - text_md: ' ganske lyst og stille. Gjesten: Hvor er nøkkelkortet? Ingrid:'
+  - blank_id: blank-known-keycard-location
+    options:
+    - Det finnes
+    - Det er
+    answer_index: 1
+  - text_md: ' på rommet. Gjesten: Hvilket rom er dette? Ingrid:'
+  - blank_id: blank-known-room-identity
+    options:
+    - Det er
+    - Det finnes
+    answer_index: 0
+  - text_md: ' rommet ved heisen.'
+- handle: availability-question
+  op: choose
+  objective: obj-det-er-vs-det-finnes-01
+  bloom: apply
+  prompt_md: Velg spørsmålet som undersøker om hotellet har en kafé.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Gjesten
+      text_md: «Jeg har ikke vært på hotellet før. Hva kan jeg spise der?»
+  options:
+  - id: availability-question-existence
+    text: Finnes det en kafé på hotellet?
+    correct: true
+    why: The guest asks whether a café exists at the hotel, so the question is about availability.
+  - id: availability-question-known-cafe
+    text: Er kafeen åpen på hotellet?
+    correct: false
+    why: This asks whether a particular, already-known café is open; it does not ask whether one exists.
+  derived_from:
+  - section_id: questions-about-existence
+- handle: location-meaning-contrast
+  op: recall_fill
+  objective: obj-det-er-vs-det-finnes-01
+  bloom: apply
+  prompt_md: Fyll ut meldingene. Bruk «det finnes» når Ingrid forteller om et nytt sted, og «det er» når hun viser til et sted som allerede er nevnt.
+  explanation_md: «Det finnes» presenterer et sted som ny informasjon. «Det er» brukes til å identifisere eller beskrive et sted som allerede er nevnt.
+  derived_from:
+  - section_id: same-place-two-different-messages
+  audio_target: 'Sara: Er det en kafé ved torget? Ingrid: Det finnes en kafé ved torget. Sara: Hvilken bygning er kafeen? Ingrid: Det er den røde bygningen ved torget. Jonas: Er det et apotek ved busstasjonen? Ingrid: Det finnes et apotek ved busstasjonen. Jonas: Hvilken bygning er apoteket? Ingrid: Det er den gule bygningen ved busstasjonen.'
+  segments:
+  - text_md: 'Sara: Er det en kafé ved torget? Ingrid:'
+  - blank_id: blank-cafe-existence
+    options:
+    - Det finnes
+    - Finnes det
+    answer_index: 0
+  - text_md: ' en kafé ved torget. Sara: Hvilken bygning er kafeen? Ingrid:'
+  - blank_id: blank-cafe-known
+    options:
+    - Det finnes
+    - Det er
+    answer_index: 1
+  - text_md: ' den røde bygningen ved torget. Jonas: Er det et apotek ved busstasjonen? Ingrid:'
+  - blank_id: blank-pharmacy-existence
+    options:
+    - Det er
+    - Det finnes
+    answer_index: 1
+  - text_md: ' et apotek ved busstasjonen. Jonas: Hvilken bygning er apoteket? Ingrid:'
+  - blank_id: blank-pharmacy-known
+    options:
+    - Det er
+    - Det finnes
+    answer_index: 0
+  - text_md: ' den gule bygningen ved busstasjonen.'
+- handle: misconception-repair
+  op: find_fix
+  objective: obj-det-er-vs-det-finnes-01
+  bloom: analyze
+  prompt_md: Ingrid forteller om et bagasjerom som allerede er kjent. Velg uttrykket som ikke passer.
+  derived_from:
+  - section_id: common-mistakes
+  tokens:
+  - token_id: repair-room-1
+    text: Bagasjerommet
+  - token_id: repair-room-2
+    text: finnes
+  - token_id: repair-room-3
+    text: stort
+  - token_id: repair-room-4
+    text: og
+  - token_id: repair-room-5
+    text: lyst.
+  error_token_id: repair-room-2
+  feedback: 'Replace «finnes» with «er»: the already-known luggage room is being described, not introduced as existing.'
+- handle: hotel-dialogue-completion
+  op: recall_fill
+  objective: obj-det-er-vs-det-finnes-01
+  bloom: apply
+  prompt_md: Fullfør samtalen i resepsjonen. Når Ingrid forteller om busstilbudet, bruk «det finnes».
+  explanation_md: Den første replikken beskriver et rom som allerede er nevnt. I den siste replikken presenterer Ingrid et nytt tilbud med «det finnes». I dagligtale kan «det er» også brukes om noe som finnes.
+  derived_from:
+  - section_id: returning-to-sara-and-jonas
+  audio_target: 'Sara: Er rommet klart? Ingrid: Ja, det er klart nå. Jonas: Finnes det en buss fra hotellet til sentrum? Ingrid: Ja, det finnes en buss fra hotellet til sentrum.'
+  segments:
+  - text_md: 'Sara: Er rommet klart? Ingrid: Ja,'
+  - blank_id: blank-dialogue-known-room
+    options:
+    - det er
+    - det finnes
+    answer_index: 0
+  - text_md: ' klart nå. Jonas:'
+  - blank_id: blank-dialogue-service-question
+    options:
+    - Det er
+    - Finnes det
+    answer_index: 1
+  - text_md: ' en buss fra hotellet til sentrum? Ingrid: Ja,'
+  - blank_id: blank-dialogue-availability-answer
+    options:
+    - det finnes
+    - det er
+    answer_index: 0
+  - text_md: ' en buss fra hotellet til sentrum.'
+- handle: new-to-known-sequence
+  op: write
+  objective: obj-det-er-vs-det-finnes-01
+  bloom: apply
+  prompt_md: Skriv en melding på 8–25 ord til Sara. Fortell at det finnes et vaskerom, og bruk «det er» og en opplysning om rommet eller døra for å vise henne hvor det ligger.
+  derived_from:
+  - section_id: controlled-choice-to-connected-use
+  response_language: "no"
+  min_words: 8
+  max_words: 25
+  judge_prompt: 'Evaluate only the visible message task. Criteria availability-form, follow-up-forms, and word-bound are gating; no criterion is diagnostic-only. Valid variant that must pass: «Det finnes et vaskerom i andre etasje. Det er rommet med det blå skiltet ved trappa.» Near-miss that must fail because it never uses det finnes: «Vaskerommet er i andre etasje.» Near-miss that must fail because it never identifies or describes the laundry room with det er: «Det finnes et vaskerom i andre etasje.»'
+  criteria:
+  - id: availability-form
+    instruction: The message announces the laundry room as available using det finnes.
+  - id: follow-up-forms
+    instruction: The message then uses det er to identify or describe the laundry room with at least one supplied detail that helps Sara find it.
+  - id: word-bound
+    instruction: The response contains 8–25 words.
+- handle: neighbourhood-information-transfer
+  op: write
+  objective: obj-det-er-vs-det-finnes-01
+  bloom: apply
+  prompt_md: Skriv en melding på 16–40 ord til en besøkende venn. En gratis informasjonsbrosjyre på norsk ligger i den blå kurven lengst til høyre ved inngangen. Bruk «det finnes» om brosjyren og «det er» til å peke ut kurven.
+  derived_from:
+  - section_id: transfer-to-a-neighbourhood
+  response_language: "no"
+  min_words: 16
+  max_words: 40
+  judge_prompt: "Evaluate only the visible message task. Criteria guide-facts, availability-form, basket-identification, and transfer-word-bound are gating; no criterion is diagnostic-only. Valid variant that must pass: «Det finnes en gratis informasjonsbrosjyre på norsk. Den ligger i en blå kurv ved inngangen. Det er kurven lengst til høyre.» Near-miss that must fail because it omits the brochure's availability: «Brosjyren ligger i en blå kurv ved inngangen.» Near-miss that must fail because it does not identify the correct basket with det er: «Det finnes en gratis informasjonsbrosjyre på norsk, og kurvene står ved inngangen.»"
+  criteria:
+  - id: guide-facts
+    instruction: The message accurately mentions a free Norwegian information brochure and that it is in the rightmost blue basket by the entrance.
+  - id: availability-form
+    instruction: The message presents the information brochure as available using det finnes.
+  - id: basket-identification
+    instruction: The message uses det er to identify which basket contains the guide, with a supplied detail.
+  - id: transfer-word-bound
+    instruction: The response contains 16–40 words.
+- handle: existence-or-description-retrieval
+  op: write
+  objective: obj-det-er-vs-det-finnes-01
+  bloom: apply
+  prompt_md: Svar Sara med 12–35 ord. Utenfor hotellet står en rød sykkel som gjestene kan låne. Fortell at sykkelen finnes, og bruk «det er» til å si hvilken sykkel det gjelder.
+  derived_from:
+  - section_id: short-retrieval-review
+  response_language: "no"
+  min_words: 12
+  max_words: 35
+  judge_prompt: 'Evaluate only the visible reply task. Criteria retrieval-facts, retrieval-forms, and retrieval-word-bound are gating; no criterion is diagnostic-only. Valid variant that must pass: «Det finnes en sykkel du kan låne. Det er den røde sykkelen utenfor hotellet.» Near-miss that must fail because it produces neither target form: «Du kan låne den røde sykkelen utenfor hotellet.» Near-miss that must fail because it omits which bicycle it is: «Det finnes en sykkel du kan låne.»'
+  criteria:
+  - id: retrieval-facts
+    instruction: The reply accurately states that the hotel has a bicycle available to borrow and identifies it as the red bicycle outside the hotel.
+  - id: retrieval-forms
+    instruction: The reply uses det finnes to present the available bicycle and det er to identify which bicycle it is.
+  - id: retrieval-word-bound
+    instruction: The response contains 12–35 words.
+- handle: review_known_thing_description
+  op: recall_fill
+  objective: obj-det-er-vs-det-finnes-01
+  bloom: apply
+  prompt_md: Fullfør svaret til Ingrid.
+  explanation_md: Rommet er allerede nevnt, så Ingrid beskriver det i stedet for å fortelle at det finnes.
+  derived_from:
+  - section_id: short-retrieval-review
+  audio_target: 'Gjesten: Hvordan ser rommet ut? Ingrid: Det er rolig og lyst.'
+  segments:
+  - text_md: 'Gjesten: Hvordan ser rommet ut? Ingrid:'
+  - blank_id: review-blank-known-description
+    options:
+    - Det finnes
+    - Det er
+    answer_index: 1
+  - text_md: ' rolig og lyst.'
+- handle: review_existence_statement
+  op: choose
+  objective: obj-det-er-vs-det-finnes-01
+  bloom: apply
+  prompt_md: Velg svaret som først presenterer garderobetilbudet som ny informasjon, og deretter viser hvor det er.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Kan jeg henge fra meg jakken gratis her?»
+  options:
+  - id: review-coat-storage-availability
+    text: Ja, det finnes en gratis garderobe ved inngangen.
+    correct: true
+    why: «Det finnes» introduces the not-yet-mentioned service as available, and the rest tells where it is.
+  - id: review-coat-storage-location
+    text: Ja, den gratis garderoben er ved inngangen.
+    correct: false
+    why: This locates an already identified cloakroom instead of introducing the service as newly available.
+  derived_from:
+  - section_id: short-retrieval-review
+- handle: review_availability_question
+  op: choose
+  objective: obj-det-er-vs-det-finnes-01
+  bloom: apply
+  prompt_md: Velg spørsmålet Jonas stiller.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Jonas
+      text_md: «Jeg vet ikke om det går buss fra stasjonen til sentrum.»
+  options:
+  - id: review-bus-availability
+    text: Finnes det en buss som går fra stasjonen til sentrum?
+    correct: true
+    why: Jonas asks whether a bus service exists for that route, not where a known bus is parked.
+  - id: review-bus-location
+    text: Er bussen ved stasjonen?
+    correct: false
+    why: This asks where an already-known bus is; it does not ask whether a bus service is available.
+  derived_from:
+  - section_id: short-retrieval-review
+- handle: review_known_thing_location
+  op: choose
+  objective: obj-det-er-vs-det-finnes-01
+  bloom: analyze
+  prompt_md: Gjestene kjenner allerede bagasjerommet. Velg svaret som bruker «det er» til å si hvor rommet ligger.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Gjesten
+      text_md: «Jeg har hørt at hotellet har et bagasjerom. Hvor ligger det?»
+  options:
+  - id: review-location-identify
+    text: Det er bagasjerommet.
+    correct: false
+    why: This identifies what the thing is instead of answering where it is.
+  - id: review-location-existence
+    text: Det finnes et bagasjerom ved resepsjonen.
+    correct: false
+    why: This mentions available storage but does not locate the known bagasjerom.
+  - id: review-location-correct
+    text: Det er ved resepsjonen.
+    correct: true
+    why: Det er with a place phrase locates a room that is already established in the conversation.
+  - id: review-location-describe
+    text: Det er et stort bagasjerom.
+    correct: false
+    why: This describes the room but does not say where it is.
+  derived_from:
+  - section_id: short-retrieval-review

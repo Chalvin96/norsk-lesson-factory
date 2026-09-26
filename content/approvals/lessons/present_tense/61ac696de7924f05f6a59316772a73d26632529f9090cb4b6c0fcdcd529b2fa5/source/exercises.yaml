@@ -1,0 +1,498 @@
+- handle: identify_present_meaning
+  op: choose
+  objective: obj-present-tense-01
+  bloom: understand
+  prompt_md: Choose the correct interpretation.
+  stem_md: Mina jobber hjemme i dag. 2. Jonas vasker kjøkkenet hver lørdag.
+  options:
+  - id: regular-now
+    text: 1 describes a habit; 2 describes a current situation.
+    correct: false
+    why: 'This reverses the time evidence: i dag indicates the current day, while hver lørdag indicates
+      repetition.'
+  - id: now-regular
+    text: 1 describes a current situation; 2 describes a habit.
+    correct: true
+    why: I dag places the first situation in the current day, while hver lørdag marks the second as a
+      repeated habit.
+  derived_from:
+  - section_id: present-tense-two-common-meanings
+- handle: build_regular_present_forms
+  op: recall_fill
+  objective: obj-present-tense-01
+  bloom: apply
+  prompt_md: Complete each statement with the present-tense form.
+  explanation_md: 'Add -r to these infinitives without å: jobbe becomes jobber, lage becomes lager, and
+    bo becomes bor. The third verb follows the same pattern.'
+  audio_target: Jeg jobber hjemme. Jonas lager kaffe. Vi spiller musikk hver kveld. De vasker kjøkkenet
+    nå. Mina bor i Bergen.
+  segments:
+  - text_md: 'Verb 1 — Jeg '
+  - blank_id: jobbe-present
+    options:
+    - jobber
+    - jobbe
+    answer_index: 0
+  - text_md: ' hjemme. å lage — Jonas '
+  - blank_id: lage-present
+    options:
+    - lager
+    - lage
+    answer_index: 0
+  - text_md: ' kaffe. — Vi '
+  - blank_id: spille-present
+    options:
+    - spille
+    - spiller
+    answer_index: 1
+  - text_md: ' musikk hver kveld. Verb 4 — De '
+  - blank_id: vaske-present
+    options:
+    - vaske
+    - vasker
+    answer_index: 1
+  - text_md: ' kjøkkenet nå. å bo — Mina '
+  - blank_id: bo-present
+    options:
+    - bor
+    - bo
+    answer_index: 0
+  - text_md: ' i Bergen.'
+  derived_from:
+  - section_id: forming-present-tense-regular-verbs
+- handle: keep_verb_unchanged
+  op: recall_fill
+  objective: obj-present-tense-01
+  bloom: apply
+  prompt_md: Complete the new statement using the present-tense form that fits Vi.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Mina jobber hjemme.
+  explanation_md: The subject changes from Mina to Vi, but the present-tense verb remains jobber.
+  audio_target: Vi jobber hjemme.
+  segments:
+  - text_md: 'Vi '
+  - blank_id: vi-jobber
+    options:
+    - jobber
+    - jobbe
+    - jobbet
+    answer_index: 0
+  - text_md: ' hjemme.'
+  derived_from:
+  - section_id: verb-does-not-change-with-subject
+- handle: select_er_har_gjor
+  op: recall_fill
+  objective: obj-present-tense-01
+  bloom: understand
+  prompt_md: Complete each statement with er, har, or gjør.
+  explanation_md: Er expresses a state or location, har expresses possession, and gjør expresses an activity.
+  audio_target: Jeg er hjemme. Mina har kaffe. Jonas gjør mye med leksene hjemme.
+  segments:
+  - text_md: 'Jeg '
+  - blank_id: location-er
+    options:
+    - er
+    - har
+    - gjør
+    answer_index: 0
+  - text_md: ' hjemme. Mina '
+  - blank_id: possession-har
+    options:
+    - er
+    - har
+    - gjør
+    answer_index: 1
+  - text_md: ' kaffe. Jonas '
+  - blank_id: task-gjor
+    options:
+    - er
+    - har
+    - gjør
+    answer_index: 2
+  - text_md: ' mye med leksene hjemme.'
+  derived_from:
+  - section_id: three-essential-present-tense-forms
+- handle: avoid_english_progressive_pattern
+  op: find_fix
+  objective: obj-present-tense-01
+  bloom: analyze
+  prompt_md: Select the unnecessary token.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Jeg er jobber hjemme.
+  tokens:
+  - token_id: subject-jeg
+    text: Jeg
+  - token_id: extra-er
+    text: er
+  - token_id: verb-jobber
+    text: jobber
+  - token_id: place-hjemme
+    text: hjemme.
+  error_token_id: extra-er
+  feedback: Remove er. The repaired statement is Jeg jobber hjemme; jobber alone expresses the current
+    action.
+  derived_from:
+  - section_id: norwegian-present-tense-and-english-ing
+- handle: add_clear_time_frame
+  op: build
+  objective: obj-present-tense-01
+  bloom: apply
+  prompt_md: Build Ali's two answers about dinner, matching each to Nora's question.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Hva gjør dere i dag?»
+    - speaker: Ali
+      text_md: «Vi lager middag.»
+    - speaker: Nora
+      text_md: «Gjør dere det alltid?»
+  explanation_md: Nå answers the question about today, while hver kveld answers the question about what
+    they always do; lager keeps the same form in both statements.
+  tokens:
+  - token_id: subject-vi-now
+    text: Vi
+  - token_id: verb-lager-now
+    text: lager
+  - token_id: object-middag-now
+    text: middag
+  - token_id: time-now-period
+    text: nå.
+  - token_id: subject-vi-habit
+    text: Vi
+  - token_id: verb-lager-habit
+    text: lager
+  - token_id: object-middag-habit
+    text: middag
+  - token_id: time-every
+    text: hver
+  - token_id: time-evening
+    text: kveld.
+  answer_order:
+  - subject-vi-now
+  - verb-lager-now
+  - object-middag-now
+  - time-now-period
+  - subject-vi-habit
+  - verb-lager-habit
+  - object-middag-habit
+  - time-every
+  - time-evening
+  derived_from:
+  - section_id: time-expressions-clarify-the-situation
+- handle: complete_returning_scene
+  op: recall_fill
+  objective: obj-present-tense-01
+  bloom: apply
+  prompt_md: Complete the new household-planning dialogue with one present-tense verb per blank.
+  explanation_md: The present forms describe current tasks; vanligvis marks the recurring Sunday shift.
+  audio_target: Nå har vi tid. Jeg vasker koppene, og du dekker bordet. Jeg lager vanligvis suppe på søndager. Og jeg rydder opp etterpå. Det er en god plan.
+  segments:
+  - text_md: 'Mina: Nå '
+  - blank_id: scene-have
+    options:
+    - gjør
+    - har
+    - er
+    answer_index: 1
+  - text_md: ' vi tid. Jonas: Jeg '
+  - blank_id: scene-wash
+    options:
+    - vasker
+    - vaskte
+    - vaske
+    answer_index: 0
+  - text_md: ' koppene, og du '
+  - blank_id: scene-cover
+    options:
+    - dekk
+    - dekker
+    - dekket
+    answer_index: 1
+  - text_md: ' bordet. Mina: Jeg '
+  - blank_id: scene-make-habit
+    options:
+    - lager
+    - lagde
+    - lage
+    answer_index: 0
+  - text_md: ' vanligvis suppe på søndager. Jonas: Og jeg '
+  - blank_id: scene-clean
+    options:
+    - ryddet
+    - rydder
+    - rydde
+    answer_index: 1
+  - text_md: ' opp etterpå. Mina: Det '
+  - blank_id: scene-be
+    options:
+    - har
+    - gjør
+    - er
+    answer_index: 2
+  - text_md: ' en god plan.'
+- handle: describe_sara_and_emil
+  op: write
+  objective: obj-present-tense-01
+  bloom: apply
+  prompt_md: 'Facts: Sara is at home today and working on her computer. She normally works in a café on
+    Saturdays. Emil is in the kitchen, has time, and is making lunch. Include Sara’s and Emil’s locations
+    and current activities, Emil’s availability, and Sara’s usual Saturday routine in a 25–50-word message
+    to Sara.'
+  response_language: 'no'
+  min_words: 25
+  max_words: 50
+  judge_prompt: 'Evaluate the response only against criteria sara-message-purpose, supplied-facts, word-bound,
+    and present-forms. Report a separate verdict and evidence for each criterion. Calibration anchors:
+    Must pass: "Hei Sara! Du er hjemme i dag og arbeider på datamaskinen nå. Vanligvis jobber du på kafé
+    på lørdager. Emil er på kjøkkenet. Han har tid og lager lunsj nå." Must fail supplied-facts: "Hei
+    Sara! Du jobber på kafé i dag, og Emil lager middag på kontoret." Must fail present-forms: "Hei Sara!
+    Du er hjemme i dag og jobbe på datamaskinen nå. Vanligvis jobber du på kafé på lørdager. Emil er på
+    kjøkkenet, har tid og lager lunsj."'
+  criteria:
+  - id: sara-message-purpose
+    instruction: Writes a message to Sara that confirms the described current situation and her usual
+      Saturday routine.
+  - id: supplied-facts
+    instruction: Includes all supplied facts without contradicting them.
+  - id: word-bound
+    instruction: Contains 25–50 words.
+  - id: present-forms
+    instruction: Uses natural simple present-tense forms for the described actions.
+  derived_from:
+  - section_id: transfer-to-new-everyday-situation
+- handle: retrieve_the_present_tense
+  op: recall_fill
+  objective: obj-present-tense-01
+  bloom: apply
+  prompt_md: Complete each message line with the missing present-tense form.
+  explanation_md: The completed lines retrieve a regular action form, the unchanged form after another
+    subject, and the frequent forms er, har, and gjør.
+  audio_target: I dag jobber Sara hjemme. Hver lørdag jobber Emil på en kafé. Nå er Sara hjemme. Emil
+    har et møte. Hver lørdag gjør Sara rent.
+  segments:
+  - text_md: 'I dag '
+  - blank_id: retrieval-current-action
+    options:
+    - jobber
+    - jobbe
+    answer_index: 0
+  - text_md: ' Sara hjemme. Hver lørdag '
+  - blank_id: retrieval-habit-action
+    options:
+    - jobber
+    - jobbe
+    answer_index: 0
+  - text_md: ' Emil på en kafé. Nå '
+  - blank_id: retrieval-state
+    options:
+    - er
+    - har
+    - gjør
+    answer_index: 0
+  - text_md: ' Sara hjemme. Emil '
+  - blank_id: retrieval-possession
+    options:
+    - er
+    - har
+    - gjør
+    answer_index: 1
+  - text_md: ' et møte. Hver lørdag '
+  - blank_id: retrieval-cleaning
+    options:
+    - er
+    - har
+    - gjør
+    answer_index: 2
+  - text_md: ' Sara rent.'
+  derived_from:
+  - section_id: short-retrieval-review
+- handle: review_identify_present_meaning
+  op: choose
+  objective: obj-present-tense-01
+  bloom: apply
+  prompt_md: Choose the correct interpretation of the two lines.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Eli
+      text_md: «Jeg spiller gitar nå.»
+    - speaker: Tom
+      text_md: «Jeg spiller gitar hver kveld.»
+  options:
+  - id: habit-vs-now
+    text: The first line describes a repeated habit; the second describes an action happening at this
+      moment.
+    correct: false
+    why: 'This reverses the two time expressions: nå appears in the first line and hver kveld in the second.'
+  - id: both-now
+    text: Both lines describe actions happening at this moment.
+    correct: false
+    why: Hver kveld marks the second line as a repeated habit, not a current action.
+  - id: now-vs-habit
+    text: The first line describes an action happening at this moment; the second describes a repeated
+      habit.
+    correct: true
+    why: Nå places the first action at this moment, while hver kveld marks the second as a repeated habit.
+  derived_from:
+  - section_id: present-tense-two-common-meanings
+- handle: review_build_regular_present_forms
+  op: recall_fill
+  objective: obj-present-tense-01
+  bloom: apply
+  prompt_md: Complete the dialogue with the present-tense form of each verb.
+  explanation_md: Regular verbs add -r in the present; infinitives with å take a corresponding present-tense
+    form.
+  audio_target: Jeg snakker norsk. Du leser en bok.
+  segments:
+  - text_md: 'det første verbet — Nora: «Jeg '
+  - blank_id: review-snakke-present
+    options:
+    - snakke
+    - snakket
+    - snakker
+    answer_index: 2
+  - text_md: ' norsk.» å lese — Ali: «Du '
+  - blank_id: review-lese-present
+    options:
+    - leste
+    - leser
+    - lese
+    answer_index: 1
+  - text_md: ' en bok.»'
+  derived_from:
+  - section_id: forming-present-tense-regular-verbs
+- handle: review_keep_verb_unchanged
+  op: choose
+  objective: obj-present-tense-01
+  bloom: apply
+  prompt_md: Ida sier «Jeg liker Oslo.» Bruk presensformen av liker med subjektet vi. Velg linjen som
+    passer.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Ida
+      text_md: «Jeg liker Oslo.»
+    - speaker: Lars
+      text_md: «___»
+  options:
+  - id: vi-bo
+    text: Vi like Oslo.
+    correct: false
+    why: Like er infinitiv; utsagnet trenger presensformen liker.
+  - id: vi-bor
+    text: Vi liker Oslo.
+    correct: true
+    why: Liker beholder samme presensform etter det nye subjektet vi.
+  - id: vi-er-bor
+    text: Vi er liker Oslo.
+    correct: false
+    why: Presensverbet trenger ikke er foran seg, heller ikke etter et nytt subjekt.
+  derived_from:
+  - section_id: verb-does-not-change-with-subject
+- handle: review_select_er_har_gjor
+  op: recall_fill
+  objective: obj-present-tense-01
+  bloom: apply
+  prompt_md: Complete each line with the correct present-tense form.
+  explanation_md: Er marks a state or location, har marks possession, and gjør marks an activity.
+  audio_target: Emil er på kjøkkenet. Han har en oppskrift. Og han gjør lekser.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Sara
+      text_md: «Hvor er Emil?»
+    - speaker: Nora
+      text_md: «Emil ___ på kjøkkenet. Han ___ en oppskrift. Og han ___ lekser.»
+  segments:
+  - text_md: '«Emil '
+  - blank_id: review-location
+    options:
+    - er
+    - har
+    - gjør
+    answer_index: 0
+  - text_md: ' på kjøkkenet. Han '
+  - blank_id: review-possession
+    options:
+    - er
+    - har
+    - gjør
+    answer_index: 1
+  - text_md: ' en oppskrift. Og han '
+  - blank_id: review-activity
+    options:
+    - er
+    - har
+    - gjør
+    answer_index: 2
+  - text_md: ' lekser.»'
+  derived_from:
+  - section_id: three-essential-present-tense-forms
+- handle: review_avoid_english_progressive_pattern
+  op: choose
+  objective: obj-present-tense-01
+  bloom: analyze
+  prompt_md: Choose the natural Bokmål reply.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Hva gjør du nå?»
+    - speaker: Ali
+      text_md: «___»
+  options:
+  - id: copied-progressive
+    text: Jeg er leser en bok.
+    correct: false
+    why: This copies the English progressive pattern by adding an unnecessary er before the action verb.
+  - id: infinitive-action
+    text: Jeg lese en bok.
+    correct: false
+    why: Lese is the infinitive; the reply needs present-tense leser.
+  - id: single-present
+    text: Jeg leser en bok.
+    correct: true
+    why: The single present-tense verb leser naturally expresses the current action.
+  derived_from:
+  - section_id: norwegian-present-tense-and-english-ing
+- handle: review_add_clear_time_frame
+  op: recall_fill
+  objective: obj-present-tense-01
+  bloom: apply
+  prompt_md: Complete each line with the matching time expression.
+  explanation_md: Nå marks what happens at this moment, while vanligvis marks what usually happens.
+  audio_target: Nå arbeider Sara hjemme. Vanligvis arbeider hun på kontoret.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Sara sitter på hjemmekontor i dag. Hvor arbeider hun akkurat nå?»
+    - speaker: Ali
+      text_md: «___ arbeider Sara hjemme.»
+    - speaker: Nora
+      text_md: «Og hvor er arbeidsplassen hennes på en vanlig arbeidsdag?»
+    - speaker: Ali
+      text_md: «___ arbeider hun på kontoret.»
+  segments:
+  - text_md: «
+  - blank_id: review-time-now
+    options:
+    - Nå
+    - Vanligvis
+    answer_index: 0
+  - text_md: ' arbeider Sara hjemme.» Ali: «'
+  - blank_id: review-time-habit
+    options:
+    - Nå
+    - Vanligvis
+    answer_index: 1
+  - text_md: ' arbeider hun på kontoret.»'
+  derived_from:
+  - section_id: time-expressions-clarify-the-situation

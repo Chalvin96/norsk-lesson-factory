@@ -1,0 +1,398 @@
+- handle: recognize_route_request
+  op: choose
+  objective: obj-ask-for-and-give-directions-01
+  bloom: understand
+  prompt_md: Choose the English meaning of the visitor's question.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Visitor
+      text_md: «Unnskyld, hvordan kommer jeg meg til rådhuset?»
+  options:
+  - id: location
+    text: Excuse me, where is the town hall?
+    correct: false
+    why: A where-question would use Hvor ligger …, not Hvordan kommer jeg meg til …
+  - id: near-station
+    text: Excuse me, is the town hall near the station?
+    correct: false
+    why: The question names no station and asks for the way, not for a yes/no location.
+  - id: route
+    text: Excuse me, how do I get to the town hall?
+    correct: true
+    why: The question asks how to reach the town hall.
+  derived_from:
+  - section_id: asking-for-the-way
+- handle: choose_route_question
+  op: write
+  objective: obj-ask-for-and-give-directions-01
+  bloom: apply
+  prompt_md: You are visiting a town. You need route steps from the square to the hotel. Ask a nearby
+    stranger politely so that you can find the hotel. Write one Bokmål question.
+  response_language: 'no'
+  min_words: 7
+  max_words: 12
+  judge_prompt: Check gating criteria polite-address, names-destination, and asks-route-steps. Record
+    taught-pattern-observation as an observation only; it never changes the pass result.
+  criteria:
+  - id: polite-address
+    instruction: Politely addresses the stranger before asking.
+  - id: names-destination
+    instruction: Names the hotel as the destination of the requested route.
+  - id: asks-route-steps
+    instruction: Asks for the route steps needed to reach the hotel from the square.
+  - id: taught-pattern-observation
+    instruction: 'Observation only: note whether the response uses Hvordan kommer jeg meg til … or Kan
+      du forklare veien til …; do not fail an otherwise successful question.'
+  derived_from:
+  - section_id: asking-for-the-way
+- handle: review_route_request
+  op: recall_fill
+  objective: obj-ask-for-and-give-directions-01
+  bloom: remember
+  prompt_md: Complete the polite question that asks the way to the pharmacy.
+  audio_target: Unnskyld, hvordan finner jeg veien til apoteket?
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Visitor
+      text_md: «Unnskyld, hvordan ___ jeg veien til apoteket?»
+  segments:
+  - text_md: '«Unnskyld, hvordan '
+  - blank_id: route-verb
+    options:
+    - finner
+    - ligger
+    - heter
+    answer_index: 0
+  - text_md: ' jeg veien til apoteket?»'
+  explanation_md: Hvordan finner jeg veien til … asks how to find the way to a place; the other options
+    would ask where something lies or what something is called.
+  derived_from:
+  - section_id: asking-for-the-way
+- handle: recognize_landmark_relation
+  op: choose
+  objective: obj-ask-for-and-give-directions-01
+  bloom: understand
+  prompt_md: Choose the English meaning of the instruction.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Guide
+      text_md: «Gå forbi hotellet.»
+  options:
+  - id: to
+    text: Go to the hotel.
+    correct: false
+    why: Til would make the hotel the endpoint instead of a landmark to pass.
+  - id: at
+    text: Stop at the hotel.
+    correct: false
+    why: Ved would tell the listener to stop by the hotel rather than walk past it.
+  - id: past
+    text: Go past the hotel.
+    correct: true
+    why: Forbi tells the listener to continue beyond the hotel.
+  derived_from:
+  - section_id: giving-short-direction-steps
+- handle: build_clear_step
+  op: build
+  objective: obj-ask-for-and-give-directions-01
+  bloom: apply
+  prompt_md: Build the instruction that tells the listener to turn right at the bank.
+  tokens:
+  - token_id: tok-2
+    text: til
+  - token_id: tok-3
+    text: høyre
+  - token_id: tok-4
+    text: ved
+  - token_id: tok-5
+    text: banken.
+  - token_id: tok-1
+    text: Ta
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  explanation_md: Use ta til høyre for the turn and ved plus the landmark for where it happens.
+  derived_from:
+  - section_id: giving-short-direction-steps
+- handle: review_landmark_relation
+  op: recall_fill
+  objective: obj-ask-for-and-give-directions-01
+  bloom: remember
+  prompt_md: The guide wants the visitor to make the left turn at the bank itself, not before or after
+    it. Complete the guide's second step.
+  audio_target: Gå rett fram til banken. Ta til venstre ved banken.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Guide
+      text_md: «Gå rett fram til banken. Ta til venstre ___.»
+  segments:
+  - text_md: '«Gå rett fram til banken. Ta til venstre '
+  - blank_id: landmark-relation
+    options:
+    - ved banken
+    - forbi banken
+    - bak banken
+    answer_index: 0
+  - text_md: .»
+  explanation_md: After arriving at the bank, ved banken places the turn at the bank; forbi marks passing
+    it and bak marks the turn behind it.
+  derived_from:
+  - section_id: giving-short-direction-steps
+- handle: recognize_movement_location
+  op: choose
+  objective: obj-ask-for-and-give-directions-01
+  bloom: analyze
+  prompt_md: Choose the English meaning of the local person's response.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Local
+      text_md: «Ta til høyre ved kiosken. Apoteket ligger på venstre side.»
+  options:
+  - id: wrong-location
+    text: Turn right at the kiosk; the pharmacy is on the right-hand side.
+    correct: false
+    why: The turn matches, but the pharmacy side is wrong.
+  - id: correct-contrast
+    text: Turn right at the kiosk; the pharmacy is on the left-hand side.
+    correct: true
+    why: The turn and the pharmacy location both match the Norwegian.
+  - id: swapped-forms
+    text: Turn left at the kiosk; the pharmacy is on the right-hand side.
+    correct: false
+    why: This reverses both the movement and the location forms.
+  derived_from:
+  - section_id: movement-and-final-location
+- handle: expand_route
+  op: write
+  objective: obj-ask-for-and-give-directions-01
+  bloom: apply
+  prompt_md: 'You are at the station. A visitor wants to reach the pharmacy. Route facts: Walk straight
+    ahead to the traffic lights. Continue past the bank. The pharmacy is on the right-hand side immediately
+    after the bank. Write three short Bokmål direction sentences that help the visitor reach the pharmacy.'
+  response_language: 'no'
+  min_words: 15
+  max_words: 40
+  judge_prompt: Check gating criteria logical-order, accurate-landmarks, and destination-location. Record
+    sequence-language-observation as an observation only; it never changes the pass result.
+  criteria:
+  - id: logical-order
+    instruction: Presents three short direction sentences in a usable order from the station.
+  - id: accurate-landmarks
+    instruction: Directs the visitor to the traffic lights and then past the bank.
+  - id: destination-location
+    instruction: Locates the pharmacy on the right-hand side immediately after the bank.
+  - id: sequence-language-observation
+    instruction: 'Observation only: note whether words such as først, så, or deretter clarify the order;
+      do not fail an otherwise clear route.'
+  derived_from:
+  - section_id: movement-and-final-location
+- handle: review_turn_vs_location
+  op: recall_fill
+  objective: obj-ask-for-and-give-directions-01
+  bloom: remember
+  prompt_md: Complete the sentence that says which side the library is on.
+  audio_target: Ta til venstre ved torget. Biblioteket ligger på venstre side.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Local
+      text_md: «Ta til venstre ved torget. Biblioteket ligger ___ venstre side.»
+  segments:
+  - text_md: '«Ta til venstre ved torget. Biblioteket ligger '
+  - blank_id: side-preposition
+    options:
+    - på
+    - under
+    - over
+    answer_index: 0
+  - text_md: ' venstre side.»'
+  explanation_md: På venstre side names the side where the library lies, while til venstre gives a turn
+    direction; under and over do not fit this side phrase.
+  derived_from:
+  - section_id: movement-and-final-location
+- handle: recognize_detail_check
+  op: choose
+  objective: obj-ask-for-and-give-directions-01
+  bloom: analyze
+  prompt_md: Choose the visitor's check that confirms only the turn after the bank.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Guide
+      text_md: «Gå rett fram til banken. Sving mot venstre når du har passert banken.»
+  options:
+  - id: wrong-place
+    text: Så jeg tar til venstre før banken?
+    correct: false
+    why: This places the turn before the bank instead of after it.
+  - id: focused
+    text: Så jeg tar til venstre etter banken?
+    correct: true
+    why: This echoes only the guide's second step and asks whether the left turn comes after the bank.
+  - id: wrong-turn
+    text: Så jeg tar til høyre etter banken?
+    correct: false
+    why: This reverses the turn direction the guide gave.
+  derived_from:
+  - section_id: checking-one-detail
+- handle: confirm_uncertain_detail
+  op: write
+  objective: obj-ask-for-and-give-directions-01
+  bloom: apply
+  prompt_md: 'Guide: Gå rett fram til banken. Ta til høyre etter banken. You understood the first step,
+    but you are unsure where to turn. Ask the guide to confirm only that detail. Write one Bokmål confirmation
+    question.'
+  response_language: 'no'
+  min_words: 4
+  max_words: 10
+  judge_prompt: Evaluate criteria isolated-detail and confirmation-question only.
+  criteria:
+  - id: isolated-detail
+    instruction: Refers only to the right turn after the bank.
+  - id: confirmation-question
+    instruction: Expresses that detail as a natural Bokmål confirmation question.
+  derived_from:
+  - section_id: checking-one-detail
+- handle: review_detail_check
+  op: recall_fill
+  objective: obj-ask-for-and-give-directions-01
+  bloom: remember
+  prompt_md: Complete the visitor's echo check of the guide's second step.
+  audio_target: Gå rett fram til kirken. Ta til venstre ved kirken. Så tar jeg til venstre ved kirken?
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Guide
+      text_md: «Gå rett fram til kirken. Ta til venstre ved kirken.»
+    - speaker: Visitor
+      text_md: «___ tar jeg til venstre ved kirken?»
+  segments:
+  - text_md: «
+  - blank_id: check-opener
+    options:
+    - Så
+    - Hvor
+    - Hvordan
+    answer_index: 0
+  - text_md: ' tar jeg til venstre ved kirken?»'
+  explanation_md: Så begins an echo check that repeats only the guide's second step for confirmation.
+  derived_from:
+  - section_id: checking-one-detail
+- handle: recognize_route_confirmation
+  op: choose
+  objective: obj-ask-for-and-give-directions-01
+  bloom: analyze
+  prompt_md: Choose the English meaning of the local person's reply.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Visitor
+      text_md: «Så jeg går forbi banken og tar til høyre?»
+    - speaker: Local
+      text_md: «Ja, det stemmer.»
+  options:
+  - id: correction
+    text: The visitor must take a different turn.
+    correct: false
+    why: A correction would use Nei and a new instruction.
+  - id: new-request
+    text: The local person is asking for the route again.
+    correct: false
+    why: A new request would use a question such as Hvordan kommer jeg meg til …
+  - id: confirm
+    text: The route the visitor repeated is correct.
+    correct: true
+    why: Ja, det stemmer confirms the repeated route.
+  derived_from:
+  - section_id: repeating-route-back
+- handle: complete_exchange
+  op: write
+  objective: obj-ask-for-and-give-directions-01
+  bloom: apply
+  prompt_md: 'Write for a visitor and a local person at the station. The visitor needs to reach the museum.
+    Route facts: Go straight to the traffic lights. Turn left at the kiosk. Go past the hotel. The museum
+    is on the right-hand side. The purpose is to ask for the route, explain it, check that it was understood,
+    and respond to the check. Write a 35–75-word Bokmål dialogue.'
+  response_language: 'no'
+  min_words: 35
+  max_words: 75
+  judge_prompt: Check gating criteria clear-request, ordered-route, listener-check, and explicit-ending.
+    Record taught-check-form-observation as an observation only; it never changes the pass result.
+  criteria:
+  - id: clear-request
+    instruction: Includes a clear request for directions to the museum.
+  - id: ordered-route
+    instruction: Gives an ordered route consistent with the traffic lights, kiosk, hotel, and museum facts.
+  - id: listener-check
+    instruction: Includes a check, made by either speaker, that the route was understood.
+  - id: explicit-ending
+    instruction: Ends with an explicit confirmation or a brief correction in response to that check.
+  - id: taught-check-form-observation
+    instruction: 'Observation only: note whether the listener check begins with Så; do not fail an otherwise
+      successful route check.'
+  derived_from:
+  - section_id: repeating-route-back
+- handle: final_retrieval
+  op: write
+  objective: obj-ask-for-and-give-directions-01
+  bloom: apply
+  prompt_md: 'Write for a visitor and a local person outside the library. The visitor needs to reach the
+    bus terminal. Route facts: Turn left outside the library. Cross the street. Go past the hotel. Turn
+    right at the traffic lights. The terminal is next to the station. The purpose is to ask for the route,
+    explain it briefly, check the route, and confirm or correct the check. Write a 35–75-word Bokmål dialogue.'
+  response_language: 'no'
+  min_words: 35
+  max_words: 75
+  judge_prompt: Check gating criteria polite-route-request, accurate-direction-steps, route-repetition,
+    and confirmation-response. Record taught-summary-form-observation as an observation only; it never
+    changes the pass result.
+  criteria:
+  - id: polite-route-request
+    instruction: Includes a polite request for directions to the bus terminal.
+  - id: accurate-direction-steps
+    instruction: Gives a usable route consistent with the supplied library, street, hotel, traffic-light,
+      and station facts.
+  - id: route-repetition
+    instruction: Includes the visitor's repetition of the route as a check-back to be confirmed or corrected.
+  - id: confirmation-response
+    instruction: Includes a clear confirmation, or an appropriate brief correction if the written repetition
+      contains an error.
+  - id: taught-summary-form-observation
+    instruction: 'Observation only: note whether the repetition begins with Så and whether the reply uses
+      Det stemmer or Helt riktig; do not fail an otherwise complete exchange.'
+  derived_from:
+  - section_id: final-retrieval
+- handle: review_route_confirmation
+  op: recall_fill
+  objective: obj-ask-for-and-give-directions-01
+  bloom: remember
+  prompt_md: Complete the local person's reply that confirms the route.
+  audio_target: Så jeg tar til venstre etter parken? Ja, helt riktig.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Visitor
+      text_md: «Så jeg tar til venstre etter parken?»
+    - speaker: Local
+      text_md: «___.»
+  segments:
+  - text_md: «
+  - blank_id: confirmation
+    options:
+    - Ja, helt riktig
+    - Nei, du tar til høyre
+    - Vi ses i morgen
+    answer_index: 0
+  - text_md: .»
+  explanation_md: Ja, helt riktig confirms that the repeated route is correct; the other options either
+    reject the route or close the exchange.
+  derived_from:
+  - section_id: repeating-route-back

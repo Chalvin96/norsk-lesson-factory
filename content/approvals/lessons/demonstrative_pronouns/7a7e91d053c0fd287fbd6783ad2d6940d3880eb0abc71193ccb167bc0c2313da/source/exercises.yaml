@@ -1,0 +1,372 @@
+- handle: shop_distance_noticing
+  op: choose
+  objective: obj-demonstrative-pronouns-01
+  bloom: understand
+  derived_from:
+  - section_id: at-the-second-hand-shop
+  prompt_md: Choose the interpretation that matches the dialogue.
+  stem_md: 'Maja: «Se på denne lampa her.» Jonas: «Hva med den lampa ved vinduet?» Maja: «Jeg liker dette
+    speilet her.» Jonas: «Jeg foretrekker det speilet ved døra.»'
+  options:
+  - id: same-distance
+    text: Both demonstrative sets identify objects at the same distance.
+    correct: false
+    why: This overlooks the contrast between objects «her» and objects by the window or door.
+  - id: close-versus-far
+    text: «Denne/dette» identifies the nearby objects; «den/det» identifies the farther-away objects.
+    correct: true
+    why: The location cues «her», «ved vinduet», and «ved døra» establish the close–far contrast.
+  - id: far-versus-close
+    text: «Denne/dette» identifies the farther-away objects; «den/det» identifies the nearby objects.
+    correct: false
+    why: This reverses the single contrast shown by the location cues.
+- handle: demonstrative_agreement_selection
+  op: recall_fill
+  objective: obj-demonstrative-pronouns-01
+  bloom: apply
+  explanation_md: Common singular, neuter singular, and plural require different demonstratives within
+    each distance set.
+  derived_from:
+  - section_id: plural-disse-or-de
+  prompt_md: Complete each phrase with the matching demonstrative.
+  audio_target: Denne lampa, dette speilet og disse stolene. Den lampa, det speilet og de stolene.
+  segments:
+  - text_md: 'På disken her:'
+  - blank_id: close-common-singular
+    options:
+    - dette
+    - denne
+    - disse
+    answer_index: 1
+  - text_md: ' lampa,'
+  - blank_id: close-neuter-singular
+    options:
+    - denne
+    - dette
+    - disse
+    answer_index: 1
+  - text_md: ' speilet og '
+  - blank_id: close-plural
+    options:
+    - disse
+    - dette
+    - denne
+    answer_index: 0
+  - text_md: ' stolene. Ved veggen der borte:'
+  - blank_id: far-common-singular
+    options:
+    - det
+    - de
+    - den
+    answer_index: 2
+  - text_md: ' lampa,'
+  - blank_id: far-neuter-singular
+    options:
+    - den
+    - det
+    - de
+    answer_index: 1
+  - text_md: ' speilet og '
+  - blank_id: far-plural
+    options:
+    - de
+    - den
+    - det
+    answer_index: 0
+  - text_md: ' stolene.'
+- handle: definite_form_repair
+  op: find_fix
+  objective: obj-demonstrative-pronouns-01
+  bloom: analyze
+  derived_from:
+  - section_id: the-noun-must-be-definite
+  prompt_md: Hvilket ord må endres for at uttrykket «denne stol her» skal bli grammatisk korrekt?
+  tokens:
+  - token_id: tok-1
+    text: denne
+  - token_id: tok-2
+    text: stol
+  - token_id: tok-3
+    text: her
+  error_token_id: tok-2
+  feedback: 'Etter det påpekende pronomenet bruker vi substantivet i bestemt form: «denne stolen her».'
+- handle: complete_reference_building
+  op: choose
+  objective: obj-demonstrative-pronouns-01
+  bloom: apply
+  derived_from:
+  - section_id: making-both-choices-together
+  prompt_md: Choose the complete reply.
+  stem_md: 'Maja står ved et bord. Tre stoler står på den andre siden av rommet. Jonas: «Hvilke møbler
+    mener du?»'
+  options:
+  - id: close-table-indefinite-chairs
+    text: «Dette bord her og de stoler der borte.»
+    correct: false
+    why: The distances are represented, but both nouns incorrectly remain indefinite.
+  - id: close-table-far-chairs
+    text: «Dette bordet her og de stolene der borte.»
+    correct: true
+    why: The reply combines the close neuter form with the far plural form, and both nouns are definite.
+  - id: far-table-close-chairs
+    text: «Det bordet her og disse stolene der borte.»
+    correct: false
+    why: The noun agreement is possible, but both distance choices contradict the location cues.
+- handle: pattern_through_description
+  op: recall_fill
+  objective: obj-demonstrative-pronouns-01
+  bloom: apply
+  derived_from:
+  - section_id: describing-a-particular-object
+  prompt_md: Complete the phrase.
+  audio_target: dette lille bordet
+  segments:
+  - text_md: 'Maja peker på et lite møbel ved siden av seg:'
+  - blank_id: description-demonstrative
+    options:
+    - denne
+    - disse
+    - dette
+    answer_index: 2
+  - text_md: ' lille '
+  - blank_id: description-noun
+    options:
+    - bordet
+    - bord
+    - bordene
+    answer_index: 0
+  - text_md: .
+- handle: full_reference_discrimination
+  op: choose
+  objective: obj-demonstrative-pronouns-01
+  bloom: analyze
+  derived_from:
+  - section_id: describing-a-particular-object
+  prompt_md: Choose the reply that identifies the requested chairs.
+  stem_md: 'Ekspeditøren: «Mener du de gamle stolene bakerst?» Maja: «Nei, jeg mener stolene ved siden
+    av meg.»'
+  options:
+  - id: nearby-old-indefinite
+    text: «Jeg mener disse gamle stoler her.»
+    correct: false
+    why: The distance choice is right, but the plural noun lacks its definite ending.
+  - id: nearby-old-chairs
+    text: «Jeg mener disse stolene her.»
+    correct: true
+    why: The plural demonstrative marks the chairs as nearby, and the definite noun remains visible.
+  - id: distant-old-chairs
+    text: «Jeg mener de stolene der.»
+    correct: false
+    why: The noun phrase is well formed, but «de» selects the farther-away set.
+- handle: counter_summary
+  op: write
+  objective: obj-demonstrative-pronouns-01
+  bloom: apply
+  derived_from:
+  - section_id: back-at-the-counter
+  prompt_md: 'Kvitteringsnotat til ekspeditøren: kjøpes: lampe på disken her (nær deg); kjøpes: speil
+    på disken her (nær deg); kjøpes: stoler ved Maja her (nær deg); kjøpes ikke: stoler bakerst der borte
+    (langt borte). Write a 12–25-word Norwegian note that names each item with a demonstrative and a definite
+    noun. Use «denne lampa» or «denne lampen» for the lamp, «dette speilet» for the mirror, «disse stolene»
+    for the nearby chairs, and «de stolene bakerst» for the rejected chairs.'
+  response_language: 'no'
+  judge_prompt: Assess only criteria selected-common-singular, selected-neuter-singular, selected-plural,
+    rejected-plural-far, audience-purpose, and word-bound. A response passes when every listed criterion
+    is met.
+  criteria:
+  - id: selected-common-singular
+    instruction: Identifies the selected nearby lamp with «denne lampa» or «denne lampen».
+  - id: selected-neuter-singular
+    instruction: Identifies the selected nearby mirror with «dette speilet».
+  - id: selected-plural
+    instruction: Identifies the selected nearby chairs with «disse stolene».
+  - id: rejected-plural-far
+    instruction: Identifies the rejected chairs with «de stolene bakerst».
+  - id: audience-purpose
+    instruction: Functions as a clear note telling the shop assistant what is and is not being bought.
+  - id: word-bound
+    instruction: Contains 12–25 words.
+- handle: moving_day_transfer
+  op: write
+  objective: obj-demonstrative-pronouns-01
+  bloom: apply
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+  prompt_md: 'Melding til Jonas: én eske ved Jonas, nær deg, til kjøkkenet; én eske ved døra, lenger borte,
+    til badet; ett bilde i Majas hender, nær deg, til soverommet; ett bilde på veggen langt borte til
+    stua; flere bøker på bordet ved Maja, nær deg, til hylla; flere bøker på andre siden av rommet, langt
+    borte, til kontoret. Write a 35–60-word Norwegian message that names each item with a demonstrative
+    and a definite noun. Use «denne/den» for each box, «dette/det» for each picture, and «disse/de» for
+    the books, choosing the close form for «nær deg» and the far form for «lenger borte» or «langt borte»,
+    and use the definite nouns «esken», «bildet», and «bøkene».'
+  response_language: 'no'
+  judge_prompt: Assess only criteria all-six-items, destinations, audience-purpose, word-bound, demonstrative-agreement,
+    and definite-nouns. A response passes when every listed criterion is met.
+  criteria:
+  - id: all-six-items
+    instruction: Refers clearly to all six rows in the supplied facts list.
+  - id: destinations
+    instruction: Assigns each item to the destination shown for it.
+  - id: audience-purpose
+    instruction: Functions as a practical message to Jonas about where the belongings should go.
+  - id: word-bound
+    instruction: Contains 35–60 words.
+  - id: demonstrative-agreement
+    instruction: Uses «denne/den» for each box, «dette/det» for each picture, and «disse/de» for the books,
+      choosing the close form for items marked «nær deg» and the far form for items marked «lenger borte»
+      or «langt borte».
+  - id: definite-nouns
+    instruction: Uses the definite forms «esken», «bildet», and «bøkene» after the demonstratives.
+- handle: final_demonstrative_retrieval
+  op: recall_fill
+  objective: obj-demonstrative-pronouns-01
+  bloom: remember
+  derived_from:
+  - section_id: short-retrieval-review
+  prompt_md: Complete the three descriptions.
+  audio_target: Denne lampa står her. Det vinduet er der borte. Disse bøkene ligger her.
+  segments:
+  - text_md: 'En lampe ved deg: '
+  - blank_id: nearby-lamp-demonstrative
+    options:
+    - dette
+    - disse
+    - denne
+    answer_index: 2
+  - text_md: ' '
+  - blank_id: nearby-lamp-noun
+    options:
+    - lamper
+    - lampa
+    - lampene
+    answer_index: 1
+  - text_md: '. Et vindu på andre siden av rommet: '
+  - blank_id: far-window-demonstrative
+    options:
+    - den
+    - det
+    - de
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: far-window-noun
+    options:
+    - vinduer
+    - vinduene
+    - vinduet
+    answer_index: 2
+  - text_md: '. Flere bøker ved deg: '
+  - blank_id: nearby-books-demonstrative
+    options:
+    - denne
+    - disse
+    - dette
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: nearby-books-noun
+    options:
+    - boka
+    - bok
+    - bøkene
+    answer_index: 2
+  - text_md: .
+- handle: review_demonstrative_agreement_selection
+  op: recall_fill
+  objective: obj-demonstrative-pronouns-01
+  bloom: apply
+  derived_from:
+  - section_id: plural-disse-or-de
+  prompt_md: Fullfør frasene i den nye scenen.
+  audio_target: disse eplene her og de eplene der borte.
+  segments:
+  - text_md: 'Maja tar på eplene ved seg:'
+  - blank_id: review-close-plural
+    options:
+    - dette
+    - de
+    - disse
+    answer_index: 2
+  - text_md: ' eplene her. Jonas ser på eplene ved veggen:'
+  - blank_id: review-far-plural
+    options:
+    - de
+    - den
+    - disse
+    answer_index: 0
+  - text_md: ' eplene der borte.'
+  explanation_md: Disse viser til flertall nær Maja, og de viser til flertall lenger unna.
+- handle: review_pattern_through_description
+  op: recall_fill
+  objective: obj-demonstrative-pronouns-01
+  bloom: apply
+  derived_from:
+  - section_id: describing-a-particular-object
+  prompt_md: Complete the description of the lamp.
+  audio_target: denne lille lampa
+  segments:
+  - text_md: 'Jonas peker på en liten lampe ved siden av seg:'
+  - blank_id: review-description-demonstrative
+    options:
+    - disse
+    - denne
+    - dette
+    answer_index: 1
+  - text_md: ' lille '
+  - blank_id: review-description-noun
+    options:
+    - lampa
+    - lamper
+    - lampene
+    answer_index: 0
+  - text_md: .
+- handle: review_final_demonstrative_retrieval
+  op: recall_fill
+  objective: obj-demonstrative-pronouns-01
+  bloom: remember
+  derived_from:
+  - section_id: short-retrieval-review
+  prompt_md: Complete the three descriptions of the new objects.
+  audio_target: Denne stolen står her. Det bildet henger der borte. De trærne står der borte.
+  segments:
+  - text_md: 'En stol ved deg: '
+  - blank_id: review-nearby-chair-demonstrative
+    options:
+    - dette
+    - disse
+    - denne
+    answer_index: 2
+  - text_md: ' '
+  - blank_id: review-nearby-chair-noun
+    options:
+    - stoler
+    - stolen
+    - stolene
+    answer_index: 1
+  - text_md: '. Et bilde på andre siden av rommet: '
+  - blank_id: review-far-picture-demonstrative
+    options:
+    - den
+    - det
+    - de
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: review-far-picture-noun
+    options:
+    - bilder
+    - bildene
+    - bildet
+    answer_index: 2
+  - text_md: '. Flere trær der borte: '
+  - blank_id: review-far-trees-demonstrative
+    options:
+    - denne
+    - disse
+    - de
+    answer_index: 2
+  - text_md: ' '
+  - blank_id: review-far-trees-noun
+    options:
+    - treet
+    - trærne
+    - tre
+    answer_index: 1
+  - text_md: .

@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "definite_articles",
   "kind": "grammar",
   "language": "nb-NO",
@@ -50,10 +50,6 @@
       "id": "form-definite-plural-endings"
     },
     {
-      "kind": "exercise",
-      "id": "match-definite-ending-to_number"
-    },
-    {
       "kind": "section",
       "id": "returning-to-nora-and-amir"
     },
@@ -64,6 +60,26 @@
     {
       "kind": "exercise",
       "id": "retrieve-definite_noun_patterns"
+    },
+    {
+      "kind": "exercise",
+      "id": "match-definite-ending-to-number"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_form-definite-singular-endings"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_choose-singular-definiteness-from-context"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_form-definite-plural-endings"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_match-definite-ending-to-number"
     }
   ],
   "sections": [
@@ -2085,33 +2101,33 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "In this lost-property situation, koppen, boka, and posen are particular objects at the table already known to Nora and Amir. Choose the interpretation that identifies these forms and explains why each refers to a known object."
+          "value": "Choose the explanation that fits the dialogue."
         }
       ],
       "explanation": null,
       "payload": {
         "options": [
           {
+            "option_id": "known-but-indefinite",
+            "text": "The objects are identifiable, but en, ei or et must still stand before each noun.",
+            "why": "In these simple noun phrases, the definite ending replaces the indefinite article."
+          },
+          {
             "option_id": "known-particular-objects",
-            "text": "Koppen, boka og posen er de bestemte tingene ved bordet som Nora og Amir allerede kjenner. — The cup, the book, and the bag are the particular things at the table that Nora and Amir already know.",
-            "why": "The three nouns identify particular objects already established in the stated situation, so their definite endings carry the meaning of the."
+            "text": "Koppen, boka and posen identify particular objects that Nora and Amir can distinguish in the situation.",
+            "why": "The dialogue treats each noun as an identifiable object, so Norwegian marks definiteness with a noun ending."
           },
           {
             "option_id": "first-mentions",
-            "text": "Koppen, boka og posen er nye ting som Nora og Amir ikke kjenner ennå. — The cup, the book, and the bag are new things that Nora and Amir do not know yet.",
-            "why": "This option treats the already identified objects as new or unknown."
-          },
-          {
-            "option_id": "indefinite-known-objects",
-            "text": "En kopp, ei bok og en pose er de bestemte tingene som Nora og Amir allerede kjenner. — A cup, a book, and a bag are the definite things that Nora and Amir already know.",
-            "why": "The indefinite forms introduce new or unspecified objects; they do not mark the known objects in the stated situation."
+            "text": "The three nouns introduce objects that Nora and Amir have not identified.",
+            "why": "This reading confuses a later reference to an identifiable object with the first mention of an unspecified object."
           }
         ],
         "answer_id": "known-particular-objects",
         "stem": [
           {
             "kind": "text",
-            "value": "Which explanation best matches the stated situation?"
+            "value": "Nora: Kan du gi meg koppen, boka og posen? Amir: Ja, her er de."
           }
         ]
       }
@@ -2124,13 +2140,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Nora is listing individual objects after the cooking class. Each object is already identified. Complete each sentence with the taught definite singular form, without adding a separate word for English the."
+          "value": "Fill in the definite singular form in each sentence."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Attach the definite ending to the noun: stolen, boka, kartet; do not add an extra article for English the."
+          "value": "Formene er «stolen», «boka» og «kartet»."
         }
       ],
       "payload": {
@@ -2140,7 +2156,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "For en stol: I rommet står"
+                "value": "I rommet står"
               },
               {
                 "kind": "text",
@@ -2152,9 +2168,9 @@
             "kind": "blank",
             "blank_id": "singular-masculine",
             "options": [
-              "stolene",
+              "en stol",
               "stolen",
-              "en stol"
+              "stolene"
             ],
             "answer_index": 1
           },
@@ -2163,11 +2179,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "ved døra. For ei bok: På stolen ligger"
+                "value": ". Der ligger"
               },
               {
                 "kind": "text",
@@ -2179,8 +2191,8 @@
             "kind": "blank",
             "blank_id": "singular-feminine",
             "options": [
+              "bøker",
               "ei bok",
-              "bøkene",
               "boka"
             ],
             "answer_index": 2
@@ -2190,11 +2202,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "ved døra. For et kart: I veska ligger"
+                "value": ". I veska ligger"
               },
               {
                 "kind": "text",
@@ -2206,21 +2214,18 @@
             "kind": "blank",
             "blank_id": "singular-neuter",
             "options": [
+              "kartet",
               "et kart",
-              "kartet"
+              "kartene"
             ],
-            "answer_index": 1
+            "answer_index": 0
           },
           {
             "kind": "span",
             "spans": [
               {
                 "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "ved boka."
+                "value": "."
               }
             ]
           }
@@ -2235,36 +2240,70 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "A visitor enters a classroom and notices one new object at a time. Choose the complete set that uses an indefinite singular noun for each first mention and a definite singular noun for the later reference to the same object."
+          "value": "Choose the sentence pair that shows a transition from something new to something familiar."
         }
       ],
       "explanation": null,
       "payload": {
         "options": [
           {
-            "option_id": "definite-then-indefinite",
-            "text": "På bordet ligger nøkkelen. En nøkkel er ved døra. — The key is on the table; a key is by the door. I rommet står veska. Ei veske er ved bordet. — The handbag is in the room; a handbag is by the table. På bordet ligger kartet. Et kart er i veska. — The map is on the table; a map is in the handbag.",
-            "why": "This reverses the required order by using definite forms for first mentions and indefinite forms for later references."
+            "option_id": "known-then-new",
+            "text": "I gangen henger jakka. Ei jakke er våt.",
+            "why": "This presents the jacket as known before introducing it as an unspecified object."
           },
           {
-            "option_id": "indefinite-throughout",
-            "text": "På bordet ligger en nøkkel. En nøkkel er ved døra. — A key is on the table; a key is by the door. I rommet står ei veske. Ei veske er ved bordet. — A handbag is in the room; a handbag is by the table. På bordet ligger et kart. Et kart er i veska. — A map is on the table; a map is in the handbag.",
-            "why": "The later sentences still use indefinite forms, so they do not mark the already identified objects."
+            "option_id": "new-throughout",
+            "text": "I gangen henger ei jakke. Ei jakke er våt.",
+            "why": "The second indefinite phrase can introduce another jacket instead of referring clearly to the first one."
           },
           {
-            "option_id": "indefinite-then-definite",
-            "text": "På bordet ligger en nøkkel. Nøkkelen er ved døra. — A key is on the table; the key is by the door. I rommet står ei veske. Veska er ved bordet. — A handbag is in the room; the handbag is by the table. På bordet ligger et kart. Kartet er i veska. — A map is on the table; the map is in the handbag.",
-            "why": "Each first mention is indefinite, and the second sentence uses the definite form for the same identifiable object."
+            "option_id": "new-then-known",
+            "text": "I gangen henger ei jakke. Jakka er våt.",
+            "why": "The first sentence introduces a jacket, and the second identifies that same jacket with the definite form."
           }
         ],
-        "answer_id": "indefinite-then-definite",
+        "answer_id": "new-then-known",
         "stem": [
           {
             "kind": "text",
-            "value": "Which set keeps the new-object-to-known-object contrast in all three pairs?"
+            "value": "A teacher points out an item in the hallway and later refers to the same item."
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Lærer",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg ser noe nytt i gangen.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Elev",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hva mener du?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Lærer",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Den gjenstanden vi nå snakker om, er våt.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2274,13 +2313,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "The cooking-class room is being cleared, and the groups are known. Complete each location statement with the definite plural form."
+          "value": "Fill in the definite plural form in each sentence."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Use the known-group plural form with its definite ending: koppene, stolene, bøkene, eplene, posene."
+          "value": "Formene for de bestemte gruppene er «koppene», «stolene», «bøkene», «eplene» og «posene»."
         }
       ],
       "payload": {
@@ -2290,7 +2329,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "For the known group of cups: Mellom"
+                "value": "Mellom"
               },
               {
                 "kind": "text",
@@ -2303,7 +2342,7 @@
             "blank_id": "plural-cups",
             "options": [
               "koppen",
-              "en kopp",
+              "kopper",
               "koppene"
             ],
             "answer_index": 2
@@ -2317,7 +2356,7 @@
               },
               {
                 "kind": "text",
-                "value": "står posen. For the supplied plural stoler: Ved døra står"
+                "value": "står vasen. Ved døra står"
               },
               {
                 "kind": "text",
@@ -2340,11 +2379,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "og bordet. For the supplied plural bøker: På bordet ligger"
+                "value": ". På bordet ligger"
               },
               {
                 "kind": "text",
@@ -2367,11 +2402,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "ved kartet. For the supplied plural epler: I bilen ligger"
+                "value": ". I bilen ligger"
               },
               {
                 "kind": "text",
@@ -2394,11 +2425,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "ved veska. For the supplied plural poser: Ved døra står"
+                "value": ". Ved vinduet står"
               },
               {
                 "kind": "text",
@@ -2421,193 +2448,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "under vinduet."
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "kind": "exercise",
-      "id": "match-definite-ending-to_number",
-      "operation": "recall_fill",
-      "objective_id": "obj-definite-articles-01",
-      "prompt": [
-        {
-          "kind": "text",
-          "value": "At the lost-property desk, complete each label with the definite form matching the stated number. Choose the form for one known object or for a known group."
-        }
-      ],
-      "explanation": null,
-      "payload": {
-        "segments": [
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": "Given en kopp; number singular: På bordet ligger"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "cup-singular",
-            "options": [
-              "koppen",
-              "koppene"
-            ],
-            "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "ved boka. Given en kopp; number plural: Mellom stolene står"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "cup-plural",
-            "options": [
-              "koppen",
-              "koppene"
-            ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "ved døra. Given ei bok; plural form bøker; number singular: På bordet ligger"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "book-singular",
-            "options": [
-              "boka",
-              "bøkene"
-            ],
-            "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "ved koppen. Given ei bok; plural form bøker; number plural: På bordet ligger"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "book-plural",
-            "options": [
-              "boka",
-              "bøkene"
-            ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "ved kartet. Given et eple; plural form epler; number singular: I veska ligger"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "apple-singular",
-            "options": [
-              "eplet",
-              "eplene"
-            ],
-            "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "ved boka. Given et eple; plural form epler; number plural: På bordet ligger"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "apple-plural",
-            "options": [
-              "eplet",
-              "eplene"
-            ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "ved koppene."
+                "value": "."
               }
             ]
           }
@@ -2622,10 +2463,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "A colleague has already reported a table, a map, a bag, chairs, books, and cups in a meeting room. Complete each new instruction with the definite Norwegian noun form for the established object or group. Use singular for one item and plural for a known group."
+          "value": "Fill in the definite form of each familiar thing or group."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Inventaret viser hvilke ting det gjelder. Antallet og substantivmønsteret avgjør hvilken bestemt form du skal bruke."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -2633,7 +2479,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "For one known chair: Kan dere sette"
+                "value": "Inventar: én stol, ett kart, én pose, flere stoler, bøker og kopper. Én stol: Sett"
               },
               {
                 "kind": "text",
@@ -2660,7 +2506,7 @@
               },
               {
                 "kind": "text",
-                "value": "ved bordet. For one known map: Kan dere sette"
+                "value": "ved bordet. Ett kart: Legg"
               },
               {
                 "kind": "text",
@@ -2673,7 +2519,8 @@
             "blank_id": "meeting-map-singular",
             "options": [
               "et kart",
-              "kartet"
+              "kartet",
+              "kartene"
             ],
             "answer_index": 1
           },
@@ -2686,7 +2533,7 @@
               },
               {
                 "kind": "text",
-                "value": "på bordet. For one known bag: Kan dere sette"
+                "value": "på bordet. Én pose: Sett"
               },
               {
                 "kind": "text",
@@ -2713,7 +2560,7 @@
               },
               {
                 "kind": "text",
-                "value": "under vinduet. For the known chairs: Kan dere sette"
+                "value": "under vinduet. Flere stoler: Sett"
               },
               {
                 "kind": "text",
@@ -2740,7 +2587,7 @@
               },
               {
                 "kind": "text",
-                "value": "ved døra. For the known books: Kan dere sette"
+                "value": "ved døra. Flere bøker: Legg"
               },
               {
                 "kind": "text",
@@ -2767,7 +2614,7 @@
               },
               {
                 "kind": "text",
-                "value": "ved kartet. For the known cups: Kan dere sette"
+                "value": "ved døra. Flere kopper: Sett"
               },
               {
                 "kind": "text",
@@ -2780,7 +2627,7 @@
             "blank_id": "meeting-cups-plural",
             "options": [
               "koppene",
-              "en kopp",
+              "kopper",
               "koppen"
             ],
             "answer_index": 0
@@ -2809,39 +2656,665 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "After a picnic, write brief Norwegian statements identifying where these known things are in the park: one basket, one book introduced as "
-        },
-        {
-          "kind": "code",
-          "value": "ei bok"
-        },
-        {
-          "kind": "text",
-          "value": ", one apple, and groups of cups and bags. Write one statement for each item or group. Retrieve the taught definite singular forms for the individual objects and the regular definite plural forms for the groups. Express definiteness through the noun endings, not a separate word for English the."
+          "value": "At the picnic table in the park there is one basket, one book (ei bok), one apple, several cups, and several bags. Write a message to a friend and say where each thing or group is so your friend can get them. Use the definite form of each noun."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": null,
-        "max_words": null,
-        "judge_prompt": "Check the response against the task and report evidence for each criterion. Require one natural Norwegian location statement for each individual object and group. Accept varied natural Bokmål location wording and any natural Norwegian noun for basket when its definite singular form ends in -en. Require the taught feminine -a form for book, neuter -et for apple, and regular plural -ene for cups and bags. Do not count a separate English-style article as a definite noun ending.",
+        "min_words": 25,
+        "max_words": 45,
+        "judge_prompt": "Check gating criteria picnic-items, audience-purpose, definite-forms and comprehensibility. Record singular-ending-observation and plural-ending-observation diagnostically; criterion ids ending in -observation never cause failure.",
         "criteria": [
           {
-            "id": "singular-endings",
-            "instruction": "Uses definite singular forms for the basket, book, and apple, with -en, -a, and -et respectively."
+            "id": "picnic-items",
+            "instruction": "States a location for the basket, book, apple, cups and bags."
           },
           {
-            "id": "plural-endings",
-            "instruction": "Uses definite plural forms for the cups and bags with the regular -ene pattern."
+            "id": "audience-purpose",
+            "instruction": "Functions as a message to a friend who needs to collect the listed things."
           },
           {
-            "id": "location-statements",
-            "instruction": "Gives one natural Norwegian location statement for each of the three individual objects and the two groups."
+            "id": "definite-forms",
+            "instruction": "Uses the definite form of each established noun, not the indefinite form."
           },
           {
-            "id": "noun-ending-definiteness",
-            "instruction": "Expresses the meaning of the through noun endings rather than through a separate article."
+            "id": "comprehensibility",
+            "instruction": "Uses standard Norwegian vocabulary and word order so a Norwegian reader can understand and act on every location; a message that is not standard Norwegian fails this criterion."
+          },
+          {
+            "id": "singular-ending-observation",
+            "instruction": "Observation only: note which definite singular endings appear for the basket, book and apple; never fail on this observation."
+          },
+          {
+            "id": "plural-ending-observation",
+            "instruction": "Observation only: note which definite plural endings appear for the cups and bags; never fail on this observation."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "match-definite-ending-to-number",
+      "operation": "recall_fill",
+      "objective_id": "obj-definite-articles-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fill in the definite form that matches the quantity."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Entall og flertall krever ulike bestemte former: «koppen» eller «koppene», «boka» eller «bøkene» og «eplet» eller «eplene»."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Én kopp er identifisert:"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "cup-singular",
+            "options": [
+              "koppene",
+              "koppen"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "er blå. Flere kopper er identifisert:"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "cup-plural",
+            "options": [
+              "koppene",
+              "koppen"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "er blå. Én bok er identifisert:"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "book-singular",
+            "options": [
+              "bøkene",
+              "boka"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "ligger her. Flere bøker er identifisert:"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "book-plural",
+            "options": [
+              "boka",
+              "bøkene"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "ligger her. Ett eple er identifisert:"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "apple-singular",
+            "options": [
+              "eplet",
+              "eplene"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "er grønt. Flere epler er identifisert:"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "apple-plural",
+            "options": [
+              "eplene",
+              "eplet"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "er grønne."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_form-definite-singular-endings",
+      "operation": "recall_fill",
+      "objective_id": "obj-definite-articles-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fill in the definite singular form for each familiar thing."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Formene er «døra», «lampen» og «vinduet»."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Ved inngangen står"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "singular-door",
+            "options": [
+              "dører",
+              "døra",
+              "ei dør"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". På hylla står"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "singular-lamp",
+            "options": [
+              "lamper",
+              "en lampe",
+              "lampen"
+            ],
+            "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Foran"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "singular-window",
+            "options": [
+              "vinduet",
+              "vinduer",
+              "et vindu"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "ligger teppet."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_choose-singular-definiteness-from-context",
+      "operation": "choose",
+      "objective_id": "obj-definite-articles-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the sentence pair that first introduces a new thing and then refers to the same thing."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "known-throughout",
+            "text": "På kjøkkenet står koppen. Koppen står ved vasken.",
+            "why": "The first sentence treats the cup as already identified instead of introducing it as new."
+          },
+          {
+            "option_id": "new-then-known",
+            "text": "På kjøkkenet finner jeg en kopp. Koppen står ved vasken.",
+            "why": "En kopp introduces one cup, while Koppen refers back to that identified cup."
+          },
+          {
+            "option_id": "new-throughout",
+            "text": "På kjøkkenet finner jeg en kopp. En kopp står ved vasken.",
+            "why": "The second indefinite phrase does not clearly identify the same cup."
+          }
+        ],
+        "answer_id": "new-then-known",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Nora says she found something in the kitchen, then tells Amir where it is."
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Nora",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg fant noe på kjøkkenet.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Amir",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hva fant du?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Nora",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Det jeg fant, står nå ved vasken.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_form-definite-plural-endings",
+      "operation": "recall_fill",
+      "objective_id": "obj-definite-articles-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fill in the definite plural form for each familiar group."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Formene er «dørene», «lampene», «teppene» og «nøklene»."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Ved gangen står"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "plural-doors",
+            "options": [
+              "døra",
+              "dører",
+              "dørene"
+            ],
+            "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". På veggen henger"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "plural-lamps",
+            "options": [
+              "lamper",
+              "lampene",
+              "lampen"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". I stua ligger"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "plural-rugs",
+            "options": [
+              "teppet",
+              "tepper",
+              "teppene"
+            ],
+            "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". På benken ligger"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "plural-keys",
+            "options": [
+              "nøkler",
+              "nøklene",
+              "nøkkelen"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_match-definite-ending-to-number",
+      "operation": "recall_fill",
+      "objective_id": "obj-definite-articles-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fill in the definite form that matches the quantity."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Entall og flertall krever ulike bestemte former: «døra» eller «dørene», «lampen» eller «lampene» og «nøkkelen» eller «nøklene»."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Én identifisert dør:"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "door-singular",
+            "options": [
+              "dørene",
+              "døra"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "er åpen. Flere identifiserte dører:"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "door-plural",
+            "options": [
+              "døra",
+              "dørene"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "er åpne. Én identifisert lampe:"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "lamp-singular",
+            "options": [
+              "lampene",
+              "lampen"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "lyser. Flere identifiserte lamper:"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "lamp-plural",
+            "options": [
+              "lampene",
+              "lampen"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "lyser. Én identifisert nøkkel:"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "key-singular",
+            "options": [
+              "nøklene",
+              "nøkkelen"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "ligger her. Flere identifiserte nøkler:"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "key-plural",
+            "options": [
+              "nøkkelen",
+              "nøklene"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "ligger her."
+              }
+            ]
           }
         ]
       }
@@ -2856,9 +3329,13 @@
         "form-definite-singular-endings",
         "choose-singular-definiteness-from-context",
         "form-definite-plural-endings",
-        "match-definite-ending-to_number",
         "use-definite-nouns-in_room_instructions",
-        "retrieve-definite_noun_patterns"
+        "retrieve-definite_noun_patterns",
+        "match-definite-ending-to-number",
+        "review_form-definite-singular-endings",
+        "review_choose-singular-definiteness-from-context",
+        "review_form-definite-plural-endings",
+        "review_match-definite-ending-to-number"
       ]
     }
   ],

@@ -174,6 +174,46 @@ def test_derive_transcript_blocks_given_norwegian_homographs_expect_candidates_k
     ]
 
 
+def test_derive_transcript_blocks_given_typed_example_roles_expect_only_incorrect_skipped() -> None:
+    blocks = derive_transcript_blocks(
+        _internal(
+            [
+                _section(
+                    "contrasts",
+                    [
+                        {
+                            "kind": "examples",
+                            "items": [
+                                {
+                                    "no": [_txt("Jeg så filmen i går.")],
+                                    "en": [_txt("I watched the film yesterday.")],
+                                    "teaching_role": "model",
+                                },
+                                {
+                                    "no": [_txt("Jeg tenker det går fint.")],
+                                    "en": [_txt("Understandable, but less natural here.")],
+                                    "teaching_role": "caution",
+                                },
+                                {
+                                    "no": [_txt("Jeg har sett filmen i går.")],
+                                    "en": [_txt("I watched the film yesterday.")],
+                                    "teaching_role": "incorrect",
+                                    "audio": True,
+                                },
+                            ],
+                        }
+                    ],
+                )
+            ]
+        )
+    )
+
+    assert [block["text"] for block in blocks] == [
+        "Jeg så filmen i går.",
+        "Jeg tenker det går fint.",
+    ]
+
+
 def test_derive_transcript_blocks_given_recall_audio_target_with_english_expect_rejected():
     with pytest.raises(ValueError, match="Norwegian only"):
         derive_transcript_blocks(

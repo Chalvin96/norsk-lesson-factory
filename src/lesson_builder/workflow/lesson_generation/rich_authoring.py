@@ -190,9 +190,9 @@ K_RICH_MAX_LESSON_CONTENT_REPAIRS = 1
 K_RICH_MAX_NORMALIZATION_REPAIRS = 1
 K_RICH_MAX_REVIEW_REASKS = 1
 K_RICH_MAX_EDIT_RESPONSE_ATTEMPTS = 2
-K_RICH_DRAFT_POLICY_VERSION = "5"
-K_RICH_NORMALIZATION_CACHE_POLICY_VERSION = "3"
-K_RICH_EXERCISE_CACHE_POLICY_VERSION = "4"
+K_RICH_DRAFT_POLICY_VERSION = "6"
+K_RICH_NORMALIZATION_CACHE_POLICY_VERSION = "4"
+K_RICH_EXERCISE_CACHE_POLICY_VERSION = "5"
 
 
 @dataclass
@@ -1435,6 +1435,7 @@ def _is_exercise_repair_allowed(
     return (
         verification.get("status") == "needs_human"
         and bool(failed_handles)
+        and not verification.get("unsupported_findings")
         and semantic_repairs < K_RICH_MAX_EXERCISE_SEMANTIC_REPAIRS
     )
 

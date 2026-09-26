@@ -1,0 +1,423 @@
+- handle: state_purpose
+  op: choose
+  objective: obj-arrange-and-confirm-an-appointment-01
+  bloom: apply
+  prompt_md: Choose the request that matches the note.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: '**Notat fra Mina** Problem: jeg ser dårlig på avstand. Sted: optiker.'
+  options:
+  - id: brake-check
+    text: Jeg vil gjerne bestille en time for en bremsesjekk.
+    correct: false
+    why: The service concerns bicycle brakes rather than eyesight.
+  - id: haircut
+    text: Jeg vil gjerne bestille en time for en hårklipp.
+    correct: false
+    why: The service concerns hair rather than eyesight.
+  - id: eye-test
+    text: Jeg vil gjerne bestille en time for en synstest.
+    correct: true
+    why: A synstest matches the stated problem and the optician.
+  derived_from:
+  - section_id: checkpoint-state-purpose
+- handle: ask_availability
+  op: choose
+  objective: obj-arrange-and-confirm-an-appointment-01
+  bloom: apply
+  prompt_md: Choose the question that asks the business about the open period.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: '**Optikerens kalender** | Periode | Status | |---|---| | Mandag | Full | | Tirsdag morgen
+        | Full | | Tirsdag ettermiddag | Ledig |'
+  options:
+  - id: wrong-period
+    text: Har dere noe ledig tirsdag morgen?
+    correct: false
+    why: It asks about the same business availability but names a full period.
+  - id: personal-suitability
+    text: Passer tirsdag ettermiddag for deg?
+    correct: false
+    why: It asks whether Tuesday suits one person rather than whether the business has an open appointment.
+  - id: open-period
+    text: Har dere noe ledig tirsdag ettermiddag?
+    correct: true
+    why: It asks the business about the period marked open.
+  derived_from:
+  - section_id: checkpoint-ask-availability
+- handle: understand_offered_time
+  op: choose
+  objective: obj-arrange-and-confirm-an-appointment-01
+  bloom: understand
+  prompt_md: Choose the calendar entry for the offered appointment.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Verkstedet
+      text_md: «Vi har en ledig time torsdag klokka halv tre.»
+  options:
+  - id: thursday-1530
+    text: Torsdag klokka 15.30
+    correct: false
+    why: This treats halv tre as half past three.
+  - id: thursday-1415
+    text: Torsdag klokka 14.15
+    correct: false
+    why: This interprets the expression as quarter past two.
+  - id: thursday-1430
+    text: Torsdag klokka 14.30
+    correct: true
+    why: Halv tre is half past two.
+  derived_from:
+  - section_id: understanding-offered-slot
+- handle: accept_precisely
+  op: choose
+  objective: obj-arrange-and-confirm-an-appointment-01
+  bloom: apply
+  prompt_md: Choose the response that accepts the exact offered slot and names both the offered day and
+    the offered time.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Resepsjonisten
+      text_md: '«Vi har to timer på onsdag: klokka ti og klokka ett. Passer klokka ti?»'
+    - speaker: Context
+      text_md: '**Mina sin kalender** Ledig etter klokka ni.'
+  options:
+  - id: vague-acceptance
+    text: Ja, onsdag passer fint.
+    correct: false
+    why: It confirms only the day and leaves the two offered times unresolved, so it does not name the
+      offered time.
+  - id: precise-acceptance
+    text: Ja, onsdag klokka ti passer fint.
+    correct: true
+    why: It accepts and repeats the offered day and time.
+  - id: other-slot
+    text: Ja, onsdag klokka ett passer fint.
+    correct: false
+    why: It accepts the other Wednesday slot.
+  derived_from:
+  - section_id: checkpoint-accept-precisely
+- handle: reject_and_counter
+  op: choose
+  objective: obj-arrange-and-confirm-an-appointment-01
+  bloom: apply
+  prompt_md: Choose the reply that rejects the conflict and proposes a possible alternative.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Verkstedet
+      text_md: «Passer tirsdag klokka ett?»
+    - speaker: Context
+      text_md: '**Mina sin kalender** | Tid | Status | |---|---| | Tirsdag 09.00–16.00 | På jobb | | Onsdag
+        morgen | Ledig |'
+  options:
+  - id: repeats-conflict
+    text: Dessverre passer ikke det. Jeg er på jobb da. Hva med tirsdag klokka ett?
+    correct: false
+    why: It rejects the offer and then proposes the same conflicting slot.
+  - id: valid-counterproposal
+    text: Dessverre passer ikke det. Jeg er på jobb da. Hva med onsdag morgen?
+    correct: true
+    why: It rejects the work conflict and proposes the available period.
+  - id: rejects-without-alternative
+    text: Dessverre passer ikke det. Jeg er på jobb da. Jeg kan ikke komme.
+    correct: false
+    why: It explains the rejection but does not make the requested counterproposal.
+  derived_from:
+  - section_id: checkpoint-reject-counter
+- handle: confirm_full_appointment
+  op: choose
+  objective: obj-arrange-and-confirm-an-appointment-01
+  bloom: apply
+  prompt_md: Choose the confirmation that matches every detail.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: '**Timekortet** | Formål | Dato | Tid | |---|---|---| | Bremsesjekk | Fredag 14. mars |
+        16.15 |'
+  options:
+  - id: wrong-time
+    text: 'Ja, det stemmer: fredag 14. mars klokka 15.15 for en bremsesjekk.'
+    correct: false
+    why: The purpose and date match, but the time is one hour early.
+  - id: wrong-purpose
+    text: 'Ja, det stemmer: fredag 14. mars klokka 16.15 for en synstest.'
+    correct: false
+    why: The date and time match, but the service is different.
+  - id: complete-match
+    text: 'Ja, det stemmer: fredag 14. mars klokka 16.15 for en bremsesjekk.'
+    correct: true
+    why: The purpose, date, and time all match the card.
+  derived_from:
+  - section_id: checkpoint-confirm-full-appointment
+- handle: appointment_message
+  op: write
+  objective: obj-arrange-and-confirm-an-appointment-01
+  bloom: apply
+  prompt_md: Write a 25–45 word reply to the clinic. Reject the Tuesday 12 May at 10.00 offer because
+    you are at work, accept the Thursday 14 May at 15.30 offer, and confirm the purpose, date, and time.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Fjordklinikken
+      text_md: «Hei! Vi kan tilby synstest tirsdag 12. mai klokka 10.00. Hvis det ikke passer, har vi
+        også torsdag 14. mai klokka 15.30.»
+    - speaker: Context
+      text_md: '**Kalenderen din** Tirsdag klokka 10.00: på jobb. Torsdag klokka 15.30: ledig.'
+  response_language: 'no'
+  min_words: 25
+  max_words: 45
+  judge_prompt: Evaluate criteria [addresses-clinic-message], [rejects-conflict], [accepts-workable-slot],
+    [confirms-details], and [word-bound]. Criterion [accepts-workable-slot] fails if the reply only asks
+    about or requests the Thursday slot instead of accepting it. Criterion [appointment-language-observation]
+    is diagnostic only and cannot make the answer fail.
+  criteria:
+  - id: addresses-clinic-message
+    instruction: The reply is written to Fjordklinikken as a response to its appointment offer.
+  - id: rejects-conflict
+    instruction: The reply states that Tuesday 12 May at 10.00 does not work.
+  - id: accepts-workable-slot
+    instruction: The reply accepts Thursday 14 May at 15.30 as the chosen appointment, rather than merely
+      asking whether that slot is available.
+  - id: confirms-details
+    instruction: The reply identifies the synstest, Thursday 14 May, and 15.30 consistently.
+  - id: word-bound
+    instruction: The reply contains 25–45 words.
+  - id: appointment-language-observation
+    instruction: Observe whether the learner uses natural language for rejecting, accepting, or confirming
+      an appointment; report issues diagnostically without failing the answer.
+  derived_from:
+  - section_id: making-counterproposal
+  - section_id: confirming-purpose-date-time
+- handle: revise_confirmation
+  op: write
+  objective: obj-arrange-and-confirm-an-appointment-01
+  bloom: apply
+  prompt_md: Rewrite the reply in 12–25 words so the dental office can verify the purpose, date, and time.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Tannlegen
+      text_md: «Da er du satt opp for kontroll mandag 7. september klokka 08.30.»
+    - speaker: Context
+      text_md: '**Ditt utkast** Ja, mandag stemmer.'
+  response_language: 'no'
+  min_words: 12
+  max_words: 25
+  judge_prompt: Evaluate criteria [reply-to-office], [complete-correction], [consistent-details], and
+    [word-bound]. Criterion [confirmation-form-observation] is diagnostic only and cannot make the answer
+    fail.
+  criteria:
+  - id: reply-to-office
+    instruction: The response functions as a reply confirming the dental appointment.
+  - id: complete-correction
+    instruction: The revised reply includes the control appointment, Monday 7 September, and 08.30.
+  - id: consistent-details
+    instruction: No appointment detail contradicts the dental office's message.
+  - id: word-bound
+    instruction: The reply contains 12–25 words.
+  - id: confirmation-form-observation
+    instruction: Observe whether the learner uses a natural confirmation expression; report issues diagnostically
+      without failing the answer.
+  derived_from:
+  - section_id: common-mistakes
+- handle: integrated_transfer
+  op: write
+  objective: obj-arrange-and-confirm-an-appointment-01
+  bloom: apply
+  prompt_md: Write a 70–110 word Norwegian chat between Nora and the salon. Nora asks about Friday afternoon,
+    rejects the first offer of Friday 2 October at 13.00 because she works until 14.00, proposes a time
+    after 15.00, accepts the final slot of Friday 2 October at 15.30, and confirms the haircut, date,
+    and time.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: '**Salongfakta** | Detalj | Informasjon | |---|---| | Kunde | Nora | | Formål | Hårklipp
+        | | Ønsket periode | Fredag ettermiddag | | Første tilbud | Fredag 2. oktober klokka 13.00 | |
+        Konflikt | Nora jobber til klokka 14.00 | | Noras alternativ | Etter klokka 15.00 | | Avtalt tid
+        | Fredag 2. oktober klokka 15.30 |'
+  response_language: 'no'
+  min_words: 70
+  max_words: 110
+  judge_prompt: Evaluate criteria [chat-genre], [states-purpose], [asks-availability], [handles-first-offer],
+    [makes-counterproposal], [accepts-final-slot], [confirms-full-booking], [consistent-booking], and
+    [word-bound]. Criterion [target-forms-observation] is diagnostic only and cannot make the answer fail.
+  criteria:
+  - id: chat-genre
+    instruction: The response is a Norwegian chat exchange between Nora and the salon.
+  - id: states-purpose
+    instruction: Nora communicates that the appointment is for a haircut.
+  - id: asks-availability
+    instruction: Nora asks about availability Friday afternoon.
+  - id: handles-first-offer
+    instruction: Nora rejects Friday 2 October at 13.00 because she works until 14.00.
+  - id: makes-counterproposal
+    instruction: Nora asks for or proposes a time after 15.00.
+  - id: accepts-final-slot
+    instruction: Nora accepts Friday 2 October at 15.30.
+  - id: confirms-full-booking
+    instruction: The exchange confirms the haircut, Friday 2 October, and 15.30.
+  - id: consistent-booking
+    instruction: The exchange concerns one appointment and does not contradict the supplied facts.
+  - id: word-bound
+    instruction: The response contains 70–110 words.
+  - id: target-forms-observation
+    instruction: Observe the naturalness of the availability, rejection, counterproposal, acceptance,
+      and confirmation forms; report issues diagnostically without failing the answer.
+  derived_from:
+  - section_id: integrated-transfer-practice
+- handle: review_state_purpose
+  op: write
+  objective: obj-arrange-and-confirm-an-appointment-01
+  bloom: apply
+  prompt_md: Write the appointment purpose in 1–4 Norwegian words.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: '**Behov** Bremsene på sykkelen lager en høy lyd. **Sted** Et sykkelverksted.'
+  response_language: 'no'
+  min_words: 1
+  max_words: 4
+  judge_prompt: Evaluate criteria [purpose-match] and [micro-length].
+  criteria:
+  - id: purpose-match
+    instruction: The response identifies a brake check or checking the brakes as the appointment purpose.
+  - id: micro-length
+    instruction: The response contains 1–4 words.
+  derived_from:
+  - section_id: retrieval-and-review
+- handle: review_ask_availability
+  op: write
+  objective: obj-arrange-and-confirm-an-appointment-01
+  bloom: apply
+  prompt_md: Write the Norwegian question you ask the business. Use 3–6 words.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: '**Situasjon** Du trenger en time neste uke, men du vet ikke når bedriften kan ta deg imot.'
+  response_language: 'no'
+  min_words: 3
+  max_words: 6
+  judge_prompt: Evaluate criteria [asks-availability] and [word-bound].
+  criteria:
+  - id: asks-availability
+    instruction: The question asks when the business has an available appointment, using natural Norwegian.
+  - id: word-bound
+    instruction: The response contains 3–6 words.
+  derived_from:
+  - section_id: retrieval-and-review
+- handle: review_understand_offered_time
+  op: choose
+  objective: obj-arrange-and-confirm-an-appointment-01
+  bloom: understand
+  prompt_md: Choose the time the receptionist offered.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Resepsjonisten
+      text_md: «Du kan komme klokka kvart på fem.»
+  options:
+  - id: time-1615
+    text: '16.15'
+    correct: false
+    why: This means kvart over fire.
+  - id: time-1645
+    text: '16.45'
+    correct: true
+    why: This is fifteen minutes before five.
+  - id: time-1745
+    text: '17.45'
+    correct: false
+    why: This places the appointment one hour too late.
+  derived_from:
+  - section_id: retrieval-and-review
+- handle: review_accept_precisely
+  op: write
+  objective: obj-arrange-and-confirm-an-appointment-01
+  bloom: apply
+  prompt_md: Write a 1–4 word Norwegian acceptance that repeats the offered day and time.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Resepsjonisten
+      text_md: «Vi har en ledig time torsdag klokka ni.»
+    - speaker: Context
+      text_md: '**Kalenderen din** Ledig torsdag klokka ni.'
+  response_language: 'no'
+  min_words: 1
+  max_words: 4
+  judge_prompt: Evaluate criteria [accepts-exact-slot] and [micro-length]. Criterion [accepts-exact-slot]
+    fails unless the reply names both the offered day and the offered time.
+  criteria:
+  - id: accepts-exact-slot
+    instruction: The response accepts the appointment and names both the offered day (torsdag) and the
+      offered time (klokka ni).
+  - id: micro-length
+    instruction: The response contains 1–4 words.
+  derived_from:
+  - section_id: retrieval-and-review
+- handle: review_reject_and_counter
+  op: choose
+  objective: obj-arrange-and-confirm-an-appointment-01
+  bloom: apply
+  prompt_md: Choose the reply that rejects the conflicting time and proposes an available alternative.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Klinikken
+      text_md: «Kan du komme mandag morgen?»
+    - speaker: Context
+      text_md: '**Kalenderen din** | Periode | Status | |---|---| | Mandag morgen | Eksamen | | Mandag
+        etter 14.00 | Ledig |'
+  options:
+  - id: accepts-conflict
+    text: Ja, det passer fint, jeg er ledig mandag morgen.
+    correct: false
+    why: It accepts a period marked unavailable.
+  - id: rejection-only
+    text: Nei, jeg kan dessverre ikke, jeg har eksamen da.
+    correct: false
+    why: It rejects the conflict but gives no alternative.
+  - id: reject-and-counter
+    text: Nei, det passer ikke. Har dere noe etter klokka to?
+    correct: true
+    why: It rejects the conflict and asks about the available period.
+  derived_from:
+  - section_id: retrieval-and-review
+- handle: review_confirm_full_appointment
+  op: choose
+  objective: obj-arrange-and-confirm-an-appointment-01
+  bloom: apply
+  prompt_md: Choose the reply that corrects the booking.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: '**Din bestilling** Synstest — torsdag 22. oktober klokka 11.30.'
+    - speaker: Optikeren
+      text_md: «Da sees vi onsdag 22. oktober klokka 11.30 for en synstest.»
+  options:
+  - id: accepts-wrong-day
+    text: Ja, det stemmer.
+    correct: false
+    why: It accepts Wednesday even though the booking says Thursday.
+  - id: corrects-day
+    text: Nei, det er torsdag 22. oktober klokka 11.30 for en synstest.
+    correct: true
+    why: It corrects the mismatched day and confirms the remaining details.
+  - id: changes-time
+    text: Nei, det er torsdag 22. oktober klokka 10.30 for en synstest.
+    correct: false
+    why: It corrects the day but introduces a different time.
+  derived_from:
+  - section_id: retrieval-and-review

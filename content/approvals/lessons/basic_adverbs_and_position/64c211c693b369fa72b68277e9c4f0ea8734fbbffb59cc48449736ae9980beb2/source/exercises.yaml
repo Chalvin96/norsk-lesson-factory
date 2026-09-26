@@ -1,0 +1,484 @@
+- handle: anchor_adverb_noticing
+  op: match_pairs
+  objective: obj-basic-adverbs-and-position-01
+  bloom: remember
+  prompt_md: Match each sentence to the kind of information its target adverb adds.
+  explanation_md: Ofte gir frekvens, ikke gir nektelse, langsomt gir måte, og nå gir tid.
+  derived_from:
+  - section_id: what-an-adverb-does
+  left:
+  - left_id: adverb-ofte
+    text: ofte — Jeg kommer ofte sent.
+  - left_id: adverb-ikke
+    text: ikke — Jeg er ikke sen i dag.
+  - left_id: adverb-langsomt
+    text: langsomt — Jeg arbeider langsomt.
+  - left_id: adverb-naa
+    text: nå — Jeg drar hjem nå.
+  right:
+  - right_id: meaning-frequency
+    text: Frequency (frekvens)
+  - right_id: meaning-negation
+    text: Negation (nektelse)
+  - right_id: meaning-manner
+    text: Manner (måte)
+  - right_id: meaning-time
+    text: Time (tid)
+  pairs:
+  - left_id: adverb-ofte
+    right_id: meaning-frequency
+  - left_id: adverb-ikke
+    right_id: meaning-negation
+  - left_id: adverb-langsomt
+    right_id: meaning-manner
+  - left_id: adverb-naa
+    right_id: meaning-time
+- handle: quality_or_action_form
+  op: recall_fill
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Complete each sentence with the correct form of the adjective.
+  explanation_md: Etter er beskriver ordet subjektet og står i adjektivform; sammen med en handling brukes
+    adverbialformen, ofte med -t.
+  derived_from:
+  - section_id: using-an-adjective-to-describe-an-action
+  audio_target: Bilen er rask. Bilen kjører raskt. Sangeren er god. Sangeren synger godt.
+  segments:
+  - text_md: 'Bilen er '
+  - blank_id: rask-quality
+    options:
+    - rask
+    - raskt
+    answer_index: 0
+  - text_md: '. Bilen kjører '
+  - blank_id: rask-action
+    options:
+    - rask
+    - raskt
+    answer_index: 1
+  - text_md: '. Sangeren er '
+  - blank_id: god-quality
+    options:
+    - godt
+    - god
+    answer_index: 1
+  - text_md: '. Sangeren synger '
+  - blank_id: god-action
+    options:
+    - god
+    - godt
+    answer_index: 1
+  - text_md: .
+- handle: unchanged_adverbial_form
+  op: recall_fill
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Complete each sentence with the correct form of the word.
+  explanation_md: Rolig og forsiktig beholder samme form enten de beskriver subjektet eller handlingen.
+  derived_from:
+  - section_id: using-an-adjective-to-describe-an-action
+  audio_target: Barnet er rolig. Barnet sover rolig. Anna er forsiktig. Anna setter glasset forsiktig
+    på bordet.
+  segments:
+  - text_md: 'Barnet er '
+  - blank_id: rolig-quality
+    options:
+    - rolig
+    - roligt
+    answer_index: 0
+  - text_md: '. Barnet sover '
+  - blank_id: rolig-action
+    options:
+    - roligt
+    - rolig
+    answer_index: 1
+  - text_md: '. Anna er '
+  - blank_id: forsiktig-quality
+    options:
+    - forsiktig
+    - forsiktigt
+    answer_index: 0
+  - text_md: '. Anna setter glasset '
+  - blank_id: forsiktig-action
+    options:
+    - forsiktigt
+    - forsiktig
+    answer_index: 1
+  - text_md: ' på bordet.'
+- handle: frequency_and_negation_position
+  op: build
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Build the sentence meaning «Erik always arrives late.»
+  explanation_md: 'I en hovedsetning med enkelt verb følger alltid etter det finitte verbet: Erik kommer
+    alltid sent.'
+  derived_from:
+  - section_id: position-of-frequency-and-negative-adverbs
+  tokens:
+  - token_id: tok-kommer
+    text: kommer
+  - token_id: tok-alltid
+    text: alltid
+  - token_id: tok-sent
+    text: sent.
+  - token_id: tok-erik
+    text: Erik
+  answer_order:
+  - tok-erik
+  - tok-kommer
+  - tok-alltid
+  - tok-sent
+- handle: simple_clause_position_repair
+  op: find_fix
+  objective: obj-basic-adverbs-and-position-01
+  bloom: analyze
+  prompt_md: One word is in the wrong position. Select the word that must be moved to make the sentence
+    natural.
+  derived_from:
+  - section_id: position-of-frequency-and-negative-adverbs
+  tokens:
+  - token_id: tok-han
+    text: Han
+  - token_id: tok-naa
+    text: nå
+  - token_id: tok-arbeider
+    text: arbeider
+  - token_id: tok-ikke
+    text: ikke.
+  error_token_id: tok-naa
+  feedback: 'Move nå to the end: Han arbeider ikke nå.'
+- handle: manner_adverb_position
+  op: build
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: 'Build the Norwegian sentence from these meanings: slowly (manner), the message (object),
+    Nora (subject), and reads (verb).'
+  explanation_md: 'Når et måtesadverb beskriver hvordan handlingen utføres, står det etter objektet: leser
+    meldingen langsomt.'
+  derived_from:
+  - section_id: position-of-manner-adverbs
+  tokens:
+  - token_id: tok-leser
+    text: leser
+  - token_id: tok-meldingen
+    text: meldingen
+  - token_id: tok-langsomt
+    text: langsomt.
+  - token_id: tok-nora
+    text: Nora
+  answer_order:
+  - tok-nora
+  - tok-leser
+  - tok-meldingen
+  - tok-langsomt
+- handle: two_adverb_position_contrast
+  op: build
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Build the sentence meaning «Erik always carries the glasses carefully.»
+  explanation_md: 'Alltid følger etter det finitte verbet, mens måtesadverbiet forsiktig står etter objektet:
+    bærer alltid glassene forsiktig.'
+  derived_from:
+  - section_id: position-of-manner-adverbs
+  tokens:
+  - token_id: tok-baerer
+    text: bærer
+  - token_id: tok-alltid
+    text: alltid
+  - token_id: tok-glassene
+    text: glassene
+  - token_id: tok-forsiktig
+    text: forsiktig.
+  - token_id: tok-erik
+    text: Erik
+  answer_order:
+  - tok-erik
+  - tok-baerer
+  - tok-alltid
+  - tok-glassene
+  - tok-forsiktig
+- handle: adjective_adverb_misconception_repair
+  op: find_fix
+  objective: obj-basic-adverbs-and-position-01
+  bloom: analyze
+  prompt_md: One word has the wrong form. Select the word that must be corrected.
+  derived_from:
+  - section_id: do-you-need-an-adjective-or-an-adverb
+  tokens:
+  - token_id: tok-bilen
+    text: Bilen
+  - token_id: tok-kjorer
+    text: kjører
+  - token_id: tok-rask
+    text: rask
+  - token_id: tok-og
+    text: og
+  - token_id: tok-forsiktig
+    text: forsiktig.
+  error_token_id: tok-rask
+  feedback: 'Replace rask with raskt because it describes the action: Bilen kjører raskt og forsiktig.'
+- handle: anchor_scene_completion_by_form
+  op: recall_fill
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Complete each sentence with the correct form of the word.
+  explanation_md: Langsom og lav får -t når de beskriver en handling, mens forsiktig beholder samme form.
+  derived_from:
+  - section_id: back-at-annas-apartment
+  audio_target: Nora leser meldingen langsomt. Anna bærer glassene forsiktig. Erik snakker lavt.
+  segments:
+  - text_md: 'Nora leser meldingen '
+  - blank_id: langsom-action
+    options:
+    - langsomt
+    - langsom
+    answer_index: 0
+  - text_md: '. Anna bærer glassene '
+  - blank_id: forsiktig-action
+    options:
+    - forsiktigt
+    - forsiktig
+    answer_index: 1
+  - text_md: '. Erik snakker '
+  - blank_id: lav-action
+    options:
+    - lavt
+    - lav
+    answer_index: 0
+  - text_md: .
+- handle: anchor_scene_completion_by_position
+  op: build
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Build the sentence meaning «Erik does not carry the glasses.»
+  explanation_md: 'I en hovedsetning står ikke etter det finitte verbet: Erik bærer ikke glassene.'
+  derived_from:
+  - section_id: back-at-annas-apartment
+  tokens:
+  - token_id: tok-baerer
+    text: bærer
+  - token_id: tok-ikke
+    text: ikke
+  - token_id: tok-glassene
+    text: glassene.
+  - token_id: tok-erik
+    text: Erik
+  answer_order:
+  - tok-erik
+  - tok-baerer
+  - tok-ikke
+  - tok-glassene
+- handle: school_event_adverb_form_transfer
+  op: recall_fill
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Complete each sentence with the correct form of the word.
+  derived_from:
+  - section_id: transfer-helping-at-a-school-event
+  audio_target: Mina er rask. Mina lager drikkene raskt. Jonas er grundig. Jonas rydder skapet grundig.
+  segments:
+  - text_md: 'Mina er '
+  - blank_id: rask-quality
+    options:
+    - raskt
+    - rask
+    answer_index: 1
+  - text_md: '. Mina lager drikkene '
+  - blank_id: rask-action
+    options:
+    - raskt
+    - rask
+    answer_index: 0
+  - text_md: '. Jonas er '
+  - blank_id: grundig-quality
+    options:
+    - grundig
+    - grundigt
+    answer_index: 0
+  - text_md: '. Jonas rydder skapet '
+  - blank_id: grundig-action
+    options:
+    - grundigt
+    - grundig
+    answer_index: 1
+  - text_md: .
+- handle: school_event_adverb_position_transfer
+  op: build
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Build the sentence meaning «Lea often tidies the hall thoroughly.»
+  derived_from:
+  - section_id: transfer-helping-at-a-school-event
+  tokens:
+  - token_id: tok-rydder
+    text: rydder
+  - token_id: tok-ofte
+    text: ofte
+  - token_id: tok-salen
+    text: salen
+  - token_id: tok-grundig
+    text: grundig.
+  - token_id: tok-lea
+    text: Lea
+  answer_order:
+  - tok-lea
+  - tok-rydder
+  - tok-ofte
+  - tok-salen
+  - tok-grundig
+- handle: final_position_retrieval
+  op: recall_fill
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Complete each morning-routine clause.
+  derived_from:
+  - section_id: short-retrieval-review
+  audio_target: Jeg kommer ofte tidlig. Jeg arbeider ikke nå. Jeg spiser fort.
+  segments:
+  - text_md: 'Jeg '
+  - blank_id: frequency-position
+    options:
+    - ofte kommer
+    - kommer ofte
+    answer_index: 1
+  - text_md: ' tidlig. Jeg '
+  - blank_id: negative-position
+    options:
+    - arbeider ikke
+    - ikke arbeider
+    answer_index: 0
+  - text_md: ' nå. Jeg '
+  - blank_id: manner-position
+    options:
+    - fort spiser
+    - spiser fort
+    answer_index: 1
+  - text_md: .
+- handle: review_adverb_types
+  op: match_pairs
+  objective: obj-basic-adverbs-and-position-01
+  bloom: remember
+  prompt_md: Match each adverb to the kind of information it gives.
+  explanation_md: Aldri og alltid forteller hvor ofte noe skjer. Raskt forteller hvordan en handling skjer.
+  derived_from:
+  - section_id: what-an-adverb-does
+  left:
+  - left_id: aldri
+    text: aldri — Hun kommer aldri sent.
+  - left_id: alltid
+    text: alltid — Du hjelper alltid Anna.
+  - left_id: raskt
+    text: raskt — Erik kutter grønnsakene raskt.
+  right:
+  - right_id: frekvens
+    text: Frekvens
+  - right_id: måte
+    text: Måte
+  pairs:
+  - left_id: aldri
+    right_id: frekvens
+  - left_id: alltid
+    right_id: frekvens
+  - left_id: raskt
+    right_id: måte
+- handle: review_degree_adverb
+  op: recall_fill
+  objective: obj-basic-adverbs-and-position-01
+  bloom: remember
+  prompt_md: Complete the sentence with the word meaning a little.
+  explanation_md: Litt står foran høyt og viser graden.
+  derived_from:
+  - section_id: getting-ready-for-a-party
+  audio_target: Du snakker litt høyt.
+  segments:
+  - text_md: 'Du snakker '
+  - blank_id: degree-word
+    options:
+    - litt
+    - alltid
+    - ute
+    answer_index: 0
+  - text_md: ' høyt.'
+- handle: review_manner_adverb
+  op: recall_fill
+  objective: obj-basic-adverbs-and-position-01
+  bloom: understand
+  prompt_md: Choose the adverb that says how Erik washes the knives.
+  explanation_md: Raskt beskriver hvordan Erik vasker knivene.
+  derived_from:
+  - section_id: getting-ready-for-a-party
+  audio_target: Erik vasker knivene raskt.
+  segments:
+  - text_md: 'Erik vasker knivene '
+  - blank_id: manner-word
+    options:
+    - raskt
+    - ofte
+    - nå
+    answer_index: 0
+  - text_md: .
+- handle: review_place_adverb
+  op: choose
+  objective: obj-basic-adverbs-and-position-01
+  bloom: understand
+  prompt_md: The sentence says that we eat outdoors. Choose the place adverb.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Anna
+      text_md: «Vi spiser ofte ute.»
+  options:
+  - id: often
+    text: ofte
+    correct: false
+    why: Ofte tells how frequently they eat.
+  - id: outside
+    text: ute
+    correct: true
+    why: Ute tells where they eat.
+  - id: not
+    text: ikke
+    correct: false
+    why: Ikke makes the sentence negative.
+  derived_from:
+  - section_id: what-an-adverb-does
+- handle: review_frequency_position
+  op: find_fix
+  objective: obj-basic-adverbs-and-position-01
+  bloom: analyze
+  prompt_md: Select the one word that is misplaced in the first clause.
+  derived_from:
+  - section_id: position-of-frequency-and-negative-adverbs
+  tokens:
+  - token_id: subject
+    text: Mina
+  - token_id: adverb
+    text: ofte
+  - token_id: remainder
+    text: foreldrene
+  - token_id: verb
+    text: ringer
+  - token_id: added_action
+    text: og lager mat.
+  error_token_id: verb
+  feedback: 'Flytt det finitte verbet til posisjon to: Mina ringer ofte foreldrene og lager mat.'
+- handle: checkpoint_manner_order
+  op: choose
+  objective: obj-basic-adverbs-and-position-01
+  bloom: apply
+  prompt_md: Which sentence follows the neutral order explained in the lesson?
+  options:
+  - id: manner-after-object
+    text: Sara tegner kartet langsomt.
+    correct: true
+    why: I den nøytrale rekkefølgen står måtesadverbiet etter objektet.
+  - id: manner-before-object
+    text: Sara tegner langsomt kartet.
+    correct: false
+    why: Denne rekkefølgen kan også brukes, men er ikke den nøytrale mønsterrekkefølgen fra leksjonen.
+  - id: adjective-form
+    text: Sara tegner kartet langsom.
+    correct: false
+    why: Når ordet beskriver handlingen, brukes langsomt.
+  derived_from:
+  - section_id: position-of-manner-adverbs

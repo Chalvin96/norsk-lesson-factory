@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "pluperfect",
   "kind": "grammar",
   "language": "nb-NO",
@@ -76,6 +76,38 @@
     {
       "kind": "exercise",
       "id": "what_had_already_happened"
+    },
+    {
+      "kind": "exercise",
+      "id": "discriminate_past_sequence"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_notice_the_earlier_event"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_contrast_the_timeline"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_build_hadde_plus_participle"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_link_completion_to_past_point"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_repair_the_reversed_timeline"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_cabin_arrival_transfer"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_what_had_already_happened"
     }
   ],
   "sections": [
@@ -1849,28 +1881,38 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "In the café scene, read these two statements: «Da Mari kom, hadde vi bestilt mat.» «Da Mari kom, hadde servitøren satt maten på bordet.» Choose the complete interpretation of both timelines."
+          "value": "Velg tidslinjen som passer til begge setningene."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Hadde bestilt» og «hadde satt» viser begge til noe som var gjort da Mari kom."
+        }
+      ],
       "payload": {
         "options": [
           {
-            "option_id": "reversed-events",
-            "text": "I begge setningene kom Mari først; vi bestilte mat og servitøren satte maten på bordet etterpå.",
-            "why": "This reverses the earlier and later events marked by the past perfect."
+            "option_id": "both-after",
+            "text": "Bestillingen og serveringen skjedde etter at Mari kom.",
+            "why": "This reverses the relationship expressed by the past-perfect phrases."
           },
           {
-            "option_id": "earlier-events",
-            "text": "I setningen «Da Mari kom, hadde vi bestilt mat» viser «hadde bestilt» at vi bestilte mat før Mari kom. I setningen «Da Mari kom, hadde servitøren satt maten på bordet» viser «hadde satt» at servitøren satte maten på bordet før Mari kom.",
-            "why": "Both hadde phrases mark actions completed before Mari’s arrival."
+            "option_id": "order-split",
+            "text": "Bestillingen skjedde før Mari kom, men serveringen skjedde etterpå.",
+            "why": "This treats identical timeline marking differently in the two sentences."
+          },
+          {
+            "option_id": "both-before",
+            "text": "Bestillingen og serveringen skjedde før Mari kom.",
+            "why": "The two past-perfect phrases present completed events before Mari’s arrival."
           }
         ],
-        "answer_id": "earlier-events",
+        "answer_id": "both-before",
         "stem": [
           {
             "kind": "text",
-            "value": "Which option identifies the action completed first and Mari’s later arrival in both statements?"
+            "value": "«Da Mari kom, hadde vi bestilt mat.» «Da Mari kom, hadde servitøren satt maten på bordet.»"
           }
         ]
       }
@@ -1883,13 +1925,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "We cleaned the kitchen before the guests arrived. Build the Norwegian sentence with the later event first."
+          "value": "Først vasket vi gulvet. Senere kom gjestene. Bygg setningen med den siste hendelsen først."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Hadde + past participle places one completed event before another past reference point."
+          "value": "«Hadde vasket» viser at gulvet var vasket før gjestene kom."
         }
       ],
       "payload": {
@@ -1921,12 +1963,12 @@
           },
           {
             "token_id": "tok-6",
-            "text": "ryddet",
+            "text": "vasket",
             "fixed": false
           },
           {
             "token_id": "tok-7",
-            "text": "kjøkkenet.",
+            "text": "gulvet.",
             "fixed": false
           }
         ],
@@ -1949,10 +1991,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Choose the correct past participle after hadde. The context is guests arriving after breakfast."
+          "value": "Vi spiste frokost. Senere kom gjestene. Fyll inn det som mangler."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Etter «hadde» står partisippet «spist»."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -1974,7 +2021,7 @@
             "options": [
               "spist",
               "spise",
-              "spiste"
+              "å spise"
             ],
             "answer_index": 0
           },
@@ -2002,10 +2049,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete the second sentence with the past participle of bestille. The first sentence supplies the past reference point; no før phrase is provided."
+          "value": "Nøklene var borte, men vi fant dem før konserten begynte. Fyll inn det manglende ordet."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Konserten er det senere tidspunktet i fortellingen. Det som skjedde før, uttrykkes med «hadde funnet»."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -2013,7 +2065,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Møtet startet klokka ni. Vi hadde allerede"
+                "value": "Konserten begynte klokka ni. Vi hadde allerede"
               },
               {
                 "kind": "text",
@@ -2023,11 +2075,11 @@
           },
           {
             "kind": "blank",
-            "blank_id": "order-participle",
+            "blank_id": "collect-participle",
             "options": [
-              "bestilt",
-              "bestille",
-              "bestilte"
+              "funnet",
+              "finne",
+              "fant"
             ],
             "answer_index": 0
           },
@@ -2040,7 +2092,7 @@
               },
               {
                 "kind": "text",
-                "value": "mat."
+                "value": "nøklene."
               }
             ]
           }
@@ -2055,26 +2107,50 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write a short guided account in Norwegian about Mari’s delay. State that she went to the wrong bus stop because she followed the old bus route to the café, discovered the mistake, and waited for the next bus. Also include these earlier facts: she checked the new bus route, she saved the old route on her phone, and the bus on the new route left the correct stop. Keep the main events in the simple past and mark each earlier completed fact with hadde plus a past participle. Write 4–6 sentences."
+          "value": "Du er Mari. Skriv Jonas en melding om hvorfor du kom for sent. Ta med disse punktene: sjekke den nye bussruta; lagre den gamle ruta på telefonen; følge den gamle ruta til feil holdeplass; oppdage feilen etter bussavgangen; vente på neste buss. Bruk «hadde» med partisipp om det som skjedde før du kom fram."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 35,
-        "max_words": 70,
-        "judge_prompt": "Check the Norwegian account against the task and report concrete evidence for each criterion. Do not award a criterion without explicit language evidence.",
+        "min_words": 45,
+        "max_words": 65,
+        "judge_prompt": "Evaluate the gating criteria main-events, earlier-facts, explanation-purpose, pluperfect-form when deciding whether the response passes.",
         "criteria": [
           {
-            "id": "main-sequence",
-            "instruction": "States that Mari followed the old bus route to the wrong stop, discovered the mistake, and waited for the next bus in simple past."
+            "id": "main-events",
+            "instruction": "States that Mari followed the old route to the wrong stop, discovered the problem, and waited for the next bus."
           },
           {
-            "id": "prior-completions",
-            "instruction": "Uses hadde followed by an accurate past participle for each supplied earlier fact: checking the new route, saving the old route, and the bus leaving the correct stop."
+            "id": "earlier-facts",
+            "instruction": "Includes the supplied facts about checking the new route, saving the old route, and the bus already being gone."
+          },
+          {
+            "id": "explanation-purpose",
+            "instruction": "Gives Jonas a coherent explanation of why Mari was late."
+          },
+          {
+            "id": "pluperfect-form",
+            "instruction": "Uses «hadde» with a correct past participle to mark an earlier fact."
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Jonas",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hvorfor kom du så sent til kafeen?»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2084,7 +2160,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "The guests arrived first, and only afterward did we clean the kitchen. Select the one token that is wrong/needs changing in this timeline."
+          "value": "Gjestene kom først, og vi ryddet kjøkkenet etterpå. Finn ordet eller ordene som gjør setningen feil: «Da gjestene kom, hadde vi ryddet kjøkkenet.»"
         }
       ],
       "explanation": null,
@@ -2100,31 +2176,19 @@
           },
           {
             "token_id": "tok-3",
-            "text": "hadde"
+            "text": "kom,"
           },
           {
             "token_id": "tok-4",
-            "text": "kommet,"
+            "text": "hadde vi ryddet"
           },
           {
             "token_id": "tok-5",
-            "text": "hadde"
-          },
-          {
-            "token_id": "tok-6",
-            "text": "vi"
-          },
-          {
-            "token_id": "tok-7",
-            "text": "ryddet"
-          },
-          {
-            "token_id": "tok-8",
             "text": "kjøkkenet."
           }
         ],
-        "error_token_id": "tok-5",
-        "feedback": "Remove the second «hadde». The arrival is earlier, so keep «hadde kommet» and use simple past for later cleaning: «Da gjestene hadde kommet, ryddet vi kjøkkenet.»"
+        "error_token_id": "tok-4",
+        "feedback": "Bytt «hadde vi ryddet» med «ryddet vi»: «Da gjestene kom, ryddet vi kjøkkenet.»"
       }
     },
     {
@@ -2135,30 +2199,50 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write four short affirmative Norwegian statements about the holiday cabin. Henrik and Lea arrived late on Friday evening. Before they arrived, their friends lit the fire, bought food, made the beds, and found the key. Show each completed preparation with hadde plus a past participle."
+          "value": "Hyttenotat før Henrik og Lea kom fredag klokka 20.30: Nøkkelen var funnet, maten var kjøpt, sengene var redd opp, og peisen var tent. Svar eieren. Fortell hva du hadde gjort før de kom, og bruk «hadde» med riktige partisipper."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": null,
-        "max_words": null,
-        "judge_prompt": "Check the Norwegian statements against the task and report evidence for each criterion. Accept natural Bokmål variants for the supplied facts.",
+        "min_words": 35,
+        "max_words": 55,
+        "judge_prompt": "Evaluate the gating criteria preparation-facts, arrival-relationship, reply-purpose, pluperfect-form when deciding whether the response passes.",
         "criteria": [
           {
-            "id": "cabin-facts",
-            "instruction": "Writes four affirmative Norwegian statements covering lighting the fire, buying food, making the beds, and finding the key."
+            "id": "preparation-facts",
+            "instruction": "Covers finding the key, buying food, making the beds, and lighting the fire."
           },
           {
-            "id": "cabin-form",
-            "instruction": "Uses hadde followed by an accurate past participle for each preparation."
+            "id": "arrival-relationship",
+            "instruction": "Makes clear that all four preparations were complete before Henrik og Lea arrived."
           },
           {
-            "id": "cabin-timeline",
-            "instruction": "Places each preparation clearly before Henrik and Lea arrived."
+            "id": "reply-purpose",
+            "instruction": "Answers the owner’s question as a coherent reply."
+          },
+          {
+            "id": "pluperfect-form",
+            "instruction": "Uses «hadde» with correct past participles for the earlier preparations."
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Eieren",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Var hytta klar da Henrik og Lea kom fram fredag kveld?»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2168,27 +2252,478 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "At a railway station, Sara arrived late. Write exactly two Norwegian sentences stating two natural things that had already happened before she arrived. Choose your own actions rather than copying a complete lesson sentence. Use hadde plus a past participle in each sentence."
+          "value": "Svar Sara på norsk. Toget dro klokka 08.05, kiosken stengte klokka 08.10, og Sara kom klokka 08.15. Bruk «hadde» om begge hendelsene som skjedde før hun kom."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 12,
+        "min_words": 20,
         "max_words": 35,
-        "judge_prompt": "Check the response against the task and report evidence for each criterion. Accept natural Bokmål variants that fit the station context, but not a complete sentence copied verbatim from the lesson.",
+        "judge_prompt": "Evaluate the gating criteria station-events, earlier-than-arrival, reply-purpose, pluperfect-form when deciding whether the response passes.",
         "criteria": [
           {
-            "id": "two-earlier-actions",
-            "instruction": "Writes exactly two Norwegian sentences with two distinct completed actions before Sara arrived."
+            "id": "station-events",
+            "instruction": "States that the train left and the kiosk closed."
           },
           {
-            "id": "past-perfect-forms",
-            "instruction": "Uses hadde followed by an accurate past participle in each sentence."
+            "id": "earlier-than-arrival",
+            "instruction": "Makes both events clearly earlier than Sara’s 08.15 arrival."
           },
           {
-            "id": "earlier-reference",
-            "instruction": "Makes both actions clearly earlier than Sara’s arrival."
+            "id": "reply-purpose",
+            "instruction": "Gives Sara a coherent explanation of the empty platform."
+          },
+          {
+            "id": "pluperfect-form",
+            "instruction": "Uses «hadde» with correct past participles for both earlier events."
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Sara",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg kom til stasjonen klokka 08.15. Hvorfor var perrongen tom?»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "discriminate_past_sequence",
+      "operation": "choose",
+      "objective_id": "obj-pluperfect-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg setningen som passer til tidslinjen."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Velg setningen der filmen begynte før dere kom til kinoen."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "both-main-sequence",
+            "text": "Da vi kom til kinoen, begynte filmen.",
+            "why": "This places the film’s beginning at the time of arrival, while the facts say it was already over."
+          },
+          {
+            "option_id": "film-earlier",
+            "text": "Da vi kom til kinoen, hadde filmen begynt.",
+            "why": "The past perfect marks the film’s beginning as earlier than the arrival."
+          },
+          {
+            "option_id": "arrival-earlier",
+            "text": "Vi kom til kinoen før filmen begynte.",
+            "why": "This reverses the stated order."
+          }
+        ],
+        "answer_id": "film-earlier",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Først begynte filmen. Senere kom vi til kinoen, og da var filmen allerede slutt."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_notice_the_earlier_event",
+      "operation": "choose",
+      "objective_id": "obj-pluperfect-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg det som allerede hadde skjedd da Nora kom."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Begge pluskvamperfektum-formene viser til noe som allerede var ferdig da Nora kom."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "only-room",
+            "text": "Vi hadde ryddet rommet, men suppen ble varmet etter at Nora kom.",
+            "why": "This overlooks the same earlier-event marking on «hadde varmet»."
+          },
+          {
+            "option_id": "room-and-soup",
+            "text": "Rommet var allerede ryddet, og suppen var allerede varmet da Nora kom.",
+            "why": "Both completed actions are presented as earlier than Nora’s arrival."
+          },
+          {
+            "option_id": "nora-earlier",
+            "text": "Nora hadde kommet før vi ryddet rommet og varmet suppen.",
+            "why": "This reverses which event is the later reference point."
+          }
+        ],
+        "answer_id": "room-and-soup",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "«Da Nora kom, hadde vi ryddet rommet.» «Da Nora kom, hadde kokken varmet suppen.»"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_contrast_the_timeline",
+      "operation": "choose",
+      "objective_id": "obj-pluperfect-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg setningen som passer til tidslinjen."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Den tidligere avsluttede handlingen står i pluskvamperfektum."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "packing-later",
+            "text": "Da bussen kom, pakket vi sekkene.",
+            "why": "This does not show that packing was already complete."
+          },
+          {
+            "option_id": "packing-first",
+            "text": "Da bussen kom, hadde vi pakket sekkene.",
+            "why": "The completed packing is placed before the bus arrived."
+          },
+          {
+            "option_id": "bus-first",
+            "text": "Da vi hadde kommet til bussen, pakket vi sekkene.",
+            "why": "This changes the timeline and makes arrival precede packing."
+          }
+        ],
+        "answer_id": "packing-first",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Først pakket vi sekkene. Senere kom bussen."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_build_hadde_plus_participle",
+      "operation": "recall_fill",
+      "objective_id": "obj-pluperfect-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Vi malte rommet. Senere kom gjestene. Fyll inn det som mangler."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Etter «hadde» bruker vi partisippet «malt»."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Da gjestene kom, hadde vi allerede"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-paint-participle",
+            "options": [
+              "malt",
+              "male",
+              "å male"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "rommet."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_link_completion_to_past_point",
+      "operation": "recall_fill",
+      "objective_id": "obj-pluperfect-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Vi kjøpte billetter før teaterforestillingen begynte klokka sju. Fyll inn det som mangler."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Etter «hadde» bruker vi partisippet «kjøpt»."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Forestillingen begynte klokka sju. Vi hadde allerede"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-buy-participle",
+            "options": [
+              "kjøpt",
+              "kjøpe",
+              "kjøpte"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "billetter."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_repair_the_reversed_timeline",
+      "operation": "choose",
+      "objective_id": "obj-pluperfect-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg setningen som retter tidslinjen."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Pluskvamperfektum markerer at flyet landet først. Preteritum forteller deretter at bagasjen ble hentet."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "luggage-first",
+            "text": "Da flyet landet, hadde vi hentet bagasjen.",
+            "why": "This places the luggage collection before the landing."
+          },
+          {
+            "option_id": "both-background",
+            "text": "Da flyet hadde landet, hadde vi hentet bagasjen.",
+            "why": "This presents the later action as completed background."
+          },
+          {
+            "option_id": "landing-first",
+            "text": "Da flyet hadde landet, hentet vi bagasjen.",
+            "why": "The landing is marked as earlier and the later collection advances the story."
+          }
+        ],
+        "answer_id": "landing-first",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Flyet landet først. Vi hentet bagasjen etterpå."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_cabin_arrival_transfer",
+      "operation": "recall_fill",
+      "objective_id": "obj-pluperfect-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Hyttelogg: Vennene bar inn veden klokka 18.10. Henrik og Lea kom klokka 20.30. Fyll ut de to verbformene."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Hadde båret» viser at veden var båret inn før Henrik og Lea kom."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Da Henrik og Lea kom,"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "cabin-auxiliary",
+            "options": [
+              "hadde",
+              "har",
+              "skal"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "vennene"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "cabin-participle",
+            "options": [
+              "bære",
+              "båret",
+              "bar"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "inn veden."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_what_had_already_happened",
+      "operation": "recall_fill",
+      "objective_id": "obj-pluperfect-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Verkstedlogg: Teknikeren slo på projektoren klokka 09.00. Kurset begynte klokka 09.15. Fyll inn verbformen som mangler."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Teknikeren slo på projektoren før kurset begynte."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Da kurset begynte,"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "earlier-event",
+            "options": [
+              "hadde teknikeren slått på projektoren",
+              "slår teknikeren på projektoren",
+              "har teknikeren slått på projektoren"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "."
+              }
+            ]
           }
         ]
       }
@@ -2206,7 +2741,15 @@
         "reconstruct_maris_delay",
         "repair_the_reversed_timeline",
         "cabin_arrival_transfer",
-        "what_had_already_happened"
+        "what_had_already_happened",
+        "discriminate_past_sequence",
+        "review_notice_the_earlier_event",
+        "review_contrast_the_timeline",
+        "review_build_hadde_plus_participle",
+        "review_link_completion_to_past_point",
+        "review_repair_the_reversed_timeline",
+        "review_cabin_arrival_transfer",
+        "review_what_had_already_happened"
       ]
     }
   ],

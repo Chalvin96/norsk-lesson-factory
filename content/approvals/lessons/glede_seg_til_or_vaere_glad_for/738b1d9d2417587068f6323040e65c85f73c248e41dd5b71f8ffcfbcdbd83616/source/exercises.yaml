@@ -1,0 +1,224 @@
+- handle: identify_anticipation
+  op: choose
+  objective: obj-glede-seg-til-or-vaere-glad-for-01
+  bloom: understand
+  prompt_md: "Sara finner notatet og gjenforteller det. Velg setningen som passer."
+  stem_md: '**Notat fra Jonas:** «Kaffe på toget i morgen. Kan ikke vente!»'
+  options:
+  - id: appreciation-instead
+    text: Jonas er glad for at han skal drikke kaffe på toget i morgen.
+    correct: false
+    why: Dette framstiller planen som noe han setter pris på, ikke som en opplevelse han gleder seg til.
+  - id: wrong-subject
+    text: Jeg gleder meg til å drikke kaffe på toget i morgen.
+    correct: false
+    why: Dette endrer subjektet fra Jonas til den som snakker.
+  - id: anticipated-experience
+    text: Jonas gleder seg til å drikke kaffe på toget i morgen.
+    correct: true
+    why: Kaffeopplevelsen ligger fortsatt fram i tid, og Jonas trenger det refleksive pronomenet seg.
+  derived_from:
+  - section_id: sec-checkpoint-identify-anticipation
+- handle: connect_feelings_to_existing_facts
+  op: recall_fill
+  objective: obj-glede-seg-til-or-vaere-glad-for-01
+  bloom: apply
+  prompt_md: "Fullfør de to svarene."
+  stem_md: '**Jonas og Sara reiser.** Jonas har varme klær, og Sara har allerede bestilt reisen.'
+  audio_target: Jonas er glad for varme klær. Sara er glad for at hun har bestilt reisen.
+  segments:
+  - text_md: 'Jonas '
+  - blank_id: noun-expression
+    options:
+    - er glad for
+    - gleder seg til
+    answer_index: 0
+  - text_md: ' varme klær. Sara '
+  - blank_id: clause-expression
+    options:
+    - gleder seg til
+    - er glad for
+    answer_index: 1
+  - text_md: ' at hun har bestilt reisen.'
+  derived_from:
+  - section_id: sec-checkpoint-connect-feelings-to-existing-facts
+- handle: choose_by_time_perspective
+  op: choose
+  objective: obj-glede-seg-til-or-vaere-glad-for-01
+  bloom: analyze
+  prompt_md: "Velg setningsparet som passer til situasjonen."
+  stem_md: >-
+    **Fredag på stasjonen:** Sara sier at hun gleder seg til å stå på ski i morgen. Hun har allerede
+    pakket varme klær.
+  options:
+  - id: both-appreciation
+    text: Sara er glad for skituren i morgen. Hun er glad for at hun har varme klær i sekken.
+    correct: false
+    why: The first sentence does not express Sara’s stated anticipation of skiing.
+  - id: reversed-perspectives
+    text: Sara er glad for at hun skal gå på ski i morgen. Hun gleder seg til å ha varme klær.
+    correct: false
+    why: The expressions assign appreciation to the future plan and anticipation to clothes already packed.
+  - id: both-anticipation
+    text: Sara gleder seg til å gå på ski i morgen. Hun gleder seg til de varme klærne.
+    correct: false
+    why: The second sentence treats clothes already packed in the bag as a future experience.
+  - id: correct-perspectives
+    text: Sara gleder seg til å gå på ski i morgen. Hun er glad for at hun har varme klær i sekken.
+    correct: true
+    why: The skiing is anticipated, while the packed clothes are an existing fact she appreciates.
+  derived_from:
+  - section_id: sec-checkpoint-choose-by-time-perspective
+- handle: complete_a_short_exchange
+  op: write
+  objective: obj-glede-seg-til-or-vaere-glad-for-01
+  bloom: apply
+  prompt_md: >-
+    **Melding fra Nora:** «Du skal reise videre og drikke kaffe på toget. Hva gleder du deg til?
+    Sara har fått hjelp, og reisen er bestilt. Hva er hun glad for?» Svar Nora på norsk med 20–45
+    ord. Besvar begge spørsmålene med én relevant opplysning hver, og bruk både «glede seg til» og
+    «være glad for».
+  response_language: 'no'
+  min_words: 20
+  max_words: 45
+  judge_prompt: Check the reply against criteria answer-both, relevant-details, word-bound, expression-choice,
+    and reflexive-agreement. All listed criteria are gating.
+  criteria:
+  - id: answer-both
+    instruction: Answers what the writer anticipates on the journey and what Sara appreciates about the
+      completed help or booking.
+  - id: relevant-details
+    instruction: Gives one relevant reason or detail for each answer without contradicting the message.
+  - id: word-bound
+    instruction: Contains 20–45 words.
+  - id: expression-choice
+    instruction: Uses glede seg til for anticipation and være glad for for appreciation.
+  - id: reflexive-agreement
+    instruction: Uses a reflexive pronoun that agrees with its subject when expressing anticipation.
+  derived_from:
+  - section_id: sec-checkpoint-complete-a-short-exchange
+- handle: final_contextual_practice
+  op: write
+  objective: obj-glede-seg-til-or-vaere-glad-for-01
+  bloom: apply
+  prompt_md: >-
+    Toget er forsinket med femten minutter. Sara og Jonas har god tid, kiosken er åpen, og de kan
+    drikke kaffe på toget. I morgen skal de stå på ski. Skriv en melding på 30–55 ord fra Sara eller
+    Jonas til en venn. Fortell om én ting du gleder deg til, og én ting du er glad for fordi det
+    gjør reisen enklere.
+  response_language: 'no'
+  min_words: 30
+  max_words: 55
+  judge_prompt: Check the message against criteria audience-and-purpose, both-perspectives, source-facts,
+    word-bound, expression-choice, and reflexive-agreement. All listed criteria are gating.
+  criteria:
+  - id: audience-and-purpose
+    instruction: Is a message from Sara or Jonas to a friend about the station situation.
+  - id: both-perspectives
+    instruction: Communicates one anticipated experience, using glede seg til, and appreciation of one
+      existing fact, using være glad for.
+  - id: source-facts
+    instruction: Uses details supplied in the station update without contradicting them.
+  - id: word-bound
+    instruction: Contains 30–55 words.
+  - id: expression-choice
+    instruction: Uses glede seg til for the anticipated experience and være glad for for the existing
+      fact.
+  - id: reflexive-agreement
+    instruction: Uses a reflexive pronoun that agrees with the message writer’s subject.
+  derived_from:
+  - section_id: sec-final-contextual-practice
+- handle: retrieval_and_review
+  op: write
+  objective: obj-glede-seg-til-or-vaere-glad-for-01
+  bloom: apply
+  prompt_md: >-
+    **Melding til studiegruppa:** «Jeg blander uttrykkene for å se fram til noe og for å sette pris
+    på noe som allerede er sant.» Svar på norsk med 20–50 ord. Forklar forskjellen, og gi ett
+    eksempel på hvert uttrykk: «glede seg til» og «være glad for».
+  response_language: 'no'
+  min_words: 20
+  max_words: 50
+  judge_prompt: Kontroller svaret mot kriteriene distinction, two-examples og word-bound. Alle tre kriteriene
+    er avgjørende for godkjenning.
+  criteria:
+  - id: distinction
+    instruction: Forklarer at den ene betydningen gjelder forventning, mens den andre gjelder å sette
+      pris på noe som allerede er sant.
+  - id: two-examples
+    instruction: Gir ett norsk eksempel på forventning med «glede seg til» og ett norsk eksempel på å
+      sette pris på noe med «være glad for».
+  - id: word-bound
+    instruction: Inneholder 20–50 ord.
+  derived_from:
+  - section_id: sec-retrieval-and-review
+- handle: review_identify_anticipation
+  op: write
+  objective: obj-glede-seg-til-or-vaere-glad-for-01
+  bloom: apply
+  prompt_md: "Fyll inn riktig form av «glede seg til» (1–4 ord): «Vi ___ filmen.»"
+  response_language: 'no'
+  min_words: 1
+  max_words: 4
+  judge_prompt: Check the response against criterion completion. Accept «gleder oss til» and capitalization
+    variants.
+  criteria:
+  - id: completion
+    instruction: Supplies gleder oss til so the sentence expresses anticipation and agrees with vi.
+  derived_from:
+  - section_id: sec-retrieval-and-review
+- handle: review_existing_fact
+  op: recall_fill
+  objective: obj-glede-seg-til-or-vaere-glad-for-01
+  bloom: apply
+  prompt_md: "Fullfør svaret."
+  stem_md: "**Melding:** «Naboen hjalp oss med bilen i går.»"
+  audio_target: Vi er glade for hjelpen.
+  segments:
+  - text_md: 'Vi '
+  - blank_id: existing-fact-expression
+    options:
+    - er glade for
+    - gleder oss til
+    answer_index: 0
+  - text_md: ' hjelpen.'
+  derived_from:
+  - section_id: sec-retrieval-and-review
+- handle: review_choose_perspective
+  op: choose
+  objective: obj-glede-seg-til-or-vaere-glad-for-01
+  bloom: analyze
+  prompt_md: "Velg svaret som passer til begge opplysningene."
+  stem_md: "**Beskjed:** Konserten er avlyst. Billettkontoret har allerede refundert pengene."
+  options:
+  - id: anticipation-of-concert
+    text: Liv gleder seg til konserten.
+    correct: false
+    why: This contradicts the update that the concert was cancelled.
+  - id: anticipation-of-refund
+    text: Liv gleder seg til å få pengene tilbake.
+    correct: false
+    why: This treats an already completed refund as something still anticipated.
+  - id: appreciation-of-refund
+    text: Liv er glad for at hun fikk pengene tilbake.
+    correct: true
+    why: The refund has already happened and is the fact Liv appreciates.
+  derived_from:
+  - section_id: sec-retrieval-and-review
+- handle: review_reflexive_chunk
+  op: recall_fill
+  objective: obj-glede-seg-til-or-vaere-glad-for-01
+  bloom: apply
+  prompt_md: "Fullfør svaret."
+  stem_md: '**Før turen** — Barna teller dagene til togturen og spør hver kveld hvor snart de kan gå om bord. De reiser i morgen.'
+  audio_target: Barna gleder seg til å ta toget.
+  segments:
+  - text_md: 'Barna '
+  - blank_id: anticipation-or-appreciation
+    options:
+    - gleder seg til
+    - er glade for
+    answer_index: 0
+  - text_md: ' å ta toget.'
+  derived_from:
+  - section_id: sec-retrieval-and-review

@@ -9,6 +9,8 @@ import pytest
 from lesson_builder.clients.llm.exceptions import BackendDownException
 from lesson_builder.clients.llm.invocation import JobRunner
 from lesson_builder.workflow.catalog_design.dependencies import default_discover_reviewer
+from lesson_builder.workflow.catalog_design.models import CandidateBatch
+from lesson_builder.workflow.catalog_design.models import CandidateResolution
 from lesson_builder.workflow.catalog_design.models import CatalogCandidate
 from lesson_builder.workflow.catalog_design.models import CatalogRequest
 from tests.clients.llm.fakes import FakeLlmClient
@@ -28,6 +30,36 @@ def test_catalog_candidate_given_evidence_field_expect_schema_rejection():
                 "source_agent": "explorer",
                 "evidence": [{"kind": "web", "claim": "the verb is second"}],
             }
+        )
+
+
+def test_candidate_batch_given_more_than_discovery_limit_expect_schema_rejection() -> None:
+    candidates = [
+        CatalogCandidate(
+            candidate_id=f"reviewer:candidate-{index}",
+            slug=f"candidate-{index}",
+            title=f"Candidate {index}",
+            category="grammar",
+            learner_question="What decision does the learner make?",
+            scope="one learner decision",
+            rationale="a focused learner decision",
+        )
+        for index in range(9)
+    ]
+
+    with pytest.raises(ValueError, match="at most 8 items"):
+        CandidateBatch(candidates=candidates)
+
+
+def test_candidate_resolution_given_duplicate_candidate_ids_expect_schema_rejection() -> None:
+    with pytest.raises(ValueError, match="candidate_ids must be unique"):
+        CandidateResolution(
+            canonical_slug="word_order",
+            canonical_title="Choose word order",
+            candidate_ids=["reviewer:word_order", "reviewer:word_order"],
+            relationship="new",
+            rationale="one learner decision",
+            confidence=0.9,
         )
 
 

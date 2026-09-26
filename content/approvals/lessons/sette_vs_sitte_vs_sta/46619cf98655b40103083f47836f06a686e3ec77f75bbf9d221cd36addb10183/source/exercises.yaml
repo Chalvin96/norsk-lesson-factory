@@ -1,0 +1,227 @@
+- handle: notice_action_and_position
+  op: categorize
+  objective: obj-sette-vs-sitte-vs-sta-01
+  bloom: analyze
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Amina
+      text_md: «Hei, Marius! Rommet er nesten klart.»
+    - speaker: Marius
+      text_md: «Jeg ser Nora komme inn med en bok, katten hvile på en pute og en lenestol under lampen.»
+    - speaker: Amina
+      text_md: «Verten hjelper Ingrid med å finne en plass, mens jeg venter ved vinduet.»
+  prompt_md: Classify each sentence as a placing action, seated position, or upright position.
+  explanation_md: Sette describes placing or seating; sitte describes a seated position; stå describes
+    a standing or upright position.
+  derived_from:
+  - section_id: first-checkpoint-notice-action-and-position
+  buckets:
+  - bucket_id: placing-action
+    label: Placing action
+  - bucket_id: seated-position
+    label: Seated position
+  - bucket_id: upright-position
+    label: Upright position
+  items:
+  - item_id: action-vase
+    text: Amina setter en vase midt på bordet.
+    bucket_id: placing-action
+  - item_id: action-guest
+    text: Amina setter gjesten ved siden av Ingrid.
+    bucket_id: placing-action
+  - item_id: seated-nora
+    text: Nora sitter ved døra.
+    bucket_id: seated-position
+  - item_id: seated-cat
+    text: Katten sitter på stolen.
+    bucket_id: seated-position
+  - item_id: upright-chair
+    text: Stolen står nær vinduet.
+    bucket_id: upright-position
+  - item_id: upright-marius
+    text: Marius står ved vinduet.
+    bucket_id: upright-position
+- handle: follow_the_change
+  op: write
+  objective: obj-sette-vs-sitte-vs-sta-01
+  bloom: apply
+  prompt_md: 'Mottaker: Ingrid, som kommer for å hjelpe. Formål: Fortell hva som nettopp ble gjort, og
+    hvordan rommet ser ut nå. Amina plasserer vasen midt på bordet; vasen er oppreist og står støtt der.
+    Marius plasserer stolen ved vinduet; stolen er der nå. Arrangørene gir en gjest plass ved siden av
+    Nora; gjesten er sittende der nå. Nora tar plass ved døra; Nora er sittende der nå. Write a 50–80-word
+    Norwegian message using a sette-form for each action and stå- or sitte-forms for the stated results.'
+  explanation_md: Each pair contrasts an action that creates a position with the position that follows.
+  derived_from:
+  - section_id: controlled-practice-follow-the-change
+  response_language: 'no'
+  judge_prompt: Evaluate only the visible task. Mark message-purpose, all-four-pairs, action-forms, result-forms,
+    and word-bound as met or unmet.
+  criteria:
+  - id: message-purpose
+    instruction: Writes a coherent Norwegian update addressed to Ingrid about the completed room preparation.
+  - id: all-four-pairs
+    instruction: Includes every supplied action and its stated result.
+  - id: action-forms
+    instruction: Uses a sette-form for each of the four actions, as explicitly requested.
+  - id: result-forms
+    instruction: Uses stå-forms for the vase and chair results and sitte-forms for the guest and Nora
+      results, as explicitly requested.
+  - id: word-bound
+    instruction: Contains 50–80 words.
+- handle: reconstruct_the_room
+  op: write
+  objective: obj-sette-vs-sitte-vs-sta-01
+  bloom: apply
+  prompt_md: 'Melding fra Amina til Marius. Fakta før gjestene kommer: Nora er sittende ved døra; stolen
+    er ved døra; det lange bordet er nær stolen; kaffekannene er på det lange bordet; koppene er ved siden
+    av kaffekannene; vasen er oppreist midt på bordet; Amina flyttet bordet nærmere stolen og plasserte
+    vasen midt på bordet. Skriv en norsk statusmelding på 65–90 ord som forklarer at rommet er klart.
+    Bruk sette-former for begge fullførte plasseringer, en sitte-form for Nora og stå-form for vasen,
+    som er det eneste objektet som beskrives som oppreist.'
+  explanation_md: A clear status message distinguishes completed actions from the positions visible afterward.
+  derived_from:
+  - section_id: checkpoint-reconstruct-the-room
+  response_language: 'no'
+  judge_prompt: Evaluate the visible message using audience-and-purpose, room-facts, completed-actions,
+    target-verb-forms, and word-bound.
+  criteria:
+  - id: audience-and-purpose
+    instruction: Writes a coherent Norwegian status message to Marius explaining that the room is ready.
+  - id: room-facts
+    instruction: Accurately includes Nora's location and the supplied locations of the chair, table, cups,
+      coffee pots, and vase.
+  - id: completed-actions
+    instruction: Reports both supplied actions performed by Amina.
+  - id: target-verb-forms
+    instruction: Uses sette-forms for both completed placing actions, a sitte-form for Nora, and a stå-form
+      for the vase. Accepts supported stå-forms for the chair, table, cups, or coffee pots when describing
+      their supplied positions.
+  - id: word-bound
+    instruction: Contains 65–90 words.
+- handle: before_during_and_after
+  op: write
+  objective: obj-sette-vs-sitte-vs-sta-01
+  bloom: apply
+  prompt_md: Logg til møteverten. Marius er først stående ved døra. Nora gir ham plass ved bordet. Etterpå
+    er Marius sittende ved siden av Ingrid. Nora plasserer en flaske på bordet. Etterpå er flasken oppreist
+    der. Write a 45–70-word Norwegian log entry in this order, using sette for the two placing events,
+    sitte for the seated result, and stå for the standing or upright positions.
+  explanation_md: The sequence separates an initial position, a change caused by someone, and the resulting
+    position.
+  derived_from:
+  - section_id: guided-practice-before-during-and-after
+  response_language: 'no'
+  judge_prompt: Evaluate only log-purpose, ordered-sequence, placing-forms, position-forms, and word-bound.
+  criteria:
+  - id: log-purpose
+    instruction: Writes a coherent Norwegian log entry for the meeting host.
+  - id: ordered-sequence
+    instruction: Presents all five supplied events and positions in the stated order.
+  - id: placing-forms
+    instruction: Uses a sette-form when Nora seats Marius and when she places the bottle, as explicitly
+      requested.
+  - id: position-forms
+    instruction: Uses sitte for Marius's seated result and stå for his initial standing position and the
+      bottle's upright result, as explicitly requested.
+  - id: word-bound
+    instruction: Contains 45–70 words.
+- handle: final_new_setting
+  op: write
+  objective: obj-sette-vs-sitte-vs-sta-01
+  bloom: apply
+  prompt_md: 'Mottaker: kafésjefen. Formål: Gi en kort status før åpning. Før åpning flytter Eva koppene
+    fra vogna opp på bordene og plasserer en vase midt på ett bord. Etterpå er koppene og vasen oppreist
+    der. Amir venter ved disken på beina, mens Liv og Jon har tatt plass ved vinduet. Skriv en sammenhengende
+    statusmelding på 55–80 norske ord. Ta med alle opplysningene og formuler selv handlingene og personenes
+    og tingenes plassering.'
+  explanation_md: Describe Eva's placement actions separately from the resulting positions and the customers'
+    postures; choose the taught verbs to match each situation.
+  derived_from:
+  - section_id: final-practice-a-new-setting
+  response_language: 'no'
+  judge_prompt: >-
+    Check the message against its audience, all supplied café facts, and the word limit. Judge verbs by
+    meaning and context: use sette for placing actions, stå for upright objects and Amir's standing posture,
+    and sitte for Liv and Jon's seated posture. Accept natural Bokmål inflections, word order, and concise
+    alternative wording that preserves the actions and positions. Do not require exact sentences or reject
+    a valid phrasing because it uses different surface wording.
+  criteria:
+  - id: cafe-message
+    instruction: Writes a coherent Norwegian pre-opening status message to the café manager.
+  - id: all-cafe-facts
+    instruction: Accurately communicates Eva's two placement actions, the resulting upright positions of the cups and vase, Amir waiting on his feet by the counter, and Liv and Jon seated by the window.
+  - id: target-verb-forms
+    instruction: Uses forms of sette for the placement actions, stå for upright objects and Amir's standing posture, and sitte for Liv and Jon's seated posture; accept natural inflection and word-order variants.
+  - id: word-bound
+    instruction: Contains 55–80 words.
+- handle: retrieval_and_review
+  op: write
+  objective: obj-sette-vs-sitte-vs-sta-01
+  bloom: apply
+  prompt_md: Lag fire nummererte logglinjer fra vakten på samfunnshuset, til bruk i kveldens rapport.
+    Først skal du beskrive at Sara setter en plante på et bord, deretter at planten står på bordet, så
+    at en besøkende står ved døren og til slutt at to barn sitter på gulvet. Bruk sette-form for Saras
+    handling, stå-former for planten og den besøkende, og sitte-former for barna. Skriv 40–60 norske ord.
+  explanation_md: Fire logglinjer med ulike tidspunkter og perspektiver viser om eleven kan hente fram
+    og bruke naturlige posisjonsverb i en ny rapporttype.
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  judge_prompt: Vurder de fire synlige logglinjene ut fra rekkefølgen, alle opplysningene, riktige verbformer
+    og ordgrensen.
+  criteria:
+  - id: library-update
+    instruction: Skriver fire nummererte, sammenhengende norske logglinjer fra vakten på samfunnshuset.
+  - id: all-library-facts
+    instruction: Formidler korrekt at Sara plasserer en plante på et bord, at planten deretter er på bordet,
+      at en besøkende er ved døren, og at to barn er på gulvet.
+  - id: target-verb-forms
+    instruction: Bruker en sette-form for Saras handling, stå-former for planten og den besøkende, og
+      sitte-former for barna.
+  - id: word-bound
+    instruction: Inneholder 40–60 ord.
+- handle: review_sette_counter
+  op: write
+  objective: obj-sette-vs-sitte-vs-sta-01
+  bloom: apply
+  prompt_md: 'Choose which of the three taught verbs best describes the change of position, then write its
+    correct form in the blank: Koppene er på vogna. De skal på disken. Jeg gjør det nå. Nå ___ jeg koppene
+    på disken.'
+  explanation_md: Setter names the action that moves the cups into their new position.
+  derived_from:
+  - section_id: sette-placing-someone-or-something
+  response_language: 'no'
+  judge_prompt: Evaluate whether the learner chose among the three taught verbs based on the scene and supplied the correct inflected form. Accept capitalization differences; do not require an explanation.
+  criteria:
+  - id: sette-cloze
+    instruction: Chooses the taught verb for moving the cups into a new position and supplies its correct form «setter».
+- handle: review_sitte_window
+  op: write
+  objective: obj-sette-vs-sitte-vs-sta-01
+  bloom: apply
+  prompt_md: 'Choose which of the three taught verbs best describes Ola’s position, then write its correct
+    form in the blank: Ola har tatt plass på stolen ved vinduet. Nå ___ Ola ved vinduet.'
+  explanation_md: Sitter describes Ola's seated position after he has taken his place.
+  derived_from:
+  - section_id: sitte-being-seated
+  response_language: 'no'
+  judge_prompt: Evaluate whether the learner chose among the three taught verbs based on the scene and supplied the correct inflected form. Accept capitalization differences; do not require an explanation.
+  criteria:
+  - id: sitte-cloze
+    instruction: Chooses the taught verb for Ola's seated position and supplies its correct form «sitter».
+- handle: review_sta_bottle
+  op: write
+  objective: obj-sette-vs-sitte-vs-sta-01
+  bloom: apply
+  prompt_md: 'Choose which of the three taught verbs best describes the bottle’s continuing position, then
+    write its correct form in the blank: Flasken er oppreist på bordet. Ingen flytter den. Flasken ___ fortsatt
+    på bordet.'
+  explanation_md: Står describes the bottle's continuing upright position.
+  derived_from:
+  - section_id: sta-being-upright-or-standing
+  response_language: 'no'
+  judge_prompt: Evaluate whether the learner chose among the three taught verbs based on the scene and supplied the correct inflected form. Accept capitalization differences; do not require an explanation.
+  criteria:
+  - id: sta-cloze
+    instruction: Chooses the taught verb for the bottle's upright position and supplies its correct form «står».

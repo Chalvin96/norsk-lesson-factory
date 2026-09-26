@@ -1,0 +1,557 @@
+- handle: pool_belongings_my_agreement
+  op: recall_fill
+  objective: obj-possessive-pronouns-01
+  bloom: apply
+  prompt_md: Fill each blank with the matching form of my.
+  stem_md: 'Mina owns every item: bilen (masculine singular), veska (feminine singular), håndkleet (neuter
+    singular), and skoene (plural).'
+  explanation_md: 'The possessed noun controls the form: min, mi, mitt, or mine.'
+  derived_from:
+  - section_id: checkpoint-match-my-to-the-thing
+  audio_target: Dette er bilen min. Dette er veska mi. Dette er håndkleet mitt. Dette er skoene mine.
+  segments:
+  - text_md: 'Dette er bilen '
+  - blank_id: pool-car-possessive
+    options:
+    - min
+    - mi
+    - mitt
+    - mine
+    answer_index: 0
+  - text_md: '. Dette er veska '
+  - blank_id: pool-bag-possessive
+    options:
+    - min
+    - mi
+    - mitt
+    - mine
+    answer_index: 1
+  - text_md: '. Dette er håndkleet '
+  - blank_id: pool-towel-possessive
+    options:
+    - min
+    - mi
+    - mitt
+    - mine
+    answer_index: 2
+  - text_md: '. Dette er skoene '
+  - blank_id: pool-shoes-possessive
+    options:
+    - min
+    - mi
+    - mitt
+    - mine
+    answer_index: 3
+  - text_md: .
+- handle: changing_owner_my_to_your
+  op: build
+  objective: obj-possessive-pronouns-01
+  bloom: apply
+  prompt_md: Rebuild Mina's correction.
+  stem_md: Mina first says, "Dette er bilen min, veska mi, håndkleet mitt og skoene mine." Jonas owns
+    all four things, so she corrects my to your without changing the nouns or their order.
+  explanation_md: Changing the owner selects the din set; each possessed noun still controls which member
+    of that set appears.
+  derived_from:
+  - section_id: checkpoint-change-the-owner
+  tokens:
+  - token_id: changing-dette
+    text: Dette
+  - token_id: changing-er
+    text: er
+  - token_id: changing-bilen
+    text: bilen
+  - token_id: changing-din
+    text: din,
+  - token_id: changing-veska
+    text: veska
+  - token_id: changing-di
+    text: di,
+  - token_id: changing-handleet
+    text: håndkleet
+  - token_id: changing-ditt
+    text: ditt
+  - token_id: changing-og
+    text: og
+  - token_id: changing-skoene
+    text: skoene
+  - token_id: changing-dine
+    text: dine.
+  answer_order:
+  - changing-dette
+  - changing-er
+  - changing-bilen
+  - changing-din
+  - changing-veska
+  - changing-di
+  - changing-handleet
+  - changing-ditt
+  - changing-og
+  - changing-skoene
+  - changing-dine
+- handle: shared_home_our_agreement
+  op: recall_fill
+  objective: obj-possessive-pronouns-01
+  bloom: apply
+  prompt_md: Fill each blank with vår, vårt, or våre.
+  stem_md: 'Two housemates describe things they own together: nøkkelen and døra are singular non-neuter
+    nouns, rommet is singular neuter, and møblene and eskene are plural.'
+  explanation_md: Vår serves masculine and feminine singular nouns, vårt serves neuter singular nouns,
+    and våre serves plural nouns.
+  derived_from:
+  - section_id: checkpoint-shared-things
+  audio_target: Dette er nøkkelen vår. Dette er døra vår. Dette er rommet vårt. Dette er møblene våre.
+    Dette er eskene våre.
+  segments:
+  - text_md: 'Dette er nøkkelen '
+  - blank_id: shared-key-possessive
+    options:
+    - vår
+    - vårt
+    - våre
+    answer_index: 0
+  - text_md: '. Dette er døra '
+  - blank_id: shared-door-possessive
+    options:
+    - vår
+    - vårt
+    - våre
+    answer_index: 0
+  - text_md: '. Dette er rommet '
+  - blank_id: shared-room-possessive
+    options:
+    - vår
+    - vårt
+    - våre
+    answer_index: 1
+  - text_md: '. Dette er møblene '
+  - blank_id: shared-furniture-possessive
+    options:
+    - vår
+    - vårt
+    - våre
+    answer_index: 2
+  - text_md: '. Dette er eskene '
+  - blank_id: shared-boxes-possessive
+    options:
+    - vår
+    - vårt
+    - våre
+    answer_index: 2
+  - text_md: .
+- handle: definite_noun_after_possessive_pattern
+  op: build
+  objective: obj-possessive-pronouns-01
+  bloom: apply
+  prompt_md: Build Lea's Norwegian sentence.
+  stem_md: At the swimming pool, Lea hands back three things and says, "Here are my bag, your card, and
+    our clothes." Use the everyday after-noun pattern.
+  explanation_md: 'In the everyday pattern, each possessive follows a definite noun: veska mi, kortet
+    ditt, and klærne våre.'
+  derived_from:
+  - section_id: checkpoint-build-the-everyday-pattern
+  tokens:
+  - token_id: definite-her
+    text: Her
+  - token_id: definite-er
+    text: er
+  - token_id: definite-veska
+    text: veska
+  - token_id: definite-mi
+    text: mi,
+  - token_id: definite-kortet
+    text: kortet
+  - token_id: definite-ditt
+    text: ditt
+  - token_id: definite-og
+    text: og
+  - token_id: definite-klaerne
+    text: klærne
+  - token_id: definite-vare
+    text: våre.
+  answer_order:
+  - definite-her
+  - definite-er
+  - definite-veska
+  - definite-mi
+  - definite-kortet
+  - definite-ditt
+  - definite-og
+  - definite-klaerne
+  - definite-vare
+- handle: possessive_position_consistency
+  op: build
+  objective: obj-possessive-pronouns-01
+  bloom: apply
+  prompt_md: Build the sentence with both transformed phrases.
+  stem_md: Change jakka mi to the before-noun pattern. Change min bil to the after-noun pattern. Say that
+    both resulting things are here.
+  explanation_md: 'A before-noun possessive takes an indefinite noun, while an after-noun possessive takes
+    a definite noun: mi jakke and bilen min.'
+  derived_from:
+  - section_id: checkpoint-keep-the-two-orders-consistent
+  tokens:
+  - token_id: position-mi
+    text: Mi
+  - token_id: position-jakke
+    text: jakke
+  - token_id: position-og
+    text: og
+  - token_id: position-bilen
+    text: bilen
+  - token_id: position-min
+    text: min
+  - token_id: position-er
+    text: er
+  - token_id: position-her
+    text: her.
+  answer_order:
+  - position-mi
+  - position-jakke
+  - position-og
+  - position-bilen
+  - position-min
+  - position-er
+  - position-her
+- handle: cabin_trip_owner_selection
+  op: choose
+  objective: obj-possessive-pronouns-01
+  bloom: understand
+  prompt_md: Choose the phrase that matches Mina's meaning.
+  stem_md: Mina points to the cabin key that belongs to her alone and says, "my key."
+  explanation_md: The owner meaning selects the possessive family; Mina speaking about her own key requires
+    the min family.
+  derived_from:
+  - section_id: cumulative-transfer-packing-for-a-cabin-trip
+  options:
+  - id: cabin-our-key
+    text: nøkkelen vår
+    correct: false
+    why: Vår would make the key a shared possession.
+  - id: cabin-my-key
+    text: nøkkelen min
+    correct: true
+    why: Min marks the speaker as the owner of the masculine singular key.
+  - id: cabin-your-key
+    text: nøkkelen din
+    correct: false
+    why: Din would make the person Mina addresses the owner.
+- handle: cabin_trip_possessive_agreement
+  op: recall_fill
+  objective: obj-possessive-pronouns-01
+  bloom: apply
+  prompt_md: Complete each statement with the matching possessive.
+  stem_md: 'Cabin packing facts: Mina owns the key and map; Jonas owns the bag; Mina and Jonas share the
+    jackets. Nøkkelen is masculine singular, veska is feminine singular, kartet is neuter singular, and
+    jakkene is plural.'
+  explanation_md: First identify the owner, then use the form in that owner's possessive set that agrees
+    with the noun.
+  derived_from:
+  - section_id: cumulative-transfer-packing-for-a-cabin-trip
+  audio_target: 'Mina sier: «Dette er nøkkelen min.» Mina sier til Jonas: «Dette er veska di.» Mina sier:
+    «Dette er kartet mitt.» Mina og Jonas sier: «Dette er jakkene våre.»'
+  segments:
+  - text_md: 'Mina sier: «Dette er nøkkelen '
+  - blank_id: cabin-key-possessive
+    options:
+    - min
+    - mi
+    - mitt
+    - mine
+    - din
+    - di
+    - ditt
+    - dine
+    - vår
+    - vårt
+    - våre
+    answer_index: 0
+  - text_md: '.» Mina sier til Jonas: «Dette er veska '
+  - blank_id: cabin-bag-possessive
+    options:
+    - min
+    - mi
+    - mitt
+    - mine
+    - din
+    - di
+    - ditt
+    - dine
+    - vår
+    - vårt
+    - våre
+    answer_index: 5
+  - text_md: '.» Mina sier: «Dette er kartet '
+  - blank_id: cabin-map-possessive
+    options:
+    - min
+    - mi
+    - mitt
+    - mine
+    - din
+    - di
+    - ditt
+    - dine
+    - vår
+    - vårt
+    - våre
+    answer_index: 2
+  - text_md: '.» Mina og Jonas sier: «Dette er jakkene '
+  - blank_id: cabin-jackets-possessive
+    options:
+    - min
+    - mi
+    - mitt
+    - mine
+    - din
+    - di
+    - ditt
+    - dine
+    - vår
+    - vårt
+    - våre
+    answer_index: 10
+  - text_md: .»
+- handle: cabin_trip_message_building
+  op: write
+  objective: obj-possessive-pronouns-01
+  bloom: apply
+  prompt_md: 'You are Mina. Send Jonas a 15–35-word Norwegian packing message so he can find everything,
+    using possessives that agree with their nouns. Facts: Mina''s bag is by the door; Jonas''s card is
+    on the table; their shared clothes are in the car.'
+  explanation_md: A successful message communicates the three locations clearly. It must also use matching
+    possessives so ownership is expressed with correct Norwegian agreement.
+  derived_from:
+  - section_id: cumulative-transfer-packing-for-a-cabin-trip
+  response_language: 'no'
+  min_words: 15
+  max_words: 35
+  judge_prompt: 'Report verdicts for bag-location, card-location, clothes-location, word-bound, and possessive-agreement.
+    All five criteria are gating. Anchor that must pass: "Hei Jonas! Veska mi står ved døra, kortet ditt
+    ligger på bordet, og klærne våre er i bilen." Near-miss that must fail card-location: "Hei Jonas!
+    Veska mi står ved døra, og klærne våre er i bilen." Form-error message that must fail possessive-agreement:
+    "Hei Jonas! Veska min står ved døra, kortet ditt ligger på bordet, og klærne våre er i bilen."'
+  criteria:
+  - id: bag-location
+    instruction: States that Mina's bag is by the door.
+  - id: card-location
+    instruction: States that Jonas's card is on the table.
+  - id: clothes-location
+    instruction: States that the clothes shared by Mina and Jonas are in the car.
+  - id: word-bound
+    instruction: Contains 15–35 words.
+  - id: possessive-agreement
+    instruction: Uses Norwegian possessives that agree with their nouns.
+- handle: final_my_your_our_retrieval
+  op: write
+  objective: obj-possessive-pronouns-01
+  bloom: apply
+  prompt_md: Make a 6–18-word Norwegian lost-property label for the pool staff. Identify veska as mine,
+    håndkleet as yours, and nøklene as ours.
+  explanation_md: The three labels combine owner choice with feminine singular, neuter singular, and plural
+    agreement.
+  derived_from:
+  - section_id: short-retrieval-review
+  response_language: 'no'
+  min_words: 6
+  max_words: 18
+  judge_prompt: 'Report verdicts for bag-is-mine, towel-is-yours, keys-are-ours, and word-bound. All four
+    criteria are gating. Accept a list or complete sentences. Anchor that must pass: "Veska mi, håndkleet
+    ditt og nøklene våre." Near-miss that must fail towel-is-yours: "Veska mi, håndkleet mitt og nøklene
+    våre."'
+  criteria:
+  - id: bag-is-mine
+    instruction: Identifies veska as belonging to the writer with matching feminine singular agreement.
+  - id: towel-is-yours
+    instruction: Identifies håndkleet as belonging to the addressee with matching neuter singular agreement.
+  - id: keys-are-ours
+    instruction: Identifies nøklene as shared with matching plural agreement.
+  - id: word-bound
+    instruction: Contains 6–18 words.
+- handle: review_pool_belongings_my_agreement
+  op: recall_fill
+  objective: obj-possessive-pronouns-01
+  bloom: apply
+  prompt_md: Complete each locker-room sentence with the form of my that matches the noun.
+  stem_md: 'The speaker owns every item: sykkelen (masculine singular), jakka (feminine singular), eplet
+    (neuter singular), and nøklene (plural).'
+  explanation_md: 'The possessed noun controls the form: min, mi, mitt, or mine.'
+  derived_from:
+  - section_id: checkpoint-match-my-to-the-thing
+  audio_target: Dette er sykkelen min. Dette er jakka mi. Dette er eplet mitt. Dette er nøklene mine.
+  segments:
+  - text_md: 'Dette er sykkelen '
+  - blank_id: review-pool-bike-possessive
+    options:
+    - mi
+    - mitt
+    - min
+    - mine
+    answer_index: 2
+  - text_md: '. Dette er jakka '
+  - blank_id: review-pool-jacket-possessive
+    options:
+    - mi
+    - min
+    - mitt
+    - mine
+    answer_index: 0
+  - text_md: '. Dette er eplet '
+  - blank_id: review-pool-apple-possessive
+    options:
+    - min
+    - mi
+    - mine
+    - mitt
+    answer_index: 3
+  - text_md: '. Dette er nøklene '
+  - blank_id: review-pool-keys-possessive
+    options:
+    - min
+    - mine
+    - mitt
+    - mi
+    answer_index: 1
+  - text_md: .
+- handle: review_your_agreement
+  op: write
+  objective: obj-possessive-pronouns-01
+  bloom: apply
+  prompt_md: Jonas gives one plural set of keys to Mina and says, "your keys." Write the 2–4-word Norwegian
+    phrase.
+  explanation_md: The addressee owns the keys, and the plural noun requires dine.
+  derived_from:
+  - section_id: checkpoint-change-the-owner
+  response_language: 'no'
+  min_words: 2
+  max_words: 4
+  judge_prompt: Report verdicts for your-keys and word-bound. Both criteria are gating. Accept "nøklene
+    dine" and a short frame such as "Her er nøklene dine."
+  criteria:
+  - id: your-keys
+    instruction: Expresses your keys with a plural noun and the matching possessive dine.
+  - id: word-bound
+    instruction: Contains 2–4 words.
+- handle: review_shared_home_our_agreement
+  op: recall_fill
+  objective: obj-possessive-pronouns-01
+  bloom: apply
+  prompt_md: Complete each sentence with the form of our that matches the noun.
+  stem_md: 'Two friends describe their shared flat: sofaen and lampa are singular non-neuter nouns, bordet
+    is singular neuter, and stolene and gardinene are plural.'
+  explanation_md: Vår serves masculine and feminine singular nouns, vårt serves neuter singular nouns,
+    and våre serves plural nouns.
+  derived_from:
+  - section_id: checkpoint-shared-things
+  audio_target: Dette er sofaen vår. Dette er lampa vår. Dette er bordet vårt. Dette er stolene våre.
+    Dette er gardinene våre.
+  segments:
+  - text_md: 'Dette er sofaen '
+  - blank_id: review-shared-sofa-possessive
+    options:
+    - våre
+    - vår
+    - vårt
+    answer_index: 1
+  - text_md: '. Dette er lampa '
+  - blank_id: review-shared-lamp-possessive
+    options:
+    - vår
+    - våre
+    - vårt
+    answer_index: 0
+  - text_md: '. Dette er bordet '
+  - blank_id: review-shared-table-possessive
+    options:
+    - vår
+    - våre
+    - vårt
+    answer_index: 2
+  - text_md: '. Dette er stolene '
+  - blank_id: review-shared-chairs-possessive
+    options:
+    - våre
+    - vår
+    - vårt
+    answer_index: 0
+  - text_md: '. Dette er gardinene '
+  - blank_id: review-shared-curtains-possessive
+    options:
+    - vår
+    - vårt
+    - våre
+    answer_index: 2
+  - text_md: .
+- handle: review_owner_selection
+  op: choose
+  objective: obj-possessive-pronouns-01
+  bloom: apply
+  prompt_md: Choose Lea's reply.
+  stem_md: Jonas points to a coat and asks Lea, "Er dette jakka di?" The coat belongs to Lea, not Jonas
+    and not both of them.
+  explanation_md: Lea is the speaker and confirms that the coat belongs to her, so her reply uses the
+    my form that matches jakka.
+  derived_from:
+  - section_id: choosing-the-form-step-by-step
+  options:
+  - id: review-owner-our
+    text: Ja, det er jakka vår.
+    correct: false
+    why: Vår would present the coat as shared.
+  - id: review-owner-my
+    text: Ja, det er jakka mi.
+    correct: true
+    why: Mi presents the speaker, Lea, as the owner.
+  - id: review-owner-your
+    text: Ja, det er jakka di.
+    correct: false
+    why: Di would present Jonas, the addressee, as the owner.
+- handle: review_possessive_position_consistency
+  op: choose
+  objective: obj-possessive-pronouns-01
+  bloom: apply
+  prompt_md: Choose the consistent rewrite.
+  stem_md: 'Original note: "Jeg har jakka mi." Rewrite only the possessive phrase in the before-noun pattern
+    without changing its meaning.'
+  explanation_md: Moving the possessive before the noun changes the definite jakka to the indefinite jakke.
+  derived_from:
+  - section_id: checkpoint-keep-the-two-orders-consistent
+  options:
+  - id: review-position-double-definite
+    text: Jeg har mi jakka.
+    correct: false
+    why: This keeps the definite noun ending after moving the possessive before the noun.
+  - id: review-position-missing-definite
+    text: Jeg har jakke mi.
+    correct: false
+    why: This puts the possessive after a noun that lacks the expected definite ending.
+  - id: review-position-consistent
+    text: Jeg har mi jakke.
+    correct: true
+    why: The before-noun pattern combines mi with the indefinite noun jakke.
+- handle: review_final_my_your_our_retrieval
+  op: write
+  objective: obj-possessive-pronouns-01
+  bloom: apply
+  prompt_md: Make a 6–18-word Norwegian lost-property label for the ski lodge. Identify skjerfet as mine,
+    lua as yours, and vottene as ours.
+  explanation_md: The three labels retrieve owner choice and agreement across neuter singular, feminine
+    singular, and plural nouns.
+  derived_from:
+  - section_id: short-retrieval-review
+  response_language: 'no'
+  min_words: 6
+  max_words: 18
+  judge_prompt: 'Report verdicts for scarf-is-mine, hat-is-yours, mittens-are-ours, and word-bound. All
+    four criteria are gating. Accept a list or complete sentences. Anchor that must pass: "Skjerfet mitt,
+    lua di og vottene våre." Near-miss that must fail hat-is-yours: "Skjerfet mitt, lua mi og vottene
+    våre."'
+  criteria:
+  - id: scarf-is-mine
+    instruction: Identifies skjerfet as belonging to the writer with matching neuter singular agreement.
+  - id: hat-is-yours
+    instruction: Identifies lua as belonging to the addressee with matching feminine singular agreement.
+  - id: mittens-are-ours
+    instruction: Identifies vottene as shared with matching plural agreement.
+  - id: word-bound
+    instruction: Contains 6–18 words.

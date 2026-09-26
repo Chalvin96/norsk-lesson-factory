@@ -32,18 +32,21 @@ def convert_inlines(
     elements: Iterable[Any],
     warnings: list[str],
     default_lang: str = "nb",
+    *,
+    soft_break: str = " ",
 ) -> list[InlineSpan]:
     """Convert a sequence of panflute inline elements into ``list[InlineSpan]``.
 
     Adjacent text-producing elements (Str, Space, SoftBreak) are merged into
-    single ``TextSpan`` values. All text is NFC-normalized. ``Link``,
-    ``Image``, and ``RawInline`` are rejected (fail closed).
+    single ``TextSpan`` values. ``soft_break`` selects whether Markdown soft
+    breaks fold or survive. All text is NFC-normalized. ``Link``, ``Image``,
+    and ``RawInline`` are rejected (fail closed).
     """
     spans: list[InlineSpan] = []
     text_buffer: list[str] = []
 
     for el in elements:
-        if _append_text_inline(el, text_buffer):
+        if _append_text_inline(el, text_buffer, soft_break):
             continue
         spans.extend(_convert_non_text_inline(el, spans, text_buffer, warnings, default_lang))
 
@@ -66,13 +69,16 @@ def stringify_inlines(elements: Iterable[Any]) -> str:
     return "".join(parts)
 
 
-def _append_text_inline(element: object, buffer: list[str]) -> bool:
+def _append_text_inline(element: object, buffer: list[str], soft_break: str) -> bool:
     """Append a plain-text panflute inline and report whether it was handled."""
     if isinstance(element, panflute.Str):
         buffer.append(element.text)
         return True
-    if isinstance(element, (panflute.Space, panflute.SoftBreak)):
+    if isinstance(element, panflute.Space):
         buffer.append(" ")
+        return True
+    if isinstance(element, panflute.SoftBreak):
+        buffer.append(soft_break)
         return True
     return False
 

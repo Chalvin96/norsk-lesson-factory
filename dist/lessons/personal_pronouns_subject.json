@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "personal_pronouns_subject",
   "kind": "grammar",
   "language": "nb-NO",
@@ -92,6 +92,38 @@
     {
       "kind": "section",
       "id": "short-retrieval-review"
+    },
+    {
+      "kind": "exercise",
+      "id": "recognize_all_subject_pronouns"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_choose_jeg_or_vi_for_speaker"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_distinguish_du_and_dere_by_addressee_count"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_choose_han_or_hun_for_named_person"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_shift_from_direct_address_to_discussion"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_distinguish_dere_and_de_by_conversation_role"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_select_subject_pronoun_from_perspective"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_replace_repeated_names_with_pronouns"
     }
   ],
   "sections": [
@@ -2485,6 +2517,16 @@
           "speaker_icon_url": "https://api.dicebear.com/10.x/open-peeps/svg?seed=2c0806f81bfe3cea98e9d2944ce1a6c2187c5314f1cedf879d51889c382c6068"
         },
         {
+          "kind": "paragraph",
+          "spans": [
+            {
+              "kind": "text",
+              "value": "Nora og Ali setter koppene på bordet med en gang."
+            }
+          ],
+          "id": "returning-to-the-cafe-block-6"
+        },
+        {
           "kind": "reading",
           "spans": [
             {
@@ -2496,7 +2538,7 @@
           "speaker_id": "emil",
           "speaker_name": "Emil",
           "dialogue_id": "community-cafe-return",
-          "id": "returning-to-the-cafe-block-6",
+          "id": "returning-to-the-cafe-block-7",
           "turn_index": 5,
           "speaker_icon_url": "https://api.dicebear.com/10.x/open-peeps/svg?seed=a48784a9a67c4b752118783fbbc553d0361b1bc85797f44451aa4c2ebb3ab7de"
         },
@@ -2548,7 +2590,7 @@
               "value": " because he comments about Nora and Ali rather than speaking directly to them."
             }
           ],
-          "id": "returning-to-the-cafe-block-7"
+          "id": "returning-to-the-cafe-block-8"
         }
       ]
     },
@@ -2638,36 +2680,70 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Read the three café lines and choose the complete reference mapping. The goal is to identify who each pronoun represents, not to translate. Maja: «Ja, jeg jobber her i dag.» (Yes, I work here today.) Ali: «Jobber du her, Maja?» (Do you work here, Maja?) Emil, about Nora and Ali: «De er raske!» (They are quick!) Which mapping is correct for jeg, du, and de?"
+          "value": "Choose what each pronoun refers to."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Jeg» viser til taleren, «du» til én person man snakker til, og «de» til personer man omtaler."
+        }
+      ],
       "payload": {
         "options": [
           {
             "option_id": "mapping-b",
-            "text": "Maja bruker «jeg» om seg selv (I); Ali bruker «du» til Nora og Ali (you, two or more people); Emil bruker «de» om Maja (they).",
-            "why": "Ali addresses Maja alone, and Emil discusses Nora and Ali."
+            "text": "«jeg» = Maja, «du» = Nora og Ali, «de» = Maja",
+            "why": "«Du» viser til én person Maja snakker til. Her viser «de» til Nora og Ali, ikke til Maja."
           },
           {
             "option_id": "mapping-c",
-            "text": "Maja bruker «jeg» om seg selv (I); Ali bruker «du» til Emil (you, one person); Emil bruker «de» om Nora og Ali (they).",
-            "why": "Ali addresses Maja, not Emil."
+            "text": "«jeg» = Ali, «du» = Ali, «de» = Nora og Ali",
+            "why": "Maja spør Ali med «du», Ali svarer med «jeg» om seg selv, og Emil omtaler Nora og Ali som «de»."
           },
           {
             "option_id": "mapping-a",
-            "text": "Maja bruker «jeg» om seg selv (I); Ali bruker «du» til Maja (you, one person); Emil bruker «de» om Nora og Ali (they).",
-            "why": "Maja is speaking, Maja is addressed as one person, and Nora and Ali are being discussed."
+            "text": "«jeg» = Maja, «du» = Maja, «de» = Nora og Ali",
+            "why": "«Du» viser til den Maja snakker til, ikke til Maja selv."
           }
         ],
-        "answer_id": "mapping-a",
-        "stem": [
-          {
-            "kind": "text",
-            "value": "Choose the mapping that correctly identifies the speaker, listener, and people being discussed."
-          }
-        ]
-      }
+        "answer_id": "mapping-c",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Ali, jobber du her i dag?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Ali",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Ja, jeg jobber her i dag.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Emil",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Nora og Ali lager kaffe. De er raske!»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2677,10 +2753,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each café quotation with jeg or vi. Sara is the only person doing the first task. Sara and Emil do the second task together. Choose according to whether the speaker is included with someone else."
+          "value": "Fill in the quotes with «jeg» or «vi»."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Jeg» viser til taleren alene. «Vi» omfatter taleren og minst én annen person."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -2688,11 +2769,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Sara sier: «"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "Sara sier om sin egen oppgave: «"
               }
             ]
           },
@@ -2714,11 +2791,7 @@
               },
               {
                 "kind": "text",
-                "value": "jobber alene i dag.» Sara og Emil sier: «"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "jobber alene i dag.» Sara og Emil sier om fellesarbeidet: «"
               }
             ]
           },
@@ -2755,10 +2828,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete two café instructions with du or dere. Jonas addresses Emil alone in the first instruction and Nora and Ali together in the second. Use the number of people being addressed."
+          "value": "Fill in the instructions with «du» or «dere»."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Bruk «du» når du snakker til én person, og «dere» når du snakker til flere."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -2767,10 +2845,6 @@
               {
                 "kind": "text",
                 "value": "Jonas sier til Emil: «"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -2793,10 +2867,6 @@
               {
                 "kind": "text",
                 "value": "setter koppene her.» Jonas sier til Nora og Ali: «"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -2833,10 +2903,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each café update with han or hun. The first update is about Emil, a male person. The second is about Sara, a female person. The pronoun refers to the person being discussed."
+          "value": "Fill in the updates with «han» or «hun»."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Bruk «han» om Emil og «hun» om Sara når du omtaler dem."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -2845,10 +2920,6 @@
               {
                 "kind": "text",
                 "value": "Oppdatering om Emil: «"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -2871,10 +2942,6 @@
               {
                 "kind": "text",
                 "value": "jobber på kafeen i dag.» Oppdatering om Sara: «"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -2911,10 +2978,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete both related café statements. Jonas speaks directly to Sara in the first statement. Later, he tells Maja about Sara. Use the pronoun that matches each conversational role and show the shift from listener to person discussed."
+          "value": "Fill in the statements with «du» or «hun»."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Sara omtales som «du» når man snakker til henne, og som «hun» når man snakker om henne."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -2923,10 +2995,6 @@
               {
                 "kind": "text",
                 "value": "Jonas sier direkte til Sara: «"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -2948,11 +3016,7 @@
               },
               {
                 "kind": "text",
-                "value": "jobber her i dag.» Senere sier Jonas til Maja: «"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "jobber her i dag.» Senere sier Jonas til Maja om Sara: «"
               }
             ]
           },
@@ -2989,10 +3053,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete the paired café statements with dere or de. In the first statement, Sara speaks directly to Maja and Jonas. In the second, she speaks to Emil about Maja and Jonas."
+          "value": "Fill in the statements with «dere» or «de»."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Bruk «dere» om en gruppe du snakker til, og «de» om en gruppe du omtaler."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -3001,10 +3070,6 @@
               {
                 "kind": "text",
                 "value": "Sara sier til Maja og Jonas: «"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -3027,10 +3092,6 @@
               {
                 "kind": "text",
                 "value": "setter koppene her.» Sara sier til Emil om Maja og Jonas: «"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -3067,10 +3128,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each café quotation with the subject pronoun that matches the described perspective. Use the seven forms jeg, du, han, hun, vi, dere, and de. Vocabulary and verb forms provide context; select the pronoun from the speaker, listener, or discussed person or group."
+          "value": "Fill in each quote with a subject pronoun."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Velg form ut fra hvem som snakker, hvem som blir tiltalt, og hvem som blir omtalt."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -3079,10 +3145,6 @@
               {
                 "kind": "text",
                 "value": "Sara snakker bare om seg selv: «"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -3110,10 +3172,6 @@
               {
                 "kind": "text",
                 "value": "baker i dag.» Maja snakker om seg selv og Sara: «"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -3141,10 +3199,6 @@
               {
                 "kind": "text",
                 "value": "jobber her i dag.» Jonas snakker direkte til Emil: «"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -3172,10 +3226,6 @@
               {
                 "kind": "text",
                 "value": "lager kaffe i dag.» Maja snakker om Emil til Sara: «"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -3203,10 +3253,6 @@
               {
                 "kind": "text",
                 "value": "kommer i morgen.» Emil snakker om Sara til Jonas: «"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -3234,10 +3280,6 @@
               {
                 "kind": "text",
                 "value": "baker i dag.» Jonas snakker direkte til Maja og Ali: «"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -3265,10 +3307,6 @@
               {
                 "kind": "text",
                 "value": "setter koppene her.» Emil snakker om Maja og Ali til Sara: «"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -3310,10 +3348,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "In this café continuation, replace each repeated named subject with a suitable subject pronoun. Complete the second sentence in each pair. Nora is female and Ali is male; keep the rest of each sentence unchanged."
+          "value": "Fill in each blank with «han» or «hun»."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Pronomenet viser til personen som ble nevnt i setningen før."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -3388,38 +3431,663 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "At a library table, write five short, simple Bokmål sentences for these exchanges. Use subject pronouns according to each perspective and use the library situation rather than the café wording: 1. Nora introduces herself and refers to Ali as another student. 2. Maja asks Ali, one person, whether he is ready. 3. Jonas tells Nora and Ali together to put the books on the table. 4. Maja tells Jonas what Nora and Ali are doing; she is talking about them, not to them. 5. Nora describes a task she shares with Ali. Write only the five Norwegian sentences."
+          "value": "You are Nora. Write a message to the class group about the library plan. Say that you are at the library, Ali and Sara are ready, ask Maja whether she is ready, ask Maja and Jonas to put the books on the table, and say that they are working quickly and that you and Ali are making the class display. Use «jeg», «han», «hun», «du», «dere», «de», and «vi» where they fit."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": null,
-        "max_words": null,
-        "judge_prompt": "Check the response against the task and report evidence for each criterion. Accept natural Bokmål variants that preserve the required conversational role and subject-pronoun reference; do not require exact vocabulary beyond the requested library situation.",
+        "min_words": 40,
+        "max_words": 70,
+        "judge_prompt": "Evaluate only the listed criteria. The response passes when message-purpose, supplied-facts, bokmal-comprehensibility, and all pronoun criteria pass. Accept natural Bokmål variants and minor language errors when the message remains comprehensible.",
         "criteria": [
           {
-            "id": "self-and-discussed-person",
-            "instruction": "Uses *jeg* for Nora as speaker and *han* for Ali as the male person being discussed in the introduction."
+            "id": "message-purpose",
+            "instruction": "The response is a message to the class group that communicates the library plan."
           },
           {
-            "id": "one-person-addressed",
-            "instruction": "Uses *du* when Maja addresses Ali, one person, in the readiness question."
+            "id": "supplied-facts",
+            "instruction": "The message communicates all six supplied facts without materially changing them."
           },
           {
-            "id": "group-addressed",
-            "instruction": "Uses *dere* when Jonas addresses Nora and Ali together."
+            "id": "bokmal-comprehensibility",
+            "instruction": "The message is comprehensible Bokmål."
           },
           {
-            "id": "group-discussed",
-            "instruction": "Uses *de* when Maja discusses Nora and Ali with Jonas."
+            "id": "jeg-pronomen",
+            "instruction": "The response refers to Nora with «jeg» where appropriate."
           },
           {
-            "id": "shared-task",
-            "instruction": "Uses *vi* when Nora describes a task shared with Ali."
+            "id": "han-hun-pronomen",
+            "instruction": "The response refers to Ali and Sara with suitable singular subject pronouns where appropriate."
+          },
+          {
+            "id": "du-pronomen",
+            "instruction": "The response addresses Maja with «du» where appropriate."
+          },
+          {
+            "id": "dere-pronomen",
+            "instruction": "The response addresses Maja and Jonas with «dere» where appropriate."
+          },
+          {
+            "id": "de-pronomen",
+            "instruction": "The response discusses Maja and Jonas with «de» where appropriate."
+          },
+          {
+            "id": "vi-pronomen",
+            "instruction": "The response includes Nora with Ali by using «vi» where appropriate."
           }
         ]
       }
+    },
+    {
+      "kind": "exercise",
+      "id": "recognize_all_subject_pronouns",
+      "operation": "choose",
+      "objective_id": "obj-personal-pronouns-subject-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the sequence of pronouns that fits all the situations."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Velg pronomen ut fra hvem som snakker, hvem som blir tiltalt, og hvem som blir omtalt."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "all-pronouns-b",
+            "text": "jeg, du, han, hun, vi, de, dere",
+            "why": "This reverses the forms for a group being addressed and a group being discussed."
+          },
+          {
+            "option_id": "all-pronouns-c",
+            "text": "vi, du, han, hun, jeg, dere, de",
+            "why": "This reverses the forms for the speaker alone and the speaker with another person."
+          },
+          {
+            "option_id": "all-pronouns-a",
+            "text": "jeg, du, han, hun, vi, dere, de",
+            "why": "The forms match speaker inclusion, addressee number, and the people being discussed."
+          }
+        ],
+        "answer_id": "all-pronouns-a",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "You introduce yourself, speak to one person, talk about Emil, talk about Sara, talk about yourself together with Sara, speak to Nora and Ali, and talk about Nora and Ali."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_choose_jeg_or_vi_for_speaker",
+      "operation": "choose",
+      "objective_id": "obj-personal-pronouns-subject-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Who is included when Liv says «vi»?"
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "liv-only",
+            "text": "Bare Liv.",
+            "why": "Da viser «vi» bare til Liv, ikke til Omar som foreslo at de skulle gjøre oppgaven sammen."
+          },
+          {
+            "option_id": "omar-only",
+            "text": "Bare Omar.",
+            "why": "Liv inkluderer seg selv i oppgaven i stedet for å legge den bare på Omar."
+          },
+          {
+            "option_id": "liv-and-omar",
+            "text": "Liv og Omar.",
+            "why": "Livs svar inkluderer både henne selv og den som foreslo oppgaven."
+          }
+        ],
+        "answer_id": "liv-and-omar",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Omar",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Liv, skal vi rydde kjøkkenet etter lunsj?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Liv",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Ja, vi rydder kjøkkenet etter lunsj.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_distinguish_du_and_dere_by_addressee_count",
+      "operation": "recall_fill",
+      "objective_id": "obj-personal-pronouns-subject-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Complete each question with the form that fits one or more people."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Bruk «du» når Mina snakker til én person, og «dere» når hun snakker til flere."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Mina sier til Lea: «Kommer"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "single-listener",
+            "options": [
+              "du",
+              "dere"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "i morgen?» Mina sier til Lea og Per: «Kommer"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "multiple-listeners",
+            "options": [
+              "du",
+              "dere"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "i morgen?»"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_choose_han_or_hun_for_named_person",
+      "operation": "choose",
+      "objective_id": "obj-personal-pronouns-subject-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose Ina’s natural next sentence about Henrik."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "henrik-female",
+            "text": "Hun hjelper studentene.",
+            "why": "This singular subject pronoun would normally refer to a female person, not Henrik."
+          },
+          {
+            "option_id": "address-henrik",
+            "text": "Du hjelper studentene.",
+            "why": "This changes from discussing Henrik to addressing a listener."
+          },
+          {
+            "option_id": "henrik-male",
+            "text": "Han hjelper studentene.",
+            "why": "Ina continues discussing Henrik with the masculine singular subject pronoun."
+          }
+        ],
+        "answer_id": "henrik-male",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Ina",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Henrik arbeider på biblioteket.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_shift_from_direct_address_to_discussion",
+      "operation": "choose",
+      "objective_id": "obj-personal-pronouns-subject-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose Erik’s reply to Pia."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "address-pia",
+            "text": "Pia har nøkkelen.",
+            "why": "This would tell Pia that Pia has the key, which conflicts with the preceding exchange."
+          },
+          {
+            "option_id": "include-eirik",
+            "text": "Vi har nøkkelen.",
+            "why": "This would say that Eirik and at least one other person have the key."
+          },
+          {
+            "option_id": "discuss-lise",
+            "text": "Hun har nøkkelen.",
+            "why": "Eirik answers Pia's question by referring back to Lise."
+          }
+        ],
+        "answer_id": "discuss-lise",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Eirik",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Lise, du har nøkkelen.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Lise",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Ja, jeg låser døra. Ha det!»"
+                }
+              ]
+            },
+            {
+              "speaker": "Pia",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Vent, hvem har nøkkelen?»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_distinguish_dere_and_de_by_conversation_role",
+      "operation": "choose",
+      "objective_id": "obj-personal-pronouns-subject-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the leader’s next line."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "discuss-workers",
+            "text": "De åpner kafeen klokka åtte.",
+            "why": "This would describe another group instead of continuing to address Aksel and Runa."
+          },
+          {
+            "option_id": "address-one",
+            "text": "Du åpner kafeen klokka åtte.",
+            "why": "This would address only one of the two workers named by the manager."
+          },
+          {
+            "option_id": "address-workers",
+            "text": "Dere åpner kafeen klokka åtte.",
+            "why": "The manager's next line addresses Aksel and Runa together."
+          }
+        ],
+        "answer_id": "address-workers",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Aksel",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«God morgen! Runa og jeg er klare.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Runa",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Når åpner vi kafeen?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Leder",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Aksel og Runa, hør her.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_select_subject_pronoun_from_perspective",
+      "operation": "recall_fill",
+      "objective_id": "obj-personal-pronouns-subject-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Complete the three replies with the pronoun that fits."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Jeg» viser til Oda selv, «du» til Ivar, og «de» til Oda og Mina."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Oda sier om seg selv: «"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "oda-self",
+            "options": [
+              "Jeg",
+              "Du",
+              "De"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "tar bussen.» Oda spør Ivar: «Tar"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "ivar-addressed",
+            "options": [
+              "jeg",
+              "du",
+              "de"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "toget?» Ivar sier om Oda og Mina: «"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "oda-mina-discussed",
+            "options": [
+              "Jeg",
+              "Du",
+              "De"
+            ],
+            "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "går sammen.»"
+              }
+            ]
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Oda",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«___ tar bussen.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Oda",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Tar ___ toget?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Ivar",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Oda og Mina? ___ går sammen.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_replace_repeated_names_with_pronouns",
+      "operation": "recall_fill",
+      "objective_id": "obj-personal-pronouns-subject-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Complete each second sentence with a subject pronoun."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Pronomenet viser til personen som ble nevnt i setningen før."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Sofie leser menyen."
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "sofie-reference",
+            "options": [
+              "Han",
+              "Hun"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "velger suppen. Martin finner et bord."
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "martin-reference",
+            "options": [
+              "Han",
+              "Hun"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "setter seg ved vinduet."
+              }
+            ]
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Forteller",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Sofie leser menyen. ___ velger suppen. Martin finner et bord. ___ setter seg ved vinduet.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "practice_groups": [
@@ -3435,7 +4103,15 @@
         "distinguish_dere_and_de_by_conversation_role",
         "select_subject_pronoun_from_perspective",
         "replace_repeated_names_with_pronouns",
-        "use_subject_pronouns_at_the_library"
+        "use_subject_pronouns_at_the_library",
+        "recognize_all_subject_pronouns",
+        "review_choose_jeg_or_vi_for_speaker",
+        "review_distinguish_du_and_dere_by_addressee_count",
+        "review_choose_han_or_hun_for_named_person",
+        "review_shift_from_direct_address_to_discussion",
+        "review_distinguish_dere_and_de_by_conversation_role",
+        "review_select_subject_pronoun_from_perspective",
+        "review_replace_repeated_names_with_pronouns"
       ]
     }
   ],

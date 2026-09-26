@@ -1,0 +1,397 @@
+- handle: understand_course_plan
+  op: choose
+  objective: obj-time-dates-and-scheduling-01
+  bloom: understand
+  derived_from:
+  - section_id: practice-understand-the-course-plan
+  prompt_md: "Velg oppsummeringen som stemmer med kursplanen."
+  stem_md: "Timeplan: «Kurset begynner 14. mai klokka halv seks. Nora og Amir møtes klokka kvart over fem.» Hvilket alternativ oppgir riktig dato, kursstart, møtetid og betydningen av halv seks?"
+  options:
+  - id: wrong_meeting_time
+    text: Kurset begynner den fjortende mai klokka 17.30, og Nora og Amir møtes klokka 17.45.
+    correct: false
+    why: Møtet er klokka 17.15; kvart over fem betyr femten over fem.
+  - id: wrong_course_time
+    text: Kurset begynner den fjortende mai klokka 16.30, og Nora og Amir møtes klokka 17.15.
+    correct: false
+    why: Halv seks betyr 17.30, ikke 16.30.
+  - id: correct
+    text: Kurset begynner den fjortende mai klokka 17.30, og Nora og Amir møtes klokka 17.15.
+    correct: true
+    why: Den fjortende mai er datoen i planen. Halv seks er 17.30, og kvart over fem er 17.15.
+  - id: wrong_date
+    text: Kurset begynner den femtende mai klokka 17.30, og Nora og Amir møtes klokka 17.15.
+    correct: false
+    why: Planen sier 14. mai, altså den fjortende mai.
+- handle: locate_time_around_the_hour
+  op: categorize
+  objective: obj-time-dates-and-scheduling-01
+  bloom: analyze
+  prompt_md: "Les tidsuttrykkene. Avgjør om hvert uttrykk viser til før eller etter den oppgitte hele timen."
+  buckets:
+  - bucket_id: after-hour
+    label: Etter den oppgitte timen
+  - bucket_id: before-hour
+    label: Før den oppgitte timen
+  items:
+  - item_id: after-1
+    text: Bussen går klokka tjue over ni.
+    bucket_id: after-hour
+  - item_id: after-2
+    text: Møtet starter klokka fem over to.
+    bucket_id: after-hour
+  - item_id: before-1
+    text: Timen begynner klokka ti på fire.
+    bucket_id: before-hour
+  - item_id: before-2
+    text: Bussen går klokka kvart på elleve.
+    bucket_id: before-hour
+  explanation_md: "«Tjue over ni» er tjue minutter etter ni, mens «ti på fire» er ti minutter før fire. «Halv seks» viser til 17.30."
+  derived_from:
+  - section_id: practice-locate-time-around-the-hour
+- handle: interpret_half_hour_expressions
+  op: choose
+  objective: obj-time-dates-and-scheduling-01
+  bloom: understand
+  prompt_md: "Velg riktig kobling mellom klokkeslettene og uttrykkene."
+  stem_md: 'Klokkeslettene er 17.20, 17.30 og 17.40. Hvilken kobling til de norske uttrykkene er riktig?'
+  options:
+  - id: half-mapping-mixed
+    text: 17.20 = halv seks; 17.30 = ti på halv seks; 17.40 = ti over halv seks.
+    correct: false
+    why: The midpoint and the two surrounding expressions are assigned to the wrong times.
+  - id: half-mapping-correct
+    text: 17.20 = ti på halv seks; 17.30 = halv seks; 17.40 = ti over halv seks.
+    correct: true
+    why: The midpoint is halv seks at 17.30; ti på halv seks is 17.20 and ti over halv seks is 17.40.
+  - id: half-mapping-reversed
+    text: 17.20 = ti over halv seks; 17.30 = halv seks; 17.40 = ti på halv seks.
+    correct: false
+    why: The before-and-after directions are reversed around the midpoint.
+  - id: half-mapping-shifted
+    text: 17.20 = ti på halv seks; 17.30 = ti over halv seks; 17.40 = halv seks.
+    correct: false
+    why: Halv seks names the midpoint at 17.30, not 17.40.
+  derived_from:
+  - section_id: practice-interpret-half-hour-expressions
+- handle: express_a_given_clock_time
+  op: recall_fill
+  objective: obj-time-dates-and-scheduling-01
+  bloom: apply
+  prompt_md: "Fullfør hver setning med det vanlige norske uttrykket for klokkeslettet."
+  audio_target: Bussen går klokka ti over fem. Timen begynner klokka kvart over fem. Kurset begynner klokka halv seks. Møtet starter klokka kvart på seks.
+  segments:
+  - text_md: '17.10 — Bussen går klokka '
+  - blank_id: bus-time
+    options:
+    - ti over fem
+    - ti på fem
+    answer_index: 0
+  - text_md: '. 17.15 — Timen begynner klokka '
+  - blank_id: lesson-time
+    options:
+    - kvart over fem
+    - kvart på fem
+    answer_index: 0
+  - text_md: '. 17.30 — Kurset begynner klokka '
+  - blank_id: course-time
+    options:
+    - halv fem
+    - halv seks
+    answer_index: 1
+  - text_md: '. 17.45 — Møtet starter klokka '
+  - blank_id: meeting-time
+    options:
+    - kvart over fem
+    - kvart på seks
+    answer_index: 1
+  - text_md: .
+  explanation_md: "17.30 er halv seks. Før halv seks teller vi tilbake fra halv: 17.20 er ti på halv seks, og 17.25 er fem på halv seks. Etter halv teller vi fram mot neste hele time: 17.45 er kvart på seks."
+  derived_from:
+  - section_id: practice-express-a-given-clock-time
+- handle: read_written_dates
+  op: recall_fill
+  objective: obj-time-dates-and-scheduling-01
+  bloom: apply
+  prompt_md: "Les datoene høyt på norsk. Fullfør setningene med datoene skrevet med bokstaver."
+  audio_target: Kurset starter fjortende mai. Kurset starter andre juni. Kurset starter tjueførste august.
+  segments:
+  - text_md: 'Dato: 14. mai — Kurset starter '
+  - blank_id: spoken-date-may
+    options:
+    - fjortende mai
+    - fjorten mai
+    answer_index: 0
+  - text_md: '. Dato: 2. juni — Kurset starter '
+  - blank_id: spoken-date-june
+    options:
+    - to juni
+    - andre juni
+    answer_index: 1
+  - text_md: '. Dato: 21. august — Kurset starter '
+  - blank_id: spoken-date-august
+    options:
+    - tjueførste august
+    - tjueen august
+    answer_index: 0
+  - text_md: .
+  explanation_md: "Datoer uttrykkes med ordenstall for dagen etterfulgt av måneden: 14. mai er fjortende mai, 2. juni er andre juni, og 21. august er tjueførste august."
+  derived_from:
+  - section_id: practice-read-written-dates
+- handle: complete_a_simple_arrangement
+  op: build
+  objective: obj-time-dates-and-scheduling-01
+  bloom: apply
+  prompt_md: "Sett sammen hele dialogen på norsk. Datoen er 14. mai, og det er ledig klokka 17.30. Nora foreslår planen, Amir spør om de har en avtale, og Nora bekrefter den endelige planen."
+  tokens:
+  - token_id: tok-10
+    text: 'Amir:'
+  - token_id: tok-21
+    text: halv
+  - token_id: tok-02
+    text: Vi
+  - token_id: tok-22
+    text: seks.
+  - token_id: tok-06
+    text: mai
+  - token_id: tok-12
+    text: det en avtale?
+  - token_id: tok-17
+    text: vi
+  - token_id: tok-11
+    text: Er
+  - token_id: tok-14
+    text: Ja,
+  - token_id: tok-16
+    text: møtes
+  - token_id: tok-20
+    text: klokka
+  - token_id: tok-07
+    text: klokka
+  - token_id: tok-13
+    text: 'Nora:'
+  - token_id: tok-18
+    text: fjortende
+  - token_id: tok-19
+    text: mai
+  - token_id: tok-15
+    text: da
+  - token_id: tok-09
+    text: seks.
+  - token_id: tok-08
+    text: halv
+  - token_id: tok-01
+    text: 'Nora:'
+  - token_id: tok-03
+    text: kan
+  - token_id: tok-04
+    text: møtes
+  - token_id: tok-05
+    text: fjortende
+  answer_order:
+  - tok-01
+  - tok-02
+  - tok-03
+  - tok-04
+  - tok-05
+  - tok-06
+  - tok-07
+  - tok-08
+  - tok-09
+  - tok-10
+  - tok-11
+  - tok-12
+  - tok-13
+  - tok-14
+  - tok-15
+  - tok-16
+  - tok-17
+  - tok-18
+  - tok-19
+  - tok-20
+  - tok-21
+  - tok-22
+  derived_from:
+  - section_id: practice-complete-a-simple-arrangement
+- handle: transfer_the_schedule_to_a_new_situation
+  op: build
+  objective: obj-time-dates-and-scheduling-01
+  bloom: apply
+  prompt_md: "Sett sammen en hel dialog på norsk om å møtes før en film. Filmen vises 14. mai klokka 17.40, og det er mulig å møtes klokka 17.20. Spør når filmen begynner, oppgi dato og klokkeslett med ord, foreslå å møtes, og bekreft planen tydelig."
+  tokens:
+  - token_id: b-05
+    text: 'Oskar:'
+  - token_id: b-08
+    text: fjortende
+  - token_id: b-16
+    text: Vi
+  - token_id: b-14
+    text: seks.
+  - token_id: b-37
+    text: seks.
+  - token_id: b-11
+    text: ti
+  - token_id: b-12
+    text: over
+  - token_id: b-17
+    text: kan
+  - token_id: b-03
+    text: begynner
+  - token_id: b-07
+    text: begynner
+  - token_id: b-10
+    text: klokka
+  - token_id: b-13
+    text: halv
+  - token_id: b-02
+    text: Når
+  - token_id: b-06
+    text: Filmen
+  - token_id: b-09
+    text: mai
+  - token_id: b-19
+    text: klokka
+  - token_id: b-30
+    text: vi
+  - token_id: b-32
+    text: mai
+  - token_id: b-25
+    text: det?
+  - token_id: b-15
+    text: 'Lina:'
+  - token_id: b-21
+    text: på
+  - token_id: b-26
+    text: 'Oskar:'
+  - token_id: b-04
+    text: filmen?
+  - token_id: b-29
+    text: møtes
+  - token_id: b-27
+    text: Ja,
+  - token_id: b-28
+    text: da
+  - token_id: b-34
+    text: ti
+  - token_id: b-33
+    text: klokka
+  - token_id: b-01
+    text: 'Lina:'
+  - token_id: b-24
+    text: Passer
+  - token_id: b-22
+    text: halv
+  - token_id: b-18
+    text: møtes
+  - token_id: b-36
+    text: halv
+  - token_id: b-20
+    text: ti
+  - token_id: b-31
+    text: fjortende
+  - token_id: b-23
+    text: seks.
+  - token_id: b-35
+    text: på
+  answer_order:
+  - b-01
+  - b-02
+  - b-03
+  - b-04
+  - b-05
+  - b-06
+  - b-07
+  - b-08
+  - b-09
+  - b-10
+  - b-11
+  - b-12
+  - b-13
+  - b-14
+  - b-15
+  - b-16
+  - b-17
+  - b-18
+  - b-19
+  - b-20
+  - b-21
+  - b-22
+  - b-23
+  - b-24
+  - b-25
+  - b-26
+  - b-27
+  - b-28
+  - b-29
+  - b-30
+  - b-31
+  - b-32
+  - b-33
+  - b-34
+  - b-35
+  - b-36
+  - b-37
+  derived_from:
+  - section_id: practice-transfer-the-schedule-to-a-new-situation
+- handle: remember_the_plan
+  op: write
+  objective: obj-time-dates-and-scheduling-01
+  bloom: apply
+  prompt_md: "Reisenotat: «Tog: 8. september, avgang 17.15. Seneste møtetid: 17.00.» Jon spør: «Når går toget, og når skal vi møtes?» Svar kort på norsk. Skriv datoen med bokstaver, bruk vanlige norske klokkeuttrykk, foreslå det seneste mulige møtetidspunktet og bekreft planen i 2–3 korte setninger."
+  response_language: 'no'
+  min_words: 8
+  max_words: 35
+  judge_prompt: Check whether the response states the supplied date as an ordinal, expresses the train time as kvart over fem or an equivalent natural Norwegian expression of 17.15, proposes meeting at five, and confirms the same factual plan. Accept natural Norwegian variants; do not require an exact wording or a speaking response.
+  criteria:
+  - id: date-in-words
+    instruction: States 8 September as åttende september or another natural Norwegian ordinal date form.
+  - id: event-time
+    instruction: Acknowledges that the train leaves at 17.15 using a correct everyday Norwegian time expression.
+  - id: meeting-time
+    instruction: Proposes and confirms meeting at 17.00.
+  - id: factual-plan
+    instruction: Communicates one clear, internally consistent plan in 2 to 3 short Norwegian sentences.
+  derived_from:
+  - section_id: final-retrieval-request-remember-the-plan
+- handle: review_express_a_given_clock_time
+  op: write
+  objective: obj-time-dates-and-scheduling-01
+  bloom: apply
+  prompt_md: "Skriv det norske klokkeuttrykket for 17.20."
+  response_language: 'no'
+  min_words: 1
+  max_words: 4
+  judge_prompt: Check that the response is a correct Norwegian time expression for 17.20, i.e., "ti på halv seks" or an equivalent natural expression. Accept variants like "ti på halv seks" or "ti på halv seks" (no punctuation). Do not accept "ti over halv seks" or "halv seks".
+  criteria:
+  - id: time-expression
+    instruction: Uses a correct Norwegian expression for 17.20, such as "ti på halv seks".
+  derived_from:
+  - section_id: practice-express-a-given-clock-time
+- handle: review_read_written_dates
+  op: write
+  objective: obj-time-dates-and-scheduling-01
+  bloom: apply
+  prompt_md: "Skriv datoen 29. mai med bokstaver på norsk."
+  response_language: 'no'
+  min_words: 1
+  max_words: 3
+  judge_prompt: Check that the response is the ordinal date form "tjueniende mai" or an equivalent natural form. Accept "tjueniende mai" or "den tjueniende mai". Do not accept "tjueni mai".
+  criteria:
+  - id: date-ordinal
+    instruction: Uses the ordinal day "tjueniende" with the month "mai".
+  derived_from:
+  - section_id: practice-read-written-dates
+- handle: review_complete_a_simple_arrangement
+  op: write
+  objective: obj-time-dates-and-scheduling-01
+  bloom: apply
+  prompt_md: "Skriv en bekreftelse på norsk om at dere møtes fredag 19. juni klokka 9.15. Bruk mønsteret «Vi møtes ...», og ta med dag, dato og klokkeslett."
+  response_language: 'no'
+  min_words: 3
+  max_words: 10
+  judge_prompt: Check that the response is a single Norwegian sentence beginning with "Vi møtes" and confirming a meeting on Friday 19 June at quarter past nine. Accept natural variants such as "Vi møtes fredag 19. juni klokka kvart over ni." The sentence must include the weekday, date, and time.
+  criteria:
+  - id: plan-confirmation
+    instruction: Confirms a meeting by beginning with "Vi møtes" and including the weekday, date, and time in one Norwegian sentence.
+  derived_from:
+  - section_id: practice-complete-a-simple-arrangement

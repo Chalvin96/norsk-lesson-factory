@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "reflexive_possessives",
   "kind": "grammar",
   "language": "nb-NO",
@@ -80,6 +80,26 @@
     {
       "kind": "exercise",
       "id": "two_question_review"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_ownership_relation"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_reflexive_or_ordinary"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_possessed_noun_agreement"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_complete_own_phrase"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_transfer_response"
     }
   ],
   "sections": [
@@ -2273,38 +2293,38 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Read the cabin sentence and choose the complete interpretation that identifies the subject, the possessed item, and whether the item belongs to the subject. Do not score agreement yet."
+          "value": "What does «si» refer to in Lina's line?"
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Sin, si, sitt og sine viser til subjektet i setningen eller leddsetningen der eiendomsordet står. Hans, hennes og deres viser til en annen eier."
+        }
+      ],
       "payload": {
         "options": [
           {
-            "option_id": "subject-owns-item",
-            "text": "Subjektet er Jonas, tingen er jakka, og Jonas eier den selv — The subject is Jonas, the item is the jacket, and Jonas owns it himself.",
-            "why": "The subject Jonas owns the jacket, so the sentence expresses his own jacket."
+            "option_id": "oskar-owns-jacket",
+            "text": "Jonas is the subject, but Oskar owns the jacket.",
+            "why": "That ownership reading would require an ordinary possessive referring to Oskar."
           },
           {
-            "option_id": "other-person-owns-item",
-            "text": "Subjektet er Jonas, tingen er jakka, og Nora eier den — The subject is Jonas, the item is the jacket, and Nora owns it.",
-            "why": "The sentence does not make Nora the owner."
+            "option_id": "lina-owns-jacket",
+            "text": "Lina is the subject and owns the jacket.",
+            "why": "Lina speaks in the first line, but Jonas is the subject of the target clause."
           },
           {
-            "option_id": "wrong-subject",
-            "text": "Subjektet er Nora, tingen er jakka, og Nora eier den selv — The subject is Nora, the item is the jacket, and Nora owns it herself.",
-            "why": "The subject in the sentence is Jonas, not Nora."
-          },
-          {
-            "option_id": "wrong-item",
-            "text": "Subjektet er Jonas, tingen er passet, og Jonas eier den selv — The subject is Jonas, the item is the passport, and Jonas owns it himself.",
-            "why": "The possessed item in the sentence is the jacket, not the passport."
+            "option_id": "jonas-owns-jacket",
+            "text": "Jonas is the subject and owns the jacket.",
+            "why": "Si refers to the clause subject, Jonas."
           }
         ],
-        "answer_id": "subject-owns-item",
+        "answer_id": "jonas-owns-jacket",
         "stem": [
           {
             "kind": "text",
-            "value": "Interpret this cabin sentence: Jonas tar på seg jakka si."
+            "value": "Lina: Jonas leter etter jakka si. Oskar: Ja, han la den på stolen."
           }
         ]
       }
@@ -2317,10 +2337,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Every item belongs to the sentence subject. Fill each blank with the correct member of sin–si–sitt–sine. Choose from the possessed noun gender and number; the owner gender is irrelevant."
+          "value": "Fill in «sin», «si», «sitt», or «sine»."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "The possessed noun controls the form: nøkkelen–sin, jakka–si, passet–sitt and billettene–sine."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -2439,13 +2464,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each cabin sentence. Use a reflexive form when the subject owns the item; use hans, hennes, or deres when a named other person owns it. Agreement is secondary in this activity."
+          "value": "Complete the sentences with the possessive that shows who owns the thing."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Sin/si/sitt/sine refers back to the clause subject and agrees with the possessed noun; hans/hennes/deres identifies another owner."
+          "value": "Use a reflexive possessive when the clause subject is the owner and an ordinary possessive when someone else is the owner."
         }
       ],
       "payload": {
@@ -2455,7 +2480,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Jonas pakker jakka"
+                "value": "Jakka tilhører Nora. Jonas pakker jakka"
               },
               {
                 "kind": "text",
@@ -2467,21 +2492,17 @@
             "kind": "blank",
             "blank_id": "contrast-jonas-nora",
             "options": [
-              "si",
-              "hennes"
+              "hennes",
+              "si"
             ],
-            "answer_index": 1
+            "answer_index": 0
           },
           {
             "kind": "span",
             "spans": [
               {
                 "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "for Nora. Nora pakker jakka"
+                "value": ". Jakka tilhører Nora. Nora pakker jakka"
               },
               {
                 "kind": "text",
@@ -2493,17 +2514,17 @@
             "kind": "blank",
             "blank_id": "contrast-nora-own",
             "options": [
-              "hennes",
-              "si"
+              "si",
+              "hennes"
             ],
-            "answer_index": 1
+            "answer_index": 0
           },
           {
             "kind": "span",
             "spans": [
               {
                 "kind": "text",
-                "value": ". Nora legger passet"
+                "value": ". Passet tilhører Jonas. Nora legger passet"
               },
               {
                 "kind": "text",
@@ -2529,7 +2550,7 @@
               },
               {
                 "kind": "text",
-                "value": "i sekken for Jonas. Jonas finner passet"
+                "value": "i sekken. Passet tilhører Jonas. Jonas finner passet"
               },
               {
                 "kind": "text",
@@ -2543,54 +2564,6 @@
             "options": [
               "hans",
               "sitt"
-            ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": ". Oskar legger billettene"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "contrast-oskar-group",
-            "options": [
-              "sine",
-              "deres"
-            ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "i sekken for Jonas og Nora. Jonas og Nora finner billettene"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "contrast-group-own",
-            "options": [
-              "deres",
-              "sine"
             ],
             "answer_index": 1
           },
@@ -2614,13 +2587,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Fill each sentence with the possessive and then choose a brief basis for each choice. Use the gender or plural number of the possessed noun as your basis, never the gender or number of the owner."
+          "value": "Fill in the correct reflexive possessive."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Choose sin/si/sitt/sine by the possessed noun, then verify that the owner is the clause subject."
+          "value": "Changing the owner's gender or number does not change the form; jakka takes si and passet takes sitt."
         }
       ],
       "payload": {
@@ -2640,36 +2613,12 @@
           },
           {
             "kind": "blank",
-            "blank_id": "misconception-jonas-form",
+            "blank_id": "misconception-male-owner",
             "options": [
               "sin",
               "si",
               "sitt",
               "sine"
-            ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": ". Basis:"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "misconception-jonas-basis",
-            "options": [
-              "substantivet er et hankjønnsord i entall — the noun is masculine singular",
-              "substantivet er et hunkjønnsord i entall — the noun is feminine singular",
-              "substantivet er et intetkjønnsord i entall — the noun is neuter singular",
-              "substantivet står i flertall — the noun is plural"
             ],
             "answer_index": 1
           },
@@ -2688,36 +2637,12 @@
           },
           {
             "kind": "blank",
-            "blank_id": "misconception-nora-form",
+            "blank_id": "misconception-female-owner",
             "options": [
               "sin",
               "si",
               "sitt",
               "sine"
-            ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": ". Basis:"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "misconception-nora-basis",
-            "options": [
-              "substantivet er et hankjønnsord i entall — the noun is masculine singular",
-              "substantivet er et hunkjønnsord i entall — the noun is feminine singular",
-              "substantivet er et intetkjønnsord i entall — the noun is neuter singular",
-              "substantivet står i flertall — the noun is plural"
             ],
             "answer_index": 1
           },
@@ -2736,132 +2661,12 @@
           },
           {
             "kind": "blank",
-            "blank_id": "misconception-plural-owner-form",
+            "blank_id": "misconception-plural-owner",
             "options": [
               "sin",
               "si",
               "sitt",
               "sine"
-            ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": ". Basis:"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "misconception-plural-owner-basis",
-            "options": [
-              "substantivet er et hankjønnsord i entall — the noun is masculine singular",
-              "substantivet er et hunkjønnsord i entall — the noun is feminine singular",
-              "substantivet er et intetkjønnsord i entall — the noun is neuter singular",
-              "substantivet står i flertall — the noun is plural"
-            ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": ". Nora finner nøkkelen"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "misconception-masculine-form",
-            "options": [
-              "sin",
-              "si",
-              "sitt",
-              "sine"
-            ],
-            "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": ". Basis:"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "misconception-masculine-basis",
-            "options": [
-              "substantivet er et hankjønnsord i entall — the noun is masculine singular",
-              "substantivet er et hunkjønnsord i entall — the noun is feminine singular",
-              "substantivet er et intetkjønnsord i entall — the noun is neuter singular",
-              "substantivet står i flertall — the noun is plural"
-            ],
-            "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": ". Nora finner jakka"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "misconception-feminine-form",
-            "options": [
-              "sin",
-              "si",
-              "sitt",
-              "sine"
-            ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": ". Basis:"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "misconception-feminine-basis",
-            "options": [
-              "substantivet er et hankjønnsord i entall — the noun is masculine singular",
-              "substantivet er et hunkjønnsord i entall — the noun is feminine singular",
-              "substantivet er et intetkjønnsord i entall — the noun is neuter singular",
-              "substantivet står i flertall — the noun is plural"
             ],
             "answer_index": 1
           },
@@ -2880,7 +2685,7 @@
           },
           {
             "kind": "blank",
-            "blank_id": "misconception-neuter-form",
+            "blank_id": "misconception-single-owner-passport",
             "options": [
               "sin",
               "si",
@@ -2894,7 +2699,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": ". Basis:"
+                "value": ". Nora og Emil finner passet"
               },
               {
                 "kind": "text",
@@ -2904,62 +2709,14 @@
           },
           {
             "kind": "blank",
-            "blank_id": "misconception-neuter-basis",
-            "options": [
-              "substantivet er et hankjønnsord i entall — the noun is masculine singular",
-              "substantivet er et hunkjønnsord i entall — the noun is feminine singular",
-              "substantivet er et intetkjønnsord i entall — the noun is neuter singular",
-              "substantivet står i flertall — the noun is plural"
-            ],
-            "answer_index": 2
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": ". Nora finner billettene"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "misconception-plural-form",
+            "blank_id": "misconception-group-owner-passport",
             "options": [
               "sin",
               "si",
               "sitt",
               "sine"
             ],
-            "answer_index": 3
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": ". Basis:"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "misconception-plural-basis",
-            "options": [
-              "substantivet er et hankjønnsord i entall — the noun is masculine singular",
-              "substantivet er et hunkjønnsord i entall — the noun is feminine singular",
-              "substantivet er et intetkjønnsord i entall — the noun is neuter singular",
-              "substantivet står i flertall — the noun is plural"
-            ],
-            "answer_index": 3
+            "answer_index": 2
           },
           {
             "kind": "span",
@@ -2981,10 +2738,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Build one complete Norwegian sentence from the supplied tokens. Nora owns all four items; use the definite noun form and the matching reflexive possessive after each noun. Use every token exactly once."
+          "value": "Build the sentence from all the words."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "In this pattern, the definite noun comes before its matching reflexive possessive."
+        }
+      ],
       "payload": {
         "tokens": [
           {
@@ -3066,10 +2828,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each paired cabin example. In each pair, the first subject handles an item owned by named other people, and the second subject is the owner. Use hans, hennes, or deres in the first sentence and sin, si, sitt, or sine in the second."
+          "value": "Complete each pair with the possessives that match the subject."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "The physical item stays the same, but the possessive changes when the clause subject changes."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -3077,7 +2844,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Jonas bærer nøkkelen"
+                "value": "Nøkkelen tilhører Nora. Jonas bærer nøkkelen"
               },
               {
                 "kind": "text",
@@ -3089,21 +2856,17 @@
             "kind": "blank",
             "blank_id": "changing-nora-key-other",
             "options": [
-              "sin",
-              "hennes"
+              "hennes",
+              "sin"
             ],
-            "answer_index": 1
+            "answer_index": 0
           },
           {
             "kind": "span",
             "spans": [
               {
                 "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "for Nora. Nora bærer nøkkelen"
+                "value": ". Nora bærer nøkkelen"
               },
               {
                 "kind": "text",
@@ -3115,21 +2878,17 @@
             "kind": "blank",
             "blank_id": "changing-nora-key-own",
             "options": [
-              "hennes",
-              "sin"
+              "sin",
+              "hennes"
             ],
-            "answer_index": 1
+            "answer_index": 0
           },
           {
             "kind": "span",
             "spans": [
               {
                 "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "til bilen. Nora legger jakka"
+                "value": ". Jakka tilhører Jonas. Nora legger jakka"
               },
               {
                 "kind": "text",
@@ -3151,11 +2910,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "på stolen for Jonas. Jonas tar på seg jakka"
+                "value": ". Jonas tar på seg jakka"
               },
               {
                 "kind": "text",
@@ -3177,7 +2932,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": ". Oskar holder passet"
+                "value": ". Passet tilhører Jonas og Nora. Oskar holder passet"
               },
               {
                 "kind": "text",
@@ -3189,21 +2944,17 @@
             "kind": "blank",
             "blank_id": "changing-group-passport-other",
             "options": [
-              "sitt",
-              "deres"
+              "deres",
+              "sitt"
             ],
-            "answer_index": 1
+            "answer_index": 0
           },
           {
             "kind": "span",
             "spans": [
               {
                 "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "for Jonas og Nora. Jonas og Nora finner passet"
+                "value": ". Jonas og Nora finner passet"
               },
               {
                 "kind": "text",
@@ -3215,58 +2966,10 @@
             "kind": "blank",
             "blank_id": "changing-group-passport-own",
             "options": [
-              "deres",
-              "sitt"
+              "sitt",
+              "deres"
             ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": ". Jonas bærer billettene"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "changing-nora-tickets-other",
-            "options": [
-              "sine",
-              "hennes"
-            ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "for Nora. Nora finner billettene"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "changing-nora-tickets-own",
-            "options": [
-              "hennes",
-              "sine"
-            ],
-            "answer_index": 1
+            "answer_index": 0
           },
           {
             "kind": "span",
@@ -3288,10 +2991,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Build one complete Norwegian sentence from the supplied tokens. The sentence should state these four facts: Jonas finds his own key, Nora puts on her own jacket, Oskar finds his own passport, and Nora and Emil find their own tickets. Use every token exactly once."
+          "value": "Build the four cabin messages from all the words. Keep the information about who owns each item."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Each owner is also the subject, while the possessed nouns require four different agreement forms."
+        }
+      ],
       "payload": {
         "tokens": [
           {
@@ -3311,7 +3019,7 @@
           },
           {
             "token_id": "cabin-sin",
-            "text": "sin,",
+            "text": "sin.",
             "fixed": false
           },
           {
@@ -3341,7 +3049,7 @@
           },
           {
             "token_id": "cabin-si",
-            "text": "si,",
+            "text": "si.",
             "fixed": false
           },
           {
@@ -3361,12 +3069,7 @@
           },
           {
             "token_id": "cabin-sitt",
-            "text": "sitt,",
-            "fixed": false
-          },
-          {
-            "token_id": "cabin-og-1",
-            "text": "og",
+            "text": "sitt.",
             "fixed": false
           },
           {
@@ -3375,7 +3078,7 @@
             "fixed": false
           },
           {
-            "token_id": "cabin-og-2",
+            "token_id": "cabin-og",
             "text": "og",
             "fixed": false
           },
@@ -3415,9 +3118,8 @@
           "cabin-finner-2",
           "cabin-passet",
           "cabin-sitt",
-          "cabin-og-1",
           "cabin-nora-2",
-          "cabin-og-2",
+          "cabin-og",
           "cabin-emil",
           "cabin-finner-3",
           "cabin-billettene",
@@ -3433,27 +3135,31 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write five short Norwegian sentences about colleagues closing an office and collecting personal belongings. Include one sentence with each of sin, si, sitt, and sine for an item owned by its subject, and at least one sentence where a colleague handles another colleague's item, using hans, hennes, or deres. Use original office wording."
+          "value": "Write a report to the office manager about what Amina and Petter should do before closing time. Use the third person. Include Amina's own computer, Petter's own window, Petter's access card on his desk, and the papers they own together."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 30,
+        "min_words": 35,
         "max_words": 55,
-        "judge_prompt": "Check the response against the task and report evidence for each criterion. Accept natural Norwegian wording and equivalent possessive forms that preserve the required ownership relationships.",
+        "judge_prompt": "Vurder svaret etter kriteriene office-message, supplied-facts, reflexive-possessives, noun-agreement. Et naturlig norsk svar som oppfyller kriteriene, må bestå. Rapporten skal omtale Amina og Petter i tredje person, ikke henvende seg direkte til dem. Bedøm hvert possessiv ut fra subjektet i setningen: bruk refleksivt possessiv når eieren er subjektet, og vanlig possessiv når eieren er en annen enn subjektet. Godta for eksempel «Petter åpner sitt vindu» og «Amina åpner vinduet hans». Bruk samme regel for adgangskortet og skrivebordet, og bevar at papirene eies av Amina og Petter sammen. Et svar som utelater adgangskortet, skal stryke på supplied-facts.",
         "criteria": [
           {
-            "id": "office-context",
-            "instruction": "Describes colleagues closing an office and collecting personal belongings in five original Norwegian sentences."
+            "id": "office-message",
+            "instruction": "Svaret er en norsk rapport til kontorlederen i tredje person om oppgavene Amina og Petter skal gjøre før stengetid."
           },
           {
-            "id": "ownership-contrast",
-            "instruction": "Uses sin, si, sitt, or sine when the subject owns the item, and hans, hennes, or deres when another colleague owns the item."
+            "id": "supplied-facts",
+            "instruction": "Meldingen kommuniserer alle fire oppgitte kontorfakta uten å endre hvem som eier hver gjenstand."
+          },
+          {
+            "id": "reflexive-possessives",
+            "instruction": "Bruker refleksivt possessiv når eieren er subjektet i setningen, og vanlig possessiv når eieren ikke er subjektet. Bevarer at Amina og Petter eier papirene sammen; godta riktig possessivvalg uavhengig av hvem av dem som er subjekt i den aktuelle setningen."
           },
           {
             "id": "noun-agreement",
-            "instruction": "Matches sin with masculine singular, si with feminine singular, sitt with neuter singular, and sine with plural possessed nouns."
+            "instruction": "Refleksive eiendomsord samsvarer riktig med substantivene de bestemmer."
           }
         ]
       }
@@ -3466,31 +3172,354 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "First state in Norwegian the two questions you use when choosing a possessive. Then write four short Norwegian sentences about people leaving a shared place: use sin in one sentence, si in one, sitt in one, and sine in one. In every sentence, the subject must own the possessed noun."
+          "value": "Write a note to a classmate. Explain how to tell whether an item belongs to the subject, and how the noun determines the form of the possessive. Give four examples of possessives that show the item belongs to the subject: one with each of «sin», «si», «sitt», and «sine». Use different nouns."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 25,
-        "max_words": 60,
-        "judge_prompt": "Check the response against the task and report evidence for each criterion. Accept natural Norwegian paraphrases of the two questions and natural sentences that preserve the required subject–owner relationship.",
+        "min_words": 40,
+        "max_words": 65,
+        "judge_prompt": "Evaluate the response using study-note-purpose, ownership-check, noun-form-check, four-examples. All listed criteria are gating because each mirrors the visible task. Accept natural Norwegian paraphrases. A note that explains both checks and gives at least one accurate subject-owner example for each form must pass, using any suitable nouns and even if it gives extra natural examples. A note that explains only noun agreement must fail ownership-check.",
         "criteria": [
           {
-            "id": "ownership-question",
-            "instruction": "States that the first question checks whether the subject owns the possessed noun."
+            "id": "study-note-purpose",
+            "instruction": "The response is a Norwegian study note addressed to a classmate."
           },
           {
-            "id": "noun-question",
-            "instruction": "States that the second question checks the gender or number of the possessed noun."
+            "id": "ownership-check",
+            "instruction": "The note explains that the learner first checks whether the possessed noun belongs to the clause subject."
           },
           {
-            "id": "four-reflexive-forms",
-            "instruction": "Writes four short Norwegian sentences with sin, si, sitt, and sine, one form per sentence."
+            "id": "noun-form-check",
+            "instruction": "The note explains that the learner then checks the possessed noun's gender or number."
           },
           {
-            "id": "subject-owner",
-            "instruction": "Makes the subject the owner of the possessed noun in all four sentences."
+            "id": "four-examples",
+            "instruction": "The note gives at least one accurate subject-owner example each using sin, si, sitt and sine with suitable nouns. Extra natural mentions while explaining the forms do not invalidate it."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_ownership_relation",
+      "operation": "choose",
+      "objective_id": "obj-reflexive-possessives-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the sentence that fits Jonas's note."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "A reflexive possessive points back to the subject of its own clause."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "wrong-noun-agreement",
+            "text": "Jonas sjekker mobilen sitt før han drar.",
+            "why": "The ownership relation is reflexive, but mobilen does not take sitt."
+          },
+          {
+            "option_id": "jonas-own-phone",
+            "text": "Jonas sjekker mobilen sin før han drar.",
+            "why": "Jonas is both the clause subject and the phone's owner."
+          },
+          {
+            "option_id": "jonas-other-phone",
+            "text": "Jonas sjekker mobilen hans før han drar.",
+            "why": "Hans presents another male person as the owner."
+          }
+        ],
+        "answer_id": "jonas-own-phone",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Note: The phone belongs to Jonas. He checks it before he leaves."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_reflexive_or_ordinary",
+      "operation": "recall_fill",
+      "objective_id": "obj-reflexive-possessives-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fill in «sin» or «hans»."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "The backpack belongs to Jonas, not to the clause subject Oskar, so the ordinary possessive is required."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Sekken tilhører Jonas. Oskar finner sekken"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-other-owner",
+            "options": [
+              "sin",
+              "hans"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "for Jonas."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_possessed_noun_agreement",
+      "operation": "recall_fill",
+      "objective_id": "obj-reflexive-possessives-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fill in «sin», «si», «sitt», or «sine»."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "The four forms follow the possessed nouns døra, kartet, koffertene and bilen."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Mina låser døra"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-feminine",
+            "options": [
+              "sin",
+              "si",
+              "sitt",
+              "sine"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Erik sjekker kartet"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-neuter",
+            "options": [
+              "sin",
+              "si",
+              "sitt",
+              "sine"
+            ],
+            "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". De henter koffertene"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-plural",
+            "options": [
+              "sin",
+              "si",
+              "sitt",
+              "sine"
+            ],
+            "answer_index": 3
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Nora starter bilen"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-masculine",
+            "options": [
+              "sin",
+              "si",
+              "sitt",
+              "sine"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_complete_own_phrase",
+      "operation": "recall_fill",
+      "objective_id": "obj-reflexive-possessives-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Complete the noun phrase."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "The post-nominal pattern uses the definite noun followed by the agreeing possessive."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Emil må ta med passet som tilhører ham:"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-complete-neuter-phrase",
+            "options": [
+              "pass sitt",
+              "passet sitt",
+              "passet sin",
+              "sitt passet"
+            ],
+            "answer_index": 1
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_transfer_response",
+      "operation": "choose",
+      "objective_id": "obj-reflexive-possessives-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the reply that fits the situation."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Eierforholdet avgjør om possessivet viser tilbake til subjektet; substantivet avgjør formen."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "wrong-reflexive-forms",
+            "text": "Amina finner nøkkelen si, tar på seg jakka sin, pakker passet sine og billettene sitt. Hun setter veska hennes ved døra.",
+            "why": "Possessivene må samsvare med nøkkelen, jakka, passet og billettene."
+          },
+          {
+            "option_id": "reflexive-forms-but-wrong-ownership",
+            "text": "Amina finner nøkkelen sin, tar på seg jakka si, pakker passet sitt og billettene sine. Hun setter veska si ved døra.",
+            "why": "Si viser her til Amina, men veska tilhører Liv."
+          },
+          {
+            "option_id": "all-owners-and-forms-correct",
+            "text": "Amina finner nøkkelen sin, tar på seg jakka si, pakker passet sitt og billettene sine. Hun setter veska hennes ved døra.",
+            "why": "Sin, si, sitt og sine viser tilbake til Amina og samsvarer med hvert substantiv; hennes viser til Liv."
+          },
+          {
+            "option_id": "wrong-ordinary-possessive",
+            "text": "Amina finner nøkkelen sin, tar på seg jakka si, pakker passet sitt og billettene sine. Hun setter veska sin ved døra.",
+            "why": "Veska tilhører Liv, ikke setningssubjektet Amina."
+          }
+        ],
+        "answer_id": "all-owners-and-forms-correct",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Amina owns the key, jacket, passport, and tickets. Liv owns the bag. Amina will collect the items before she leaves."
           }
         ]
       }
@@ -3509,7 +3538,12 @@
         "changing_subject_same_belonging",
         "cabin_departure_sentence_building",
         "office_ownership_transfer",
-        "two_question_review"
+        "two_question_review",
+        "review_ownership_relation",
+        "review_reflexive_or_ordinary",
+        "review_possessed_noun_agreement",
+        "review_complete_own_phrase",
+        "review_transfer_response"
       ]
     }
   ],

@@ -24,9 +24,11 @@ def test_authoring_projections_given_positive_and_labeled_negative_examples_expe
     visible_examples = exported["sections"][0]["blocks"][0]["items"]
     assert [_text(item["no"]) for item in visible_examples] == [
         "Jeg kommer.",
-        "Incorrect: Jeg komme.",
-        "Not: Jeg kommer. (in this situation)",
+        "Jeg komme.",
+        "Jeg kommer. (in this situation)",
     ]
+    assert [item.get("teaching_role", "model") for item in visible_examples] == ["model", "incorrect", "incorrect"]
+    assert all("Incorrect:" not in _text(item["en"]) for item in visible_examples)
     assert [item["text"] for item in transcript] == ["Jeg kommer."]
     assert attempt[0]["id"] == "choose-example"
     assert attempt[0]["operation"] == "choose"

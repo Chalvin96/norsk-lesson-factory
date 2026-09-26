@@ -177,6 +177,8 @@ def _build_block(
     output = {
         key: value for key, value in block.items() if key not in {"id", "turn_index", "character_id", "voice_profile"}
     }
+    if kind == "example" and output.get("teaching_role") == "model":
+        output.pop("teaching_role")
     output["id"] = block_id
     if kind == "reading" and block.get("dialogue_id"):
         _populate_reading_block(
@@ -307,6 +309,8 @@ def _build_example_items(
             "id": f"{block_id}-item-{index + 1}",
             **{key: value for key, value in item.items() if key != "id"},
         }
+        if projected_item.get("teaching_role") == "model":
+            projected_item.pop("teaching_role")
         source = {**_block_source(source_section_id, source_block_path), "item_index": index}
         audio_id = audio_bindings.get(audio_binding_key(source))
         if audio_id is not None:
@@ -441,24 +445,30 @@ def _build_exercise(element: dict[str, Any], *, audio_bindings: Mapping[str, str
     payload = dict(element["payload"])
     if element["operation"] == "recall_fill":
         payload.pop("audio_target", None)
+    common = {
+        "kind": "exercise",
+        "id": element["id"],
+        "operation": element["operation"],
+        "objective_id": element["objective_id"],
+        "prompt": element["prompt"],
+        "explanation": element.get("explanation"),
+        "payload": payload,
+    }
+    _add_nonempty(common, "stimulus", element.get("stimulus"))
     projected = cast(
         dict[str, Any],
-        _strip_spans_in_obj(
-            {
-                "kind": "exercise",
-                "id": element["id"],
-                "operation": element["operation"],
-                "objective_id": element["objective_id"],
-                "prompt": element["prompt"],
-                "explanation": element.get("explanation"),
-                "payload": payload,
-            }
-        ),
+        _strip_spans_in_obj(common),
     )
     audio_id = audio_bindings.get(f"exercise:{element['id']}")
     if audio_id is not None:
         projected["audio_id"] = audio_id
     return projected
+
+
+def _add_nonempty(target: dict[str, Any], key: str, value: object) -> None:
+    """Add one optional public field only when authored content exists."""
+    if value:
+        target[key] = value
 
 
 def _build_practice_group(pool: dict[str, Any], *, exercise_ids: set[str]) -> dict[str, Any]:

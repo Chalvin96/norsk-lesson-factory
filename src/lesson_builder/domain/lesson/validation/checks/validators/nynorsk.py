@@ -154,6 +154,7 @@ def nynorsk_scan(text: str) -> list[str]:
 def _learner_facing_bokmal_targets(el: dict[str, Any]) -> list[str]:
     op = el.get("operation")
     payload = el.get("payload", {})
+    texts = _stimulus_targets(el.get("stimulus"))
     handlers = {
         "judge": _judge_targets,
         "find_fix": _get_empty_targets,
@@ -167,8 +168,23 @@ def _learner_facing_bokmal_targets(el: dict[str, Any]) -> list[str]:
     }
     handler = handlers.get(op) if isinstance(op, str) else None
     if handler is not None:
-        return handler(payload)
-    return [value for value in payload.values() if isinstance(value, str)]
+        texts.extend(handler(payload))
+        return texts
+    texts.extend(value for value in payload.values() if isinstance(value, str))
+    return texts
+
+
+def _stimulus_targets(value: object) -> list[str]:
+    """Collect Norwegian text from typed dialogue stimulus turns."""
+    if not isinstance(value, list):
+        return []
+    return [
+        json.dumps(turn.get("text", []), ensure_ascii=False)
+        for block in value
+        if isinstance(block, dict) and block.get("kind") == "dialogue"
+        for turn in block.get("turns", [])
+        if isinstance(turn, dict)
+    ]
 
 
 def _get_empty_targets(payload: dict[str, Any]) -> list[str]:

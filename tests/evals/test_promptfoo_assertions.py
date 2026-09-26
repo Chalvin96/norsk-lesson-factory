@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 
 from evals.promptfoo.assertions import response_contract
+from evals.promptfoo.assertions import validate_normalization_negative_markers
 from evals.promptfoo.assertions import validate_review_edit_handle_coverage
 from evals.promptfoo.assertions import validate_review_edit_replacements
 
@@ -62,6 +63,35 @@ def test_response_contract_given_unknown_surface_expect_fail():
 
     assert result["pass"] is False
     assert "unknown" in str(result["reason"])
+
+
+def test_validate_normalization_negative_markers_given_typed_role_without_marker_expect_pass() -> None:
+    output = json.dumps(
+        {
+            "lesson_md": (
+                "::: {.examples teaching_role=incorrect}\n- no: Gi meg en kaffe.\n- en: Give me a coffee.\n:::\n"
+            ),
+            "exercise_requests_yaml": "[]",
+        }
+    )
+
+    result = validate_normalization_negative_markers(output, K_NORMALIZATION_CONTEXT)
+
+    assert result["pass"] is True
+
+
+def test_validate_normalization_negative_markers_given_legacy_inline_marker_expect_fail() -> None:
+    output = json.dumps(
+        {
+            "lesson_md": "::: examples\n- no: Gi meg en kaffe.\n- en: Incorrect: Give me a coffee.\n:::\n",
+            "exercise_requests_yaml": "[]",
+        }
+    )
+
+    result = validate_normalization_negative_markers(output, K_NORMALIZATION_CONTEXT)
+
+    assert result["pass"] is False
+    assert "legacy inline" in str(result["reason"])
 
 
 def test_validate_review_edit_handle_coverage_given_complete_unique_handles_expect_pass():

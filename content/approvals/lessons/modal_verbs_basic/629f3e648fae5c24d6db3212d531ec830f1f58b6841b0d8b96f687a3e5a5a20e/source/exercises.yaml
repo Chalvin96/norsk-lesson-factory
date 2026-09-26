@@ -1,0 +1,439 @@
+- handle: notice_modal_plus_bare_infinitive
+  op: recall_fill
+  objective: obj-modal-verbs-basic-01
+  bloom: understand
+  prompt_md: 'Fullfør setningene med riktig form av verbet etter modalverbet.'
+  explanation_md: 'Etter «kan», «vil», «må» og «skal» bruker vi infinitiv uten «å».'
+  derived_from:
+  - section_id: sec-one-sentence-pattern-four-meaning-choices
+  audio_target: Jeg kan lage mat. Jeg vil spise nå. Jeg må vente litt. Jeg skal jobbe.
+  segments:
+  - text_md: 'Jeg kan '
+  - blank_id: notice-kan-infinitive
+    options:
+    - lager
+    - lage
+    answer_index: 1
+  - text_md: ' mat. Jeg vil '
+  - blank_id: notice-vil-infinitive
+    options:
+    - spise
+    - spiser
+    answer_index: 0
+  - text_md: ' nå. Jeg må '
+  - blank_id: notice-ma-infinitive
+    options:
+    - venter
+    - vente
+    answer_index: 1
+  - text_md: ' litt. Jeg skal '
+  - blank_id: notice-skal-infinitive
+    options:
+    - jobbe
+    - jobber
+    answer_index: 0
+  - text_md: .
+- handle: choose_kan_for_ability_or_possibility
+  op: build
+  objective: obj-modal-verbs-basic-01
+  bloom: apply
+  prompt_md: 'Sett sammen setningen som forteller om en evne.'
+  derived_from:
+  - section_id: sec-kan-ability-and-possibility
+  tokens:
+  - token_id: kan-build-2
+    text: kan
+  - token_id: kan-build-3
+    text: lage
+  - token_id: kan-build-4
+    text: mat.
+  - token_id: kan-build-1
+    text: Du
+  answer_order:
+  - kan-build-1
+  - kan-build-2
+  - kan-build-3
+  - kan-build-4
+- handle: build_vil_desire_sentences
+  op: build
+  objective: obj-modal-verbs-basic-01
+  bloom: apply
+  prompt_md: 'Sett sammen setningen som uttrykker Minas ønske.'
+  derived_from:
+  - section_id: sec-vil-what-someone-wants-to-do
+  tokens:
+  - token_id: vil-build-2
+    text: vil
+  - token_id: vil-build-3
+    text: spise
+  - token_id: vil-build-4
+    text: hjemme.
+  - token_id: vil-build-1
+    text: Mina
+  answer_order:
+  - vil-build-1
+  - vil-build-2
+  - vil-build-3
+  - vil-build-4
+- handle: contrast_vil_and_ma
+  op: choose
+  objective: obj-modal-verbs-basic-01
+  bloom: understand
+  prompt_md: 'Velg paret som passer til dialogene i riktig rekkefølge.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Jeg har lyst til å gå hjem, men jeg trenger ikke.»
+    - speaker: Amir
+      text_md: «Så du blir litt til?»
+    - speaker: Nora
+      text_md: «Ja, gjerne.»
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Jeg er nødt til å gå hjem nå.»
+    - speaker: Amir
+      text_md: «Hvorfor det?»
+    - speaker: Nora
+      text_md: «Den siste bussen går snart.»
+  derived_from:
+  - section_id: sec-ma-necessity
+  options:
+  - id: ma-then-vil
+    text: Nora må gå hjem. Nora vil gå hjem.
+    correct: false
+    why: This reverses the intended meanings of the two situations.
+  - id: vil-then-ma
+    text: Nora vil gå hjem. Nora må gå hjem.
+    correct: true
+    why: The first sentence expresses desire, while the second expresses necessity.
+- handle: build_skal_plan_sentences
+  op: build
+  objective: obj-modal-verbs-basic-01
+  bloom: apply
+  prompt_md: 'Sett sammen setningen som forteller om avtalen.'
+  derived_from:
+  - section_id: sec-skal-plans-and-intended-actions
+  tokens:
+  - token_id: skal-build-2
+    text: skal
+  - token_id: skal-build-3
+    text: spise
+  - token_id: skal-build-4
+    text: hjemme
+  - token_id: skal-build-5
+    text: i
+  - token_id: skal-build-6
+    text: kveld.
+  - token_id: skal-build-1
+    text: Du
+  answer_order:
+  - skal-build-1
+  - skal-build-2
+  - skal-build-3
+  - skal-build-4
+  - skal-build-5
+  - skal-build-6
+- handle: select_modal_from_context
+  op: choose
+  objective: obj-modal-verbs-basic-01
+  bloom: analyze
+  prompt_md: 'Velg alternativet som passer til de fire opplysningene om Jonas, i riktig rekkefølge.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Eli
+      text_md: «Er Jonas nødt til å dekke bordet før gjestene kommer?»
+    - speaker: Nora
+      text_md: «Ja, det er nødvendig.»
+    - speaker: Eli
+      text_md: «Er det avtalt at han handler i kveld?»
+    - speaker: Nora
+      text_md: «Ja, det er avtalt.»
+    - speaker: Eli
+      text_md: «Har han lært seg å bake brød?»
+    - speaker: Nora
+      text_md: «Ja, han har lært det.»
+    - speaker: Eli
+      text_md: «Har han lyst til å lage suppe?»
+    - speaker: Nora
+      text_md: «Ja, det har han lyst til.»
+  derived_from:
+  - section_id: sec-choice-changes-the-message
+  stem_md: 'Velg alternativet med riktig betydning og form i alle setningene.'
+  options:
+  - id: marker-added
+    text: Jonas må å dekke bordet. Jonas skal å handle i kveld. Jonas kan å bake brød. Jonas vil å lage suppe.
+    correct: false
+    why: The meanings match, but å is incorrectly placed after every modal.
+  - id: meanings-reversed
+    text: Jonas skal dekke bordet. Jonas må handle i kveld. Jonas vil bake brød. Jonas kan lage suppe.
+    correct: false
+    why: The sentences use bare infinitives, but the modal meanings are in the wrong order.
+  - id: all-four-correct
+    text: Jonas må dekke bordet. Jonas skal handle i kveld. Jonas kan bake brød. Jonas vil lage suppe.
+    correct: true
+    why: The modals express necessity, an arranged plan, ability, and desire in the order given.
+- handle: reconstruct_saturday_plan
+  op: build
+  objective: obj-modal-verbs-basic-01
+  bloom: apply
+  prompt_md: 'Sett sammen én setning for hver replikk, i samme rekkefølge.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Jeg har lyst til å lage suppe.»
+    - speaker: Nora
+      text_md: «Vi har ingen grønnsaker, så jeg er nødt til å kjøpe dem.»
+    - speaker: Amir
+      text_md: «Det er avtalt at jeg handler litt ekstra i dag.»
+    - speaker: Nora
+      text_md: «Jeg har mulighet til å spise hjemme i kveld.»
+  derived_from:
+  - section_id: sec-returning-to-nora-and-amir
+  tokens:
+  - token_id: sat-2
+    text: Nora vil
+  - token_id: sat-3
+    text: lage suppe.
+  - token_id: sat-5
+    text: Nora må
+  - token_id: sat-6
+    text: kjøpe grønnsaker.
+  - token_id: sat-9
+    text: Amir skal
+  - token_id: sat-10
+    text: kjøpe litt ekstra mat.
+  - token_id: sat-15
+    text: Nora kan
+  - token_id: sat-16
+    text: spise hjemme i kveld.
+  answer_order:
+  - sat-2
+  - sat-3
+  - sat-5
+  - sat-6
+  - sat-9
+  - sat-10
+  - sat-15
+  - sat-16
+- handle: repair_modal_sentence_errors
+  op: find_fix
+  objective: obj-modal-verbs-basic-01
+  bloom: analyze
+  prompt_md: 'Velg ordet som skal bort.'
+  derived_from:
+  - section_id: sec-common-mistakes-to-avoid
+  tokens:
+  - token_id: repair-1
+    text: Nora
+  - token_id: repair-2
+    text: vil
+  - token_id: repair-3
+    text: å
+  - token_id: repair-4
+    text: bestille
+  - token_id: repair-5
+    text: en
+  - token_id: repair-6
+    text: taxi.
+  error_token_id: repair-3
+  feedback: 'Remove å: after the modal vil, use the bare infinitive bestille directly.'
+- handle: plan_day_trip_with_modals
+  op: build
+  objective: obj-modal-verbs-basic-01
+  bloom: apply
+  prompt_md: 'Sett sammen de fem modalsetningene som passer til samtalen, i riktig
+    rekkefølge.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Henrik
+      text_md: «Hvem kjører bilen i morgen?»
+    - speaker: Lea
+      text_md: «Jeg er flink til å kjøre, så det går fint.»
+    - speaker: Henrik
+      text_md: «Jeg har lyst til å ta bilder på turen.»
+    - speaker: Lea
+      text_md: «Vi er nødt til å dra før klokka ni.»
+    - speaker: Henrik
+      text_md: «Det er avtalt at vi møter Mari på stasjonen.»
+    - speaker: Lea
+      text_md: «Det er også mulig for oss å spise ute.»
+  derived_from:
+  - section_id: sec-transfer-preparing-for-a-day-trip
+  tokens:
+  - token_id: trip-2
+    text: Lea kan
+  - token_id: trip-3
+    text: kjøre bil.
+  - token_id: trip-5
+    text: Henrik vil
+  - token_id: trip-6
+    text: ta bilder.
+  - token_id: trip-9
+    text: Vi må
+  - token_id: trip-10
+    text: dra før klokka ni.
+  - token_id: trip-15
+    text: Vi skal
+  - token_id: trip-16
+    text: møte Mari på stasjonen.
+  - token_id: trip-21
+    text: Vi kan
+  - token_id: trip-22
+    text: spise ute.
+  answer_order:
+  - trip-2
+  - trip-3
+  - trip-5
+  - trip-6
+  - trip-9
+  - trip-10
+  - trip-15
+  - trip-16
+  - trip-21
+  - trip-22
+- handle: retrieve_four_modal_patterns
+  op: write
+  objective: obj-modal-verbs-basic-01
+  bloom: apply
+  prompt_md: 'Skriv at du ønsker å fotografere på turen. Bruk et modalverb med infinitiv uten å.'
+  response_language: 'no'
+  min_words: 3
+  max_words: 12
+  judge_prompt: "Evaluate preference, modal-choice, bare-infinitive as gating criteria. The response must be one short Norwegian sentence that states the speaker wants to take photographs on the walk, using «vil» directly followed by a bare infinitive. Accept natural alternatives such as «Jeg vil fotografere», «Jeg vil fotografere fuglene», and «Jeg vil ta bilder av fuglene». Anchor that must pass: «Jeg vil ta bilder av fuglene.»"
+  criteria:
+  - id: preference
+    instruction: States that the speaker wants or prefers to take photographs during the walk, rather than merely being able, required, or scheduled to do so.
+  - id: modal-choice
+    instruction: Uses «vil» to express this personal desire; accept natural variations in wording and the activity phrase.
+  - id: bare-infinitive
+    instruction: Places the bare infinitive directly after «vil», with no «å» between them.
+  - id: one-sentence
+    instruction: Writes one simple Norwegian sentence.
+  derived_from:
+  - section_id: sec-short-retrieval-review
+- handle: review_modal_bare_infinitive
+  op: recall_fill
+  objective: obj-modal-verbs-basic-01
+  bloom: apply
+  prompt_md: 'Fullfør setningen.'
+  explanation_md: 'Etter et modalverb står infinitiven uten «å».'
+  derived_from:
+  - section_id: sec-short-retrieval-review
+  segments:
+  - text_md: 'Mina skal '
+  - blank_id: review-bare-infinitive
+    options:
+    - å møte
+    - møte
+    answer_index: 1
+  - text_md: ' Eva i morgen.'
+  audio_target: Mina skal møte Eva i morgen.
+- handle: review_kan_ability_or_possibility
+  op: recall_fill
+  objective: obj-modal-verbs-basic-01
+  bloom: apply
+  prompt_md: 'Fullfør svaret til Arne med modalverbet som uttrykker evne.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: «Har du lært å kjøre bil?»
+    - speaker: Arne
+      text_md: «Ja, nå ___ jeg kjøre bil.»
+  explanation_md: '«Kan» forteller at Arne har evne til å kjøre.'
+  derived_from:
+  - section_id: sec-kan-ability-and-possibility
+  segments:
+  - text_md: 'Ja, nå '
+  - blank_id: review-kan
+    options:
+    - må
+    - kan
+    - vil
+    - skal
+    answer_index: 1
+  - text_md: ' jeg kjøre bil.'
+  audio_target: Ja, nå kan jeg kjøre bil.
+- handle: review_vil_desire
+  op: recall_fill
+  objective: obj-modal-verbs-basic-01
+  bloom: apply
+  prompt_md: 'Fullfør svaret til Liv med modalverbet som uttrykker ønske.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Ola
+      text_md: «Hva har du lyst til å gjøre i sommer?»
+    - speaker: Liv
+      text_md: «Jeg ___ besøke Bergen.»
+  explanation_md: '«Vil» uttrykker Livs ønske, ikke en plikt eller en fast plan.'
+  derived_from:
+  - section_id: sec-vil-what-someone-wants-to-do
+  segments:
+  - text_md: 'Jeg '
+  - blank_id: review-vil
+    options:
+    - skal
+    - må
+    - vil
+    - kan
+    answer_index: 2
+  - text_md: ' besøke Bergen.'
+  audio_target: Jeg vil besøke Bergen.
+- handle: review_ma_necessity
+  op: recall_fill
+  objective: obj-modal-verbs-basic-01
+  bloom: apply
+  prompt_md: 'Fullfør svaret til Sara med modalverbet som uttrykker nødvendighet.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Emil
+      text_md: «Har du tid til å bli litt lenger?»
+    - speaker: Sara
+      text_md: «Nei, bussen går om fem minutter, så jeg ___ gå nå.»
+  explanation_md: '«Må» uttrykker at det er nødvendig å gå.'
+  derived_from:
+  - section_id: sec-ma-necessity
+  segments:
+  - text_md: 'Nei, bussen går om fem minutter, så jeg '
+  - blank_id: review-ma
+    options:
+    - vil
+    - kan
+    - skal
+    - må
+    answer_index: 3
+  - text_md: ' gå nå.'
+  audio_target: Nei, bussen går om fem minutter, så jeg må gå nå.
+- handle: review_skal_plan
+  op: recall_fill
+  objective: obj-modal-verbs-basic-01
+  bloom: apply
+  prompt_md: 'Fullfør svaret med modalverbet som uttrykker en avtalt plan.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Hva står i kalenderen din i ettermiddag?»
+    - speaker: Jeg
+      text_md: «Jeg ___ møte Eva klokka tre.»
+  explanation_md: '«Skal» framstiller møtet som en avtalt handling.'
+  derived_from:
+  - section_id: sec-skal-plans-and-intended-actions
+  segments:
+  - text_md: 'Jeg '
+  - blank_id: review-skal
+    options:
+    - kan
+    - skal
+    - må
+    - vil
+    answer_index: 1
+  - text_md: ' møte Eva klokka tre.'
+  audio_target: Jeg skal møte Eva klokka tre.

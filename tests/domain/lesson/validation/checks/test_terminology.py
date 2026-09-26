@@ -422,6 +422,30 @@ class TestBothShapesExtraction:
         assert "Pick one." in texts
         assert "First option" in texts
 
+    def test_extract_learner_text_given_dialogue_stimulus_expect_turn_text(self):
+        lesson = _lesson(
+            [
+                {
+                    "element_kind": "exercise",
+                    "id": "ex_dialogue",
+                    "operation": "choose",
+                    "prompt": [_span("Choose.")],
+                    "explanation": [],
+                    "stimulus": [
+                        {
+                            "kind": "dialogue",
+                            "turns": [{"speaker": "Lea", "text": [_span("Kanskje.")]}],
+                        }
+                    ],
+                    "payload": {"options": [{"option_id": "a", "text": "A"}], "answer_id": "a"},
+                }
+            ]
+        )
+
+        fragments = extract_learner_text(lesson)
+
+        assert any(fragment.text == "Kanskje." for fragment in fragments)
+
 
 # ---------------------------------------------------------------------------
 # Helper smoke-test: CheckResult construction sanity

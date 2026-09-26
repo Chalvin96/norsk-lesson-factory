@@ -1,0 +1,469 @@
+- handle: choose_the_known_object
+  op: choose
+  objective: obj-object-pronoun-position-01
+  bloom: understand
+  prompt_md: Choose the object-pronoun set that completes every sentence.
+  derived_from:
+  - section_id: what-does-the-pronoun-replace
+  stem_md: Jeg ringer Sara → Jeg ringer ___. Maja hjelper Jonas → Maja hjelper ___. Har du nøkkelen? → Ja, jeg har ___. Har du kortet? → Ja, jeg har ___. Har du koppene? → Ja, jeg har ___.
+  options:
+  - id: set-wrong-person
+    text: ham; henne; den; det; dem
+    correct: false
+    why: The person pronouns reverse the roles of Sara and Jonas.
+  - id: set-correct
+    text: henne; ham; den; det; dem
+    correct: true
+    why: The forms match the two people, the genders of the singular nouns, and the plural noun.
+  - id: set-wrong-gender
+    text: henne; ham; det; den; dem
+    correct: false
+    why: The singular thing pronouns reverse the masculine noun nøkkelen and the neuter noun kortet.
+  - id: set-wrong-number
+    text: henne; ham; den; det; den
+    correct: false
+    why: The last form is singular, but koppene is plural.
+- handle: replace_and_place_affirmative
+  op: build
+  objective: obj-object-pronoun-position-01
+  bloom: apply
+  prompt_md: Build both rewrites with den and henne.
+  derived_from:
+  - section_id: position-in-an-affirmative-sentence
+  stimulus_md: Maja finner nøkkelen. I dag hjelper Jonas Sara.
+  explanation_md: In an affirmative main clause, the object pronoun follows the verb or the post-verbal subject.
+  tokens:
+  - token_id: affirmative-subject-1
+    text: Maja
+  - token_id: affirmative-verb-1
+    text: finner
+  - token_id: affirmative-object-1
+    text: den.
+  - token_id: affirmative-time-1
+    text: I
+  - token_id: affirmative-time-2
+    text: dag
+  - token_id: affirmative-verb-2
+    text: hjelper
+  - token_id: affirmative-subject-2
+    text: Jonas
+  - token_id: affirmative-object-2
+    text: henne.
+  answer_order:
+  - affirmative-subject-1
+  - affirmative-verb-1
+  - affirmative-object-1
+  - affirmative-time-1
+  - affirmative-time-2
+  - affirmative-verb-2
+  - affirmative-subject-2
+  - affirmative-object-2
+- handle: move_before_ikke
+  op: build
+  objective: obj-object-pronoun-position-01
+  bloom: apply
+  prompt_md: Replace Sara with henne and build the neutral sentence.
+  derived_from:
+  - section_id: object-pronouns-with-ikke-and-one-verb
+  stimulus_md: Jonas ringer ikke Sara.
+  explanation_md: With one verb, a short unstressed object pronoun normally comes before ikke.
+  tokens:
+  - token_id: move-subject
+    text: Jonas
+  - token_id: move-verb
+    text: ringer
+  - token_id: move-object
+    text: henne
+  - token_id: move-negation
+    text: ikke.
+  answer_order:
+  - move-subject
+  - move-verb
+  - move-object
+  - move-negation
+- handle: contrast_noun_and_pronoun
+  op: build
+  objective: obj-object-pronoun-position-01
+  bloom: apply
+  prompt_md: Build the noun sentence and its pronoun rewrite.
+  derived_from:
+  - section_id: object-pronouns-with-ikke-and-one-verb
+  stimulus_md: Jonas does not have the key. The second sentence replaces nøkkelen with den.
+  explanation_md: A full noun normally follows ikke, while a short unstressed object pronoun normally precedes ikke in this one-verb pattern.
+  tokens:
+  - token_id: contrast-subject-1
+    text: Jonas
+  - token_id: contrast-verb-1
+    text: har
+  - token_id: contrast-negation-1
+    text: ikke
+  - token_id: contrast-noun
+    text: nøkkelen.
+  - token_id: contrast-subject-2
+    text: Han
+  - token_id: contrast-verb-2
+    text: har
+  - token_id: contrast-pronoun
+    text: den
+  - token_id: contrast-negation-2
+    text: ikke.
+  answer_order:
+  - contrast-subject-1
+  - contrast-verb-1
+  - contrast-negation-1
+  - contrast-noun
+  - contrast-subject-2
+  - contrast-verb-2
+  - contrast-pronoun
+  - contrast-negation-2
+- handle: count_the_verbs_and_place
+  op: build
+  objective: obj-object-pronoun-position-01
+  bloom: apply
+  prompt_md: Build the four-sentence update.
+  derived_from:
+  - section_id: when-the-sentence-has-two-verbs
+  stimulus_md: Jeg finner ikke nøkkelen. Jeg kan ikke åpne kortet. Jonas ringer ikke Sara. Jeg kan ikke hjelpe Jonas.
+  explanation_md: With one verb, the pronoun precedes ikke; with two verbs, it follows the infinitive.
+  tokens:
+  - token_id: count-s1-subject
+    text: Jeg
+  - token_id: count-s1-verb
+    text: finner
+  - token_id: count-s1-object
+    text: den
+  - token_id: count-s1-negation
+    text: ikke.
+  - token_id: count-s2-subject
+    text: Jeg
+  - token_id: count-s2-modal
+    text: kan
+  - token_id: count-s2-negation
+    text: ikke
+  - token_id: count-s2-main
+    text: åpne
+  - token_id: count-s2-object
+    text: det.
+  - token_id: count-s3-subject
+    text: Jonas
+  - token_id: count-s3-verb
+    text: ringer
+  - token_id: count-s3-object
+    text: henne
+  - token_id: count-s3-negation
+    text: ikke.
+  - token_id: count-s4-subject
+    text: Jeg
+  - token_id: count-s4-modal
+    text: kan
+  - token_id: count-s4-negation
+    text: ikke
+  - token_id: count-s4-main
+    text: hjelpe
+  - token_id: count-s4-object
+    text: ham.
+  answer_order:
+  - count-s1-subject
+  - count-s1-verb
+  - count-s1-object
+  - count-s1-negation
+  - count-s2-subject
+  - count-s2-modal
+  - count-s2-negation
+  - count-s2-main
+  - count-s2-object
+  - count-s3-subject
+  - count-s3-verb
+  - count-s3-object
+  - count-s3-negation
+  - count-s4-subject
+  - count-s4-modal
+  - count-s4-negation
+  - count-s4-main
+  - count-s4-object
+- handle: repair_the_message
+  op: find_fix
+  objective: obj-object-pronoun-position-01
+  bloom: analyze
+  prompt_md: Select the misplaced object pronoun.
+  derived_from:
+  - section_id: when-the-sentence-has-two-verbs
+  stimulus_md: Jeg finner ikke henne nå. Jeg kan ikke hjelpe henne.
+  explanation_md: 'Only the first henne is misplaced: a neutral one-verb clause puts it before ikke, while the two-verb clause keeps it after hjelpe.'
+  tokens:
+  - token_id: repair-s1-subject
+    text: Jeg
+  - token_id: repair-s1-verb
+    text: finner
+  - token_id: repair-s1-negation
+    text: ikke
+  - token_id: repair-henne-1
+    text: henne
+  - token_id: repair-s1-adverb
+    text: nå.
+  - token_id: repair-s2-subject
+    text: Jeg
+  - token_id: repair-s2-modal
+    text: kan
+  - token_id: repair-s2-negation
+    text: ikke
+  - token_id: repair-s2-main
+    text: hjelpe
+  - token_id: repair-henne-2
+    text: henne.
+  error_token_id: repair-henne-1
+  feedback: 'Move the marked henne before ikke: Jeg finner henne ikke nå. The second sentence is correct because henne follows hjelpe.'
+- handle: birthday_pronoun_selection
+  op: recall_fill
+  objective: obj-object-pronoun-position-01
+  bloom: understand
+  prompt_md: Fill each blank with one object pronoun.
+  derived_from:
+  - section_id: cumulative-transfer-preparing-for-a-birthday-visit
+  stimulus_md: Nora calls their male friend. Emil helps Nora. Emil has the present, gaven. Nora has the cakes, kakene.
+  audio_target: Nora ringer ham. Emil hjelper henne. Emil har den. Nora har dem.
+  segments:
+  - text_md: 'Nora ringer '
+  - blank_id: birthday-friend
+    options:
+    - dem
+    - ham
+    - henne
+    answer_index: 1
+  - text_md: '. Emil hjelper '
+  - blank_id: birthday-nora
+    options:
+    - dem
+    - henne
+    - ham
+    answer_index: 1
+  - text_md: '. Emil har '
+  - blank_id: birthday-present
+    options:
+    - den
+    - det
+    - dem
+    answer_index: 0
+  - text_md: '. Nora har '
+  - blank_id: birthday-cakes
+    options:
+    - dem
+    - den
+    - det
+    answer_index: 0
+  - text_md: .
+- handle: birthday_pronoun_placement
+  op: build
+  objective: obj-object-pronoun-position-01
+  bloom: apply
+  prompt_md: Build the three-sentence update.
+  derived_from:
+  - section_id: cumulative-transfer-preparing-for-a-birthday-visit
+  stimulus_md: Nora finds the present, gaven. Emil is not calling their male friend. Nora cannot find the cakes, kakene.
+  explanation_md: The affirmative pronoun follows finner, the one-verb negative pronoun precedes ikke, and the two-verb negative pronoun follows finne.
+  tokens:
+  - token_id: birthday-place-s1-subject
+    text: Nora
+  - token_id: birthday-place-s1-verb
+    text: finner
+  - token_id: birthday-place-s1-object
+    text: den.
+  - token_id: birthday-place-s2-subject
+    text: Emil
+  - token_id: birthday-place-s2-verb
+    text: ringer
+  - token_id: birthday-place-s2-object
+    text: ham
+  - token_id: birthday-place-s2-negation
+    text: ikke.
+  - token_id: birthday-place-s3-subject
+    text: Nora
+  - token_id: birthday-place-s3-modal
+    text: kan
+  - token_id: birthday-place-s3-negation
+    text: ikke
+  - token_id: birthday-place-s3-main
+    text: finne
+  - token_id: birthday-place-s3-object
+    text: dem.
+  answer_order:
+  - birthday-place-s1-subject
+  - birthday-place-s1-verb
+  - birthday-place-s1-object
+  - birthday-place-s2-subject
+  - birthday-place-s2-verb
+  - birthday-place-s2-object
+  - birthday-place-s2-negation
+  - birthday-place-s3-subject
+  - birthday-place-s3-modal
+  - birthday-place-s3-negation
+  - birthday-place-s3-main
+  - birthday-place-s3-object
+- handle: birthday_integrated_rewrite
+  op: build
+  objective: obj-object-pronoun-position-01
+  bloom: apply
+  prompt_md: Rewrite the account with object pronouns.
+  derived_from:
+  - section_id: cumulative-transfer-preparing-for-a-birthday-visit
+  stimulus_md: Nora finner gaven. Emil ringer vennen deres. Nora har ikke kakene. Nora kan ikke åpne gaven.
+  explanation_md: The pronouns match their known referents and take the position required by the affirmative, one-verb negative, or two-verb negative structure.
+  tokens:
+  - token_id: integrated-s1-subject
+    text: Nora
+  - token_id: integrated-s1-verb
+    text: finner
+  - token_id: integrated-s1-object
+    text: den.
+  - token_id: integrated-s2-subject
+    text: Emil
+  - token_id: integrated-s2-verb
+    text: ringer
+  - token_id: integrated-s2-object
+    text: ham.
+  - token_id: integrated-s3-subject
+    text: Nora
+  - token_id: integrated-s3-verb
+    text: har
+  - token_id: integrated-s3-object
+    text: dem
+  - token_id: integrated-s3-negation
+    text: ikke.
+  - token_id: integrated-s4-subject
+    text: Nora
+  - token_id: integrated-s4-modal
+    text: kan
+  - token_id: integrated-s4-negation
+    text: ikke
+  - token_id: integrated-s4-main
+    text: åpne
+  - token_id: integrated-s4-object
+    text: den.
+  answer_order:
+  - integrated-s1-subject
+  - integrated-s1-verb
+  - integrated-s1-object
+  - integrated-s2-subject
+  - integrated-s2-verb
+  - integrated-s2-object
+  - integrated-s3-subject
+  - integrated-s3-verb
+  - integrated-s3-object
+  - integrated-s3-negation
+  - integrated-s4-subject
+  - integrated-s4-modal
+  - integrated-s4-negation
+  - integrated-s4-main
+  - integrated-s4-object
+- handle: review_birthday_pronoun_selection
+  op: recall_fill
+  objective: obj-object-pronoun-position-01
+  bloom: understand
+  prompt_md: Fill each blank with the pronoun for the thing in each sentence.
+  derived_from:
+  - section_id: cumulative-transfer-preparing-for-a-birthday-visit
+  stimulus_md: Nora has the letter, brevet. Nora finds the glass, glasset. Nora sees the tray, fatet.
+  audio_target: Nora har det. Nora finner det. Nora ser det.
+  segments:
+  - text_md: 'Nora har '
+  - blank_id: review-birthday-letter
+    options:
+    - det
+    - den
+    - dem
+    answer_index: 0
+  - text_md: '. Nora finner '
+  - blank_id: review-birthday-glass
+    options:
+    - den
+    - det
+    - dem
+    answer_index: 1
+  - text_md: '. Nora ser '
+  - blank_id: review-birthday-tray
+    options:
+    - den
+    - dem
+    - det
+    answer_index: 2
+  - text_md: .
+  explanation_md: Brevet, glasset, and fatet are all neuter nouns, so each is replaced by det.
+- handle: review_affirmative_pronoun_position
+  op: recall_fill
+  objective: obj-object-pronoun-position-01
+  bloom: apply
+  prompt_md: Fill the blank with the two missing words.
+  derived_from:
+  - section_id: position-in-an-affirmative-sentence
+  stimulus_md: Boka er kjent fra før. Spørsmålet er «Leser Liv boka i dag?» Svar bekreftende og sett tidsuttrykket først.
+  audio_target: I dag leser Liv den.
+  segments:
+  - text_md: 'I dag leser '
+  - blank_id: review-affirmative
+    options:
+    - Liv den
+    - den Liv
+    - Liv ikke
+    answer_index: 0
+  - text_md: .
+- handle: review_one_verb_negative_position
+  op: recall_fill
+  objective: obj-object-pronoun-position-01
+  bloom: apply
+  prompt_md: Fill the blank with the two missing words.
+  derived_from:
+  - section_id: object-pronouns-with-ikke-and-one-verb
+  stimulus_md: Per er kjent fra før. Spørsmålet er «Ser Ada Per i dag?» Svar nei og bruk et pronomen i stedet for Per.
+  audio_target: Ada ser ham ikke.
+  segments:
+  - text_md: 'Ada ser '
+  - blank_id: review-one-verb
+    options:
+    - ham ikke
+    - ikke ham
+    - han ikke
+    answer_index: 0
+  - text_md: .
+- handle: review_two_verb_negative_position
+  op: recall_fill
+  objective: obj-object-pronoun-position-01
+  bloom: apply
+  prompt_md: Fill the blank with the two missing words.
+  derived_from:
+  - section_id: when-the-sentence-has-two-verbs
+  stimulus_md: Per er kjent fra før. Spørsmålet er «Kan Ada se Per?» Svar nei og bruk et pronomen i stedet for Per.
+  audio_target: Ada kan ikke se ham.
+  segments:
+  - text_md: 'Ada kan ikke '
+  - blank_id: review-two-verbs
+    options:
+    - se ham
+    - ham se
+    - se han
+    answer_index: 0
+  - text_md: .
+- handle: review_one_or_two_verbs
+  op: choose
+  objective: obj-object-pronoun-position-01
+  bloom: analyze
+  prompt_md: Choose the two neutral replies.
+  derived_from:
+  - section_id: when-the-sentence-has-two-verbs
+  stem_md: 'A: Finner Lea nøkkelen? B: ___. A: Kan Lea finne kortet? B: ___.'
+  options:
+  - id: review-one-verb-generalized
+    text: Nei, hun finner den ikke. Nei, hun kan det ikke finne.
+    correct: false
+    why: The second reply incorrectly applies the one-verb pattern inside a modal construction.
+  - id: review-ikke-generalized
+    text: Nei, hun finner ikke den. Nei, hun kan ikke finne det.
+    correct: false
+    why: The first reply incorrectly keeps ikke immediately after the only verb.
+  - id: review-forms-reversed
+    text: Nei, hun finner det ikke. Nei, hun kan ikke finne den.
+    correct: false
+    why: The positions fit, but the pronouns reverse masculine nøkkelen and neuter kortet.
+  - id: review-both-correct
+    text: Nei, hun finner den ikke. Nei, hun kan ikke finne det.
+    correct: true
+    why: The one-verb reply places den before ikke, while the two-verb reply places det after finne.

@@ -28,64 +28,18 @@ from lesson_builder.formats.yaml import load_unique_yaml
 
 K_RICH_GRAMMAR_DRAFT_GUIDANCE = """
 Grammar chapter shape (apply this only when the approved plan kind is grammar):
-- Anchor the lesson in one believable named-speaker dialogue or short everyday
-  scene. The situation is a reason to use the grammar, not a second vocabulary
-  lesson. Let the learner understand the scene before explaining the rule.
-- After the anchor, make the learner's purpose and meaning choice explicit in
-  plain English. Introduce only the necessary glossary terms, with the
-  established Norwegian label on first use (for example, `past tense
-  (preteritum)`).
-- Teach the first approved grammar decision completely: show aligned Norwegian
+- Teach each approved grammar decision completely: show aligned Norwegian
   examples with English translations, contrast the relevant forms and meanings,
   state a compact rule, and correct one likely misconception.
-- Place checkpoints and practice requests where they help the learner notice,
-  retrieve, and use the target. Use as many explanation and practice clusters
-  as the chapter needs; do not force a fixed number of sections or insert an
-  exercise after every paragraph.
-- End with a cumulative retrieval and transfer block in a changed everyday
-  situation. Reuse the target forms, but make the learner use them for a new
-  purpose rather than repeat the dialogue verbatim.
-- Plan as many varied checkpoints as the distinct learner evidence goals
-  require. Do not optimize for a fixed count, merge two different practice
-  purposes to be concise, or add checkpoints just to make the chapter look busy.
-  Mark each checkpoint with exactly one typed directive block:
-  `{{checkpoint`
-  `handle: stable-handle`
-  `objective_ref: approved-objective-id`
-  `bloom: level`
-  `evidence: One concise sentence of observable learner evidence.`
-  `}}`
-  Keep each directive on its own lines. Do not repeat its metadata in prose or
-  describe an activity or success response. Ordinary checkpoints omit settings
-  and context; the final checkpoint includes its changed-situation transfer
-  requirement in the evidence sentence. Give each
-  checkpoint one primary scored evidence goal. If one sentence illustrates
-  several target patterns, say which dimension is scored and which patterns are
-  only context; split genuinely different scored goals into separate checkpoints
-  rather than relying on mutually exclusive categories.
 - Keep the grammar scope bounded by the approved teaching points and
   prerequisites. Do not ask the learner to classify an abstract clause before
   showing what the form helps them say.
 """.strip()
 K_RICH_GRAMMAR_NORMALIZATION_GUIDANCE = """
 Grammar preservation requirements:
-- Preserve the chapter's anchor dialogue, meaning-first explanation, aligned
-  form/meaning contrasts, glossary introductions, misconception correction,
-  every useful checkpoint, and cumulative transfer. Do not compress these into
-  a generic summary such as “the conversation contains several kinds of ...”.
-- Keep the visible rhythm chapter-like: an orient/context section, one or more
-  model sections, contrast/checkpoint sections, and a recap/transfer section.
-  Repeat roles whenever the draft needs another explanation; do not force four
-  tiny sections. Link model and contrast sections to the approved objective.
-- Preserve every standalone `{{exercise: handle}}` marker byte-for-byte at its
-  authored position. The route-free checkpoint intent is supplied separately;
-  never copy its metadata into learner-facing prose, merge or reorder markers,
-  or change an authored field except by adding the evidence route.
-- Add compiler metadata, typed audio/example blocks, section IDs, and exercise
-  markers mechanically; do not rewrite learner-facing prose for brevity.
-- Keep English explanations, instructions, feedback, headings, and
-  translations; keep natural Bokmål in dialogue, examples, and answer choices.
-  Preserve every Norwegian function word and punctuation mark.
+- Preserve the meaning-first explanation, aligned form/meaning contrasts,
+  compact rules, and misconception corrections; do not replace them with a
+  generic grammar summary.
 """.strip()
 
 
@@ -110,7 +64,7 @@ def build_rich_draft_prompt(
         "aligned contrasts, common mistakes, and a gradual set of practice checkpoints. "
         "At each checkpoint, write one typed directive block using exactly this shape:\n"
         "`{{checkpoint`\n"
-        "`handle: stable-handle`\n"
+        "`handle: stable_handle`\n"
         "`objective_ref: approved-objective-id`\n"
         "`bloom: level`\n"
         "`evidence: One concise sentence of observable learner evidence.`\n"
@@ -119,7 +73,15 @@ def build_rich_draft_prompt(
         "`Checkpoint activity:` or repeat the directive metadata outside the block. "
         "The handle is a stable snake_case name, the objective is one approved plan "
         "objective id, and the Bloom level is one of remember, understand, apply, "
-        "analyze, and the evidence sentence names observable learner evidence. Do not "
+        "analyze, and the evidence sentence names observable learner evidence. Give "
+        "each checkpoint one primary scored evidence goal and one cohesive learner "
+        "submission. If one sentence illustrates several target patterns, say which "
+        "dimension is scored and which patterns are only context; split genuinely "
+        "different scored goals into separate checkpoints rather than relying on "
+        "mutually exclusive categories. Split only when the requested outputs can be "
+        "attempted, omitted, judged, and remediated independently: repeated "
+        "homogeneous items and one cohesive multi-part product stay as one "
+        "submission, and word, item, or criterion counts are not the rule. Do not "
         "describe an activity, setting, context, or success response in an ordinary "
         "checkpoint directive; for the final retrieval directive, include its changed-"
         "situation transfer requirement in the one-sentence evidence field; do not "
@@ -186,7 +148,7 @@ def build_lesson_review_prompt(
         "pedagogy, glossary use, CEFR scope, and the plan's family outcome. The "
         "draft is textbook-like prose, so judge teaching quality rather than "
         "serialization: later nodes add compiler structure and exercise payloads.\n\n"
-        f"Score every rubric axis 0-2 in this exact order: {list(expected_axes)!r}. "
+        f"Score every rubric axis 0-2: {list(expected_axes)!r}. "
         "Every score needs draft-grounded rationale. Report one finding per concrete "
         "defect with its exact location, the evidence, and a bounded draft-only "
         "repair instruction. Blocking codes are reserved for incorrect or "
@@ -203,17 +165,21 @@ def build_lesson_review_prompt(
         "Treat broad plan wording as scope, not proof of a universal rule: when "
         "the draft demonstrates only named constructions, qualify the rule and "
         "limit the claim to those taught patterns rather than inventing exceptions. "
-        "Before scoring the prose, build a private scope ledger: map every level-two "
-        "section, named dialogue, and typed checkpoint directive to one approved "
-        "objective or teaching point from the plan. Report any dedicated explanation "
-        "or scored learner action that has no such mapping as a prerequisite_scope_breach "
-        "or pedagogy_gap; a brief recognition example may support the target, but a "
-        "second outcome must not receive its own rule, practice, or transfer task. "
+        "Report any dedicated explanation or scored learner action outside the approved "
+        "objectives as a prerequisite_scope_breach or pedagogy_gap. A brief recognition "
+        "example may support the target, but a second outcome must not receive its own "
+        "rule, practice, or transfer task. "
         "Judge practice checkpoints by their placement, objective, Bloom level, and "
         "one-sentence observable evidence: a typed directive carries intent only, so "
         "do not require activity prose, context narration, or a success-response description, "
         "and flag checkpoint wording that leans on earlier material instead of naming "
-        "observable evidence. "
+        "observable evidence. Report a checkpoint evidence statement that bundles "
+        "independently attemptable, omittable, judgeable, and remediable outputs as "
+        "a `practice_gap` finding with major severity, exact evidence, and a bounded "
+        "draft-only repair that separates the checkpoints. A cohesive dialogue, "
+        "report, or operation-native homogeneous collection is one submission, not "
+        "a compound deliverable, so do not report it as a gap merely for containing "
+        "several turns, items, or criteria. "
         "For every dialogue, check each adjacent question/answer pair for pragmatic fit "
         "and keep named places, people, and other entities consistent across turns and "
         "translations. If a repair changes a dialogue turn, require the repair to update "
@@ -298,18 +264,13 @@ def build_normalization_prompt(
         "`- en: <English gloss>`; these are Markdown typed-example lines, so do "
         "not add YAML-style outer quote characters around either value. Any quote "
         "characters inside a value are learner-visible punctuation and belong only "
-        "when quotation marks are themselves being taught. The next pair starts "
-        "only after that `en:` line. For a negative example use `- no: <bad "
-        "Norwegian>` immediately followed by `- en: Incorrect: <English gloss>` "
-        "(or `Not:`/`✗`). Never group multiple `no:` items before their `en:` "
-        "values, and never move the negative marker into preceding prose.\n"
-        "- Every negative or discouraged example must carry its negative status "
-        "inside that typed example itself, using an inline compiler-recognized "
-        "English marker such as `Incorrect:` or `Not:` at the start of its `en:` "
-        "value; keep the Norwegian `no:` bytes unchanged. A preceding heading or "
-        "prose label such as `Less useful`, `Vague`, or `Common mistake` does not "
-        "protect the example from model audio and is not an encoded status. Do not "
-        "mark ordinary positive examples negative.\n"
+        "when quotation marks are themselves being taught. Never group multiple "
+        "`no:` items before their `en:` values.\n"
+        "- Examples default to `teaching_role=model`. Put wrong forms in their own "
+        "`::: {.examples teaching_role=incorrect}` block and discouraged but valid "
+        "forms in `::: {.examples teaching_role=caution}`. Keep one role per block; "
+        "adjacent blocks still render as one ordered group. Do not add `✗`, "
+        "`Incorrect:`, or other status text to the learner sentence.\n"
         "- Keep each `::: examples` block one contiguous list; close it before any "
         "explanation.\n"
         "- In ordinary bilingual examples, preserve the example text without added quote "
@@ -321,8 +282,8 @@ def build_normalization_prompt(
         "id, Bloom label, or other request metadata around a marker. Marker position is "
         "the lesson sequence authority, never an exercise dependency. "
         "- `exercise_requests_yaml` must be a top-level YAML list. Each item has only "
-        "`handle`, `objective_ref`, `bloom`, `evidence_route`, and `evidence`, in that "
-        "order. Copy handle, objective_ref, bloom, and evidence exactly from the supplied "
+        "`handle`, `objective_ref`, `bloom`, `evidence_route`, and `evidence`. Copy "
+        "handle, objective_ref, bloom, and evidence exactly from the supplied "
         "checkpoint intents, preserving list order; add only one `evidence_route` selected "
         "from the registry. This scratch handoff must not contain exercise instructions, "
         "activity prose, backward-looking references, operation payloads, or the retired "
@@ -335,9 +296,8 @@ def build_normalization_prompt(
         "bare pipe tables, Markdown fences, multi-paragraph rule blocks, and typed "
         "blocks nested inside list items are rejected by the deterministic source "
         "validators.\n"
-        "- Quote every YAML scalar containing a colon, question mark, or apostrophe, "
-        "including list values and `key`-like text. The normalizer adds the metadata, "
-        "typed blocks, section IDs, and markers required by the contract; it must not "
+        "- The normalizer adds the metadata, typed blocks, section IDs, and markers "
+        "required by the contract; it must not "
         "rewrite learner-facing prose for brevity, merge or drop requests, or impose the "
         "old typed brief, fixed move list, coverage response, or a request-count limit. "
         "Do not make exercise decisions in this stage beyond selecting the evidence "
@@ -347,7 +307,13 @@ def build_normalization_prompt(
         "contains every required field without operation payloads.\n"
         "Evidence-route registry:\n"
         + render_evidence_route_guidance()
-        + "\nWrite only the operation-free handoff fields after selecting the route.\n\n"
+        + "\nRoute-selection policy: `meaning_selection` names one primary "
+        "selection, so it fits a checkpoint whose observable evidence is one "
+        "chosen meaning or interpretation. A cohesive multi-expression "
+        "correspondence, where several independently represented forms each "
+        "connect to a meaning or communicative function, is `pair_matching`; "
+        "do not collapse such a set into one selection route. Write only the "
+        "operation-free handoff fields after selecting the route.\n\n"
     )
     if plan_kind == "grammar":
         prompt += K_RICH_GRAMMAR_NORMALIZATION_GUIDANCE + "\n\n"
@@ -425,47 +391,25 @@ def build_exercise_author_prompt(
         "complete evidence contract. The route names the operation that can collect "
         "that evidence; the statement names the observable learner evidence. You own "
         "everything else: the complete standalone prompt, answer material, "
-        "distractors, feedback, and open-response criteria. If a request asks the "
-        "learner to explain, classify, or distinguish several error types, choose an "
-        "operation that can collect that evidence or fail the stage; a single token "
-        "tap cannot stand in for an explanation or a relational word-order swap.\n\n"
-        "Every exercise must be understandable and performable from its own "
-        "learner-visible payload. The immutable lesson is grounding for what has "
-        "been taught; it is not runtime context. Restate in the exercise payload "
-        "every fact, item, phrase, or situation the task needs: the words being "
-        "manipulated, the dialogue lines being answered, the sentence being judged, "
-        "the frames being practiced. Never refer the learner to a dialogue turn, a "
-        'checkpoint, another section, an earlier exercise, or anything "above"; a '
-        "task that only works after re-reading the lesson is defective. Document "
-        "position may inform what the learner has already been taught, never what "
-        "the payload may omit.\n\n"
+        "distractors, feedback, and open-response criteria. If the mapped operation "
+        "cannot collect the requested evidence, fail the stage rather than weaken "
+        "the evidence goal.\n\n"
+        "Put every fact and source text needed to attempt the task in its "
+        "learner-visible payload. Lesson prose is teaching context, not attempt "
+        "context; do not refer the learner to earlier material.\n\n"
         "Choose the operation required by each request's `evidence_route`; do not "
         "change the route or substitute a merely Bloom-compatible operation. The "
-        "route-to-operation registry is the evidence contract, while Bloom remains "
-        "a separate cognitive-level constraint. Do not default to "
-        "choose: use recognition/meaning selection for understanding, recall_fill or "
-        "match_pairs for bounded retrieval, build/find_fix/judge for controlled use or "
-        "repair, speak for a spoken response when the lesson calls for it, and write "
-        "for genuinely open Norwegian production. Vary operations when the requests "
-        "call for different evidence. Do not invent an operation. Do not emit "
+        "route-to-operation registry is the evidence contract; preserve the "
+        "request's Bloom level as a separate constraint. Do not emit "
         "`derived_from` or any other internal provenance field; the public payload "
         "is self-contained.\n\n"
-        "Use the repository's existing operation schema: top-level YAML list items have "
-        "`handle`, `op`, `objective`, `bloom`, `prompt_md`, and optional "
-        "`explanation_md`; operation-specific "
-        "payloads must use the supported fields. A choose item has option mappings "
-        "with `id`, `text`, `correct`, and optional `why`. A build item has `tokens` "
-        "with `token_id` and `text`, plus `answer_order`. A find_fix item has `tokens`, "
-        "`error_token_id`, and `feedback`. A recall_fill item has an explicit Norwegian "
-        "`audio_target` plus `segments` alternating "
-        "plain `{text_md: ...}` spans and `{blank_id, options: [strings], answer_index}` "
-        "blanks using those fields directly. A write item has `response_language`, optional "
-        "`min_words`/`max_words` bounds, `judge_prompt`, and non-empty criteria. Preserve exact Norwegian "
-        "function words and punctuation from the lesson.\n\n"
         "Base authored answer examples and distractors on the taught target forms. "
-        "Keep prompts, explanations, feedback, and judge instructions in English; "
-        "keep Norwegian target content and answer choices in natural Bokmål with the "
-        "lesson's translations. Apply answer-policy precedence in this order: first "
+        "Use the approved plan's CEFR level for instruction language: A1 and A2 task "
+        "directions in prompt_md, stem_md, and per-item cues use concise English; B1 and "
+        "higher task directions use natural Bokmål. Preserve Norwegian target text, "
+        "dialogue, example utterances, and answer choices when the exercise needs them. "
+        "Keep useful English glosses and translations. Hidden "
+        "judge instructions and criteria may use English. Apply answer-policy precedence in this order: first "
         "enforce every explicit requirement in the request and visible prompt, including "
         "the requested meaning, tense, construction, frame, and gender/form; a response "
         "missing one of those features is not an equivalent answer. Then accept natural "
@@ -474,10 +418,7 @@ def build_exercise_author_prompt(
         "do not infer a restriction from an example alone. For a single-answer operation "
         "such as categorize or choose, score the request's primary evidence dimension; "
         "do not force a sentence that illustrates multiple patterns into mutually "
-        "exclusive categories without saying which dimension is being scored. Do not add "
-        "a second lesson objective. If "
-        "a request cannot be expressed by a legal supported operation, preserve the "
-        "request and fail the stage rather than silently changing its evidence goal.\n\n"
+        "exclusive categories without saying which dimension is being scored.\n\n"
         "Payload quality rules: use disjoint items for `categorize`; never place an item "
         "in two conceptual buckets and hope the learner guesses a priority. For "
         "`build`, include exactly the tokens that belong in the answer; this schema has "
@@ -493,33 +434,32 @@ def build_exercise_author_prompt(
         "target sentence verbatim from the lesson. Bounded retrieval of an explicitly "
         "requested taught phrase may reuse that phrase; do not change its evidence "
         "goal to force novelty. For "
-        "`write`, align `prompt_md`, any word bounds, `criteria`, and `judge_prompt`: "
-        "every assessed requirement must be visible, and every requested requirement "
-        "must be assessed. Do not add restrictions such as no extra details or items "
-        "unless the request requires them and the visible prompt states them. "
-        "Add word bounds only when the evidence goal needs them, "
-        "and state them in the visible prompt. Check that a valid alternative within "
+        "`write`, align `prompt_md`, structured word bounds, `criteria`, and `judge_prompt`: "
+        "every assessed language or content requirement must be visible, and every requested "
+        "language or content requirement must be assessed. Do not add restrictions such as no "
+        "extra details or items unless the request requires them and the visible prompt states "
+        "them. Add word bounds only when the evidence goal needs them, using `min_words` and "
+        "`max_words`; do not repeat a numeric word budget in `prompt_md` or make a model judge "
+        "count words. "
+        "Check that a valid alternative within "
         "the explicit constraints would pass and that a response missing a requested "
         "feature would fail. Keep incidental vocabulary "
         "and response length appropriate to the learner level and evidence goal.\n\n"
+        "Write learner-visible directions like concise textbook tasks: begin with a "
+        "short imperative in the level's instruction language, and use at most two "
+        "sentences. State context once in the stem or stimulus. Put dialogue in "
+        "`stimulus` as `kind: dialogue` with ordered `turns` containing `speaker` "
+        "and `text_md`. Show binding requested forms compactly. Keep assessor "
+        "language, scoring rules, and rubric reasoning out of prompt_md and stem_md.\n\n"
         "For closed choices, use plausible target-related confusions with comparable "
         "specificity; avoid giving away the key through length or irrelevant detail. "
         "Use supported feedback fields or optional `explanation_md` for a concise "
-        "English explanation of the target decision or a likely error. Keep feedback "
+        "Bokmål explanation of the target decision or a likely error. Keep feedback "
         "consistent with the keyed answer and accepted variants. Omit optional feedback "
         "that only restates the answer; do not duplicate a rationale across fields. "
         "Keep answers and feedback out of the learner prompt.\n\n"
-        "Build invariant: every `token_id` in one build's `tokens` list must be unique, "
-        "and `answer_order` must contain each of those IDs exactly once. If the same "
-        "word appears twice in the target, give its two token mappings different IDs; "
-        "never repeat an ID in `answer_order`, omit an ID, or invent a second occurrence "
-        "without a corresponding token mapping.\n\n"
-        "For `write`, `criteria` must be a YAML list of mappings, each with a stable "
-        "`id` and an `instruction` string; do not emit bare criterion strings.\n\n"
-        "Operation/Bloom/payload policy (copy the request Bloom; choose only "
-        "a compatible operation):\n"
-        "The internal build-stage labels used by factory diagnostics are not source "
-        "fields. Never emit `stage` or `build_stage` in an exercise mapping.\n"
+        "Operation/Bloom/payload policy (copy the request Bloom; use its mapped "
+        "operation):\n"
         + render_operation_guidance(operation_scope)
         + "\n\nConcrete operation payload shapes (copy these source fields literally; "
         "the names in parentheses are documentation, not YAML keys):\n"
@@ -527,13 +467,8 @@ def build_exercise_author_prompt(
         + "\n\nEvidence-route registry (the request route is authoritative):\n"
         + render_evidence_route_guidance(route_scope)
         + "\n\n"
-        "Never use `write` for a request whose Bloom is `understand`; the public `write` "
-        "operation is reserved for open Norwegian production and is not a general text "
-        "answer box. For an understanding request that asks for labels, meanings, or "
-        "multiple interpretation parts, encode the complete interpretations as options "
-        "in one `choose` item, or use `recall_fill`/`judge` when their payload "
-        "fits. If no supported operation can preserve the evidence goal, fail rather "
-        "than retag the request.\n\n"
+        "Each `choose` option must represent one scored decision; do not bundle "
+        "independently judgeable mappings or propositions into one option.\n\n"
         "For inline Markdown blanks, use the literal `[BLANK]` marker; never use `__` "
         "or a run of underscores.\n\n"
         "Completion criterion: every request becomes exactly one schema-valid exercise "
@@ -660,20 +595,16 @@ def build_exercise_repair_prompt(
             lesson_md=lesson_md,
             exercise_requests_yaml=scoped_requests,
         )
-        retry_context = scoped_requests
     elif base_prompt is not None:
         retry_base = base_prompt
-        retry_context = exercise_requests_yaml or "(request handoff omitted by legacy caller)"
     else:
         raise ValueError("exercise repair prompt requires a base prompt or scoped lesson inputs")
     return (
         f"{retry_base}\n\n"
         "This is a bounded exercise-only repair. The lesson Markdown is immutable. "
-        f"Replace ONLY these failed handles: {failed_handles!r}. Keep every other "
-        "exercise byte-for-byte equivalent after deterministic normalization. Do not "
-        "change any request handle, objective, Bloom level, or evidence goal. Return "
-        "one item for each failed handle; omit unaffected handles. Completion criterion: "
-        "return every failed handle exactly once with its identity and evidence goal preserved.\n\n"
+        f"Return exactly one replacement for each failed handle: {failed_handles!r}. "
+        "Omit unaffected handles. Preserve each handle's identity, objective, Bloom "
+        "level, and evidence goal.\n\n"
         "Verifier diagnostics (treat these as concrete defects, not a reason to rewrite "
         "the lesson):\n"
         f"{json.dumps(verification, ensure_ascii=False, indent=2)}\n\n"
@@ -683,10 +614,6 @@ def build_exercise_repair_prompt(
         "---BEGIN FAILED LEARNER PAYLOAD---\n"
         f"{json.dumps(learner_visible_payload, ensure_ascii=False, indent=2)}\n"
         "---END FAILED LEARNER PAYLOAD---\n"
-        "The scoped request handoff for these handles is:\n"
-        "---BEGIN FAILED REQUESTS---\n"
-        f"{retry_context}\n"
-        "---END FAILED REQUESTS---\n"
     )
 
 

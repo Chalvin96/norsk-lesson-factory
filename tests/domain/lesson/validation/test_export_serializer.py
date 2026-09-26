@@ -20,7 +20,7 @@ K_AUDIO_SINGLE_EXAMPLE_UUID = "33333333-3333-5333-8333-333333333333"
 def test_export_given_internal_lesson_expect_pages_and_practice_groups():
     exported = to_export_dict(_lesson(), kind="grammar")
 
-    assert exported["schema_version"] == "4.0"
+    assert exported["schema_version"] == "4.1"
     assert exported["id"] == "noun_gender"
     assert exported["kind"] == "grammar"
     assert [section["id"] for section in exported["sections"]] == ["s1", "s2"]
@@ -28,6 +28,37 @@ def test_export_given_internal_lesson_expect_pages_and_practice_groups():
     assert exported["practice_groups"] == [{"id": "practice-o1", "objective_id": "o1", "exercise_ids": ["e1"]}]
     assert exported["media"] == {"audio": []}
     ExportedLesson.model_validate(exported)
+
+
+def test_export_given_dialogue_stimulus_expect_public_ordered_turns():
+    data = _lesson().model_dump(mode="json")
+    data["elements"][1]["stimulus"] = [
+        {
+            "kind": "dialogue",
+            "turns": [
+                {"speaker": "Lea", "text": [_txt("Kanskje.")]},
+                {"speaker": "Jonas", "text": [_txt("Da er det avtalt.")]},
+            ],
+        }
+    ]
+
+    exported = to_export_dict(Lesson.model_validate(data))
+
+    assert exported["exercises"][0]["stimulus"] == [
+        {
+            "kind": "dialogue",
+            "turns": [
+                {"speaker": "Lea", "text": [{"kind": "text", "value": "Kanskje."}]},
+                {"speaker": "Jonas", "text": [{"kind": "text", "value": "Da er det avtalt."}]},
+            ],
+        }
+    ]
+
+
+def test_export_given_no_stimulus_expect_field_omitted():
+    exported = to_export_dict(_lesson())
+
+    assert "stimulus" not in exported["exercises"][0]
 
 
 def test_exported_lesson_given_missing_schema_version_expect_validation_error():
@@ -125,6 +156,48 @@ def test_export_given_reading_and_examples_expect_stable_block_and_turn_ids():
     assert blocks[1]["turn_index"] == 2
     assert blocks[2]["items"][0]["id"] == "dialogue-block-3-item-1"
     ExportedLesson.model_validate(exported)
+
+
+def test_export_given_example_teaching_roles_expect_non_default_roles_only():
+    lesson = _lesson(
+        elements=[
+            {
+                "element_kind": "section",
+                "id": "examples",
+                "role": "model",
+                "objective_ids": ["o1"],
+                "title": "Examples",
+                "blocks": [
+                    {
+                        "kind": "example",
+                        "no": [_txt("En modell.")],
+                        "en": [_txt("A model.")],
+                    },
+                    {
+                        "kind": "examples",
+                        "items": [
+                            {
+                                "no": [_txt("Vær forsiktig.")],
+                                "en": [_txt("Use care.")],
+                                "teaching_role": "caution",
+                            },
+                            {
+                                "no": [_txt("Feil form.")],
+                                "en": [_txt("Wrong form.")],
+                                "teaching_role": "incorrect",
+                            },
+                        ],
+                    },
+                ],
+            },
+            _lesson().model_dump(mode="json")["elements"][1],
+        ]
+    )
+
+    blocks = to_export_dict(lesson)["sections"][0]["blocks"]
+
+    assert "teaching_role" not in blocks[0]
+    assert [item["teaching_role"] for item in blocks[1]["items"]] == ["caution", "incorrect"]
 
 
 def test_export_given_reading_voice_profile_expect_profile_stripped_from_packet():
@@ -356,7 +429,7 @@ def test_export_given_unreferenced_synthesized_audio_expect_validation_error():
     with pytest.raises(ValueError, match="synthesized media.audio entries"):
         ExportedLesson.model_validate(
             {
-                "schema_version": "4.0",
+                "schema_version": "4.1",
                 "id": "noun_gender",
                 "kind": "grammar",
                 "language": "nb-NO",
@@ -396,7 +469,7 @@ def test_export_given_audio_for_another_lesson_expect_validation_error():
     with pytest.raises(ValueError, match="belong to the packet lesson id"):
         ExportedLesson.model_validate(
             {
-                "schema_version": "4.0",
+                "schema_version": "4.1",
                 "id": "noun_gender",
                 "kind": "grammar",
                 "language": "nb-NO",

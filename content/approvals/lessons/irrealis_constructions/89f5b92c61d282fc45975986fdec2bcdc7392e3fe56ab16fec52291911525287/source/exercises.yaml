@@ -1,0 +1,283 @@
+- handle: recognize_hypothetical_distance
+  op: choose
+  objective: obj-irrealis-constructions-01
+  bloom: analyze
+  prompt_md: 'Les setningene. Velg gruppen som klassifiserer vilkårene som åpen mulighet,
+    tenkt situasjon eller noe som ikke skjedde.'
+  derived_from:
+  - section_id: checkpoint-recognize-hypothetical-distance
+  stem_md: 'Velg gruppen som riktig klassifiserer vilkårene 1, 2 og 3.'
+  options:
+  - id: distant-open-open
+    text: '1: en mer fjern eller uvirkelig situasjon; 2: en åpen mulighet; 3: en åpen
+      mulighet'
+    correct: false
+    why: Vilkår 1 er en åpen mulighet, ikke en tenkt situasjon.
+  - id: open-open-distant
+    text: '1: en åpen mulighet; 2: en åpen mulighet; 3: en mer fjern eller uvirkelig
+      situasjon'
+    correct: false
+    why: Vilkår 2 beskriver en tenkt situasjon nå, mens vilkår 3 er en åpen
+      mulighet.
+  - id: open-distant-open
+    text: '1: en åpen mulighet; 2: en mer fjern eller uvirkelig situasjon; 3: en åpen
+      mulighet'
+    correct: true
+    why: Vilkår 1 og 3 er åpne muligheter. Vilkår 2 forestiller seg en annen
+      situasjon nå.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Vilkår 1: Hvis toget er i rute, rekker vi møtet. Vilkår 2: Hvis jeg
+        hadde bil, ville jeg kjøre til hytta. Vilkår 3: Hvis det regner i morgen, tar vi
+        bussen.'
+- handle: build_present_hypothetical_condition
+  op: build
+  objective: obj-irrealis-constructions-01
+  bloom: apply
+  prompt_md: 'Hun bor langt fra Oslo nå. Sett sammen setningen om hva hun ville gjort
+    hvis hun bodde nærmere.'
+  stimulus: []
+  explanation_md: 'En tenkt situasjon nå eller framover uttrykkes med fortidsform
+    i hvis-setningen og «ville + infinitiv» i resultatet.'
+  derived_from:
+  - section_id: checkpoint-build-present-hypothetical-condition
+  tokens:
+  - token_id: tok-1
+    text: Hvis
+  - token_id: tok-8
+    text: ta
+  - token_id: tok-7
+    text: hun
+  - token_id: tok-6
+    text: ville
+  - token_id: tok-5
+    text: Oslo,
+  - token_id: tok-4
+    text: nærmere
+  - token_id: tok-3
+    text: bodde
+  - token_id: tok-2
+    text: hun
+  - token_id: tok-9
+    text: toget.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+- handle: select_would_or_could_result
+  op: recall_fill
+  objective: obj-irrealis-constructions-01
+  bloom: understand
+  prompt_md: 'Fullfør de to setningene slik at de passer til situasjonene.'
+  explanation_md: 'Presensformene «har» og «bor» uttrykker reelle forhold. Lina har
+    lite tid, og Mats bor langt unna, så fortidsformene markerer de tenkte alternativene.'
+  derived_from:
+  - section_id: checkpoint-select-would-or-could-result
+  audio_target: Hvis jeg hadde mer tid, ville jeg lese boka. Hvis jeg bodde
+    nærmere, kunne jeg komme oftere.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lina
+      text_md: «Jeg har liten tid til å lese boka nå.»
+    - speaker: Mats
+      text_md: «Jeg bor langt unna dere, så jeg kommer sjelden.»
+  segments:
+  - text_md: '«Hvis jeg '
+  - blank_id: time-condition
+    options:
+    - har
+    - hadde
+    answer_index: 1
+  - text_md: ' mer tid, ville jeg lese boka.»'
+  - text_md: '«Hvis jeg '
+  - blank_id: distance-condition
+    options:
+    - bodde
+    - bor
+    answer_index: 0
+  - text_md: ' nærmere, kunne jeg komme oftere.»'
+- handle: distinguish_hypothetical_time_reference
+  op: choose
+  objective: obj-irrealis-constructions-01
+  bloom: analyze
+  prompt_md: 'Nora ser for seg to situasjoner: Hun har lite fritid nå, men ønsker
+    seg mer. I går kjøpte hun ikke billett, og turen er over. Velg setningsparet som
+    passer.'
+  derived_from:
+  - section_id: checkpoint-distinguish-hypothetical-time-reference
+  stem_md: 'Velg paret som passer til en tenkt situasjon nå eller framover og en situasjon
+    i fortida som ikke ble noe av.'
+  options:
+  - id: ordinary-past
+    text: 'Nå: Hvis Nora har mer tid, ville hun lese boka. Tidligere: Hvis Nora kjøpte
+      billetten, ville hun ha reist.'
+    correct: false
+    why: The condition forms do not use the taught patterns for the two time
+      frames.
+  - id: present-mixed-result
+    text: 'Nå: Hvis Nora hadde mer tid, ville hun lese boka. Tidligere: Hvis Nora
+      hadde kjøpt billetten, ville hun reise.'
+    correct: false
+    why: The completed past case needs the past result form ville ha reist.
+  - id: present-past
+    text: 'Nå: Hvis Nora hadde mer tid, ville hun lese boka. Tidligere: Hvis Nora
+      hadde kjøpt billetten, ville hun ha reist.'
+    correct: true
+    why: The first sentence imagines a different present; the second uses hadde
+      + past participle and ville ha + past participle for the completed past.
+- handle: build_past_counterfactual_condition
+  op: build
+  objective: obj-irrealis-constructions-01
+  bloom: apply
+  prompt_md: 'Toget har gått, fordi du reiste hjemmefra for sent. Sett sammen en setning
+    om hvordan reisen kunne ha gått annerledes.'
+  explanation_md: 'En uvirkelig situasjon nå eller framover bruker fortidsform. Om
+    noe som ikke skjedde i fortida, bruker vi «hadde + partisipp» i hvis-setningen
+    og «ville ha + partisipp» i resultatet.'
+  derived_from:
+  - section_id: checkpoint-build-past-counterfactual-condition
+  tokens:
+  - token_id: tok-1
+    text: Hvis
+  - token_id: tok-9
+    text: rukket
+  - token_id: tok-8
+    text: ha
+  - token_id: tok-7
+    text: du
+  - token_id: tok-6
+    text: ville
+  - token_id: tok-5
+    text: tidligere,
+  - token_id: tok-4
+    text: dratt
+  - token_id: tok-3
+    text: hadde
+  - token_id: tok-2
+    text: du
+  - token_id: tok-10
+    text: toget.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+- handle: repair_irrealis_construction_errors
+  op: find_fix
+  objective: obj-irrealis-constructions-01
+  bloom: analyze
+  prompt_md: 'Du kjøpte ikke billetten i går. Finn ordet som må endres for å uttrykke
+    det motsatte.'
+  derived_from:
+  - section_id: checkpoint-repair-irrealis-construction-errors
+  tokens:
+  - token_id: tok-1
+    text: Hvis
+  - token_id: tok-2
+    text: jeg
+  - token_id: tok-3
+    text: hadde
+  - token_id: tok-4
+    text: kjøpte
+  - token_id: tok-5
+    text: billetten
+  - token_id: tok-6
+    text: i
+  - token_id: tok-7
+    text: går,
+  - token_id: tok-8
+    text: ville
+  - token_id: tok-9
+    text: jeg
+  - token_id: tok-10
+    text: ha
+  - token_id: tok-11
+    text: reist.
+  error_token_id: tok-4
+  feedback: 'Bytt «kjøpte» med «kjøpt»: etter «hadde» bruker vi partisipp.'
+- handle: interpret_conditions_in_return_scene
+  op: choose
+  objective: obj-irrealis-constructions-01
+  bloom: analyze
+  prompt_md: 'Les vilkårene. Velg tolkningen som passer til alle tre.'
+  derived_from:
+  - section_id: checkpoint-interpret-conditions-in-return-scene
+  stem_md: 'Velg tolkningen som forklarer hva hvert vilkår innebærer.'
+  options:
+  - id: imagined-now-possible-now-unchangeable-past
+    text: '1: en tenkt situasjon nå; 2: en åpen mulighet; 3: en mulighet i fortida
+      som ikke ble noe av.'
+    correct: false
+    why: Vilkår 1 er åpent, mens vilkår 2 bruker fortidsform + ville/kunne.
+  - id: possible-now-imagined-now-unchangeable-past
+    text: '1: en åpen mulighet; 2: en tenkt situasjon nå; 3: en mulighet i fortida
+      som ikke ble noe av.'
+    correct: true
+    why: Vilkår 1 er åpent, vilkår 2 gjelder en bil som ikke er klar, og vilkår
+      3 viser til gårsdagen.
+  - id: possible-now-unchangeable-past-imagined-now
+    text: '1: en åpen mulighet; 2: en mulighet i fortida som ikke ble noe av; 3: en
+      tenkt situasjon nå.'
+    correct: false
+    why: Vilkår 2 gjelder om bilen er klar nå, mens vilkår 3 handler om
+      gårsdagen.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Første vilkår: Hvis det ikke regner fredag, drar vi på tur. Andre
+        vilkår: Hvis bilen var klar nå, kunne vi hente deg. Eirik har bil, men den
+        står på verksted. Tredje vilkår: Hvis vi hadde reist tidligere i går, ville
+        vi ha rukket toget.'
+- handle: transfer_irrealis_to_new_situation
+  op: write
+  objective: obj-irrealis-constructions-01
+  bloom: apply
+  prompt_md: 'Ida bor langt fra konsertlokalet. Hun og Jon kjøpte billettene for sent
+    til å få rabatt. Skriv en dialog på norsk på 30–55 ord om konserten. Ta med én
+    tenkt situasjon nå eller framover og én situasjon i fortida som ikke ble noe av.
+    Bruk opplysningene om Ida og rabatten.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Ida
+      text_md: «Jeg bor langt fra konsertlokalet, og vi kjøpte billettene for
+        sent til å få rabatten.»
+    - speaker: Jon
+      text_md: «Kanskje vi kan finne en annen løsning neste gang.»
+  derived_from:
+  - section_id: retrieval-and-transfer
+  response_language: 'no'
+  judge_prompt: Check the Norwegian dialogue against the task and report
+    evidence for every criterion. Accept natural Bokmål forms of present/future
+    hypotheses and past counterfactuals, including suitable alternatives with
+    kunne. Do not enforce one modal choice where the prompt leaves the meaning
+    open.
+  criteria:
+  - id: concert-context
+    instruction: 'Uses the concert situation: one friend currently lives away from
+      the venue, and both friends missed the earlier discount because they bought
+      tickets late.'
+  - id: present-future-hypothesis
+    instruction: Includes a natural present or future hypothesis with a
+      past-form conditional clause and a fitting result. Accept ville, kunne, or
+      another natural modal where the meaning supports it.
+  - id: past-counterfactual
+    instruction: Includes a contrary-to-fact past condition with hadde + past
+      participle and a natural result. Accept a suitable result with ville or
+      kunne, with or without ha when Norwegian usage permits.

@@ -1,0 +1,312 @@
+- handle: checkpoint_identify_situation_now
+  op: write
+  objective: obj-vaere-or-bli-for-state-and-change-01
+  bloom: apply
+  prompt_md: Mina steps into the concert room and sees that it is already noisy. Write a short Norwegian
+    note to Jonas that says the room is noisy now and uses er for this current state.
+  derived_from:
+  - section_id: checkpoint-identify-the-situation-now
+  response_language: 'no'
+  min_words: 3
+  max_words: 60
+  judge_prompt: Check that the response describes the current room and uses er to express the existing
+    adjective state.
+  criteria:
+  - id: describes-current-room
+    instruction: Describes the room as already noisy at the moment of speaking.
+  - id: uses-er
+    instruction: Uses er to express the room's existing adjective state.
+  - id: er-state-observation
+    instruction: 'Observation only: note whether the response uses the taught er form; do not fail a natural
+      equivalent.'
+- handle: checkpoint_show_result_of_action
+  op: write
+  objective: obj-vaere-or-bli-for-state-and-change-01
+  bloom: apply
+  prompt_md: Jonas turns on the heater and lamps, washes the tables, and opens the curtains. Write a short
+    Norwegian message to Mina with four clauses, one describing the result of each action. Show each result
+    as a change into a new state with blir.
+  derived_from:
+  - section_id: checkpoint-show-the-result-of-an-action
+  response_language: 'no'
+  min_words: 5
+  max_words: 60
+  judge_prompt: Check that the response covers all four actions and presents each result as a change into
+    a new adjective state with blir.
+  criteria:
+  - id: covers-all-actions
+    instruction: Describes a plausible result of turning on the heater, turning on the lamps, washing
+      the tables, and opening the curtains.
+  - id: uses-blir-for-each-change
+    instruction: For each of the four actions, uses blir to present the result as a change into a new
+      adjective state.
+  - id: blir-change-observation
+    instruction: 'Observation only: note variation in adjective choice and wording; do not fail a natural
+      equivalent.'
+- handle: checkpoint_choose_intended_viewpoint
+  op: recall_fill
+  objective: obj-vaere-or-bli-for-state-and-change-01
+  bloom: apply
+  prompt_md: Fill each blank with the verb that fits the situation.
+  explanation_md: Use er for a state that holds at the stated time; use blir when the subject enters or
+    changes into that state.
+  derived_from:
+  - section_id: checkpoint-choose-the-intended-viewpoint
+  audio_target: Mina asks about the concert room and the singer. Jonas answers with four verb forms that
+    distinguish an existing state from a change.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Mina
+      text_md: «Hvordan er det i salen under pausen?»
+    - speaker: Jonas
+      text_md: «Under pausen ___ rommet stille. Når konserten begynner, ___ rommet støyende.»
+    - speaker: Mina
+      text_md: «Og hvordan har sangeren det?»
+    - speaker: Jonas
+      text_md: «Før opptredenen ___ sangeren nervøs. Når hun roer seg på scenen, ___ hun rolig.»
+  segments:
+  - text_md: '«Under pausen '
+  - blank_id: room-current
+    options:
+    - er
+    - blir
+    answer_index: 0
+  - text_md: ' rommet stille. Når konserten begynner,'
+  - blank_id: room-change
+    options:
+    - blir
+    - er
+    answer_index: 0
+  - text_md: ' rommet støyende. Før opptredenen '
+  - blank_id: performer-current
+    options:
+    - blir
+    - er
+    answer_index: 1
+  - text_md: ' sangeren nervøs. Når sangeren roer seg på scenen,'
+  - blank_id: performer-change
+    options:
+    - er
+    - blir
+    answer_index: 1
+  - text_md: ' hun rolig.»'
+- handle: checkpoint_correct_permanence_shortcut
+  op: write
+  objective: obj-vaere-or-bli-for-state-and-change-01
+  bloom: apply
+  prompt_md: 'Write a Norwegian text message to a friend explaining four pairs of situations: an existing
+    condition before lunch and becoming hungry later, a singer''s existing nervousness and becoming calm
+    later, wetness after a rainy walk and becoming wet while walking, and tiredness after work and becoming
+    tired during long work. For every pair, use er for the first existing state and blir for the later
+    change.'
+  derived_from:
+  - section_id: checkpoint-correct-the-permanence-shortcut
+  response_language: 'no'
+  min_words: 20
+  max_words: 100
+  judge_prompt: Check that the response covers all four pairs and uses er for each first state and blir
+    for each change.
+  criteria:
+  - id: covers-four-pairs
+    instruction: Covers all four supplied pairs of situations.
+  - id: state-then-change
+    instruction: For each pair, describe the existing state with er and the later change into or away
+      from that state with blir.
+  - id: er-blir-observation
+    instruction: 'Observation only: note lexical and stylistic variation; do not fail a natural equivalent.'
+- handle: guided_practice_follow_one_object_through_time
+  op: write
+  objective: obj-vaere-or-bli-for-state-and-change-01
+  bloom: apply
+  prompt_md: 'Choose one element from the concert room: the temperature, tables, lighting, hall, or Mina''s
+    mood. Write a short Norwegian note to the event organiser with a three-stage timeline: the element''s
+    initial state, the event that changes it, and its state after the change. Use er for the initial and
+    resulting states and blir for the transition.'
+  derived_from:
+  - section_id: guided-practice-follow-one-object-through-time
+  response_language: 'no'
+  min_words: 10
+  max_words: 60
+  judge_prompt: Check that the response gives a coherent three-stage timeline and uses er for both states
+    and blir for the transition.
+  criteria:
+  - id: coherent-timeline
+    instruction: Describes the selected element's initial state, the event, and the resulting state in
+      a coherent timeline.
+  - id: er-blir-sequence
+    instruction: Uses er for the initial state, blir for the transition, and er for the resulting state.
+  - id: er-blir-sequence-observation
+    instruction: 'Observation only: note the selected element and adjective choices; do not fail a natural
+      equivalent.'
+- handle: broader_practice_apply_the_contrast_in_new_situations
+  op: write
+  objective: obj-vaere-or-bli-for-state-and-change-01
+  bloom: apply
+  prompt_md: 'Write connected Norwegian descriptions for at least two situations: a cold drink warming
+    on a table, a quiet station becoming busy, or a worried friend calming down. In each description,
+    use er for the condition that already holds and blir for the change into the next condition.'
+  derived_from:
+  - section_id: broader-practice-apply-the-contrast-in-new-situations
+  response_language: 'no'
+  min_words: 20
+  max_words: 80
+  judge_prompt: Check that the response covers at least two situations and uses er for each existing condition
+    and blir for each change.
+  criteria:
+  - id: covers-two-situations
+    instruction: Covers at least two of the three supplied situations.
+  - id: includes-state-and-change
+    instruction: In each description, states the existing adjective condition with er and the change into
+      another adjective condition with blir.
+  - id: er-blir-context-observation
+    instruction: 'Observation only: note the variety of situations and vocabulary; do not fail a natural
+      equivalent.'
+- handle: retrieval_explain_contrast
+  op: write
+  objective: obj-vaere-or-bli-for-state-and-change-01
+  bloom: apply
+  prompt_md: 'Write three Norwegian sentences for your language journal: one about a current adjective
+    state using er, one about a change into a new adjective state using blir, and one that shows the change
+    followed by its resulting state using both forms.'
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  min_words: 10
+  max_words: 60
+  judge_prompt: Check that the response includes the three requested sentence types and uses er for states
+    and blir for the change.
+  criteria:
+  - id: three-descriptions
+    instruction: 'Includes three sentences: a current state expressed with er, a change expressed with
+      blir, and a change followed by its resulting state expressed with blir and er.'
+  - id: er-blir-retrieval-observation
+    instruction: 'Observation only: note whether the examples use varied subjects and adjectives; do not
+      fail a natural equivalent.'
+- handle: review_choose_viewpoint_mixed
+  op: recall_fill
+  objective: obj-vaere-or-bli-for-state-and-change-01
+  bloom: apply
+  prompt_md: Complete this new dialogue with the verb that fits each situation.
+  explanation_md: A state that holds at a given time takes er; a transition into a state takes blir.
+  derived_from:
+  - section_id: retrieval-and-review
+  audio_target: Lea asks Omar about a dark corridor and his condition after running. Omar answers by distinguishing
+    states from changes.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lea
+      text_md: «Hvorfor virker korridoren så mørk?»
+    - speaker: Omar
+      text_md: «Akkurat nå ___ korridoren mørk. Når vakten åpner døren, ___ korridoren mer opplyst.»
+    - speaker: Lea
+      text_md: «Hvordan føler du deg etter løpeturen?»
+    - speaker: Omar
+      text_md: «Etter løpeturen ___ jeg sliten. Når jeg fortsetter å løpe, ___ jeg mer utmattet.»
+  segments:
+  - text_md: '«Akkurat nå '
+  - blank_id: state-dark
+    options:
+    - er
+    - blir
+    answer_index: 0
+  - text_md: ' korridoren mørk. Når vakten åpner døren,'
+  - blank_id: change-light
+    options:
+    - blir
+    - er
+    answer_index: 0
+  - text_md: ' korridoren mer opplyst. Etter løpeturen '
+  - blank_id: state-tired
+    options:
+    - blir
+    - er
+    answer_index: 1
+  - text_md: ' jeg sliten. Når jeg fortsetter å løpe,'
+  - blank_id: change-tired
+    options:
+    - er
+    - blir
+    answer_index: 1
+  - text_md: ' jeg mer utmattet.»'
+- handle: review_temporary_state_vs_transition
+  op: recall_fill
+  objective: obj-vaere-or-bli-for-state-and-change-01
+  bloom: apply
+  prompt_md: Complete this new dialogue with the verb that fits each situation.
+  explanation_md: A short-lived condition is still a state and takes er. Use blir when the context shows
+    a transition into that condition.
+  derived_from:
+  - section_id: retrieval-and-review
+  audio_target: Amir and Nora discuss the jacket after a hike and how Nora feels before a meeting and
+    when it is canceled. Nora distinguishes existing states from later changes.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Amir
+      text_md: «Hva skjedde med frakken etter turen?»
+    - speaker: Nora
+      text_md: «Den må tørkes før jeg pakker den igjen.»
+    - speaker: Amir
+      text_md: «Hvordan har du det før møtet, og hva skjer med planene deres?»
+    - speaker: Nora
+      text_md: «Jeg kjenner meg litt urolig på forhånd. Da det kom beskjed om endringen, kjente jeg meg
+        plutselig lettet.»
+  segments:
+  - text_md: '«Etter turen '
+  - blank_id: jacket-state
+    options:
+    - er
+    - blir
+    answer_index: 0
+  - text_md: ' frakken gjennomvåt. Når jeg henger den opp,'
+  - blank_id: bag-change
+    options:
+    - er
+    - blir
+    answer_index: 1
+  - text_md: ' frakken tørr igjen. Før møtet '
+  - blank_id: nervous-state
+    options:
+    - er
+    - blir
+    answer_index: 0
+  - text_md: ' jeg spent. Når møtet blir avlyst,'
+  - blank_id: calm-change
+    options:
+    - blir
+    - er
+    answer_index: 0
+  - text_md: ' jeg roligere.»'
+- handle: review_change_then_state
+  op: recall_fill
+  objective: obj-vaere-or-bli-for-state-and-change-01
+  bloom: apply
+  prompt_md: Complete this new dialogue with the verb that fits each situation.
+  explanation_md: Use blir for the transition into the state, then er for the resulting state.
+  derived_from:
+  - section_id: retrieval-and-review
+  audio_target: Nora asks about the lake after a breeze dies down. Eli describes the transition and the
+    later state.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Hvordan endrer innsjøen seg etter vinden?»
+    - speaker: Eli
+      text_md: «Når vinden gir seg, ___ innsjøen rolig. Etter hvert holder innsjøen seg rolig.»
+  segments:
+  - text_md: «Når vinden gir seg,
+  - blank_id: lake-change
+    options:
+    - blir
+    - er
+    answer_index: 0
+  - text_md: ' innsjøen rolig. Litt senere '
+  - blank_id: lake-state
+    options:
+    - blir
+    - er
+    answer_index: 1
+  - text_md: ' innsjøen rolig.»'

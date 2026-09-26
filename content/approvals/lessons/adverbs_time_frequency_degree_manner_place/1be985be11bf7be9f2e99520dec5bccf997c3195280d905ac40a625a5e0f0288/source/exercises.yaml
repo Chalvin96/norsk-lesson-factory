@@ -1,0 +1,365 @@
+- handle: notice_frequency_position
+  op: choose
+  objective: obj-adverbs-time-frequency-degree-manner-place-01
+  bloom: understand
+  stem_md: 'Fakta: Jeg arbeider hjemme. Jeg gjør det ofte.'
+  prompt_md: Velg setningen der frekvensadverbet står på den nøytrale plassen
+    etter det finitte verbet.
+  explanation_md: Frekvensadverbet står vanligvis etter det finitte verbet i en
+    subjektførst hovedsetning.
+  derived_from:
+  - section_id: frequency-after-finite-verb
+  options:
+  - correct: false
+    why: Dette flytter ofte til slutt i stedet for den nøytrale plassen etter
+      verbet.
+    id: after-place
+    text: Jeg arbeider hjemme ofte.
+  - correct: true
+    why: Ofte står etter det finitte verbet arbeider.
+    id: after-finite
+    text: Jeg arbeider ofte hjemme.
+  - correct: false
+    why: Dette kopierer engelsk rekkefølge og setter ofte foran det finitte
+      verbet.
+    id: before-finite
+    text: Jeg ofte arbeider hjemme.
+- handle: frequency_after_the_verb
+  op: find_fix
+  objective: obj-adverbs-time-frequency-degree-manner-place-01
+  bloom: analyze
+  prompt_md: Velg adverbet som må flyttes for å gi nøytral ordstilling.
+  explanation_md: I en subjektførst hovedsetning står alltid etter det finitte
+    verbet snakker.
+  derived_from:
+  - section_id: frequency-after-finite-verb
+  tokens:
+  - token_id: subject
+    text: Maja
+  - token_id: frequency
+    text: alltid
+  - token_id: finite-verb
+    text: snakker
+  - token_id: manner
+    text: fort.
+  error_token_id: frequency
+  feedback: Flytt alltid etter snakker.
+- handle: keep_degree_together
+  op: recall_fill
+  objective: obj-adverbs-time-frequency-degree-manner-place-01
+  bloom: apply
+  prompt_md: Fyll inn ordene i nøytral rekkefølge, med gradsadverbet rett foran
+    ordet det forsterker.
+  explanation_md: Et gradsadverb står rett foran adjektivet eller adverbet det
+    forsterker.
+  derived_from:
+  - section_id: degree-close-to-target
+  audio_target: Maja snakker veldig tydelig. Kaffen er ganske varm. Nora sykler
+    veldig fort.
+  segments:
+  - text_md: 'Maja snakker '
+  - blank_id: degree-1
+    options:
+    - veldig tydelig
+    - tydelig veldig
+    answer_index: 0
+  - text_md: '. Kaffen er '
+  - blank_id: degree-2
+    options:
+    - varm ganske
+    - ganske varm
+    answer_index: 1
+  - text_md: '. Nora sykler '
+  - blank_id: degree-3
+    options:
+    - fort veldig
+    - veldig fort
+    answer_index: 1
+  - text_md: .
+- handle: describe_how_it_happens
+  op: build
+  objective: obj-adverbs-time-frequency-degree-manner-place-01
+  bloom: apply
+  prompt_md: Bygg en nøytral hovedsetning.
+  explanation_md: Objektet rapporten står før måtesadverbet grundig, mens svært
+    står rett foran det.
+  derived_from:
+  - section_id: manner-after-action-or-object
+  tokens:
+  - token_id: finite-verb
+    text: gjennomgår
+  - token_id: object
+    text: rapporten
+  - token_id: degree
+    text: svært
+  - token_id: manner
+    text: grundig.
+  - token_id: subject
+    text: Ingrid
+  answer_order:
+  - subject
+  - finite-verb
+  - object
+  - degree
+  - manner
+- handle: build_the_sentence_end
+  op: build
+  objective: obj-adverbs-time-frequency-degree-manner-place-01
+  bloom: apply
+  prompt_md: Bygg en nøytral hovedsetning om Amir. Plasser opplysningene om
+    hvordan, hvor og når i vanlig sluttfølge.
+  explanation_md: Utfyllingen «på pianostykket» kommer før sluttinformasjonen,
+    som her følger rekkefølgen måte–sted–tid.
+  derived_from:
+  - section_id: place-and-time-at-end
+  tokens:
+  - token_id: finite-verb
+    text: øver
+  - token_id: object
+    text: på pianostykket
+  - token_id: manner
+    text: stille
+  - token_id: place
+    text: i øvingsrommet
+  - token_id: time
+    text: før lunsj.
+  - token_id: subject
+    text: Amir
+  answer_order:
+  - subject
+  - finite-verb
+  - object
+  - manner
+  - place
+  - time
+- handle: start_with_time_or_place
+  op: build
+  objective: obj-adverbs-time-frequency-degree-manner-place-01
+  bloom: apply
+  prompt_md: Bygg en setning om en reparasjon. Start med På verkstedet.
+  explanation_md: Når På verkstedet står først, kommer det finitte verbet
+    reparerer på andre plass og subjektet etter verbet.
+  derived_from:
+  - section_id: fronted-time-or-place
+  tokens:
+  - token_id: finite-verb
+    text: reparerer
+  - token_id: subject
+    text: Lea
+  - token_id: object
+    text: sykkelen.
+  - token_id: fronted-setting
+    text: På verkstedet
+  answer_order:
+  - fronted-setting
+  - finite-verb
+  - subject
+  - object
+- handle: discriminate_adverb_order
+  op: choose
+  objective: obj-adverbs-time-frequency-degree-manner-place-01
+  bloom: analyze
+  stem_md: Nora leser planen. Hun leser den ofte. Hun går nøye gjennom planen på
+    biblioteket om ettermiddagen.
+  prompt_md: Velg setningen der frekvensadverbet står etter verbet, objektet før
+    måten og sted før tid i sluttfølgen.
+  explanation_md: Frekvens står etter det finitte verbet, objektet står før
+    måten, og sluttfølgen er måte–sted–tid.
+  derived_from:
+  - section_id: place-and-time-at-end
+  options:
+  - correct: false
+    why: Tid står foran sted i stedet for den øvde nøytrale sluttfølgen
+      måte–sted–tid.
+    id: time-before-place
+    text: Nora leser ofte planen nøye om ettermiddagen på biblioteket.
+  - correct: true
+    why: Setningen følger frekvens–objekt–måte–sted–tid.
+    id: neutral-order
+    text: Nora leser ofte planen nøye på biblioteket om ettermiddagen.
+  - correct: false
+    why: Ofte står foran det finitte verbet som i engelsk ordstilling.
+    id: english-frequency
+    text: Nora ofte leser planen nøye på biblioteket om ettermiddagen.
+  - correct: false
+    why: Objektet planen er flyttet bak måte og sted.
+    id: object-too-late
+    text: Nora leser ofte nøye på biblioteket planen om ettermiddagen.
+- handle: restore_the_cafe_details
+  op: write
+  objective: obj-adverbs-time-frequency-degree-manner-place-01
+  bloom: apply
+  prompt_md: "Nora skriver: «Jeg kommer snart. Hvordan går øvingen?» Notater: kafé, øving nå; rolig stemme; tydelige notater; ganske nervøs. Svar Nora og få med alle opplysningene."
+  explanation_md: Et godt svar bruker alle de oppgitte faktaene i en kort og
+    naturlig melding med nøytral ordstilling.
+  derived_from:
+  - section_id: returning-to-maja-and-erik
+  response_language: "no"
+  min_words: 25
+  max_words: 40
+  judge_prompt: "Vurder kriteriene cafe-purpose, cafe-facts, cafe-neutral-order. Registrer eventuelle observasjoner med suffikset -observation diagnostisk."
+  criteria:
+  - id: cafe-purpose
+    instruction: Svaret er en forståelig melding til Nora om hvordan øvingen
+      går.
+  - id: cafe-facts
+    instruction: Svaret gjengir alle fire oppgitte faktaene uten å motsi dem.
+  - id: cafe-neutral-order
+    instruction: 'Svaret bruker nøytral ordstilling for de oppgitte faktaene: gradsadverb
+      rett foran ordet det forsterker, objekt før måtesadverb, og måte–sted–tid i
+      sluttinformasjonen når disse uttrykkene brukes.'
+- handle: revise_cafe_message
+  op: write
+  objective: obj-adverbs-time-frequency-degree-manner-place-01
+  bloom: analyze
+  prompt_md: "Maja vil sende denne meldingen til Nora: «Jeg ofte øver. Jeg skriver tydelig notatene på kafeen nå. I dag jeg møter Erik her.» Skriv meldingen på nytt med naturlig ordstilling. Behold «I dag» først i den siste setningen."
+  explanation_md: Revisjonen flytter frekvens etter verbet, objektet foran måten
+    og verbet til andre plass etter I dag.
+  derived_from:
+  - section_id: common-mistakes
+  response_language: "no"
+  min_words: 15
+  max_words: 25
+  judge_prompt: "Vurder kriteriene revision-meaning, revision-frequency, revision-object-manner og revision-v2. Godta både «her» og «der» for kafeen når stedsreferansen ellers er tydelig; Maja kan beskrive stedet fra eget ståsted eller fra Noras."
+  criteria:
+  - id: revision-meaning
+    instruction: Den reviderte meldingen bevarer at Maja øver, skriver notatene
+      tydelig på kafeen nå og møter Erik der i dag.
+  - id: revision-frequency
+    instruction: Ofte står etter det finitte verbet i den reviderte
+      subjektførstsetningen.
+  - id: revision-object-manner
+    instruction: Notatene står før tydelig.
+  - id: revision-v2
+    instruction: I setningen som begynner med I dag, står det finitte verbet før
+      subjektet.
+- handle: prepare_at_the_library
+  op: write
+  objective: obj-adverbs-time-frequency-degree-manner-place-01
+  bloom: apply
+  prompt_md: "Bibliotekaren spør hva dere skal gjøre og når møtet begynner. Notater: Maja – planleggingsnotater / lese grundig; Nora – arbeide stille / de fleste dager; møte – inne / klokka tre. Svar bibliotekaren. Bruk et frekvensadverb om Noras arbeidsvaner."
+  explanation_md: Svaret skal gi bibliotekaren den oppgitte informasjonen i en
+    sammenhengende melding med nøytral ordstilling.
+  derived_from:
+  - section_id: transfer-to-library
+  response_language: "no"
+  min_words: 30
+  max_words: 45
+  judge_prompt: "Vurder kriteriene library-audience-purpose, library-facts, library-frequency-placement, library-object-manner og library-end-order. Registrer observasjonen library-fronted-observation diagnostisk."
+  criteria:
+  - id: library-audience-purpose
+    instruction: Svaret er en forståelig melding til bibliotekaren om hva de skal gjøre
+      og når møtet begynner.
+  - id: library-facts
+    instruction: Svaret gjengir alle fire oppgitte faktaene uten å motsi dem.
+  - id: library-frequency-placement
+    instruction: Et frekvensadverb står etter det finitte verbet i en
+      subjektførst hovedsetning.
+  - id: library-object-manner
+    instruction: Svaret sier at Maja leser notatene grundig, med objektet før et
+      naturlig måtesadverb.
+  - id: library-end-order
+    instruction: I sluttfølgen står sted før tid.
+  - id: library-fronted-observation
+    instruction: 'Observation only: hvis en tids- eller stedsfrase står først, registrer
+      om det finitte verbet står på andre plass; denne observasjonen skal ikke avgjøre
+      om svaret består.'
+- handle: review_frequency_after_the_verb
+  op: recall_fill
+  objective: obj-adverbs-time-frequency-degree-manner-place-01
+  bloom: apply
+  prompt_md: Fyll inn ordene i nøytral rekkefølge, med frekvensadverbet etter
+    det finitte verbet.
+  explanation_md: I en subjektførst hovedsetning står frekvensadverbet etter det
+    finitte verbet danser.
+  derived_from:
+  - section_id: frequency-after-finite-verb
+  audio_target: Sigrid danser alltid på kjøkkenet.
+  segments:
+  - text_md: 'Sigrid '
+  - blank_id: frequency
+    options:
+    - danser alltid
+    - alltid danser
+    answer_index: 0
+  - text_md: ' på kjøkkenet.'
+- handle: review_keep_degree_together
+  op: recall_fill
+  objective: obj-adverbs-time-frequency-degree-manner-place-01
+  bloom: apply
+  prompt_md: Fyll inn ordene slik at gradsadverbet står rett foran adjektivet.
+  explanation_md: Nesten står rett foran ferdig, som det avgrenser.
+  derived_from:
+  - section_id: degree-close-to-target
+  audio_target: Prosjektet er nesten ferdig.
+  segments:
+  - text_md: 'Prosjektet er '
+  - blank_id: degree
+    options:
+    - nesten ferdig
+    - ferdig nesten
+    answer_index: 0
+  - text_md: .
+- handle: review_describe_how_it_happens
+  op: choose
+  objective: obj-adverbs-time-frequency-degree-manner-place-01
+  bloom: analyze
+  stem_md: 'Fakta: Sara vasker vinduene. Hun gjør det grundig.'
+  prompt_md: Velg den nøytrale setningen.
+  explanation_md: Når verbet har et objekt, står objektet normalt før
+    måtesadverbet.
+  derived_from:
+  - section_id: manner-after-action-or-object
+  options:
+  - correct: false
+    why: Måtesadverbet bryter den nøytrale rekkefølgen mellom subjekt og verb.
+    id: manner-before-verb
+    text: Sara grundig vasker vinduene.
+  - correct: true
+    why: Objektet vinduene står før måtesadverbet grundig.
+    id: object-before-manner
+    text: Sara vasker vinduene grundig.
+  - correct: false
+    why: Måtesadverbet er satt foran objektet i stedet for etter det.
+    id: manner-before-object
+    text: Sara vasker grundig vinduene.
+- handle: review_build_the_sentence_end
+  op: choose
+  objective: obj-adverbs-time-frequency-degree-manner-place-01
+  bloom: analyze
+  stem_md: 'Fakta: Omar løper raskt. Han løper langs elva. Han gjør dette etter jobb.'
+  prompt_md: Velg den nøytrale setningen.
+  explanation_md: Den nøytrale sluttfølgen er måte–sted–tid.
+  derived_from:
+  - section_id: place-and-time-at-end
+  options:
+  - correct: false
+    why: Måtesadverbet raskt er skilt fra handlingen og plassert sist.
+    id: place-time-manner
+    text: Omar løper langs elva etter jobb raskt.
+  - correct: true
+    why: Raskt gir måte, langs elva gir sted, og etter jobb gir tid.
+    id: manner-place-time
+    text: Omar løper raskt langs elva etter jobb.
+  - correct: false
+    why: Tid og sted er satt foran måten i stedet for den nøytrale sluttfølgen.
+    id: time-place-manner
+    text: Omar løper etter jobb langs elva raskt.
+- handle: review_start_with_time_or_place
+  op: recall_fill
+  objective: obj-adverbs-time-frequency-degree-manner-place-01
+  bloom: apply
+  prompt_md: Fyll inn ordene som mangler.
+  explanation_md: Etter et innledende tidsuttrykk står det finitte verbet på
+    andre plass, før subjektet.
+  derived_from:
+  - section_id: fronted-time-or-place
+  audio_target: Etter møtet sender hun rapporten.
+  segments:
+  - text_md: 'Etter møtet '
+  - blank_id: verb-before-subject
+    options:
+    - sender hun
+    - hun sender
+    answer_index: 0
+  - text_md: ' rapporten.'

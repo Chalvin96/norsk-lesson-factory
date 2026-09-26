@@ -207,6 +207,13 @@
           "title": "Prompt",
           "type": "array"
         },
+        "stimulus": {
+          "items": {
+            "$ref": "#/$defs/ExportedDialogueStimulus"
+          },
+          "title": "Stimulus",
+          "type": "array"
+        },
         "explanation": {
           "anyOf": [
             {
@@ -413,6 +420,13 @@
           "title": "Prompt",
           "type": "array"
         },
+        "stimulus": {
+          "items": {
+            "$ref": "#/$defs/ExportedDialogueStimulus"
+          },
+          "title": "Stimulus",
+          "type": "array"
+        },
         "explanation": {
           "anyOf": [
             {
@@ -533,6 +547,13 @@
             ]
           },
           "title": "Prompt",
+          "type": "array"
+        },
+        "stimulus": {
+          "items": {
+            "$ref": "#/$defs/ExportedDialogueStimulus"
+          },
+          "title": "Stimulus",
           "type": "array"
         },
         "explanation": {
@@ -722,6 +743,82 @@
       "title": "ExportedContentItem",
       "type": "object"
     },
+    "ExportedDialogueStimulus": {
+      "additionalProperties": false,
+      "description": "Public ordered dialogue supplied before an exercise task.",
+      "properties": {
+        "kind": {
+          "const": "dialogue",
+          "title": "Kind",
+          "type": "string"
+        },
+        "turns": {
+          "items": {
+            "$ref": "#/$defs/ExportedDialogueTurn"
+          },
+          "minItems": 1,
+          "title": "Turns",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "turns"
+      ],
+      "title": "ExportedDialogueStimulus",
+      "type": "object"
+    },
+    "ExportedDialogueTurn": {
+      "additionalProperties": false,
+      "description": "One public speaker turn in exercise stimulus context.",
+      "properties": {
+        "speaker": {
+          "minLength": 1,
+          "title": "Speaker",
+          "type": "string"
+        },
+        "text": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "code": "#/$defs/CodeSpan",
+                "emphasis": "#/$defs/EmphasisSpan",
+                "foreign_term": "#/$defs/ForeignTermSpan",
+                "strong": "#/$defs/StrongSpan",
+                "text": "#/$defs/TextSpan"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextSpan"
+              },
+              {
+                "$ref": "#/$defs/EmphasisSpan"
+              },
+              {
+                "$ref": "#/$defs/StrongSpan"
+              },
+              {
+                "$ref": "#/$defs/CodeSpan"
+              },
+              {
+                "$ref": "#/$defs/ForeignTermSpan"
+              }
+            ]
+          },
+          "minItems": 1,
+          "title": "Text",
+          "type": "array"
+        }
+      },
+      "required": [
+        "speaker",
+        "text"
+      ],
+      "title": "ExportedDialogueTurn",
+      "type": "object"
+    },
     "ExportedExampleBlock": {
       "additionalProperties": false,
       "properties": {
@@ -799,6 +896,16 @@
           },
           "title": "En",
           "type": "array"
+        },
+        "teaching_role": {
+          "default": "model",
+          "enum": [
+            "model",
+            "incorrect",
+            "caution"
+          ],
+          "title": "Teaching Role",
+          "type": "string"
         },
         "audio_id": {
           "anyOf": [
@@ -894,6 +1001,16 @@
           },
           "title": "En",
           "type": "array"
+        },
+        "teaching_role": {
+          "default": "model",
+          "enum": [
+            "model",
+            "incorrect",
+            "caution"
+          ],
+          "title": "Teaching Role",
+          "type": "string"
         },
         "audio_id": {
           "anyOf": [
@@ -996,6 +1113,13 @@
             ]
           },
           "title": "Prompt",
+          "type": "array"
+        },
+        "stimulus": {
+          "items": {
+            "$ref": "#/$defs/ExportedDialogueStimulus"
+          },
+          "title": "Stimulus",
           "type": "array"
         },
         "explanation": {
@@ -1181,6 +1305,13 @@
             ]
           },
           "title": "Prompt",
+          "type": "array"
+        },
+        "stimulus": {
+          "items": {
+            "$ref": "#/$defs/ExportedDialogueStimulus"
+          },
+          "title": "Stimulus",
           "type": "array"
         },
         "explanation": {
@@ -1425,6 +1556,13 @@
             ]
           },
           "title": "Prompt",
+          "type": "array"
+        },
+        "stimulus": {
+          "items": {
+            "$ref": "#/$defs/ExportedDialogueStimulus"
+          },
+          "title": "Stimulus",
           "type": "array"
         },
         "explanation": {
@@ -1833,6 +1971,13 @@
           "title": "Prompt",
           "type": "array"
         },
+        "stimulus": {
+          "items": {
+            "$ref": "#/$defs/ExportedDialogueStimulus"
+          },
+          "title": "Stimulus",
+          "type": "array"
+        },
         "explanation": {
           "anyOf": [
             {
@@ -2187,6 +2332,13 @@
           "title": "Prompt",
           "type": "array"
         },
+        "stimulus": {
+          "items": {
+            "$ref": "#/$defs/ExportedDialogueStimulus"
+          },
+          "title": "Stimulus",
+          "type": "array"
+        },
         "explanation": {
           "anyOf": [
             {
@@ -2463,6 +2615,13 @@
             ]
           },
           "title": "Prompt",
+          "type": "array"
+        },
+        "stimulus": {
+          "items": {
+            "$ref": "#/$defs/ExportedDialogueStimulus"
+          },
+          "title": "Stimulus",
           "type": "array"
         },
         "explanation": {
@@ -2908,7 +3067,7 @@
   "description": "The lesson packet consumed by the learning app.\n\nSections and exercises remain separate lookup collections. ``content`` is\nthe authored learner-facing order that interleaves those collections without\nadding app-side page or session state to the contract.",
   "properties": {
     "schema_version": {
-      "const": "4.0",
+      "const": "4.1",
       "title": "Schema Version",
       "type": "string"
     },

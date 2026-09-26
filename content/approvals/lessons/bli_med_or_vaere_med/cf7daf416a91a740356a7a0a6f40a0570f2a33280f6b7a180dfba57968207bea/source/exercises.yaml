@@ -1,0 +1,376 @@
+- handle: first_checkpoint_finding_change
+  op: choose
+  objective: obj-bli-med-or-vaere-med-01
+  bloom: understand
+  prompt_md: Choose the description that matches how the two expressions are used.
+  stem_md: 'Confusable pair: bli med / være med Prerequisite: Recognize blir/ble as forms of bli and er/var
+    as forms of være. Sara: «Vil du bli med på hytta?» Omar står allerede på deltakerlista: «Han er med
+    på turen.»'
+  options:
+  - id: both-entry
+    text: Both expressions present joining or entry into the trip.
+    correct: false
+    why: The line about Omar reports settled inclusion, not a new act of joining.
+  - id: bli-entry-vaere-inclusion
+    text: bli med presents joining or entry; være med presents being included.
+    correct: true
+    why: Vil du bli med? invites entry, while er med reports that Omar is already included.
+  - id: bli-inclusion-vaere-entry
+    text: bli med presents being included; være med presents joining or entry.
+    correct: false
+    why: This reverses the two expressions.
+  derived_from:
+  - section_id: central-contrast
+- handle: controlled_bli_med_viewpoint
+  op: recall_fill
+  objective: obj-bli-med-or-vaere-med-01
+  bloom: apply
+  prompt_md: Fill in the correct form of bli med in each sentence.
+  explanation_md: Use blir med for a present or upcoming decision and ble med for joining in the past.
+  derived_from:
+  - section_id: invitations-decisions-bli-med
+  segments:
+  - text_md: 'Mina får en invitasjon til biblioteket i kveld. Hun svarer: «Ja, jeg '
+  - blank_id: mina-form
+    options:
+    - blir med
+    - ble med
+    answer_index: 0
+  - text_md: ' til biblioteket.» Erik sa nei på mandag, men ombestemte seg på tirsdag og '
+  - blank_id: erik-form
+    options:
+    - blir med
+    - ble med
+    answer_index: 1
+  - text_md: ' i arbeidsgruppa. Et barn spør om å få delta i leken nå. Moren svarer: «Ja, du '
+  - blank_id: child-form
+    options:
+    - blir med
+    - ble med
+    answer_index: 0
+  - text_md: ' i leken.»'
+  audio_target: 'Mina får en invitasjon til biblioteket i kveld. Hun svarer: «Ja, jeg blir med til biblioteket.»
+    Erik sa nei på mandag, men ombestemte seg på tirsdag og ble med i arbeidsgruppa. Et barn spør om å
+    få delta i leken nå. Moren svarer: «Ja, du blir med i leken.»'
+- handle: second_participation_check
+  op: recall_fill
+  objective: obj-bli-med-or-vaere-med-01
+  bloom: apply
+  prompt_md: Fill in the correct form of være med in each sentence.
+  explanation_md: Use er med for current inclusion and var med for participation during a past period.
+  derived_from:
+  - section_id: participation-inclusion-vaere-med
+  segments:
+  - text_md: 'Noor deltar på kurset denne våren. Hun '
+  - blank_id: course-participation
+    options:
+    - er med
+    - var med
+    answer_index: 0
+  - text_md: ' på kurset. Jonas spilte på skolelaget i fjor. Han '
+  - blank_id: team-participation
+    options:
+    - er med
+    - var med
+    answer_index: 1
+  - text_md: ' på laget den sesongen. Fatima deltok i prosjektet i sommer. Hun '
+  - blank_id: project-participation
+    options:
+    - er med
+    - var med
+    answer_index: 1
+  - text_md: ' i prosjektet. Vi sjekker gjestelista nå. Navnet til Emil '
+  - blank_id: guest-list-inclusion
+    options:
+    - er med
+    - var med
+    answer_index: 0
+  - text_md: ' på lista.'
+  audio_target: Noor deltar på kurset denne våren. Hun er med på kurset. Jonas spilte på skolelaget i
+    fjor. Han var med på laget den sesongen. Fatima deltok i prosjektet i sommer. Hun var med i prosjektet.
+    Vi sjekker gjestelista nå. Navnet til Emil er med på lista.
+- handle: contrast_before_after
+  op: choose
+  objective: obj-bli-med-or-vaere-med-01
+  bloom: apply
+  prompt_md: Choose the response that follows Nora through both stages.
+  stem_md: 'Mandag: Nora takker nei til korøvelsen. Tirsdag kl. 17: Nora ombestemmer seg. Tirsdag kl.
+    18: Øvelsen er i gang, og Nora synger med koret.'
+  options:
+  - id: participation-then-entry
+    text: «Klokka 17 er Nora med på øvelsen. Klokka 18 blir hun med på øvelsen.»
+    correct: false
+    why: This places settled participation before the stated change of decision.
+  - id: entry-twice
+    text: «Klokka 17 blir Nora med på øvelsen. Klokka 18 blir hun med på øvelsen.»
+    correct: false
+    why: The second sentence treats the ongoing rehearsal as another act of joining.
+  - id: participation-twice
+    text: «Klokka 17 er Nora med på øvelsen. Klokka 18 er hun med på øvelsen.»
+    correct: false
+    why: This does not express the change from saying no to joining at 17.
+  - id: entry-then-participation
+    text: «Klokka 17 blir Nora med på øvelsen. Klokka 18 er hun med på øvelsen.»
+    correct: true
+    why: The first sentence presents her decision to join; the second presents her participation.
+  derived_from:
+  - section_id: same-event-two-viewpoints
+- handle: viewpoint_overlap
+  op: recall_fill
+  objective: obj-bli-med-or-vaere-med-01
+  bloom: apply
+  prompt_md: Complete each reply, emphasizing the decision made now for the invitation and established inclusion for the participant list.
+  explanation_md: The first reply presents the decision to join; the second reports established inclusion.
+  derived_from:
+  - section_id: useful-overlap-invitations
+  segments:
+  - text_md: '— Vi går på kafé etter jobb. Har du lyst til å komme? — Ja, jeg '
+  - blank_id: acceptance-viewpoint
+    options:
+    - blir med
+    - er med
+    answer_index: 0
+  - text_md: '. — Står du fortsatt på deltakerlista til dugnaden? — Ja, jeg '
+  - blank_id: settled-viewpoint
+    options:
+    - blir med
+    - er med
+    answer_index: 1
+  - text_md: ; jeg har allerede fått arbeidsoppgaven min.
+  audio_target: — Vi går på kafé etter jobb. Har du lyst til å komme? — Ja, jeg blir med. — Står du fortsatt
+    på deltakerlista til dugnaden? — Ja, jeg er med; jeg har allerede fått arbeidsoppgaven min.
+- handle: repair_mixed_expression
+  op: choose
+  objective: obj-bli-med-or-vaere-med-01
+  bloom: apply
+  prompt_md: Choose the correction that preserves the intended meaning.
+  stem_md: 'Intended meaning: Liv is not on the list yet, and you want to invite her to join tomorrow''s
+    trip. Draft: «Er du bli med på turen i morgen?»'
+  options:
+  - id: imperative-question
+    text: «Bli du med på turen i morgen?»
+    correct: false
+    why: A present-tense question needs blir med, not the bare form bli med.
+  - id: past-joining-question
+    text: «Ble du med på turen i morgen?»
+    correct: false
+    why: Ble places the act of joining in the past, which conflicts with i morgen.
+  - id: settled-inclusion-question
+    text: «Var du med på turen i morgen?»
+    correct: false
+    why: Var places settled inclusion in the past, which conflicts with i morgen.
+  - id: joining-question
+    text: «Blir du med på turen i morgen?»
+    correct: true
+    why: Blir med invites Liv to join and fits the present or future invitation.
+  derived_from:
+  - section_id: common-mistakes
+- handle: context_cabin_plan
+  op: write
+  objective: obj-bli-med-or-vaere-med-01
+  bloom: apply
+  prompt_md: 'Melding fra Maja: «Jeg gikk glipp av hytteturen. Kan du sende meg en kort oppdatering om
+    planen fredag og det som skjedde lørdag?» | Tid | Fakta | |---|---| | Fredag | Lea takket ja til plass
+    i Saras bil. | | Fredag | Jonas og Omar sto på deltakerlista. | | Fredag | Omar skulle møte gruppa
+    lørdag. | | Fredag | Lea takket ja til å bære mat og fikk plass på bærelaget. | | Lørdag | Omar møtte
+    gruppa og deltok resten av dagen. | Write Maja a 35–65-word Norwegian update covering the listed facts,
+    using bli med for Lea''s Friday decisions and Omar''s Saturday arrival, and være med for Jonas''s
+    and Omar''s Friday settled inclusion, Lea''s settled role, and Omar''s Saturday participation.'
+  derived_from:
+  - section_id: back-at-cabin-trip
+  response_language: 'no'
+  min_words: 35
+  max_words: 65
+  judge_prompt: Evaluate cabin-facts, audience-purpose, word-bound, viewpoint-forms, clarity, viewpoint-observation,
+    and tense-observation. Only cabin-facts, audience-purpose, word-bound, viewpoint-forms, and clarity
+    are gating. Criteria whose ids end in -observation are diagnostic and must never make the response
+    fail.
+  criteria:
+  - id: cabin-facts
+    instruction: Covers Lea's car decision, Jonas and Omar on Friday's participant list, Omar's Saturday
+      arrival, Lea's food-carrying role, and Omar's Saturday participation.
+  - id: audience-purpose
+    instruction: Reads as a short update to Maja about Friday's plan and Saturday's result.
+  - id: word-bound
+    instruction: Contains 35–65 words.
+  - id: viewpoint-forms
+    instruction: Uses a form of bli med for Lea's car decision, Lea's new food-carrying entry, and Omar's
+      Saturday arrival; uses a form of være med for Jonas's Friday settled inclusion, Omar's Friday settled
+      inclusion, Lea's settled food-carrying role, and Omar's Saturday participation.
+  - id: clarity
+    instruction: Is understandable Norwegian and keeps the Friday and Saturday events distinguishable.
+  - id: viewpoint-observation
+    instruction: 'Observation only: record whether forms of bli med present acceptance or arrival and
+      forms of være med present established inclusion or participation.'
+  - id: tense-observation
+    instruction: 'Observation only: record whether the verb forms fit the Friday plan and the later Saturday
+      report.'
+- handle: final_retrieval_pairs
+  op: write
+  objective: obj-bli-med-or-vaere-med-01
+  bloom: apply
+  prompt_md: 'E-post fra kurslederen: «Kan du oppdatere aktivitetsoversikten?» | Person | Opplysning |
+    |---|---| | Nora | Takket ja til studiegruppa i dag og står nå på medlemslista. | | Elias | Deltok
+    på konserten i fjor. | | Iben | Bestemte seg nettopp for å delta på årets konsert. | Write a 25–50-word
+    Norwegian reply that reports each person separately, using bli med for Nora''s acceptance and Iben''s
+    new decision, and være med for Nora''s settled listing and Elias''s past participation.'
+  derived_from:
+  - section_id: final-retrieval
+  response_language: 'no'
+  min_words: 25
+  max_words: 50
+  judge_prompt: Evaluate activity-facts, reply-purpose, word-bound, viewpoint-forms, clarity, joining-viewpoint-observation,
+    and participation-viewpoint-observation. Only activity-facts, reply-purpose, word-bound, viewpoint-forms,
+    and clarity are gating. Criteria whose ids end in -observation are diagnostic and must never make
+    the response fail.
+  criteria:
+  - id: activity-facts
+    instruction: Reports Nora's acceptance and current listing, Elias's participation last year, and Iben's
+      new decision about this year's concert.
+  - id: reply-purpose
+    instruction: Reads as a concise update to the course leader.
+  - id: word-bound
+    instruction: Contains 25–50 words.
+  - id: viewpoint-forms
+    instruction: Uses a form of bli med for Nora's joining decision and Iben's new decision, and a form
+      of være med for Nora's settled membership listing and Elias's past participation.
+  - id: clarity
+    instruction: Is understandable Norwegian and assigns each fact to the correct person and time.
+  - id: joining-viewpoint-observation
+    instruction: 'Observation only: record whether a form of bli med presents Nora''s acceptance and Iben''s
+      new decision.'
+  - id: participation-viewpoint-observation
+    instruction: 'Observation only: record whether forms of være med present Nora''s settled inclusion
+      and Elias''s past participation.'
+- handle: review_controlled_bli_med_viewpoint
+  op: choose
+  objective: obj-bli-med-or-vaere-med-01
+  bloom: apply
+  prompt_md: Choose the sentence that reports a decision to join made in the past.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Ingeborg
+      text_md: «Henrik takket først nei til bokklubben.»
+    - speaker: Daniel
+      text_md: «Men på fredag ombestemte han seg og sa ja likevel.»
+  options:
+  - id: settled-inclusion
+    text: «Henrik er med i bokklubben på fredag.»
+    correct: false
+    why: Er med presents settled inclusion rather than the completed act of joining.
+  - id: past-joining
+    text: «Henrik ble med i bokklubben på fredag.»
+    correct: true
+    why: Ble med reports the decision to join as completed in the past.
+  - id: present-joining
+    text: «Henrik blir med i bokklubben på fredag.»
+    correct: false
+    why: Blir med presents a present or upcoming decision, which conflicts with the past report.
+  derived_from:
+  - section_id: invitations-decisions-bli-med
+- handle: review_second_participation_check
+  op: recall_fill
+  objective: obj-bli-med-or-vaere-med-01
+  bloom: apply
+  prompt_md: Complete each sentence about who takes part.
+  explanation_md: Er med reports present inclusion; var med reports participation in a past period.
+  derived_from:
+  - section_id: participation-inclusion-vaere-med
+  segments:
+  - text_md: 'Sofie svømmer på laget denne sesongen. Hun '
+  - blank_id: swim-participation
+    options:
+    - er med
+    - var med
+    answer_index: 0
+  - text_md: ' på laget. Tobias spilte i korpset i fjor. Han '
+  - blank_id: band-participation
+    options:
+    - er med
+    - var med
+    answer_index: 1
+  - text_md: ' i korpset den våren. Ahmed meldte seg på workshopen i går. Han '
+  - blank_id: workshop-inclusion
+    options:
+    - er med
+    - var med
+    answer_index: 0
+  - text_md: ' på deltakerlista.'
+  audio_target: Sofie svømmer på laget denne sesongen. Hun er med på laget. Tobias spilte i korpset i
+    fjor. Han var med i korpset den våren. Ahmed meldte seg på workshopen i går. Han er med på deltakerlista.
+- handle: review_contrast_before_after
+  op: recall_fill
+  objective: obj-bli-med-or-vaere-med-01
+  bloom: apply
+  prompt_md: Complete the two sentences about Ida's teams.
+  explanation_md: Use var med for participation in a past period and ble med for the decision to join
+    a new team.
+  derived_from:
+  - section_id: same-event-two-viewpoints
+  segments:
+  - text_md: 'Hun '
+  - blank_id: last-year
+    options:
+    - var med
+    - ble med
+    answer_index: 0
+  - text_md: ' på håndballaget i fjor. I januar bestemte hun seg for å bytte, og hun '
+  - blank_id: this-year
+    options:
+    - var med
+    - ble med
+    answer_index: 1
+  - text_md: ' på et nytt lag i år.'
+  audio_target: Hun var med på håndballaget i fjor. I januar bestemte hun seg for å bytte, og hun ble
+    med på et nytt lag i år.
+- handle: review_viewpoint_overlap
+  op: recall_fill
+  objective: obj-bli-med-or-vaere-med-01
+  bloom: apply
+  prompt_md: 'Complete each reply based on the viewpoint: report established participation in the first and the moment someone joins in the second.'
+  explanation_md: The first reply reports established inclusion; the second presents the decision to join.
+  derived_from:
+  - section_id: useful-overlap-invitations
+  segments:
+  - text_md: '— Du er påmeldt svømmekurset, ikke sant? — Ja, jeg '
+  - blank_id: settled-reply
+    options:
+    - er med
+    - blir med
+    answer_index: 0
+  - text_md: '. — Liv står utenfor løpegruppa, men bestemmer seg nå for å delta. Hun sier: «Nå '
+  - blank_id: accept-reply
+    options:
+    - er jeg med
+    - blir jeg med
+    answer_index: 1
+  - text_md: ' i løpegruppa.»'
+  audio_target: '— Du er påmeldt svømmekurset, ikke sant? — Ja, jeg er med. Liv står utenfor løpegruppa, men bestemmer seg nå for å delta. Hun sier: «Nå blir jeg med i løpegruppa.»'
+- handle: review_cabin_dual_viewpoint
+  op: choose
+  objective: obj-bli-med-or-vaere-med-01
+  bloom: apply
+  prompt_md: Choose the update that reports Omar joining at nine and participating at noon.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: «Omar sa først at han ville bli hjemme. Hva skjedde på lørdag?»
+    - speaker: Jonas
+      text_md: «Klokka ni satte han seg i bilen med oss. Klokka tolv satt han sammen med gruppa på hytta.»
+  options:
+  - id: reversed-travel
+    text: «Klokka ni var Omar med oss i bilen. Klokka tolv ble han med gruppa på hytta.»
+    correct: false
+    why: This makes his presence in the car a settled state and presents his presence at the cabin as a new joining.
+  - id: joining-twice
+    text: «Klokka ni var Omar med oss i bilen. Klokka tolv var han med gruppa på hytta.»
+    correct: false
+    why: This reports where Omar was at both times but does not highlight when he joined the trip.
+  - id: joining-then-participating
+    text: «Klokka ni ble Omar med oss i bilen. Klokka tolv var han med gruppa på hytta.»
+    correct: true
+    why: Ble med reports the change at nine; var med reports participation at the cabin at noon.
+  derived_from:
+  - section_id: back-at-cabin-trip

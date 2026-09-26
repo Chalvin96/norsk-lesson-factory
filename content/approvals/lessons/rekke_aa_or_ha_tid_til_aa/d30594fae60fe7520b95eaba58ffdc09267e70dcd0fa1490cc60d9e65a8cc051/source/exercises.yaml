@@ -1,0 +1,416 @@
+- handle: distinguish_rekke_ha_tid
+  op: choose
+  objective: obj-rekke-aa-or-ha-tid-til-aa-01
+  bloom: understand
+  prompt_md: Choose the sentence that matches the situation.
+  stem_md: Nora and Emil must finish a report before the meeting at 15.00. Nora wants to help Emil after
+    the meeting, when there is no stated deadline.
+  explanation_md: Ha tid til å describes room in a schedule. Rekke å presents an action as something that
+    must be completed before a cutoff.
+  derived_from:
+  - section_id: the-central-distinction
+  options:
+  - id: cutoff-reading
+    text: Nora rekker å hjelpe Emil etter møtet.
+    correct: false
+    why: Rekker å suggests successful completion before a cutoff, but the situation gives no deadline
+      for helping after the meeting.
+  - id: missing-til
+    text: Nora har tid å hjelpe Emil etter møtet.
+    correct: false
+    why: The availability meaning is appropriate, but the frame must include til before å.
+  - id: availability-correct
+    text: Nora har tid til å hjelpe Emil etter møtet.
+    correct: true
+    why: The sentence presents the period after the meeting as available time for helping.
+- handle: checkpoint_hidden_cutoff
+  op: write
+  objective: obj-rekke-aa-or-ha-tid-til-aa-01
+  bloom: apply
+  prompt_md: Du skriver en kort arbeidsnote til Nora på 35–70 ord. For hver oppgave, forklar hvilken hendelse begrenser tiden, og bruk rekke å med riktig bøying og nekting ved behov for å si om oppgaven lar seg fullføre.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Klokka er 15.55. Det tar minst ti minutter å rydde pulten. Bussen min hjem går kl. 16.00.»
+    - speaker: Emil
+      text_md: «Klokka er 16.20. Butikken stenger kl. 16.30, og jeg trenger minst femten minutter til å kjøpe melk.»
+    - speaker: Nora
+      text_md: «Klokka er 16.25. Møtet starter kl. 17.00, og sakspapirene trenger minst tjue minutter til.»
+    - speaker: Emil
+      text_md: «Klokka er 17.20. Rapporten mangler en avslutning som tar omtrent femten minutter å skrive. Innleveringsportalen stenger kl. 18.00.»
+  response_language: 'no'
+  min_words: 35
+  max_words: 70
+  judge_prompt: Evaluate criteria bus-endpoint, shop-endpoint, meeting-endpoint, report-endpoint, and
+    explicit-rekke-aa. Accept concise, natural Norwegian, but do not accept an equivalent expression in
+    place of the required rekke å frame.
+  criteria:
+  - id: bus-endpoint
+    instruction: >-
+      Recognizes the 16.00 home bus as Nora's cutoff: with only five minutes remaining and at least ten
+      minutes of work, she will not finish clearing the desk in time.
+  - id: shop-endpoint
+    instruction: >-
+      Recognizes the 16.30 closing time as Emil's cutoff: fifteen minutes of shopping will not fit into
+      the ten minutes remaining.
+  - id: meeting-endpoint
+    instruction: >-
+      Recognizes the 17.00 meeting as Nora's cutoff and that the twenty-minute task fits within the thirty-five
+      minutes remaining.
+  - id: report-endpoint
+    instruction: >-
+      Recognizes the 18.00 portal closing as Emil's cutoff and that the fifteen-minute task fits within
+      the forty minutes remaining.
+  - id: explicit-rekke-aa
+    instruction: Uses the frame rekke å, with suitable tense or negation, for each task.
+- handle: checkpoint_availability
+  op: build
+  objective: obj-rekke-aa-or-ha-tid-til-aa-01
+  bloom: apply
+  prompt_md: A community-center coordinator has an open hour after class. Ask Sam whether there is time available to help prepare the room, using the availability expression from this section.
+  explanation_md: This asks whether Sam has time available in an open period, without a deadline for finishing. Build the question with the availability expression and a new activity.
+  derived_from:
+  - section_id: available-time-ha-tid-til
+  tokens:
+  - token_id: availq-sam
+    text: Sam,
+  - token_id: availq-har
+    text: har
+  - token_id: availq-du
+    text: du
+  - token_id: availq-tid
+    text: tid
+  - token_id: availq-til
+    text: til
+  - token_id: availq-aa
+    text: å
+  - token_id: availq-hjelpe
+    text: hjelpe
+  - token_id: availq-med
+    text: med
+  - token_id: availq-rommet
+    text: rommet
+  - token_id: availq-etter
+    text: etter
+  - token_id: availq-kurset
+    text: kurset?
+  answer_order:
+  - availq-sam
+  - availq-har
+  - availq-du
+  - availq-tid
+  - availq-til
+  - availq-aa
+  - availq-hjelpe
+  - availq-med
+  - availq-rommet
+  - availq-etter
+  - availq-kurset
+- handle: checkpoint_intended_perspective
+  op: choose
+  objective: obj-rekke-aa-or-ha-tid-til-aa-01
+  bloom: apply
+  prompt_md: Choose the set that best fits the four situations.
+  stem_md: A colleague asks about a free period this afternoon to read a message. Another asks whether
+    the message can be read before a meeting begins. Later, there is an open period after the meeting for
+    making lunch, followed by a plan to finish lunch before guests arrive.
+  explanation_md: The first and third situations highlight available periods; the second and fourth focus
+    on finishing before a cutoff. The expressions can overlap in real contexts, but these cues foreground
+    different perspectives.
+  derived_from:
+  - section_id: compare-the-same-activity
+  options:
+  - id: availability-all
+    text: Har du tid til å lese beskjeden i ettermiddag? Har du tid til å lese beskjeden før møtet begynner?
+      Vi har tid til å lage lunsj etter møtet. Vi har tid til å lage lunsj før gjestene kommer.
+    correct: false
+    why: This overlooks the explicitly foregrounded cutoff in the meeting and guest situations.
+  - id: perspectives-fit
+    text: Har du tid til å lese beskjeden i ettermiddag? Rekker du å lese beskjeden før møtet begynner?
+      Vi har tid til å lage lunsj etter møtet. Vi rekker å lage lunsj før gjestene kommer.
+    correct: true
+    why: The sentences match the stated availability periods and completion cutoffs.
+  - id: cutoff-all
+    text: Rekker du å lese beskjeden i ettermiddag? Rekker du å lese beskjeden før møtet begynner? Vi
+      rekker å lage lunsj etter møtet. Vi rekker å lage lunsj før gjestene kommer.
+    correct: false
+    why: This casts the two open periods as completion-before-cutoff tasks.
+- handle: checkpoint_negative_problem
+  op: choose
+  objective: obj-rekke-aa-or-ha-tid-til-aa-01
+  bloom: analyze
+  prompt_md: Choose the interpretation set that classifies all four sentences correctly.
+  stem_md: Nora har ikke tid til å kontrollere tallene. 2. Nora rekker ikke å skrive om teksten før møtet
+    begynner. 3. Emil har ikke tid til å forlate kontoret. 4. Emil rekker ikke å ta bussen.
+  explanation_md: Har ikke tid til å denies available time. Rekker ikke å denies successful completion
+    before a stated or understood cutoff.
+  derived_from:
+  - section_id: negative-statements-reveal-the-difference
+  options:
+  - id: set-first-pair-swapped
+    text: '1: cutoff; 2: availability; 3: availability; 4: cutoff.'
+    correct: false
+    why: This reverses the time perspectives in sentences 1 and 2.
+  - id: set-second-pair-swapped
+    text: '1: availability; 2: cutoff; 3: cutoff; 4: availability.'
+    correct: false
+    why: This reverses the time perspectives in sentences 3 and 4.
+  - id: set-all-cutoff
+    text: '1: cutoff; 2: cutoff; 3: cutoff; 4: cutoff.'
+    correct: false
+    why: Sentences 1 and 3 concern room in a schedule rather than completion before an endpoint.
+  - id: set-correct
+    text: '1: availability; 2: cutoff; 3: availability; 4: cutoff.'
+    correct: true
+    why: Sentences 1 and 3 deny available time; sentences 2 and 4 deny completion before a cutoff.
+- handle: guided_schedule_to_deadline
+  op: choose
+  objective: obj-rekke-aa-or-ha-tid-til-aa-01
+  bloom: apply
+  prompt_md: Choose the sentence set that focuses on finishing each task before its deadline.
+  stem_md: The meeting starts before there will be another chance to read the message. The guest arrives
+    at a fixed time, and the form closes at a stated time.
+  explanation_md: These situations foreground completion before fixed cutoffs, so rekke å is the clearest
+    framing here.
+  derived_from:
+  - section_id: guided-practice-in-new-situations
+  options:
+  - id: deadline-set
+    text: Jeg rekker å lese meldingen før møtet begynner. Vi rekker å kjøpe mat før gjesten kommer. Hun
+      rekker å fylle ut skjemaet før systemet stenger.
+    correct: true
+    why: Each sentence focuses on completing the task before the stated cutoff.
+  - id: availability-set
+    text: Jeg har tid til å lese meldingen før møtet begynner. Vi har tid til å kjøpe mat før gjesten kommer.
+      Hun har tid til å fylle ut skjemaet før systemet stenger.
+    correct: false
+    why: This can be grammatical, but it foregrounds available time rather than whether each task will
+      be completed before the cutoff.
+  - id: mixed-set
+    text: Jeg har tid til å lese meldingen før møtet begynner. Vi rekker å kjøpe mat før gjesten kommer.
+      Hun har tid til å fylle ut skjemaet før systemet stenger.
+    correct: false
+    why: The task asks for a consistent deadline-focused perspective across all three situations.
+- handle: guided_deadline_to_availability
+  op: choose
+  objective: obj-rekke-aa-or-ha-tid-til-aa-01
+  bloom: apply
+  prompt_md: Choose the sentence set that presents each activity as fitting an available period.
+  stem_md: After lunch, today, this evening, and this weekend are open periods in four people's schedules;
+    no deadline or required completion is being discussed.
+  explanation_md: With open periods as the focus and no completion cutoff, ha tid til å presents the
+    activities as fitting into the schedule.
+  derived_from:
+  - section_id: guided-practice-in-new-situations
+  options:
+  - id: availability-set
+    text: Jeg har tid til å ringe kollegaen etter lunsj. Vi har tid til å lage lunsj i dag. Hun har tid
+      til å gå gjennom dokumentet i kveld. Har du tid til å besøke en venn i helgen?
+    correct: true
+    why: Each sentence presents an activity as fitting an open period in someone's schedule.
+  - id: cutoff-set
+    text: Jeg rekker å ringe kollegaen etter lunsj. Vi rekker å lage lunsj i dag. Hun rekker å gå gjennom
+      dokumentet i kveld. Rekker du å besøke en venn i helgen?
+    correct: false
+    why: This presents the activities as completion goals rather than available periods.
+  - id: mixed-set
+    text: Jeg rekker å ringe kollegaen etter lunsj. Vi har tid til å lage lunsj i dag. Hun rekker å gå
+      gjennom dokumentet i kveld. Har du tid til å besøke en venn i helgen?
+    correct: false
+    why: The task asks for a consistent availability perspective across all four situations.
+- handle: guided_nora_emil_plan
+  op: write
+  objective: obj-rekke-aa-or-ha-tid-til-aa-01
+  bloom: apply
+  prompt_md: Nora og Emil må forlate kontoret kl. 15.55. Skriveren er ute av drift til kl. 16.10, og bussen går kl. 16.00. Skriv en melding på 15–35 ord til Nora. Bruk rekke å + infinitiv for utskriften og ha tid til å + infinitiv for lesingen på bussen. Tilpass verbformen til meldingen.
+  derived_from:
+  - section_id: guided-practice-in-new-situations
+  response_language: 'no'
+  min_words: 15
+  max_words: 35
+  judge_prompt: Evaluate whether the message uses the requested rekke å frame for the printing deadline
+    and ha tid til å frame for the reading opportunity, with the stated meanings. Accept natural Bokmål
+    variants and verb inflections; do not pass an answer that uses unrelated frames for either meaning.
+  criteria:
+  - id: cutoff-negative
+    instruction: Uses a natural negative form of rekke å + infinitive to state that the document cannot be printed before the 16.00 bus leaves.
+  - id: availability-positive
+    instruction: Uses ha tid til å + infinitive to state positively that there is an available period on the bus for reading.
+- handle: transfer_daily_priorities
+  op: write
+  objective: obj-rekke-aa-or-ha-tid-til-aa-01
+  bloom: apply
+  prompt_md: Du skriver til en kollega for å avklare dagens prioriteringer. Kundesvaret må sendes før
+    kl. 14; du har en ledig halvtime etter lunsj til å kontrollere vedlegget; kollegaen kan hjelpe fra
+    kl. 13.30; møtet begynner kl. 14.15. Skriv en melding på 45–70 ord som foreslår en plan, bruker rekke
+    å om kundesvaret, bruker ha tid til å om vedlegget og spør om kollegaen kan hjelpe.
+  derived_from:
+  - section_id: guided-practice-in-new-situations
+  response_language: 'no'
+  min_words: 45
+  max_words: 70
+  judge_prompt: Evaluate all gating criteria, including the required use of rekke å and ha tid til å.
+    Record the two observation criteria diagnostically only.
+  criteria:
+  - id: plan-content
+    instruction: Proposes a workable plan that accounts for the 14.00 customer deadline, the free half-hour,
+      the colleague's availability, and the 14.15 meeting.
+  - id: colleague-request
+    instruction: Asks the colleague for help with a relevant part of the work.
+  - id: rekke-required
+    instruction: Uses rekke å appropriately for completing the customer reply before 14.00.
+  - id: ha-tid-required
+    instruction: Uses ha tid til å appropriately for the available time to check the attachment.
+  - id: word-bound
+    instruction: Contains 45–70 words.
+  - id: rekke-observation
+    instruction: 'Observation only: note whether another use of rekke å is natural; do not fail the response.'
+  - id: ha-tid-observation
+    instruction: 'Observation only: note whether another use of ha tid til å is natural; do not fail the
+      response.'
+- handle: final_retrieval
+  op: write
+  objective: obj-rekke-aa-or-ha-tid-til-aa-01
+  bloom: apply
+  prompt_md: Du sender læreren en læringsnote på 25–55 ord. Skriv begge målrammene, ett eksempel om å
+    fullføre før et endepunkt og ett eksempel om tilgjengelig tid.
+  derived_from:
+  - section_id: final-retrieval
+  response_language: 'no'
+  min_words: 25
+  max_words: 55
+  judge_prompt: Evaluate criteria both-frames, cutoff-sentence, availability-sentence, and word-bound.
+    Accept natural Bokmål examples, but reject examples that swap the two time perspectives.
+  criteria:
+  - id: both-frames
+    instruction: 'Writes both taught frames: rekke å plus an infinitive and ha tid til å plus an infinitive.'
+  - id: cutoff-sentence
+    instruction: Provides one Norwegian sentence centered on completing an action before a cutoff.
+  - id: availability-sentence
+    instruction: Provides one Norwegian sentence centered on available time for an activity.
+  - id: word-bound
+    instruction: Contains 25–55 words.
+- handle: review_checkpoint_availability
+  op: choose
+  objective: obj-rekke-aa-or-ha-tid-til-aa-01
+  bloom: apply
+  prompt_md: Choose the question that matches the situation.
+  stem_md: Emil has no other tasks after lunch. Nora wants to know whether his schedule leaves room for
+    checking the figures.
+  explanation_md: The question concerns Emil's availability, so har du tid til å expresses the intended
+    perspective.
+  derived_from:
+  - section_id: available-time-ha-tid-til
+  options:
+  - id: incomplete-frame-question
+    text: Har du tid å kontrollere tallene etter lunsj?
+    correct: false
+    why: The availability meaning is appropriate, but the frame is missing til.
+  - id: availability-question
+    text: Har du tid til å kontrollere tallene etter lunsj?
+    correct: true
+    why: This asks whether checking the figures fits into Emil's available time.
+  - id: implicit-cutoff-question
+    text: Rekker du å kontrollere tallene etter lunsj?
+    correct: false
+    why: This presents the checking as a race against an implied limit rather than a question about schedule
+      room.
+- handle: review_checkpoint_intended_perspective
+  op: choose
+  objective: obj-rekke-aa-or-ha-tid-til-aa-01
+  bloom: analyze
+  prompt_md: Choose the sentence that most directly expresses the stated perspective.
+  stem_md: The goal is to complete the contract review before the 10.00 meeting; time is short and completing
+    it in time matters more than merely having some time to work on it.
+  explanation_md: The meeting is the endpoint, and successful completion before it is central. Ha tid
+    til å can describe available time, but does not state as directly whether the review will be completed
+    in time.
+  derived_from:
+  - section_id: compare-the-same-activity
+  options:
+  - id: availability-with-endpoint
+    text: Jeg har tid til å gå gjennom kontrakten før møtet begynner.
+    correct: false
+    why: This says there is time available for reviewing the contract, but does not directly say whether
+      the review will be completed before the meeting.
+  - id: explicit-cutoff
+    text: Jeg rekker å gå gjennom kontrakten før møtet begynner.
+    correct: true
+    why: This most directly presents the contract review as something that must be completed before the
+      meeting.
+  - id: general-availability
+    text: Jeg har tid til å lese kontrakten i dag.
+    correct: false
+    why: This says the activity fits into the day but does not express completion before the meeting.
+- handle: review_checkpoint_negative_problem
+  op: choose
+  objective: obj-rekke-aa-or-ha-tid-til-aa-01
+  bloom: analyze
+  prompt_md: Choose the reply that expresses the stated problem.
+  stem_md: Bussen går om fire minutter. Emil kan begynne å spise nå, men han kan ikke fullføre frokosten
+    før avgang.
+  explanation_md: Emil has some time to begin, but the departure prevents him from completing breakfast
+    in time.
+  derived_from:
+  - section_id: negative-statements-reveal-the-difference
+  options:
+  - id: negative-availability
+    text: Emil har ikke tid til å spise frokost i dag.
+    correct: false
+    why: This denies available time more broadly, although the situation says he can begin now.
+  - id: positive-cutoff
+    text: Emil rekker å spise frokost før avgang.
+    correct: false
+    why: This reverses the stated outcome by claiming that he can finish before departure.
+  - id: negative-cutoff
+    text: Emil rekker ikke å fullføre frokosten før bussen går.
+    correct: true
+    why: This denies successful completion before the bus departure.
+- handle: review_guided_nora_emil_plan
+  op: choose
+  objective: obj-rekke-aa-or-ha-tid-til-aa-01
+  bloom: analyze
+  prompt_md: Choose the two-line message that best expresses the two intended meanings.
+  stem_md: Lea og Omar må sende søknaden før portalen stenger kl. 18.00. Det tar minst en halvtime å finne
+    de tre vedleggene, men de har bare ti minutter igjen. Etter jobb har de en ledig time til å ringe
+    veilederen.
+  explanation_md: The application cannot be completed before the portal closes, while the free hour after
+    work is available for calling the adviser. Choose the message that expresses both meanings most directly.
+  derived_from:
+  - section_id: guided-practice-in-new-situations
+  options:
+  - id: deadline-polarity-reversed
+    text: De rekker å sende søknaden før portalen stenger kl. 18.00. De har tid til å ringe veilederen etter jobb.
+    correct: false
+    why: This claims they can submit the application in time, contrary to the time available for the attachments.
+  - id: both-perspectives-correct
+    text: De rekker ikke å sende søknaden før portalen stenger kl. 18.00. De har tid til å ringe veilederen etter jobb.
+    correct: true
+    why: The first sentence focuses on completing the application before a deadline; the second says the call fits into available time.
+  - id: availability-denied
+    text: De rekker ikke å sende søknaden før portalen stenger kl. 18.00. De har ikke tid til å ringe veilederen etter jobb.
+    correct: false
+    why: This denies the available hour for calling and reverses the intended availability meaning.
+- handle: review_final_retrieval
+  op: choose
+  objective: obj-rekke-aa-or-ha-tid-til-aa-01
+  bloom: understand
+  prompt_md: Choose the pair with both complete frames.
+  stem_md: One frame expresses completion before a cutoff. The other expresses available time for an activity.
+  explanation_md: The complete frames are rekke å plus an infinitive and ha tid til å plus an infinitive.
+  derived_from:
+  - section_id: final-retrieval
+  options:
+  - id: extra-til
+    text: rekke til å + infinitiv; ha tid til å + infinitiv
+    correct: false
+    why: The availability frame is complete, but the cutoff frame has an extra til.
+  - id: both-complete
+    text: rekke å + infinitiv; ha tid til å + infinitiv
+    correct: true
+    why: Both frames contain all required elements.
+  - id: missing-til
+    text: rekke å + infinitiv; ha tid å + infinitiv
+    correct: false
+    why: The availability frame is incomplete because til is missing.

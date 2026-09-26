@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "reciprocal_pronouns",
   "kind": "grammar",
   "language": "nb-NO",
@@ -80,6 +80,26 @@
     {
       "kind": "exercise",
       "id": "retrieve_and_transfer_hverandre"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_notice_shared_action"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_complete_direct_reciprocal_object"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_preposition_with_reciprocal"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_joint_or_reciprocal"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_combine_two_directions"
     }
   ],
   "sections": [
@@ -809,9 +829,10 @@
               "en": [
                 {
                   "kind": "text",
-                  "value": "'Not: We see ourselves in the mirror. (for the reciprocal meaning)'"
+                  "value": "We see ourselves in the mirror. (for the reciprocal meaning)"
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "hverandre-direct-object-block-14"
@@ -2224,31 +2245,56 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Choose the interpretation that shows a reciprocal relationship and identifies the participants connected by the action."
+          "value": "Velg setningen som passer til Aida og Noor."
         }
       ],
       "explanation": null,
       "payload": {
         "options": [
           {
-            "option_id": "one-way-volunteer",
-            "text": "En frivillig hjelper lederen med forberedelsene. / One volunteer helps the leader with the preparations; connected participants: the volunteer and the leader.",
-            "why": "The action goes from one volunteer to one leader, so it is not reciprocal."
+            "option_id": "joint-activity",
+            "text": "Aida og Noor bærer de samme kassene sammen.",
+            "why": "Dialogen beskriver to ulike oppgaver, ikke én felles bærejobb."
           },
           {
-            "option_id": "reciprocal-volunteers",
-            "text": "De frivillige hjelper hverandre med forberedelsene. / The volunteers help one another with the preparations; connected participants: the volunteers.",
-            "why": "The volunteers act toward one another, so the relationship is reciprocal."
+            "option_id": "one-way-noor",
+            "text": "Noor bærer kassene alene.",
+            "why": "Dialogen sier at begge bærer noe til den andre, hver sin vei."
+          },
+          {
+            "option_id": "reciprocal-help",
+            "text": "Aida og Noor bærer ting til hverandre.",
+            "why": "Begge bærer noe til den andre, hver sin vei."
           }
         ],
-        "answer_id": "reciprocal-volunteers",
-        "stem": [
-          {
-            "kind": "text",
-            "value": "Which situation calls for hverandre?"
-          }
-        ]
-      }
+        "answer_id": "reciprocal-help",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Aida",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg bærer kassene til Noor i dag.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Noor",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg bærer bagene til Aida i dag.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2258,10 +2304,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each Norwegian sentence with the reciprocal object form. In every sentence, the volunteers act toward one another."
+          "value": "Fyll inn ordet som passer til dialogen."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Hverandre viser at Lise ringer Omar, og at Omar ringer Lise."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -2269,7 +2320,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "De frivillige hjelper"
+                "value": "«Lise og Omar ringer"
               },
               {
                 "kind": "text",
@@ -2279,7 +2330,7 @@
           },
           {
             "kind": "blank",
-            "blank_id": "direct-help",
+            "blank_id": "direct-call",
             "options": [
               "hverandre",
               "dem"
@@ -2295,116 +2346,37 @@
               },
               {
                 "kind": "text",
-                "value": "i sentrum. De frivillige møter"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "direct-meet",
-            "options": [
-              "hverandre",
-              "dem"
-            ],
-            "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "etter møtet. De frivillige kjenner"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "direct-know",
-            "options": [
-              "hverandre",
-              "dem"
-            ],
-            "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "godt. De frivillige støtter"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "direct-support",
-            "options": [
-              "hverandre",
-              "dem"
-            ],
-            "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "under forberedelsene. De frivillige kontakter"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "direct-contact",
-            "options": [
-              "hverandre",
-              "dem"
-            ],
-            "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "senere."
+                "value": "hver kveld.»"
               }
             ]
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Lise",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg ringer Omar hver kveld.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Omar",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg ringer Lise hver kveld.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2414,35 +2386,55 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Rewrite the two Norwegian statements as one natural Norwegian sentence. Use De as the plural subject, the supplied verb expression, and hverandre. Maria snakker med Jonas. Jonas snakker med Maria."
+          "value": "Slå sammen det Maria og Jonas sier i én setning. Ta med «hver dag»."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Hverandre expresses participants acting on one another and follows any required preposition."
+          "value": "Preposisjonen med står foran hverandre fordi uttrykket er snakke med hverandre. Hver dag må også være med."
         }
       ],
       "payload": {
         "tokens": [
           {
             "token_id": "tok-1",
-            "text": "De",
+            "text": "Maria",
             "fixed": false
           },
           {
             "token_id": "tok-2",
-            "text": "snakker",
+            "text": "og",
             "fixed": false
           },
           {
             "token_id": "tok-3",
-            "text": "med",
+            "text": "Jonas",
             "fixed": false
           },
           {
             "token_id": "tok-4",
-            "text": "hverandre.",
+            "text": "snakker",
+            "fixed": false
+          },
+          {
+            "token_id": "tok-5",
+            "text": "med",
+            "fixed": false
+          },
+          {
+            "token_id": "tok-6",
+            "text": "hverandre",
+            "fixed": false
+          },
+          {
+            "token_id": "tok-7",
+            "text": "hver",
+            "fixed": false
+          },
+          {
+            "token_id": "tok-8",
+            "text": "dag.",
             "fixed": false
           }
         ],
@@ -2450,9 +2442,38 @@
           "tok-1",
           "tok-2",
           "tok-3",
-          "tok-4"
+          "tok-4",
+          "tok-5",
+          "tok-6",
+          "tok-7",
+          "tok-8"
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Maria",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg snakker med Jonas hver dag.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Jonas",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg snakker med Maria hver dag.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2462,45 +2483,45 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Classify each Norwegian sentence into exactly one bucket: a joint activity or a reciprocal action."
+          "value": "Sorter setningene etter om personene gjør noe sammen, eller gjør noe med hverandre."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Doing something together is a joint action; hverandre is reserved for participants directing the action toward one another."
+          "value": "Et flertallssubjekt kan gjøre noe sammen uten å gjøre det mot hverandre. Hverandre viser at handlingen går begge veier."
         }
       ],
       "payload": {
         "buckets": [
           {
             "bucket_id": "joint",
-            "label": "Joint activity: participants act together, not toward one another."
+            "label": "Én felles aktivitet"
           },
           {
             "bucket_id": "reciprocal",
-            "label": "Reciprocal action: participants act toward one another."
+            "label": "Handling i begge retninger"
           }
         ],
         "items": [
           {
-            "item_id": "joint-travel",
-            "text": "Kollegaene reiser sammen. / The colleagues travel together.",
-            "bucket_id": "joint"
-          },
-          {
             "item_id": "joint-cooking",
-            "text": "Vennene lager mat sammen. / The friends cook together.",
+            "text": "Vennene lager én middag til bursdagen.",
             "bucket_id": "joint"
           },
           {
-            "item_id": "joint-studying",
-            "text": "Søsknene studerer sammen. / The siblings study together.",
+            "item_id": "reciprocal-cooking",
+            "text": "Vennene bytter på å lage middag for den andre.",
+            "bucket_id": "reciprocal"
+          },
+          {
+            "item_id": "joint-walking",
+            "text": "Naboene går gruppevis til bussholdeplassen.",
             "bucket_id": "joint"
           },
           {
-            "item_id": "reciprocal-help",
-            "text": "Naboene hjelper hverandre med snøen. / The neighbors help one another with the snow.",
+            "item_id": "reciprocal-waiting",
+            "text": "Naboene bytter på å holde av plassen for den andre.",
             "bucket_id": "reciprocal"
           }
         ]
@@ -2514,10 +2535,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Combine the two Norwegian statements into one natural Norwegian sentence. Use Mina og Jonas as the plural subject and hverandre; do not repeat the names as separate objects. Mina hjelper Jonas. Jonas hjelper Mina."
+          "value": "Slå sammen de to retningene i én setning. Behold «med flyttingen»."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Et flertallssubjekt og hverandre samler de to handlingene i én setning. Med flyttingen beholder opplysningen om hva hjelpen gjelder."
+        }
+      ],
       "payload": {
         "tokens": [
           {
@@ -2542,7 +2568,17 @@
           },
           {
             "token_id": "tok-5",
-            "text": "hverandre.",
+            "text": "hverandre",
+            "fixed": false
+          },
+          {
+            "token_id": "tok-6",
+            "text": "med",
+            "fixed": false
+          },
+          {
+            "token_id": "tok-7",
+            "text": "flyttingen.",
             "fixed": false
           }
         ],
@@ -2551,9 +2587,36 @@
           "tok-2",
           "tok-3",
           "tok-4",
-          "tok-5"
+          "tok-5",
+          "tok-6",
+          "tok-7"
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Mina",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg hjelper Jonas med flyttingen.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Jonas",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg hjelper Mina med flyttingen.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2563,26 +2626,68 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write three complete Norwegian sentences about neighbors in a new everyday setting, not the community center. Use these cues: 1. The neighbors help one another after a storm. Use hjelpe. 2. They send messages containing information about icy paths to one another. Use sende meldinger til. 3. Last week, they borrowed tools from one another. Use låne verktøy av. Use hverandre directly where the verb takes a direct object and after the required preposition in the other expressions."
+          "value": "Skriv en melding til vaktmesteren om hjelpen i parsellhagen. Ta med alle tre opplysningene og bruk gjensidige uttrykk der det passer."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Meldingen gjengir de tre opplysningene og bruker gjensidige uttrykk om handlingene som gikk begge veier."
+        }
+      ],
       "payload": {
         "response_language": "no",
-        "min_words": 18,
-        "max_words": 50,
-        "judge_prompt": "Check the response against the task and report evidence for each criterion. Accept natural Bokmål variants that preserve reciprocal meaning and the required prepositions.",
+        "min_words": 35,
+        "max_words": 55,
+        "judge_prompt": "Evaluate only the listed criteria. Accept natural Bokmål and any accurate description of the supplied plant-care facts. Require reciprocal wording only for relationships the stimulus establishes as mutual.",
         "criteria": [
           {
-            "id": "reciprocal-action",
-            "instruction": "Uses hverandre to describe reciprocal actions between two or more neighbors in the new setting."
+            "id": "neighbor-facts",
+            "instruction": "The message communicates all three supplied facts about watering, caring for plants, and exchanging cuttings and advice."
           },
           {
-            "id": "required-constructions",
-            "instruction": "Uses hverandre directly with hjelpe and after the required prepositions in sende meldinger til and låne verktøy av."
+            "id": "reciprocal-forms",
+            "instruction": "The message accurately uses reciprocal expressions for actions the neighbors performed for one another, without requiring every fact to be reciprocal."
+          },
+          {
+            "id": "audience-purpose",
+            "instruction": "The response is a coherent Norwegian report suitable for updating the caretaker."
+          },
+          {
+            "id": "reciprocal-form-observation",
+            "instruction": "Observation only: note where hverandre occurs; do not treat it as required for facts that are not mutual."
+          },
+          {
+            "id": "preposition-form-observation",
+            "instruction": "Observation only: note whether any preposition used before hverandre fits its Norwegian verb expression; do not fail the message for this."
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Vaktmester",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Hvordan gikk det i parsellhagen mens dere var borte?"
+                }
+              ]
+            },
+            {
+              "speaker": "Nabo",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Ava vannet plantene for Omar mens han var bortreist. Omar tok vare på plantene hennes da hun var syk. De byttet stiklinger og ga hverandre råd om plantene."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2592,30 +2697,433 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write four concise Norwegian sentences from these English cues about friends planning a weekend trip: 1. The friends call one another to coordinate departure. 2. They wait for one another at the station. 3. They help one another with packing. 4. They send messages to one another while planning. Use hverandre only when the action is reciprocal. Include at least one verb that takes hverandre directly and at least one expression with a preposition before hverandre."
+          "value": "Skriv et svar til Nora med planen for lørdagsturen. Ta med alle opplysningene, og bruk «hverandre» minst én gang om en gjensidig handling."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Svaret skal gi Nora en fullstendig og praktisk plan. Bruk «hverandre» minst én gang om en gjensidig handling, og gjengi de andre opplysningene naturlig."
+        }
+      ],
+      "payload": {
+        "response_language": "no",
+        "min_words": 30,
+        "max_words": 50,
+        "judge_prompt": "Evaluate the listed criteria using only facts supplied in the prompt and dialogue. Accept natural Norwegian reciprocal constructions; do not require an unsupplied detail.",
+        "criteria": [
+          {
+            "id": "trip-facts",
+            "instruction": "The reply communicates all supplied facts about calling, meeting at the station, carrying the bags; do not infer or require a number of bags, and exchanging the plan and schedule."
+          },
+          {
+            "id": "reciprocal-constructions",
+            "instruction": "The reply uses at least one natural construction with hverandre for an action established as mutual in the stimulus."
+          },
+          {
+            "id": "reply-purpose",
+            "instruction": "The response is a coherent Norwegian reply that gives Nora the requested plan."
+          },
+          {
+            "id": "reciprocal-form-observation",
+            "instruction": "The reply must use hverandre at least once for a mutual action. Other supplied facts may be expressed naturally, including with møtes or bytte på å bære."
+          },
+          {
+            "id": "construction-choice-observation",
+            "instruction": "Observation only: note whether hverandre is placed directly after suitable verbs and after the required preposition in expressions such as vente på; do not fail the reply for this."
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Nora",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Kan du sende meg en kort plan for lørdagsturen?"
+                }
+              ]
+            },
+            {
+              "speaker": "Jon",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Vi kan ringe på vei, møtes ved stasjonen og bytte på å bære sekkene. Jeg sender deg planen, og du sender meg rutetidene."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_notice_shared_action",
+      "operation": "choose",
+      "objective_id": "obj-reciprocal-pronouns-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg setningen som passer til situasjonen."
         }
       ],
       "explanation": null,
       "payload": {
-        "response_language": "no",
-        "min_words": 20,
-        "max_words": 50,
-        "judge_prompt": "Check the response against the task and report evidence for each criterion. Accept natural Bokmål variants that preserve the intended reciprocal meanings.",
-        "criteria": [
+        "options": [
           {
-            "id": "reciprocal-meaning",
-            "instruction": "Uses hverandre accurately only for reciprocal actions among two or more friends."
+            "option_id": "joint",
+            "text": "Sofie og Tarek gjør leksene sammen.",
+            "why": "Dialogen viser at de hjelper hverandre, ikke at de gjør leksene sammen."
           },
           {
-            "id": "construction-coverage",
-            "instruction": "Includes at least one direct-object use of hverandre and at least one preposition plus hverandre construction."
+            "option_id": "one-way",
+            "text": "Tarek hjelper Sofie med leksene på mandager.",
+            "why": "Dialogen viser at Tarek hjelper Sofie på fredager, ikke på mandager."
           },
           {
-            "id": "cue-completion",
-            "instruction": "Writes one complete Norwegian sentence for each of the four weekend-trip cues."
+            "option_id": "mutual",
+            "text": "Sofie og Tarek hjelper hverandre med leksene.",
+            "why": "Dialogen viser gjensidig hjelp, ikke én felles lekseoppgave."
+          }
+        ],
+        "answer_id": "mutual",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Sofie",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg hjelper Tarek med leksene på mandager.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Tarek",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg hjelper Sofie med leksene på fredager.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_complete_direct_reciprocal_object",
+      "operation": "recall_fill",
+      "objective_id": "obj-reciprocal-pronouns-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fyll inn ordet som passer til Ida og Petters utsagn."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Hverandre viser at Ida besøker Petter, og at Petter besøker Ida."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "«Ida og Petter besøker"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "direct-visit",
+            "options": [
+              "hverandre",
+              "dem"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "hver søndag.»"
+              }
+            ]
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Ida",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg besøker Petter hver søndag.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Petter",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg besøker Ida hver søndag.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_preposition_with_reciprocal",
+      "operation": "recall_fill",
+      "objective_id": "obj-reciprocal-pronouns-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fullfør setningen med ordet som passer til dialogen."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Vente tar preposisjonen på, og hverandre viser at handlingen går begge veier."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "«Eirik og Sana venter"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "waiting-phrase",
+            "options": [
+              "på hverandre",
+              "med hverandre",
+              "av hverandre"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "utenfor kinoen.»"
+              }
+            ]
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Eirik",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg venter utenfor kinoen til Sana kommer.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Sana",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg venter utenfor kinoen til Eirik kommer.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_joint_or_reciprocal",
+      "operation": "choose",
+      "objective_id": "obj-reciprocal-pronouns-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg om Ada og Kim gjør én oppgave sammen eller gjør den for hverandre."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "reciprocal-meals",
+            "text": "Ada og Kim maler hver sin vegg for den andre.",
+            "why": "Dialogen sier ikke at de utfører oppgaven for hverandre."
+          },
+          {
+            "option_id": "one-way",
+            "text": "Ada maler stua for Kim alene.",
+            "why": "Ada og Kim begge deltar i oppgaven."
+          },
+          {
+            "option_id": "shared-meal",
+            "text": "Begge bidrar til oppussingen av stua.",
+            "why": "De bidrar begge til arbeidet med det samme rommet."
+          }
+        ],
+        "answer_id": "shared-meal",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Ada",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg har kjøpt maling til stua.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Kim",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg tar med penslene. Vi maler dette rommet før gjestene kommer.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_combine_two_directions",
+      "operation": "recall_fill",
+      "objective_id": "obj-reciprocal-pronouns-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fullfør setningen med pronomenet som viser hvem som mottar meldingene."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Hverandre samler de to motsatte handlingene i én setning, mens hver dag beholder opplysningen om hyppighet."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "«Iben og Amir sender"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "reciprocal-recipient",
+            "options": [
+              "hverandre",
+              "dem"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "meldinger hver dag.»"
+              }
+            ]
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Iben",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg sender Amir meldinger hver dag.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Amir",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg sender Iben meldinger hver dag.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "practice_groups": [
@@ -2629,7 +3137,12 @@
         "distinguish_joint_and_reciprocal_meaning",
         "combine_actions_with_hverandre",
         "write_reciprocal_sentences_in_new_context",
-        "retrieve_and_transfer_hverandre"
+        "retrieve_and_transfer_hverandre",
+        "review_notice_shared_action",
+        "review_complete_direct_reciprocal_object",
+        "review_preposition_with_reciprocal",
+        "review_joint_or_reciprocal",
+        "review_combine_two_directions"
       ]
     }
   ],

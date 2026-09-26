@@ -9,6 +9,7 @@ together.
 
 from __future__ import annotations
 
+import re
 from collections.abc import Iterable
 from typing import Any
 from typing import Literal
@@ -21,6 +22,7 @@ from lesson_builder.domain.lesson.models.blocks import CalloutBlock
 from lesson_builder.domain.lesson.models.blocks import ExampleBlock
 from lesson_builder.domain.lesson.models.blocks import ExampleItem
 from lesson_builder.domain.lesson.models.blocks import ExamplesBlock
+from lesson_builder.domain.lesson.models.blocks import ExampleTeachingRole
 from lesson_builder.domain.lesson.models.blocks import HeadingBlock
 from lesson_builder.domain.lesson.models.blocks import ListBlock
 from lesson_builder.domain.lesson.models.blocks import ParagraphBlock
@@ -33,6 +35,21 @@ from lesson_builder.formats.markdown.attributes import normalize_lang
 from lesson_builder.formats.markdown.attributes import normalize_text
 
 K_BLOCKS_SECTION_ROLES: frozenset[str] = frozenset({"orient", "model", "contrast", "recap"})
+K_BLOCKS_EXAMPLE_TEACHING_ROLES: frozenset[str] = frozenset({"model", "incorrect", "caution"})
+K_BLOCKS_INCORRECT_EXAMPLE_RE = re.compile(
+    r"^(?:✗\s*|(?:incorrect(?:\s+[^:]+)?|wrong|common mistake|intended(?: neutral)? meaning|not)\s*:\s*)",
+    re.IGNORECASE,
+)
+K_BLOCKS_CAUTION_EXAMPLE_RE = re.compile(r"^(?:(?:not normally|not standard)\s*:\s*)", re.IGNORECASE)
+K_BLOCKS_EXAMPLE_STATUS_RE = re.compile(
+    r"^[\s*`_'\"]*(?:✗\s*|(?:incorrect(?:\s+[^:]+)?|wrong|common mistake|intended(?: neutral)? meaning|"
+    r"not normally|not standard|not)\s*:\s*)",
+    re.IGNORECASE,
+)
+K_BLOCKS_LEGACY_EXAMPLE_LABEL_RE = re.compile(
+    r"^(?P<label>incorrect(?:\s+[^:]+)?|wrong|not normally|not standard|not)\s*:$",
+    re.IGNORECASE,
+)
 
 K_BLOCKS_CALLOUT_LEVELS: dict[str, Literal["tip", "warning", "note"]] = {
     "tip": "tip",
@@ -52,9 +69,27 @@ def convert_blocks(
     default_lang: str = "nb",
 ) -> list[Block]:
     """Convert a sequence of panflute block elements into ``list[Block]``."""
+    source_blocks = list(blocks)
     result: list[Block] = []
-    for el in blocks:
+    source_index = 0
+    while source_index < len(source_blocks):
+        el = source_blocks[source_index]
+        inherited_role = _find_legacy_example_label_role(el)
+        if inherited_role is not None and source_index + 1 < len(source_blocks):
+            next_el = source_blocks[source_index + 1]
+            if _is_example_container(next_el):
+                result.append(
+                    _convert_one(
+                        next_el,
+                        warnings,
+                        default_lang,
+                        inherited_example_role=inherited_role,
+                    )
+                )
+                source_index += 2
+                continue
         result.append(_convert_one(el, warnings, default_lang))
+        source_index += 1
     return result
 
 
@@ -62,6 +97,8 @@ def _convert_one(
     el: object,
     warnings: list[str],
     default_lang: str,
+    *,
+    inherited_example_role: ExampleTeachingRole | None = None,
 ) -> Block:
     """Convert a single panflute block element into a ``Block``."""
     if isinstance(el, panflute.Header):
@@ -69,7 +106,12 @@ def _convert_one(
     if isinstance(el, panflute.Para):
         return _convert_paragraph(el, warnings, default_lang)
     if isinstance(el, panflute.Div):
-        return _convert_div(el, warnings, default_lang)
+        return _convert_div(
+            el,
+            warnings,
+            default_lang,
+            inherited_example_role=inherited_example_role,
+        )
     if isinstance(el, (panflute.BulletList, panflute.OrderedList)):
         return _convert_list(el, warnings, default_lang)
     raise ValueError(
@@ -158,6 +200,8 @@ def _convert_div(
     el: panflute.Div,
     warnings: list[str],
     default_lang: str,
+    *,
+    inherited_example_role: ExampleTeachingRole | None = None,
 ) -> Block:
     """Convert a pandoc Div to one of the typed-block kinds per §4.2."""
     classes = el.classes
@@ -166,9 +210,19 @@ def _convert_div(
     if "rule" in classes:
         return _convert_rule(el, warnings, default_lang)
     if "example" in classes:
-        return _convert_example(el, warnings, default_lang)
+        return _convert_example(
+            el,
+            warnings,
+            default_lang,
+            inherited_role=inherited_example_role,
+        )
     if "examples" in classes:
-        return _convert_examples(el, warnings, default_lang)
+        return _convert_examples(
+            el,
+            warnings,
+            default_lang,
+            inherited_role=inherited_example_role,
+        )
     if "word_list" in classes:
         return _convert_word_list(el)
     if "reading" in classes:
@@ -203,6 +257,8 @@ def _convert_example(
     el: panflute.Div,
     warnings: list[str],
     default_lang: str,
+    *,
+    inherited_role: ExampleTeachingRole | None = None,
 ) -> ExampleBlock:
     """Convert ``::: example`` div to ``ExampleBlock`` (one no:/en: pair)."""
     pairs = _extract_example_pairs(el, warnings, default_lang, snippet="example div")
@@ -212,18 +268,174 @@ def _convert_example(
             f"Use ::: examples for multiple pairs. Snippet: {_snippet(el)}"
         )
     no_spans, en_spans = pairs[0]
-    return ExampleBlock(kind="example", no=no_spans, en=en_spans)
+    teaching_role = _resolve_example_teaching_role(el, no_spans, en_spans, inherited_role=inherited_role)
+    return ExampleBlock(
+        kind="example",
+        no=_strip_example_role_prefix(no_spans, teaching_role),
+        en=_strip_example_role_prefix(en_spans, teaching_role),
+        teaching_role=teaching_role,
+    )
 
 
 def _convert_examples(
     el: panflute.Div,
     warnings: list[str],
     default_lang: str,
+    *,
+    inherited_role: ExampleTeachingRole | None = None,
 ) -> ExamplesBlock:
     """Convert ``::: examples`` div to ``ExamplesBlock`` (multiple pairs)."""
     pairs = _extract_example_pairs(el, warnings, default_lang, snippet="examples div")
-    items = [ExampleItem(no=no_spans, en=en_spans) for no_spans, en_spans in pairs]
+    explicit_role = _parse_explicit_example_teaching_role(el)
+    block_role = _resolve_inherited_example_teaching_role(explicit_role, inherited_role, el)
+    items = []
+    for no_spans, en_spans in pairs:
+        teaching_role = block_role or _infer_example_teaching_role(no_spans, en_spans)
+        items.append(
+            ExampleItem(
+                no=_strip_example_role_prefix(no_spans, teaching_role),
+                en=_strip_example_role_prefix(en_spans, teaching_role),
+                teaching_role=teaching_role,
+            )
+        )
     return ExamplesBlock(kind="examples", items=items)
+
+
+def _resolve_example_teaching_role(
+    el: panflute.Div,
+    no_spans: list[Any],
+    en_spans: list[Any],
+    *,
+    inherited_role: ExampleTeachingRole | None,
+) -> ExampleTeachingRole:
+    """Resolve one explicit or legacy-inferred example teaching role."""
+    explicit_role = _parse_explicit_example_teaching_role(el)
+    block_role = _resolve_inherited_example_teaching_role(explicit_role, inherited_role, el)
+    return block_role or _infer_example_teaching_role(no_spans, en_spans)
+
+
+def _parse_explicit_example_teaching_role(el: panflute.Div) -> ExampleTeachingRole | None:
+    """Validate an optional semantic teaching role on an example container."""
+    value = _optional_attribute(el, "teaching_role")
+    if value is None:
+        return None
+    if value not in K_BLOCKS_EXAMPLE_TEACHING_ROLES:
+        expected = ", ".join(sorted(K_BLOCKS_EXAMPLE_TEACHING_ROLES))
+        raise ValueError(f"example teaching_role must be one of {expected}, got {value!r}. Snippet: {_snippet(el)}")
+    return value  # type: ignore[return-value]
+
+
+def _resolve_inherited_example_teaching_role(
+    explicit_role: ExampleTeachingRole | None,
+    inherited_role: ExampleTeachingRole | None,
+    el: panflute.Div,
+) -> ExampleTeachingRole | None:
+    """Combine an explicit role with an immediately preceding legacy label."""
+    if explicit_role is not None and inherited_role is not None and explicit_role != inherited_role:
+        raise ValueError(
+            f"example teaching_role {explicit_role!r} conflicts with preceding "
+            f"{inherited_role!r} label. Snippet: {_snippet(el)}"
+        )
+    return explicit_role or inherited_role
+
+
+def _infer_example_teaching_role(no_spans: list[Any], en_spans: list[Any]) -> ExampleTeachingRole:
+    """Map legacy textual status markers to the typed contract during migration."""
+    norwegian = _flatten_example_spans(no_spans).lstrip("* `_\t'\"")
+    english = _flatten_example_spans(en_spans).lstrip("* `_\t'\"")
+    if K_BLOCKS_CAUTION_EXAMPLE_RE.match(norwegian) or K_BLOCKS_CAUTION_EXAMPLE_RE.match(english):
+        return "caution"
+    if K_BLOCKS_INCORRECT_EXAMPLE_RE.match(norwegian) or K_BLOCKS_INCORRECT_EXAMPLE_RE.match(english):
+        return "incorrect"
+    return "model"
+
+
+def _flatten_example_spans(spans: list[Any]) -> str:
+    """Flatten internal spans only for legacy role migration."""
+    pieces: list[str] = []
+    for span in spans:
+        value = getattr(span, "value", None)
+        if isinstance(value, str):
+            pieces.append(value)
+        children = getattr(span, "children", None)
+        if isinstance(children, list):
+            pieces.append(_flatten_example_spans(children))
+    return "".join(pieces)
+
+
+def _strip_example_role_prefix(spans: list[Any], role: ExampleTeachingRole) -> list[Any]:
+    """Remove legacy status text now represented by ``teaching_role``."""
+    if role == "model" or not spans:
+        return spans
+    return _strip_example_status_spans(spans)
+
+
+def _strip_example_status_spans(spans: list[Any]) -> list[Any]:
+    """Remove a possibly formatted or quoted legacy status prefix."""
+    updated = list(spans)
+    removed_status = False
+    quote_wrapper = _example_quote_wrapper(updated)
+    while updated:
+        first = updated[0]
+        value = getattr(first, "value", None)
+        if not isinstance(value, str):
+            break
+        stripped = _strip_example_status_value(value, quote_wrapper)
+        if stripped is None:
+            if removed_status:
+                cleaned = _remove_example_quote(value.lstrip(), quote_wrapper)
+                updated[0] = first.model_copy(update={"value": cleaned})
+            break
+        removed_status = True
+        if stripped:
+            updated[0] = first.model_copy(update={"value": stripped})
+        else:
+            updated.pop(0)
+    return updated
+
+
+def _example_quote_wrapper(spans: list[Any]) -> str | None:
+    """Return a quote opened by the first text-bearing example span."""
+    for span in spans:
+        value = getattr(span, "value", None)
+        if isinstance(value, str):
+            leading = value.lstrip()
+            if leading[:1] in {"'", '"'}:
+                return leading[0]
+    return None
+
+
+def _strip_example_status_value(value: str, quote_wrapper: str | None) -> str | None:
+    """Strip one status marker from a span, or return ``None`` when absent."""
+    stripped = K_BLOCKS_EXAMPLE_STATUS_RE.sub("", value, count=1)
+    if stripped == value:
+        return None
+    return _remove_example_quote(stripped.lstrip(), quote_wrapper)
+
+
+def _remove_example_quote(value: str, quote_wrapper: str | None) -> str:
+    """Remove the closing quote paired with a migrated status prefix."""
+    if quote_wrapper is not None and value.endswith(quote_wrapper):
+        return value[: -len(quote_wrapper)]
+    return value
+
+
+def _find_legacy_example_label_role(el: object) -> ExampleTeachingRole | None:
+    """Find an exact standalone legacy role label before an example container."""
+    if not isinstance(el, panflute.Para):
+        return None
+    label_match = K_BLOCKS_LEGACY_EXAMPLE_LABEL_RE.fullmatch(_snippet(el).strip())
+    if label_match is None:
+        return None
+    label = label_match.group("label").casefold()
+    if label in {"not normally", "not standard"}:
+        return "caution"
+    return "incorrect"
+
+
+def _is_example_container(el: object) -> bool:
+    """Return whether a Pandoc block is a singular or grouped example div."""
+    return isinstance(el, panflute.Div) and bool({"example", "examples"}.intersection(el.classes))
 
 
 def _extract_example_pairs(

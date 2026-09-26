@@ -19,6 +19,52 @@ from lesson_builder.application.operations.load_exercises import load_exercises 
 # ── choose ───────────────────────────────────────────────────────────────
 
 
+def test_load_exercises_given_dialogue_stimulus_expect_typed_ordered_turns():
+    exercise = {
+        "handle": "ex_dialogue",
+        "op": "choose",
+        "objective": "obj1",
+        "bloom": "understand",
+        "prompt_md": "What did Jonas assume?",
+        "stimulus": [
+            {
+                "kind": "dialogue",
+                "turns": [
+                    {"speaker": "Lea", "text_md": "Vi kan *kanskje* bruke møterommet."},
+                    {"speaker": "Jonas", "text_md": "Da skriver jeg at vi skal være der."},
+                ],
+            }
+        ],
+        "options": [
+            {"id": "a", "text": "The room is confirmed.", "correct": True},
+            {"id": "b", "text": "The room is unavailable."},
+        ],
+    }
+
+    ex = _load_one(exercise)
+
+    assert [turn.speaker for turn in ex.stimulus[0].turns] == ["Lea", "Jonas"]
+    assert ex.stimulus[0].turns[0].text[1].value == "kanskje"
+
+
+def test_load_exercises_given_unknown_stimulus_kind_expect_value_error():
+    exercise = {
+        "handle": "ex_dialogue",
+        "op": "choose",
+        "objective": "obj1",
+        "bloom": "understand",
+        "prompt_md": "Choose.",
+        "stimulus": [{"kind": "quote", "turns": []}],
+        "options": [
+            {"id": "a", "text": "A", "correct": True},
+            {"id": "b", "text": "B"},
+        ],
+    }
+
+    with pytest.raises(ValueError, match="unsupported kind"):
+        _load_one(exercise)
+
+
 def test_load_exercises_given_choose_with_curved_option_ids_and_correct_true_expect_answer_id_projected():
     exercise = {
         "handle": "ex_choose",
@@ -891,6 +937,57 @@ def test_load_exercises_given_write_rubric_expect_llm_judged_payload():
     assert ex.payload.response_language == "no"
     assert ex.payload.min_words == 12
     assert [criterion.id for criterion in ex.payload.criteria] == ["purpose", "clarity"]
+
+
+def test_load_exercises_given_multiline_prompt_expect_preserved_line_breaks():
+    exercise = {
+        "handle": "ex_write",
+        "op": "write",
+        "objective": "obj-message",
+        "bloom": "apply",
+        "prompt_md": "Nora: «Hei.»\nJonas: «Hei.»\n\nWrite Nora's reply.",
+        "judge_prompt": "Judge the message.",
+        "criteria": [{"id": "purpose", "instruction": "Meet the purpose."}],
+    }
+
+    ex = _load_one(exercise)
+
+    assert "".join(span.value for span in ex.prompt) == "Nora: «Hei.»\nJonas: «Hei.»\n\nWrite Nora's reply."
+
+
+def test_load_exercises_given_multiline_closed_prompt_expect_folded_line_breaks():
+    exercise = {
+        "handle": "ex_choose",
+        "op": "choose",
+        "objective": "obj-message",
+        "bloom": "understand",
+        "prompt_md": "Read the dialogue.\nChoose the natural reply.",
+        "options": [
+            {"id": "natural", "text": "Hei!", "correct": True},
+            {"id": "unnatural", "text": "Nei.", "correct": False},
+        ],
+    }
+
+    ex = _load_one(exercise)
+
+    assert ex.prompt[0].value == "Read the dialogue. Choose the natural reply."
+
+
+def test_load_exercises_given_multiparagraph_closed_prompt_expect_value_error():
+    exercise = {
+        "handle": "ex_choose",
+        "op": "choose",
+        "objective": "obj-message",
+        "bloom": "understand",
+        "prompt_md": "Read the dialogue.\n\nChoose the natural reply.",
+        "options": [
+            {"id": "natural", "text": "Hei!", "correct": True},
+            {"id": "unnatural", "text": "Nei.", "correct": False},
+        ],
+    }
+
+    with pytest.raises(ValueError, match="single-paragraph inline text"):
+        _load_one(exercise)
 
 
 def test_load_exercises_given_write_runtime_field_expect_value_error():

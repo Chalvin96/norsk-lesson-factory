@@ -1,0 +1,689 @@
+- handle: register_choice
+  op: choose
+  objective: obj-formal-vs-informal-register-01
+  bloom: understand
+  prompt_md: Choose one message.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Nora needs a larger room for Thursday's meeting. She writes to Eirik, a building coordinator she has not dealt with before, and needs an answer before four o'clock because access cards must be ordered by then.
+  stem_md: Which message best fits the situation?
+  options:
+  - id: vague_hint
+    text: Det hadde kanskje vært fint om romsituasjonen kunne ses litt nærmere på i løpet av uken, om det passer.
+    correct: false
+    why: It softens the message until the requested action and deadline are unclear.
+  - id: professional_request
+    text: Hei Eirik, kunne du undersøkt om et større rom er ledig på torsdag? Vi trenger en avklaring innen klokka fire fordi adgangskortene må bestilles da. Vennlig hilsen Nora
+    correct: true
+    why: It supplies context, a clear request, a reason, and a deadline in a tone suited to an unfamiliar professional contact.
+  - id: chatty_message
+    text: Hei Eirik! Vi trenger visst et større rom til torsdag. Har du noe ledig?
+    correct: false
+    why: Its conversational tone can work in an ordinary workplace message, but it omits the deadline and why Nora needs an answer by then.
+  - id: old_fashioned
+    text: Det bes herved om at De oversender Deres bekreftelse på et ledig større rom innen klokken fire, ettersom adgangskort skal bestilles da.
+    correct: false
+    why: It conveys excessive distance through old-fashioned pronouns and administrative phrasing.
+  explanation_md: A professional email can use ordinary modern language while still supplying context, a clear request, a reason, and a deadline.
+  derived_from:
+  - section_id: register-situation
+- handle: notice_relationship
+  op: write
+  objective: obj-formal-vs-informal-register-01
+  bloom: apply
+  prompt_md: '**Draft:** «Hei Eirik! Vi må bytte rom! Send meg en oversikt over ledige rom i morgen.» **Revision:** «Hei Eirik, vi ser ut til å ha behov for et større rom. Kunne du sendt meg en oversikt over større rom som er ledige? Jeg trenger den før klokka 12 i morgen, for da bestiller vi adgangskort.» **Audience and purpose:** Write a 60–90-word note to Nora explaining how the revision better suits an unfamiliar professional contact while keeping the response deadline. Identify the relationship, inconvenience, purpose, and cooperative changes.'
+  response_language: 'no'
+  judge_prompt: Evaluate only `relationship-inconvenience-purpose`, `evidence-from-excerpts`, and `cooperative-revision-explanation`. Accept natural Bokmål and equivalent well-supported interpretations. Do not add a gating requirement for any particular modal, greeting, or terminology.
+  criteria:
+  - id: relationship-inconvenience-purpose
+    instruction: Identifies the unfamiliar professional relationship, the short-notice inconvenience, and the room-related purpose.
+  - id: evidence-from-excerpts
+    instruction: "Uses the supplied draft and revision to identify the requested relationship, inconvenience, purpose, and cooperative changes; quotations and exact wording are not required."
+  - id: cooperative-revision-explanation
+    instruction: Explains how the revised context, reason for the deadline, and request make the message more cooperative than the commands and exclamation marks without dropping the deadline.
+  derived_from:
+  - section_id: register-situation
+- handle: greeting_context_choice
+  op: choose
+  objective: obj-formal-vs-informal-register-01
+  bloom: understand
+  prompt_md: Choose one opening.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Nora is emailing all registered participants. She must announce that Thursday's meeting has moved to Sal 3.
+  stem_md: Which opening best fits this audience and purpose?
+  options:
+  - id: named_recipient
+    text: Hei Eirik,
+    correct: false
+    why: It addresses one named person rather than all participants.
+  - id: unknown_service
+    text: Til kundeservice,
+    correct: false
+    why: It suits an unnamed organizational recipient, not a known group receiving an update.
+  - id: group_greeting
+    text: Hei alle sammen,
+    correct: true
+    why: It addresses a known professional group naturally without sounding ceremonial.
+  - id: personal_greeting
+    text: Kjære bestemor,
+    correct: false
+    why: It signals a close personal relationship that does not match the participant group.
+  explanation_md: The greeting should identify the intended relationship and recipient group rather than merely sound more formal.
+  derived_from:
+  - section_id: greetings-relationship
+- handle: match_greeting_to_context
+  op: write
+  objective: obj-formal-vs-informal-register-01
+  bloom: apply
+  prompt_md: '**Shared fact:** The meeting on Thursday needs a larger room. **Recipients:** a close colleague in chat; an unfamiliar administrative contact by email; all participants in an event update. Write three 5–12-word Norwegian openings that preserve the fact and distinguish the relationships.'
+  response_language: 'no'
+  judge_prompt: Evaluate only `three-natural-openings`, `differentiated-relationships`, `unchanged-purpose`, and `non-ceremonial-professional-tone`. Accept suitable greeting variants. Do not require the examples from the lesson verbatim.
+  criteria:
+  - id: three-natural-openings
+    instruction: Supplies three natural Bokmål openings of 5–12 words each.
+  - id: differentiated-relationships
+    instruction: Makes the colleague, administrative contact, and participant group distinguishable.
+  - id: unchanged-purpose
+    instruction: Keeps the Thursday room issue as the practical purpose in all three openings.
+  - id: non-ceremonial-professional-tone
+    instruction: Avoids unnaturally ceremonial language in the professional openings.
+  derived_from:
+  - section_id: greetings-relationship
+- handle: pronoun_register_choice
+  op: choose
+  objective: obj-formal-vs-informal-register-01
+  bloom: understand
+  prompt_md: Choose one sentence.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Nora is emailing a coordinator she has not met before. She wants him to confirm that he received the documents.
+  stem_md: Which sentence is the most natural professional choice?
+  options:
+  - id: chat_fragment
+    text: Mottatt dokumentene?
+    correct: false
+    why: The fragment may work in a shared-context chat but is too compressed for this email.
+  - id: vague_statement
+    text: Dokumentene hadde vært fine å få bekreftet.
+    correct: false
+    why: The wording obscures who should confirm receipt and what response is requested.
+  - id: modern_du
+    text: Kan du bekrefte at du har mottatt dokumentene?
+    correct: true
+    why: Ordinary professional Norwegian commonly uses du and creates tone through the whole request.
+  - id: traditional_de
+    text: Kan De bekrefte at De har mottatt dokumentene?
+    correct: false
+    why: Capitalized De creates an unusually traditional or distant tone in an ordinary modern workplace email.
+  explanation_md: Using du does not make a professional message informal; clarity, context, and request form establish the tone.
+  derived_from:
+  - section_id: du-professional
+- handle: keep_du_adjust_tone
+  op: write
+  objective: obj-formal-vs-informal-register-01
+  bloom: apply
+  prompt_md: '**Original:** «Hei! Kan du sende meg den nyeste versjonen nå!» **Facts:** The recipient is an unfamiliar workplace contact. Nora needs the version before a meeting at 14.00. Write a 22–55-word professional email that keeps «du» and makes the request clear and cooperative.'
+  response_language: 'no'
+  judge_prompt: 'Evaluate only `retains-du`, `meeting-context`, `clear-cooperative-request`, and `email-word-bound`. Accept natural Bokmål and different cooperative request forms. Calibration anchors: Must pass: «Hei, kan du sende meg den nyeste versjonen før møtet klokka 14? Da rekker jeg å kontrollere tallene på forhånd. Takk for hjelpen. Vennlig hilsen Nora» Must fail: «Hei! Send versjonen nå!» Must fail on clear-cooperative-request: «Hei, du må sende meg den nyeste versjonen før møtet klokka 14, slik at jeg får kontrollert tallene. Takk. Vennlig hilsen Nora» because it imposes an obligation on an unfamiliar contact.'
+  criteria:
+  - id: retains-du
+    instruction: Keeps the pronoun du and does not replace it with De.
+  - id: meeting-context
+    instruction: States that the version is needed before the meeting at 14.00.
+  - id: clear-cooperative-request
+    instruction: Makes the requested action clear without imposing an obligation on this unfamiliar contact or using the abrupt punctuation and unsupported urgency of the original.
+  - id: email-word-bound
+    instruction: Produces a professional email of 22–55 words.
+  - id: request-form-observation
+    instruction: Diagnose whether the chosen request form sounds more forceful than the situation invites; this observation never fails an otherwise valid answer.
+  derived_from:
+  - section_id: du-professional
+- handle: request_form_choice
+  op: choose
+  objective: obj-formal-vs-informal-register-01
+  bloom: apply
+  prompt_md: Choose one request.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Nora has not worked with Eirik, a building coordinator, before. She is asking him to check which larger rooms are available for Thursday.
+  stem_md: Which request best fits the situation?
+  options:
+  - id: direct_instruction
+    text: Undersøk hvilke større rom som er ledige.
+    correct: false
+    why: The imperative presents the favor as a direct instruction.
+  - id: fixed_requirement
+    text: Større rom må undersøkes.
+    correct: false
+    why: The impersonal requirement misrepresents an optional request as a fixed procedure.
+  - id: unclear_hint
+    text: Det hadde kanskje vært fint med et større rom.
+    correct: false
+    why: The hint does not clearly ask the coordinator to investigate anything.
+  - id: tentative_request
+    text: Kunne du undersøkt hvilke større rom som er ledige?
+    correct: true
+    why: The tentative request fits a request to a less familiar contact.
+  explanation_md: A cooperative request remains explicit about the action while reflecting the relationship.
+  derived_from:
+  - section_id: directness-requests
+- handle: build_professional_request
+  op: write
+  objective: obj-formal-vs-informal-register-01
+  bloom: apply
+  prompt_md: '**To:** Eirik, an unfamiliar building coordinator. **Facts:** Thursday''s room is too small because more people registered than expected. Ask him to check or send larger-room options. An answer is needed by 16.00 because access cards must then be ordered. Write a concise 27–55-word professional request.'
+  response_language: 'no'
+  judge_prompt: 'Evaluate only `unmistakable-action`, `deadline`, `deadline-reason`, `cooperative-tone`, and `request-word-bound`. Accept natural Bokmål and more than one suitable request form. Do not require a specific modal. Calibration anchors: Must pass: «Hei Eirik, flere har meldt seg på møtet enn forventet. Kunne du undersøkt om et større rom er ledig på torsdag? Vi trenger svar innen klokka fire fordi adgangskortene må bestilles da. På forhånd takk.» Must fail: «Hei, vi har et romproblem. Håper du ordner det snart.» Must pass with `modal-choice-observation` flagged: «Hei Eirik, kan du sende meg en oversikt over større rom innen klokka fire? Flere har meldt seg på, og adgangskortene må bestilles da. Takk for hjelpen.»'
+  criteria:
+  - id: unmistakable-action
+    instruction: Clearly asks Eirik to check or send available larger-room options.
+  - id: deadline
+    instruction: States the deadline as 16.00.
+  - id: deadline-reason
+    instruction: Explains that access cards must be ordered by that time.
+  - id: cooperative-tone
+    instruction: Frames the inconvenient action as a clear, cooperative request rather than a command or vague hint.
+  - id: request-word-bound
+    instruction: Uses 27–55 words.
+  - id: modal-choice-observation
+    instruction: Diagnose the degree of tentativeness created by the request form; this observation never fails an otherwise valid answer.
+  derived_from:
+  - section_id: directness-requests
+- handle: sentence_style_choice
+  op: choose
+  objective: obj-formal-vs-informal-register-01
+  bloom: understand
+  prompt_md: Choose one version.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Nora is emailing an external coordinator about the room reserved for Thursday's meeting.
+  stem_md: Which version is clearest and easiest to act on in an email to an external coordinator?
+  options:
+  - id: different_fact
+    text: Møtet på torsdag er avlyst fordi rommet er opptatt, så vi trenger ikke et nytt rom.
+    correct: false
+    why: It is complete but changes the practical facts rather than restating them clearly.
+  - id: complete_email
+    text: Det gjelder romreservasjonen for møtet på torsdag. Flere har meldt seg på enn forventet, så vi trenger et større rom.
+    correct: true
+    why: It names the reservation, event, day, cause, and need so the message stands alone.
+  - id: chat_fragments
+    text: Hei! Gjelder torsdag. Trenger noe større. Fikser du det?
+    correct: false
+    why: The fragments depend on shared context the external recipient does not have.
+  - id: administrative_nouns
+    text: På bakgrunn av deltakerantallsøkningen foreligger et romendringsbehov som bør imøtekommes før torsdagens møte.
+    correct: false
+    why: It conveys the situation but does not clearly ask the coordinator to check or offer an available room.
+  explanation_md: External email needs enough explicit context to stand alone, but professional language need not be abstract or heavy.
+  derived_from:
+  - section_id: sentence-style-flow
+- handle: change_genre_not_meaning
+  op: write
+  objective: obj-formal-vs-informal-register-01
+  bloom: apply
+  prompt_md: '**Facts for both texts:** More people registered than expected. Thursday''s booked room is too small. A larger available room is needed. An answer is needed by 16.00 so access cards can be ordered. **Text 1:** internal chat to a close colleague who knows the meeting. **Text 2:** email request to an unfamiliar external coordinator. Write a 15–25-word chat and a 45–70-word email while preserving the facts.'
+  response_language: 'no'
+  judge_prompt: Evaluate only `preserved-facts-and-deadline`, `chat-audience-purpose`, `email-audience-purpose`, and `genre-word-bounds`. Accept natural Bokmål. The chat may rely on the stated shared context; the email must stand alone. Do not require any particular conversational marker.
+  criteria:
+  - id: preserved-facts-and-deadline
+    instruction: Preserves the supplied room-change facts, 16.00 deadline, and access-card reason across the two texts.
+  - id: chat-audience-purpose
+    instruction: Makes the 15–25-word internal chat efficient and suitable for a close colleague with shared context.
+  - id: email-audience-purpose
+    instruction: Makes the 45–70-word external email self-contained, courteous, and clear.
+  - id: genre-word-bounds
+    instruction: Keeps each text within its stated word bound.
+  derived_from:
+  - section_id: sentence-style-flow
+- handle: marker_effect_choice
+  op: choose
+  objective: obj-formal-vs-informal-register-01
+  bloom: understand
+  prompt_md: Choose the best interpretation.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Eirik
+      text_md: «Å flytte møtet krever nye utstyrsbestillinger.»
+    - speaker: Nora
+      text_md: «Du kan bare flytte møtet til et annet rom.»
+  stem_md: What effect can «bare» have here?
+  options:
+  - id: fixed_deadline
+    text: It makes the time limit precise.
+    correct: false
+    why: Bare affects the perceived effort or pressure, not the presence of a deadline.
+  - id: ceremonial_distance
+    text: It makes the sentence old-fashioned and ceremonial.
+    correct: false
+    why: Bare is conversational rather than a marker of ceremonial distance.
+  - id: factual_surprise
+    text: It marks the room change as contrary to expectation.
+    correct: false
+    why: Highlighting unexpected truth is more closely associated with faktisk in this lesson.
+  - id: minimizes_work
+    text: It can make Nora sound as if she is minimizing a task that is not simple.
+    correct: true
+    why: Eirik's line shows that the move involves additional work, so bare can sound dismissive.
+  explanation_md: Conversational markers express stance; their effect depends on the surrounding facts and relationship.
+  derived_from:
+  - section_id: conversational-markers
+- handle: control_conversational_markers
+  op: write
+  objective: obj-formal-vs-informal-register-01
+  bloom: apply
+  prompt_md: '**Exchange:** Nora: «Du kan bare flytte møtet.» Jonas: «Vi trenger jo plass til alle.» Nora: «Det blir vel trangt med førti personer.» Jonas: «Da må vi altså bytte rom.» Nora: «Det største rommet er faktisk ledig.» **Facts for Eirik:** Forty people are attending; the present room is too small; the largest room is available; a room change is needed. Write a 70–110-word note that explains the five markers and gives Eirik a neutral professional update.'
+  response_language: 'no'
+  judge_prompt: Evaluate only `five-marker-effects`, `preserved-essential-facts`, `neutral-update`, and `response-word-bound`. Accept contextual nuances supported by the supplied lines. Do not fail a valid update merely because it retains a marker appropriately.
+  criteria:
+  - id: five-marker-effects
+    instruction: Explains bare as casual or minimizing, jo as shared or presupposed knowledge, vel as tentative, altså as a conclusion, and faktisk as contrast or unexpected truth.
+  - id: preserved-essential-facts
+    instruction: Preserves all four supplied facts in the update to Eirik.
+  - id: neutral-update
+    instruction: Presents the facts to Eirik in a clear, neutral professional register.
+  - id: response-word-bound
+    instruction: Keeps the complete response within 70–110 words.
+  derived_from:
+  - section_id: conversational-markers
+- handle: closing_consistency_choice
+  op: choose
+  objective: obj-formal-vs-informal-register-01
+  bloom: apply
+  prompt_md: Choose one closing.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Hei Eirik, Kunne du sendt meg en oversikt over ledige rom innen klokka fire? Vi trenger den for å bestille adgangskort.
+  stem_md: Which closing best completes this email?
+  options:
+  - id: casual_farewell
+    text: Ha det!
+    correct: false
+    why: It is a natural conversational farewell but is more casual than the rest of this email.
+  - id: chat_closing
+    text: Snakkes 😄
+    correct: false
+    why: The familiar wording and emoji fit a close-contact chat more readily than this external request.
+  - id: ceremonial_closing
+    text: Med den aller største respekt og aktelse
+    correct: false
+    why: It creates a ceremonial tone that is inconsistent with the ordinary modern email.
+  - id: friendly_professional
+    text: Takk for hjelpen. Vennlig hilsen Nora
+    correct: true
+    why: It matches the cooperative professional request and its unfamiliar recipient.
+  explanation_md: A closing should continue the relationship and tone established by the rest of the message.
+  derived_from:
+  - section_id: closings-tone
+- handle: confirmation_context_choice
+  op: choose
+  objective: obj-formal-vs-informal-register-01
+  bloom: apply
+  prompt_md: Choose the best interpretation.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Eirik: «Sal 3 er ledig. Jeg kan flytte reservasjonen dit, men trenger bekreftelse fra deg før klokka to.» Nora: «Det høres bra ut. Du kan flytte reservasjonen til Sal 3.»'
+  stem_md: What does Nora's second sentence do in this exchange?
+  options:
+  - id: uncertain_hint
+    text: It hints that Nora may want a different room without saying so.
+    correct: false
+    why: Nora explicitly names Sal 3 and approves the move.
+  - id: formal_rule
+    text: It states an impersonal rule for all room reservations.
+    correct: false
+    why: The sentence responds personally to this specific offer and situation.
+  - id: confirmation
+    text: It confirms permission for the action Eirik has already offered.
+    correct: true
+    why: Eirik asks for confirmation, so Nora's wording authorizes the proposed move.
+  - id: abrupt_request
+    text: It introduces an abrupt new demand that Eirik has not discussed.
+    correct: false
+    why: The action is already offered and only awaits Nora's confirmation.
+  explanation_md: The same grammatical form can function differently when the preceding turn changes its communicative purpose.
+  derived_from:
+  - section_id: back-to-nora
+- handle: integrated_three_tones
+  op: write
+  objective: obj-formal-vs-informal-register-01
+  bloom: apply
+  prompt_md: "**Event sequence:** Thursday's meeting attracted more participants than expected, so the original room was too small. Nora first asked Eirik about a larger room. Eirik then offered Sal 3, Nora confirmed it, and the meeting moved there. **Texts:** a 15–25-word chat to Jonas, a close colleague who already knows about the meeting, before confirmation; a 22–70-word request email to Eirik, an unfamiliar building coordinator, before his offer; a 25–45-word update to all participants after the move. Write the three Norwegian texts for their stated audiences and purposes."
+  response_language: 'no'
+  judge_prompt: 'Evaluate only `preserved-event-sequence`, `chat-purpose`, `email-purpose`, `participant-update-purpose`, and `three-word-bounds`. Greetings, pronouns, request forms, markers, and closings are diagnostic unless required by one of those visible criteria. Calibration anchors for the email: Must pass: «Hei Eirik, flere har meldt seg på enn forventet, og rommet er blitt for lite. Kunne du undersøkt om Sal 3 eller et annet større rom er ledig? Vi trenger svar innen klokka fire. Takk for hjelpen. Vennlig hilsen Nora» Must fail: «Hei! Ordne Sal 3 nå!» Must pass with `register-feature-observation` flagged: «Hei Eirik, kan du sjekke om Sal 3 er ledig? Vi har fått flere deltakere enn forventet og trenger svar innen klokka fire. Takk. Hilsen Nora»'
+  criteria:
+  - id: preserved-event-sequence
+    instruction: Keeps the supplied facts and correctly places the chat and request before confirmation and the participant update after the move.
+  - id: chat-purpose
+    instruction: Makes the chat useful to Jonas, a close colleague who shares the meeting context.
+  - id: email-purpose
+    instruction: Makes the request to the unfamiliar coordinator self-contained, clear, and cooperative.
+  - id: participant-update-purpose
+    instruction: Clearly tells all participants that the meeting has moved to Sal 3 without irrelevant conversational detail.
+  - id: three-word-bounds
+    instruction: Keeps the chat, email, and participant update within their respective word bounds.
+  - id: register-feature-observation
+    instruction: Diagnose how greetings, pronouns, directness, sentence completeness, markers, and closings contribute to each register; this observation never fails an otherwise valid answer.
+  derived_from:
+  - section_id: integrated-practice
+- handle: short_retrieval_review
+  op: write
+  objective: obj-formal-vs-informal-register-01
+  bloom: apply
+  prompt_md: '**Blunt message:** «Hei! Kan du sende meg deltakerlisten i løpet av dagen! Det haster!» **Audience and purpose:** Reply as Nora to an unfamiliar professional contact. The list is needed by 16.00 so access cards can be ordered. Write a 18–70-word email that keeps «du», then add a 20–35-word note explaining your register choices.'
+  response_language: 'no'
+  judge_prompt: 'Evaluate only `retains-du`, `suitable-email-frame`, `reason-and-deadline`, `clear-non-abrupt-request`, `register-choice-explanation`, and `two-word-bounds`. Accept natural Bokmål variants. Calibration anchors for the message: Must pass: «Hei Eirik, kunne du sendt meg deltakerlisten innen klokka fire? Vi trenger den for å bestille adgangskort før fristen. Takk for hjelpen. Vennlig hilsen Nora» Must fail: «Hei! Send lista fort!» Must pass with `softening-observation` flagged: «Hei Eirik, kan du sende meg deltakerlisten innen klokka fire? Vi må bestille adgangskort da. Takk. Hilsen Nora»'
+  criteria:
+  - id: retains-du
+    instruction: Keeps the pronoun du.
+  - id: suitable-email-frame
+    instruction: Uses a suitable greeting and closing for the unfamiliar professional contact.
+  - id: reason-and-deadline
+    instruction: States both the 16.00 deadline and the access-card reason.
+  - id: clear-non-abrupt-request
+    instruction: Clearly requests the participant list without reproducing the blunt tone.
+  - id: register-choice-explanation
+    instruction: Connects concrete language choices to the stated audience, email genre, and purpose.
+  - id: two-word-bounds
+    instruction: Uses 18–70 words for the email and 20–35 words for the explanatory note.
+  - id: softening-observation
+    instruction: Diagnose the degree of softening in the request form; this observation never fails an otherwise valid answer.
+  derived_from:
+  - section_id: short-retrieval-review
+- handle: review_register_choice
+  op: choose
+  objective: obj-formal-vs-informal-register-01
+  bloom: apply
+  prompt_md: Choose one message.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Du og en nær kollega oppdager at prosjektoren ikke virker rett før møtet. Kollegaen kjenner situasjonen fra før.
+  stem_md: Which message best fits this situation?
+  options:
+  - id: vague
+    text: Det hadde vært fint med bedre teknisk utstyr.
+    correct: false
+    why: It does not clearly request the needed replacement.
+  - id: concise_chat
+    text: Hei! Har du en ekstra prosjektor? Trenger den før møtet.
+    correct: true
+    why: The colleague shares the context, so a concise conversational request is sufficient.
+  - id: external_email
+    text: Hei, jeg kontakter deg angående en teknisk feil ved prosjektoren som skal brukes under dagens møte.
+    correct: false
+    why: The self-contained introduction is defensible for an external email but unnecessarily elaborate for this shared-context chat.
+  - id: ceremonial
+    text: Det bes herved om at De fremskaffer en erstatningsprojektor.
+    correct: false
+    why: The distant administrative style conflicts with the close colleague relationship.
+  explanation_md: Shared context can justify compression, but the requested action must remain clear.
+  derived_from:
+  - section_id: register-situation
+- handle: review_greeting
+  op: choose
+  objective: obj-formal-vs-informal-register-01
+  bloom: apply
+  prompt_md: Choose one opening.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Du skriver en kort velkomstmelding til alle de nye ansatte på avdelingen.
+  stem_md: Which opening best fits this audience?
+  options:
+  - id: single_person
+    text: Hei du,
+    correct: false
+    why: It addresses one person and does not suit a message to the whole group.
+  - id: wrong_recipient
+    text: Hei sjefen,
+    correct: false
+    why: It singles out one role instead of greeting everyone in the group.
+  - id: impersonal
+    text: Til den det måtte angå,
+    correct: false
+    why: It is an impersonal administrative formula, not a welcome to a known group.
+  - id: group_greeting
+    text: Hei alle sammen,
+    correct: true
+    why: It addresses the whole group of new employees naturally.
+  explanation_md: A greeting to a group should address everyone collectively rather than one person or an unknown recipient.
+  derived_from:
+  - section_id: greetings-relationship
+- handle: review_du_professional
+  op: choose
+  objective: obj-formal-vs-informal-register-01
+  bloom: apply
+  prompt_md: Choose one request.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Du skriver en e-post til en ekstern regnskapsfører du ikke har møtt før. Du vil at hun bekrefter at hun har mottatt fakturaen.
+  stem_md: Which complete request is most natural?
+  options:
+  - id: fragment
+    text: Faktura mottatt?
+    correct: false
+    why: The fragment depends on chat-like shared context rather than a complete email request.
+  - id: unclear
+    text: En bekreftelse kunne muligens vært ønskelig.
+    correct: false
+    why: It hides both the recipient's action and the object of confirmation.
+  - id: du_request
+    text: Kan du bekrefte at du har mottatt fakturaen?
+    correct: true
+    why: Ordinary present-day professional Norwegian uses du, even with a contact you have not met.
+  - id: de_request
+    text: Kan De bekrefte at De har mottatt fakturaen?
+    correct: false
+    why: Capitalized De adds traditional distance that this ordinary modern email does not call for.
+  explanation_md: Professional tone does not normally require replacing du with De.
+  derived_from:
+  - section_id: du-professional
+- handle: review_request_form
+  op: choose
+  objective: obj-formal-vs-informal-register-01
+  bloom: apply
+  prompt_md: Choose one request.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: En tekniker du ikke har jobbet med før, må se på en feil som ikke haster. Det passer best at hun gjør det når hun selv har tid.
+  stem_md: Which request best fits the situation?
+  options:
+  - id: demanding
+    text: Du må se på feilen i dag.
+    correct: false
+    why: It adds urgency and pressure that the non-urgent situation does not call for.
+  - id: vague
+    text: Det hadde vært fint om noen så på feilen etter hvert.
+    correct: false
+    why: It does not clearly ask this technician to inspect the fault.
+  - id: considerate
+    text: Kunne du sett på feilen en gang når det passer deg?
+    correct: true
+    why: The tentative opening fits an unfamiliar technician and a non-urgent fault.
+  - id: imperative
+    text: Se på feilen.
+    correct: false
+    why: The bare imperative presents the request as a direct instruction.
+  explanation_md: A cooperative request stays explicit about the action while reflecting the relationship and the low urgency.
+  derived_from:
+  - section_id: directness-requests
+- handle: review_sentence_style
+  op: choose
+  objective: obj-formal-vs-informal-register-01
+  bloom: apply
+  prompt_md: Choose one update.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Intern melding: «Leveransen fredag blir forsinket. Mangler én vare.» Du skal sende beskjeden videre til en leverandør som ikke kjenner saken.'
+  stem_md: Which version can you send as it stands?
+  options:
+  - id: changed_meaning
+    text: Leveransen på fredag er avlyst fordi alle varene er utsolgt.
+    correct: false
+    why: It changes a delay involving one item into a cancellation involving every item.
+  - id: self_contained
+    text: Leveransen som skulle komme fredag, blir forsinket fordi én av varene ikke er tilgjengelig.
+    correct: true
+    why: It identifies the delivery, original day, delay, and cause without prior context.
+  - id: fragment
+    text: Blir forsinket. Mangler én.
+    correct: false
+    why: The omitted subject and vague reference depend on shared context.
+  - id: heavy
+    text: Det foreligger en leveranseforsinkelsesproblematikk grunnet varemangel.
+    correct: false
+    why: It is less clear because it replaces ordinary verbs with dense nominal wording.
+  explanation_md: A self-contained professional update supplies the missing context in clear sentences.
+  derived_from:
+  - section_id: sentence-style-flow
+- handle: review_marker_effect
+  op: choose
+  objective: obj-formal-vs-informal-register-01
+  bloom: understand
+  prompt_md: Choose the best explanation.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Nora skriver til en koordinator: «Vi trenger vel svar innen fredag.»'
+  stem_md: What does «vel» signal here?
+  options:
+  - id: gives_reason
+    text: It explains why Friday matters.
+    correct: false
+    why: The sentence still gives no reason for the deadline.
+  - id: marks_surprise
+    text: It shows that Friday is unexpectedly early.
+    correct: false
+    why: The line does not establish the contrast normally needed for that interpretation.
+  - id: weakens_precision
+    text: It can make a requirement sound tentative rather than firm.
+    correct: true
+    why: Vel invites agreement or uncertainty, so it weakens a deadline that should be precise.
+  - id: adds_formality
+    text: It makes the deadline more official.
+    correct: false
+    why: Vel is conversational and tentative rather than an official marker.
+  explanation_md: Remove tentative framing when the communicative purpose requires a firm, precise deadline.
+  derived_from:
+  - section_id: conversational-markers
+- handle: review_closing
+  op: choose
+  objective: obj-formal-vs-informal-register-01
+  bloom: apply
+  prompt_md: Choose one closing.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Du avslutter en e-post til en hotellresepsjon du ikke har vært i kontakt med før, etter å ha spurt om en bekreftelse.
+  stem_md: Which closing best completes this email?
+  options:
+  - id: ceremonial_closing
+    text: Ærbødigst Nora
+    correct: false
+    why: It creates an archaic ceremonial tone that is inconsistent with an ordinary modern email.
+  - id: friendly_professional
+    text: Takk for hjelpen. Med vennlig hilsen Nora
+    correct: true
+    why: It matches the courteous request and the unfamiliar business recipient.
+  - id: casual_farewell
+    text: Ha det bra!
+    correct: false
+    why: It is a natural conversational farewell but is more casual than this email.
+  - id: chat_closing
+    text: Snakkes snart!
+    correct: false
+    why: The familiar wording fits a close-contact chat more readily than this email.
+  explanation_md: A closing should continue the relationship and tone established by the rest of the message.
+  derived_from:
+  - section_id: closings-tone
+- handle: review_confirmation_context
+  op: choose
+  objective: obj-formal-vs-informal-register-01
+  bloom: apply
+  prompt_md: Choose the best interpretation.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Kari
+      text_md: «Jeg kan sende avtalen til kunden nå.»
+    - speaker: Per
+      text_md: «Det ser bra ut. Du kan sende avtalen.»
+  stem_md: What is Per doing?
+  options:
+  - id: commanding
+    text: He is assigning Kari a new task without discussion.
+    correct: false
+    why: Sending the agreement is already Kari's proposal, not a new assignment.
+  - id: hinting
+    text: He is indirectly suggesting that the agreement needs revision.
+    correct: false
+    why: He states that it looks good and authorizes sending it.
+  - id: refusing
+    text: He is refusing permission to contact the customer.
+    correct: false
+    why: «Du kan» grants rather than refuses permission in this exchange.
+  - id: authorizing
+    text: He is approving an action Kari has offered to take.
+    correct: true
+    why: Per's «Du kan sende» grants permission for the action Kari proposed.
+  explanation_md: The prior turn makes the utterance an approval, not an abrupt command.
+  derived_from:
+  - section_id: back-to-nora
+- handle: review_register_transfer
+  op: choose
+  objective: obj-formal-vs-informal-register-01
+  bloom: apply
+  prompt_md: Choose one response.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: "Du jobber ved et museum og skriver til en skolekoordinator du ikke har møtt før. Tjue ekstra personer er meldt til omvisningen tirsdag, inkludert elever og medfølgende voksne. Bemanningen låses ved lunsjtid dagen før ankomsten, men museet mangler fortsatt et sikkert samlet antall personer."
+  stem_md: Which full response best fits the audience and purpose?
+  options:
+  - id: close_chat
+    text: "Hei! Hvor mange blir dere til slutt? Trenger tallet mandag."
+    correct: false
+    why: The compressed wording assumes more shared context and sounds like a familiar chat.
+  - id: vague_politeness
+    text: "Hei, vi gleder oss til besøket på tirsdag. Det hadde kanskje vært fint om dere kunne si litt mer om gruppen når dere får anledning, slik at vi kan se på planleggingen."
+    correct: false
+    why: It hides the fixed deadline and practical reason.
+  - id: ceremonial_demand
+    text: "God dag. De pålegges herved å oversende Deres fullstendige elevantall før planleggingen avsluttes."
+    correct: false
+    why: It turns a routine professional request into an old-fashioned, authoritarian demand.
+  - id: clear_professional
+    text: "Hei, kan du bekrefte hvor mange personer som kommer totalt, inkludert elever og medfølgende voksne, innen mandag klokka tolv? Da rekker vi å planlegge guidene til tirsdagens besøk. Takk for hjelpen. Vennlig hilsen Mari"
+    correct: true
+    why: It asks for the total headcount, including accompanying adults, and gives the deadline, reason, and event in a natural professional email.
+  explanation_md: Successful transfer preserves clarity while adjusting context, directness, sentence completeness, and tone to a new professional situation.
+  derived_from:
+  - section_id: integrated-practice

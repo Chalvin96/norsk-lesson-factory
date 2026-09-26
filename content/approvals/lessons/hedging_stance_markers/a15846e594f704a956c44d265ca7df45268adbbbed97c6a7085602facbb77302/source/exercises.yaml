@@ -1,0 +1,613 @@
+- handle: open_uncertainty_checkpoint
+  op: write
+  objective: obj-hedging-stance-markers-01
+  bloom: apply
+  prompt_md: 'Forecast note: «Meteorologene er usikre på om været bedrer seg før konserten.» Transport
+    note: «Det er ikke avklart om bussen kommer før publikum.» Write a 35–50-word update to Maja that
+    presents both outcomes as open possibilities, using kanskje once for each outcome.'
+  derived_from:
+  - section_id: expressing-uncertainty-with-kanskje
+  response_language: 'no'
+  judge_prompt: Check the response against criteria open-possibilities, both-updates, audience-purpose,
+    and word-bound; report a verdict for each criterion and add no gating requirements.
+  criteria:
+  - id: open-possibilities
+    instruction: Presents both outcomes as open possibilities and uses kanskje for each one.
+  - id: both-updates
+    instruction: Covers the weather and bus updates without presenting either outcome as established.
+  - id: audience-purpose
+    instruction: Functions as an update to Maja about the concert preparations.
+  - id: word-bound
+    instruction: Contains 35–50 words.
+- handle: possibility_or_inference_recognition
+  op: choose
+  objective: obj-hedging-stance-markers-01
+  bloom: understand
+  stem_md: 'Weather service: «Regn er én mulighet, men prognosen er usikker.»'
+  prompt_md: Choose the response that preserves the open uncertainty.
+  options:
+  - id: maybe-rain
+    text: Det regner kanskje på lørdag.
+    correct: true
+    why: Kanskje leaves rain as one unresolved possibility.
+  - id: likely-rain
+    text: Det regner nok på lørdag.
+    correct: false
+    why: Nok presents rain as the speaker’s likely conclusion, which is stronger than the note supports.
+  - id: reported-rain
+    text: Det regner visst på lørdag.
+    correct: false
+    why: Visst presents the claim as indirectly reported rather than merely possible.
+  explanation_md: Kanskje marks an open possibility, whereas nok presents one outcome as likely.
+- handle: possibility_or_inference_supported
+  op: choose
+  objective: obj-hedging-stance-markers-01
+  bloom: apply
+  stem_md: The forecast predicts heavy rain, and dark clouds are gathering above the stage. The organizers
+    have not decided whether to move the concert indoors.
+  prompt_md: Choose the sentence that presents moving the concert indoors as an open possibility because
+    the organizers have not decided yet.
+  options:
+  - id: possible-move
+    text: Konserten blir kanskje flyttet inn.
+    correct: true
+    why: Kanskje presents the undecided move as an open possibility.
+  - id: likely-move
+    text: Konserten blir nok flyttet inn.
+    correct: false
+    why: Nok presents the move as the speaker’s likely conclusion, but the organizers have not made that
+      decision.
+  - id: reported-move
+    text: Konserten blir visst flyttet inn.
+    correct: false
+    why: Visst suggests the move is indirectly reported, but no such report is given.
+  explanation_md: Kanskje fits an undecided plan; nok presents a likely conclusion, and visst suggests
+    an indirect report.
+- handle: possibility_or_inference_checkpoint
+  op: write
+  objective: obj-hedging-stance-markers-01
+  bloom: apply
+  prompt_md: 'Planning log: «Det er ikke avklart om Henrik kan hente teltet.» Evidence: «Bilen hans står
+    på verksted, og siste buss går før møtet slutter.» Write a 35–50-word message to Maja that presents
+    Henrik’s help as an open possibility with kanskje and the transport outcome as a likely inference
+    with nok.'
+  derived_from:
+  - section_id: particle-foundation-contrast
+  response_language: 'no'
+  judge_prompt: Check the response against criteria possibility-with-kanskje, inference-with-nok, evidence-preserved,
+    audience-purpose, and word-bound; report a verdict for each criterion and add no gating requirements.
+  criteria:
+  - id: possibility-with-kanskje
+    instruction: Uses kanskje to present Henrik’s help as unresolved.
+  - id: inference-with-nok
+    instruction: Uses nok for a likely transport conclusion supported by the stated evidence.
+  - id: evidence-preserved
+    instruction: Keeps the unavailable car and early last bus relevant to the inference.
+  - id: audience-purpose
+    instruction: Functions as a planning message to Maja.
+  - id: word-bound
+    instruction: Contains 35–50 words.
+- handle: report_or_inference_recognition
+  op: choose
+  objective: obj-hedging-stance-markers-01
+  bloom: understand
+  stem_md: 'Volunteer message: «Lydutstyret blir levert etter klokka seks.»'
+  prompt_md: Choose the response that passes on the report.
+  options:
+  - id: reported-delay
+    text: Lydutstyret kommer visst etter klokka seks.
+    correct: true
+    why: Visst marks the volunteer’s message as the indirect source.
+  - id: possible-delay
+    text: Lydutstyret kommer kanskje etter klokka seks.
+    correct: false
+    why: Kanskje makes the delay an open possibility and loses the reported-source meaning.
+  - id: inferred-delay
+    text: Lydutstyret kommer nok etter klokka seks.
+    correct: false
+    why: Nok presents a likely inference rather than information passed on from the volunteer.
+  explanation_md: Visst or visstnok fits information learned from another source.
+- handle: report_or_inference_supported
+  op: choose
+  objective: obj-hedging-stance-markers-01
+  bloom: apply
+  stem_md: An online notice from the road authority says the access road is closed, though the notice
+    may not be up to date.
+  prompt_md: Choose the response that passes on the reported information without presenting it as a definite
+    fact.
+  options:
+  - id: reported-closure
+    text: Veien er visst stengt.
+    correct: true
+    why: Visst presents the closure as indirectly reported information from the notice.
+  - id: inferred-closure
+    text: Veien er nok stengt.
+    correct: false
+    why: Nok presents a likely inference, but the context gives a report rather than evidence from which
+      to infer a closure.
+  - id: open-closure
+    text: Veien er kanskje stengt.
+    correct: false
+    why: Kanskje presents the closure as an open possibility without conveying the reported source.
+  explanation_md: Visst suits indirect information from the notice; nok marks a likely inference from
+    evidence.
+- handle: report_or_inference_checkpoint
+  op: write
+  objective: obj-hedging-stance-markers-01
+  bloom: apply
+  prompt_md: 'Volunteer message: «Lydutstyret er forsinket.» On arrival: «Leveringsporten er låst, og
+    alle lysene på lageret er av.» Write a 40–55-word update to Maja that reports the delay with visst
+    or visstnok and gives a likely inference about the warehouse with nok.'
+  derived_from:
+  - section_id: reporting-uncertain-information-with-visst-and-visstnok
+  response_language: 'no'
+  judge_prompt: Check the response against criteria indirect-report, evidence-inference, source-distinction,
+    audience-purpose, and word-bound; report a verdict for each criterion and add no gating requirements.
+  criteria:
+  - id: indirect-report
+    instruction: Uses visst or visstnok to pass on the volunteer’s report about the delayed equipment.
+  - id: evidence-inference
+    instruction: Uses nok for a likely conclusion based on the locked gate and dark warehouse.
+  - id: source-distinction
+    instruction: Keeps the indirect report distinct from the evidence-based inference.
+  - id: audience-purpose
+    instruction: Functions as an update to Maja.
+  - id: word-bound
+    instruction: Contains 40–55 words.
+- handle: family_visst_nok_report
+  op: choose
+  objective: obj-hedging-stance-markers-01
+  bloom: analyze
+  stem_md: 'Club worker’s message: «Vi har et telt dere kan låne.»'
+  prompt_md: Choose the response that matches the source.
+  options:
+  - id: visst-tent
+    text: Idrettslaget har visst et telt vi kan låne.
+    correct: true
+    why: Visst passes on information received from the club worker.
+  - id: nok-tent
+    text: Idrettslaget har nok et telt vi kan låne.
+    correct: false
+    why: Nok would make the tent a likely inference rather than a reported fact.
+  explanation_md: 'Confusable pair: visst versus nok. Prerequisite: vel jo nok da in conversation.'
+- handle: family_visst_nok_inference
+  op: choose
+  objective: obj-hedging-stance-markers-01
+  bloom: analyze
+  stem_md: The club has lent Maja and Henrik tents for the last five outdoor concerts. They are planning
+    another outdoor concert, but have not contacted the club yet.
+  prompt_md: Choose the response that expresses a likely inference from the club’s past lending history.
+  options:
+  - id: nok-tent
+    text: Idrettslaget har nok et telt vi kan låne.
+    correct: true
+    why: Nok presents a likely conclusion based on the club’s repeated past lending.
+  - id: visst-tent
+    text: Idrettslaget har visst et telt vi kan låne.
+    correct: false
+    why: Visst suggests indirectly reported information, but no report has been received.
+  explanation_md: 'Confusable pair: visst versus nok. Prerequisite: vel jo nok da in conversation.'
+- handle: presenting_a_view_recognition
+  op: choose
+  objective: obj-hedging-stance-markers-01
+  bloom: understand
+  stem_md: Maja is giving her personal impression of the venue’s atmosphere.
+  prompt_md: Choose the most natural response.
+  options:
+  - id: synes-venue
+    text: Jeg synes lokalet er hyggelig.
+    correct: true
+    why: Synes naturally frames an impression or evaluation as personal.
+  - id: mener-venue
+    text: Jeg mener at lokalet er hyggelig.
+    correct: false
+    why: Mener can express a position, but it sounds more considered and argumentative than the requested
+      impression.
+  - id: reported-venue
+    text: Lokalet er visst hyggelig.
+    correct: false
+    why: Visst turns the evaluation into indirectly reported information.
+  explanation_md: Synes commonly introduces a personal impression, while mener commonly presents a considered
+    position.
+- handle: presenting_a_view_supported
+  op: choose
+  objective: obj-hedging-stance-markers-01
+  bloom: apply
+  stem_md: 'Henrik speaks for the committee and must argue for municipal support, citing this concrete
+    reason: the municipality’s contribution would pay for a security guard, which the organizers cannot
+    afford. He must state the committee’s position rather than a personal reaction.'
+  prompt_md: Choose the response that expresses the position and backs it with the stated security-cost
+    reason.
+  options:
+  - id: mener-support
+    text: Komiteen mener at kommunen bør støtte arrangementet fordi bidraget kan betale for en vekter
+      som arrangørene ikke har råd til.
+    correct: true
+    why: Mener presents the committee’s considered position, and the stated reason supports the request
+      for municipal funding.
+  - id: tro-support
+    text: Jeg tror kommunen vil støtte arrangementet.
+    correct: false
+    why: Tro expresses uncertainty about a factual outcome, not a position the committee argues for with
+      the stated reason.
+  - id: stacked-support
+    text: Etter min mening mener jeg at kommunen bør støtte arrangementet.
+    correct: false
+    why: The two opinion frames are unnecessarily stacked, and the sentence gives no security-cost reason.
+  explanation_md: Mener introduces a considered position; the explicit reason makes the claim arguable
+    rather than a bare statement of support.
+- handle: presenting_a_view_checkpoint
+  op: write
+  objective: obj-hedging-stance-markers-01
+  bloom: apply
+  prompt_md: 'Committee proposal: «Flytt konserten til parkeringshuset; det er billigere, men rommet har
+    svak akustikk.» Write a 45–65-word reply to the committee that gives one personal impression of the
+    venue with synes and one considered position about moving the concert with mener or etter min mening.'
+  derived_from:
+  - section_id: marking-personal-opinion-with-synes-mener-and-etter-min-mening
+  response_language: 'no'
+  judge_prompt: Check the response against criteria personal-impression, considered-position, proposal-addressed,
+    no-stacking, audience-purpose, and word-bound; report a verdict for each criterion and add no gating
+    requirements.
+  criteria:
+  - id: personal-impression
+    instruction: Uses synes for a personal impression of the proposed venue.
+  - id: considered-position
+    instruction: Uses mener or etter min mening for a considered position about moving the concert.
+  - id: proposal-addressed
+    instruction: Responds to the lower cost and weak acoustics in the supplied proposal.
+  - id: no-stacking
+    instruction: Does not stack equivalent opinion frames without a separate communicative purpose.
+  - id: audience-purpose
+    instruction: Functions as a reply to the committee.
+  - id: word-bound
+    instruction: Contains 45–65 words.
+- handle: approximation_recognition
+  op: choose
+  objective: obj-hedging-stance-markers-01
+  bloom: understand
+  stem_md: 'Official planning note: estimated budget 80,000 kroner.'
+  prompt_md: Choose the register-appropriate sentence.
+  options:
+  - id: neutral-budget
+    text: Budsjettet er på omtrent 80 000 kroner.
+    correct: true
+    why: Omtrent gives a neutral approximation suited to a planning note.
+  - id: informal-budget
+    text: Budsjettet er på sånn 80 000 kroner.
+    correct: false
+    why: Sånn is deliberately conversational and too loose for the stated document.
+  - id: stacked-budget
+    text: Budsjettet er på sånn cirka rundt 80 000 kroner.
+    correct: false
+    why: The approximation markers are needlessly stacked.
+  explanation_md: Rundt, omtrent, and cirka are neutral choices; sånn is conversational and deliberately
+    loose.
+- handle: approximation_supported
+  op: choose
+  objective: obj-hedging-stance-markers-01
+  bloom: apply
+  stem_md: Henrik is speaking casually to Maja about a tent labelled for 28–32 people.
+  prompt_md: Choose the most natural informal estimate.
+  options:
+  - id: informal-capacity
+    text: Det er sånn til tretti personer.
+    correct: true
+    why: Sånn gives the deliberately rough conversational estimate requested.
+  - id: exact-capacity
+    text: Det er til tretti personer.
+    correct: false
+    why: Without an approximation marker, the capacity sounds exact.
+  - id: stacked-capacity
+    text: Det er sånn omtrent rundt tretti personer.
+    correct: false
+    why: Several approximation markers are stacked without separate functions.
+  explanation_md: Informal sånn suits a rough estimate in conversation.
+- handle: exact_approximate_or_informally_rough_checkpoint
+  op: write
+  objective: obj-hedging-stance-markers-01
+  bloom: apply
+  prompt_md: 'Planning figures: audience 180, ticket 400 kroner, walk 10 minutes. Henrik’s chat: tent
+    capacity 30 people, setup time 5–10 minutes. Write a 50–70-word update for the planning group, using
+    neutral approximation for the first three figures and informal sånn for the two chat estimates.'
+  derived_from:
+  - section_id: giving-approximate-amounts
+  response_language: 'no'
+  judge_prompt: Check the response against criteria neutral-estimates, informal-estimates, figures-preserved,
+    no-stacking, audience-purpose, and word-bound; report a verdict for each criterion and add no gating
+    requirements.
+  criteria:
+  - id: neutral-estimates
+    instruction: Uses suitable neutral choices among rundt, omtrent, and cirka for the audience, ticket
+      price, and walking time.
+  - id: informal-estimates
+    instruction: Uses sånn for the tent capacity and setup-time estimates.
+  - id: figures-preserved
+    instruction: Preserves all five supplied figures and their meanings.
+  - id: no-stacking
+    instruction: Does not stack approximation markers without distinct purposes.
+  - id: audience-purpose
+    instruction: Functions as an update for the planning group.
+  - id: word-bound
+    instruction: Contains 50–70 words.
+- handle: shared_or_tentative_recognition
+  op: choose
+  objective: obj-hedging-stance-markers-01
+  bloom: understand
+  stem_md: Maja and Henrik already agreed that the tent must be erected before the sound check.
+  prompt_md: Choose the reminder that treats this as shared knowledge.
+  options:
+  - id: jo-reminder
+    text: Vi må jo sette opp teltet før lydprøven.
+    correct: true
+    why: Jo presents the schedule as already shared or accepted.
+  - id: vel-question
+    text: Vi må vel sette opp teltet før lydprøven?
+    correct: false
+    why: Vel asks for tentative confirmation instead of simply invoking shared knowledge.
+  - id: maybe-reminder
+    text: Vi må kanskje sette opp teltet før lydprøven.
+    correct: false
+    why: Kanskje makes the requirement uncertain.
+  explanation_md: Jo invokes shared knowledge, whereas vel commonly leaves room for the listener’s confirmation.
+- handle: shared_or_tentative_supported
+  op: choose
+  objective: obj-hedging-stance-markers-01
+  bloom: apply
+  stem_md: Maja thinks the borrowed tent is large enough, but Henrik has the measurements and she wants
+    him to confirm.
+  prompt_md: Choose Maja’s most natural question.
+  options:
+  - id: vel-size
+    text: Det er vel stort nok?
+    correct: true
+    why: Vel marks a tentative assumption and invites Henrik’s confirmation.
+  - id: jo-size
+    text: Det er jo stort nok.
+    correct: false
+    why: Jo treats the size as shared or obvious and does not genuinely seek confirmation.
+  - id: nok-size
+    text: Det er nok stort nok.
+    correct: false
+    why: Nok gives Maja’s likely assessment but does not specifically invite agreement.
+  explanation_md: Vel is appropriate when the speaker tentatively assumes something and seeks uptake.
+- handle: changing_only_the_stance_checkpoint
+  op: write
+  objective: obj-hedging-stance-markers-01
+  bloom: apply
+  prompt_md: 'Earlier agreement: «Teltet må stå klart før lydprøven.» Unchecked assumption: «Det lånte
+    teltet har plass til alle frivillige.» Write a 35–50-word message to Henrik that reminds him of the
+    agreed schedule with jo and asks him to confirm the tent capacity with vel.'
+  derived_from:
+  - section_id: combining-stance-markers-naturally
+  response_language: 'no'
+  judge_prompt: Check the response against criteria shared-reminder, tentative-confirmation, facts-preserved,
+    audience-purpose, and word-bound; report a verdict for each criterion and add no gating requirements.
+  criteria:
+  - id: shared-reminder
+    instruction: Uses jo to treat the previously agreed schedule as shared knowledge.
+  - id: tentative-confirmation
+    instruction: Uses vel in a question seeking confirmation of the tent capacity.
+  - id: facts-preserved
+    instruction: Keeps the sound-check deadline and unchecked capacity assumption distinct.
+  - id: audience-purpose
+    instruction: Functions as a message to Henrik.
+  - id: word-bound
+    instruction: Contains 35–50 words.
+- handle: reconstructing_the_planning_conversation
+  op: write
+  objective: obj-hedging-stance-markers-01
+  bloom: apply
+  prompt_md: 'Facts: the delivery van may be unavailable; volunteer Nora says the sound equipment is delayed;
+    the car park is full; the walk from the car park is about ten minutes; Maja and Henrik already agreed
+    to open the gates early. Write a natural 70–100-word exchange in Norwegian in which Maja and Henrik
+    decide how to handle transport and setup. Distinguish Nora’s report from guesses, invoke their shared
+    gate-opening agreement, draw a likely inference from the full car park, and include one participant’s
+    view of the best plan.'
+  derived_from:
+  - section_id: back-at-the-cultural-centre
+  response_language: 'no'
+  judge_prompt: 'Check the response against criteria supplied-facts, connected-decision, evidence-stance,
+    car-park-inference, shared-agreement, personal-view, audience-purpose, and word-bound; report diagnostic verdicts for all ids ending in -observation without using them in
+    the all-met pass rule. Valid variant that must pass: a connected exchange that covers every fact and
+    reaches a workable decision and meets all stated criteria even if it uses different natural wording. Near-miss that must fail: unrelated
+    example sentences that do not decide how to handle transport and setup. Accept natural wording without
+    exact marker words, but fail a response that presents Nora’s report as mere speculation or a guess
+    about the car park as something Nora reported.'
+  criteria:
+  - id: supplied-facts
+    instruction: Includes the possibly unavailable van, Nora’s report, the full car park, the approximate
+      ten-minute walk, and the earlier agreement about opening the gates.
+  - id: connected-decision
+    instruction: Forms one connected exchange that reaches a decision about transport and setup.
+  - id: evidence-stance
+    instruction: Keeps Nora’s report distinct from open possibilities and inferences; exact marker words
+      are not required when the source and certainty are expressed naturally.
+  - id: car-park-inference
+    instruction: Draws a plausible, clearly inferential conclusion from the full car park about parking
+      or transport; accepts natural wording without requiring nok.
+  - id: shared-agreement
+    instruction: Invokes the earlier gate-opening agreement as something both speakers already know.
+  - id: personal-view
+    instruction: Gives a participant’s own view of the best transport or setup plan, with natural opinion wording.
+  - id: audience-purpose
+    instruction: Uses dialogue appropriate to Maja and Henrik planning together.
+  - id: word-bound
+    instruction: Contains 70–100 words.
+  - id: possibility-marker-observation
+    instruction: Observe whether an open possibility is naturally marked, but do not fail the response
+      on this criterion.
+  - id: inference-marker-observation
+    instruction: Observe whether the full car park supports a likely inference with nok, but do not fail
+      the response on this criterion.
+  - id: reported-source-marker-observation
+    instruction: Observe whether Nora’s report is distinguished with visst or visstnok, but do not fail
+      the response on this criterion.
+  - id: shared-knowledge-marker-observation
+    instruction: Observe whether the earlier agreement is invoked with jo, but do not fail the response
+      on this criterion.
+  - id: opinion-marker-observation
+    instruction: Observe whether a personal view is framed with a taught opinion marker, but do not fail
+      the response on this criterion.
+  - id: approximation-marker-observation
+    instruction: Observe whether the walking time is marked as approximate, but do not fail the response
+      on this criterion.
+- handle: common_problems_marker_repair
+  op: write
+  objective: obj-hedging-stance-markers-01
+  bloom: analyze
+  prompt_md: 'A colleague writes «Kari kommer kanskje senere.» The office has heard from another person
+    that Kari is coming later, but your colleague has not checked it directly. Rewrite the sentence to
+    mark that indirect source, then explain in one short Norwegian sentence how the meaning changes.'
+  response_language: 'no'
+  min_words: 8
+  max_words: 35
+  judge_prompt: 'Evaluate repaired-report and source-explanation as gating criteria. Accept natural Norwegian
+    wording using visst or visstnok to mark an indirect report. Do not require a claim that Kari’s arrival
+    has been independently confirmed.'
+  criteria:
+  - id: repaired-report
+    instruction: Rewrites Kari’s arrival with visst or visstnok as indirectly reported information rather
+      than an unsupported open possibility.
+  - id: source-explanation
+    instruction: Explains that kanskje expresses a possibility while the repaired marker signals information
+      heard or learned from another source.
+- handle: retrieval_and_review
+  op: write
+  objective: obj-hedging-stance-markers-01
+  bloom: apply
+  prompt_md: 'Facts for Henrik’s colleague: the outdoor stage may remain closed; puddles cover its electrical
+    connections; volunteer Nora says the replacement equipment arrives at noon; Henrik and the colleague
+    already agreed to test it before opening; the expected audience is about 180. Write a natural 80–110-word
+    update that helps the colleague plan the morning. Keep Nora’s report distinct from uncertainty, refer
+    to the testing agreement as shared knowledge, infer cautiously from the puddles that the electrical
+    connections may need inspection before use, ask the colleague to confirm one tentative assumption about
+    the morning plan, and give your own view of the best morning plan.'
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  judge_prompt: 'Check the response against criteria facts-covered, useful-connected-update, evidence-based-inference,
+    evidence-stance, shared-agreement, tentative-confirmation, personal-view, audience-purpose, and word-bound; report diagnostic verdicts for all ids ending in -observation without using them in
+    the all-met pass rule. Valid variant that must pass: a coherent update covering all supplied facts
+    and helping the colleague plan while meeting all stated criteria, regardless of exact marker choices. Near-miss that must fail: a list
+    that omits Nora’s report and gives no usable morning plan. Accept natural wording without exact marker
+    words, but fail an update that downgrades Nora’s stated report to a mere possibility.'
+  criteria:
+  - id: facts-covered
+    instruction: Covers the stage uncertainty, wet electrical connections, Nora’s noon report, the testing
+      agreement, and the approximate audience.
+  - id: useful-connected-update
+    instruction: Connects the facts and inference into an update that helps the colleague plan the morning.
+  - id: evidence-based-inference
+    instruction: Draws a cautious inference from the puddles covering the electrical connections, such as that the connections may need inspection or drying before use; does not present this as a confirmed fact. Exact marker words are not required.
+  - id: evidence-stance
+    instruction: Attributes Nora’s noon report to Nora and distinguishes it from uncertain conditions
+      and inferences; exact marker words are not required when source and certainty are clear.
+  - id: shared-agreement
+    instruction: Refers to the testing agreement as something the writer and colleague already settled.
+  - id: tentative-confirmation
+    instruction: Asks the colleague to confirm a tentative assumption about the morning plan, using
+      natural wording; a suitable vel question is one option.
+  - id: personal-view
+    instruction: Gives the writer’s view of the best morning plan with natural opinion wording.
+  - id: audience-purpose
+    instruction: Functions as an update from Henrik to a colleague.
+  - id: word-bound
+    instruction: Contains 80–110 words.
+  - id: possibility-marker-observation
+    instruction: Observe whether the uncertain stage opening is marked with kanskje, but do not fail on
+      this criterion.
+  - id: inference-marker-observation
+    instruction: Observe whether the puddles support an inference with nok, but do not fail on this criterion.
+  - id: reported-source-marker-observation
+    instruction: Observe whether Nora’s report is marked with visst or visstnok, but do not fail on this
+      criterion.
+  - id: shared-knowledge-marker-observation
+    instruction: Observe whether the testing agreement is invoked with jo, but do not fail on this criterion.
+  - id: tentative-agreement-marker-observation
+    instruction: Observe whether any tentative request for confirmation uses vel naturally, but do not
+      fail on this criterion.
+  - id: opinion-marker-observation
+    instruction: Observe whether a personal judgment uses a taught opinion frame, but do not fail on this
+      criterion.
+  - id: approximation-marker-observation
+    instruction: Observe whether the audience figure is appropriately approximate, but do not fail on
+      this criterion.
+- handle: review_open_possibility
+  op: write
+  objective: obj-hedging-stance-markers-01
+  bloom: apply
+  prompt_md: 'No decision has been made about moving the concert indoors. Complete with 1–4 words: «Vi
+    flytter     konserten inn.»'
+  response_language: 'no'
+  judge_prompt: Accept natural one-to-four-word completions that leave the move as an open possibility, including kanskje and muligens; do not require one particular marker.
+  criteria:
+  - id: open-possibility-answer
+    instruction: Supplies a natural marker of open possibility in no more than four words; accept alternatives such as kanskje or muligens.
+- handle: review_likely_inference
+  op: write
+  objective: obj-hedging-stance-markers-01
+  bloom: apply
+  prompt_md: 'The office is dark, the door is locked, and the clock shows midnight. Complete with 1–4
+    words: «De har     gått hjem.»'
+  response_language: 'no'
+  judge_prompt: Accept natural one-to-four-word completions that present going home as a likely inference from the evidence, including nok, antakelig, or sannsynligvis; do not require one particular marker.
+  criteria:
+  - id: likely-inference-answer
+    instruction: Supplies a natural likely-inference marker in no more than four words; accept nok, antakelig, or sannsynligvis.
+- handle: review_indirect_report
+  op: write
+  objective: obj-hedging-stance-markers-01
+  bloom: apply
+  prompt_md: 'A volunteer says the road is closed. Complete with 1–4 words: «Veien er     stengt.»'
+  response_language: 'no'
+  judge_prompt: Accept natural one-to-four-word completions that mark the road closure as reported information, including visst, visstnok, or angivelig; do not require one particular marker.
+  criteria:
+  - id: indirect-report-answer
+    instruction: Supplies a natural reported-information marker in no more than four words; accept visst, visstnok, or angivelig.
+- handle: review_shared_knowledge
+  op: write
+  objective: obj-hedging-stance-markers-01
+  bloom: apply
+  prompt_md: 'Both speakers already know that setup starts at eight. Complete with 1–4 words: «Vi begynner     klokka
+    åtte.»'
+  response_language: 'no'
+  judge_prompt: Accept natural one-to-four-word completions that present the start time as shared knowledge, including jo or som kjent; do not require one particular marker.
+  criteria:
+  - id: shared-knowledge-answer
+    instruction: Supplies a natural shared-knowledge marker in no more than four words; accept jo or som kjent.
+- handle: review_tentative_agreement
+  op: write
+  objective: obj-hedging-stance-markers-01
+  bloom: apply
+  prompt_md: 'Maja expects the tent to be large enough but wants confirmation. Complete with 1–4 words:
+    «Det er     stort nok?»'
+  response_language: 'no'
+  judge_prompt: Accept vel as the completion; report a verdict for criterion tentative-agreement-answer
+    and add no gating requirements.
+  criteria:
+  - id: tentative-agreement-answer
+    instruction: Supplies vel and no more than four words.
+- handle: review_personal_impression
+  op: write
+  objective: obj-hedging-stance-markers-01
+  bloom: apply
+  prompt_md: 'Give a personal impression, not a reported fact. Complete with 1–4 words: «Jeg     lokalet
+    er hyggelig.»'
+  response_language: 'no'
+  judge_prompt: Accept natural one-to-four-word completions that frame the venue description as the speaker's personal view, including synes or mener; do not require one particular marker.
+  criteria:
+  - id: personal-impression-answer
+    instruction: Supplies a natural personal-view marker in no more than four words; accept synes or mener.
+- handle: review_informal_approximation
+  op: write
+  objective: obj-hedging-stance-markers-01
+  bloom: apply
+  prompt_md: 'Henrik is casually estimating a capacity near thirty. Complete with 1–4 words: «Teltet er
+    til     tretti personer.»'
+  response_language: 'no'
+  judge_prompt: Accept sånn, sånn omtrent, rundt, or another natural informal approximation as the completion; report a verdict for criterion informal-approximation-answer
+    and add no gating requirements.
+  criteria:
+  - id: informal-approximation-answer
+    instruction: Supplies a natural approximation such as sånn, sånn omtrent, or rundt in no more than four words.

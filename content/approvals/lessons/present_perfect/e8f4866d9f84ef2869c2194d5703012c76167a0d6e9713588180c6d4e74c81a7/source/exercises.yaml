@@ -1,0 +1,535 @@
+- handle: anchor_form_noticing
+  op: recall_fill
+  objective: obj-present-perfect-01
+  bloom: understand
+  prompt_md: "Fyll inn partisippet som mangler etter har."
+  derived_from:
+  - section_id: sec-new-flat
+  audio_target: Har du pakket koffertene? Ja, jeg har pakket de varme klærne, men jeg har
+    ikke åpnet esken med duker. Og har du funnet nøklene til sykkelen? De lå i jakka. Men
+    jeg har glemt å lage sengen. Det går bra. Jeg har kjøpt blomster på veien. Perfekt.
+    Foreldrene mine kommer snart, og jeg har ikke ryddet badet. Jeg har allerede vasket
+    oppvasken. Nå tar vi en kaffe sammen.
+  segments:
+  - text_md: 'Har du '
+  - blank_id: anchor-pakket-1
+    options:
+    - funnet
+    - kjøpt
+    - pakket
+    answer_index: 2
+  - text_md: ' koffertene? Ja, jeg har '
+  - blank_id: anchor-pakket-2
+    options:
+    - vasket
+    - pakket
+    - åpnet
+    answer_index: 1
+  - text_md: ' de varme klærne, men jeg har ikke '
+  - blank_id: anchor-åpnet
+    options:
+    - glemt
+    - åpnet
+    - ryddet
+    answer_index: 1
+  - text_md: ' esken med duker. Og har du '
+  - blank_id: anchor-funnet
+    options:
+    - glemt
+    - kjøpt
+    - funnet
+    answer_index: 2
+  - text_md: ' nøklene til sykkelen? De lå i jakka. Men jeg har '
+  - blank_id: anchor-glemt
+    options:
+    - gått
+    - glemt
+    - kjøpt
+    answer_index: 1
+  - text_md: ' å lage sengen. Det går bra. Jeg har '
+  - blank_id: anchor-kjøpt
+    options:
+    - gjort
+    - kjøpt
+    - pakket
+    answer_index: 1
+  - text_md: ' blomster på veien. Perfekt. Foreldrene mine kommer snart, og jeg har ikke '
+  - blank_id: anchor-ryddet
+    options:
+    - vasket
+    - ryddet
+    - åpnet
+    answer_index: 1
+  - text_md: ' badet. Jeg har allerede '
+  - blank_id: anchor-vasket
+    options:
+    - pakket
+    - kjøpt
+    - vasket
+    answer_index: 2
+  - text_md: ' oppvasken. Nå tar vi en kaffe sammen.'
+- handle: participle_recognition
+  op: match_pairs
+  objective: obj-present-perfect-01
+  bloom: remember
+  prompt_md: "Koble hver infinitiv til riktig partisipp. Formene til høyre kan stå etter har."
+  derived_from:
+  - section_id: sec-recognizing-past-participles
+  left:
+  - left_id: inf-pack
+    text: å pakke
+  - left_id: inf-buy
+    text: å kjøpe
+  - left_id: inf-do
+    text: å gjøre
+  - left_id: inf-be
+    text: å være
+  - left_id: inf-see
+    text: å se
+  - left_id: inf-go
+    text: å gå
+  - left_id: inf-find
+    text: å finne
+  - left_id: inf-read
+    text: å lese
+  right:
+  - right_id: part-pakket
+    text: pakket
+  - right_id: part-kjøpt
+    text: kjøpt
+  - right_id: part-gjort
+    text: gjort
+  - right_id: part-vært
+    text: vært
+  - right_id: part-sett
+    text: sett
+  - right_id: part-gått
+    text: gått
+  - right_id: part-funnet
+    text: funnet
+  - right_id: part-lest
+    text: lest
+  pairs:
+  - left_id: inf-pack
+    right_id: part-pakket
+  - left_id: inf-buy
+    right_id: part-kjøpt
+  - left_id: inf-do
+    right_id: part-gjort
+  - left_id: inf-be
+    right_id: part-vært
+  - left_id: inf-see
+    right_id: part-sett
+  - left_id: inf-go
+    right_id: part-gått
+  - left_id: inf-find
+    right_id: part-funnet
+  - left_id: inf-read
+    right_id: part-lest
+- handle: complete_present_perfect_form
+  op: recall_fill
+  objective: obj-present-perfect-01
+  bloom: apply
+  prompt_md: "Fullfør de fire positive setningene om forberedelsene. Bruk infinitivene i denne rekkefølgen: å pakke, å kjøpe, å finne, å rydde. Fyll først inn hjelpeverbet og deretter partisippet i hver setning."
+  derived_from:
+  - section_id: sec-recognizing-past-participles
+  audio_target: Jeg har pakket klærne. Sander har kjøpt kaffe. Vi har funnet kaffetrakteren. De har ryddet
+    kjøkkenet.
+  segments:
+  - text_md: 'Jeg '
+  - blank_id: complete-har-1
+    options:
+    - har
+    - kjøpte
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: complete-participle-1
+    options:
+    - pakket
+    - kjøpt
+    - åpnet
+    answer_index: 0
+  - text_md: ' klærne. Sander '
+  - blank_id: complete-har-2
+    options:
+    - kjøpte
+    - har
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: complete-participle-2
+    options:
+    - prøvd
+    - kjøpt
+    - lest
+    answer_index: 1
+  - text_md: ' kaffe. Vi '
+  - blank_id: complete-har-3
+    options:
+    - har
+    - kjøpte
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: complete-participle-3
+    options:
+    - gjort
+    - funnet
+    - skrevet
+    answer_index: 1
+  - text_md: ' kaffetrakteren. De '
+  - blank_id: complete-har-4
+    options:
+    - kjøpte
+    - har
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: complete-participle-4
+    options:
+    - vasket
+    - snakket
+    - ryddet
+    answer_index: 2
+  - text_md: ' kjøkkenet.'
+- handle: current_result_connection
+  op: choose
+  objective: obj-present-perfect-01
+  bloom: understand
+  prompt_md: "Les de tre setningene. Velg den norske parafrasen som beholder betydningen."
+  derived_from:
+  - section_id: sec-completed-action-result-now
+  stem_md: Jeg har mistet nøkkelen. Vi har laget middag. Jeg har lest boka, så du kan låne den.
+  options:
+  - id: future-shift
+    text: Nøkkelen blir borte, middagen blir klar, og boka skal lånes.
+    correct: false
+    why: These forms move the statements to the future instead of keeping the result that already holds.
+  - id: past-only
+    text: Nøkkelen var borte, middagen var klar, og boka kunne lånes.
+    correct: false
+    why: These past forms describe only a finished past and lose the result that the present perfect keeps.
+  - id: present-result
+    text: Nøkkelen er borte, middagen er klar, og boka kan lånes.
+    correct: true
+    why: The present forms keep the result that the present perfect points to.
+- handle: experience_up_to_now
+  op: choose
+  objective: obj-present-perfect-01
+  bloom: understand
+  prompt_md: "Les de tre spørsmålene. Velg det som spør om lytteren har gjort noe noen gang."
+  derived_from:
+  - section_id: sec-experience-up-to-now
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: A
+      text_md: «Så du den filmen på fredag?»
+    - speaker: B
+      text_md: «Spiste du brunost til frokost i går?»
+    - speaker: C
+      text_md: «Har du spist norsk brunost?»
+  options:
+  - id: friday
+    text: A
+    correct: false
+    why: Filmspørsmålet viser til én bestemt, avsluttet anledning.
+  - id: yesterday
+    text: B
+    correct: false
+    why: Spørsmålet viser til én bestemt, avsluttet anledning.
+  - id: experience
+    text: C
+    correct: true
+    why: Spørsmålet nevner ingen avsluttet anledning og spør om erfaring.
+- handle: continuing_situation
+  op: recall_fill
+  objective: obj-present-perfect-01
+  bloom: apply
+  prompt_md: "Fullfør setningene med har og riktig partisipp. Tidsuttrykket viser at situasjonen fortsatt gjelder."
+  explanation_md: "Har + partisipp knytter noe som skjedde før, til nå. Tidsuttrykk med siden eller i kan vise at situasjonen fortsatt varer."
+  derived_from:
+  - section_id: sec-continuing-situation
+  audio_target: Jeg har bodd her i to år. Vi har kjent hverandre lenge. Hun har jobbet på hotellet siden
+    mai.
+  segments:
+  - text_md: 'Jeg '
+  - blank_id: continuing-har-1
+    options:
+    - bor
+    - har
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: continuing-participle-1
+    options:
+    - kjent
+    - jobbet
+    - bodd
+    answer_index: 2
+  - text_md: ' her i to år. Vi '
+  - blank_id: continuing-har-2
+    options:
+    - tar
+    - har
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: continuing-participle-2
+    options:
+    - bodd
+    - jobbet
+    - kjent
+    answer_index: 2
+  - text_md: ' hverandre lenge. Hun '
+  - blank_id: continuing-har-3
+    options:
+    - kommer
+    - har
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: continuing-participle-3
+    options:
+    - kjent
+    - jobbet
+    - bodd
+    answer_index: 1
+  - text_md: ' på hotellet siden mai.'
+- handle: present_relevance_choice
+  op: choose
+  objective: obj-present-perfect-01
+  bloom: analyze
+  prompt_md: "Les de fire norske replikkene. Velg paret der presens perfektum passer: resultatet eller erfaringen har betydning nå, ikke bare på et avsluttet tidspunkt."
+  derived_from:
+  - section_id: sec-present-relevance-finished-occasion
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: A
+      text_md: «Jeg har kjøpt kaffe, så vi kan lage kaffe nå.»
+    - speaker: B
+      text_md: «Jeg har kjøpt kaffe i går.»
+    - speaker: C
+      text_md: «Har du sett den filmen?»
+    - speaker: D
+      text_md: «Så du den filmen på fredag?»
+  options:
+  - id: finished-pair
+    text: B og D
+    correct: false
+    why: >-
+      D correctly uses the simple past for a finished occasion, but B combines har with the finished-time
+      expression i går.
+  - id: current-or-experience
+    text: A og C
+    correct: true
+    why: A reports a result that matters now, and C asks about experience without naming a finished occasion.
+  - id: mixed-pair
+    text: A og B
+    correct: false
+    why: >-
+      A is present-relevant, but B combines har with the finished-time expression i går.
+- handle: finished_time_error_repair
+  op: find_fix
+  objective: obj-present-perfect-01
+  bloom: analyze
+  prompt_md: "Finn ordet som gjør at meldingen ikke passer med presens perfektum."
+  derived_from:
+  - section_id: sec-present-relevance-finished-occasion
+  tokens:
+  - token_id: finished-time-1
+    text: Jeg
+  - token_id: finished-time-2
+    text: har
+  - token_id: finished-time-3
+    text: kjøpt
+  - token_id: finished-time-4
+    text: boka
+  - token_id: finished-time-5
+    text: i går
+  error_token_id: finished-time-5
+  feedback: Remove the finished-time expression i går. The present perfect can then report the present-relevant
+    purchase; a specified finished past time calls for the past-time viewpoint.
+- handle: participle_not_infinitive
+  op: find_fix
+  objective: obj-present-perfect-01
+  bloom: analyze
+  prompt_md: "Finn verbformen som ikke passer etter har. Behold setningen som et spørsmål."
+  derived_from:
+  - section_id: sec-negative-statements-questions
+  tokens:
+  - token_id: wrong-form-1
+    text: Har
+  - token_id: wrong-form-2
+    text: du
+  - token_id: wrong-form-3
+    text: åpne
+  - token_id: wrong-form-4
+    text: esken?
+  error_token_id: wrong-form-3
+  feedback: 'Replace åpne with the taught past participle åpnet; keep the question structure: Har du åpnet
+    esken?'
+- handle: return_to_flat_completion
+  op: recall_fill
+  objective: obj-present-perfect-01
+  bloom: apply
+  prompt_md: "Fullfør dialogen med har og riktig partisipp. Maja og Sander har ryddet boden, og Kari kommer med etiketter."
+  derived_from:
+  - section_id: sec-back-at-flat
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: "I boden er alle hyllene tomme, og verktøyet er sortert. Flere esker mangler etiketter. Kari har med seg en ny pakke etiketter."
+  audio_target: 'Kari: Så ryddig det har blitt i boden! Maja: Takk! Vi har tømt hyllene, og vi har sortert verktøyet. Kari: Har dere merket alle eskene? Maja: Nei, vi har ikke merket alle ennå. Kari: Det går bra. Jeg har tatt med nye etiketter.'
+  segments:
+  - text_md: 'Kari: Så ryddig det '
+  - blank_id: return-har-1
+    options:
+    - tar
+    - har
+    answer_index: 1
+  - text_md: ' blitt i boden! Maja: Takk! Vi '
+  - blank_id: return-har-2
+    options:
+    - kommer
+    - har
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: return-tomt
+    options:
+    - tømmer
+    - tømt
+    - tatt
+    answer_index: 1
+  - text_md: ' hyllene, og vi '
+  - blank_id: return-har-3
+    options:
+    - har
+    - tar
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: return-sortert
+    options:
+    - sorterer
+    - sortert
+    - ryddet
+    answer_index: 1
+  - text_md: ' verktøyet. Kari: '
+  - blank_id: return-har-4
+    options:
+    - Har
+    - Er
+    answer_index: 0
+  - text_md: ' dere '
+  - blank_id: return-merket-1
+    options:
+    - merker
+    - merket
+    answer_index: 1
+  - text_md: ' alle eskene? Maja: Nei, vi '
+  - blank_id: return-har-5
+    options:
+    - har
+    - er
+    answer_index: 0
+  - text_md: ' ikke '
+  - blank_id: return-merket-2
+    options:
+    - merket
+    - pakket
+    - tatt
+    answer_index: 0
+  - text_md: ' alle ennå. Kari: Det går bra. Jeg '
+  - blank_id: return-har-6
+    options:
+    - har
+    - tar
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: return-tatt
+    options:
+    - laget
+    - tatt
+    - gjort
+    answer_index: 1
+  - text_md: ' med nye etiketter.'
+- handle: trip_preparation_transfer
+  op: build
+  objective: obj-present-perfect-01
+  bloom: apply
+  prompt_md: "Sett sammen en ny dialog om hytteturen av alle ordene du får. Bruk hvert ord én gang, og lag tre meldinger om pakkingen, innkjøpene og lommelykta."
+  derived_from:
+  - section_id: sec-trip-preparation-transfer
+  tokens:
+  - token_id: trip-transfer-06
+    text: 'Nora:'
+  - token_id: trip-transfer-11
+    text: ennå.
+  - token_id: trip-transfer-16
+    text: lommelykten?
+  - token_id: trip-transfer-02
+    text: Jeg
+  - token_id: trip-transfer-10
+    text: epler
+  - token_id: trip-transfer-03
+    text: har
+  - token_id: trip-transfer-13
+    text: Har
+  - token_id: trip-transfer-08
+    text: ikke
+  - token_id: trip-transfer-04
+    text: pakket
+  - token_id: trip-transfer-14
+    text: du
+  - token_id: trip-transfer-09
+    text: kjøpt
+  - token_id: trip-transfer-15
+    text: funnet
+  - token_id: trip-transfer-05
+    text: soveposene.
+  - token_id: trip-transfer-01
+    text: 'Amir:'
+  - token_id: trip-transfer-07
+    text: Jeg har
+  - token_id: trip-transfer-12
+    text: 'Amir spør:'
+  answer_order:
+  - trip-transfer-01
+  - trip-transfer-02
+  - trip-transfer-03
+  - trip-transfer-04
+  - trip-transfer-05
+  - trip-transfer-06
+  - trip-transfer-07
+  - trip-transfer-08
+  - trip-transfer-09
+  - trip-transfer-10
+  - trip-transfer-11
+  - trip-transfer-12
+  - trip-transfer-13
+  - trip-transfer-14
+  - trip-transfer-15
+  - trip-transfer-16
+- handle: final_present_perfect_retrieval
+  op: write
+  objective: obj-present-perfect-01
+  bloom: apply
+  prompt_md: "Skriv én kort setning på norsk for hver situasjon: 1. Ida vasket gulvet i samfunnshuset tidligere i dag, og det er rent nå. 2. Mina skal ta nattoget for første gang neste uke. 3. Lina begynte å snakke norsk på jobb for seks måneder siden og gjør det fortsatt. Bruk har og et passende partisipp for å vise sammenhengen med nåtid."
+  derived_from:
+  - section_id: sec-retrieval-review
+  response_language: 'no'
+  min_words: 15
+  max_words: 55
+  judge_prompt: Check three natural Norwegian present-perfect sentences against the three supplied situations.
+    Require har with an appropriate past participle in each, a present result for the cleaned floor, experience
+    up to now for the night train, and a continuing situation lasting six months for speaking Norwegian
+    at work. Accept natural lexical and word-order variants without requiring an exact model sentence.
+  criteria:
+  - id: present-result
+    instruction: Uses har plus a suitable past participle to say Ida cleaned the community hall floor
+      and it is clean now.
+  - id: experience
+    instruction: Uses har plus a suitable past participle to express that Mina has never taken the night
+      train as experience up to now.
+  - id: continuing-situation
+    instruction: Uses har plus a suitable past participle and a six-month duration to express that Lina
+      still speaks Norwegian at work.
+  - id: complete-form-and-meaning
+    instruction: Writes three complete Norwegian sentences whose tense and time meanings fit the supplied
+      situations.

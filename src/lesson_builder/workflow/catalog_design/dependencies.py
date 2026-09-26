@@ -41,6 +41,7 @@ from lesson_builder.workflow.catalog_design.nodes.discover_reviewer import build
 from lesson_builder.workflow.catalog_design.nodes.evaluate_candidates import build_evaluate_candidates_prompt
 from lesson_builder.workflow.catalog_design.nodes.request_advice import build_request_advice_prompt
 from lesson_builder.workflow.catalog_design.nodes.resolve_candidates import build_resolve_candidates_prompt
+from lesson_builder.workflow.catalog_design.settings import K_CATALOG_TITLE_BANNED_TERMS
 
 
 class DiscoveryService(Protocol):
@@ -375,6 +376,7 @@ def _discovery_quality_contract(category: str) -> str:
             "constraints and nearest contrasts. An incomplete paradigm or a "
             "narrower facet of an existing lesson is not a new owner."
         )
+    banned_title_terms = ", ".join(K_CATALOG_TITLE_BANNED_TERMS)
     return f"""Shared novelty contract:
 1. Derive one recurring learner need and one independently teachable outcome.
 2. Compare the learner decision and teachable core with the full snapshot.
@@ -391,9 +393,8 @@ Title rule: write a short learner-facing title in ASD-STE100-style controlled
 English. Use simple words, active voice, and one clear action or contrast. Keep
 the title concrete and preferably under ten words. Include the Norwegian form
 when it helps the learner, followed by a short English meaning when needed.
-Avoid internal labels and noun stacks such as dummy, expletive, presentational,
-agentless, correlative, interrogative, constituent, threshold, or scope unless
-the title also gives a plain learner action. Prefer titles such as “Use det in
+Never use these hard-banned internal labels in a title: {banned_title_terms}.
+Avoid other internal labels and dense noun stacks. Prefer titles such as “Use det in
 weather sentences”, “Talk about past habits with pleide å”, or “Say either/or
 with enten ... eller”. This is a title-writing rule, not a claim of full
 ASD-STE100 certification.

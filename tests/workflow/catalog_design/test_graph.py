@@ -163,6 +163,30 @@ def test_catalog_graph_given_internal_title_jargon_expect_structural_rejection()
     assert "internal jargon" in result["proposal"]["decisions"][0]["reason"]
 
 
+@pytest.mark.parametrize(
+    ("evaluation_slugs", "expected_error"),
+    [
+        ([], "missing"),
+        (["appointment_forms", "appointment_forms"], "duplicate"),
+        (["unrelated_owner"], "unknown"),
+    ],
+)
+def test_catalog_graph_given_invalid_evaluation_coverage_expect_structured_failure(
+    evaluation_slugs: list[str], expected_error: str
+) -> None:
+    services = FakeCatalogServices(
+        explorer_candidates=[_candidate("appointment_forms", "Making appointments", "explorer")],
+        reviewer_candidates=[],
+        coverage_complete=True,
+        evaluation_slugs=evaluation_slugs,
+    )
+
+    result = _invoke(services)
+
+    assert result["proposal"]["status"] == "needs_human_review"
+    assert any(expected_error in error.lower() for error in result["proposal"]["errors"])
+
+
 def test_catalog_graph_given_explorer_failure_and_reviewer_candidate_expect_partial_result():
     services = FakeCatalogServices(
         explorer_candidates=[],

@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "object_pronoun_position",
   "kind": "grammar",
   "language": "nb-NO",
@@ -80,6 +80,26 @@
     {
       "kind": "section",
       "id": "final-retrieval"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_birthday_pronoun_selection"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_affirmative_pronoun_position"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_one_verb_negative_position"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_two_verb_negative_position"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_one_or_two_verbs"
     }
   ],
   "sections": [
@@ -774,7 +794,7 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Maja henne ringer."
+                  "value": "Maja henne ringer."
                 }
               ],
               "en": [
@@ -782,7 +802,8 @@
                   "kind": "emphasis",
                   "value": "Maja her calls."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "position-in-an-affirmative-sentence-block-8"
@@ -1784,7 +1805,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Choose the one complete object-pronoun set that fits all five meeting-room exchanges."
+          "value": "Choose the object pronouns that complete all the sentences."
         }
       ],
       "explanation": null,
@@ -1792,30 +1813,46 @@
         "options": [
           {
             "option_id": "set-wrong-person",
-            "text": "1. Jeg ringer ham. 2. Maja hjelper henne. 3. Ja, jeg har den. 4. Ja, jeg har det. 5. Ja, jeg har dem.",
-            "why": "ham and henne do not match the genders of Sara and Jonas in these lines."
+            "text": "ham; henne; den; det; dem",
+            "why": "The person pronouns reverse the roles of Sara and Jonas."
           },
           {
             "option_id": "set-correct",
-            "text": "1. Jeg ringer henne. 2. Maja hjelper ham. 3. Ja, jeg har den. 4. Ja, jeg har det. 5. Ja, jeg har dem.",
-            "why": "Sara is feminine, Jonas is masculine, nøkkelen is masculine, kortet is neuter, and koppene is plural; the pronouns match each reference."
+            "text": "henne; ham; den; det; dem",
+            "why": "The forms match the two people, the genders of the singular nouns, and the plural noun."
           },
           {
             "option_id": "set-wrong-gender",
-            "text": "1. Jeg ringer henne. 2. Maja hjelper ham. 3. Ja, jeg har det. 4. Ja, jeg har den. 5. Ja, jeg har dem.",
-            "why": "den and det are reversed for nøkkelen and kortet."
+            "text": "henne; ham; det; den; dem",
+            "why": "The singular thing pronouns reverse the masculine noun nøkkelen and the neuter noun kortet."
           },
           {
             "option_id": "set-wrong-number",
-            "text": "1. Jeg ringer henne. 2. Maja hjelper ham. 3. Ja, jeg har den. 4. Ja, jeg har det. 5. Ja, jeg har den.",
-            "why": "koppene is plural, so dem is required instead of den."
+            "text": "henne; ham; den; det; den",
+            "why": "The last form is singular, but koppene is plural."
           }
         ],
         "answer_id": "set-correct",
         "stem": [
           {
             "kind": "text",
-            "value": "Replace the repeated object in each line. The intended meanings are calling Sara, helping Jonas, having the key, having the card, and having the cups. 1. Jeg ringer Sara. 2. Maja hjelper Jonas. 3. Har du nøkkelen? – Ja, jeg har nøkkelen. 4. Har du kortet? – Ja, jeg har kortet. 5. Har du koppene? – Ja, jeg har koppene."
+            "value": "Jeg ringer Sara → Jeg ringer "
+          },
+          {
+            "kind": "strong",
+            "value": ". Maja hjelper Jonas → Maja hjelper "
+          },
+          {
+            "kind": "text",
+            "value": ". Har du nøkkelen? → Ja, jeg har "
+          },
+          {
+            "kind": "strong",
+            "value": ". Har du kortet? → Ja, jeg har "
+          },
+          {
+            "kind": "text",
+            "value": ". Har du koppene? → Ja, jeg har ___."
           }
         ]
       }
@@ -1828,13 +1865,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Build the complete Norwegian rewrite of these meeting statements: Maja finner nøkkelen. I dag hjelper Jonas Sara. Use the supplied pronouns den and henne, and place each pronoun after its verb."
+          "value": "Rewrite both sentences with «den» and «henne»."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "An unstressed object pronoun normally precedes ikke, while a full noun object normally follows it."
+          "value": "In an affirmative main clause, the object pronoun follows the verb or the post-verbal subject."
         }
       ],
       "payload": {
@@ -1900,13 +1937,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Build the complete Norwegian rewrite of Jonas ringer ikke Sara. Use the supplied object pronoun henne and keep the neutral one-verb meaning."
+          "value": "Replace «Sara» with «henne», and put the words in the usual order."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "The unstressed object pronoun henne comes before ikke; a full noun object would normally remain after ikke."
+          "value": "With one verb, a short unstressed object pronoun normally comes before ikke."
         }
       ],
       "payload": {
@@ -1948,10 +1985,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Build the aligned two-line comparison. Keep nøkkelen as a full noun in the first line and replace it with den in the second. Show neutral placement around ikke in both lines."
+          "value": "Write the sentence with the noun, then rewrite it with a pronoun."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "A full noun normally follows ikke, while a short unstressed object pronoun normally precedes ikke in this one-verb pattern."
+        }
+      ],
       "payload": {
         "tokens": [
           {
@@ -2015,10 +2057,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Build the four-sentence meeting-room update from the supplied tokens. It covers finding the key, opening the room, calling Sara, and helping Jonas. Use one-verb placement before ikke and two-verb placement after the main action."
+          "value": "Replace the noun objects with pronouns, and put the four sentences together."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "With one verb, the pronoun precedes ikke; with two verbs, it follows the infinitive."
+        }
+      ],
       "payload": {
         "tokens": [
           {
@@ -2063,7 +2110,7 @@
           },
           {
             "token_id": "count-s2-object",
-            "text": "det.",
+            "text": "den.",
             "fixed": false
           },
           {
@@ -2142,10 +2189,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Select the misplaced object-pronoun token. Use neutral word order without contrastive emphasis; the feedback gives the corrected order."
+          "value": "Find the object pronoun that is in the wrong place."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Only the first henne is misplaced: a neutral one-verb clause puts it before ikke, while the two-verb clause keeps it after hjelpe."
+        }
+      ],
       "payload": {
         "tokens": [
           {
@@ -2190,7 +2242,7 @@
           }
         ],
         "error_token_id": "repair-henne-1",
-        "feedback": "Move the marked henne before ikke: Jeg finner henne ikke nå. The second sentence is already correct because henne follows the main action hjelpe."
+        "feedback": "Move the marked henne before ikke: Jeg finner henne ikke nå. The second sentence is correct because henne follows hjelpe."
       }
     },
     {
@@ -2201,7 +2253,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Fill each blank with one object pronoun. In this birthday context, Nora calls their male friend, Emil helps Nora, Emil has the present, and Nora has the cakes. Sentence order is already correct; choose the pronoun identity."
+          "value": "Fill in one object pronoun in each blank."
         }
       ],
       "explanation": null,
@@ -2212,7 +2264,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Nora ringer vennen deres. Nora ringer"
+                "value": "Nora ringer"
               },
               {
                 "kind": "text",
@@ -2224,18 +2276,18 @@
             "kind": "blank",
             "blank_id": "birthday-friend",
             "options": [
+              "dem",
               "ham",
-              "henne",
-              "dem"
+              "henne"
             ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
             "spans": [
               {
                 "kind": "text",
-                "value": ". Emil hjelper Nora. Emil hjelper"
+                "value": ". Emil hjelper"
               },
               {
                 "kind": "text",
@@ -2247,18 +2299,18 @@
             "kind": "blank",
             "blank_id": "birthday-nora",
             "options": [
+              "dem",
               "henne",
-              "ham",
-              "dem"
+              "ham"
             ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
             "spans": [
               {
                 "kind": "text",
-                "value": ". Emil har gaven. Emil har"
+                "value": ". Emil har"
               },
               {
                 "kind": "text",
@@ -2281,7 +2333,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": ". Nora har kakene. Nora har"
+                "value": ". Nora har"
               },
               {
                 "kind": "text",
@@ -2319,10 +2371,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Build the complete three-sentence birthday-preparation update. The supplied pronouns refer in order to gaven, vennen deres, and kakene: den, ham, and dem. Include one affirmative clause, one neutral one-verb negative, and one two-verb negative."
+          "value": "Put the three sentences together."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "The affirmative pronoun follows finner, the one-verb negative pronoun precedes ikke, and the two-verb negative pronoun follows finne."
+        }
+      ],
       "payload": {
         "tokens": [
           {
@@ -2410,10 +2467,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Rewrite this Norwegian birthday account with object pronouns without changing the events: Nora finner gaven. Emil ringer vennen deres. Nora har ikke kakene. Nora kan ikke åpne gaven. Build the complete rewritten account from the supplied tokens, preserving the affirmative, one-verb negative, and two-verb negative structures."
+          "value": "Rewrite the text with object pronouns."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "The pronouns match their known referents and take the position required by the affirmative, one-verb negative, or two-verb negative structure."
+        }
+      ],
       "payload": {
         "tokens": [
           {
@@ -2510,6 +2572,305 @@
           "integrated-s4-object"
         ]
       }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_birthday_pronoun_selection",
+      "operation": "recall_fill",
+      "objective_id": "obj-object-pronoun-position-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fill in the pronoun that refers to the thing in the sentence."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Brevet and glasset are neuter nouns and are replaced by det. Skjeen is a common-gender noun and is replaced by den."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Nora har"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-birthday-letter",
+            "options": [
+              "det",
+              "den",
+              "dem"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Nora finner"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-birthday-glass",
+            "options": [
+              "den",
+              "det",
+              "dem"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Nora ser"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-birthday-tray",
+            "options": [
+              "den",
+              "dem",
+              "det"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_affirmative_pronoun_position",
+      "operation": "recall_fill",
+      "objective_id": "obj-object-pronoun-position-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fill in the two missing words."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "I dag leser"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-affirmative",
+            "options": [
+              "Liv den",
+              "den Liv",
+              "Liv ikke"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_one_verb_negative_position",
+      "operation": "recall_fill",
+      "objective_id": "obj-object-pronoun-position-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fill in the two missing words."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Ada ser"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-one-verb",
+            "options": [
+              "ham ikke",
+              "ikke ham",
+              "ikke Per"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_two_verb_negative_position",
+      "operation": "recall_fill",
+      "objective_id": "obj-object-pronoun-position-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fill in the two missing words."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Ada kan ikke"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-two-verbs",
+            "options": [
+              "se ham",
+              "ham se",
+              "han se"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_one_or_two_verbs",
+      "operation": "choose",
+      "objective_id": "obj-object-pronoun-position-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the two replies with the usual word order."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "review-one-verb-generalized",
+            "text": "Nei, hun finner den ikke. Nei, hun kan det ikke finne.",
+            "why": "The second reply incorrectly applies the one-verb pattern inside a modal construction."
+          },
+          {
+            "option_id": "review-ikke-generalized",
+            "text": "Nei, hun finner ikke den. Nei, hun kan ikke finne det.",
+            "why": "The first reply incorrectly keeps ikke immediately after the only verb."
+          },
+          {
+            "option_id": "review-forms-reversed",
+            "text": "Nei, hun finner det ikke. Nei, hun kan ikke finne den.",
+            "why": "The positions fit, but the pronouns reverse masculine nøkkelen and neuter kortet."
+          },
+          {
+            "option_id": "review-both-correct",
+            "text": "Nei, hun finner den ikke. Nei, hun kan ikke finne det.",
+            "why": "The one-verb reply places den before ikke, while the two-verb reply places det after finne."
+          }
+        ],
+        "answer_id": "review-both-correct",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "A: Finner Lea nøkkelen? B: "
+          },
+          {
+            "kind": "strong",
+            "value": ". A: Kan Lea finne kortet? B: "
+          },
+          {
+            "kind": "text",
+            "value": "."
+          }
+        ]
+      }
     }
   ],
   "practice_groups": [
@@ -2525,7 +2886,12 @@
         "repair_the_message",
         "birthday_pronoun_selection",
         "birthday_pronoun_placement",
-        "birthday_integrated_rewrite"
+        "birthday_integrated_rewrite",
+        "review_birthday_pronoun_selection",
+        "review_affirmative_pronoun_position",
+        "review_one_verb_negative_position",
+        "review_two_verb_negative_position",
+        "review_one_or_two_verbs"
       ]
     }
   ],

@@ -301,12 +301,17 @@ def _candidate_id(prefix: str, text: str, seen_ids: set[str]) -> str:
 
 
 def _is_audio_safe_example(item: dict[str, Any]) -> bool:
-    """Skip examples explicitly labelled as incorrect in their translation."""
+    """Skip typed incorrect examples, with text fallback for legacy inputs."""
+    teaching_role = item.get("teaching_role")
+    if teaching_role == "incorrect":
+        return False
     structured_audio = item.get("audio")
     if isinstance(structured_audio, bool):
         return structured_audio
     if isinstance(structured_audio, dict) and structured_audio.get("enabled") is False:
         return False
+    if teaching_role in {"model", "caution"}:
+        return True
     norwegian = _flatten_spans(item.get("no")).lstrip("* `_\t'\"")
     if norwegian.lower().startswith(("✗", "incorrect:", "wrong:", "not normally:", "not:")):
         return False

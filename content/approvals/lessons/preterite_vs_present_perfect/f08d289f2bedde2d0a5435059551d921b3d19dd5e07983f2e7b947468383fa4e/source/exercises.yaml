@@ -1,0 +1,471 @@
+- handle: anchor_time_connections
+  op: categorize
+  objective: obj-preterite-vs-present-perfect-01
+  bloom: analyze
+  prompt_md: Sort each line by its time relationship.
+  explanation_md: Preteritum places an event in a completed past frame; presens perfektum connects earlier
+    events or situations to the present.
+  derived_from:
+  - section_id: an-evening-plan
+  buckets:
+  - bucket_id: completed-past
+    label: Completed past frame
+  - bucket_id: past-to-present
+    label: Connected to the present
+  items:
+  - item_id: restaurant-experience
+    text: 'Jonas: Har du vært på Fjordhuset før?'
+    bucket_id: past-to-present
+  - item_id: restaurant-occasion
+    text: 'Leila: Jeg var der forrige fredag.'
+    bucket_id: completed-past
+  - item_id: meal-result
+    text: 'Jonas: Jeg har allerede spist, så jeg vil bare ha kaffe.'
+    bucket_id: past-to-present
+  - item_id: lunch-time
+    text: 'Jonas: Jeg tok lunsj før elleve.'
+    bucket_id: completed-past
+  - item_id: continuing-work
+    text: 'Jonas: Jeg har jobbet siden klokka åtte i dag.'
+    bucket_id: past-to-present
+  - item_id: continuing-home
+    text: 'Leila: Jeg har bodd i området i tre år og bor her fortsatt.'
+    bucket_id: past-to-present
+  - item_id: finished-home
+    text: 'Jonas: Jeg bodde i Bergen i tre år før jeg flyttet hit.'
+    bucket_id: completed-past
+  - item_id: completed-sequence
+    text: 'Leila: Først spiste vi middag, og så hørte vi på et band.'
+    bucket_id: completed-past
+- handle: completed_past_time_choice
+  op: recall_fill
+  objective: obj-preterite-vs-present-perfect-01
+  bloom: apply
+  prompt_md: Complete the reports.
+  explanation_md: The incorrect alternatives use presens perfektum even though each sentence names a completed
+    past time.
+  derived_from:
+  - section_id: specific-past-events
+  audio_target: I fjor bodde jeg i Bergen. Vi hadde tre møter forrige uke. Jeg så filmen i går kveld.
+  segments:
+  - text_md: 'I fjor '
+  - blank_id: residence-last-year
+    options:
+    - bodde
+    - har bodd
+    answer_index: 0
+  - text_md: ' jeg i Bergen. Vi '
+  - blank_id: meetings-last-week
+    options:
+    - har hatt
+    - hadde
+    answer_index: 1
+  - text_md: ' tre møter forrige uke. Jeg '
+  - blank_id: film-yesterday
+    options:
+    - så
+    - har sett
+    answer_index: 0
+  - text_md: ' filmen i går kveld.'
+- handle: experience_or_occasion
+  op: recall_fill
+  objective: obj-preterite-vs-present-perfect-01
+  bloom: apply
+  prompt_md: Complete the dialogue.
+  explanation_md: Presens perfektum presents experience before now; preteritum identifies the completed
+    occasion.
+  derived_from:
+  - section_id: experiences-before-now
+  audio_target: 'Jonas: Kjenner du til Fjordhuset? Leila: Ja, jeg har vært der før. Jeg var der forrige
+    fredag.'
+  segments:
+  - text_md: 'Jonas: Kjenner du til Fjordhuset? Leila: Ja, jeg '
+  - blank_id: restaurant-experience
+    options:
+    - har vært
+    - var
+    answer_index: 0
+  - text_md: ' der før. Jeg '
+  - blank_id: restaurant-occasion
+    options:
+    - har vært
+    - var
+    answer_index: 1
+  - text_md: ' der forrige fredag.'
+- handle: present_result_choice
+  op: recall_fill
+  objective: obj-preterite-vs-present-perfect-01
+  bloom: apply
+  prompt_md: Complete the exchange with the tense that connects the earlier eating to the speaker's present
+    need.
+  explanation_md: Presens perfektum explains a present result; preteritum reports an event at a completed
+    time.
+  derived_from:
+  - section_id: results-that-matter-now
+  audio_target: 'Leila: Vil du spise nå? Jonas: Nei, jeg har spist, så jeg vil bare ha kaffe. I går spiste
+    jeg klokka fire. Kan du hjelpe meg inn? Jeg har mistet nøklene, og de er fortsatt borte.'
+  segments:
+  - text_md: 'Leila: Vil du spise nå? Jonas: Nei, jeg '
+  - blank_id: meal-result
+    options:
+    - spiste
+    - har spist
+    answer_index: 1
+  - text_md: ', så jeg vil bare ha kaffe. I går '
+  - blank_id: meal-occasion
+    options:
+    - har spist
+    - spiste
+    answer_index: 1
+  - text_md: ' jeg klokka fire. Kan du hjelpe meg inn? Jeg '
+  - blank_id: keys-result
+    options:
+    - har mistet
+    - mistet
+    answer_index: 0
+  - text_md: ' nøklene, og de er fortsatt borte.'
+- handle: unfinished_period_viewpoint
+  op: recall_fill
+  objective: obj-preterite-vs-present-perfect-01
+  bloom: apply
+  prompt_md: Complete the work update. The speaker is still working today.
+  explanation_md: A summary up to now takes presens perfektum, while a completed event at a stated point
+    takes preteritum.
+  derived_from:
+  - section_id: finished-and-unfinished-periods
+  audio_target: Jeg jobber fortsatt. Jeg har jobbet mye i dag, men klokka ni snakket jeg med sjefen.
+  segments:
+  - text_md: 'Jeg jobber fortsatt. Jeg '
+  - blank_id: today-summary
+    options:
+    - har jobbet
+    - jobbet
+    answer_index: 0
+  - text_md: ' mye i dag, men klokka ni '
+  - blank_id: exact-time-today
+    options:
+    - har snakket
+    - snakket
+    answer_index: 1
+  - text_md: ' jeg med sjefen.'
+- handle: duration_continuation
+  op: recall_fill
+  objective: obj-preterite-vs-present-perfect-01
+  bloom: apply
+  prompt_md: Complete the profiles.
+  explanation_md: A duration continuing now takes presens perfektum; a duration presented as finished
+    takes preteritum.
+  derived_from:
+  - section_id: duration-still-true-or-finished
+  audio_target: Nora jobber fortsatt her. Hun har jobbet her siden 2021. Amir sluttet i fjor. Han jobbet
+    her i tre år.
+  segments:
+  - text_md: 'Nora jobber fortsatt her. Hun '
+  - blank_id: continuing-work
+    options:
+    - har jobbet
+    - jobbet
+    answer_index: 0
+  - text_md: ' her siden 2021. Amir sluttet i fjor. Han '
+  - blank_id: finished-work
+    options:
+    - har jobbet
+    - jobbet
+    answer_index: 1
+  - text_md: ' her i tre år.'
+- handle: narrative_sequence
+  op: write
+  objective: obj-preterite-vs-present-perfect-01
+  bloom: apply
+  prompt_md: 'Write a short account in Norwegian. Say that you have been to Fjordhuset once before,
+    then recount last Friday: you went there with your colleagues, ate dinner first, listened to music,
+    and took the bus home afterwards. Use the appropriate tense for the experience and the completed
+    evening. Write 35–55 words.'
+  explanation_md: Presens perfektum presents the earlier visit as experience; preteritum narrates the
+    events of last Friday in order.
+  derived_from:
+  - section_id: telling-a-sequence-of-events
+  response_language: 'no'
+  min_words: 35
+  max_words: 55
+  judge_prompt: Evaluate only the visible account task. Apply supplied-events, event-order, coherent-account,
+    word-bound, experience-form, and narrative-form as gating criteria. Record all ids ending in -observation
+    diagnostically; they never make an otherwise successful account fail.
+  criteria:
+  - id: supplied-events
+    instruction: The account includes the prior visit, the trip last Friday with colleagues, dinner, listening to music, and the bus home.
+  - id: event-order
+    instruction: The account presents dinner before listening to music and the bus journey home afterwards.
+  - id: coherent-account
+    instruction: The events form one understandable Norwegian account.
+  - id: word-bound
+    instruction: The response contains 35–55 words.
+  - id: experience-form
+    instruction: The earlier visit is expressed naturally with presens perfektum.
+  - id: narrative-form
+    instruction: The completed events last Friday are expressed naturally with preteritum.
+- handle: anchor_message_revision
+  op: write
+  objective: obj-preterite-vs-present-perfect-01
+  bloom: analyze
+  prompt_md: 'Til kollegaen din. Leila har skrevet: «Jeg har vært på Fjordhuset før, men besøket var forrige
+    fredag. Først har vi spist middag, og så har vi hørt på et band. Jonas vil bare ha kaffe i kveld fordi
+    han spiste allerede. Jeg bodde i området i tre år og bor her fortsatt.» Rewrite the message so its
+    time relationships are clear. Preserve every stated meaning, including Leila''s prior experience,
+    and use the appropriate tense for each relationship. Write 45–75 Norwegian words.'
+  explanation_md: A clear revision distinguishes prior experience, a dated visit, its completed sequence,
+    a present result, and a duration that continues now.
+  derived_from:
+  - section_id: returning-to-leila-and-jonas
+  response_language: 'no'
+  min_words: 45
+  max_words: 75
+  judge_prompt: Evaluate only the visible revision task. Apply message-purpose, supplied-meanings, connected-message,
+    word-bound, experience-form, completed-past-form, current-result-form, and continuing-duration-form
+    as gating criteria. Record all ids ending in -observation diagnostically; they never make an otherwise
+    successful revision fail.
+  criteria:
+  - id: message-purpose
+    instruction: The response is a Norwegian message suitable for informing a colleague.
+  - id: supplied-meanings
+    instruction: The message preserves Leila's prior experience, the visit last Friday, the meal and band,
+      Jonas wanting only coffee because he has eaten, and Leila still living in the area after three years.
+  - id: connected-message
+    instruction: The supplied meanings form an understandable connected message.
+  - id: word-bound
+    instruction: The response contains 45–75 words.
+  - id: experience-form
+    instruction: Prior experience is expressed naturally with presens perfektum.
+  - id: completed-past-form
+    instruction: The dated visit and its completed actions are expressed naturally with preteritum.
+  - id: current-result-form
+    instruction: Jonas's present reason is expressed naturally with presens perfektum.
+  - id: continuing-duration-form
+    instruction: Leila's continuing residence is expressed naturally with presens perfektum.
+  - id: experience-form-observation
+    instruction: 'Observation only: note the exact form used for prior experience.'
+  - id: completed-past-form-observation
+    instruction: 'Observation only: note the exact form used for the dated visit and completed actions.'
+  - id: current-result-form-observation
+    instruction: 'Observation only: note the exact form used for Jonas''s present reason.'
+  - id: continuing-duration-form-observation
+    instruction: 'Observation only: note the exact form used for Leila''s continuing residence.'
+- handle: cumulative_evening_transfer
+  op: write
+  objective: obj-preterite-vs-present-perfect-01
+  bloom: apply
+  prompt_md: 'Message from Sara to her housemate. Purpose: say what is ready before the guests arrive.
+    Facts: today Sara started cleaning this morning and is still working; the dinner is made and the food
+    is ready now; she sent the guests a message at three; she moved in four years ago and still lives
+    there; she has hosted guests before, at an unspecified time; last month the guests arrived first,
+    then they ate, and afterwards they went home. Use presens perfektum for facts linked to the present
+    and preteritum for dated or completed events. Write Sara''s 70–110-word Norwegian message.'
+  explanation_md: The facts invite a natural mixture of presens perfektum for links to now and preteritum
+    for dated or completed events.
+  derived_from:
+  - section_id: cumulative-transfer-a-different-evening
+  response_language: 'no'
+  min_words: 70
+  max_words: 110
+  judge_prompt: Evaluate only the visible message task. Apply audience-purpose, supplied-facts, completed-dinner,
+    coherent-account, word-bound, unfinished-period-form, current-result-form, specific-event-form, continuing-duration-form,
+    experience-form, and narrative-form as gating criteria. Record all ids ending in -observation diagnostically;
+    they never make an otherwise successful message fail.
+  criteria:
+  - id: audience-purpose
+    instruction: The response is a Norwegian message to Sara's housemate explaining the preparations.
+  - id: supplied-facts
+    instruction: The message includes today's cleaning, the ready meal, the message at three, four years
+      in the flat, and prior experience hosting guests.
+  - id: completed-dinner
+    instruction: The message recounts last month's arrival, meal, and departure in the supplied order.
+  - id: coherent-account
+    instruction: The facts form one understandable message.
+  - id: word-bound
+    instruction: The response contains 70–110 words.
+  - id: unfinished-period-form
+    instruction: Today's continuing work is expressed naturally with presens perfektum.
+  - id: current-result-form
+    instruction: The ready meal is expressed naturally with presens perfektum.
+  - id: specific-event-form
+    instruction: The message sent at three is expressed naturally with preteritum.
+  - id: continuing-duration-form
+    instruction: Residence continuing for four years is expressed naturally with presens perfektum.
+  - id: experience-form
+    instruction: Unspecified hosting experience is expressed naturally with presens perfektum.
+  - id: narrative-form
+    instruction: The completed dinner sequence is expressed naturally with preteritum.
+  - id: unfinished-period-form-observation
+    instruction: 'Observation only: note the form used for today''s continuing work.'
+  - id: current-result-form-observation
+    instruction: 'Observation only: note the form used for the ready meal.'
+  - id: specific-event-form-observation
+    instruction: 'Observation only: note the form used for the message at three.'
+  - id: continuing-duration-form-observation
+    instruction: 'Observation only: note the form used for the continuing residence.'
+  - id: experience-form-observation
+    instruction: 'Observation only: note the form used for hosting experience.'
+  - id: narrative-form-observation
+    instruction: 'Observation only: note the form used for the completed dinner sequence.'
+- handle: final_tense_retrieval
+  op: write
+  objective: obj-preterite-vs-present-perfect-01
+  bloom: apply
+  prompt_md: 'Email to your Norwegian teacher. Purpose: report on your weekend. Facts: you have visited
+    Trondheim before, at an unspecified time; you arrived yesterday; your luggage is still missing after
+    you lost it; you started waiting for an answer on Monday and are still waiting; yesterday evening
+    you ate dinner first and then went to a concert. Use presens perfektum for experience, present results,
+    and continuing duration, and preteritum for dated events and the completed evening sequence. Write
+    a 55–90-word Norwegian email.'
+  explanation_md: The email combines experience, a dated event, a present result, continuing duration,
+    and a completed sequence.
+  derived_from:
+  - section_id: final-retrieval-request
+  response_language: 'no'
+  min_words: 55
+  max_words: 90
+  judge_prompt: Evaluate only the visible email task. Apply audience-purpose, supplied-facts, sequence-order,
+    understandable-email, word-bound, experience-form, dated-event-form, result-form, duration-form, and
+    sequence-form as gating criteria. Record all ids ending in -observation diagnostically; they never
+    make an otherwise successful email fail.
+  criteria:
+  - id: audience-purpose
+    instruction: The response is a Norwegian email to the learner's Norwegian teacher reporting the weekend.
+  - id: supplied-facts
+    instruction: The email includes prior Trondheim experience, arrival yesterday, missing luggage, waiting
+      since Monday, and dinner plus a concert yesterday evening.
+  - id: sequence-order
+    instruction: Dinner is presented before the concert.
+  - id: understandable-email
+    instruction: The supplied facts form an understandable email.
+  - id: word-bound
+    instruction: The response contains 55–90 words.
+  - id: experience-form
+    instruction: Unspecified Trondheim experience is expressed naturally with presens perfektum.
+  - id: dated-event-form
+    instruction: Arrival yesterday is expressed naturally with preteritum.
+  - id: result-form
+    instruction: The still-missing luggage is expressed naturally with presens perfektum.
+  - id: duration-form
+    instruction: Waiting that continues from Monday is expressed naturally with presens perfektum.
+  - id: sequence-form
+    instruction: Yesterday evening's completed sequence is expressed naturally with preteritum.
+  - id: experience-form-observation
+    instruction: 'Observation only: note the form used for Trondheim experience.'
+  - id: dated-event-form-observation
+    instruction: 'Observation only: note the form used for arrival.'
+  - id: result-form-observation
+    instruction: 'Observation only: note the form used for the missing luggage.'
+  - id: duration-form-observation
+    instruction: 'Observation only: note the form used for waiting.'
+  - id: sequence-form-observation
+    instruction: 'Observation only: note the form used for the evening sequence.'
+- handle: review_completed_past_time_choice
+  op: recall_fill
+  objective: obj-preterite-vs-present-perfect-01
+  bloom: apply
+  prompt_md: Complete the report.
+  explanation_md: For ti år siden places the residence in a completed past point, so presens perfektum
+    would conflict with the stated frame.
+  derived_from:
+  - section_id: specific-past-events
+  segments:
+  - text_md: 'For ti år siden '
+  - blank_id: residence-dated-past
+    options:
+    - har bodd
+    - bodde
+    answer_index: 1
+  - text_md: ' hun i Oslo.'
+  audio_target: For ti år siden bodde hun i Oslo.
+- handle: review_experience_or_occasion
+  op: recall_fill
+  objective: obj-preterite-vs-present-perfect-01
+  bloom: apply
+  prompt_md: Complete the reply.
+  explanation_md: Før asks about accumulated experience without identifying a completed occasion, so preteritum
+    would change the viewpoint.
+  derived_from:
+  - section_id: experiences-before-now
+  segments:
+  - text_md: 'Jonas: Har du noen gang vært i Tromsø? Leila: Ja, jeg '
+  - blank_id: tromso-experience
+    options:
+    - besøkte
+    - har besøkt
+    answer_index: 1
+  - text_md: ' Tromsø før.'
+  audio_target: 'Jonas: Har du noen gang vært i Tromsø? Leila: Ja, jeg har besøkt Tromsø før.'
+- handle: review_present_result_choice
+  op: recall_fill
+  objective: obj-preterite-vs-present-perfect-01
+  bloom: apply
+  prompt_md: Complete the reply with the form that shows the earlier viewing is relevant to the speaker's
+    need now.
+  explanation_md: The earlier viewing explains the speaker's choice now; preteritum reports only a past
+    event without marking that connection.
+  derived_from:
+  - section_id: results-that-matter-now
+  segments:
+  - text_md: 'Jeg trenger ikke å se filmen igjen, for jeg '
+  - blank_id: film-result
+    options:
+    - har sett
+    - så
+    answer_index: 0
+  - text_md: ' den allerede.'
+  audio_target: Jeg trenger ikke å se filmen igjen, for jeg har sett den allerede.
+- handle: review_unfinished_period_viewpoint
+  op: recall_fill
+  objective: obj-preterite-vs-present-perfect-01
+  bloom: apply
+  prompt_md: Complete the update. The speaker is still working today.
+  explanation_md: The speaker summarizes the still-continuing day up to now; preteritum would present
+    the work as a completed past event.
+  derived_from:
+  - section_id: finished-and-unfinished-periods
+  segments:
+  - text_md: 'Jeg er fortsatt på jobb i dag. Jeg '
+  - blank_id: today-summary
+    options:
+    - har jobbet
+    - jobbet
+    answer_index: 0
+  - text_md: ' allerede mye.'
+  audio_target: Jeg er fortsatt på jobb i dag. Jeg har allerede jobbet mye.
+- handle: review_duration_continuation
+  op: recall_fill
+  objective: obj-preterite-vs-present-perfect-01
+  bloom: apply
+  prompt_md: Fullfør profilen. Setningen må vise at perioden i Bergen er avsluttet.
+  explanation_md: Flyttingen til Oslo avsluttet perioden i Bergen, så preteritum passer; presens perfektum
+    ville knyttet perioden til nå.
+  derived_from:
+  - section_id: duration-still-true-or-finished
+  segments:
+  - text_md: 'Mina flyttet fra Bergen til Oslo i 2022. Hun '
+  - blank_id: finished-residence
+    options:
+    - har bodd
+    - bodde
+    answer_index: 1
+  - text_md: ' i Bergen i fem år før flyttingen.'
+  audio_target: Mina flyttet fra Bergen til Oslo i 2022. Hun bodde i Bergen i fem år før flyttingen.
+- handle: review_narrative_sequence
+  op: recall_fill
+  objective: obj-preterite-vs-present-perfect-01
+  bloom: apply
+  prompt_md: Complete the story.
+  explanation_md: The sentence advances a completed sequence from last night; presens perfektum would
+    break that narrative frame.
+  derived_from:
+  - section_id: telling-a-sequence-of-events
+  segments:
+  - text_md: 'I går kveld spiste vi middag. Etterpå '
+  - blank_id: journey-home
+    options:
+    - har gått
+    - gikk
+    answer_index: 1
+  - text_md: ' vi hjem.'
+  audio_target: I går kveld spiste vi middag. Etterpå gikk vi hjem.

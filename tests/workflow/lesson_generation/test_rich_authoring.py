@@ -433,6 +433,105 @@ def test_rich_generation_graph_given_needs_repair_lesson_review_expect_one_bound
     assert attestations.stages["normalization_review"].input_hash == text_content_hash(repaired_draft)
 
 
+def test_rich_generation_graph_given_practice_gap_bundled_checkpoint_expect_split_into_ordered_directives(
+    tmp_path: Path,
+):
+    _write_job_config(tmp_path)
+    FakeRichAuthorAgent.instances.clear()
+    original_draft = FakeRichAuthorAgent.draft_text
+    bundled_checkpoint = """{{checkpoint
+handle: identify-and-choose-question
+objective_ref: obj-question-order
+bloom: understand
+evidence: Collect observable learner evidence for the choose target and the judge target.
+}}"""
+    split_checkpoints = """{{checkpoint
+handle: identify-question
+objective_ref: obj-question-order
+bloom: understand
+evidence: Collect observable learner evidence for the choose target.
+}}
+
+{{checkpoint
+handle: choose-infinitive
+objective_ref: obj-question-order
+bloom: understand
+evidence: Collect observable learner evidence for the choose target.
+}}"""
+    bundled_draft = original_draft.replace(split_checkpoints, bundled_checkpoint, 1)
+    assert bundled_draft != original_draft
+    compound_review = valid_quality_review("grammar")
+    compound_review["verdict"] = "needs_repair"
+    compound_review["summary"] = "One checkpoint bundles two independently judgeable outputs."
+    compound_review["findings"] = [
+        {
+            "code": "practice_gap",
+            "severity": "major",
+            "artifact": "lesson.md",
+            "location": "identify-and-choose-question checkpoint",
+            "evidence": "The checkpoint bundles a meaning-selection goal with a separate judgement goal.",
+            "repair_instruction": "Separate the two independently orderable goals into distinct checkpoints.",
+        }
+    ]
+    FakeRichAuthorAgent.draft_text = bundled_draft
+    FakeRichAuthorAgent.repair_edit_response = {
+        "edits": [
+            {
+                "finding_ref": "practice_gap:1",
+                "old_text": bundled_checkpoint,
+                "new_text": split_checkpoints,
+                "reason": "Replace the bundled directive with two independently ordered checkpoints.",
+            }
+        ]
+    }
+    FakeRichAuthorAgent.review_responses = [
+        compound_review,
+        valid_quality_review("grammar"),
+        {"verdict": "pass", "summary": "Every reviewed teaching unit survived.", "findings": []},
+    ]
+
+    try:
+        result = run_rich_generation_graph(
+            plan_source=K_CATALOG_PACKAGE_FIXTURE_ROOT,
+            output_root=tmp_path / "run",
+            repo_root=tmp_path,
+            run_id="rich-bundled-checkpoint-repair",
+            closed_task_verifier=FakeClosedTaskVerifier(),
+        )
+    finally:
+        FakeRichAuthorAgent.draft_text = original_draft
+        FakeRichAuthorAgent.repair_edit_response = None
+        FakeRichAuthorAgent.review_responses = None
+
+    repaired_draft = (tmp_path / "run" / "draft" / "rich.md").read_text(encoding="utf-8").strip()
+    assert repaired_draft == original_draft
+    intents = yaml.safe_load(
+        (tmp_path / "run" / "normalization" / "checkpoint_intents.yaml").read_text(encoding="utf-8")
+    )
+    assert [intent["handle"] for intent in intents] == [
+        "identify-question",
+        "choose-infinitive",
+        "judge-question-order",
+        "find-fix-modal",
+        "judge-fronted-time",
+        "build-fronted-time",
+        "recall-question",
+    ]
+    prose = (tmp_path / "run" / "draft" / "prose.md").read_text(encoding="utf-8")
+    assert prose.index("{{exercise: identify-question}}") < prose.index("{{exercise: choose-infinitive}}")
+    receipt = json.loads(result.receipt_path.read_text(encoding="utf-8"))
+    assert [stage["name"] for stage in receipt["stages"][:4]] == [
+        "draft_author",
+        "lesson_review_repair",
+        "lesson_review",
+        "checkpoint_split",
+    ]
+    split_stage = next(stage for stage in receipt["stages"] if stage["name"] == "checkpoint_split")
+    assert split_stage["request_count"] == 7
+    assert receipt["stage_receipts"]["lesson_review"]["repaired"] is True
+    assert receipt["stage_receipts"]["lesson_review"]["reviewer_calls"] == 2
+
+
 def test_rich_generation_graph_given_invalid_edit_transport_expect_one_correction_without_regeneration(tmp_path: Path):
     _write_job_config(tmp_path)
     FakeRichAuthorAgent.instances.clear()
@@ -2297,12 +2396,30 @@ def test_validate_exercise_requests_given_unknown_evidence_route_expect_rejects(
         )
 
 
-def test_validate_exercise_requests_given_route_bloom_mismatch_expect_rejects_before_exercise_author():
+def test_validate_exercise_requests_given_pair_matching_at_understand_expect_accepted():
     requests = """
 - handle: match-question
   objective_ref: obj-question-order
   evidence_route: pair_matching
   bloom: understand
+  evidence: Match the taught question with its meaning.
+"""
+
+    validated = rich.validate_exercise_requests(
+        requests,
+        {"obj-question-order"},
+        "{{exercise: match-question}}",
+    )
+
+    assert yaml.safe_load(validated)[0]["bloom"] == "understand"
+
+
+def test_validate_exercise_requests_given_route_bloom_mismatch_expect_rejects_before_exercise_author():
+    requests = """
+- handle: match-question
+  objective_ref: obj-question-order
+  evidence_route: pair_matching
+  bloom: apply
   evidence: Match the taught question with its meaning.
 """
 
@@ -2339,7 +2456,7 @@ def test_rich_generation_graph_given_invalid_route_bloom_handoff_expect_fails_be
     _write_job_config(tmp_path)
     requests = yaml.safe_load(fixture_exercise_requests())
     requests[0]["evidence_route"] = "pair_matching"
-    requests[0]["bloom"] = "understand"
+    requests[0]["bloom"] = "apply"
     FakeRichAuthorAgent.normalized_payload = {
         "lesson_md": (K_CATALOG_PACKAGE_FIXTURE_ROOT / "lesson.md").read_text(encoding="utf-8"),
         "exercise_requests_yaml": yaml.safe_dump(requests, allow_unicode=True, sort_keys=False),

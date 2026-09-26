@@ -21,7 +21,7 @@ def test_create_lesson_packet_from_source_given_source_package_expect_lean_packe
 
     ExportedLesson.model_validate(packet)
     assert metadata["kind"] == "grammar"
-    assert packet["schema_version"] == "4.0"
+    assert packet["schema_version"] == "4.1"
     assert packet["sections"]
     assert packet["exercises"]
     assert packet["content"]

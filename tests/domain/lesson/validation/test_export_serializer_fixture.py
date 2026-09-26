@@ -25,7 +25,7 @@ def test_export_fixture_given_direct_packet_validation_expect_self_describing_sh
 
     validated = ExportedLesson.model_validate(packet)
 
-    assert validated.schema_version == "4.0"
+    assert validated.schema_version == "4.1"
     assert validated.id == "ordinal_numbers"
     assert set(packet) == {
         "schema_version",

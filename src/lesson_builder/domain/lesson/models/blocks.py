@@ -13,6 +13,7 @@ from pydantic import model_validator
 from lesson_builder.domain.lesson.models.inline import InlineSpan
 
 Spans = list[InlineSpan]
+ExampleTeachingRole = Literal["model", "incorrect", "caution"]
 
 # The authored provider-neutral vocal-presentation vocabulary. A missing
 # profile means unconstrained; the value is never inferred from names or text.
@@ -82,12 +83,14 @@ class RuleBlock(_BlockBase):
 class ExampleItem(_BlockBase):
     no: Spans
     en: Spans
+    teaching_role: ExampleTeachingRole = "model"
 
 
 class ExampleBlock(_BlockBase):
     kind: Literal["example"]
     no: Spans
     en: Spans
+    teaching_role: ExampleTeachingRole = "model"
 
 
 class ExamplesBlock(_BlockBase):

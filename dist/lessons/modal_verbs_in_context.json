@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "modal_verbs_in_context",
   "kind": "grammar",
   "language": "nb-NO",
@@ -40,6 +40,18 @@
     {
       "kind": "exercise",
       "id": "transfer_modals_across_action_and_evidence"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_distinguish_action_and_evidence_readings"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_classify_evidence_reading"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_transfer_modal_reading"
     }
   ],
   "sections": [
@@ -908,10 +920,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Sort each sentence by what the modal contributes in this context. Choose action meaning when it directs, plans, or advises an action. Choose evidence meaning when it marks an inference, reported information, or an expectation."
+          "value": "Sorter setningene etter hva modalverbet uttrykker."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "En handlingsbetydning gjelder noe noen må, planlegger eller bør gjøre. En vurdering uttrykker en slutning, gjengir en kilde eller viser til en rimelig forventning."
+        }
+      ],
       "payload": {
         "buckets": [
           {
@@ -965,10 +982,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Each sentence presents a claim rather than directing an action. Sort it by the source of the claim."
+          "value": "Sorter påstandene etter om de bygger på tegn, gjengir en kilde eller uttrykker en forventning på vilkår."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Sorter etter hva påstanden bygger på. Et modalverb kan uttrykke en tendens, men sammenhengen er viktig: «bør» kan vise en slutning ut fra synlige tegn eller en forventning på bestemte vilkår."
+        }
+      ],
       "payload": {
         "buckets": [
           {
@@ -987,32 +1009,37 @@
         "items": [
           {
             "item_id": "office-lights",
-            "text": "Ola må være på kontoret; lyset er fortsatt på.",
+            "text": "Kari må være hjemme; lyset i stua er på, og hun svarer på telefonen.",
+            "bucket_id": "inference-ma"
+          },
+          {
+            "item_id": "office-window",
+            "text": "Det bør være noen på kontoret ennå; vinduet er opplyst, og jeg hører Kari snakke der inne.",
             "bucket_id": "inference-ma"
           },
           {
             "item_id": "wet-streets",
-            "text": "Det må ha regnet i natt; gatene er våte.",
+            "text": "Det må ha blåst kraftig i natt; flere greiner ligger på bakken.",
             "bucket_id": "inference-ma"
           },
           {
             "item_id": "newspaper-concert",
-            "text": "Bandet skal være svært godt live, ifølge avisen.",
+            "text": "Ifølge arrangøren skal konserten begynne klokka åtte.",
             "bucket_id": "report-skal"
           },
           {
             "item_id": "neighbour-renovation",
-            "text": "Leiligheten skal være nyoppusset, sier naboen.",
+            "text": "Museet skal ha fått en ny kafé, forteller guiden.",
             "bucket_id": "report-skal"
           },
           {
             "item_id": "timetable-train",
-            "text": "Toget bør være her om to minutter hvis rutetabellen stemmer.",
+            "text": "Ferga bør være framme om en halvtime dersom været holder seg.",
             "bucket_id": "expectation-bor"
           },
           {
             "item_id": "normal-delivery",
-            "text": "Pakken bør komme før lunsj dersom leveringen går som normalt.",
+            "text": "Det bør bli ledige plasser hvis alle melder seg av innen fristen.",
             "bucket_id": "expectation-bor"
           }
         ]
@@ -1026,43 +1053,272 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "New situation: a delivery is late at your workplace, and two colleagues are deciding what to do. Write a short conversation in natural Bokmål — between 20 and 70 words — and mark the speaker at the start of each line. Use at least three of må, kan, skal, vil, and bør. Include (1) one claim-level reading: inferential må, reported-information skal, or expectation bør; and (2) one core action meaning such as necessity, possibility, plan, wish, or advice. Make the surrounding context clear enough to support every modal you use."
+          "value": "Melding fra lageret: «Budbilen forlot terminalen klokka 09.15. Vanlig kjøretid er 45 minutter, men pakken har ikke kommet klokka 11.00.» Kunden trenger pakken før klokka 14.00. Nora kan ringe transportselskapet, og Amir møter kunden klokka 13.30. Skriv en dialog. Bruk må til en slutning om forsinkelsen, skal til å gjengi lagerets beskjed, bør til en forventning på vilkår og et modalverb til å foreslå neste steg."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Bruk må til slutningen, skal til opplysningen fra lageret, bør til forventningen og et modalverb om handling til neste steg."
+        }
+      ],
       "payload": {
         "response_language": "no",
-        "min_words": 20,
+        "min_words": 30,
         "max_words": 70,
-        "judge_prompt": "Check the dialogue against the task and report evidence for each criterion, quoting every modal use and the contextual evidence for its reading. State the total word count excluding speaker labels.",
+        "judge_prompt": "Evaluate criteria dialogue-purpose, facts-supported, inference-from-clues, reported-information, conditional-expectation, action-modal, and natural-bokmal as gating criteria. Accept natural Bokmål variants that use the required modal readings accurately. Quote relevant evidence. Do not add requirements.",
         "criteria": [
           {
-            "id": "dialogue-format",
-            "instruction": "Written as a coherent workplace conversation about the late delivery, with the speaker marked at the start of each line."
+            "id": "dialogue-purpose",
+            "instruction": "The response is a coherent workplace dialogue that interprets the delay and agrees on a next action."
           },
           {
-            "id": "within-word-bounds",
-            "instruction": "The dialogue is between 20 and 70 words, not counting speaker labels."
+            "id": "facts-supported",
+            "instruction": "The dialogue does not contradict the warehouse message or supplied facts."
           },
           {
-            "id": "at-least-three-modals",
-            "instruction": "Uses at least three of må, kan, skal, vil, and bør."
+            "id": "natural-bokmal",
+            "instruction": "The response is understandable, natural Bokmål."
           },
           {
-            "id": "every-modal-fits-context",
-            "instruction": "Every counted modal has a contextually appropriate action, inference, report, or expectation reading; no extra modal is accepted merely because its form is grammatical."
+            "id": "inference-from-clues",
+            "instruction": "Uses må to draw a plausible inference from the delivery facts."
           },
           {
-            "id": "evidence-reading",
-            "instruction": "Uses inferential må, reported-information skal, or expectation bør at least once, with context that supports that reading."
+            "id": "reported-information",
+            "instruction": "Uses skal to relay the warehouse's information as attributed to that source."
           },
           {
-            "id": "action-reading",
-            "instruction": "Uses at least one modal for a core action meaning such as necessity, possibility, plan, wish, or advice, with context that supports that reading."
+            "id": "conditional-expectation",
+            "instruction": "Uses bør for an expectation tied to a condition, such as ordinary travel conditions."
           },
           {
-            "id": "natural-bokmal-grammar",
-            "instruction": "Natural Bokmål with correct modal grammar: no å between a modal and its infinitive, and word order that fits a conversation."
+            "id": "action-modal",
+            "instruction": "Uses a modal with an action meaning to propose or agree on a next step."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_distinguish_action_and_evidence_readings",
+      "operation": "categorize",
+      "objective_id": "obj-modal-verbs-in-context-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Sorter setningene etter hva modalverbet uttrykker."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Vurder om modalverbet gjelder en handling noen styrer, eller en påstand som bygger på bevis, en kilde eller en forventning."
+        }
+      ],
+      "payload": {
+        "buckets": [
+          {
+            "bucket_id": "action-meaning",
+            "label": "Action meaning"
+          },
+          {
+            "bucket_id": "evidence-meaning",
+            "label": "Evidence, report, or expectation"
+          }
+        ],
+        "items": [
+          {
+            "item_id": "cabin-boots",
+            "text": "Ingrid bør ta med støvler fordi stien er gjørmete.",
+            "bucket_id": "action-meaning"
+          },
+          {
+            "item_id": "stove-inference",
+            "text": "Det må være fyr i ovnen; det lukter røyk.",
+            "bucket_id": "evidence-meaning"
+          },
+          {
+            "item_id": "holiday-plan",
+            "text": "Thomas skal kjøre til Telemark på fredag.",
+            "bucket_id": "action-meaning"
+          },
+          {
+            "item_id": "reported-cabin",
+            "text": "Hytta skal være ledig i påsken, ifølge kalenderen.",
+            "bucket_id": "evidence-meaning"
+          },
+          {
+            "item_id": "food-advice",
+            "text": "Du bør pakke noe varmt til kvelden.",
+            "bucket_id": "action-meaning"
+          },
+          {
+            "item_id": "expected-weather",
+            "text": "Det bør bli kjøligere etter solnedgang hvis skyene trekker inn.",
+            "bucket_id": "evidence-meaning"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_classify_evidence_reading",
+      "operation": "categorize",
+      "objective_id": "obj-modal-verbs-in-context-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Sorter påstandene etter om de bygger på tegn, gjengir en kilde eller uttrykker en forventning på vilkår."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Se etter tegn, en oppgitt kilde eller et vilkår som støtter forventningen."
+        }
+      ],
+      "payload": {
+        "buckets": [
+          {
+            "bucket_id": "inference-ma",
+            "label": "Inference from clues"
+          },
+          {
+            "bucket_id": "report-skal",
+            "label": "Information attributed to a source"
+          },
+          {
+            "bucket_id": "expectation-bor",
+            "label": "Reasonable expectation"
+          }
+        ],
+        "items": [
+          {
+            "item_id": "muddy-trail",
+            "text": "Stien bør være glatt; det regnet hele natten, og temperaturen ligger rundt null.",
+            "bucket_id": "inference-ma"
+          },
+          {
+            "item_id": "packed-car",
+            "text": "De må ha pakket bilen allerede; nøklene ligger i bagasjerommet, og bilen er klar til avreise.",
+            "bucket_id": "inference-ma"
+          },
+          {
+            "item_id": "cabin-review",
+            "text": "Hytta skal ha fått nytt kjøkken, ifølge annonsen.",
+            "bucket_id": "report-skal"
+          },
+          {
+            "item_id": "local-news",
+            "text": "Det skal være stengt på veien, melder kommunen.",
+            "bucket_id": "report-skal"
+          },
+          {
+            "item_id": "night-temperature",
+            "text": "Temperaturen bør synke etter midnatt hvis vinden løyer.",
+            "bucket_id": "expectation-bor"
+          },
+          {
+            "item_id": "train-arrival",
+            "text": "Toget bør komme snart dersom det ikke blir flere forsinkelser.",
+            "bucket_id": "expectation-bor"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_transfer_modal_reading",
+      "operation": "categorize",
+      "objective_id": "obj-modal-verbs-in-context-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Sorter setningene etter betydningen av modalverbet."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Sammenhengen rundt modalverbet – årsak, kilde, vilkår eller planlagt handling – avgjør hvordan det skal tolkes."
+        }
+      ],
+      "payload": {
+        "buckets": [
+          {
+            "bucket_id": "necessity-ma",
+            "label": "Necessary action"
+          },
+          {
+            "bucket_id": "possibility-kan",
+            "label": "Possible action"
+          },
+          {
+            "bucket_id": "plan-skal",
+            "label": "Planned action"
+          },
+          {
+            "bucket_id": "wish-vil",
+            "label": "Wish"
+          },
+          {
+            "bucket_id": "advice-bor",
+            "label": "Advice"
+          },
+          {
+            "bucket_id": "inference-ma",
+            "label": "Inference from clues"
+          },
+          {
+            "bucket_id": "report-skal",
+            "label": "Information from a source"
+          },
+          {
+            "bucket_id": "expectation-bor",
+            "label": "Rimelig forventning"
+          }
+        ],
+        "items": [
+          {
+            "item_id": "necessary-day-off",
+            "text": "Ingrid må ta fri på fredag for å rekke avreisen.",
+            "bucket_id": "necessity-ma"
+          },
+          {
+            "item_id": "possible-drive",
+            "text": "Jeg kan kjøre, så deler vi på bensinen.",
+            "bucket_id": "possibility-kan"
+          },
+          {
+            "item_id": "planned-train",
+            "text": "Vi skal ta toget hvis bilen ikke starter.",
+            "bucket_id": "plan-skal"
+          },
+          {
+            "item_id": "wished-return",
+            "text": "Jeg vil gjerne besøke hytta igjen til sommeren.",
+            "bucket_id": "wish-vil"
+          },
+          {
+            "item_id": "advised-boots",
+            "text": "Du bør velge støvler med godt grep på den gjørmete stien.",
+            "bucket_id": "advice-bor"
+          },
+          {
+            "item_id": "inferred-cold",
+            "text": "Det må ha vært kaldt i natt; vannet i bøtta har frosset.",
+            "bucket_id": "inference-ma"
+          },
+          {
+            "item_id": "reported-stove",
+            "text": "Naboen skal ha fyrt opp før vi kom, ifølge Thomas.",
+            "bucket_id": "report-skal"
+          },
+          {
+            "item_id": "expected-sunset",
+            "text": "Det bør bli kjøligere etter solnedgang, dersom det klarner opp.",
+            "bucket_id": "expectation-bor"
           }
         ]
       }
@@ -1075,7 +1331,10 @@
       "exercise_ids": [
         "distinguish_action_and_evidence_readings",
         "classify_evidence_reading",
-        "transfer_modals_across_action_and_evidence"
+        "transfer_modals_across_action_and_evidence",
+        "review_distinguish_action_and_evidence_readings",
+        "review_classify_evidence_reading",
+        "review_transfer_modal_reading"
       ]
     }
   ],

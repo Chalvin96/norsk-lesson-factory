@@ -1,0 +1,465 @@
+- handle: gender_phrase_discrimination
+  op: choose
+  objective: obj-indefinite-articles-01
+  bloom: understand
+  prompt_md: Using the lesson's mandatory three-gender Bokmål convention, choose the article phrase that
+    matches each noun card's definite form.
+  stem_md: 'Noun cards: sengen · hylla · skrivebordet'
+  options:
+  - id: gender-labels-feminine-as-masculine
+    text: en seng · en hylle · et skrivebord
+    correct: false
+    why: The lesson's three-gender convention uses ei with hylle.
+  - id: gender-labels-neuter-as-masculine
+    text: en seng · ei hylle · en skrivebord
+    correct: false
+    why: Skrivebord is neuter and requires et.
+  - id: gender-labels-masculine-as-neuter
+    text: et seng · ei hylle · et skrivebord
+    correct: false
+    why: Seng is masculine and requires en.
+  - id: gender-labels-correct
+    text: en seng · ei hylle · et skrivebord
+    correct: true
+    why: The three-gender convention maps -en to en, -a to ei, and -et to et.
+  derived_from:
+  - section_id: one-thing-en-ei-et
+- handle: room_article_hunt
+  op: recall_fill
+  objective: obj-indefinite-articles-01
+  bloom: understand
+  prompt_md: Using the lesson's mandatory three-gender Bokmål convention, fill in en, ei, or et.
+  audio_target: Amina ser en seng, ei hylle og et skrivebord.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Amina
+      text_md: «Jeg ser ___ seng, ___ hylle og ___ skrivebord.»
+  segments:
+  - text_md: '«Jeg ser '
+  - blank_id: room-seng-article
+    options:
+    - en
+    - et
+    - ei
+    answer_index: 0
+  - text_md: ' seng,'
+  - blank_id: room-hylle-article
+    options:
+    - et
+    - ei
+    - en
+    answer_index: 1
+  - text_md: ' hylle og '
+  - blank_id: room-skrivebord-article
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 2
+  - text_md: ' skrivebord.»'
+  explanation_md: Under the lesson's mandatory three-gender convention, seng is masculine, hylle is feminine,
+    and skrivebord is neuter.
+  derived_from:
+  - section_id: one-thing-en-ei-et
+- handle: furnishing_the_room
+  op: recall_fill
+  objective: obj-indefinite-articles-01
+  bloom: apply
+  prompt_md: Using the lesson's mandatory three-gender Bokmål convention, fill in en, ei, or et.
+  audio_target: Til rommet trenger Amina en stol, ei bok og et kart.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Amina
+      text_md: «Til rommet trenger jeg ___ stol, ___ bok og ___ kart.»
+  segments:
+  - text_md: '«Til rommet trenger jeg '
+  - blank_id: furnishing-stol-article
+    options:
+    - en
+    - et
+    - ei
+    answer_index: 0
+  - text_md: ' stol,'
+  - blank_id: furnishing-bok-article
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 1
+  - text_md: ' bok og '
+  - blank_id: furnishing-kart-article
+    options:
+    - ei
+    - en
+    - et
+    answer_index: 2
+  - text_md: ' kart.»'
+  explanation_md: Under the lesson's mandatory three-gender convention, stol is masculine, bok is feminine,
+    and kart is neuter.
+  derived_from:
+  - section_id: choosing-the-article-in-a-sentence
+- handle: role_or_person
+  op: recall_fill
+  objective: obj-indefinite-articles-01
+  bloom: apply
+  prompt_md: Complete each reply.
+  audio_target: Hun er lærer. Hun møter en lærer. Han er lege. Han ringer en lege. Jeg er student. Jeg
+    kjenner en student.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Ingrid
+      text_md: «Hva jobber hun som?»
+    - speaker: Amina
+      text_md: «Hun er ___.»
+    - speaker: Per
+      text_md: «Hvem møter hun?»
+    - speaker: Amina
+      text_md: «Hun møter ___.»
+    - speaker: Ingrid
+      text_md: «Hva jobber han som?»
+    - speaker: Amina
+      text_md: «Han er ___.»
+    - speaker: Per
+      text_md: «Hvem ringer han?»
+    - speaker: Amina
+      text_md: «Han ringer ___.»
+    - speaker: Ingrid
+      text_md: «Hva er du?»
+    - speaker: Amina
+      text_md: «Jeg er ___.»
+    - speaker: Per
+      text_md: «Hvem kjenner du?»
+    - speaker: Amina
+      text_md: «Jeg kjenner ___.»
+  segments:
+  - text_md: '«Hun er '
+  - blank_id: role-laerer-role-phrase
+    options:
+    - lærer
+    - en lærer
+    answer_index: 0
+  - text_md: '. Hun møter '
+  - blank_id: role-laerer-person-phrase
+    options:
+    - en lærer
+    - lærer
+    answer_index: 0
+  - text_md: '. Han er '
+  - blank_id: role-lege-role-phrase
+    options:
+    - en lege
+    - lege
+    answer_index: 1
+  - text_md: '. Han ringer '
+  - blank_id: role-lege-person-phrase
+    options:
+    - lege
+    - en lege
+    answer_index: 1
+  - text_md: '. Jeg er '
+  - blank_id: role-student-role-phrase
+    options:
+    - student
+    - en student
+    answer_index: 0
+  - text_md: '. Jeg kjenner '
+  - blank_id: role-student-person-phrase
+    options:
+    - en student
+    - student
+    answer_index: 0
+  - text_md: .
+  explanation_md: A simple profession after er has no article; a specific person takes en.
+  derived_from:
+  - section_id: no-article-for-a-role-after-vaere
+- handle: drink_or_serving
+  op: choose
+  objective: obj-indefinite-articles-01
+  bloom: understand
+  prompt_md: Choose the sentence that matches the order for one serving.
+  stem_md: At the café, the cashier asks what Amina wants. Amina orders one cup of coffee.
+  options:
+  - id: definite-serving
+    text: Jeg vil gjerne ha kaffen.
+    correct: false
+    why: This refers to particular coffee already known.
+  - id: serving
+    text: Jeg vil gjerne ha en kaffe.
+    correct: true
+    why: En kaffe presents the order as one countable serving.
+  - id: substance
+    text: Jeg vil gjerne ha kaffe.
+    correct: false
+    why: The bare noun presents coffee as a substance rather than one serving.
+  - id: wrong-gender-serving
+    text: Jeg vil gjerne ha et kaffe.
+    correct: false
+    why: The article does not match the taught form for one serving of coffee.
+  derived_from:
+  - section_id: no-article-for-a-substance
+- handle: full_response_choice
+  op: choose
+  objective: obj-indefinite-articles-01
+  bloom: analyze
+  prompt_md: Choose the message that matches all four facts and follows the lesson's mandatory three-gender
+    convention.
+  stem_md: Amina found a room. The room has a shelf. Ingrid works there as a teacher. At home they drink
+    coffee.
+  options:
+  - id: room-wrong-gender
+    text: Jeg har funnet en rom. Ingrid er lærer. Vi drikker kaffe. Rommet har ei hylle.
+    correct: false
+    why: The article with rom is incorrect.
+  - id: role-treated-as-person
+    text: Jeg har funnet et rom. Ingrid er en lærer. Vi drikker kaffe. Rommet har ei hylle.
+    correct: false
+    why: The profession is a bare role after er.
+  - id: substance-treated-as-serving
+    text: Jeg har funnet et rom. Ingrid er lærer. Vi drikker en kaffe. Rommet har ei hylle.
+    correct: false
+    why: The coffee is described as a serving instead of a substance.
+  - id: all-facts-correct
+    text: Jeg har funnet et rom. Ingrid er lærer. Vi drikker kaffe. Rommet har ei hylle.
+    correct: true
+    why: The message matches every fact and uses the lesson's required forms.
+  explanation_md: The correct message uses et rom, bare lærer after er, bare kaffe for the substance,
+    and ei hylle under the three-gender convention.
+  derived_from:
+  - section_id: bringing-the-choices-together
+- handle: new_kitchen_transfer
+  op: recall_fill
+  objective: obj-indefinite-articles-01
+  bloom: apply
+  prompt_md: Using the lesson's mandatory three-gender Bokmål convention, complete the account with the
+    matching noun phrase.
+  audio_target: I butikken kjøper de en stol og ei bok. De finner også et kart. Ingrid jobber som lærer.
+    På kafeen bestiller Amina en kaffe.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Amina
+      text_md: «I butikken kjøper vi ___ stol og ___ bok. Vi finner også ___ kart.»
+    - speaker: Ingrid
+      text_md: «Jeg jobber som ___.»
+    - speaker: Amina
+      text_md: «På kafeen bestiller jeg ___.»
+  segments:
+  - text_md: '«I butikken kjøper vi '
+  - blank_id: kitchen-stol-article
+    options:
+    - ei
+    - en
+    - et
+    answer_index: 1
+  - text_md: ' stol og '
+  - blank_id: kitchen-bok-article
+    options:
+    - et
+    - en
+    - ei
+    answer_index: 2
+  - text_md: ' bok. Vi finner også '
+  - blank_id: kitchen-kart-article
+    options:
+    - et
+    - en
+    - ei
+    answer_index: 0
+  - text_md: ' kart.» Ingrid: «Jeg jobber som '
+  - blank_id: kitchen-role-phrase
+    options:
+    - en lærer
+    - lærer
+    answer_index: 1
+  - text_md: '.» Amina: «På kafeen bestiller jeg '
+  - blank_id: kitchen-serving-phrase
+    options:
+    - kaffe
+    - en kopp kaffe
+    answer_index: 1
+  - text_md: .»
+  explanation_md: Countable objects use the lesson's gender-matching articles, a profession after jobber
+    som is bare, and one café serving is expressed with en kopp kaffe.
+  derived_from:
+  - section_id: back-at-the-flat
+- handle: review_room_article_hunt
+  op: recall_fill
+  objective: obj-indefinite-articles-01
+  bloom: apply
+  prompt_md: Using the lesson's mandatory three-gender Bokmål convention, complete the kitchen dialogue.
+  audio_target: På kjøkkenet trenger Amina en kopp, ei flaske og et fat.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Amina
+      text_md: «På kjøkkenet trenger jeg ___ kopp, ___ flaske og ___ fat.»
+  segments:
+  - text_md: '«På kjøkkenet trenger jeg '
+  - blank_id: review-room-kopp-article
+    options:
+    - en
+    - et
+    - ei
+    answer_index: 0
+  - text_md: ' kopp,'
+  - blank_id: review-room-flaske-article
+    options:
+    - et
+    - ei
+    - en
+    answer_index: 1
+  - text_md: ' flaske og '
+  - blank_id: review-room-fat-article
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 2
+  - text_md: ' fat.»'
+  explanation_md: Under the lesson's three-gender convention, kopp is masculine, flaske is feminine, and
+    fat is neuter.
+  derived_from:
+  - section_id: one-thing-en-ei-et
+- handle: four_way_retrieval_review
+  op: write
+  objective: obj-indefinite-articles-01
+  bloom: analyze
+  prompt_md: Write 20–40 Norwegian words about your kitchen and workday. Include one singular phrase with
+    en for a countable object, one with ei for a countable object, one with et for a countable object,
+    and one bare profession after er or jobber som.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Marta
+      text_md: «Hva har du på kjøkkenet, og hva jobber du som?»
+    - speaker: Jon
+      text_md: «Jeg forteller om tingene og jobben min.»
+  response_language: 'no'
+  judge_prompt: Check the visible criteria uses-en, uses-ei, uses-et, bare-profession, comprehensible-message,
+    and word-bound. All listed criteria gate. Report a verdict for every criterion id.
+  criteria:
+  - id: uses-en
+    instruction: The response includes at least one correct singular noun phrase with en for a countable
+      object.
+  - id: uses-ei
+    instruction: The response includes at least one correct singular noun phrase with ei for a countable
+      object.
+  - id: uses-et
+    instruction: The response includes at least one correct singular noun phrase with et for a countable
+      object.
+  - id: bare-profession
+    instruction: The response includes a profession used without an article after er or jobber som.
+  - id: comprehensible-message
+    instruction: The Norwegian is comprehensible enough for the listener to understand the description.
+  - id: word-bound
+    instruction: The response contains 20–40 words.
+  derived_from:
+  - section_id: bringing-the-choices-together
+- handle: room_reply_message
+  op: write
+  objective: obj-indefinite-articles-01
+  bloom: apply
+  prompt_md: 'Nora asks about your new shared flat. Reply in 25–45 Norwegian words and include these facts:
+    your room has a bed, shelf, and desk; a student and a teacher live there; at home you drink coffee.
+    Use en, ei, or et correctly for the listed objects.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Hvordan er det nye kollektivet? Hva har du på rommet, hvem bor der, og hva drikker dere?»
+    - speaker: Amina
+      text_md: «Jeg prøver å beskrive kollektivet uten å glemme noen detaljer.»
+  response_language: 'no'
+  judge_prompt: Evaluate only the listed criteria. The criteria reply-purpose, supplied-facts, article-forms,
+    word-bound, and comprehensible-message are gating. Criteria whose ids end in -observation are diagnostic
+    and must never make the response fail. Report a verdict for every criterion id.
+  criteria:
+  - id: reply-purpose
+    instruction: The response is a message to Nora describing the new shared flat.
+  - id: supplied-facts
+    instruction: The response communicates that the room has a bed, shelf, and desk, that a student and
+      teacher live there, and that coffee is drunk at home.
+  - id: article-forms
+    instruction: The singular indefinite phrases for the bed, shelf, and desk use articles that match
+      the lesson's required gender convention.
+  - id: word-bound
+    instruction: The response contains 25–45 words.
+  - id: comprehensible-message
+    instruction: The Norwegian is comprehensible enough for Nora to understand the description.
+  - id: count-articles-observation
+    instruction: 'Observation only: report the article used with each supplied singular noun and whether
+      it matches the noun''s gender; do not fail the response.'
+  - id: role-form-observation
+    instruction: 'Observation only: report whether student and teacher are bare role nouns after være;
+      do not fail the response.'
+  - id: substance-form-observation
+    instruction: 'Observation only: report whether coffee at home is presented without an article; do
+      not fail the response.'
+  derived_from:
+  - section_id: back-at-the-flat
+- handle: first_day_exchange
+  op: write
+  objective: obj-indefinite-articles-01
+  bloom: apply
+  prompt_md: Write a 15–30-word Norwegian exchange for a classmate at the door. Greet, ask and answer
+    names, mark the meeting as friendly, and close.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Mina
+      text_md: «Hei! Jeg er ny i klassen.»
+    - speaker: Jonas
+      text_md: «Velkommen! La oss hilse ordentlig.»
+  response_language: 'no'
+  judge_prompt: Check criteria opens-greeting, both-names, friendly-meeting, closes, and word-bound. Record
+    connected-observation diagnostically. All non-observation criteria gate.
+  criteria:
+  - id: opens-greeting
+    instruction: The exchange opens with a Norwegian greeting.
+  - id: both-names
+    instruction: One speaker asks for the other person's name, and both speakers give their names.
+  - id: friendly-meeting
+    instruction: The exchange includes a natural friendly meeting expression.
+  - id: closes
+    instruction: The exchange ends with a natural goodbye.
+  - id: word-bound
+    instruction: The exchange contains 15–30 words.
+  - id: connected-observation
+    instruction: 'Observation only: note whether the lines form one connected conversation; do not fail
+      an otherwise complete exchange.'
+  derived_from:
+  - section_id: guided-exchange-practice
+- handle: review_complete_meeting
+  op: write
+  objective: obj-greet-and-introduce-yourself-01
+  bloom: apply
+  prompt_md: Write a 12–24-word Norwegian exchange at the bus stop. Greet, introduce yourself, ask how
+    long the other person has waited, respond, and close.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Selma
+      text_md: «Hei, jeg venter på bussen.»
+    - speaker: Noah
+      text_md: «Hei! Vi kan hilse mens vi venter.»
+  response_language: 'no'
+  judge_prompt: Check criteria greeting, self-introduction, waiting-question, waiting-answer, and closing,
+    and word-bound. All listed criteria gate. Report a verdict for every criterion id.
+  criteria:
+  - id: greeting
+    instruction: The exchange contains a Norwegian greeting.
+  - id: self-introduction
+    instruction: One speaker introduces themself by name.
+  - id: waiting-question
+    instruction: One speaker asks how long the other person has been waiting.
+  - id: waiting-answer
+    instruction: The other speaker answers how long they have been waiting.
+  - id: closing
+    instruction: The exchange ends with a natural closing.
+  - id: word-bound
+    instruction: The exchange contains 12–24 words.
+  derived_from:
+  - section_id: building-the-complete-first-meeting

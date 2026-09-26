@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "passive_bli_and_s",
   "kind": "grammar",
   "language": "nb-NO",
@@ -80,6 +80,38 @@
     {
       "kind": "exercise",
       "id": "retrieve_bli_and_s_passive"
+    },
+    {
+      "kind": "exercise",
+      "id": "discriminate_passive_response"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_form_s_apnes"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_form_bli_future"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_form_bli_past"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_choose_routine_s"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_choose_event_bli"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_omit_irrelevant_agent"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_keep_relevant_agent"
     }
   ],
   "sections": [
@@ -934,15 +966,16 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Dørene åpners klokka ti."
+                  "value": "Dørene åpners klokka ti."
                 }
               ],
               "en": [
                 {
                   "kind": "text",
-                  "value": "Intended meaning: The doors are opened at ten."
+                  "value": "The doors are opened at ten."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "forming-s-passive-block-12"
@@ -1392,15 +1425,16 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Rommet blir males."
+                  "value": "Rommet blir males."
                 }
               ],
               "en": [
                 {
                   "kind": "text",
-                  "value": "Intended meaning: The room is being painted."
+                  "value": "The room is being painted."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "forming-passive-with-bli-block-13"
@@ -2408,33 +2442,33 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Compare the two supplied library messages. Select one complete interpretation of what each passive puts in focus and why the employee need not be named."
+          "value": "Velg den beste forklaringen."
         }
       ],
       "explanation": null,
       "payload": {
         "options": [
           {
-            "option_id": "focus-agent",
-            "text": "Begge setningene setter den ansatte som utfører handlingen, i fokus; bordene og skiltet er bare bakgrunn. (Both sentences focus on the employee who acts; the tables and sign are only background.)",
-            "why": "This reverses the information focus of a passive sentence."
+            "option_id": "agent-focus",
+            "text": "Begge beskjedene framhever den ansatte som utfører arbeidet, selv om personen ikke er nevnt.",
+            "why": "Dette forveksler den underforståtte utøveren med informasjonen som faktisk står i fokus."
           },
           {
-            "option_id": "focus-reversed",
-            "text": "«Bord ryddes etter bruk.» handler om én bestemt ansatt, mens «Det nye skiltet blir hengt opp i kveld.» er en generell rutine. Derfor må den ansatte navngis. (The first is about one particular employee, while the second is a general routine. Therefore the employee must be named.)",
-            "why": "It confuses the routine with the particular event and wrongly makes the agent necessary."
+            "option_id": "reversed-focus",
+            "text": "Den første beskriver én bestemt hendelse, og den andre beskriver en fast rutine.",
+            "why": "Tidsuttrykkene «etter bruk» og «i kveld» gir motsatt skille."
           },
           {
-            "option_id": "focus-correct",
-            "text": "«Bord ryddes etter bruk.» setter bordene og rutinen i fokus, mens «Det nye skiltet blir hengt opp i kveld.» setter den konkrete hendelsen med skiltet i fokus. Hvem som utfører handlingen, er ikke viktig. (The first focuses on tables and the routine; the second focuses on the particular sign event. The worker is not important.)",
-            "why": "The affected thing or particular event is the focus, while the agent is irrelevant."
+            "option_id": "affected-focus",
+            "text": "Den første framhever en rutine, og den andre framhever en bestemt hendelse. Den som gjør arbeidet, er ikke viktig i noen av beskjedene.",
+            "why": "Mottakerne trenger å vite hva som skjer med bordene og skiltet, ikke hvem som utfører arbeidet."
           }
         ],
-        "answer_id": "focus-correct",
+        "answer_id": "affected-focus",
         "stem": [
           {
             "kind": "text",
-            "value": "Compare «Bord ryddes etter bruk.» and «Det nye skiltet blir hengt opp i kveld.» Which interpretation best explains what each passive puts in focus and why the worker is unnecessary?"
+            "value": "Offentlig beskjed: «Bord ryddes etter bruk.» Intern oppdatering: «Det nye skiltet blir hengt opp i kveld.»"
           }
         ]
       }
@@ -2442,43 +2476,57 @@
     {
       "kind": "exercise",
       "id": "form_s_passive_for_procedures",
-      "operation": "build",
+      "operation": "recall_fill",
       "objective_id": "obj-passive-bli-and-s-01",
       "prompt": [
         {
           "kind": "text",
-          "value": "Rewrite the procedural statement Ansatte rydder bord etter bruk. (Staff clear tables after use.) Put the affected item first, omit the worker, and remove the present-tense -r where needed to form the s-passive. Build exactly one complete Norwegian notice from the supplied tokens."
+          "value": "Fullfør den offentlige beskjeden med s-passiv av «åpne»."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Åpner» mister presens-r før passiv-s legges til: «åpnes»."
+        }
+      ],
       "payload": {
-        "tokens": [
+        "segments": [
           {
-            "token_id": "s-1",
-            "text": "Bord",
-            "fixed": false
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Dørene"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
           },
           {
-            "token_id": "s-2",
-            "text": "ryddes",
-            "fixed": false
+            "kind": "blank",
+            "blank_id": "form-s-passive",
+            "options": [
+              "åpnes",
+              "åpner"
+            ],
+            "answer_index": 0
           },
           {
-            "token_id": "s-3",
-            "text": "etter",
-            "fixed": false
-          },
-          {
-            "token_id": "s-4",
-            "text": "bruk.",
-            "fixed": false
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "hver morgen klokka ti."
+              }
+            ]
           }
-        ],
-        "answer_order": [
-          "s-1",
-          "s-2",
-          "s-3",
-          "s-4"
         ]
       }
     },
@@ -2490,79 +2538,69 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Recast two particular library updates as one complete sentence: the new sign will be put up this evening, and the door was repaired on Friday. Use blir/ble + past participle, place tense on bli, and omit the agents."
+          "value": "Skriv de to beskjedene om hendelsene."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Blir» viser den planlagte hendelsen, mens «ble» viser den avsluttede hendelsen."
+        }
+      ],
       "payload": {
         "tokens": [
           {
             "token_id": "b-1",
-            "text": "Det",
+            "text": "Lampene",
             "fixed": false
           },
           {
             "token_id": "b-2",
-            "text": "nye",
-            "fixed": false
-          },
-          {
-            "token_id": "b-3",
-            "text": "skiltet",
-            "fixed": false
-          },
-          {
-            "token_id": "b-4",
             "text": "blir",
             "fixed": false
           },
           {
-            "token_id": "b-5",
-            "text": "hengt",
+            "token_id": "b-3",
+            "text": "montert",
             "fixed": false
           },
           {
-            "token_id": "b-6",
-            "text": "opp",
-            "fixed": false
-          },
-          {
-            "token_id": "b-7",
+            "token_id": "b-4",
             "text": "i",
             "fixed": false
           },
           {
-            "token_id": "b-8",
-            "text": "kveld,",
+            "token_id": "b-5",
+            "text": "morgen,",
             "fixed": false
           },
           {
-            "token_id": "b-9",
+            "token_id": "b-6",
             "text": "og",
             "fixed": false
           },
           {
-            "token_id": "b-10",
-            "text": "døren",
+            "token_id": "b-7",
+            "text": "døra",
             "fixed": false
           },
           {
-            "token_id": "b-11",
+            "token_id": "b-8",
             "text": "ble",
             "fixed": false
           },
           {
-            "token_id": "b-12",
+            "token_id": "b-9",
             "text": "reparert",
             "fixed": false
           },
           {
-            "token_id": "b-13",
+            "token_id": "b-10",
             "text": "på",
             "fixed": false
           },
           {
-            "token_id": "b-14",
+            "token_id": "b-11",
             "text": "fredag.",
             "fixed": false
           }
@@ -2578,107 +2616,46 @@
           "b-8",
           "b-9",
           "b-10",
-          "b-11",
-          "b-12",
-          "b-13",
-          "b-14"
+          "b-11"
         ]
       }
     },
     {
       "kind": "exercise",
       "id": "choose_passive_for_routine_or_event",
-      "operation": "build",
+      "operation": "choose",
       "objective_id": "obj-passive-bli-and-s-01",
       "prompt": [
         {
           "kind": "text",
-          "value": "Build one complete library-reopening message from the tokens. Combine a recurring after-use procedure with a particular sign event this evening. Use an s-passive for the procedure, a bli-passive for the event, and omit the workers."
+          "value": "Velg kombinasjonen som følger den vanlige tendensen for rutiner og bestemte enkelthendelser."
         }
       ],
       "explanation": null,
       "payload": {
-        "tokens": [
+        "options": [
           {
-            "token_id": "r-1",
-            "text": "Bord",
-            "fixed": false
+            "option_id": "routine-bli-event-s",
+            "text": "Bokluka blir tømt hver kveld, og det nye skiltet henges opp i kveld.",
+            "why": "S-passiv kan også være naturlig om en planlagt hendelse i en beskjed, men bli-passiv er den vanligere tendensen for kveldens bestemte oppsetting."
           },
           {
-            "token_id": "r-2",
-            "text": "ryddes",
-            "fixed": false
+            "option_id": "both-active",
+            "text": "Bokluka blir tømt hver kveld, og det nye skiltet blir hengt opp i kveld.",
+            "why": "Bli-passiv kan også beskrive en rutine, men s-passiv er vanligvis den kortere formen i en offentlig beskjed."
           },
           {
-            "token_id": "r-3",
-            "text": "etter",
-            "fixed": false
-          },
-          {
-            "token_id": "r-4",
-            "text": "bruk,",
-            "fixed": false
-          },
-          {
-            "token_id": "r-5",
-            "text": "og",
-            "fixed": false
-          },
-          {
-            "token_id": "r-6",
-            "text": "det",
-            "fixed": false
-          },
-          {
-            "token_id": "r-7",
-            "text": "nye",
-            "fixed": false
-          },
-          {
-            "token_id": "r-8",
-            "text": "skiltet",
-            "fixed": false
-          },
-          {
-            "token_id": "r-9",
-            "text": "blir",
-            "fixed": false
-          },
-          {
-            "token_id": "r-10",
-            "text": "hengt",
-            "fixed": false
-          },
-          {
-            "token_id": "r-11",
-            "text": "opp",
-            "fixed": false
-          },
-          {
-            "token_id": "r-12",
-            "text": "i",
-            "fixed": false
-          },
-          {
-            "token_id": "r-13",
-            "text": "kveld.",
-            "fixed": false
+            "option_id": "routine-s-event-bli",
+            "text": "Bokluka tømmes hver kveld, og det nye skiltet blir hengt opp i kveld.",
+            "why": "Dette følger den vanlige tendensen, med s-passiv for rutinen og bli-passiv for kveldens bestemte hendelse."
           }
         ],
-        "answer_order": [
-          "r-1",
-          "r-2",
-          "r-3",
-          "r-4",
-          "r-5",
-          "r-6",
-          "r-7",
-          "r-8",
-          "r-9",
-          "r-10",
-          "r-11",
-          "r-12",
-          "r-13"
+        "answer_id": "routine-s-event-bli",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Biblioteket informerer besøkende om to ting: De ansatte tømmer bokluka hver kveld, og montøren setter opp det nye skiltet i kveld."
+          }
         ]
       }
     },
@@ -2690,23 +2667,36 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Rewrite the following practical notices in Norwegian. The named workers in the first two notices are irrelevant: put the affected item first, omit the worker, and choose a natural passive. Use an s-passive for the after-use routine and a bli-passive for the particular evening event. The worker in the third notice is relevant, so leave that notice unchanged. Return only the three resulting notices. 1. Renholderen rydder bord etter bruk. (The cleaner clears tables after use.) 2. Teknikeren henger opp det nye skiltet i kveld. (The technician puts up the new sign this evening.) 3. En bibliotekar møter deg ved inngangen klokka fem. (A librarian meets you at the entrance at five.)"
+          "value": "Skriv en offentlig beskjed til bibliotekets besøkende. Fortell at bord ryddes etter bruk, at det nye skiltet henges opp i kveld, og at bibliotekar Nora møter skoleklassen ved inngangen klokka fem. Utelat de ansatte i de to første opplysningene, men ta med Nora som kontaktperson."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "En offentlig beskjed kan utelate ukjente eller irrelevante arbeidere, men bør beholde navnet når mottakeren trenger det."
+        }
+      ],
       "payload": {
         "response_language": "no",
-        "min_words": 15,
-        "max_words": 35,
-        "judge_prompt": "Check the response against the task and report evidence for each criterion. The expected core rewrites are «Bord ryddes etter bruk.» and «Det nye skiltet blir hengt opp i kveld.», but accept equally natural Bokmål variants that preserve the same passive patterns and information focus. The relevant librarian must remain in the third notice.",
+        "min_words": 20,
+        "max_words": 40,
+        "judge_prompt": "Vurder svaret etter kriteriene public-facts, contact-named, agent-omission og passive-choice-observation. Registrer observasjonen diagnostisk.",
         "criteria": [
           {
-            "id": "omit-irrelevant-agents",
-            "instruction": "Omits the irrelevant worker in the first two rewrites, puts the affected item first, and leaves the relevant librarian in the third notice."
+            "id": "public-facts",
+            "instruction": "Beskjeden bevarer rutinen med bordene og kveldens skiltoppsetting."
           },
           {
-            "id": "passive-pattern-support",
-            "instruction": "Uses a natural s-passive for the after-use routine and a natural bli-passive for the evening event."
+            "id": "contact-named",
+            "instruction": "Beskjeden navngir Nora som kontakt for skoleklassen ved inngangen klokka fem."
+          },
+          {
+            "id": "agent-omission",
+            "instruction": "Beskjeden utelater renholderen og teknikeren i de to første punktene."
+          },
+          {
+            "id": "passive-choice-observation",
+            "instruction": "Observation only: registrer diagnostisk om rutinen uttrykkes med s-passiv og kveldshendelsen med bli-passiv."
           }
         ]
       }
@@ -2719,27 +2709,32 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Revise Marius's draft public notice for the library reopening. Return only the revised Norwegian notice. Keep all four content points, remove irrelevant workers, put affected items or events first, use s-passives for recurring or instructional points, and use bli-passives for particular event updates. 1. Ansatte rydder bord etter bruk. (Staff clear tables after use.) 2. Renholderen vasker gulvet hver dag. (The cleaner washes the floor every day.) 3. Teknikeren henger opp det nye skiltet i kveld. (The technician puts up the new sign this evening.) 4. Vaktmesteren reparerte døren på fredag. (The caretaker repaired the door on Friday.)"
+          "value": "Rett Marius’ beskjed og skriv den på nytt for bibliotekets besøkende. «Bøkene blir leveres i luka. Luka blir tømt hver kveld. Det nye skiltet henges opp hver kveld. Døra ble repareres på fredag.» Lånerne leverer bøker i luka hver kveld mens hoveddøra er stengt. Ansatte tømmer luka hver kveld. Det nye skiltet skal opp én gang i kveld, og en vaktmester reparerte døra på fredag. Bruk naturlige passivformer og skill mellom den faste kveldsrutinen og enkelthendelsene."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Bli-passiv bruker partisipp etter «blir» eller «ble», mens s-passiv passer en fast rutine. Tidsuttrykkene må fortsatt skille rutiner fra enkelthendelser."
+        }
+      ],
       "payload": {
         "response_language": "no",
         "min_words": 20,
-        "max_words": 50,
-        "judge_prompt": "Check all four content points against the task and report evidence for each criterion. Expected core forms are «Bord ryddes etter bruk.», «Gulvet vaskes hver dag.», «Det nye skiltet blir hengt opp i kveld.», and «Døren ble reparert på fredag.». Accept natural Bokmål variants only when they preserve all content cues, the requested passive distinction, and omission of irrelevant agents.",
+        "max_words": 45,
+        "judge_prompt": "Vurder svaret etter kriteriene passive-contrast, content-preserved, errors-repaired.",
         "criteria": [
           {
-            "id": "routine-s-passives",
-            "instruction": "Recasts the first two recurring or instructional points as natural s-passives and preserves their cues such as etter bruk and hver dag."
+            "id": "passive-contrast",
+            "instruction": "Uses a natural s-passive for a recurring routine and a natural bli-passive for at least one particular event, as requested."
           },
           {
-            "id": "event-bli-passives",
-            "instruction": "Recasts the last two particular events as natural blir/ble + past participle forms and preserves their time cues."
+            "id": "content-preserved",
+            "instruction": "Den rettede beskjeden bevarer de fire oppgitte faktaene og skiller den faste kveldsrutinen fra skiltoppsettingen som skjer én gang i kveld."
           },
           {
-            "id": "integrated-agent-omission",
-            "instruction": "Removes irrelevant workers and makes the affected items or events the focus throughout the revised notice."
+            "id": "errors-repaired",
+            "instruction": "«Bøkene blir leveres» er rettet til en naturlig passivform for bokleveringen, «ble repareres» er rettet til «ble reparert», og ingen dobbel passiv står igjen."
           }
         ]
       }
@@ -2752,27 +2747,40 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write two short Norwegian parts for a café opening: one public notice and one conversational internal update. In the public notice, state that napkins are collected at the counter every day and cups are cleared after use. Use s-passives for these recurring customer procedures. In the internal update, report that the new coffee machine will be installed tomorrow and the ventilation was inspected on Friday. Use bli-passives for these particular events. Omit workers when their identities do not matter. Use original café wording."
+          "value": "Skriv en kundeoppdatering om kaféens rutiner og kommende arbeid. Kundene bestiller ved disken hver dag og setter koppene på tralla etter bruk. I morgen installerer en tekniker en ny kaffemaskin; på fredag kontrollerte en montør ventilasjonen. Bruk passiv med riktige tidsformer, og utelat de ansatte."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Kundeinformasjon framhever normalt ordningen og hendelsene, ikke hvilke ansatte som utfører arbeidet."
+        }
+      ],
       "payload": {
         "response_language": "no",
-        "min_words": 20,
+        "min_words": 25,
         "max_words": 50,
-        "judge_prompt": "Check both parts against the task and report evidence for each criterion. Expected evidence is two public procedure sentences in -s and two internal event updates using blir/ble + past participle, with worker identities omitted. Accept natural Bokmål lexical variants that preserve the two communicative settings and passive prototypes, but do not accept a verbatim lesson sentence as the transfer response.",
+        "judge_prompt": "Vurder cafe-facts, audience-purpose, agent-omission, passive-use som bindende. Rapporter passive-transfer-observation diagnostisk; naturlige s- og bli-passiver kan begge uttrykke flere av de oppgitte tidsforholdene og skal ikke underkjennes bare for valg av passivtype.",
         "criteria": [
           {
-            "id": "cafe-public-s-passives",
-            "instruction": "Uses natural s-passives for both recurring or direct-customer procedures in the public notice."
+            "id": "cafe-facts",
+            "instruction": "Oppdateringen gjengir alle fire fakta med riktige tidsforhold."
           },
           {
-            "id": "cafe-internal-bli-passives",
-            "instruction": "Uses natural blir/ble + past participle forms for both particular event updates in the internal message."
+            "id": "audience-purpose",
+            "instruction": "Teksten fungerer som en tydelig oppdatering til kafékunder om ordningen og åpningen."
           },
           {
-            "id": "cafe-agent-omission",
-            "instruction": "Omits worker identities where they do not matter and keeps the affected items or events in focus."
+            "id": "agent-omission",
+            "instruction": "Oppdateringen utelater teknikeren og montøren."
+          },
+          {
+            "id": "passive-use",
+            "instruction": "Hvert av de fire faktaene uttrykkes med en naturlig passivkonstruksjon, slik oppgaven ber om."
+          },
+          {
+            "id": "passive-transfer-observation",
+            "instruction": "Bare observasjon: Noter om svaret bruker s-passiv om rutiner og bli-passiv om bestemte hendelser; ikke underkjenn en naturlig passivvariant på dette grunnlaget."
           }
         ]
       }
@@ -2785,27 +2793,348 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Respond in Norwegian. First state the practical tendency that distinguishes the two passive patterns. Then produce one Norwegian sentence for a recurring procedure with the exact cue hver dag and an s-passive, and one conversational report about a particular event happening now or already completed with a bli-passive and an explicit time cue. Omit an irrelevant agent in both sentences. Use original wording for a setting such as a café, office, or shop."
+          "value": "Forklar kort når s-passiv og bli-passiv vanligvis brukes. Skriv én setning om en rutine med s-passiv og én om en hendelse med bli-passiv. Utelat den som utfører arbeidet."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "S-passiv kjennetegner rutiner og prosedyrer, bli-passiv kjennetegner bestemte hendelser, og utøveren utelates når mottakeren ikke trenger den."
+        }
+      ],
       "payload": {
         "response_language": "no",
         "min_words": 20,
         "max_words": 45,
-        "judge_prompt": "Check the response against the task and report evidence for each criterion. Accept concise natural Bokmål wording and different lexical frames, including either blir or ble for the particular event, when the time cue and event reading are clear. Do not require a verbatim model sentence.",
+        "judge_prompt": "Vurder svaret etter kriteriene states-tendency, routine-s-passive, event-bli-passive, agent-omission.",
         "criteria": [
           {
-            "id": "states-passive-tendency",
-            "instruction": "States in Norwegian that s-passive is often used for routines, procedures, or instructions, while bli-passive is often used for particular events."
+            "id": "states-tendency",
+            "instruction": "Svaret sier at s-passiv brukes om faste rutiner og prosedyrer, mens bli-passiv brukes om én bestemt hendelse."
           },
           {
-            "id": "recurring-s-sentence",
-            "instruction": "Provides one natural Bokmål s-passive sentence with hver dag, omitting an irrelevant agent and focusing the affected thing."
+            "id": "routine-s-passive",
+            "instruction": "Svaret inneholder én rutinesetning med en naturlig s-passiv."
           },
           {
-            "id": "event-bli-sentence",
-            "instruction": "Provides one natural Bokmål bli-passive sentence for a current or completed particular event with an explicit time cue, omitting an irrelevant agent and focusing the affected event or thing."
+            "id": "event-bli-passive",
+            "instruction": "Svaret inneholder én hendelsessetning med bli-passiv og partisipp."
+          },
+          {
+            "id": "agent-omission",
+            "instruction": "Begge setningene utelater den som utfører arbeidet."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "discriminate_passive_response",
+      "operation": "choose",
+      "objective_id": "obj-passive-bli-and-s-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg svaret som passer begge situasjonene."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "time-mismatch",
+            "text": "«Bøkene blir levert i luka i går.» / «Ja, luka repareres hver kveld.»",
+            "why": "Tidsformene gjør kundens prosedyre til en avsluttet handling og gårsdagens reparasjon til en rutine."
+          },
+          {
+            "option_id": "procedure-then-report",
+            "text": "«Bøkene leveres i luka.» / «Ja, luka ble reparert i går.»",
+            "why": "Første svar gir en generell prosedyre; andre rapporterer én avsluttet hendelse."
+          },
+          {
+            "option_id": "wrong-second",
+            "text": "«Bøkene legges i luka.» / «Ja, luka repareres i går.»",
+            "why": "S-passiven «repareres» kan ikke beskrive én fullført reparasjon i går."
+          }
+        ],
+        "answer_id": "procedure-then-report",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Kunde: «Hvordan leverer jeg lånte bøker når hoveddøra er stengt?» Leder: «Er reparasjonen av luka ferdig? Den sto på planen for i går.»"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_form_s_apnes",
+      "operation": "choose",
+      "objective_id": "obj-passive-bli-and-s-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg den riktige beskjeden."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "visers",
+            "text": "Nye utstillinger visers hver tirsdag.",
+            "why": "Presens-r er feilaktig beholdt foran passiv-s."
+          },
+          {
+            "option_id": "blir-vises",
+            "text": "Nye utstillinger blir vises hver tirsdag.",
+            "why": "«Blir» kan ikke kombineres med s-passiven «vises»."
+          },
+          {
+            "option_id": "vises",
+            "text": "Nye utstillinger vises hver tirsdag.",
+            "why": "«Vises» er s-passiven som passer den faste institusjonelle rutinen."
+          }
+        ],
+        "answer_id": "vises",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Fast ordning: Biblioteket viser nye utstillinger for publikum hver tirsdag. Den som viser utstillingen, skal ikke nevnes."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_form_bli_future",
+      "operation": "choose",
+      "objective_id": "obj-passive-bli-and-s-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg den riktige oppdateringen."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "blir-leveres",
+            "text": "De nye lampene blir leveres i morgen.",
+            "why": "Etter «blir» trengs partisipp, ikke s-passiv."
+          },
+          {
+            "option_id": "blir-levert",
+            "text": "De nye lampene blir levert i morgen.",
+            "why": "«Blir» og partisippet «levert» uttrykker den planlagte enkelthendelsen."
+          },
+          {
+            "option_id": "ble-levert",
+            "text": "De nye lampene ble levert i morgen.",
+            "why": "«Ble» viser fortid og passer derfor ikke med planen for i morgen."
+          }
+        ],
+        "answer_id": "blir-levert",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Plan for én bestemt jobb i morgen: nye lamper. Teknikeren skal ikke nevnes."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_form_bli_past",
+      "operation": "choose",
+      "objective_id": "obj-passive-bli-and-s-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg den riktige rapporten."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "blir-lukket",
+            "text": "Porten blir lukket på tirsdag.",
+            "why": "«Blir» presenterer arbeidet som aktuelt eller planlagt, ikke som ferdig."
+          },
+          {
+            "option_id": "ble-lukkes",
+            "text": "Porten ble lukkes på tirsdag.",
+            "why": "S-passiven «lukkes» kan ikke stå etter «ble»."
+          },
+          {
+            "option_id": "ble-lukket",
+            "text": "Porten ble lukket på tirsdag.",
+            "why": "«Ble» bærer fortiden, og «lukket» står som partisipp."
+          }
+        ],
+        "answer_id": "ble-lukket",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Ferdig arbeid på tirsdag: porten. Vaktmesteren skal ikke nevnes."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_choose_routine_s",
+      "operation": "choose",
+      "objective_id": "obj-passive-bli-and-s-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg den korte s-passive formuleringen som passer til en fast kunderegel."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "ble-kontrollert",
+            "text": "Alle kvitteringer ble kontrollert ved utgangen i går.",
+            "why": "Dette gjør prosedyren om til én avsluttet kontroll."
+          },
+          {
+            "option_id": "kontrolleres",
+            "text": "Alle kvitteringer kontrolleres ved utgangen.",
+            "why": "S-passiven gir en kort institusjonell prosedyre uten å framheve en kontrollør."
+          },
+          {
+            "option_id": "kontrolloren",
+            "text": "Alle kvitteringer blir kontrollert ved utgangen.",
+            "why": "Bli-passiv er også naturlig, men s-passiv er den kortere formen som passer den faste prosedyren her."
+          }
+        ],
+        "answer_id": "kontrolleres",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Kunderegel: Ansatte sjekker alle kvitteringer ved utgangen. Dette skjer som fast prosedyre."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_choose_event_bli",
+      "operation": "choose",
+      "objective_id": "obj-passive-bli-and-s-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg den mest naturlige interne oppdateringen om en bestemt reparasjon."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "besvares-generelt",
+            "text": "Vinduer kontrolleres hver vår.",
+            "why": "Dette uttrykker en generell vedlikeholdsrutine og mister den konkrete reparasjonen i morgen."
+          },
+          {
+            "option_id": "ble-besvart",
+            "text": "Vinduet ble reparert i morgen.",
+            "why": "Fortidsformen «ble» kolliderer med framtidsuttrykket «i morgen»."
+          },
+          {
+            "option_id": "blir-besvart",
+            "text": "Vinduet blir reparert i morgen.",
+            "why": "Bli-passiven framhever den planlagte reparasjonen av det bestemte vinduet."
+          }
+        ],
+        "answer_id": "blir-besvart",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Et vindu på kontoret har fått en sprekk. Reparasjonen er avtalt til i morgen, og kollegene vil vite hva som skjer med akkurat dette vinduet."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_omit_irrelevant_agent",
+      "operation": "choose",
+      "objective_id": "obj-passive-bli-and-s-02",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg meldingen som bare forteller kundene hva som skjer med tjenesten og når."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "municipality-active",
+            "text": "Teknikeren setter systemet ut av drift onsdag kveld fra klokka 20 til 22.",
+            "why": "Innholdet er sant, men avsenderen framhever teknikeren i stedet for informasjonen kundene trenger."
+          },
+          {
+            "option_id": "road-passive",
+            "text": "Systemet blir satt ut av drift onsdag kveld fra klokka 20 til 22.",
+            "why": "Beskjeden framhever hva som skjer med tjenesten og tidspunktet kundene trenger."
+          },
+          {
+            "option_id": "routine-road",
+            "text": "Systemet settes ut av drift hver onsdag kveld fra klokka 20 til 22.",
+            "why": "Dette endrer én planlagt driftsstans til en ukentlig rutine."
+          }
+        ],
+        "answer_id": "road-passive",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Kundemelding: Teknikeren oppgraderer serverne onsdag kveld, og systemet blir utilgjengelig fra klokka 20 til 22. Kundene trenger å vite hva som skjer og når."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_keep_relevant_agent",
+      "operation": "choose",
+      "objective_id": "obj-passive-bli-and-s-02",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg beskjeden som beholder informasjonen klassen trenger."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "omit-nora",
+            "text": "Dere blir møtt ved inngangen klokka fem.",
+            "why": "Hendelsen og tidspunktet bevares, men klassen får ikke vite hvem den skal se etter."
+          },
+          {
+            "option_id": "routine-meeting",
+            "text": "Skoleklasser møtes ved inngangen hver dag.",
+            "why": "Dette endrer den konkrete avtalen til en generell rutine."
+          },
+          {
+            "option_id": "keep-nora",
+            "text": "Nora, bibliotekaren, venter på dere ved inngangen klokka fem.",
+            "why": "Navnet og rollen lar klassen kjenne igjen riktig person ved inngangen."
+          }
+        ],
+        "answer_id": "keep-nora",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Klassen trenger navn, rolle, sted og tidspunkt for å finne riktig person."
           }
         ]
       }
@@ -2819,7 +3148,13 @@
         "form_s_passive_for_procedures",
         "form_bli_passive_for_events",
         "choose_passive_for_routine_or_event",
-        "revise_library_reopening_notice"
+        "revise_library_reopening_notice",
+        "discriminate_passive_response",
+        "review_form_s_apnes",
+        "review_form_bli_future",
+        "review_form_bli_past",
+        "review_choose_routine_s",
+        "review_choose_event_bli"
       ]
     },
     {
@@ -2829,7 +3164,9 @@
         "notice_passive_focus",
         "omit_irrelevant_agent",
         "create_cafe_opening_update",
-        "retrieve_bli_and_s_passive"
+        "retrieve_bli_and_s_passive",
+        "review_omit_irrelevant_agent",
+        "review_keep_relevant_agent"
       ]
     }
   ],

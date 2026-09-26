@@ -3,8 +3,8 @@
 This is the published per-op YAML schema. One YAML document is a list of
 exercise mappings. Each exercise has common wrapper fields plus op-specific
 payload fields. Fields suffixed ``_md`` are parsed as pandoc-markdown inline
-(spans allowed, via :func:`convert_inlines`); all other strings are plain
-scalars.
+(spans allowed, via :func:`convert_inlines`); ``write`` and ``speak`` prompts
+also preserve paragraph breaks. All other strings are plain scalars.
 
 Common wrapper fields (every op)::
 
@@ -13,7 +13,8 @@ Common wrapper fields (every op)::
     op:             choose | recall_fill | match_pairs | judge | categorize | build | find_fix | speak | write
     objective:      objective id string
     bloom:          remember | understand | apply | analyze
-    prompt_md:      prompt text (inline markdown → spans)
+    prompt_md:      prompt text (inline markdown → spans; write/speak preserve breaks)
+    stimulus:       optional list of dialogue blocks with ordered speaker turns
     explanation_md: optional explanation (inline markdown → spans; omit or null → none)
     derived_from:   optional list of {section_id, block_index?, note?}; default []
 
@@ -269,6 +270,7 @@ def _build_exercise(
         _require_str(raw, "prompt_md", handle=handle),
         default_lang,
         warnings,
+        preserve_breaks=op in {"speak", "write"},
     )
     explanation = _parse_optional_md(
         raw.get("explanation_md"),
@@ -277,6 +279,7 @@ def _build_exercise(
         handle=handle,
         field_name="explanation_md",
     )
+    stimulus = _build_stimulus(raw.get("stimulus"), default_lang, warnings, handle)
     derived_from = _build_derived_from(raw.get("derived_from"), handle)
 
     payload = _build_payload(raw, op, default_lang, warnings, handle)
@@ -288,11 +291,65 @@ def _build_exercise(
         "objective_id": objective_id,
         "bloom_level": bloom_level,
         "prompt": prompt,
+        "stimulus": stimulus,
         "explanation": explanation,
         "derived_from": derived_from,
         "payload": payload,
     }
     return K_EXERCISES_ADAPTER.validate_python(exercise_dict)
+
+
+def _build_stimulus(
+    value: object,
+    default_lang: str,
+    warnings: list[str],
+    handle: str,
+) -> list[dict[str, Any]]:
+    """Build learner-visible context blocks shared by every exercise operation."""
+    if value is None:
+        return []
+    if not isinstance(value, list):
+        raise TypeError(f"exercise {handle!r}: field 'stimulus' must be a list.")
+    blocks: list[dict[str, Any]] = []
+    for block_index, raw_block in enumerate(value):
+        if not isinstance(raw_block, dict):
+            raise TypeError(f"exercise {handle!r}: stimulus entry {block_index} must be a mapping.")
+        if raw_block.get("kind") != "dialogue":
+            raise ValueError(f"exercise {handle!r}: stimulus entry {block_index} has unsupported kind.")
+        raw_turns = raw_block.get("turns")
+        if not isinstance(raw_turns, list):
+            raise TypeError(f"exercise {handle!r}: dialogue stimulus {block_index} needs a turns list.")
+        turns = [
+            _build_dialogue_turn(raw_turn, default_lang, warnings, handle, block_index, turn_index)
+            for turn_index, raw_turn in enumerate(raw_turns)
+        ]
+        block = dict(raw_block)
+        block["turns"] = turns
+        blocks.append(block)
+    return blocks
+
+
+def _build_dialogue_turn(
+    raw_turn: object,
+    default_lang: str,
+    warnings: list[str],
+    handle: str,
+    block_index: int,
+    turn_index: int,
+) -> dict[str, Any]:
+    """Build one speaker-labelled dialogue turn with contextual errors."""
+    location = f"dialogue stimulus {block_index} turn {turn_index}"
+    if not isinstance(raw_turn, dict):
+        raise TypeError(f"exercise {handle!r}: {location} must be a mapping.")
+    speaker = raw_turn.get("speaker")
+    text_md = raw_turn.get("text_md")
+    if not isinstance(speaker, str):
+        raise TypeError(f"exercise {handle!r}: {location} needs a string speaker.")
+    if not isinstance(text_md, str):
+        raise TypeError(f"exercise {handle!r}: {location} needs string text_md.")
+    turn = {key: item for key, item in raw_turn.items() if key != "text_md"}
+    turn["text"] = _parse_md(text_md, default_lang, warnings)
+    return turn
 
 
 def _build_payload(
@@ -679,12 +736,18 @@ def _write_word_bounds(raw: dict[str, Any], handle: str) -> dict[str, int]:
 # ── Inline markdown parsing ──────────────────────────────────────────────
 
 
-def _parse_md(text: str, default_lang: str, warnings: list[str]) -> Spans:
+def _parse_md(
+    text: str,
+    default_lang: str,
+    warnings: list[str],
+    *,
+    preserve_breaks: bool = False,
+) -> Spans:
     """Parse an inline-markdown string into spans via pandoc + ``convert_inlines``.
 
     Adjacent-text merge and NFC normalization come from ``convert_inlines``.
     ``[BLANK]`` resolves to the blank text marker. Raises if the text produces
-    zero or more than one block (inline fields must be single-paragraph).
+    zero or, unless ``preserve_breaks`` is set, more than one block.
     """
     if not text.strip():
         return []
@@ -692,12 +755,19 @@ def _parse_md(text: str, default_lang: str, warnings: list[str]) -> Spans:
     blocks = list(doc.content)
     if not blocks:
         return []
-    if len(blocks) > 1 or not isinstance(blocks[0], (panflute.Para, panflute.Plain)):
+    valid_blocks = all(isinstance(block, (panflute.Para, panflute.Plain)) for block in blocks)
+    if not valid_blocks or (len(blocks) > 1 and not preserve_breaks):
         snippet = text[:K_EXERCISES_SNIPPET_LIMIT]
         raise ValueError(
             f"_md field must be single-paragraph inline text, got {len(blocks)} block(s). Snippet: {snippet}"
         )
-    return convert_inlines(blocks[0].content, warnings, default_lang)
+    soft_break = "\n" if preserve_breaks else " "
+    spans: Spans = []
+    for block in blocks:
+        if spans:
+            spans.append(TextSpan(kind="text", value="\n\n"))
+        spans.extend(convert_inlines(block.content, warnings, default_lang, soft_break=soft_break))
+    return spans
 
 
 def _parse_recall_span(text: str, default_lang: str, warnings: list[str]) -> Spans:
@@ -787,6 +857,7 @@ K_SPEAK_ALLOWED_FIELDS: frozenset[str] = frozenset(
         "objective",
         "bloom",
         "prompt_md",
+        "stimulus",
         "explanation_md",
         "derived_from",
         "target",
@@ -800,6 +871,7 @@ K_WRITE_ALLOWED_FIELDS: frozenset[str] = frozenset(
         "objective",
         "bloom",
         "prompt_md",
+        "stimulus",
         "explanation_md",
         "derived_from",
         "response_language",

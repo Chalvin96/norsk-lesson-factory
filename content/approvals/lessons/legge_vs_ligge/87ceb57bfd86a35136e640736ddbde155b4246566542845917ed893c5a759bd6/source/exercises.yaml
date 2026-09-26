@@ -1,0 +1,295 @@
+- handle: identify_action_or_location
+  op: categorize
+  objective: obj-legge-vs-ligge-01
+  bloom: analyze
+  prompt_md: Classify each sentence as placement or location.
+  explanation_md: Legge describes putting an object somewhere; ligge describes where a compatible referent
+    is located.
+  derived_from:
+  - section_id: first-checkpoint
+  buckets:
+  - bucket_id: placement-action
+    label: Putting an object somewhere
+  - bucket_id: location
+    label: Saying where something is located
+  items:
+  - item_id: towels-senga
+    text: Maja legger håndklærne på senga.
+    bucket_id: placement-action
+  - item_id: keys-bordet
+    text: Nøklene ligger på bordet.
+    bucket_id: location
+  - item_id: clothes-skapet
+    text: Klærne ligger i skapet.
+    bucket_id: location
+  - item_id: food-kjoleskapet
+    text: Henrik legger maten i kjøleskapet.
+    bucket_id: placement-action
+  - item_id: jackets-benken
+    text: Maja legger jakkene på benken.
+    bucket_id: placement-action
+  - item_id: towels-badet
+    text: Håndklærne ligger på badet.
+    bucket_id: location
+- handle: complete_cabin_preparations
+  op: recall_fill
+  objective: obj-legge-vs-ligge-01
+  bloom: apply
+  prompt_md: Complete each exchange with legge or ligge.
+  explanation_md: Use legge when someone places an object and ligge when the object is the subject of
+    a location statement.
+  derived_from:
+  - section_id: second-checkpoint
+  audio_target: 'Maja: Hvor skal jeg legge håndklærne? Henrik: På senga. Maja: Hvor skal nøklene ligge?
+    Henrik: På bordet. Maja: Skal jeg legge maten i kjøleskapet? Henrik: Ja, der skal den ligge.'
+  segments:
+  - text_md: 'Maja: Hvor skal jeg '
+  - blank_id: towels-placement
+    options:
+    - legge
+    - ligger
+    answer_index: 0
+  - text_md: ' håndklærne? Henrik: På senga. Maja: Hvor skal nøklene '
+  - blank_id: keys-location
+    options:
+    - legger
+    - ligge
+    answer_index: 1
+  - text_md: '? Henrik: På bordet. Maja: Skal jeg '
+  - blank_id: food-placement
+    options:
+    - legge
+    - ligger
+    answer_index: 0
+  - text_md: ' maten i kjøleskapet? Henrik: Ja, der skal den '
+  - blank_id: food-location
+    options:
+    - legger
+    - ligge
+    answer_index: 1
+  - text_md: .
+- handle: repair_the_misunderstanding
+  op: find_fix
+  objective: obj-legge-vs-ligge-01
+  bloom: analyze
+  prompt_md: Select the verb that must be corrected.
+  explanation_md: Henrik performs a placement action, so the opening needs legger; the remaining clauses
+    describe locations and correctly use ligger.
+  derived_from:
+  - section_id: third-checkpoint
+  tokens:
+  - token_id: subject-henrik
+    text: Henrik
+  - token_id: incorrect-placement-verb
+    text: ligger
+  - token_id: keys-object
+    text: nøklene
+  - token_id: keys-place-preposition
+    text: på
+  - token_id: keys-place
+    text: bordet,
+  - token_id: towels-subject
+    text: håndklærne
+  - token_id: towels-verb
+    text: ligger
+  - token_id: towels-place-preposition
+    text: på
+  - token_id: towels-place
+    text: senga,
+  - token_id: groceries-subject
+    text: dagligvarene
+  - token_id: groceries-verb
+    text: ligger
+  - token_id: groceries-place-preposition
+    text: i
+  - token_id: groceries-place
+    text: kjøleskapet,
+  - token_id: conjunction
+    text: og
+  - token_id: jackets-subject
+    text: jakkene
+  - token_id: jackets-verb
+    text: ligger
+  - token_id: jackets-place-preposition
+    text: i
+  - token_id: jackets-place
+    text: gangen.
+  error_token_id: incorrect-placement-verb
+  feedback: 'Replace ligger with legger: Henrik is the subject and moves the keys to the table. The corrected
+    opening is «Henrik legger nøklene på bordet».'
+- handle: follow_one_object
+  op: write
+  objective: obj-legge-vs-ligge-01
+  bloom: apply
+  prompt_md: You are updating a colleague about a contract. Read the exchange between Nora and Amir, then
+    write a 25–55-word message in Norwegian that reports Nora's action today, where the contract is now,
+    Amir's action yesterday, and where it was all morning. Use a form of legge for each placement action
+    and a form of ligge for each location statement.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Jeg setter kontrakten på skrivebordet nå.»
+    - speaker: Amir
+      text_md: «I går satte jeg den i den blå mappa, og den var der hele formiddagen.»
+    - speaker: Nora
+      text_md: «Nå er den på skrivebordet.»
+  response_language: 'no'
+  min_words: 25
+  max_words: 55
+  judge_prompt: Evaluate the gating criteria present-placement, present-location, past-placement, past-location,
+    placement-verbs, location-verbs, supplied-facts, and message-purpose. Report a verdict and evidence
+    for every criterion id.
+  criteria:
+  - id: present-placement
+    instruction: Reports that Nora puts the contract on the desk now.
+  - id: present-location
+    instruction: Reports that the contract is on the desk now.
+  - id: past-placement
+    instruction: Reports that Amir put the contract in the blue folder yesterday.
+  - id: past-location
+    instruction: Reports that the contract was in the blue folder all morning.
+  - id: placement-verbs
+    instruction: Uses a form of legge for each placement action.
+  - id: location-verbs
+    instruction: Uses a form of ligge for each location statement.
+  - id: supplied-facts
+    instruction: Preserves the supplied people, object, places, and time references without contradiction.
+  - id: message-purpose
+    instruction: Produces a coherent Norwegian update addressed to a colleague within 25–55 words.
+  derived_from:
+  - section_id: fourth-checkpoint
+- handle: final_guided_practice
+  op: write
+  objective: obj-legge-vs-ligge-01
+  bloom: apply
+  prompt_md: 'Ingrid is trying to find the deck of cards. Write a 30–65-word reply in Norwegian to Ingrid:
+    ask where the deck is, explain that Henrik put it on the bookshelf earlier, report that it is now
+    under the sofa, and tell Maja to put it on the table. Use forms of legge for placement and ligge for
+    location.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Ingrid
+      text_md: «Maja og jeg finner ikke kortstokken. Henrik flyttet den tidligere, men vi vet ikke hvor
+        den er nå. Kan du hjelpe oss?»
+    - speaker: Maja
+      text_md: «Ja, jeg leter ved sofaen og bokhylla.»
+  response_language: 'no'
+  min_words: 30
+  max_words: 65
+  judge_prompt: Evaluate the gating criteria location-question, earlier-action, current-location, final-instruction,
+    legge-ligge, supplied-facts, and reply-purpose. Report a verdict and evidence for every criterion
+    id. A response that omits the required legge and ligge distinctions must fail legge-ligge.
+  criteria:
+  - id: location-question
+    instruction: Asks where the deck of cards is.
+  - id: earlier-action
+    instruction: Explains that Henrik put the deck on the bookshelf earlier.
+  - id: current-location
+    instruction: Reports that the deck is under the sofa now.
+  - id: final-instruction
+    instruction: Tells Maja to put the deck on the table.
+  - id: legge-ligge
+    instruction: Uses a form of legge for the placement actions and a form of ligge for the location statements.
+  - id: supplied-facts
+    instruction: Preserves the supplied object, people, places, and time relationship without contradiction.
+  - id: reply-purpose
+    instruction: Produces a coherent Norwegian reply to Ingrid within 30–65 words.
+  derived_from:
+  - section_id: final-guided-practice
+- handle: review_complete_cabin_preparations
+  op: recall_fill
+  objective: obj-legge-vs-ligge-01
+  bloom: apply
+  prompt_md: Complete the exchange with the correct verb form.
+  explanation_md: The person placing an object selects legge; an object whose location is described selects
+    ligge.
+  derived_from:
+  - section_id: second-checkpoint
+  audio_target: 'Jonas: Hvor skal jeg legge veden? Ingrid: I vedskjulet. Jonas: Hvor skal støvlene ligge?
+    Ingrid: Under benken.'
+  segments:
+  - text_md: 'Jonas: Hvor skal jeg '
+  - blank_id: review-firewood-placement
+    options:
+    - legge
+    - ligger
+    answer_index: 0
+  - text_md: ' veden? Ingrid: I vedskjulet. Jonas: Hvor skal støvlene '
+  - blank_id: review-boots-location
+    options:
+    - legger
+    - ligge
+    answer_index: 1
+  - text_md: '? Ingrid: Under benken.'
+- handle: review_past_placement_or_location
+  op: recall_fill
+  objective: obj-legge-vs-ligge-01
+  bloom: apply
+  prompt_md: Complete each sentence with the correct past verb form.
+  explanation_md: La reports a past placement action; lå reports a past location.
+  derived_from:
+  - section_id: time-frames
+  audio_target: I går la Sara passet i sidelomma. Det lå der hele reisen.
+  segments:
+  - text_md: 'I går '
+  - blank_id: past-placement
+    options:
+    - la
+    - lå
+    answer_index: 0
+  - text_md: ' Sara passet i sidelomma. Det '
+  - blank_id: past-location
+    options:
+    - la
+    - lå
+    answer_index: 1
+  - text_md: ' der hele reisen.'
+- handle: review_completed_placement_or_location
+  op: recall_fill
+  objective: obj-legge-vs-ligge-01
+  bloom: apply
+  prompt_md: Complete each sentence with the correct verb form.
+  explanation_md: Har lagt reports a completed placement action; har ligget describes a location continuing
+    over time.
+  derived_from:
+  - section_id: time-frames
+  audio_target: Noen har lagt sekken ved døra. Den har ligget der siden i morges.
+  segments:
+  - text_md: 'Noen har '
+  - blank_id: completed-placement
+    options:
+    - lagt
+    - ligget
+    answer_index: 0
+  - text_md: ' sekken ved døra. Den har '
+  - blank_id: completed-location
+    options:
+    - lagt
+    - ligget
+    answer_index: 1
+  - text_md: ' der siden i morges.'
+- handle: review_command_and_location_question
+  op: recall_fill
+  objective: obj-legge-vs-ligge-01
+  bloom: apply
+  prompt_md: Complete the exchange with the correct verb form.
+  explanation_md: Legg is the command for placing the map; ligger asks about its existing location.
+  derived_from:
+  - section_id: commands-and-questions
+  audio_target: 'A: Hvor ligger kartet? B: Det er på stolen. A: Legg det i skuffen etterpå.'
+  segments:
+  - text_md: 'A: Hvor '
+  - blank_id: location-question
+    options:
+    - legg
+    - ligger
+    answer_index: 1
+  - text_md: ' kartet? B: Det er på stolen. A:'
+  - blank_id: placement-command
+    options:
+    - Legg
+    - Ligger
+    answer_index: 0
+  - text_md: ' det i skuffen etterpå.'

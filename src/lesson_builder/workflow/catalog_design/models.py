@@ -13,8 +13,10 @@ from typing import Literal
 from pydantic import BaseModel
 from pydantic import ConfigDict
 from pydantic import Field
+from pydantic import field_validator
 
 from lesson_builder.domain.lesson.models.lesson import CefrLevel
+from lesson_builder.workflow.catalog_design.settings import K_CATALOG_DISCOVERY_CANDIDATE_LIMIT
 
 AgentKind = Literal["explorer", "reviewer"]
 Relationship = Literal[
@@ -91,7 +93,10 @@ class CandidateBatch(BaseModel):
 
     model_config = ConfigDict(extra="forbid")
 
-    candidates: list[CatalogCandidate] = Field(default_factory=list)
+    candidates: list[CatalogCandidate] = Field(
+        default_factory=list,
+        max_length=K_CATALOG_DISCOVERY_CANDIDATE_LIMIT,
+    )
     coverage_notes: list[str] = Field(default_factory=list)
 
 
@@ -128,6 +133,14 @@ class CandidateResolution(BaseModel):
     independent_difference: str = ""
     uncertainty_kind: Literal["semantic", "pragmatic"] | None = None
     review_question: str = ""
+
+    @field_validator("candidate_ids")
+    @classmethod
+    def validate_unique_candidate_ids(cls, value: list[str]) -> list[str]:
+        """Reject one candidate being counted twice in a resolution."""
+        if len(value) != len(set(value)):
+            raise ValueError("candidate_ids must be unique")
+        return value
 
 
 class ResolutionBatch(BaseModel):

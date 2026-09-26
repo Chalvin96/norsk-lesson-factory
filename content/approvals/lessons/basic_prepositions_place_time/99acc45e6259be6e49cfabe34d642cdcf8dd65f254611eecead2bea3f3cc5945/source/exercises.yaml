@@ -1,0 +1,209 @@
+- handle: choose-current-place
+  op: recall_fill
+  objective: obj-basic-prepositions-place-time-01
+  bloom: apply
+  prompt_md: Complete the location updates with i or på.
+  audio_target: Kari og Per snakker om hvor de bor, arbeider og møtes.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Kari
+      text_md: «Jeg bor ___ Oslo.»
+    - speaker: Per
+      text_md: «Jeg er ___ jobb.»
+    - speaker: Kari
+      text_md: «Vi er ___ Norge.»
+    - speaker: Per
+      text_md: «De møtes ___ Bergen.»
+  segments:
+  - text_md: '«Jeg bor '
+  - blank_id: city-location
+    options:
+    - i
+    - på
+    answer_index: 0
+  - text_md: ' Oslo.» Per: «Jeg er '
+  - blank_id: work-location
+    options:
+    - i
+    - på
+    answer_index: 1
+  - text_md: ' jobb.» Kari: «Vi er '
+  - blank_id: country-location
+    options:
+    - på
+    - i
+    answer_index: 1
+  - text_md: ' Norge.» Per: «De møtes '
+  - blank_id: meeting-location
+    options:
+    - i
+    - på
+    answer_index: 0
+  - text_md: ' Bergen.»'
+  explanation_md: I brukes foran by- og landnavn, mens på jobb er et fast uttrykk for arbeidssted.
+  derived_from:
+  - section_id: being-in-a-place
+- handle: contrast-location-and-destination
+  op: recall_fill
+  objective: obj-basic-prepositions-place-time-01
+  bloom: apply
+  prompt_md: Complete the travel updates with til, i, or på.
+  audio_target: Ali, Eva og Per forteller om reiser og steder de skal besøke.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Ali
+      text_md: «Jeg kjører ___ Tromsø. Senere er jeg ___ Tromsø.»
+    - speaker: Eva
+      text_md: «Jeg reiser ___ Spania. Etterpå er jeg ___ Spania.»
+    - speaker: Per
+      text_md: «Jeg går ___ kontoret. Når jeg kommer fram, er jeg ___ kontoret og jobber.»
+  segments:
+  - text_md: '«Jeg kjører '
+  - blank_id: tromso-destination
+    options:
+    - til
+    - i
+    - på
+    answer_index: 0
+  - text_md: ' Tromsø. Senere er jeg '
+  - blank_id: tromso-location
+    options:
+    - på
+    - i
+    - til
+    answer_index: 1
+  - text_md: ' Tromsø.» Eva: «Jeg reiser '
+  - blank_id: spania-destination
+    options:
+    - i
+    - til
+    - på
+    answer_index: 1
+  - text_md: ' Spania. Etterpå er jeg '
+  - blank_id: spania-location
+    options:
+    - på
+    - i
+    - til
+    answer_index: 1
+  - text_md: ' Spania.» Per: «Jeg går '
+  - blank_id: office-destination
+    options:
+    - på
+    - til
+    - i
+    answer_index: 1
+  - text_md: ' kontoret. Når jeg kommer fram, er jeg '
+  - blank_id: office-location
+    options:
+    - i
+    - til
+    - på
+    answer_index: 2
+  - text_md: ' kontoret og jobber.»'
+  explanation_md: Til viser reisemålet, mens i eller på viser hvor personen er etter ankomst.
+  derived_from:
+  - section_id: location-or-destination
+- handle: retrieve-preposition-meanings
+  op: write
+  objective: obj-basic-prepositions-place-time-01
+  bloom: apply
+  prompt_md: 'Til: Nora. Formål: Forklar hvor folk er, og når ting skjer. Skriv en norsk melding på 35–65
+    ord til Nora som formidler disse seks opplysningene uten å kopiere formuleringene: Lars befinner seg
+    der man låner bøker, akkurat nå; legekontoret er Saras reisemål; Omar er på besøk hos bestemoren sin;
+    møtet starter tre timer fra nå; Eva kom hjem for to dager siden; kurset varer to timer. Bruk på for
+    nåværende sted, til for reisemål, hos for besøkssted hos en person, om for framtidig tidspunkt, for
+    ... siden for tidligere tidspunkt og i for varighet.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Kan du fortelle meg hvor folk er, og hva som skjer senere?»
+    - speaker: Mina
+      text_md: «Ja, jeg sender deg en samlet oppdatering.»»
+  response_language: 'no'
+  min_words: 35
+  max_words: 65
+  judge_prompt: Vurder formål, de seks opplysningene, ordgrensen og at svaret bruker på for nåværende
+    sted, til for reisemål, hos for besøkssted hos en person, om for framtidig tidspunkt, for ... siden
+    for tidligere tidspunkt og i for varighet.
+  criteria:
+  - id: message-purpose
+    instruction: Svaret er en sammenhengende norsk melding til Nora som forklarer hvor folk er og når
+      hendelser skjer.
+  - id: six-updates
+    instruction: Meldingen formidler alle de seks opplysningene fra oppgaven med riktig betydning.
+  - id: relation-forms
+    instruction: 'Svaret bruker de nødvendige preposisjonsformene riktig: på for nåværende sted, til for
+      reisemål, hos for besøkssted hos en person, om for framtidig tidspunkt, for ... siden for tidligere
+      tidspunkt og i for varighet.'
+  - id: word-bound
+    instruction: Meldingen inneholder 35–65 ord.
+  derived_from:
+  - section_id: final-retrieval
+- handle: first_day_exchange
+  op: write
+  objective: obj-basic-prepositions-place-time-01
+  bloom: apply
+  prompt_md: 'Write a 15–30-word Norwegian exchange for a classmate at the door: greet, ask and answer
+    names, mark the meeting as friendly, and close.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lærer
+      text_md: «Du møter en ny klassekamerat ved døren på første skoledag.»
+    - speaker: Elev
+      text_md: «Du vil hilse, presentere dere, være vennlig og avslutte samtalen.»
+  response_language: 'no'
+  judge_prompt: Check criteria opens-greeting, both-names, friendly-meeting, closes, and word-count. Record
+    connected-observation diagnostically.
+  criteria:
+  - id: opens-greeting
+    instruction: The exchange opens with a Norwegian greeting.
+  - id: both-names
+    instruction: One speaker asks for the other person's name, and both speakers give their names.
+  - id: friendly-meeting
+    instruction: The exchange includes a natural friendly meeting expression.
+  - id: closes
+    instruction: The exchange ends with a natural goodbye.
+  - id: word-count
+    instruction: The Norwegian exchange contains 15–30 words.
+  - id: connected-observation
+    instruction: 'Observation only: note whether the lines form one connected conversation; do not fail
+      an otherwise complete exchange.'
+  derived_from:
+  - section_id: guided-exchange-practice
+- handle: review_complete_meeting
+  op: write
+  objective: obj-basic-prepositions-place-time-01
+  bloom: apply
+  prompt_md: 'Write a 12–24-word Norwegian exchange for two colleagues meeting on a first day: greet,
+    ask and answer names, welcome each other, and arrange to meet later.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Kollega
+      text_md: «Du møter en ny kollega på den første arbeidsdagen.»
+    - speaker: Elev
+      text_md: «Skriv en kort samtale der dere presenterer dere, ønsker hverandre velkommen og avtaler
+        å møtes senere.»
+  response_language: 'no'
+  judge_prompt: Sjekk at svaret er en norsk utveksling på 12–24 ord og oppfyller kriteriene hilsen, navnespørsmål,
+    navnesvar, velkomst og avtale om å møtes senere.
+  criteria:
+  - id: greeting
+    instruction: Samtalen inneholder en norsk hilsen.
+  - id: name-question
+    instruction: Den ene taleren spør hva den andre heter.
+  - id: name-answer
+    instruction: Begge talerne sier hva de heter.
+  - id: friendly-line
+    instruction: Begge talerne ønsker hverandre velkommen.
+  - id: closing
+    instruction: Samtalen inneholder en naturlig avtale om å møtes senere.
+  - id: word-count
+    instruction: Samtalen består av 12–24 ord.
+  derived_from:
+  - section_id: building-the-complete-first-meeting

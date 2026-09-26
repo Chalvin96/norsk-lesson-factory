@@ -16,7 +16,7 @@ def add_preview_commands(parent: SubparserRegistrar) -> None:
     parser = parent.add_parser("preview", help="Serve a read-only local authoring preview")
     parser.add_argument("lesson", help="lesson id or path under content/lessons")
     parser.add_argument("--workspace-root", default=None, help=argparse.SUPPRESS)
-    parser.add_argument("--host", default="127.0.0.1", help="loopback host (default: 127.0.0.1)")
+    parser.add_argument("--host", default="127.0.0.1", help="IPv4 bind address (default: 127.0.0.1)")
     parser.add_argument("--port", type=int, default=0, help="port, or 0 to choose a free local port")
     parser.add_argument("--no-browser", action="store_true", help="print the URL without opening a browser")
     parser.set_defaults(func=_preview)

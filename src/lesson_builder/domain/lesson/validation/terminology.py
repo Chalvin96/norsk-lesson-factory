@@ -195,6 +195,7 @@ def _extract_exercise(exercise: dict[str, Any]) -> list[LearnerText]:
     fragments.extend(
         _from_spans(exercise.get("explanation") or [], f"{base_path}.explanation", ex_id, "exercise_explanation")
     )
+    fragments.extend(_extract_stimulus(exercise.get("stimulus"), base_path, ex_id))
     payload = exercise.get("payload") or {}
     operation = exercise.get("operation")
     handlers = {
@@ -211,6 +212,35 @@ def _extract_exercise(exercise: dict[str, Any]) -> list[LearnerText]:
     if handler is not None:
         fragments.extend(handler(payload, base_path, ex_id))
     return fragments
+
+
+def _extract_stimulus(value: object, base_path: str, ex_id: str) -> list[LearnerText]:
+    """Extract learner text from typed dialogue context blocks."""
+    if not isinstance(value, list):
+        return []
+    fragments: list[LearnerText] = []
+    for block_index, stimulus in enumerate(value):
+        if not isinstance(stimulus, dict) or stimulus.get("kind") != "dialogue":
+            continue
+        fragments.extend(_extract_dialogue_turns(stimulus, base_path, ex_id, block_index))
+    return fragments
+
+
+def _extract_dialogue_turns(
+    stimulus: dict[str, Any], base_path: str, ex_id: str, block_index: int
+) -> list[LearnerText]:
+    """Extract ordered utterances from one dialogue block."""
+    return [
+        fragment
+        for turn_index, turn in enumerate(stimulus.get("turns") or [])
+        if isinstance(turn, dict)
+        for fragment in _from_spans(
+            turn.get("text") or [],
+            f"{base_path}.stimulus[{block_index}].turns[{turn_index}].text",
+            ex_id,
+            "exercise_prompt",
+        )
+    ]
 
 
 def _extract_choose_exercise(payload: dict[str, Any], base_path: str, ex_id: str) -> list[LearnerText]:

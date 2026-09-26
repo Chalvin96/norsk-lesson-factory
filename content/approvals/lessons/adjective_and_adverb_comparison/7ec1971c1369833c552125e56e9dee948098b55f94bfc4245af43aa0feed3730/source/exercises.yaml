@@ -1,0 +1,589 @@
+- handle: notice_comparison_meaning
+  op: categorize
+  objective: obj-adjective-and-adverb-comparison-01
+  bloom: analyze
+  prompt_md: Mina and Jonas are evaluating bicycles, routes, and cycling styles. Classify each Norwegian
+    statement as a base description with no comparison, a comparison between two alternatives, or the
+    highest or lowest degree in a group. Do not infer the category from a word ending alone.
+  explanation_md: A base form describes without comparing, a comparative sets two alternatives against
+    each other, and a superlative identifies an extreme within a group.
+  derived_from:
+  - section_id: what-comparison-forms-do
+  buckets:
+  - bucket_id: base-description
+    label: Base description (no comparison)
+  - bucket_id: two-way-comparison
+    label: Comparison between two alternatives
+  - bucket_id: group-extreme
+    label: Highest or lowest degree in a group
+  items:
+  - item_id: statement-3
+    text: Av de tre hjelmene er den røde tyngst.
+    bucket_id: group-extreme
+  - item_id: statement-1
+    text: Hjelmen føles tung.
+    bucket_id: base-description
+  - item_id: statement-5
+    text: Stien er brattere enn grusveien.
+    bucket_id: two-way-comparison
+  - item_id: statement-6
+    text: Av alle tre veiene er grusveien bredest.
+    bucket_id: group-extreme
+  - item_id: statement-2
+    text: Den nye hjelmen veier mindre enn den gamle.
+    bucket_id: two-way-comparison
+  - item_id: statement-4
+    text: Sara løper rolig.
+    bucket_id: base-description
+- handle: form_regular_comparatives
+  op: recall_fill
+  objective: obj-adjective-and-adverb-comparison-01
+  bloom: apply
+  prompt_md: The outdoor club compares helmets, runners, bags, and paths. In order, complete each two-way
+    comparison with the regular -ere form and the connector that introduces the second side. The connector
+    is tested where it is blank.
+  explanation_md: Use -ere for a regular two-way comparison and introduce the second side with enn.
+  derived_from:
+  - section_id: regular-comparison
+  audio_target: Denne hjelmen er lettere enn reservehjelmen. Amina løper saktere enn Bilal. Den grønne sekken
+    er dyrere enn den svarte. Snarveien er kortere enn stien.
+  segments:
+  - text_md: 'Denne hjelmen er '
+  - blank_id: comparative-1
+    options:
+    - lettere
+    - lettest
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: connector-1
+    options:
+    - enn
+    - som
+    answer_index: 0
+  - text_md: ' reservehjelmen.'
+  - text_md: ' Amina løper '
+  - blank_id: comparative-2
+    options:
+    - saktest
+    - saktere
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: connector-2
+    options:
+    - som
+    - enn
+    answer_index: 1
+  - text_md: ' Bilal.'
+  - text_md: ' Den grønne sekken er '
+  - blank_id: comparative-3
+    options:
+    - dyrere
+    - dyrest
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: connector-3
+    options:
+    - enn
+    - som
+    answer_index: 0
+  - text_md: ' den svarte. Snarveien er '
+  - blank_id: comparative-4
+    options:
+    - kortere
+    - kortest
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: connector-4
+    options:
+    - som
+    - enn
+    answer_index: 1
+  - text_md: ' stien.'
+- handle: form_regular_superlatives
+  op: recall_fill
+  objective: obj-adjective-and-adverb-comparison-01
+  bloom: apply
+  prompt_md: Mina and Jonas are choosing among several bicycles and routes. In order, complete statements
+    identifying the lightest bicycle, fastest cyclist, cheapest bicycle, and shortest route. Use the short
+    -est form after the verb and the required -e form before a definite noun.
+  explanation_md: 'Use the short superlative after er, but add -e before a definite noun: sykkelen er
+    billigst, den billigste sykkelen.'
+  derived_from:
+  - section_id: regular-comparison
+  audio_target: Den blå sykkelen er lettest. Jonas er raskest. Mina valgte den billigste sykkelen. Dette
+    er den korteste ruta.
+  segments:
+  - text_md: 'Den blå sykkelen er '
+  - blank_id: superlative-1
+    options:
+    - lettest
+    - raskest
+    answer_index: 0
+  - text_md: .
+  - text_md: ' Jonas er '
+  - blank_id: superlative-2
+    options:
+    - lettest
+    - raskest
+    answer_index: 1
+  - text_md: .
+  - text_md: ' Mina valgte den '
+  - blank_id: superlative-3
+    options:
+    - billigste
+    - billigst
+    answer_index: 0
+  - text_md: ' sykkelen.'
+  - text_md: ' Dette er den '
+  - blank_id: superlative-4
+    options:
+    - billigste
+    - korteste
+    answer_index: 1
+  - text_md: ' ruta.'
+- handle: choose_adjective_or_adverb_comparison
+  op: recall_fill
+  objective: obj-adjective-and-adverb-comparison-01
+  bloom: apply
+  prompt_md: >-
+    Complete each sentence with a regular superlative. Both choices are superlatives; decide whether the
+    form modifies a noun or describes how an action happens.
+  explanation_md: Before a definite noun, a superlative adjective normally takes -e. A superlative adverb
+    describing an action keeps its short form.
+  derived_from:
+  - section_id: regular-comparison
+  audio_target: Den raskeste syklisten vant spurten. Jonas sykler fortest av alle på siste bakken. Vi tok
+    den korteste stien tilbake. Mina gikk saktest av alle på den glatte stien.
+  segments:
+  - text_md: 'Den '
+  - blank_id: role-1
+    options:
+    - fortest
+    - raskeste
+    answer_index: 1
+  - text_md: ' syklisten vant spurten.'
+  - text_md: ' Jonas sykler '
+  - blank_id: role-2
+    options:
+    - raskeste
+    - fortest
+    answer_index: 1
+  - text_md: ' av alle på siste bakken.'
+  - text_md: ' Vi tok den '
+  - blank_id: role-3
+    options:
+    - fortest
+    - korteste
+    answer_index: 1
+  - text_md: ' stien tilbake.'
+  - text_md: ' Mina gikk '
+  - blank_id: role-4
+    options:
+    - saktest
+    - sakteste
+    answer_index: 0
+  - text_md: ' av alle på den glatte stien.'
+- handle: select_regular_or_long_comparison
+  op: recall_fill
+  objective: obj-adjective-and-adverb-comparison-01
+  bloom: apply
+  prompt_md: Maja is planning a weekend trip. Complete five fresh Norwegian sentences about equipment,
+    tickets, accommodation, and transport. Choose regular -ere/-est or mer/mest according to the adjective
+    and the comparison frame.
+  explanation_md: Common short adjectives usually take -ere or -est. Longer adjectives commonly use mer
+    for a two-way comparison and mest for a group extreme; use the superlative form that fits the noun.
+  derived_from:
+  - section_id: longer-forms-with-mer-and-mest
+  audio_target: Den nye ryggsekken er lettere enn den gamle. Av togbillettene valgte Maja den billigste.
+    Denne soveposen er mer komfortabel enn den gamle. Dette er den mest moderne hytta i området. Å ta toget
+    er mer effektivt enn å kjøre bil.
+  segments:
+  - text_md: 'Den nye ryggsekken er '
+  - blank_id: pattern-1
+    options:
+    - lettere
+    - mer lett
+    answer_index: 0
+  - text_md: ' enn den gamle.'
+  - text_md: ' Av togbillettene valgte Maja den '
+  - blank_id: pattern-2
+    options:
+    - billigste
+    - mest billige
+    answer_index: 0
+  - text_md: .
+  - text_md: ' Denne soveposen er '
+  - blank_id: pattern-3
+    options:
+    - mest komfortabel
+    - mer komfortabel
+    answer_index: 1
+  - text_md: ' enn den gamle.'
+  - text_md: ' Dette er den '
+  - blank_id: pattern-4
+    options:
+    - moderneste
+    - mest moderne
+    answer_index: 1
+  - text_md: ' hytta i området.'
+  - text_md: ' Å ta toget er '
+  - blank_id: pattern-5
+    options:
+    - mer effektivt
+    - mest effektivt
+    answer_index: 0
+  - text_md: ' enn å kjøre bil.'
+- handle: compare_actions_with_mer_and_mest
+  op: recall_fill
+  objective: obj-adjective-and-adverb-comparison-01
+  bloom: apply
+  prompt_md: Mina, Jonas, and a guide perform actions in different ways. Complete each action-focused
+    sentence with the correct comparison form. Use the signal words inside each sentence, such as enn
+    and av alle, to choose the degree. Every blank must describe how an action happens, not an object.
+  derived_from:
+  - section_id: longer-forms-with-mer-and-mest
+  audio_target: Mina forklarer ruta mer presist enn Jonas. Guiden forklarer ruta mest presist av alle.
+    Med kartet planlegger vi mer effektivt enn før. Hun sitter mer komfortabelt på dette setet.
+  segments:
+  - text_md: 'Mina forklarer ruta '
+  - blank_id: action-long-1
+    options:
+    - mest presist
+    - mer presist
+    answer_index: 1
+  - text_md: ' enn Jonas.'
+  - text_md: ' Guiden forklarer ruta '
+  - blank_id: action-long-2
+    options:
+    - mest presist
+    - mer presist
+    answer_index: 0
+  - text_md: ' av alle.'
+  - text_md: ' Med kartet planlegger vi '
+  - blank_id: action-long-3
+    options:
+    - mest effektivt
+    - mer effektivt
+    answer_index: 1
+  - text_md: ' enn før.'
+  - text_md: ' Hun sitter '
+  - blank_id: action-long-4
+    options:
+    - mer komfortabelt
+    - mer komfortabel
+    answer_index: 0
+  - text_md: ' på dette setet.'
+- handle: retrieve_irregular_comparison_sets
+  op: recall_fill
+  objective: obj-adjective-and-adverb-comparison-01
+  bloom: remember
+  prompt_md: Complete each sentence. The base form appears in parentheses. Select the taught irregular
+    comparative or superlative that fits the sentence.
+  explanation_md: 'Learn these sets as families: god–bedre–best, dårlig–verre–verst, stor–større–størst,
+    liten–mindre–minst, lang–lengre–lengst, mye–mer–mest.'
+  derived_from:
+  - section_id: irregular-comparison
+  audio_target: Denne sykkelen er bedre enn den svarte. Av de tre syklene er den grønne den beste. Jonas
+    ser verre i tåka enn i mørket. Av alle dagene blir været på søndag verst. Den blå sekken er større
+    enn den svarte. Av sekkene er den blå størst. Jonas bruker en mindre sekk enn Mina. Guiden har den
+    minste sekken i gruppa. Den nye ruta er lengre enn den gamle. Vi syklet lengst på søndag. Mina trener
+    mer enn Jonas. Av alle i laget trener guiden mest.
+  segments:
+  - text_md: Denne sykkelen er (god)
+  - blank_id: god-comp
+    options:
+    - større
+    - bedre
+    answer_index: 1
+  - text_md: ' enn den svarte.'
+  - text_md: ' Av de tre syklene er den grønne den (god)'
+  - blank_id: god-sup
+    options:
+    - minste
+    - beste
+    answer_index: 1
+  - text_md: .
+  - text_md: ' Jonas ser (dårlig)'
+  - blank_id: dårlig-comp
+    options:
+    - mindre
+    - verre
+    answer_index: 1
+  - text_md: ' i tåka enn i mørket.'
+  - text_md: ' Av alle dagene blir været på søndag (dårlig)'
+  - blank_id: dårlig-sup
+    options:
+    - verst
+    - størst
+    answer_index: 0
+  - text_md: .
+  - text_md: ' Den blå sekken er (stor)'
+  - blank_id: stor-comp
+    options:
+    - lengre
+    - større
+    answer_index: 1
+  - text_md: ' enn den svarte.'
+  - text_md: ' Av sekkene er den blå (stor)'
+  - blank_id: stor-sup
+    options:
+    - størst
+    - lengst
+    answer_index: 0
+  - text_md: .
+  - text_md: ' Jonas bruker en (liten)'
+  - blank_id: liten-comp
+    options:
+    - lengre
+    - mindre
+    answer_index: 1
+  - text_md: ' sekk enn Mina.'
+  - text_md: ' Guiden har den (liten)'
+  - blank_id: liten-sup
+    options:
+    - minste
+    - største
+    answer_index: 0
+  - text_md: ' sekken i gruppa.'
+  - text_md: ' Den nye ruta er (lang)'
+  - blank_id: lang-comp
+    options:
+    - lengre
+    - større
+    answer_index: 0
+  - text_md: ' enn den gamle.'
+  - text_md: ' Vi syklet (lang)'
+  - blank_id: lang-sup
+    options:
+    - størst
+    - lengst
+    answer_index: 1
+  - text_md: ' på søndag.'
+  - text_md: ' Mina trener (mye)'
+  - blank_id: mye-comp
+    options:
+    - mest
+    - mer
+    answer_index: 1
+  - text_md: ' enn Jonas.'
+  - text_md: ' Av alle i laget trener guiden (mye)'
+  - blank_id: mye-sup
+    options:
+    - mest
+    - best
+    answer_index: 0
+  - text_md: .
+- handle: use_irregular_forms_for_actions
+  op: recall_fill
+  objective: obj-adjective-and-adverb-comparison-01
+  bloom: apply
+  prompt_md: >-
+    Complete only action-focused comparisons. The sentences compare cycling quality, seeing, amount of
+    training, and distance. Each sentence contains an explicit comparison frame such as enn or av alle.
+    For distance, choose the adverbial form that describes how far the group cycled; Norwegian uses both
+    lenger and lengre in different grammatical roles.
+  explanation_md: In “syklet lenger,” lenger is the adverb modifying the action; lengre is the adjective
+    used before a noun, as in “en lengre strekning.” The adverbial superlative is lengst.
+  derived_from:
+  - section_id: irregular-comparison
+  audio_target: Etter pausen sykler Mina bedre enn før. Uten brillene ser Jonas verre i mørket enn med
+    dem. Mina trener mer enn Jonas. Guiden trener mest av alle. På lørdag syklet gruppa lenger enn på
+    fredag. Av alle syklistene syklet Mina lengst.
+  segments:
+  - text_md: 'Etter pausen sykler Mina '
+  - blank_id: action-irregular-1
+    options:
+    - bedre
+    - best
+    answer_index: 0
+  - text_md: ' enn før.'
+  - text_md: ' Uten brillene ser Jonas '
+  - blank_id: action-irregular-2
+    options:
+    - verre
+    - verst
+    answer_index: 0
+  - text_md: ' i mørket enn med dem.'
+  - text_md: ' Mina trener '
+  - blank_id: action-irregular-3
+    options:
+    - mest
+    - mer
+    answer_index: 1
+  - text_md: ' enn Jonas.'
+  - text_md: ' Guiden trener '
+  - blank_id: action-irregular-4
+    options:
+    - mer
+    - mest
+    answer_index: 1
+  - text_md: ' av alle.'
+  - text_md: ' På lørdag syklet gruppa '
+  - blank_id: action-irregular-5
+    options:
+    - lenger
+    - lengst
+    answer_index: 0
+  - text_md: ' enn på fredag.'
+  - text_md: ' Av alle syklistene syklet Mina '
+  - blank_id: action-irregular-6
+    options:
+    - lengst
+    - lengre
+    answer_index: 0
+  - text_md: .
+- handle: integrate_comparison_patterns
+  op: recall_fill
+  objective: obj-adjective-and-adverb-comparison-01
+  bloom: apply
+  prompt_md: At the bicycle shop after the trip, complete six new comparisons. Use the rest of each
+    sentence, including words such as enn and av, to choose the correct form.
+  derived_from:
+  - section_id: returning-to-mina-and-jonas
+  audio_target: Mina sykler raskere enn Jonas på flat vei. Den nye sykkelen fungerer bedre enn den gamle.
+    Denne hjelmen er billigst av alle. Returveien er lengre enn veien hit. Mina sykler mer forsiktig
+    enn Jonas. Det er den letteste sykkelen i butikken.
+  segments:
+  - text_md: 'Mina sykler '
+  - blank_id: integrated-1
+    options:
+    - raskere
+    - raskest
+    answer_index: 0
+  - text_md: ' enn Jonas på flat vei. Den nye sykkelen fungerer '
+  - blank_id: integrated-2
+    options:
+    - bedre
+    - best
+    answer_index: 0
+  - text_md: ' enn den gamle. Denne hjelmen er '
+  - blank_id: integrated-3
+    options:
+    - billigere
+    - billigst
+    answer_index: 1
+  - text_md: ' av alle. Returveien er '
+  - blank_id: integrated-4
+    options:
+    - lengst
+    - lengre
+    answer_index: 1
+  - text_md: ' enn veien hit. Mina sykler '
+  - blank_id: integrated-5
+    options:
+    - mer forsiktig
+    - mest forsiktig
+    answer_index: 0
+  - text_md: ' enn Jonas. Det er den '
+  - blank_id: integrated-6
+    options:
+    - letteste
+    - lettere
+    answer_index: 0
+  - text_md: ' sykkelen i butikken.'
+- handle: transfer_comparisons_to_commuting
+  op: write
+  objective: obj-adjective-and-adverb-comparison-01
+  bloom: apply
+  prompt_md: Erik is choosing between walking, taking the bus, and cycling to work. Write a short Norwegian
+    comparison in this new commuting situation. Compare price, speed, comfort, reliability, distance,
+    and how efficiently Erik travels. Include at least one comparison between two alternatives and at
+    least one highest- or lowest-degree statement across all three alternatives. Use regular, long, and
+    irregular adjective and adverb comparison patterns. For reliability, you may express the comparison
+    through how well an option functions. Use natural Bokmål and do not copy a complete sentence from
+    the bicycle-trip dialogue.
+  derived_from:
+  - section_id: cumulative-transfer-choosing-a-journey-to-work
+  response_language: 'no'
+  min_words: 35
+  max_words: 65
+  judge_prompt: Check the Norwegian response against the commuting task and report evidence for every
+    criterion. Accept natural Bokmål wording when it preserves the requested comparison meaning and target
+    pattern.
+  criteria:
+  - id: commuting-factors
+    instruction: Addresses price, speed, comfort, reliability, distance, and travel efficiency across
+      the three commuting options.
+  - id: two-way-and-group
+    instruction: Includes at least one comparison between two alternatives and at least one highest- or
+      lowest-degree statement across all three alternatives.
+  - id: pattern-variety
+    instruction: Uses at least one accurate regular -ere or -est form, one mer or mest form, and one taught
+      irregular comparison form.
+  - id: thing-and-action
+    instruction: Uses an adjective to compare a travel option and an adverb to compare how Erik travels.
+  - id: new-commuting-context
+    instruction: Keeps the comparisons in Erik's commuting situation rather than copying the lesson's
+      bicycle-trip sentences.
+- handle: final_comparison_retrieval
+  op: recall_fill
+  objective: obj-adjective-and-adverb-comparison-01
+  bloom: remember
+  prompt_md: 'Without returning to the tables, fill each blank with the required comparison form. In order,
+    the meanings are: a route is shorter, a route is shortest in a group, a seat is more comfortable than
+    the blue-bike seat, a seat is most comfortable, a cyclist rides better than another cyclist, a cyclist
+    rides best in a group, a journey is more efficient than another, and a journey is most efficient among
+    three.'
+  derived_from:
+  - section_id: short-retrieval-review
+  audio_target: Ruta er kortere enn den andre. Den korteste ruta går langs elva. Setet er mer komfortabelt
+    enn setet på den blå sykkelen. Dette er det mest komfortable setet. Jonas sykler bedre enn Mina. Av
+    alle syklistene sykler Jonas best. Denne reisen er mer effektiv enn den andre. Av de tre reisene er
+    denne mest effektiv.
+  segments:
+  - text_md: 'Ruta er '
+  - blank_id: final-1
+    options:
+    - kortere
+    - korteste
+    answer_index: 0
+  - text_md: ' enn den andre.'
+  - text_md: ' Den '
+  - blank_id: final-2
+    options:
+    - korteste
+    - kortere
+    answer_index: 0
+  - text_md: ' ruta går langs elva.'
+  - text_md: ' Setet er '
+  - blank_id: final-3
+    options:
+    - mest komfortabelt
+    - mer komfortabelt
+    answer_index: 1
+  - text_md: ' enn setet på den blå sykkelen.'
+  - text_md: ' Dette er det '
+  - blank_id: final-4
+    options:
+    - mest komfortabel
+    - mest komfortable
+    answer_index: 1
+  - text_md: ' setet.'
+  - text_md: ' Jonas sykler '
+  - blank_id: final-5
+    options:
+    - bedre
+    - best
+    answer_index: 0
+  - text_md: ' enn Mina.'
+  - text_md: ' Av alle syklistene sykler Jonas '
+  - blank_id: final-6
+    options:
+    - best
+    - bedre
+    answer_index: 0
+  - text_md: .
+  - text_md: ' Denne reisen er '
+  - blank_id: final-7
+    options:
+    - mest effektiv
+    - mer effektiv
+    answer_index: 1
+  - text_md: ' enn den andre.'
+  - text_md: ' Av de tre reisene er denne '
+  - blank_id: final-8
+    options:
+    - mer effektiv
+    - mest effektiv
+    answer_index: 1
+  - text_md: .

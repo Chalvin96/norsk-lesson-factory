@@ -1,0 +1,341 @@
+- handle: anchor_meaning_check
+  op: categorize
+  objective: obj-hvis-vs-om-01
+  bloom: analyze
+  prompt_md: Classify each highlighted clause.
+  buckets:
+  - bucket_id: condition
+    label: Condition
+  - bucket_id: embedded-yes-no-question
+    label: Embedded yes/no question
+  items:
+  - item_id: anchor-1
+    text: Hvis Nora trenger skyss, kan Henrik hente henne.
+    bucket_id: condition
+  - item_id: anchor-2
+    text: Maja vet ikke om Nora trenger skyss.
+    bucket_id: embedded-yes-no-question
+  explanation_md: «Hvis» introduces a circumstance that controls a result; «om» introduces an unresolved
+    yes/no question.
+  derived_from:
+  - section_id: the-central-choice
+- handle: condition_recognition
+  op: recall_fill
+  objective: obj-hvis-vs-om-01
+  bloom: understand
+  prompt_md: Complete each message with hvis or om.
+  audio_target: 'Henrik og Maja planlegger kvelden. Hver melding mangler ett innledningsord: avgjør om
+    setningen er en betingelse eller et uavklart ja/nei-spørsmål.'
+  segments:
+  - text_md: 'Henrik: «'
+  - blank_id: condition-1
+    options:
+    - Hvis
+    - Om
+    answer_index: 0
+  - text_md: ' det blir sent, tar jeg en taxi.» Maja: «Jeg vet ikke '
+  - blank_id: condition-2
+    options:
+    - hvis
+    - om
+    answer_index: 1
+  - text_md: ' toget er forsinket.» Henrik: «'
+  - blank_id: condition-3
+    options:
+    - Hvis
+    - Om
+    answer_index: 0
+  - text_md: ' det regner, spiser vi inne.»'
+  explanation_md: The taxi and indoor meal depend on conditions, so they take «hvis». Maja reports the
+    unresolved question «Er toget forsinket?», so that clause takes «om».
+  derived_from:
+  - section_id: conditions-with-hvis
+- handle: conditional_sentence_building
+  op: build
+  objective: obj-hvis-vs-om-01
+  bloom: apply
+  prompt_md: Build Henrik's complete sentence.
+  stem_md: '**Facts** Condition: Det blir sent. Result: Henrik tar en taxi.'
+  tokens:
+  - token_id: conditional-1
+    text: Hvis
+  - token_id: conditional-2
+    text: det
+  - token_id: conditional-3
+    text: blir
+  - token_id: conditional-4
+    text: sent,
+  - token_id: conditional-5
+    text: tar
+  - token_id: conditional-6
+    text: Henrik
+  - token_id: conditional-7
+    text: en
+  - token_id: conditional-8
+    text: taxi.
+  answer_order:
+  - conditional-1
+  - conditional-2
+  - conditional-3
+  - conditional-4
+  - conditional-5
+  - conditional-6
+  - conditional-7
+  - conditional-8
+  explanation_md: Henrik taking a taxi depends on it getting late, so the condition begins with «Hvis».
+  derived_from:
+  - section_id: conditions-with-hvis
+- handle: question_embedding
+  op: build
+  objective: obj-hvis-vs-om-01
+  bloom: apply
+  prompt_md: Build Maja's complete question.
+  stem_md: '**Direct question:** Kommer Nora i kveld? **Maja asks Henrik:** Vet du …?'
+  tokens:
+  - token_id: embedding-1
+    text: Vet
+  - token_id: embedding-2
+    text: du
+  - token_id: embedding-3
+    text: om
+  - token_id: embedding-4
+    text: Nora
+  - token_id: embedding-5
+    text: kommer
+  - token_id: embedding-6
+    text: i
+  - token_id: embedding-7
+    text: kveld?
+  answer_order:
+  - embedding-1
+  - embedding-2
+  - embedding-3
+  - embedding-4
+  - embedding-5
+  - embedding-6
+  - embedding-7
+  explanation_md: The unresolved question «Kommer Nora i kveld?» is embedded after «Vet du», so it is
+    introduced by «om».
+  derived_from:
+  - section_id: embedded-yes-no-questions-with-om
+- handle: whether_test
+  op: choose
+  objective: obj-hvis-vs-om-01
+  bloom: apply
+  prompt_md: Choose the pair that preserves both meanings.
+  stem_md: You need to find out whether the shop is open. If it is open, you will go inside.
+  options:
+  - id: connectors-reversed
+    text: Jeg vet ikke hvis butikken er åpen. Om butikken er åpen, går jeg inn.
+    correct: false
+    why: This assigns the condition connector to the unresolved question and the question connector to
+      the ordinary condition.
+  - id: correct-contrast
+    text: Jeg vet ikke om butikken er åpen. Hvis butikken er åpen, går jeg inn.
+    correct: true
+    why: The first sentence embeds an unresolved yes/no question; the second makes entering depend on
+      the shop being open.
+  - id: both-hvis
+    text: Jeg vet ikke hvis butikken er åpen. Hvis butikken er åpen, går jeg inn.
+    correct: false
+    why: The second connector fits its condition, but the first clause is an unresolved question rather
+      than a condition.
+  derived_from:
+  - section_id: embedded-yes-no-questions-with-om
+- handle: paired_meaning_contrast
+  op: recall_fill
+  objective: obj-hvis-vs-om-01
+  bloom: analyze
+  prompt_md: Complete each sentence with hvis or om.
+  audio_target: 'Lea, møtet og toget: hver setning mangler ett innledningsord. Avgjør om faktumet presenteres
+    som en betingelse eller som et uavklart ja/nei-spørsmål.'
+  segments:
+  - text_md: 'Henrik: «'
+  - blank_id: paired-1a
+    options:
+    - Hvis
+    - Om
+    answer_index: 0
+  - text_md: ' Lea er hjemme, ringer jeg henne.» Maja: «Jeg vet ikke '
+  - blank_id: paired-1b
+    options:
+    - hvis
+    - om
+    answer_index: 1
+  - text_md: ' Lea er hjemme.» Henrik: «'
+  - blank_id: paired-2a
+    options:
+    - Hvis
+    - Om
+    answer_index: 0
+  - text_md: ' møtet slutter tidlig, tar vi toget.» Maja: «Vi må finne ut '
+  - blank_id: paired-2b
+    options:
+    - hvis
+    - om
+    answer_index: 1
+  - text_md: ' møtet slutter tidlig.»'
+  explanation_md: 'Repeated facts can serve different functions: «hvis» presents the fact as a condition,
+    while «om» embeds the corresponding yes/no question.'
+  derived_from:
+  - section_id: compare-the-meanings-directly
+- handle: translation_error_repair
+  op: write
+  objective: obj-hvis-vs-om-01
+  bloom: analyze
+  prompt_md: '**Message:** «Jeg vet ikke hvis bussen er forsinket.» Replace the wrong connector and explain
+    in Norwegian what kind of clause follows it.'
+  response_language: 'no'
+  judge_prompt: Evaluate corrected-connector and clause-classification. Both are gating because the task
+    explicitly requests the correction and explanation. Accept natural Norwegian wording.
+  criteria:
+  - id: corrected-connector
+    instruction: Replaces hvis with om, producing the meaning «Jeg vet ikke om bussen er forsinket».
+  - id: clause-classification
+    instruction: Explains in Norwegian that the corrected clause is an embedded yes/no question rather
+      than a condition.
+  explanation_md: The speaker is reporting the unresolved question «Er bussen forsinket?», so the sentence
+    needs «om».
+  derived_from:
+  - section_id: common-mistake-translating-if-mechanically
+- handle: dialogue_continuation
+  op: write
+  objective: obj-hvis-vs-om-01
+  bloom: apply
+  prompt_md: '**Nora to Henrik:** «Jeg vet ikke om jeg rekker bussen klokka seks. Kan du spørre Maja om
+    jeg skal ta med noe?» Write an 18–35 word message to Maja that asks whether Nora should bring anything
+    and says what you will tell Nora if Maja answers. Use «om» to embed the yes/no question about whether
+    Nora should bring anything and «hvis» for the circumstance that controls your reply to Nora.'
+  response_language: 'no'
+  min_words: 18
+  max_words: 35
+  judge_prompt: Evaluate audience-purpose, requested-content, connected-message, word-count, om-observation,
+    hvis-observation as gating.
+  criteria:
+  - id: audience-purpose
+    instruction: The response functions as Henrik's message to Maja about Nora.
+  - id: requested-content
+    instruction: The message asks Maja whether Nora should bring anything and states what Henrik will
+      tell Nora if Maja answers.
+  - id: connected-message
+    instruction: The requested ideas form one coherent message in understandable Norwegian.
+  - id: word-count
+    instruction: The response contains 18–35 words.
+  - id: om-observation
+    instruction: The learner must use om to embed the yes/no question about whether Nora should bring
+      anything.
+  - id: hvis-observation
+    instruction: The learner must use hvis to introduce the circumstance controlling Henrik's reply to
+      Nora.
+  explanation_md: A natural message embeds the yes/no question with «om» and introduces the circumstance
+    for Henrik's reply with «hvis».
+  derived_from:
+  - section_id: back-to-maja-henrik-and-nora
+- handle: new_plan_transfer
+  op: write
+  objective: obj-hvis-vs-om-01
+  bloom: apply
+  prompt_md: '**Sunday-walk facts** Sara must discover whether the café is open. An open café means lunch
+    there. Rain means taking the bus instead. Write a 20–45 word plan for Emil and Sara to send to their
+    walking group. Use «om» for the unresolved café question and «hvis» for the café and rain conditions.'
+  response_language: 'no'
+  min_words: 20
+  max_words: 45
+  judge_prompt: Evaluate audience-purpose, cafe-question, cafe-outcome, rain-outcome, connected-plan,
+    word-count, om-usage, and hvis-usage as gating.
+  criteria:
+  - id: audience-purpose
+    instruction: The response is a plan addressed or suitable for Emil and Sara's walking group.
+  - id: cafe-question
+    instruction: The plan communicates that Sara needs to discover whether the café is open.
+  - id: cafe-outcome
+    instruction: The plan says that they will eat lunch at the café when it is open.
+  - id: rain-outcome
+    instruction: The plan says that they will take the bus instead in case of rain.
+  - id: connected-plan
+    instruction: The supplied facts are connected into a coherent plan in understandable Norwegian.
+  - id: word-count
+    instruction: The response contains 20–45 words.
+  - id: om-usage
+    instruction: The plan uses om for the unresolved café question.
+  - id: hvis-usage
+    instruction: The plan uses hvis for the café and rain conditions.
+  explanation_md: The opening time is first an unresolved question and then a possible condition; rain
+    supplies a second condition.
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+- handle: retrieval_and_review
+  op: write
+  objective: obj-hvis-vs-om-01
+  bloom: apply
+  prompt_md: '**Message facts** Audience: a friend. Unknown: is the library open tonight? Plan: meet inside
+    when it is open. Write a 12–30 word message that checks the unknown fact and explains the plan. Use
+    «om» to introduce the unresolved question and «hvis» to introduce the condition for meeting inside.'
+  response_language: 'no'
+  min_words: 12
+  max_words: 30
+  judge_prompt: Evaluate audience-purpose, unknown-fact, dependent-plan, coherent-review, om-usage, hvis-usage,
+    and word-count as gating.
+  criteria:
+  - id: audience-purpose
+    instruction: The response functions as a short message to a friend.
+  - id: unknown-fact
+    instruction: The message communicates the unresolved question of whether the library is open tonight.
+  - id: dependent-plan
+    instruction: The message says that the friends will meet inside when the library is open.
+  - id: coherent-review
+    instruction: The unknown fact and dependent plan form one coherent message in understandable Norwegian.
+  - id: word-count
+    instruction: The response contains 12–30 words.
+  - id: om-usage
+    instruction: The learner introduces the unresolved question with «om».
+  - id: hvis-usage
+    instruction: The learner introduces the condition for meeting inside with «hvis».
+  explanation_md: The library's opening is an unresolved question in the check and a condition in the
+    plan.
+  derived_from:
+  - section_id: retrieval-and-review
+- handle: review_hvis_condition
+  op: choose
+  objective: obj-hvis-vs-om-01
+  bloom: apply
+  prompt_md: Ida says the roads may be icy tonight. Choose the reply that makes the drive depend on the
+    roads being safe.
+  stem_md: '**Ida:** «Det kan bli glatt i kveld.»'
+  options:
+  - id: review-hvis-reversed
+    text: Hvis vi kjører, er veiene trygge.
+    correct: false
+    why: This reverses the dependency by making road safety the result of driving.
+  - id: review-hvis-correct
+    text: Hvis veiene er trygge, kjører vi.
+    correct: true
+    why: Hvis introduces the condition that controls whether they drive.
+  - id: review-hvis-om
+    text: Om veiene er trygge?
+    correct: false
+    why: This is an embedded yes/no question, not a reply that states a dependent plan.
+  derived_from:
+  - section_id: retrieval-and-review
+- handle: review_om_embedded_question
+  op: choose
+  objective: obj-hvis-vs-om-01
+  bloom: apply
+  prompt_md: Aksel has not received the Sunday plan and needs to know whether the museum opens before
+    eleven. Choose the reply that asks for that information.
+  stem_md: '**Aksel:** «Jeg har ikke fått søndagsplanen.»'
+  options:
+  - id: review-om-hvis
+    text: Kan du sjekke hvis museet åpner før elleve?
+    correct: false
+    why: Hvis introduces a condition, not the embedded yes/no question that this request needs.
+  - id: review-om-condition
+    text: Hvis museet åpner før elleve, går vi inn.
+    correct: false
+    why: This states a consequence of an early opening instead of asking for the missing information.
+  - id: review-om-correct
+    text: Kan du sjekke om museet åpner før elleve?
+    correct: true
+    why: Om embeds the unresolved yes/no question about the museum's opening time.
+  derived_from:
+  - section_id: retrieval-and-review

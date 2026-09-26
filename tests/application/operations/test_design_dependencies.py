@@ -346,6 +346,43 @@ def test_run_dependency_design_given_second_opinion_expect_persisted_advisory_fi
     assert "Second opinion" in readme
 
 
+def test_run_dependency_design_given_second_opinion_omits_edge_expect_human_review(tmp_path: Path) -> None:
+    _write_catalog(
+        tmp_path,
+        [
+            {"id": "first", "catalog_kind": "grammar", "title": "First", "cefr_tags": ["A1"]},
+            {"id": "second", "catalog_kind": "grammar", "title": "Second", "cefr_tags": ["A2"]},
+        ],
+    )
+
+    def proposal(request: DependencyProposalRequest, *, repo_root: Path) -> DependencyProposal:
+        del request, repo_root
+        return DependencyProposal(
+            assessments=[
+                DependencyAssessment(owner_id="first", status="reviewed"),
+                DependencyAssessment(owner_id="second", required_prerequisites=["first"], status="reviewed"),
+            ]
+        )
+
+    def second_opinion(
+        request: DependencySecondOpinionRequest,
+        *,
+        repo_root: Path,
+    ) -> DependencySecondOpinion:
+        del request, repo_root
+        return DependencySecondOpinion(summary="No findings returned.")
+
+    result = run_dependency_design(
+        repo_root=tmp_path,
+        run_id="dependency-second-opinion-missing-edge",
+        proposal_service=proposal,
+        second_opinion_service=second_opinion,
+    )
+
+    assert result.review.status == "needs_human_review"
+    assert "second-opinion omitted proposed edge: first -> second" in result.review.unresolved
+
+
 def test_run_dependency_design_given_second_opinion_failure_expect_parked_review(tmp_path: Path) -> None:
     _write_catalog(
         tmp_path,

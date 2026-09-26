@@ -1,0 +1,329 @@
+- handle: noun_focus_in_the_cabin
+  op: recall_fill
+  objective: obj-exclamatives-with-for-and-sa-01
+  bloom: understand
+  prompt_md: 'Velg hele utropet som passer til hver reaksjon på hytta.'
+  explanation_md: 'Bruk «for en/et/noen» når utropet framhever en person, et sted eller en ting.'
+  derived_from:
+  - section_id: noun-focused-exclamations-with-for
+  audio_target: For en fin leilighet! For et stort kjøkken! For noen vakre blomster!
+  segments:
+  - text_md: 'Maja reagerer på leiligheten som helhet:'
+  - blank_id: cabin-noun-marker-1
+    options:
+    - Så fin leiligheten er!
+    - For en fin leilighet!
+    answer_index: 1
+  - text_md: ' Elias reagerer på selve kjøkkenet:'
+  - blank_id: cabin-noun-marker-2
+    options:
+    - For et stort kjøkken!
+    - Så stort kjøkkenet er!
+    answer_index: 0
+  - text_md: ' Maja ser hagen full av blomster:'
+  - blank_id: cabin-noun-marker-3
+    options:
+    - Så vakre blomstene er!
+    - For noen vakre blomster!
+    answer_index: 1
+- handle: shift_the_focus
+  op: recall_fill
+  objective: obj-exclamatives-with-for-and-sa-01
+  bloom: apply
+  prompt_md: 'Velg hele utropet som passer til hver reaksjon.'
+  explanation_md: '«For en vakker kveld» framhever kvelden. «Så vakker kvelden er» framhever hvor vakker den er.'
+  derived_from:
+  - section_id: for-sa-focus-contrast
+  audio_target: For en vakker kveld! Så vakker kvelden er!
+  segments:
+  - text_md: 'Maja utbryter om selve kvelden:'
+  - blank_id: shift-noun-marker
+    options:
+    - For en vakker kveld!
+    - Så vakker kvelden er!
+    answer_index: 0
+  - text_md: ' Elias sier hvor vakker kvelden er:'
+  - blank_id: shift-degree-marker
+    options:
+    - For en vakker kveld!
+    - Så vakker kvelden er!
+    answer_index: 1
+- handle: exclamation_not_question
+  op: build
+  objective: obj-exclamatives-with-for-and-sa-01
+  bloom: apply
+  prompt_md: 'Skriv Elias’ utrop om hvor vakker utsikten er.'
+  explanation_md: 'Et helt utrop med «så» begynner med beskrivelsen og har vanlig setningsordstilling: «utsikten er».'
+  derived_from:
+  - section_id: exclamations-keep-statement-word-order
+  tokens:
+  - token_id: tok-2
+    text: vakker
+  - token_id: tok-3
+    text: utsikten
+  - token_id: tok-4
+    text: er!
+  - token_id: tok-1
+    text: Så
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+- handle: repair_mixed_reactions
+  op: find_fix
+  objective: obj-exclamatives-with-for-and-sa-01
+  bloom: analyze
+  prompt_md: 'Velg ordet som må endres i Maja sin reaksjon.'
+  explanation_md: 'Mønsteret «artikkel + substantiv» bruker «for»: «For en søt hund!»'
+  derived_from:
+  - section_id: avoid-mixing-the-two-patterns
+  tokens:
+  - token_id: tok-marker
+    text: Så
+  - token_id: tok-article
+    text: en
+  - token_id: tok-adjective
+    text: søt
+  - token_id: tok-noun
+    text: hund!
+  error_token_id: tok-marker
+  feedback: Bytt ut «Så» med «For». Den rettede reaksjonen er «For en søt hund!»
+- handle: complete_the_cabin_conversation
+  op: recall_fill
+  objective: obj-exclamatives-with-for-and-sa-01
+  bloom: apply
+  prompt_md: 'Fullfør svarene med ett utrop om selve utsikten og deretter ett om hvor fin den er.'
+  explanation_md: 'Maja bruker mønsteret «for + substantivfrase». Elias bruker «så + beskrivelse» og har subjektet foran verbet.'
+  derived_from:
+  - section_id: back-at-the-cabin
+  audio_target: For en vakker utsikt vi hadde! Så fin utsikten er!
+  segments:
+  - text_md: 'Ingrid: Hvordan var utsikten? Maja:'
+  - blank_id: cabin-turn-maja
+    options:
+    - Så vakker utsikten er!
+    - For en vakker utsikt hadde vi!
+    - For en vakker utsikt vi hadde!
+    answer_index: 2
+  - text_md: ' Elias sier hvor fin utsikten er:'
+  - blank_id: cabin-turn-elias
+    options:
+    - Så fin utsikten er!
+    - Så fin er utsikten!
+    - For en fin utsikt!
+    answer_index: 0
+- handle: birthday_party_reactions
+  op: recall_fill
+  objective: obj-exclamatives-with-for-and-sa-01
+  bloom: apply
+  prompt_md: 'Velg reaksjonen som passer til hver festhendelse.'
+  explanation_md: Bruk «for» når substantivet framheves, og «så» når graden framheves. Hele utropssetninger har vanlig setningsordstilling.
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+  audio_target: For en nydelig gave vi fikk! Så ivrig hun åpner den! For et morsomt spill vi fant! Så spente barna er!
+  segments:
+  - text_md: 'Når Lea ser selve gaven:'
+  - blank_id: party-gift-noun
+    options:
+    - Så nydelig gaven er!
+    - For en nydelig gave vi fikk!
+    - Så nydelig er gaven!
+    answer_index: 1
+  - text_md: ' Når Amir legger merke til hvor ivrig Lea åpner den:'
+  - blank_id: party-opening-degree
+    options:
+    - For en ivrig åpning!
+    - Så ivrig åpner hun den!
+    - Så ivrig hun åpner den!
+    answer_index: 2
+  - text_md: ' Når Lea reagerer på selve spillet:'
+  - blank_id: party-game-noun
+    options:
+    - For et morsomt spill vi fant!
+    - Så morsomt spillet er!
+    - For et morsomt spill fant vi!
+    answer_index: 0
+  - text_md: ' Når Amir framhever hvor begeistret barna er:'
+  - blank_id: party-children-degree
+    options:
+    - For noen spente barn!
+    - Så spente er barna!
+    - Så spente barna er!
+    answer_index: 2
+- handle: two_ways_to_react
+  op: write
+  objective: obj-exclamatives-with-for-and-sa-01
+  bloom: apply
+  prompt_md: "Ingrid skriver: «Hytta har store vinduer. Fjorden er svært vakker, og det er helt stille om kvelden.» Svar Ingrid med en melding. Takk for oppholdet og kommenter minst to detaljer med ett utrop som begynner med «for» og ett med «så»."
+  min_words: 21
+  max_words: 40
+  explanation_md: 'Svaret takker Ingrid for hytta eller oppholdet, kommenterer minst to detaljer og bruker begge utropsmønstrene.'
+  response_language: 'no'
+  judge_prompt: Check the response against all gating criteria. Any full clause used for an exclamation must keep statement word order, with the subject before the verb; question inversion fails the word-order criterion. Do not require a full clause when an otherwise valid exclamation does not use one.
+  criteria:
+  - id: message-to-ingrid
+    instruction: The Norwegian message is addressed or clearly directed to Ingrid.
+  - id: thanks-owner
+    instruction: The message thanks Ingrid for the cabin or the stay.
+  - id: two-cabin-details
+    instruction: 'The message reacts to at least two supplied details: the large windows, the beautiful fjord, or the quiet evenings.'
+  - id: for-exclamation
+    instruction: The message contains a noun-focused exclamation built with «for en/et/noen ...».
+  - id: sa-exclamation
+    instruction: The message contains a degree-focused exclamation built with «så» followed by an adjective or adverb.
+  - id: no-question-inversion
+    instruction: Any full clause used for an exclamation keeps statement word order, with the subject before the verb; question inversion fails this criterion. A full clause is not required.
+  derived_from:
+  - section_id: retrieval-and-review
+- handle: review_noun_focus_in_the_cabin
+  op: recall_fill
+  objective: obj-exclamatives-with-for-and-sa-01
+  bloom: understand
+  prompt_md: 'Velg utropet som reagerer på hver ting som helhet.'
+  explanation_md: 'Et utrop som framhever et substantiv, bygges med «for en/et/noen» og substantivfrasen.'
+  derived_from:
+  - section_id: noun-focused-exclamations-with-for
+  audio_target: For en koselig hytte! For noen fine blomster!
+  segments:
+  - text_md: 'Elias reagerer på hytta som helhet:'
+  - blank_id: review-cabin-noun-phrase-1
+    options:
+    - Så koselig hytta er!
+    - For en koselig hytte!
+    - For koselig hytte!
+    answer_index: 1
+  - text_md: ' Maja reagerer på blomstene som helhet:'
+  - blank_id: review-cabin-noun-phrase-2
+    options:
+    - For noen fine blomster!
+    - For fine blomster!
+    - Så fine blomstene er!
+    answer_index: 0
+- handle: review_shift_the_focus
+  op: recall_fill
+  objective: obj-exclamatives-with-for-and-sa-01
+  bloom: apply
+  prompt_md: 'Fullfør hver reaksjon med et uttrykk som passer.'
+  explanation_md: '«Så herlig morgenen er» framhever graden, mens «For en herlig morgen» framhever selve morgenen.'
+  derived_from:
+  - section_id: for-sa-focus-contrast
+  audio_target: Så herlig morgenen er! For en herlig morgen!
+  segments:
+  - text_md: 'Elias sier hvor herlig morgenen er:'
+  - blank_id: review-shift-degree-phrase
+    options:
+    - Så herlig morgenen er!
+    - Så herlig er morgenen!
+    - For en herlig morgen!
+    answer_index: 0
+  - text_md: ' Maja utbryter om selve morgenen:'
+  - blank_id: review-shift-noun-phrase
+    options:
+    - For herlig morgenen er!
+    - Så herlig er morgenen!
+    - For en herlig morgen!
+    answer_index: 2
+- handle: review_exclamation_not_question
+  op: build
+  objective: obj-exclamatives-with-for-and-sa-01
+  bloom: apply
+  prompt_md: 'Skriv Elias’ utrop om hvor vakker morgenen er.'
+  explanation_md: 'Et helt «så»-utrop beholder vanlig setningsordstilling: «morgenen er».'
+  derived_from:
+  - section_id: exclamations-keep-statement-word-order
+  tokens:
+  - token_id: review-tok-3
+    text: morgenen
+  - token_id: review-tok-1
+    text: Så
+  - token_id: review-tok-4
+    text: er!
+  - token_id: review-tok-2
+    text: nydelig
+  answer_order:
+  - review-tok-1
+  - review-tok-2
+  - review-tok-3
+  - review-tok-4
+- handle: review_repair_mixed_reactions
+  op: find_fix
+  objective: obj-exclamatives-with-for-and-sa-01
+  bloom: analyze
+  prompt_md: 'Velg ordet som må endres i Elias’ reaksjon.'
+  explanation_md: 'Uttrykket «så» brukes i gradsutropet: «Så vakkert de synger!»'
+  derived_from:
+  - section_id: avoid-mixing-the-two-patterns
+  tokens:
+  - token_id: review-tok-marker
+    text: For
+  - token_id: review-tok-adjective
+    text: vakkert
+  - token_id: review-tok-pronoun
+    text: de
+  - token_id: review-tok-verb
+    text: synger!
+  error_token_id: review-tok-marker
+  feedback: Bytt ut «For» med «Så». Den rettede reaksjonen er «Så vakkert de synger!»
+- handle: review_complete_the_cabin_conversation
+  op: recall_fill
+  objective: obj-exclamatives-with-for-and-sa-01
+  bloom: apply
+  prompt_md: "Fullfør samtalen på hytta. Elias framhever hvor vakker fjorden er, og Maja framhever hytta som en fin opplevelse."
+  explanation_md: 'Gradsutropet bruker «så» og vanlig setningsordstilling. Substantivutropet bruker «for en/et».'
+  derived_from:
+  - section_id: back-at-the-cabin
+  audio_target: Så vakker fjorden er! For en fin hytte vi har!
+  segments:
+  - text_md: "Ingrid: Hva synes dere om fjorden? Elias:"
+  - blank_id: review-cabin-turn-elias
+    options:
+    - For en vakker fjord!
+    - Så vakker fjorden er!
+    - Så vakker er fjorden!
+    answer_index: 1
+  - text_md: " Maja ser på hytta:"
+  - blank_id: review-cabin-turn-maja
+    options:
+    - For en fin hytte vi har!
+    - For en fin hytte har vi!
+    - Så fin hytta er!
+    answer_index: 0
+- handle: review_birthday_party_reactions
+  op: recall_fill
+  objective: obj-exclamatives-with-for-and-sa-01
+  bloom: apply
+  prompt_md: Velg den fullstendige reaksjonen som passer til hvert nye festøyeblikk.
+  explanation_md: 'Et helt «så»-utrop beholder vanlig setningsordstilling.'
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+  audio_target: For en flott kake hun bakte! Så forsiktig han skjærer kaken! For en livlig sang de spiller! Så fornøyde gjestene blir!
+  segments:
+  - text_md: 'Når Nora framhever selve kaken:'
+  - blank_id: review-party-gift-noun
+    options:
+    - Så flott kaken er!
+    - For en flott kake hun bakte!
+    - For en flott kake bakte hun!
+    answer_index: 1
+  - text_md: ' Når Amir legger merke til at han skjærer kaken med stor forsiktighet:'
+  - blank_id: review-party-opening-degree
+    options:
+    - For en forsiktig skjæring!
+    - Så forsiktig skjærer han kaken!
+    - Så forsiktig han skjærer kaken!
+    answer_index: 2
+  - text_md: ' Når Nora utbryter om selve sangen:'
+  - blank_id: review-party-game-noun
+    options:
+    - For en livlig sang de spiller!
+    - Så livlig sangen er!
+    - For en livlig sang spiller de!
+    answer_index: 0
+  - text_md: ' Når Amir framhever hvor fornøyde gjestene blir:'
+  - blank_id: review-party-children-degree
+    options:
+    - For noen fornøyde gjester!
+    - Så fornøyde blir gjestene!
+    - Så fornøyde gjestene blir!
+    answer_index: 2

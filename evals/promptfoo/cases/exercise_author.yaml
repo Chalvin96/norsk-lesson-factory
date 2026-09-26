@@ -2,6 +2,50 @@
 # exercise contract: the lesson is immutable grounding and the requests are the
 # exact evidence contract.
 
+- description: Cohesive function correspondence uses independently represented pairs
+  metadata:
+    surface: exercise_author
+    cefr: A1
+    kind: communicative
+    source_lesson: synthetic composite-choice regression
+  vars:
+    surface: exercise_author
+    plan: |
+      ---
+      approved: true
+      objectives:
+        - id: obj-first-meeting
+          statement: Recognize the functions of first-meeting expressions.
+      ---
+
+      # Plan
+
+      Connect each taught expression to its communicative function.
+    lesson_md: |
+      # A first meeting
+
+      `Hei!` is a greeting. `Jeg heter Mina.` states a name. `Hva heter du?`
+      asks for a name. `Ha det!` closes the exchange.
+    exercise_requests_yaml: |
+      - handle: match-first-meeting-functions
+        objective_ref: obj-first-meeting
+        bloom: understand
+        evidence_route: pair_matching
+        evidence: Connect each taught expression to its communicative function.
+  assert:
+    - type: llm-rubric
+      metric: decision_correctness
+      value: |
+        Return pass=true only when the exercise uses `match_pairs` and represents
+        the four expressions and their functions as separately matchable items.
+        Return pass=false when it uses one `choose` whose options repeat complete
+        four-part mappings or otherwise bundles all mappings into one selection.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
 - description: Closed meaning choice and sentence construction
   metadata:
     surface: exercise_author

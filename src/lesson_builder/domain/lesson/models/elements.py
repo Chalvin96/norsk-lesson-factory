@@ -10,6 +10,7 @@ from typing import Literal
 from pydantic import BaseModel
 from pydantic import ConfigDict
 from pydantic import Field
+from pydantic import field_validator
 from pydantic import model_validator
 
 from lesson_builder.domain.lesson.models.blocks import Block
@@ -289,6 +290,27 @@ class _SourceRef(_Base):
     note: str | None = None
 
 
+class DialogueTurn(_Base):
+    """One authored speaker turn in learner-visible exercise context."""
+
+    speaker: str = Field(min_length=1)
+    text: Spans = Field(min_length=1)
+
+    @field_validator("speaker")
+    @classmethod
+    def _speaker_is_not_blank(cls, value: str) -> str:
+        if not value.strip():
+            raise ValueError("dialogue speaker must contain non-whitespace text")
+        return value
+
+
+class DialogueStimulus(_Base):
+    """Ordered dialogue supplied as learner-visible exercise context."""
+
+    kind: Literal["dialogue"]
+    turns: list[DialogueTurn] = Field(min_length=1)
+
+
 Operation = Literal[
     "recall_fill", "match_pairs", "judge", "choose", "categorize", "build", "find_fix", "speak", "write"
 ]
@@ -303,6 +325,7 @@ class _ExerciseBase[OperationT: str, PayloadT: BaseModel](_Base):
     objective_id: str
     bloom_level: BloomLevel
     prompt: Spans
+    stimulus: list[DialogueStimulus] = Field(default_factory=list)
     explanation: Spans | None
     derived_from: list[_SourceRef]
     payload: PayloadT

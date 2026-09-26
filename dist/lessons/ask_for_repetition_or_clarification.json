@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "ask_for_repetition_or_clarification",
   "kind": "communicative",
   "language": "nb-NO",
@@ -116,6 +116,42 @@
     {
       "kind": "exercise",
       "id": "short-retrieval-review"
+    },
+    {
+      "kind": "exercise",
+      "id": "clarification-word-or-meaning"
+    },
+    {
+      "kind": "exercise",
+      "id": "revise-repair-message"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_request_repetition"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_request_slower_speech"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_ask_word_meaning"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_check_uncertain_detail"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_confirm_correction"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_continue_after_repair"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_discriminate_complete_response"
     }
   ],
   "sections": [
@@ -2559,31 +2595,61 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "In a noisy café exchange, Jonas gives Mina an instruction, but surrounding noise hides the whole message. Choose the complete interpretation and polite repair request."
+          "value": "Choose the reply that fits the situation."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Be om å få beskjeden gjentatt når støy gjør at du ikke hører den."
+        }
+      ],
       "payload": {
         "options": [
           {
-            "option_id": "whole-message-repetition",
-            "text": "Jeg fikk ikke med meg hele beskjeden. «Kan du gjenta?» — Can you repeat that?",
-            "why": "The whole message was missed, so a repetition request is appropriate."
+            "option_id": "ask-for-word-meaning",
+            "text": "«Unnskyld, hva betyr “kan”?»",
+            "why": "This treats one word as unfamiliar, but the noise hid the whole message."
           },
           {
-            "option_id": "single-word-meaning",
-            "text": "Jeg forstår resten, men ett ord er uklart. «Hva betyr …?» — What does … mean?",
-            "why": "This asks about one word, but the problem is a missing whole message."
+            "option_id": "check-a-detail",
+            "text": "«Mener du bord fire?»",
+            "why": "This proposes a detail that Mina never heard."
+          },
+          {
+            "option_id": "ask-for-repetition",
+            "text": "«Unnskyld, kan du gjenta?»",
+            "why": "The whole message was lost in the noise, so Mina needs to hear it again."
           }
         ],
-        "answer_id": "whole-message-repetition",
-        "stem": [
-          {
-            "kind": "text",
-            "value": "Choose the response that identifies the communication problem and uses the appropriate repair."
-          }
-        ]
-      }
+        "answer_id": "ask-for-repetition",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Kaffekverna bråker slik at Mina ikke hører resten av beskjeden."
+                }
+              ]
+            },
+            {
+              "speaker": "Jonas",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Mina, kan du …»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2593,31 +2659,79 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Mina faces three situations: a noisy room, a speaker who talks too quickly, and a message she missed because she was looking away. Choose the complete set that names each problem and matches it with a clear, polite Norwegian request."
+          "value": "Choose the reply that best solves Mina’s problem."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Be personen snakke saktere når ordene kommer for fort, også om beskjeden allerede er gjentatt."
+        }
+      ],
       "payload": {
         "options": [
           {
-            "option_id": "mismatched-repair-set",
-            "text": "1. Det er bråk, men jeg spør «Hva betyr …?» — What does … mean? 2. Taleren snakker for fort, så jeg spør «Kan du gjenta?» — Can you repeat that? 3. Jeg så bort, men jeg spør «Mener du …?» — Do you mean …?",
-            "why": "The set uses a word-meaning question or interpretation check where repetition or slower speech is needed."
+            "option_id": "ask-about-meaning",
+            "text": "«Hva mener du, egentlig?»",
+            "why": "This asks about intended meaning, although the words are clear and only their speed is the obstacle."
           },
           {
-            "option_id": "matched-repair-set",
-            "text": "1. Det er bråk, så jeg hørte ikke hele beskjeden. «Kan du gjenta?» — Can you repeat that? 2. Taleren snakker for fort. «Kan du snakke saktere?» — Can you speak more slowly? 3. Jeg så bort og fikk ikke med meg beskjeden. «Kan du gjenta?» — Can you repeat that?",
-            "why": "Each request matches the specific communication obstacle."
+            "option_id": "request-repetition",
+            "text": "«Kan du gjenta beskjeden?»",
+            "why": "Jonas has already repeated the whole message twice at the same fast tempo, and he always repeats at that tempo, so another repetition would still arrive too quickly."
+          },
+          {
+            "option_id": "request-slower-speech",
+            "text": "«Kan du snakke saktere?»",
+            "why": "Jonas always repeats the message at the same fast tempo, so Mina needs the same words delivered more slowly."
           }
         ],
-        "answer_id": "matched-repair-set",
-        "stem": [
-          {
-            "kind": "text",
-            "value": "Which complete set matches all three communication obstacles with suitable requests?"
-          }
-        ]
-      }
+        "answer_id": "request-slower-speech",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Mina synes det er vanskelig å forstå Jonas fordi han snakker fort."
+                }
+              ]
+            },
+            {
+              "speaker": "Mina",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Kan du gjenta beskjeden?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Jonas",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Kunden vil ha to kaffe, ett glass vann og en bolle.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Jonas gjentar like fort som første gang."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2626,31 +2740,68 @@
       "objective_id": "obj-ask-for-repetition-or-clarification-01",
       "prompt": [
         {
+          "kind": "strong",
+          "value": "For Jonas at work"
+        },
+        {
           "kind": "text",
-          "value": "Jonas tells Mina: «Ta koppen til bord 3.» Mina understands the instruction except for the word koppen. Jonas then explains: «Koppen er en liten drikkebeholder med hank.» Write Mina’s two short Norwegian contributions: first ask what koppen means; after this explanation, confirm in Norwegian that koppen is a small drinking container with a handle and show that she now understands."
+          "value": " Jonas says: «Legg kvitteringen ved kassen.» Write the short conversation in the correct order: Mina asks what "
+        },
+        {
+          "kind": "emphasis",
+          "value": "kvitteringen"
+        },
+        {
+          "kind": "text",
+          "value": " means, Jonas explains that it shows what the customer has paid, and Mina confirms that she understands."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Et presist spørsmål om ordet, fulgt av en bekreftelse, avslutter oppklaringen."
+        }
+      ],
       "payload": {
         "response_language": "no",
-        "min_words": null,
-        "max_words": null,
-        "judge_prompt": "Check for both stages. Accept natural Bokmål variants of «Hva betyr …?» (What does … mean?) for the focused question. After an explanation, require a Norwegian confirmation of the explained meaning and an indication that Mina now understands, such as «Å, nå forstår jeg» (Oh, now I understand).",
+        "min_words": 8,
+        "max_words": 18,
+        "judge_prompt": "Evaluate gating criteria repair-sequence, focused-question, and meaning-confirmed. Require Mina's question, Jonas's explanation, and Mina's confirmation in that order. Record understanding-observation diagnostically; its verdict must never cause failure. Accept natural Bokmål variants and minor language errors that preserve the message.",
         "criteria": [
           {
+            "id": "repair-sequence",
+            "instruction": "Includes Mina's question, Jonas's explanation, and Mina's confirmation in that order."
+          },
+          {
             "id": "focused-question",
-            "instruction": "Asks what the unfamiliar word means with a focused Norwegian question."
+            "instruction": "Asks Jonas what «kvitteringen» means."
           },
           {
             "id": "meaning-confirmed",
-            "instruction": "Confirms in Norwegian that koppen is a small drinking container with a handle after receiving the explanation."
+            "instruction": "Acknowledges that a receipt shows what the customer paid."
           },
           {
-            "id": "understanding-shown",
-            "instruction": "Indicates in Norwegian that Mina now understands."
+            "id": "understanding-observation",
+            "instruction": "Observation only: note whether Mina signals that she now understands; never gate on this."
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Jonas",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Legg kvitteringen ved kassen.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2659,31 +2810,60 @@
       "objective_id": "obj-ask-for-repetition-or-clarification-01",
       "prompt": [
         {
+          "kind": "strong",
+          "value": "Message to Aksel"
+        },
+        {
           "kind": "text",
-          "value": "At a bus stop, Jonas says: «Ta vesken til plattform 3.» Mina is unsure whether he means platform 2 or platform 3. Write Mina’s two short Norwegian contributions: ask «Mener du …?» — Do you mean …? with her best interpretation; then use one of these supplied replies from Jonas — «Ja, plattform 3.» or «Nei, plattform 2.» — and repeat the final platform and continue the task."
+          "value": " Aksel says they are meeting outside the station. Write the conversation in the correct order: Nora asks whether he means the main entrance, Aksel clarifies «ved østinngangen», and Nora confirms the correction."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Et kontrollspørsmål foreslår en tolkning. Ved å gjenta rettelsen viser du hva du har forstått."
+        }
+      ],
       "payload": {
         "response_language": "no",
-        "min_words": null,
-        "max_words": null,
-        "judge_prompt": "Accept either a confirmation or correction branch. Require the first contribution to ask a focused Norwegian «Mener du …?» (Do you mean …?) question about one ambiguous detail. Require the second contribution to repeat the confirmed or corrected final detail and continue the task. Accept natural Bokmål variants.",
+        "min_words": 8,
+        "max_words": 18,
+        "judge_prompt": "Evaluate gating criteria repair-sequence, detail-checked, and correction-registered. Require Nora's question, Aksel's correction, and Nora's confirmation in that order. Record meeting-continued-observation diagnostically; its verdict must never cause failure. Accept natural Bokmål variants and minor language errors that preserve the message.",
         "criteria": [
           {
-            "id": "uncertain-detail-check",
-            "instruction": "Uses a focused Norwegian check with Mener du …? about one ambiguous detail."
+            "id": "repair-sequence",
+            "instruction": "Includes Nora's question, Aksel's correction, and Nora's confirmation in that order."
           },
           {
-            "id": "final-detail-repeated",
-            "instruction": "Repeats the confirmed or corrected final place, time, or object in Norwegian."
+            "id": "detail-checked",
+            "instruction": "Asks whether Aksel means outside the station's main entrance."
           },
           {
-            "id": "exchange-continued",
-            "instruction": "Continues the exchange with a relevant next step based on the final detail."
+            "id": "correction-registered",
+            "instruction": "Repeats or clearly acknowledges «ved østinngangen»."
+          },
+          {
+            "id": "meeting-continued-observation",
+            "instruction": "Observation only: note whether the reply ends with a relevant continuation of the meeting arrangement; never gate on this."
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Aksel",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Vi møtes utenfor stasjonen.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2692,31 +2872,60 @@
       "objective_id": "obj-ask-for-repetition-or-clarification-01",
       "prompt": [
         {
+          "kind": "strong",
+          "value": "For Jonas at the café"
+        },
+        {
           "kind": "text",
-          "value": "At the café, Jonas tells Mina to bring two cups of coffee to table 4, but she misses the whole order. Write Mina’s three short Norwegian contributions: request repetition; after Jonas repeats «Ta to kopper kaffe til bord 4.», confirm the order; and continue with the café task."
+          "value": " The coffee grinder drowns out the order. Write what happens next in the correct order: Mina asks Jonas to repeat it, Jonas says «to kaffe og én te», and Mina confirms the order and says what she will do next."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "En full oppklaring ber om hjelp, bekrefter den oppfangede informasjonen og fortsetter oppgaven."
+        }
+      ],
       "payload": {
         "response_language": "no",
-        "min_words": null,
-        "max_words": null,
-        "judge_prompt": "Check the three-stage repair cycle. Accept natural Bokmål variants, including «Kan du gjenta?» (Can you repeat that?) for the missed whole order, a confirmation that repeats or clearly acknowledges two cups of coffee for table 4, and a relevant continuation such as «Greit, jeg gjør det nå» (All right, I’ll do it now).",
+        "min_words": 12,
+        "max_words": 24,
+        "judge_prompt": "Evaluate criteria repair-sequence, repetition-requested, order-confirmed, and cafe-task-continued. Require Mina's request before Jonas repeats the order, followed by Mina's confirmation and next action. Accept natural Bokmål variants and minor language errors that preserve the repair sequence.",
         "criteria": [
           {
-            "id": "matched-repair-move",
-            "instruction": "Uses a repetition request because Mina missed the whole café order."
+            "id": "repair-sequence",
+            "instruction": "Presents Mina's repetition request, Jonas's repeated order, and Mina's confirmation in that order."
           },
           {
-            "id": "corrected-message-acknowledged",
-            "instruction": "Repeats or acknowledges the complete repeated order in Norwegian."
+            "id": "repetition-requested",
+            "instruction": "Requests repetition because the whole order was missed."
           },
           {
-            "id": "café-task-continued",
-            "instruction": "Adds a natural Norwegian next step for the café task."
+            "id": "order-confirmed",
+            "instruction": "Confirms the order of two coffees and one tea."
+          },
+          {
+            "id": "cafe-task-continued",
+            "instruction": "States a relevant next action at the café."
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Kaffekverna overdøver Jonas idet han sier bestillingen sin."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2726,30 +2935,68 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Choose one of these four everyday situations and write three short Norwegian contributions: (1) Jonas says «Ta to kopper kaffe til bord 4.», but noise hides the whole message; after Mina asks for repetition, Jonas repeats that sentence. (2) Jonas says «Sett kaken på bord 2.» too quickly; after Mina asks him to speak more slowly, he repeats that sentence. (3) Jonas says «Ta koppen til bord 3.» and koppen is unfamiliar; after Mina asks what it means, Jonas explains «Koppen er en liten drikkebeholder med hank.» (4) Jonas says «Ta vesken til plattform 3.» and Mina is unsure whether he means platform 2 or 3; after Mina asks «Mener du …?», Jonas replies «Ja, plattform 3.» or «Nei, plattform 2.». Use the matching taught move: «Kan du gjenta?» — Can you repeat that?; «Kan du snakke saktere?» — Can you speak more slowly?; «Hva betyr …?» — What does … mean?; or «Mener du …?» — Do you mean …?. After the supplied repair reply, confirm the important information and continue the selected situation. Make the selected problem visible through the request and end with a relevant next step."
+          "value": "A colleague calls from the library, but the connection breaks while the colleague is giving two instructions. Write a short three-line dialogue in Norwegian: Mina asks for the unclear part to be repeated, the colleague repeats it, and Mina confirms the instructions and says what she will do next."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Samtalen brytes før én opplysning blir tydelig. Dialogen bør rette opp misforståelsen, bekrefte beskjedene og fortsette oppgaven."
+        }
+      ],
       "payload": {
         "response_language": "no",
-        "min_words": null,
-        "max_words": null,
-        "judge_prompt": "Accept one of the four routes only when the Norwegian repair request matches the selected problem: «Kan du gjenta?» (Can you repeat that?) for a missed message, «Kan du snakke saktere?» (Can you speak more slowly?) for speech that is too fast, «Hva betyr …?» (What does … mean?) for an unfamiliar word, or «Mener du …?» (Do you mean …?) for an uncertain detail. Require a confirmation or acknowledgment of the important information after repair and a relevant continuation in the selected situation. The response must not stop after the repair request.",
+        "min_words": 18,
+        "max_words": 32,
+        "judge_prompt": "Evaluate gating criteria message-repeated, instructions-confirmed, and next-step-stated. Also check that the colleague's repeated detail matches the message. Record request-form-observation diagnostically; its verdict must never cause failure. Accept natural Bokmål variants and minor form errors when the communicative outcome is clear.",
         "criteria": [
           {
-            "id": "problem-visible",
-            "instruction": "Makes one selected communication problem visible through the matching Norwegian repair request."
+            "id": "message-repeated",
+            "instruction": "Requests that the colleague repeat the unclear instructions or the details that were missed."
           },
           {
-            "id": "understanding-confirmed",
-            "instruction": "Confirms or acknowledges the important corrected information in Norwegian after repair."
+            "id": "detail-repeated",
+            "instruction": "Repeats that the key should be left in the blue box by the staff entrance."
           },
           {
-            "id": "task-continued",
-            "instruction": "Ends with a relevant Norwegian continuation of the selected situation."
+            "id": "instructions-confirmed",
+            "instruction": "Confirms that the reading room must be locked at 18:30 and the key belongs in the blue box by the staff entrance."
+          },
+          {
+            "id": "next-step-stated",
+            "instruction": "States a relevant next action, such as locking the reading room and leaving the key in the specified box."
+          },
+          {
+            "id": "request-form-observation",
+            "instruction": "Observation only: note whether the reply uses a conventional repetition or slower-speech request naturally; never gate on this."
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Kollega",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Lesesalen må låses klokka atten tretti. Legg nøkkelen i den blå boksen ved personalinngangen.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Situasjon",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Forbindelsen brytes idet kollegaen forteller hvor nøkkelen skal legges."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2758,35 +3005,545 @@
       "objective_id": "obj-ask-for-repetition-or-clarification-01",
       "prompt": [
         {
+          "kind": "strong",
+          "value": "Quick review:"
+        },
+        {
           "kind": "text",
-          "value": "Write one natural Norwegian request for each situation: you did not hear the message; the speaker is too fast; one word is unfamiliar; or one detail may be wrong. Then choose one situation and write a complete Norwegian repair sequence: briefly identify the problem, request help, acknowledge the corrected message, and return naturally to the conversation or task. Use a new everyday context such as a bus stop or short telephone call."
+          "value": " Write one natural request in Norwegian for each situation: You missed an entire message; the person is speaking too fast; you do not understand one word; you think one detail may be wrong. Then complete the conversation with the bus driver in the correct order: ask for the departure details again, let the driver repeat platform nine and 5:10 p.m., confirm the details, and continue the conversation."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Den nye situasjonen lar deg bruke hele oppklaringssekvensen."
+        }
+      ],
       "payload": {
         "response_language": "no",
-        "min_words": null,
-        "max_words": null,
-        "judge_prompt": "Check all four retrieval items and one complete sequence. Accept natural Bokmål variants, but require the canonical meanings «Kan du gjenta?» (Can you repeat that?) for a missed message, «Kan du snakke saktere?» (Can you speak more slowly?) for speech that is too fast, «Hva betyr …?» (What does … mean?) for an unfamiliar word, and «Mener du …?» (Do you mean …?) for an uncertain detail. In the selected sequence, require a matching request, a clear Norwegian acknowledgment or repetition of the final information, and a natural continuation such as «Å, nå forstår jeg» (Oh, now I understand) and «Greit, jeg gjør det nå» (All right, I’ll do it now).",
+        "min_words": 45,
+        "max_words": 85,
+        "judge_prompt": "Evaluate whether the response includes an appropriate, distinct Norwegian request for each of the four listed situations and completes the bus-call repair sequence. Accept natural Bokmål variants; do not require fixed phrases. For the call, require three turns in order: a request for the missed departure, the employee's repetition of platform nine and 17.10, then an acknowledgment and relevant continuation.",
         "criteria": [
           {
-            "id": "four-matched-repair-requests",
-            "instruction": "Provides one distinct Norwegian request for each listed communication problem, with every request matched to its problem."
+            "id": "four-repair-requests",
+            "instruction": "Provides an appropriate Norwegian request for a missed message, speech that is too fast, an unfamiliar word, and a possibly incorrect detail."
           },
           {
-            "id": "chosen-problem-repaired",
-            "instruction": "Identifies one chosen problem and uses the matching repair request in a complete sequence."
+            "id": "call-repair-sequence",
+            "instruction": "In the bus call, first requests the missed departure information, then includes the employee repeating platform nine and 17.10, and finally acknowledges those details."
           },
           {
-            "id": "final-information-acknowledged",
-            "instruction": "Clearly acknowledges or repeats the final information in Norwegian."
-          },
-          {
-            "id": "natural-continuation",
-            "instruction": "Returns naturally to the conversation or task in Norwegian."
+            "id": "call-continued",
+            "instruction": "Continues or closes the bus call naturally after acknowledging the information."
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Forbindelsen blir brutt mens den ansatte forteller om avgangen. Bussen går fra plattform ni klokka 17.10."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "clarification-word-or-meaning",
+      "operation": "choose",
+      "objective_id": "obj-ask-for-repetition-or-clarification-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Mina does not know the meaning of one word in the sentence. Choose the question that asks for the meaning of that word."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Bruk «Hva betyr …?» om et ukjent ord og «Hva mener du?» når meningen er uklar."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "ask-speaker-intention",
+            "text": "«Hva mener du?»",
+            "why": "This asks about Jonas's overall intention instead of the single word Mina has not learned."
+          },
+          {
+            "option_id": "ask-for-slower-speech",
+            "text": "«Kan du snakke litt saktere?»",
+            "why": "Slower speech would repeat the same unfamiliar word without explaining it."
+          },
+          {
+            "option_id": "ask-word-meaning",
+            "text": "«Hva betyr “ledig”?»",
+            "why": "This isolates the unfamiliar word and asks for its meaning."
+          }
+        ],
+        "answer_id": "ask-word-meaning",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Mina forstår «dette bordet er», men ikke ordet «ledig»."
+                }
+              ]
+            },
+            {
+              "speaker": "Jonas",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Dette bordet er ledig.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "revise-repair-message",
+      "operation": "write",
+      "objective_id": "obj-ask-for-repetition-or-clarification-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Rewrite Mina’s reply so she clearly confirms that she understood the correction."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Når du gjentar den rettede opplysningen, viser du at oppklaringen fungerte."
+        }
+      ],
+      "payload": {
+        "response_language": "no",
+        "min_words": 4,
+        "max_words": 10,
+        "judge_prompt": "Evaluate whether Mina clearly confirms that the corrected table number is five. Accept natural concise Bokmål using either «5» or «fem».",
+        "criteria": [
+          {
+            "id": "table-five-explicit",
+            "instruction": "Explicitly confirms that the corrected table number is five. Accept the digit 5 or the Norwegian word «fem»."
+          },
+          {
+            "id": "reply-closed-observation",
+            "instruction": "Observation only: note whether the reply also signals acceptance or readiness to continue; never gate on this."
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Jonas",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Bestillingen skal til bord 5.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Mina",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Greit, bord 6.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Jonas",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Nei, jeg mener bord 5.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_request_repetition",
+      "operation": "write",
+      "objective_id": "obj-ask-for-repetition-or-clarification-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "A colleague gives you an instruction, but you hear nothing because a train passes by. Ask them to repeat the whole instruction."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Situasjonen krever at du får med deg en hel beskjed du ikke hørte."
+        }
+      ],
+      "payload": {
+        "response_language": "no",
+        "min_words": 1,
+        "max_words": 4,
+        "judge_prompt": "Evaluate whole-message-repair. Accept concise natural Bokmål variants such as «Kan du gjenta?» and polite variants with «Unnskyld».",
+        "criteria": [
+          {
+            "id": "whole-message-repair",
+            "instruction": "Requests that the missed whole message be repeated."
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Toget overdøver hele beskjeden fra kollegaen."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_request_slower_speech",
+      "operation": "write",
+      "objective_id": "obj-ask-for-repetition-or-clarification-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "You hear every word, but the cashier is speaking too fast. Ask the person to speak more slowly."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Bruk denne forespørselen når personen snakker så fort at du ikke rekker å få med deg ordene."
+        }
+      ],
+      "payload": {
+        "response_language": "no",
+        "min_words": 1,
+        "max_words": 6,
+        "judge_prompt": "Evaluate speed-repair. Accept concise natural Bokmål variants, including «Kan du snakke litt saktere?», «Snakk litt saktere» and «Litt saktere, takk».",
+        "criteria": [
+          {
+            "id": "speed-repair",
+            "instruction": "Requests slower speech."
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Kassereren snakker så fort at du ikke rekker å følge med."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_ask_word_meaning",
+      "operation": "write",
+      "objective_id": "obj-ask-for-repetition-or-clarification-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Colleague: «Legg vekselpengene i skuffen.» You understand everything except "
+        },
+        {
+          "kind": "emphasis",
+          "value": "vekselpengene"
+        },
+        {
+          "kind": "text",
+          "value": ". Ask what the word means."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Det er mer presist å spørre om det ukjente ordet enn å be om hele beskjeden på nytt."
+        }
+      ],
+      "payload": {
+        "response_language": "no",
+        "min_words": 1,
+        "max_words": 4,
+        "judge_prompt": "Evaluate word-meaning-repair. Accept concise natural Bokmål variants that ask what «vekselpengene» means.",
+        "criteria": [
+          {
+            "id": "word-meaning-repair",
+            "instruction": "Asks for the meaning of «vekselpengene»."
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Kollega",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Legg vekselpengene i skuffen.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_check_uncertain_detail",
+      "operation": "write",
+      "objective_id": "obj-ask-for-repetition-or-clarification-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Friend: «Vi møtes neste uke.» You think your friend means Thursday. Check whether Thursday is right."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Foreslå den opplysningen du tror er riktig, og be personen bekrefte den."
+        }
+      ],
+      "payload": {
+        "response_language": "no",
+        "min_words": 1,
+        "max_words": 4,
+        "judge_prompt": "Evaluate detail-repair. Accept concise natural Bokmål variants that ask whether Thursday is intended.",
+        "criteria": [
+          {
+            "id": "detail-repair",
+            "instruction": "Checks whether the friend means Thursday."
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Venn",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Vi møtes neste uke.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_confirm_correction",
+      "operation": "write",
+      "objective_id": "obj-ask-for-repetition-or-clarification-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Your colleague corrects you about the table number. Confirm that you understood the correction."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Når du gjentar den rettede opplysningen, viser du at du har forstått."
+        }
+      ],
+      "payload": {
+        "response_language": "no",
+        "min_words": 1,
+        "max_words": 4,
+        "judge_prompt": "Evaluate whether the reply explicitly acknowledges the correction to table seven. Accept natural concise Bokmål using the digit or the number word.",
+        "criteria": [
+          {
+            "id": "correction-confirmed",
+            "instruction": "Explicitly acknowledges the corrected table number, using either «7» or «sju»."
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Kollega",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Nei, vi skal sitte ved bord 7.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_continue_after_repair",
+      "operation": "write",
+      "objective_id": "obj-ask-for-repetition-or-clarification-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Colleague: «Ja, kunden venter ved døra.» Now you understand and want to help right away."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Et neste steg fører samtalen tilbake til det dere holder på med."
+        }
+      ],
+      "payload": {
+        "response_language": "no",
+        "min_words": 1,
+        "max_words": 4,
+        "judge_prompt": "Evaluate task-resumed. Accept concise natural Bokmål variants that state an immediate relevant next action.",
+        "criteria": [
+          {
+            "id": "task-resumed",
+            "instruction": "States that the learner will help or act now."
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Kollega",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Ja, kunden venter ved døra.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_discriminate_complete_response",
+      "operation": "choose",
+      "objective_id": "obj-ask-for-repetition-or-clarification-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the reply that confirms the corrected time and continues the appointment."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Et godt svar bekrefter den siste opplysningen før samtalen går videre."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "continue-with-wrong-time",
+            "text": "«Greit, da kommer jeg klokka to.»",
+            "why": "It continues without adopting the corrected time."
+          },
+          {
+            "option_id": "confirm-and-continue",
+            "text": "«Å, klokka tre. Da kommer jeg litt før.»",
+            "why": "It registers the corrected time and continues the arrangement."
+          },
+          {
+            "option_id": "acknowledge-only",
+            "text": "«Å, klokka tre.»",
+            "why": "It registers the time but gives no evidence of continuing the arrangement."
+          }
+        ],
+        "answer_id": "confirm-and-continue",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Resepsjonist",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Avtalen er klokka tre.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Ringende",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Mener du klokka to?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Resepsjonist",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Nei, klokka tre.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "practice_groups": [
@@ -2800,7 +3557,16 @@
         "confirming-place-time-or-object",
         "completing-repair-cycle",
         "integrated-practice-repairing-complete-exchange",
-        "short-retrieval-review"
+        "short-retrieval-review",
+        "clarification-word-or-meaning",
+        "revise-repair-message",
+        "review_request_repetition",
+        "review_request_slower_speech",
+        "review_ask_word_meaning",
+        "review_check_uncertain_detail",
+        "review_confirm_correction",
+        "review_continue_after_repair",
+        "review_discriminate_complete_response"
       ]
     }
   ],

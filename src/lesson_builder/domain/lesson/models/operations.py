@@ -30,7 +30,7 @@ EvidenceRoute = Literal[
 K_EVIDENCE_ROUTE_DESCRIPTIONS: dict[str, str] = {
     "meaning_selection": "select one meaning or interpretation from competing options",
     "bounded_retrieval": "retrieve a taught form in a bounded sentence or slot",
-    "pair_matching": "match two sides of a taught form/meaning pair",
+    "pair_matching": "connect independently represented forms with their meanings or communicative functions",
     "sentence_judgement": "judge whether one complete sentence is correct",
     "sentence_construction": "construct a complete sentence from supplied tokens",
     "form_repair": "find and repair one taught form error",
@@ -131,7 +131,7 @@ K_OPERATION_POLICIES: dict[str, OperationPolicy] = {
     ),
     "match_pairs": OperationPolicy(
         name="match_pairs",
-        bloom_levels=("remember",),
+        bloom_levels=("remember", "understand"),
         default_bloom="remember",
         build_stage="notice",
         payload_kind="left_right_pairs",

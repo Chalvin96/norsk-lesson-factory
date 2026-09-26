@@ -1,0 +1,516 @@
+- handle: future_anchor_noticing
+  op: choose
+  objective: obj-future-expressions-01
+  bloom: understand
+  prompt_md: Choose the function of each numbered line.
+  stem_md: Toget går klokka ni i morgen. 2. Jeg skal kjøpe billetter i kveld. 3. Se på de mørke skyene!
+    Det kommer til å regne. 4. Jeg tror Jonas vil like Lillehammer.
+  options:
+  - id: wrong-vil
+    text: 1 = timetable; 2 = commitment; 3 = expected result based on signs; 4 = desire
+    correct: false
+    why: Jeg tror frames the fourth line as an assessment about Jonas's future reaction, not as Jonas's
+      desire.
+  - id: wrong-plan
+    text: 1 = commitment; 2 = timetable; 3 = expected result based on signs; 4 = assessment
+    correct: false
+    why: The ticket purchase is the decision, while the fixed departure time belongs to a timetable.
+  - id: wrong-predictions
+    text: 1 = timetable; 2 = commitment; 3 = assessment; 4 = expected result based on signs
+    correct: false
+    why: The opinion frame marks the assessment, while the dark clouds provide present evidence.
+  - id: correct
+    text: 1 = timetable; 2 = commitment; 3 = expected result based on signs; 4 = assessment
+    correct: true
+    why: The fixed departure is a timetable, the decision is a commitment, the clouds support a sign-based
+      expectation, and the opinion frame makes a prediction.
+  derived_from:
+  - section_id: first-checkpoint-speaker-perspective
+- handle: skal_plan_formation
+  op: recall_fill
+  objective: obj-future-expressions-01
+  bloom: apply
+  prompt_md: Fullfør utvekslingen med modalverbet for en avtalt plan.
+  explanation_md: Use skal for an agreed action, followed directly by the infinitive.
+  derived_from:
+  - section_id: likely-misconception-skal
+  audio_target: 'Maja: Jeg skal kjøpe billettene i kveld. Jonas: Skal vi pakke maten?'
+  segments:
+  - text_md: 'Maja: Jeg '
+  - blank_id: plan-modal-1
+    options:
+    - skal
+    - vil
+    answer_index: 0
+  - text_md: ' kjøpe billettene i kveld. Jonas:'
+  - blank_id: plan-modal-2
+    options:
+    - Vil
+    - Skal
+    answer_index: 1
+  - text_md: ' vi '
+  - blank_id: plan-infinitive-1
+    options:
+    - pakke
+    - å pakke
+    answer_index: 0
+  - text_md: ' maten?'
+- handle: plan_or_arrangement_choice
+  op: build
+  objective: obj-future-expressions-01
+  bloom: apply
+  prompt_md: Build the timetable sentence.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'RUTEPLAN Avreise: Oslo Tid: kl. 09.00 i morgen'
+  derived_from:
+  - section_id: common-mistake-present-context
+  tokens:
+  - token_id: plan-01
+    text: Toget
+  - token_id: plan-02
+    text: går
+  - token_id: plan-03
+    text: fra
+  - token_id: plan-04
+    text: Oslo
+  - token_id: plan-05
+    text: klokka
+  - token_id: plan-06
+    text: ni
+  - token_id: plan-07
+    text: i
+  - token_id: plan-08
+    text: morgen.
+  answer_order:
+  - plan-01
+  - plan-02
+  - plan-03
+  - plan-04
+  - plan-05
+  - plan-06
+  - plan-07
+  - plan-08
+- handle: vil_prediction_interpretation
+  op: choose
+  objective: obj-future-expressions-01
+  bloom: analyze
+  prompt_md: Choose the interpretation that matches each numbered line.
+  stem_md: 'Jeg vil hjelpe deg, det lover jeg. 2. Jeg tror Maja vil like Lillehammer. 3. Avtale: Jeg henter
+    deg klokka seks.'
+  options:
+  - id: wrong-assessment
+    text: 1 = assessment; 2 = promise; 3 = agreed pickup plan.
+    correct: false
+    why: Den første linjen inneholder et løfte, mens Jeg tror gjør den andre til en vurdering av Majas
+      framtidige reaksjon.
+  - id: wrong-willingness
+    text: 1 = promise; 2 = willingness; 3 = agreed pickup plan.
+    correct: false
+    why: Jeg tror gjør den andre linjen til en vurdering, ikke et uttrykk for villighet.
+  - id: correct
+    text: 1 = promise; 2 = assessment; 3 = agreed pickup plan.
+    correct: true
+    why: Tillegget det lover jeg gjør den første linjen til et løfte, Jeg tror markerer en vurdering,
+      og Avtale viser at henting klokka seks er avtalt.
+  - id: wrong-plan
+    text: 1 = promise; 2 = assessment; 3 = willingness.
+    correct: false
+    why: Avtale viser at henting klokka seks er en avtalt plan, ikke bare villighet.
+  derived_from:
+  - section_id: two-meanings-of-vil
+- handle: prediction_basis_choice
+  op: recall_fill
+  objective: obj-future-expressions-01
+  bloom: apply
+  prompt_md: Complete the predictions.
+  explanation_md: An opinion frame favors vil; visible circumstances favor kommer til å.
+  derived_from:
+  - section_id: vil-or-kommer-til-a
+  audio_target: Jeg tror gjestene vil komme. Se på de mørke skyene! Det kommer til å regne.
+  segments:
+  - text_md: 'Emil: Jeg tror gjestene '
+  - blank_id: prediction-opinion-1
+    options:
+    - vil
+    - kommer til å
+    answer_index: 0
+  - text_md: ' komme før middagen. Sara: Se på de mørke skyene! Det '
+  - blank_id: prediction-sign-1
+    options:
+    - vil
+    - kommer til å
+    answer_index: 1
+  - text_md: ' regne i kveld.'
+- handle: future_form_repair
+  op: find_fix
+  objective: obj-future-expressions-01
+  bloom: analyze
+  prompt_md: Find the incorrect token.
+  derived_from:
+  - section_id: common-form-errors
+  tokens:
+  - token_id: repair-01
+    text: 'Maja:'
+  - token_id: repair-02
+    text: Jeg
+  - token_id: repair-03
+    text: skal
+  - token_id: repair-04
+    text: å
+  - token_id: repair-05
+    text: kjøpe
+  - token_id: repair-06
+    text: billetter
+  - token_id: repair-07
+    text: i
+  - token_id: repair-08
+    text: kveld.
+  - token_id: repair-09
+    text: Toget
+  - token_id: repair-10
+    text: går
+  - token_id: repair-11
+    text: klokka
+  - token_id: repair-12
+    text: ni
+  - token_id: repair-13
+    text: i
+  - token_id: repair-14
+    text: morgen.
+  - token_id: repair-15
+    text: Jeg
+  - token_id: repair-16
+    text: tror
+  - token_id: repair-17
+    text: toget
+  - token_id: repair-18
+    text: vil
+  - token_id: repair-19
+    text: være
+  - token_id: repair-20
+    text: fullt.
+  - token_id: repair-21
+    text: Det
+  - token_id: repair-22
+    text: kommer
+  - token_id: repair-23
+    text: til
+  - token_id: repair-24
+    text: å
+  - token_id: repair-25
+    text: regne.
+  error_token_id: repair-04
+  feedback: Remove å. Skal is followed directly by the infinitive kjøpe.
+- handle: trip_message_completion
+  op: build
+  objective: obj-future-expressions-01
+  bloom: apply
+  prompt_md: Build Jonas's complete update.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Jonas sends Maja one complete update before the train trip. Build his message from the
+        words.
+  derived_from:
+  - section_id: back-to-maja-and-jonas
+  tokens:
+  - token_id: trip-01
+    text: Søsteren
+  - token_id: trip-02
+    text: min
+  - token_id: trip-03
+    text: skal
+  - token_id: trip-04
+    text: møte
+  - token_id: trip-05
+    text: oss
+  - token_id: trip-06
+    text: på
+  - token_id: trip-07
+    text: stasjonen.
+  - token_id: trip-08
+    text: Toget
+  - token_id: trip-09
+    text: kommer
+  - token_id: trip-10
+    text: fram
+  - token_id: trip-11
+    text: klokka
+  - token_id: trip-12
+    text: 10.26.
+  - token_id: trip-13
+    text: Jeg
+  - token_id: trip-14
+    text: tror
+  - token_id: trip-15
+    text: hun
+  - token_id: trip-16
+    text: vil
+  - token_id: trip-17
+    text: vente
+  - token_id: trip-18
+    text: ved
+  - token_id: trip-19
+    text: hovedinngangen.
+  - token_id: trip-20
+    text: Det
+  - token_id: trip-21
+    text: kommer
+  - token_id: trip-22
+    text: til
+  - token_id: trip-23
+    text: å
+  - token_id: trip-24
+    text: bli
+  - token_id: trip-25
+    text: kaldt
+  - token_id: trip-26
+    text: i
+  - token_id: trip-27
+    text: kveld.
+  answer_order:
+  - trip-01
+  - trip-02
+  - trip-03
+  - trip-04
+  - trip-05
+  - trip-06
+  - trip-07
+  - trip-08
+  - trip-09
+  - trip-10
+  - trip-11
+  - trip-12
+  - trip-13
+  - trip-14
+  - trip-15
+  - trip-16
+  - trip-17
+  - trip-18
+  - trip-19
+  - trip-20
+  - trip-21
+  - trip-22
+  - trip-23
+  - trip-24
+  - trip-25
+  - trip-26
+  - trip-27
+- handle: birthday_future_transfer
+  op: write
+  objective: obj-future-expressions-01
+  bloom: apply
+  prompt_md: 'Til: Nora. Formål: Gi Nora en praktisk oppdatering før bursdagsmiddagen. FAKTA • Sara har
+    lovet å hente kaken i kveld. • Restauranten: åpningstid klokka 19.00. • Emil forventer gjestene før
+    middagen. • Mørke uværsskyer samler seg; det ventes regn i kveld. Uttrykk hvert punkt med den formen
+    det krever: Saras løfte med skal + infinitiv, åpningstiden med presens sammen med framtidstiden, Emils
+    forventning med vil i en meningsramme som «jeg tror», og regnet med kommer til å + infinitiv. Skriv
+    en sammenhengende melding på 35–55 ord.'
+  derived_from:
+  - section_id: cumulative-transfer-birthday-dinner
+  response_language: 'no'
+  min_words: 35
+  max_words: 55
+  judge_prompt: Evaluate all eight criteria as gating. The message must be a connected update to Nora
+    that preserves all four supplied facts, expresses each fact with the required future form named in
+    the prompt, and stays within 35–55 words. Accept natural Bokmål wording.
+  criteria:
+  - id: message-purpose
+    instruction: The response is a connected practical message to Nora about the birthday dinner.
+  - id: supplied-facts
+    instruction: The message accurately communicates all four supplied facts.
+  - id: word-bound
+    instruction: The message contains 35–55 words.
+  - id: comprehensible-norwegian
+    instruction: The message is comprehensible Norwegian despite minor errors.
+  - id: commitment-form
+    instruction: Sara's promise is expressed with skal followed by a bare infinitive.
+  - id: arrangement-form
+    instruction: The restaurant opening is expressed in the present tense together with its future time.
+  - id: assessment-form
+    instruction: Emil's expectation is expressed with vil in an opinion frame.
+  - id: evidence-form
+    instruction: The weather result is expressed with kommer til å followed by an infinitive.
+- handle: future_expression_review
+  op: recall_fill
+  objective: obj-future-expressions-01
+  bloom: apply
+  prompt_md: Complete the four updates about the evening.
+  explanation_md: The contexts distinguish a commitment (skal), a timetable (present tense), an assessment
+    (vil), and a result supported by signs (kommer til å).
+  derived_from:
+  - section_id: final-retrieval
+  audio_target: Jeg skal sende deg en melding i kveld. Toget går klokka 10.26 i morgen. Jeg tror toget
+    vil være fullt. Se på den lange køen! Toget kommer til å bli fullt.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Du har lovet å gi beskjed i kveld.
+  segments:
+  - text_md: 'Jeg '
+  - blank_id: final-form-1
+    options:
+    - vil sende
+    - kommer til å sende
+    - skal sende
+    answer_index: 2
+  - text_md: ' deg en melding i kveld. Toget '
+  - blank_id: final-form-2
+    options:
+    - vil gå
+    - går
+    - skal gå
+    answer_index: 1
+  - text_md: ' klokka 10.26 i morgen. Jeg tror toget '
+  - blank_id: final-form-3
+    options:
+    - skal være
+    - kommer til å være
+    - vil være
+    answer_index: 2
+  - text_md: ' fullt. Se på den lange køen! Toget '
+  - blank_id: final-form-4
+    options:
+    - skal bli
+    - kommer til å bli
+    - vil bli
+    answer_index: 1
+  - text_md: ' fullt.'
+- handle: review_skal_commitment
+  op: recall_fill
+  objective: obj-future-expressions-01
+  bloom: apply
+  prompt_md: Complete Maja's reply.
+  explanation_md: A promise to act later is expressed with skal followed by a bare infinitive.
+  derived_from:
+  - section_id: final-retrieval
+  audio_target: 'Jonas: Kan du gi meg beskjed i morgen? Maja: Ja, jeg skal ringe deg i morgen.'
+  segments:
+  - text_md: 'Jonas: Kan du gi meg beskjed i morgen? Maja: Ja, jeg '
+  - blank_id: review-skal-1
+    options:
+    - skal ringe
+    - vil ringe
+    - kommer til å ringe
+    answer_index: 0
+  - text_md: ' deg i morgen.'
+- handle: review_present_arrangement
+  op: recall_fill
+  objective: obj-future-expressions-01
+  bloom: apply
+  prompt_md: Complete the line from the departure board.
+  explanation_md: A scheduled departure is expressed in the present tense together with its future time.
+  derived_from:
+  - section_id: final-retrieval
+  audio_target: Bussen går klokka 07.15 i morgen.
+  segments:
+  - text_md: 'Rutetabell: Bussen '
+  - blank_id: review-present-1
+    options:
+    - går
+    - skal gå
+    - vil gå
+    answer_index: 0
+  - text_md: ' klokka 07.15 i morgen.'
+- handle: review_vil_assessment
+  op: recall_fill
+  objective: obj-future-expressions-01
+  bloom: apply
+  prompt_md: Complete Emil's opinion about the film.
+  explanation_md: The frame jeg tror presents an assessment about the future with vil.
+  derived_from:
+  - section_id: final-retrieval
+  audio_target: 'Emil: Jeg tror filmen vil være bra.'
+  segments:
+  - text_md: 'Emil: Jeg tror filmen '
+  - blank_id: review-vil-1
+    options:
+    - vil være
+    - skal være
+    - kommer til å være
+    answer_index: 0
+  - text_md: ' bra.'
+- handle: review_kommer_evidence
+  op: recall_fill
+  objective: obj-future-expressions-01
+  bloom: apply
+  prompt_md: Complete Sara's prediction from what she sees.
+  explanation_md: Visible signs support the full construction kommer til å for an expected result.
+  derived_from:
+  - section_id: final-retrieval
+  audio_target: 'Sara: Se på hvor fort han løper! Han kommer til å vinne.'
+  segments:
+  - text_md: 'Sara: Se på hvor fort han løper! Han '
+  - blank_id: review-kommer-1
+    options:
+    - kommer til å
+    - vil
+    - skal
+    answer_index: 0
+  - text_md: ' vinne.'
+- handle: review_skal_bare_infinitive
+  op: choose
+  objective: obj-future-expressions-01
+  bloom: apply
+  prompt_md: Velg svaret der Maja lover å gjøre det.
+  stem_md: 'Jonas: Kan du kjøpe billettene i kveld? Maja: Ja, …'
+  options:
+  - id: wrong-want
+    text: jeg må kjøpe dem.
+    correct: false
+    why: Må uttrykker nødvendighet, ikke et løfte om at hun gjør det.
+  - id: wrong-present
+    text: jeg har kjøpt dem.
+    correct: false
+    why: Perfektum forteller at handlingen allerede er fullført, ikke at hun lover å gjøre den senere.
+  - id: correct
+    text: jeg skal kjøpe dem.
+    correct: true
+    why: Skal presenterer kjøpet som et løfte og står direkte foran infinitiven.
+  derived_from:
+  - section_id: common-form-errors
+- handle: review_vil_bare_infinitive
+  op: choose
+  objective: obj-future-expressions-01
+  bloom: apply
+  prompt_md: Choose the sentence that states Jonas's assessment of the travel time.
+  stem_md: Turen er 180 kilometer. Jonas vurderer hvor lang tid den tar.
+  options:
+  - id: wrong-desire
+    text: Jeg vil at turen skal ta omtrent tre timer.
+    correct: false
+    why: This expresses a wish about the trip's duration, not an estimate of how long it will take.
+  - id: wrong-plan
+    text: Jeg har bestemt at turen skal ta omtrent tre timer.
+    correct: false
+    why: This states a decision, while the task asks for Jonas's assessment of the travel time.
+  - id: correct
+    text: Jeg tror turen vil ta omtrent tre timer.
+    correct: true
+    why: Jeg tror frames vil as an estimate of the trip's duration, and vil is followed directly by the
+      infinitive ta.
+  derived_from:
+  - section_id: common-form-errors
+- handle: review_kommer_til_a_form
+  op: recall_fill
+  objective: obj-future-expressions-01
+  bloom: apply
+  prompt_md: Velg riktig måte å fullføre værmeldingen på.
+  explanation_md: Uttrykket kommer til å står samlet foran infinitiven.
+  derived_from:
+  - section_id: common-form-errors
+  audio_target: Det kommer til å regne i kveld.
+  segments:
+  - text_md: 'Værvarsel:'
+  - blank_id: review-kommer-form-1
+    options:
+    - Det kommer til å
+    - Det blir
+    - Det ventes
+    answer_index: 0
+  - text_md: ' regne i kveld.'

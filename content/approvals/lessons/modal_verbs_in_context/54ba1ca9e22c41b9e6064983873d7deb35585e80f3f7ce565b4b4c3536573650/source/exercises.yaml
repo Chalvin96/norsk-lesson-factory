@@ -1,0 +1,110 @@
+- handle: distinguish_action_and_evidence_readings
+  op: categorize
+  objective: obj-modal-verbs-in-context-01
+  bloom: analyze
+  prompt_md: Sort each sentence by what the modal contributes in this context. Choose action meaning when it directs, plans, or advises an action. Choose evidence meaning when it marks an inference, reported information, or an expectation.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Sentences from a workday and everyday situations, each containing one of må, skal, or bør.
+  explanation_md: The same modal can direct an action or frame a claim. *Må* can express necessity or an inference, *skal* a plan or reported information, and *bør* advice or an expectation. Look for the subject's control, an explicit source, or evidence in the surrounding sentence.
+  derived_from:
+  - section_id: when-the-modal-evaluates-evidence
+  buckets:
+  - bucket_id: action-meaning
+    label: Action meaning
+  - bucket_id: evidence-meaning
+    label: Evidence, report, or expectation
+  items:
+  - item_id: submit-form
+    text: Du må levere skjemaet før fredag.
+    bucket_id: action-meaning
+  - item_id: bicycle-evidence
+    text: Hun må være på kontoret; sykkelen hennes står utenfor.
+    bucket_id: evidence-meaning
+  - item_id: friday-plan
+    text: Vi skal møte kunden på fredag.
+    bucket_id: action-meaning
+  - item_id: reported-teacher
+    text: Den nye læreren skal være svært flink, ifølge kollegene.
+    bucket_id: evidence-meaning
+  - item_id: save-copy
+    text: Du bør lagre en kopi før du lukker dokumentet.
+    bucket_id: action-meaning
+  - item_id: expected-bus
+    text: Bussen bør være her om fem minutter hvis rutetabellen holder.
+    bucket_id: evidence-meaning
+- handle: classify_evidence_reading
+  op: categorize
+  objective: obj-modal-verbs-in-context-01
+  bloom: analyze
+  prompt_md: Each sentence presents a claim rather than directing an action. Sort it by the source of the claim.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Ingrid
+      text_md: «Her er noen korte utsagn jeg samlet i løpet av dagen.»
+    - speaker: Petter
+      text_md: «La oss se på hva slags kilde hvert utsagn bygger på.»
+  explanation_md: 'Claim-level readings are separated by their source: *må* draws an inference from clues, *skal* attributes information to a source, and *bør* states a reasonable expectation if conditions hold.'
+  derived_from:
+  - section_id: when-the-modal-evaluates-evidence
+  buckets:
+  - bucket_id: inference-ma
+    label: Inference from clues
+  - bucket_id: report-skal
+    label: Information attributed to a source
+  - bucket_id: expectation-bor
+    label: Reasonable expectation
+  items:
+  - item_id: office-lights
+    text: Ola må være på kontoret; lyset er fortsatt på.
+    bucket_id: inference-ma
+  - item_id: wet-streets
+    text: Det må ha regnet i natt; gatene er våte.
+    bucket_id: inference-ma
+  - item_id: newspaper-concert
+    text: Bandet skal være svært godt live, ifølge avisen.
+    bucket_id: report-skal
+  - item_id: neighbour-renovation
+    text: Leiligheten skal være nyoppusset, sier naboen.
+    bucket_id: report-skal
+  - item_id: timetable-train
+    text: Toget bør være her om to minutter hvis rutetabellen stemmer.
+    bucket_id: expectation-bor
+  - item_id: normal-delivery
+    text: Pakken bør komme før lunsj dersom leveringen går som normalt.
+    bucket_id: expectation-bor
+- handle: transfer_modals_across_action_and_evidence
+  op: write
+  objective: obj-modal-verbs-in-context-01
+  bloom: apply
+  prompt_md: 'New situation: a delivery is late at your workplace, and two colleagues are deciding what to do. Write a short conversation in natural Bokmål — between 20 and 70 words — and mark the speaker at the start of each line. Use at least three of må, kan, skal, vil, and bør. Include (1) one claim-level reading: inferential må, reported-information skal, or expectation bør; and (2) one core action meaning such as necessity, possibility, plan, wish, or advice. Make the surrounding context clear enough to support every modal you use.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: A workplace delivery is late; two colleagues exchange short messages about what to do.
+  explanation_md: This task asks you to write a dialogue that uses at least three modals, including one claim-level reading (inference, report, or expectation) and one action reading. The context must make each reading clear.
+  derived_from:
+  - section_id: taking-it-with-you
+  response_language: 'no'
+  min_words: 20
+  max_words: 70
+  judge_prompt: Check the dialogue against the task and report evidence for each criterion, quoting every modal use and the contextual evidence for its reading. State the total word count excluding speaker labels.
+  criteria:
+  - id: dialogue-format
+    instruction: Written as a coherent workplace conversation about the late delivery, with the speaker marked at the start of each line.
+  - id: within-word-bounds
+    instruction: The dialogue is between 20 and 70 words, not counting speaker labels.
+  - id: at-least-three-modals
+    instruction: Uses at least three of må, kan, skal, vil, and bør.
+  - id: every-modal-fits-context
+    instruction: Every counted modal has a contextually appropriate action, inference, report, or expectation reading; no extra modal is accepted merely because its form is grammatical.
+  - id: evidence-reading
+    instruction: Uses inferential må, reported-information skal, or expectation bør at least once, with context that supports that reading.
+  - id: action-reading
+    instruction: Uses at least one modal for a core action meaning such as necessity, possibility, plan, wish, or advice, with context that supports that reading.
+  - id: natural-bokmal-grammar
+    instruction: 'Natural Bokmål with correct modal grammar: no å between a modal and its infinitive, and word order that fits a conversation.'

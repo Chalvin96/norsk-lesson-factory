@@ -1,0 +1,415 @@
+- handle: notice_double_definiteness_in_shop_dialogue
+  op: recall_fill
+  objective: obj-double-definiteness-01
+  bloom: understand
+  prompt_md: Fyll ut de tre substantivfrasene.
+  explanation_md: Når et bestemt substantiv har et adjektiv foran seg, bruker vi den/det/de + adjektivet i bestemt form + substantivet i bestemt form.
+  derived_from:
+  - section_id: first-checkpoint-notice-the-full-pattern
+  audio_target: Den røde jakken henger her. Det lille skapet står ved vinduet. De gule blomstene står på bordet.
+  segments:
+  - text_md: 'Jakkefrase: '
+  - blank_id: old-chair-opening
+    options:
+    - den
+    - det
+    - de
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: old-chair-adjective
+    options:
+    - røde
+    - rød
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: old-chair-noun
+    options:
+    - jakken
+    - jakke
+    answer_index: 0
+  - text_md: '. Skap: '
+  - blank_id: round-table-opening
+    options:
+    - den
+    - det
+    - de
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: round-table-adjective
+    options:
+    - lille
+    - lita
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: round-table-noun
+    options:
+    - skapet
+    - skap
+    answer_index: 0
+  - text_md: '. Blomster: '
+  - blank_id: small-lamps-opening
+    options:
+    - den
+    - det
+    - de
+    answer_index: 2
+  - text_md: ' '
+  - blank_id: small-lamps-adjective
+    options:
+    - gule
+    - gul
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: small-lamps-noun
+    options:
+    - blomstene
+    - blomster
+    answer_index: 0
+  - text_md: .
+- handle: select_den_det_or_de_for_specific_objects
+  op: recall_fill
+  objective: obj-double-definiteness-01
+  bloom: understand
+  prompt_md: Fyll inn den, det eller de.
+  explanation_md: Bruk den med substantiv i felleskjønn entall, det med intetkjønn entall og de i flertall.
+  derived_from:
+  - section_id: checkpoint-select-the-opening-word
+  audio_target: Den gamle stolen. Det runde bordet. Den runde døren. De små lampene. De små hyllene.
+  segments:
+  - text_md: 'Stol:'
+  - blank_id: chair-opening
+    options:
+    - den
+    - det
+    - de
+    answer_index: 0
+  - text_md: ' gamle stolen. Bord:'
+  - blank_id: table-opening
+    options:
+    - den
+    - det
+    - de
+    answer_index: 1
+  - text_md: ' runde bordet. Dør:'
+  - blank_id: door-opening
+    options:
+    - den
+    - det
+    - de
+    answer_index: 0
+  - text_md: ' runde døren. Lamper:'
+  - blank_id: lamps-opening
+    options:
+    - den
+    - det
+    - de
+    answer_index: 2
+  - text_md: ' små lampene. Hyller:'
+  - blank_id: shelves-opening
+    options:
+    - den
+    - det
+    - de
+    answer_index: 2
+  - text_md: ' små hyllene.'
+- handle: complete_definite_nouns_after_adjectives
+  op: recall_fill
+  objective: obj-double-definiteness-01
+  bloom: apply
+  prompt_md: Fullfør hver frase med substantivet i bestemt form.
+  explanation_md: 'Substantivet står fortsatt i bestemt form etter adjektivet: jakken, speilet og skoene.'
+  derived_from:
+  - section_id: checkpoint-keep-the-noun-definite
+  audio_target: Den røde jakken henger i vinduet. Det store speilet står ved døra. De svarte skoene ligger på gulvet.
+  segments:
+  - text_md: 'Jakkefrase: Den røde '
+  - blank_id: jacket-noun
+    options:
+    - jakken
+    - jakke
+    answer_index: 0
+  - text_md: '. Speilfrase: Det store '
+  - blank_id: mirror-noun
+    options:
+    - speil
+    - speilet
+    answer_index: 1
+  - text_md: '. Skofrase: De svarte '
+  - blank_id: shoes-noun
+    options:
+    - skoene
+    - sko
+    answer_index: 0
+  - text_md: .
+- handle: add_e_to_adjectives_in_definite_phrases
+  op: recall_fill
+  objective: obj-double-definiteness-01
+  bloom: apply
+  prompt_md: Fyll ut hver frase med adjektivet i bestemt form.
+  explanation_md: 'Adjektivet står i bestemt form foran substantivet: store, nye, røde og runde.'
+  derived_from:
+  - section_id: checkpoint-form-the-adjective
+  audio_target: Det store vinduet. Den nye sofaen. De røde gardinene. Det runde bordet.
+  segments:
+  - text_md: 'Vindu: Det '
+  - blank_id: window-adjective
+    options:
+    - store
+    - stort
+    answer_index: 0
+  - text_md: ' vinduet. Sofa: Den '
+  - blank_id: sofa-adjective
+    options:
+    - nye
+    - ny
+    answer_index: 0
+  - text_md: ' sofaen. Gardiner: De '
+  - blank_id: curtains-adjective
+    options:
+    - rødt
+    - røde
+    answer_index: 1
+  - text_md: ' gardinene. Bord: Det '
+  - blank_id: table-adjective
+    options:
+    - rundt
+    - runde
+    answer_index: 1
+  - text_md: ' bordet.'
+- handle: build_complete_double_definite_phrases
+  op: write
+  objective: obj-double-definiteness-01
+  bloom: apply
+  prompt_md: Lag en fullstendig substantivfrase med «høy» og «tre» i bestemt form.
+  response_language: "no"
+  min_words: 3
+  max_words: 3
+  judge_prompt: Accept «det høye treet» or «det høge treet». Check for the neuter singular opening word, a valid definite adjective form, and the definite noun form.
+  criteria:
+  - id: opening-word
+    instruction: Uses det, agreeing with singular neuter tre.
+  - id: adjective-form
+    instruction: Uses a valid definite form of the adjective, either «høye» or «høge».
+  - id: definite-noun
+    instruction: Uses treet, retaining the definite noun ending.
+  derived_from:
+  - section_id: controlled-phrase-production
+- handle: change_indefinite_phrases_to_specific_definite_phrases
+  op: recall_fill
+  objective: obj-double-definiteness-01
+  bloom: apply
+  prompt_md: Velg frasen som viser til sofaen Nora valgte.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Nora sammenligner to sofaer, en ny og en gammel. Hun velger den nye.
+  explanation_md: Når vi viser til en bestemt ting, bruker vi bestemt form.
+  derived_from:
+  - section_id: meaning-checkpoint
+  audio_target: Nora velger den nye sofaen.
+  segments:
+  - text_md: 'Nora velger '
+  - blank_id: chosen-sofa
+    options:
+    - den nye sofaen
+    - en ny sofa
+    - den gamle sofaen
+    - en gammel sofa
+    answer_index: 0
+  - text_md: .
+- handle: repair_double_definiteness_errors
+  op: find_fix
+  objective: obj-double-definiteness-01
+  bloom: analyze
+  prompt_md: Finn ordet som må endres.
+  explanation_md: 'Det innledende ordet og substantivet er riktige. Adjektivet skal stå i bestemt form: røde.'
+  derived_from:
+  - section_id: editing-checkpoint
+  tokens:
+  - token_id: tok-de
+    text: De
+  - token_id: tok-red
+    text: rød
+  - token_id: tok-curtains
+    text: gardinene.
+  error_token_id: tok-red
+  feedback: Replace rød with røde.
+- handle: describe_specific_items_in_new_flat
+  op: recall_fill
+  objective: obj-double-definiteness-01
+  bloom: apply
+  prompt_md: Fullfør Jonas’ svar til Mia om speilet han valgte.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Leietaker
+      text_md: '«Det står to speil i leiligheten: ett med hvit ramme og ett med mørk ramme. Jonas vil flytte det med hvit ramme.»'
+    - speaker: Mia
+      text_md: «Hvilket speil flytter du?»
+  explanation_md: Speil er intetkjønn entall. Om det valgte speilet bruker vi «det», «hvite» og «speilet».
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+  audio_target: Jeg flytter det hvite speilet.
+  segments:
+  - text_md: 'Jeg flytter '
+  - blank_id: chosen-mirror
+    options:
+    - det hvite speilet
+    - den hvite speilet
+    - det hvit speilet
+    - det hvite speil
+    answer_index: 0
+  - text_md: .
+- handle: retrieve_double_definiteness_after_delay
+  op: write
+  objective: obj-double-definiteness-01
+  bloom: apply
+  prompt_md: 'Skriv Nora en melding på 15–35 ord om tingene hun skal hente. Notater: en gammel stol ved døra, et rundt bord ved vinduet og små lamper ved kassa. Bruk bestemt form med artikkel, bøyd adjektiv og substantiv.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Hvilke ting skal jeg hente på bruktbutikken?»
+  explanation_md: En tydelig melding viser til hver bestemt ting med riktig foranstilt ord, adjektivform og substantiv i bestemt form.
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: "no"
+  min_words: 15
+  max_words: 35
+  judge_prompt: Check criteria den-chair, det-table, de-lamps and word-bound. Record each criterion verdict separately. Accept natural Bokmål wording and word order.
+  criteria:
+  - id: den-chair
+    instruction: The message identifies the old chair with den gamle stolen and places it by the door; accept both natural forms ved døren and ved døra.
+  - id: det-table
+    instruction: The message identifies the round table by the window with the complete specific phrase det runde bordet ved vinduet.
+  - id: de-lamps
+    instruction: The message uses de små lampene for the small lamps and locates them by the checkout; natural Bokmål forms such as ved kassa and ved kassen both satisfy the location.
+  - id: word-bound
+    instruction: The message contains 15–35 words.
+- handle: review_select_den_det_or_de_for_specific_objects
+  op: recall_fill
+  objective: obj-double-definiteness-01
+  bloom: apply
+  prompt_md: Velg riktig innledningsord til hver ting.
+  explanation_md: 'Velg foranstilt ord etter substantivets kjønn eller tall: den hvite tallerkenen, det gule eplet og de blå koppene.'
+  derived_from:
+  - section_id: retrieval-and-review
+  audio_target: Den hvite tallerkenen. Det gule eplet. De blå koppene.
+  segments:
+  - text_md: 'White plate:'
+  - blank_id: review-plate-opening
+    options:
+    - den
+    - det
+    - de
+    answer_index: 0
+  - text_md: ' hvite tallerkenen. Yellow apple:'
+  - blank_id: review-apple-opening
+    options:
+    - den
+    - det
+    - de
+    answer_index: 1
+  - text_md: ' gule eplet. Blue cups:'
+  - blank_id: review-cups-opening
+    options:
+    - de
+    - den
+    - det
+    answer_index: 0
+  - text_md: ' blå koppene.'
+- handle: review_complete_definite_nouns_after_adjectives
+  op: recall_fill
+  objective: obj-double-definiteness-01
+  bloom: apply
+  prompt_md: Fullfør hver frase med substantivet i bestemt form.
+  explanation_md: 'De bestemte tingene krever substantiv i bestemt form: jakken, huset og gardinene.'
+  derived_from:
+  - section_id: retrieval-and-review
+  audio_target: Den varme jakken. Det store huset. De røde gardinene.
+  segments:
+  - text_md: 'Warm jacket: Den varme '
+  - blank_id: review-jacket-noun
+    options:
+    - jakken
+    - jakke
+    answer_index: 0
+  - text_md: '. Large house: Det store '
+  - blank_id: review-house-noun
+    options:
+    - hus
+    - huset
+    answer_index: 1
+  - text_md: '. Red curtains: De røde '
+  - blank_id: review-curtains-noun
+    options:
+    - gardinene
+    - gardiner
+    answer_index: 0
+  - text_md: .
+- handle: review_add_e_to_adjectives_in_definite_phrases
+  op: recall_fill
+  objective: obj-double-definiteness-01
+  bloom: apply
+  prompt_md: Fyll ut hver frase med riktig adjektivform.
+  explanation_md: I bestemte fraser står grønne, store og svarte foran substantivene i bestemt form.
+  derived_from:
+  - section_id: retrieval-and-review
+  audio_target: Den grønne stolen. Det store huset. De svarte skoene.
+  segments:
+  - text_md: 'Stol: Den '
+  - blank_id: review-chair-adjective
+    options:
+    - grønne
+    - grønn
+    answer_index: 0
+  - text_md: ' stolen. Hus: Det '
+  - blank_id: review-window-adjective
+    options:
+    - stort
+    - store
+    answer_index: 1
+  - text_md: ' huset. Sko: De '
+  - blank_id: review-shoes-adjective
+    options:
+    - svarte
+    - svart
+    answer_index: 0
+  - text_md: ' skoene.'
+- handle: review_change_indefinite_to_specific_definite
+  op: recall_fill
+  objective: obj-double-definiteness-01
+  bloom: analyze
+  prompt_md: Fullfør setningen slik at den viser til den bestemte gjenstanden Nora valgte.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: En stor gjenstand til å se seg selv i står til venstre, og en lampe står til høyre.
+    - speaker: Nora
+      text_md: «Jeg velger det til venstre.»
+  explanation_md: Dialogen identifiserer valget til venstre, så den siste setningen bruker bestemt form.
+  derived_from:
+  - section_id: retrieval-and-review
+  audio_target: Nora kjøper det store speilet.
+  segments:
+  - text_md: 'Nora kjøper '
+  - blank_id: review-mirror-opening
+    options:
+    - det
+    - et
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: review-mirror-adjective
+    options:
+    - stort
+    - store
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: review-mirror-noun
+    options:
+    - speilet
+    - speil
+    answer_index: 0
+  - text_md: .

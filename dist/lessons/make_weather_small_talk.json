@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "make_weather_small_talk",
   "kind": "communicative",
   "language": "nb-NO",
@@ -92,6 +92,46 @@
     {
       "kind": "exercise",
       "id": "retrieval_review_weather_exchange"
+    },
+    {
+      "kind": "exercise",
+      "id": "recognize_exchange_shape"
+    },
+    {
+      "kind": "exercise",
+      "id": "notice_shared_weather_opening"
+    },
+    {
+      "kind": "exercise",
+      "id": "select_connected_reply"
+    },
+    {
+      "kind": "exercise",
+      "id": "select_relevant_follow_up"
+    },
+    {
+      "kind": "exercise",
+      "id": "discriminate_close_or_continue"
+    },
+    {
+      "kind": "exercise",
+      "id": "revise_weather_exchange"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_weather_opening"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_acknowledge_weather"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_weather_follow_up"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_weather_closing"
     }
   ],
   "sections": [
@@ -2379,22 +2419,38 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write one short Norwegian weather observation for the situation where you and Nora are waiting outside a rainy cafe and it is raining heavily."
+          "value": "Write a weather comment in Norwegian to Nora to start a conversation."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
         "min_words": 3,
-        "max_words": 60,
-        "judge_prompt": "Check the Norwegian response against the task and report evidence for each criterion.",
+        "max_words": 10,
+        "judge_prompt": "Evaluate criterion opening-observation and report its verdict with evidence.",
         "criteria": [
           {
-            "id": "criterion-1",
-            "instruction": "opens the exchange with a natural Norwegian observation about the heavy rain"
+            "id": "opening-observation",
+            "instruction": "Opens the conversation with a natural Norwegian observation about the current heavy rain."
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Situasjon",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Du og Nora venter utenfor en stengt kafé mens det regner kraftig."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2404,23 +2460,23 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write a brief Norwegian response that acknowledges the rain and adds the contrast that it is not very cold."
+          "value": "Nora: «Det regner mye i dag.» Reply to Nora in Norwegian. Agree that it is raining, and mention that it is not very cold."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 3,
-        "max_words": 60,
-        "judge_prompt": "Check the Norwegian response against the task and report evidence for each criterion.",
+        "min_words": 5,
+        "max_words": 12,
+        "judge_prompt": "Evaluate criteria acknowledges-rain and adds-contrasting-fact and report each verdict with evidence.",
         "criteria": [
           {
-            "id": "criterion-1",
-            "instruction": "acknowledges the rain"
+            "id": "acknowledges-rain",
+            "instruction": "Acknowledges Nora's observation that it is raining heavily."
           },
           {
-            "id": "criterion-2",
-            "instruction": "adds the contrast that it is not very cold"
+            "id": "adds-contrasting-fact",
+            "instruction": "Adds that it is not particularly cold as a connected contrast."
           }
         ]
       }
@@ -2433,27 +2489,27 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write one connected Norwegian response to the strong wind with an acknowledgement, a short contrast, and a relevant follow-up question about the ferry."
+          "value": "Amir: «Det blåser kraftig her ved fergekaia.» Reply in Norwegian. Confirm that it is windy, mention that the sun is shining, and ask a relevant follow-up question about the weather that Amir can answer. You do not yet know whether the wind will die down."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 3,
-        "max_words": 60,
-        "judge_prompt": "Check the Norwegian response against the task and report evidence for each criterion.",
+        "min_words": 10,
+        "max_words": 25,
+        "judge_prompt": "Evaluate criteria acknowledges-wind, adds-sunny-contrast, and asks-weather-follow-up and report each verdict with evidence.",
         "criteria": [
           {
-            "id": "criterion-1",
-            "instruction": "acknowledges the strong wind"
+            "id": "acknowledges-wind",
+            "instruction": "Acknowledges Amir's observation about the strong wind."
           },
           {
-            "id": "criterion-2",
-            "instruction": "adds a short weather contrast"
+            "id": "adds-sunny-contrast",
+            "instruction": "Adds the supplied fact that the sun is shining as a connected contrast."
           },
           {
-            "id": "criterion-3",
-            "instruction": "asks a relevant follow-up question about the ferry"
+            "id": "asks-weather-follow-up",
+            "instruction": "Asks a relevant weather question that Amir can answer."
           }
         ]
       }
@@ -2466,27 +2522,35 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write a short Norwegian exchange between Nora and Amir outside a grocery shop on a hot afternoon. One person should open with a weather observation. The other should acknowledge or gently contrast it and ask one related follow-up. End by either closing politely or adding one sentence that clearly continues the exchange."
+          "value": "Nora and Amir meet outside a grocery store on a warm afternoon. The sun is shining, Amir has a bottle of water, and Nora is about to go inside. Write a dialogue in Norwegian. Start with the weather, respond with agreement or a mild contrast, ask a relevant follow-up question, and end or continue the conversation naturally."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": null,
-        "max_words": null,
-        "judge_prompt": "Check the Norwegian exchange against the task and report evidence for each criterion. Accept natural Bokmål variants that preserve the requested meaning and conversational sequence.",
+        "min_words": 25,
+        "max_words": 60,
+        "judge_prompt": "Evaluate criteria brief-exchange, weather-opening, connected-response, related-follow-up, and clear-ending and report each verdict with evidence. Accept natural Bokmål variants that preserve the visible facts and requested sequence.",
         "criteria": [
           {
             "id": "brief-exchange",
-            "instruction": "Keeps the exchange brief."
+            "instruction": "Presents a dialogue between Nora and Amir."
           },
           {
-            "id": "connected-turns",
-            "instruction": "Uses connected turns."
+            "id": "weather-opening",
+            "instruction": "Opens with an observation connected to the hot, sunny afternoon."
           },
           {
-            "id": "clear-direction",
-            "instruction": "Makes the conversation direction clear from opening to close or continuation."
+            "id": "connected-response",
+            "instruction": "Follows the opening with a natural acknowledgement or gentle contrast."
+          },
+          {
+            "id": "related-follow-up",
+            "instruction": "Includes one follow-up question related to the weather or the supplied immediate situation."
+          },
+          {
+            "id": "clear-ending",
+            "instruction": "Ends with a polite closing or a sentence that clearly continues the exchange."
           }
         ]
       }
@@ -2499,35 +2563,526 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write exactly four connected Norwegian lines about one weather situation: one weather opening, one natural acknowledgement or contrast, one follow-up question, and one closing sentence."
+          "value": "Two neighbours meet outside while it is snowing. They both have to leave soon. Write a short four-line dialogue in Norwegian with a weather comment, a relevant reply, a follow-up question, and a goodbye."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": null,
-        "max_words": null,
-        "judge_prompt": "Check the four Norwegian lines against the task and report evidence for each criterion. Accept natural Bokmål variants that preserve the requested meaning and sequence.",
+        "min_words": 16,
+        "max_words": 45,
+        "judge_prompt": "Evaluate criteria four-lines, weather-opening, acknowledgement-or-contrast, follow-up-question, closing-sentence, and same-weather-situation and report each verdict with evidence. Accept natural Bokmål variants that satisfy the visible task.",
         "criteria": [
           {
+            "id": "four-lines",
+            "instruction": "Contains exactly four dialogue lines."
+          },
+          {
             "id": "weather-opening",
-            "instruction": "Includes a weather opening."
+            "instruction": "Includes a weather observation that opens the exchange."
           },
           {
             "id": "acknowledgement-or-contrast",
-            "instruction": "Includes a natural acknowledgement or contrast."
+            "instruction": "Includes a natural response that acknowledges or gently contrasts the opening."
           },
           {
             "id": "follow-up-question",
-            "instruction": "Includes a follow-up question."
+            "instruction": "Includes one relevant follow-up question."
           },
           {
             "id": "closing-sentence",
-            "instruction": "Includes a closing sentence."
+            "instruction": "Includes a natural closing sentence."
           },
           {
             "id": "same-weather-situation",
-            "instruction": "Keeps all four lines connected to the same weather situation."
+            "instruction": "Keeps all four lines connected to the snowy situation."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "recognize_exchange_shape",
+      "operation": "choose",
+      "objective_id": "obj-make-weather-small-talk-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the description that fits the conversation."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Samtalen følger mønsteret observasjon → svar med kontrast → oppfølgingsspørsmål → avslutning."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "forecast-response-repetition-closing",
+            "text": "Værvarsel, svar med enighet, gjentatt observasjon og invitasjon.",
+            "why": "Den første replikken beskriver været nå, svaret inneholder en kontrast, og samtalen ender med et farvel."
+          },
+          {
+            "option_id": "opening-response-question-closing",
+            "text": "Observasjon, svar med kontrast, oppfølgingsspørsmål og avslutning.",
+            "why": "Nora observerer været, Amir svarer med en kontrast, Nora følger opp, og Amir avslutter."
+          },
+          {
+            "option_id": "opening-correction-question-closing",
+            "text": "Observasjon, korrigering, navnespørsmål og avslutning.",
+            "why": "Amir korrigerer ikke Nora, og spørsmålet handler om været, ikke om navn."
+          }
+        ],
+        "answer_id": "opening-response-question-closing",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Nora",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Det regner mye i dag.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Amir",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Ja, men det er ikke særlig kaldt.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Nora",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Tror du det blir bedre snart?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Amir",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Kanskje. Der kommer bussen min. Ha det!»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "notice_shared_weather_opening",
+      "operation": "choose",
+      "objective_id": "obj-make-weather-small-talk-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the most natural opening for the situation."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "En naturlig væråpning viser til noe begge kan se eller kjenne."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "private-plan",
+            "text": "Jeg skal kjøpe kaffe senere.",
+            "why": "It gives a personal plan rather than opening with the shared weather."
+          },
+          {
+            "option_id": "shared-weather",
+            "text": "Det regner mye i dag.",
+            "why": "The line comments directly on weather that both people can observe."
+          },
+          {
+            "option_id": "old-weather",
+            "text": "Det regnet mye forrige måned.",
+            "why": "It refers to a different time instead of the weather shared now."
+          }
+        ],
+        "answer_id": "shared-weather",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Situasjon",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Du og en nabo venter utenfor en butikk mens det regner jevnt."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "select_connected_reply",
+      "operation": "choose",
+      "objective_id": "obj-make-weather-small-talk-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose Amir’s reply that acknowledges Nora and mentions the other weather they notice."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "En bekreftelse fulgt av en annen relevant værdetalj gjør at svaret passer inn i samtalen."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "disconnected-detail",
+            "text": "Jeg skal hjem etterpå.",
+            "why": "It does not acknowledge Nora's comment or add the other weather detail."
+          },
+          {
+            "option_id": "acknowledge-contrast",
+            "text": "Ja, dessverre, men det er ikke særlig kaldt.",
+            "why": "The reply acknowledges the rain and connects the mild temperature with men."
+          },
+          {
+            "option_id": "contradict-rain",
+            "text": "Nei, det regner ikke, og det er ikke særlig kaldt.",
+            "why": "It denies the rain that Nora mentions and that both speakers can see."
+          }
+        ],
+        "answer_id": "acknowledge-contrast",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Situasjon",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Nora og Amir står under et takskjegg. Det regner, men lufta er mild."
+                }
+              ]
+            },
+            {
+              "speaker": "Nora",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Det regner mye i dag.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "select_relevant_follow_up",
+      "operation": "choose",
+      "objective_id": "obj-make-weather-small-talk-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the most natural follow-up question from Amir."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Et nyttig oppfølgingsspørsmål holder seg til været og gjør det lett for den andre å svare."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "visible-weather-question",
+            "text": "Hvordan er været?",
+            "why": "Both speakers can already see the weather, so the broad question adds little."
+          },
+          {
+            "option_id": "unrelated-question",
+            "text": "Hva spiste du til frokost?",
+            "why": "It changes to an unrelated personal topic before the weather exchange develops."
+          },
+          {
+            "option_id": "umbrella-question",
+            "text": "Har du paraply?",
+            "why": "The practical question follows directly from their being outside in the rain."
+          }
+        ],
+        "answer_id": "umbrella-question",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Situasjon",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Nora og Amir står ute i regnet, et stykke fra nærmeste ly."
+                }
+              ]
+            },
+            {
+              "speaker": "Nora",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Det regner mye nå.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Amir",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Ja, virkelig.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "discriminate_close_or_continue",
+      "operation": "choose",
+      "objective_id": "obj-make-weather-small-talk-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Nora has to leave when the bus arrives. Choose Amir’s most natural next reply."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Når situasjonen endrer seg, passer det å avslutte med en kort kommentar om været og et farvel."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "abrupt-topic",
+            "text": "Hva skal du spise til middag?",
+            "why": "It changes topic just as the situation calls for a brief farewell."
+          },
+          {
+            "option_id": "weather-close",
+            "text": "Vi får håpe det blir bedre. Ha en fin dag!",
+            "why": "It answers within the weather topic and closes naturally because Nora must leave."
+          },
+          {
+            "option_id": "weather-continue",
+            "text": "Har du paraply, og liker du regnvær?",
+            "why": "It opens two new questions even though Nora's arriving bus calls for a closing."
+          }
+        ],
+        "answer_id": "weather-close",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Nora",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Det regner fortsatt. Tror du det blir bedre snart?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Situasjon",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Bussen til Nora kommer, og hun må gå."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "revise_weather_exchange",
+      "operation": "write",
+      "objective_id": "obj-make-weather-small-talk-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Nora: «Det er kaldt i dag.» Amir: «Det regner. Hva jobber du med?» Rewrite Amir’s line in Norwegian. Reply to Nora, keep the information about the rain, and ask whether she has an umbrella."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "response_language": "no",
+        "min_words": 6,
+        "max_words": 14,
+        "judge_prompt": "Evaluate criteria responds-to-nora, uses-rain-fact, and keeps-weather-focus and report each verdict with evidence.",
+        "criteria": [
+          {
+            "id": "responds-to-nora",
+            "instruction": "Clearly responds to Nora's comment about the cold."
+          },
+          {
+            "id": "uses-rain-fact",
+            "instruction": "Incorporates the supplied fact that it is raining."
+          },
+          {
+            "id": "keeps-weather-focus",
+            "instruction": "Uses the supplied umbrella question instead of the unrelated work question."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_weather_opening",
+      "operation": "write",
+      "objective_id": "obj-make-weather-small-talk-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Write a weather comment in Norwegian to your neighbour."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "response_language": "no",
+        "min_words": 3,
+        "max_words": 4,
+        "judge_prompt": "Evaluate criterion opening-chunk and report its verdict with evidence.",
+        "criteria": [
+          {
+            "id": "opening-chunk",
+            "instruction": "Gives a natural Norwegian opening about the snow beginning now; accept natural variants such as comments that it is snowing or beginning to snow."
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "You and a neighbour stand outside the library as the first snowflakes of the season begin to fall around you."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_acknowledge_weather",
+      "operation": "write",
+      "objective_id": "obj-make-weather-small-talk-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Neighbour: «Det blåser kraftig i dag.» You feel the same way. Reply in Norwegian."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "response_language": "no",
+        "min_words": 1,
+        "max_words": 3,
+        "judge_prompt": "Evaluate criterion acknowledgement-chunk and report its verdict with evidence.",
+        "criteria": [
+          {
+            "id": "acknowledgement-chunk",
+            "instruction": "Gives a natural Norwegian acknowledgement of the neighbour's observation; accept brief agreement variants."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_weather_follow_up",
+      "operation": "write",
+      "objective_id": "obj-make-weather-small-talk-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Amir says it is raining, and you do not know whether he has anything to protect himself from it. Ask him in Norwegian."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "response_language": "no",
+        "min_words": 3,
+        "max_words": 4,
+        "judge_prompt": "Evaluate criterion follow-up-chunk and report its verdict with evidence.",
+        "criteria": [
+          {
+            "id": "follow-up-chunk",
+            "instruction": "Asks a natural Norwegian question about whether Amir has protection from the rain."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_weather_closing",
+      "operation": "write",
+      "objective_id": "obj-make-weather-small-talk-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "You have been talking with a neighbour about the rain. Your bus is here, and you have to go. Say goodbye in Norwegian."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "response_language": "no",
+        "min_words": 3,
+        "max_words": 4,
+        "judge_prompt": "Evaluate criterion closing-chunk and report its verdict with evidence.",
+        "criteria": [
+          {
+            "id": "closing-chunk",
+            "instruction": "Gives a natural Norwegian farewell appropriate when the speaker must leave; accept polite farewell variants."
           }
         ]
       }
@@ -2542,7 +3097,17 @@
         "second_checkpoint_acknowledge_contrast",
         "third_checkpoint_middle_exchange",
         "final_guided_exchange",
-        "retrieval_review_weather_exchange"
+        "retrieval_review_weather_exchange",
+        "recognize_exchange_shape",
+        "notice_shared_weather_opening",
+        "select_connected_reply",
+        "select_relevant_follow_up",
+        "discriminate_close_or_continue",
+        "revise_weather_exchange",
+        "review_weather_opening",
+        "review_acknowledge_weather",
+        "review_weather_follow_up",
+        "review_weather_closing"
       ]
     }
   ],

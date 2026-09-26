@@ -1,0 +1,227 @@
+- handle: distinguish_action_and_evidence_readings
+  op: categorize
+  objective: obj-modal-verbs-in-context-01
+  bloom: analyze
+  prompt_md: Sort each sentence by the modal's meaning.
+  buckets:
+  - bucket_id: action-meaning
+    label: Action meaning
+  - bucket_id: evidence-meaning
+    label: Evidence, report, or expectation
+  items:
+  - item_id: submit-form
+    text: Du må levere skjemaet før fredag.
+    bucket_id: action-meaning
+  - item_id: bicycle-evidence
+    text: Hun må være på kontoret; sykkelen hennes står utenfor.
+    bucket_id: evidence-meaning
+  - item_id: friday-plan
+    text: Vi skal møte kunden på fredag.
+    bucket_id: action-meaning
+  - item_id: reported-teacher
+    text: Den nye læreren skal være svært flink, ifølge kollegene.
+    bucket_id: evidence-meaning
+  - item_id: save-copy
+    text: Du bør lagre en kopi før du lukker dokumentet.
+    bucket_id: action-meaning
+  - item_id: expected-bus
+    text: Bussen bør være her om fem minutter hvis rutetabellen holder.
+    bucket_id: evidence-meaning
+  explanation_md: An action reading concerns something a person must, plans to, or should do. An evidence
+    reading presents an inference, a report, or a reasonable expectation.
+- handle: classify_evidence_reading
+  op: categorize
+  objective: obj-modal-verbs-in-context-01
+  bloom: analyze
+  prompt_md: Sort each claim by whether it relies on clues, reports a source, or gives a conditional expectation.
+  buckets:
+  - bucket_id: inference-ma
+    label: Inference from clues
+  - bucket_id: report-skal
+    label: Information attributed to a source
+  - bucket_id: expectation-bor
+    label: Reasonable expectation
+  items:
+  - item_id: office-lights
+    text: Kari må være hjemme; lyset i stua er på, og hun svarer på telefonen.
+    bucket_id: inference-ma
+  - item_id: office-window
+    text: Det bør være noen på kontoret ennå; vinduet er opplyst, og jeg hører Kari snakke der inne.
+    bucket_id: inference-ma
+  - item_id: wet-streets
+    text: Det må ha blåst kraftig i natt; flere greiner ligger på bakken.
+    bucket_id: inference-ma
+  - item_id: newspaper-concert
+    text: Ifølge arrangøren skal konserten begynne klokka åtte.
+    bucket_id: report-skal
+  - item_id: neighbour-renovation
+    text: Museet skal ha fått en ny kafé, forteller guiden.
+    bucket_id: report-skal
+  - item_id: timetable-train
+    text: Ferga bør være framme om en halvtime dersom været holder seg.
+    bucket_id: expectation-bor
+  - item_id: normal-delivery
+    text: Det bør bli ledige plasser hvis alle melder seg av innen fristen.
+    bucket_id: expectation-bor
+  explanation_md: >-
+    Sort by the basis for the claim. A modal gives a useful tendency, but context matters:
+    bør can present a reasonable inference from visible clues as well as an expectation under stated
+    conditions.
+- handle: transfer_modals_across_action_and_evidence
+  op: write
+  objective: obj-modal-verbs-in-context-01
+  bloom: apply
+  prompt_md: 'Melding fra lageret: «Budbilen forlot terminalen klokka 09.15. Vanlig kjøretid er 45 minutter,
+    men pakken har ikke kommet klokka 11.00.»
+
+
+    Fakta: Kunden trenger pakken før klokka 14.00. Nora kan ringe transportselskapet. Amir har avtalt
+    å møte kunden klokka 13.30.
+
+
+    Skriv en dialog på 30–70 ord til kollegaen din. Trekk en slutning med må ut fra opplysningene, gjengi
+    lagerets beskjed med skal, og uttrykk en betinget forventning med bør. Avtal også et neste steg med et
+    modalverb som gjelder en handling, for eksempel kan eller skal.'
+  response_language: 'no'
+  min_words: 30
+  max_words: 70
+  judge_prompt: Evaluate criteria dialogue-purpose, facts-supported, inference-from-clues, reported-information,
+    conditional-expectation, action-modal, within-word-bounds, and natural-bokmal as gating criteria.
+    Accept natural Bokmål variants that use the required modal readings accurately. Quote relevant evidence
+    and report the word count without speaker labels. Do not add requirements.
+  criteria:
+  - id: dialogue-purpose
+    instruction: The response is a coherent workplace dialogue that interprets the delay and agrees on
+      a next action.
+  - id: facts-supported
+    instruction: The dialogue does not contradict the warehouse message or supplied facts.
+  - id: within-word-bounds
+    instruction: The response contains 30–70 words, excluding speaker labels.
+  - id: natural-bokmal
+    instruction: The response is understandable, natural Bokmål.
+  - id: inference-from-clues
+    instruction: Uses må to draw a plausible inference from the delivery facts.
+  - id: reported-information
+    instruction: Uses skal to relay the warehouse's information as attributed to that source.
+  - id: conditional-expectation
+    instruction: Uses bør for an expectation tied to a condition, such as ordinary travel conditions.
+  - id: action-modal
+    instruction: Uses a modal with an action meaning to propose or agree on a next step.
+  explanation_md: The response interprets the delay, relays the source's information, gives a conditional
+    expectation, and agrees on an action using the target modal meanings.
+- handle: review_distinguish_action_and_evidence_readings
+  op: categorize
+  objective: obj-modal-verbs-in-context-01
+  bloom: analyze
+  prompt_md: Sort each sentence by the modal's meaning.
+  buckets:
+  - bucket_id: action-meaning
+    label: Action meaning
+  - bucket_id: evidence-meaning
+    label: Evidence, report, or expectation
+  items:
+  - item_id: cabin-boots
+    text: Ingrid bør ta med støvler fordi stien er gjørmete.
+    bucket_id: action-meaning
+  - item_id: stove-inference
+    text: Det må være fyr i ovnen; det lukter røyk.
+    bucket_id: evidence-meaning
+  - item_id: holiday-plan
+    text: Thomas skal kjøre til Telemark på fredag.
+    bucket_id: action-meaning
+  - item_id: reported-cabin
+    text: Hytta skal være ledig i påsken, ifølge kalenderen.
+    bucket_id: evidence-meaning
+  - item_id: food-advice
+    text: Du bør pakke noe varmt til kvelden.
+    bucket_id: action-meaning
+  - item_id: expected-weather
+    text: Det bør bli kjøligere etter solnedgang hvis skyene trekker inn.
+    bucket_id: evidence-meaning
+  explanation_md: Decide whether the modal concerns a controlled action or presents a claim based on evidence,
+    a source, or an expectation.
+  derived_from:
+  - section_id: a-weekend-in-telemark
+- handle: review_classify_evidence_reading
+  op: categorize
+  objective: obj-modal-verbs-in-context-01
+  bloom: analyze
+  prompt_md: Sort each claim by whether it relies on clues, reports a source, or gives a conditional expectation.
+  buckets:
+  - bucket_id: inference-ma
+    label: Inference from clues
+  - bucket_id: report-skal
+    label: Information attributed to a source
+  - bucket_id: expectation-bor
+    label: Reasonable expectation
+  items:
+  - item_id: muddy-trail
+    text: Stien bør være glatt; det regnet hele natten, og temperaturen ligger rundt null.
+    bucket_id: inference-ma
+  - item_id: packed-car
+    text: De må ha pakket bilen allerede; nøklene ligger i bagasjerommet, og bilen er klar til avreise.
+    bucket_id: inference-ma
+  - item_id: cabin-review
+    text: Hytta skal ha fått nytt kjøkken, ifølge annonsen.
+    bucket_id: report-skal
+  - item_id: local-news
+    text: Det skal være stengt på veien, melder kommunen.
+    bucket_id: report-skal
+  - item_id: night-temperature
+    text: Temperaturen bør synke etter midnatt hvis vinden løyer.
+    bucket_id: expectation-bor
+  - item_id: train-arrival
+    text: Toget bør komme snart dersom det ikke blir flere forsinkelser.
+    bucket_id: expectation-bor
+  explanation_md: Look for clues, an attributed source, or a condition that supports an expectation.
+  derived_from:
+  - section_id: when-the-modal-evaluates-evidence
+- handle: review_transfer_modal_reading
+  op: categorize
+  objective: obj-modal-verbs-in-context-01
+  bloom: apply
+  prompt_md: Sort each reply by the reading of the highlighted modal.
+  buckets:
+  - bucket_id: necessity-ma
+    label: Necessary action
+  - bucket_id: possibility-kan
+    label: Possible action
+  - bucket_id: plan-skal
+    label: Planned action
+  - bucket_id: wish-vil
+    label: Wish
+  - bucket_id: advice-bor
+    label: Advice
+  - bucket_id: inference-ma
+    label: Inference from clues
+  - bucket_id: report-skal
+    label: Information from a source
+  - bucket_id: expectation-bor
+    label: Reasonable expectation
+  items:
+  - item_id: necessary-day-off
+    text: Ingrid må ta fri på fredag for å rekke avreisen.
+    bucket_id: necessity-ma
+  - item_id: possible-drive
+    text: Jeg kan kjøre, så deler vi på bensinen.
+    bucket_id: possibility-kan
+  - item_id: planned-train
+    text: Vi skal ta toget hvis bilen ikke starter.
+    bucket_id: plan-skal
+  - item_id: wished-return
+    text: Jeg vil gjerne besøke hytta igjen til sommeren.
+    bucket_id: wish-vil
+  - item_id: advised-boots
+    text: Du bør velge støvler med godt grep på den gjørmete stien.
+    bucket_id: advice-bor
+  - item_id: inferred-cold
+    text: Det må ha vært kaldt i natt; vannet i bøtta har frosset.
+    bucket_id: inference-ma
+  - item_id: reported-stove
+    text: Naboen skal ha fyrt opp før vi kom, ifølge Thomas.
+    bucket_id: report-skal
+  - item_id: expected-sunset
+    text: Det bør bli mørkt snart hvis solnedgangen følger værmeldingen.
+    bucket_id: expectation-bor
+  explanation_md: The surrounding reason, source, condition, or intended action determines the reading;
+    the modal form alone does not.

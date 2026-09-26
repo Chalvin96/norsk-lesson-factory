@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "adjectives_as_nouns",
   "kind": "grammar",
   "language": "nb-NO",
@@ -92,6 +92,26 @@
     {
       "kind": "exercise",
       "id": "recall_the_core_patterns"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_definite_gender_and_number"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_contrast_indefinite_and_definite_singular"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_forms_of_liten"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_core_patterns"
+    },
+    {
+      "kind": "exercise",
+      "id": "speak_core_chunk"
     }
   ],
   "sections": [
@@ -847,7 +867,7 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ det rødt"
+                  "value": "det rødt"
                 }
               ],
               "en": [
@@ -855,7 +875,8 @@
                   "kind": "text",
                   "value": "the red one"
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "definite-forms-the-red-one-and-the-red-ones-block-23"
@@ -2551,36 +2572,61 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "A shop assistant has mentioned «et lite bord» and «de blå stolene». Later, the assistant refers to them only as «det lille» and «de blå». Choose the complete interpretation for both shortened phrases. Focus on which nouns are understood; adjective endings are not the primary target."
+          "value": "Koble hver kortform til substantivet den viser til."
         }
       ],
       "explanation": null,
       "payload": {
         "options": [
           {
-            "option_id": "reversed",
-            "text": "det lille viser til stolene; de blå viser til et bord",
-            "why": "The noun references are reversed."
+            "option_id": "unmentioned",
+            "text": "det lille = et skap; de blå = en lampe",
+            "why": "These nouns are not established in the dialogue."
           },
           {
             "option_id": "correct",
-            "text": "det lille viser til et bord; de blå viser til stolene",
-            "why": "The shop context makes et bord the understood noun for det lille and stolene the understood plural noun for de blå."
+            "text": "det lille = et bord; de blå = flere stoler",
+            "why": "Det lille is singular neuter, while de blå is plural."
           },
           {
-            "option_id": "other-objects",
-            "text": "det lille viser til et skjerf; de blå viser til en stol",
-            "why": "These references do not match the established shop context or the singular and plural phrases."
+            "option_id": "reversed",
+            "text": "det lille = flere stoler; de blå = et bord",
+            "why": "The singular and plural references are reversed."
           }
         ],
         "answer_id": "correct",
         "stem": [
           {
             "kind": "text",
-            "value": "Which option correctly identifies the understood noun for each phrase?"
+            "value": "Velg tolkningen som passer til samtalen."
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Vi ser på et bord og flere stoler."
+                }
+              ]
+            },
+            {
+              "speaker": "Erik",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Det lille passer best. De blå står ved døra."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2590,36 +2636,61 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "In the second-hand shop, interpret den, det, and de. Choose the complete interpretation that identifies one common-gender object, one neuter object, and several objects."
+          "value": "Sorter den, det og de etter kjønn og tall."
         }
       ],
       "explanation": null,
       "payload": {
         "options": [
           {
+            "option_id": "number-swap",
+            "text": "den røde = flertall; det røde = intetkjønn entall; de røde = hankjønn/hunkjønn entall",
+            "why": "«Den» og «de» viser til feil tall."
+          },
+          {
             "option_id": "correct",
-            "text": "den røde = én stol eller én kopp; det røde = ett skjerf eller ett glass; de røde = flere ting",
-            "why": "Den marks one common-gender object, det marks one neuter object, and de marks several objects."
+            "text": "den røde = hankjønn/hunkjønn entall; det røde = intetkjønn entall; de røde = flertall",
+            "why": "«Den» og «det» viser til entall med ulikt kjønn, mens «de» viser til flertall."
           },
           {
-            "option_id": "swapped-singular-genders",
-            "text": "den røde = ett skjerf eller ett glass; det røde = én stol eller én kopp; de røde = flere ting",
-            "why": "The two singular gender interpretations are swapped."
-          },
-          {
-            "option_id": "swapped-number",
-            "text": "den røde = flere ting; det røde = ett skjerf eller ett glass; de røde = én stol eller én kopp",
-            "why": "The interpretations for den and de have the wrong number."
+            "option_id": "gender-swap",
+            "text": "den røde = intetkjønn entall; det røde = hankjønn/hunkjønn entall; de røde = flertall",
+            "why": "Kjønnsformene for hankjønn/hunkjønn og intetkjønn er byttet om."
           }
         ],
         "answer_id": "correct",
         "stem": [
           {
             "kind": "text",
-            "value": "Which option correctly classifies den røde, det røde, and de røde?"
+            "value": "Sorter uttrykkene etter kjønn og tall."
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Her er en stol, et skap og flere lamper."
+                }
+              ]
+            },
+            {
+              "speaker": "Erik",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Jeg liker den røde, det røde og de røde."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2629,13 +2700,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "The shop context has one red common-gender item, one red neuter item, and several red items. Build the Norwegian question showing all three definite adjective-only phrases in this order: common gender, neuter, then plural. Omit every noun and use the supplied words exactly."
+          "value": "Lag spørsmålet med tre bestemte adjektivfraser i denne rekkefølgen: felleskjønn, intetkjønn, flertall."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "When the noun is understood, keep den, det, or de and use the adjective in -e: den røde, det røde, de røde."
+          "value": "Determinativet og adjektivendelsen må passe til kjønnet og tallet på substantivet frasen viser til."
         }
       ],
       "payload": {
@@ -2657,36 +2728,31 @@
           },
           {
             "token_id": "tok-4",
-            "text": "røde",
+            "text": "røde,",
             "fixed": false
           },
           {
             "token_id": "tok-5",
-            "text": "eller",
-            "fixed": false
-          },
-          {
-            "token_id": "tok-6",
             "text": "det",
             "fixed": false
           },
           {
-            "token_id": "tok-7",
+            "token_id": "tok-6",
             "text": "røde",
             "fixed": false
           },
           {
-            "token_id": "tok-8",
+            "token_id": "tok-7",
             "text": "eller",
             "fixed": false
           },
           {
-            "token_id": "tok-9",
+            "token_id": "tok-8",
             "text": "de",
             "fixed": false
           },
           {
-            "token_id": "tok-10",
+            "token_id": "tok-9",
             "text": "røde?",
             "fixed": false
           }
@@ -2700,10 +2766,34 @@
           "tok-6",
           "tok-7",
           "tok-8",
-          "tok-9",
-          "tok-10"
+          "tok-9"
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Vi ser på et rødt skap, flere røde lamper og en rød stol."
+                }
+              ]
+            },
+            {
+              "speaker": "Erik",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Hvilke av dem synes du vi bør ta med?"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2713,15 +2803,10 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete four short shop turns. In each pair, the first phrase introduces an unspecified singular item and the second identifies a particular singular item. Keep the gender and definiteness contrast clear."
+          "value": "Fyll ut hvert svar med riktig entallsform."
         }
       ],
-      "explanation": [
-        {
-          "kind": "text",
-          "value": "Use en or et plus the singular agreement form for an unspecified item; use den or det plus -e for a particular item."
-        }
-      ],
+      "explanation": null,
       "payload": {
         "segments": [
           {
@@ -2729,7 +2814,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Maja ser på en lampe. Hun trenger"
+                "value": "Jeg trenger"
               },
               {
                 "kind": "text",
@@ -2751,7 +2836,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": ". Nå velger hun"
+                "value": ". Nå velger jeg"
               },
               {
                 "kind": "text",
@@ -2763,17 +2848,17 @@
             "kind": "blank",
             "blank_id": "common-definite",
             "options": [
-              "den billige",
-              "en billig"
+              "en billig",
+              "den billige"
             ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
             "spans": [
               {
                 "kind": "text",
-                "value": ". Erik ser på et bord. Han trenger"
+                "value": ". Jeg trenger"
               },
               {
                 "kind": "text",
@@ -2795,7 +2880,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": ". Nå velger han"
+                "value": ". Nå velger jeg"
               },
               {
                 "kind": "text",
@@ -2807,10 +2892,10 @@
             "kind": "blank",
             "blank_id": "neuter-definite",
             "options": [
-              "det store",
-              "et stort"
+              "et stort",
+              "det store"
             ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
@@ -2822,7 +2907,32 @@
             ]
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Butikken har flere billige lamper og store bord. Vi har ikke valgt noen av dem ennå."
+                }
+              ]
+            },
+            {
+              "speaker": "Erik",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Vi trenger noe nytt før kundene kommer. Hvilken lampe og hvilket bord foreslår du?"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2832,10 +2942,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Build the Norwegian sentence. It refers first to an unspecified neuter item and then to a particular neuter item, with both nouns omitted. Preserve the contrast between et plus -t and det plus -e."
+          "value": "Lag setningen med en ubestemt og en bestemt intetkjønnsfrase."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Den ubestemte frasen viser til et bord hun fortsatt leter etter. Den bestemte frasen viser til det valgte stuebordet."
+        }
+      ],
       "payload": {
         "tokens": [
           {
@@ -2901,7 +3016,32 @@
           "tok-9",
           "tok-10"
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Hun leter fortsatt etter et bord til kjøkkenet."
+                }
+              ]
+            },
+            {
+              "speaker": "Erik",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Til stua har hun allerede bestemt seg for det store bordet."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2911,24 +3051,24 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Sort each shop statement by definiteness. Classify whether it uses an indefinite plural adjective phrase without de or a definite plural phrase with de. The adjective spelling is supplied; classify the presence or absence of de."
+          "value": "Sorter frasene etter om de viser til en ubestemt eller bestemt gruppe."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Without a noun, bare svarte can mean unspecified black ones; de svarte points to a known group."
+          "value": "Tenk på om frasen introduserer en gruppe eller viser til en kjent gruppe."
         }
       ],
       "payload": {
         "buckets": [
           {
             "bucket_id": "indefinite-plural",
-            "label": "Indefinite plural adjective phrase: no de"
+            "label": "Ubestemt gruppe"
           },
           {
             "bucket_id": "definite-plural",
-            "label": "Definite plural adjective phrase: de"
+            "label": "Bestemt gruppe"
           }
         ],
         "items": [
@@ -2939,21 +3079,46 @@
           },
           {
             "item_id": "item-2",
-            "text": "Vi tar de svarte.",
+            "text": "Vi tar de blå.",
             "bucket_id": "definite-plural"
           },
           {
             "item_id": "item-3",
-            "text": "Erik ser etter gamle.",
+            "text": "Butikken selger billige.",
             "bucket_id": "indefinite-plural"
           },
           {
             "item_id": "item-4",
-            "text": "Erik ser etter de gamle.",
+            "text": "Jeg liker ikke de svarte.",
             "bucket_id": "definite-plural"
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Butikken har mange stoler i forskjellige farger."
+                }
+              ]
+            },
+            {
+              "speaker": "Erik",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Vi trenger flere stoler til kafeen. Hvilke bør vi velge?"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2963,10 +3128,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Build one Norwegian shop sentence. The black items are an unspecified group, while the blue items are a particular known group. Omit both plural nouns and show the correct absence or presence of de."
+          "value": "Lag setningen med én ubestemt og én bestemt flertallsfrase."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Den ubestemte frasen viser til en gruppe som ikke er valgt ennå; den bestemte frasen viser til stolene som allerede er valgt."
+        }
+      ],
       "payload": {
         "tokens": [
           {
@@ -3020,7 +3190,32 @@
           "tok-7",
           "tok-8"
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Ved døra står stolene vi har valgt; de er blå. På lageret står mange stoler i svart."
+                }
+              ]
+            },
+            {
+              "speaker": "Erik",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Hvilke stoler mangler vi, og hvilke skal vi ha med?"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -3030,15 +3225,10 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete six short shop statements using forms of liten. The six blanks cover indefinite and definite common-gender singular, indefinite and definite neuter singular, and indefinite and definite plural."
+          "value": "Fyll ut replikkene i butikken med riktig form av liten."
         }
       ],
-      "explanation": [
-        {
-          "kind": "text",
-          "value": "Use liten or lite for indefinite singular, lille for definite singular, and små for plural; add de only for definite plural."
-        }
-      ],
+      "explanation": null,
       "payload": {
         "segments": [
           {
@@ -3046,7 +3236,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Maja ser på en lampe. Hun trenger"
+                "value": "Jeg trenger"
               },
               {
                 "kind": "text",
@@ -3056,7 +3246,7 @@
           },
           {
             "kind": "blank",
-            "blank_id": "liten-common-indefinite",
+            "blank_id": "common-indefinite",
             "options": [
               "en liten",
               "den lille"
@@ -3068,7 +3258,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": ". Erik ser på et bord. Han trenger"
+                "value": ". Jeg trenger"
               },
               {
                 "kind": "text",
@@ -3078,7 +3268,7 @@
           },
           {
             "kind": "blank",
-            "blank_id": "liten-neuter-indefinite",
+            "blank_id": "neuter-indefinite",
             "options": [
               "et lite",
               "det lille"
@@ -3090,7 +3280,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": ". Nå velger Maja"
+                "value": ". Jeg velger"
               },
               {
                 "kind": "text",
@@ -3100,12 +3290,12 @@
           },
           {
             "kind": "blank",
-            "blank_id": "liten-common-definite",
+            "blank_id": "common-definite",
             "options": [
-              "den lille",
-              "en liten"
+              "en liten",
+              "den lille"
             ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
@@ -3116,7 +3306,7 @@
               },
               {
                 "kind": "text",
-                "value": "og Erik velger"
+                "value": "og"
               },
               {
                 "kind": "text",
@@ -3126,12 +3316,12 @@
           },
           {
             "kind": "blank",
-            "blank_id": "liten-neuter-definite",
+            "blank_id": "neuter-definite",
             "options": [
-              "det lille",
-              "et lite"
+              "et lite",
+              "det lille"
             ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
@@ -3148,7 +3338,7 @@
           },
           {
             "kind": "blank",
-            "blank_id": "liten-plural-indefinite",
+            "blank_id": "plural-indefinite",
             "options": [
               "små",
               "de små"
@@ -3170,7 +3360,7 @@
           },
           {
             "kind": "blank",
-            "blank_id": "liten-plural-definite",
+            "blank_id": "plural-definite",
             "options": [
               "de små",
               "små"
@@ -3187,7 +3377,32 @@
             ]
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Vi ser på en lampe, et bord og flere stoler."
+                }
+              ]
+            },
+            {
+              "speaker": "Erik",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Først ser vi etter noe vi kan bruke. Senere velger vi det vi liker best."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -3197,36 +3412,61 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Read this shop exchange: «Vi trenger noen svarte stoler. De svarte står ved døra, og de blå står ved vinduet.» Choose the complete interpretation showing which phrase introduces an indefinite group, which phrase refers back to it, and which phrase identifies the other known group."
+          "value": "Velg tolkningen som viser hvilken gruppe hver adjektivfrase viser til."
         }
       ],
       "explanation": null,
       "payload": {
         "options": [
           {
-            "option_id": "definite-first",
-            "text": "noen svarte og de svarte viser begge til en kjent gruppe; de blå introduserer en ny gruppe",
-            "why": "Noen is indefinite, and de does not introduce an indefinite group."
-          },
-          {
-            "option_id": "reversed-reference",
-            "text": "noen svarte introduserer en gruppe; de svarte viser til en annen gruppe; de blå viser tilbake til de svarte",
-            "why": "The later phrase de svarte is the one that refers back to the introduced group."
+            "option_id": "same-group",
+            "text": "Alle tre frasene viser til den samme gruppa med stoler.",
+            "why": "«De blå» viser til en annen gruppe med stoler."
           },
           {
             "option_id": "correct",
-            "text": "noen svarte introduserer noen svarte stoler; de svarte viser tilbake til disse stolene; de blå viser til en annen kjent gruppe blå stoler",
-            "why": "Noen introduces an indefinite group, de svarte refers back to that group, and de blå identifies another known group."
+            "text": "«Noen svarte» innfører en gruppe, «de svarte» viser tilbake til den, og «de blå» viser til en annen kjent gruppe.",
+            "why": "«Noen» innfører en ubestemt gruppe, mens «de» viser til bestemte grupper i flertall."
+          },
+          {
+            "option_id": "reversed",
+            "text": "«De svarte» innfører en ny gruppe, «noen svarte» viser tilbake til den, og «de blå» viser til den første gruppa.",
+            "why": "«Noen» innfører gruppa; «de» viser til en kjent gruppe."
           }
         ],
         "answer_id": "correct",
         "stem": [
           {
             "kind": "text",
-            "value": "Which interpretation correctly tracks noen svarte, de svarte, and de blå?"
+            "value": "Velg tolkningen som passer til samtalen."
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Jeg så noen svarte stoler ved døra."
+                }
+              ]
+            },
+            {
+              "speaker": "Erik",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "De svarte står ved døra, og de blå står ved vinduet."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -3236,42 +3476,67 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "At a bakery, Nora and Hassan see several cakes (en kake, common gender) and baked goods (et bakverk, neuter) for a meeting. Several of each are on the counter. Write six short Norwegian responses using adjectives as complete noun phrases and omitting the understood nouns. Cover these situations: an unspecified singular kake, an unspecified singular bakverk, a particular visible kake, a particular visible bakverk, an unspecified plural group, and a particular visible plural group. Use familiar adjectives from the lesson, but create bakery responses rather than copying a complete furniture-shop sentence."
+          "value": "Skriv en melding til den du skal møte. Velg kaker og bakverk fra situasjonen. Ta med én frase av hver type: ubestemt og bestemt felleskjønn, intetkjønn og flertall. Utelat substantivene."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 20,
+        "min_words": 30,
         "max_words": 45,
-        "judge_prompt": "Check all six requested bakery responses and report evidence for each criterion. Accept any adjective form taught in the lesson when it agrees with the requested definiteness, gender, and number; do not require one particular adjective. Each response must use an adjective-only noun phrase rather than speaking the understood bakery-item noun.",
+        "judge_prompt": "Check criteria C1 through C6 and the word-bound criterion. Report each criterion separately. Accept any taught adjective that agrees with the requested gender, number and definiteness. Judge whether the message chooses cakes and baked goods from the supplied bakery situation overall.",
         "criteria": [
           {
-            "id": "indefinite-common-singular",
-            "instruction": "Includes an unspecified singular common-gender bakery choice with en and an agreeing adjective form."
+            "id": "C1-indefinite-common",
+            "instruction": "Contains an indefinite common-gender adjective-only phrase with en."
           },
           {
-            "id": "indefinite-neuter-singular",
-            "instruction": "Includes an unspecified singular neuter bakery choice with et and an agreeing adjective form."
+            "id": "C2-indefinite-neuter",
+            "instruction": "Contains an indefinite neuter adjective-only phrase with et and the neuter adjective form."
           },
           {
-            "id": "definite-common-singular",
-            "instruction": "Includes a particular singular common-gender bakery choice with den and a definite adjective form."
+            "id": "C3-definite-common",
+            "instruction": "Contains a definite common-gender adjective-only phrase with den and the definite adjective form."
           },
           {
-            "id": "definite-neuter-singular",
-            "instruction": "Includes a particular singular neuter bakery choice with det and a definite adjective form."
+            "id": "C4-definite-neuter",
+            "instruction": "Contains a definite neuter adjective-only phrase with det and the definite adjective form."
           },
           {
-            "id": "indefinite-plural",
-            "instruction": "Includes an unspecified plural bakery choice with the plural adjective form and no de."
+            "id": "C5-indefinite-plural",
+            "instruction": "Contains an indefinite plural adjective-only phrase without de."
           },
           {
-            "id": "definite-plural",
-            "instruction": "Includes a particular plural bakery choice with de and the plural adjective form."
+            "id": "C6-definite-plural",
+            "instruction": "Contains a definite plural adjective-only phrase with de."
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Nora",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "På disken står det flere kaker og bakverk. Vi skal velge til møtet."
+                }
+              ]
+            },
+            {
+              "speaker": "Hassan",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Møtet begynner snart. Hvilke kaker og hvilket bakverk skal vi sette fram?"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -3281,7 +3546,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Without looking back, complete each phrase using rød. The six contexts require indefinite common-gender singular, indefinite neuter singular, definite common-gender singular, definite neuter singular, indefinite plural, and definite plural."
+          "value": "Fyll ut adjektivfrasene med riktig form av rød. Determinativet viser kjønn, tall og bestemt eller ubestemt form."
         }
       ],
       "explanation": null,
@@ -3292,7 +3557,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Common-gender singular, indefinite: Jeg trenger"
+                "value": "Jeg trenger en"
               },
               {
                 "kind": "text",
@@ -3302,10 +3567,10 @@
           },
           {
             "kind": "blank",
-            "blank_id": "red-common-indefinite",
+            "blank_id": "common-indefinite",
             "options": [
-              "en rød",
-              "et rødt"
+              "rød",
+              "rødt"
             ],
             "answer_index": 0
           },
@@ -3314,20 +3579,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "."
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": "Neuter singular, indefinite: Jeg trenger"
+                "value": ". Jeg trenger et"
               },
               {
                 "kind": "text",
@@ -3337,10 +3589,10 @@
           },
           {
             "kind": "blank",
-            "blank_id": "red-neuter-indefinite",
+            "blank_id": "neuter-indefinite",
             "options": [
-              "et rødt",
-              "en rød"
+              "rødt",
+              "rød"
             ],
             "answer_index": 0
           },
@@ -3349,20 +3601,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "."
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": "Common-gender singular, definite: Jeg velger"
+                "value": ". Jeg velger den"
               },
               {
                 "kind": "text",
@@ -3372,32 +3611,19 @@
           },
           {
             "kind": "blank",
-            "blank_id": "red-common-definite",
+            "blank_id": "common-definite",
             "options": [
-              "den røde",
-              "det røde"
+              "rød",
+              "røde"
             ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
             "spans": [
               {
                 "kind": "text",
-                "value": "."
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": "Neuter singular, definite: Jeg velger"
+                "value": ". Jeg velger det"
               },
               {
                 "kind": "text",
@@ -3407,32 +3633,19 @@
           },
           {
             "kind": "blank",
-            "blank_id": "red-neuter-definite",
+            "blank_id": "neuter-definite",
             "options": [
-              "det røde",
-              "den røde"
+              "rødt",
+              "røde"
             ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
             "spans": [
               {
                 "kind": "text",
-                "value": "."
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": "Plural, indefinite: Vi trenger"
+                "value": ". Vi trenger noen"
               },
               {
                 "kind": "text",
@@ -3442,10 +3655,10 @@
           },
           {
             "kind": "blank",
-            "blank_id": "red-plural-indefinite",
+            "blank_id": "plural-indefinite",
             "options": [
               "røde",
-              "de røde"
+              "rød"
             ],
             "answer_index": 0
           },
@@ -3454,20 +3667,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "."
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": "Plural, definite: Vi tar"
+                "value": ". Vi tar de"
               },
               {
                 "kind": "text",
@@ -3477,10 +3677,10 @@
           },
           {
             "kind": "blank",
-            "blank_id": "red-plural-definite",
+            "blank_id": "plural-definite",
             "options": [
-              "de røde",
-              "røde"
+              "røde",
+              "rød"
             ],
             "answer_index": 0
           },
@@ -3494,7 +3694,586 @@
             ]
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Du ser på en stol, et skap og flere lamper. Først beskriver du uspesifikke ting, så bestemte ting."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_definite_gender_and_number",
+      "operation": "recall_fill",
+      "objective_id": "obj-adjectives-as-nouns-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fyll ut frasene i denne rekkefølgen: flertall, felleskjønn entall, intetkjønn entall."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«De gamle» viser til flertall, «den gamle» til felleskjønn entall og «det gamle» til intetkjønn entall."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Jeg velger"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "plural",
+            "options": [
+              "den gamle",
+              "de gamle",
+              "det gamle"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ","
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "common",
+            "options": [
+              "den gamle",
+              "det gamle",
+              "de gamle"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "eller"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "neuter",
+            "options": [
+              "de gamle",
+              "den gamle",
+              "det gamle"
+            ],
+            "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "."
+              }
+            ]
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Det finnes en gammel stol, et gammelt skap og flere gamle lamper."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_contrast_indefinite_and_definite_singular",
+      "operation": "choose",
+      "objective_id": "obj-adjectives-as-nouns-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg Majas replikk. Først nevner hun to nye ting hun ikke har valgt, så peker hun på tingene hun har valgt."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "neuter-form",
+            "text": "Jeg vurderer en ny og et nytt. Til slutt velger jeg den nye og det nytt.",
+            "why": "A definite neuter phrase before an understood noun takes the -e form, not -t."
+          },
+          {
+            "option_id": "correct",
+            "text": "Jeg vurderer en ny og et nytt. Til slutt velger jeg den nye og det nye.",
+            "why": "The first two phrases leave the two items open, and the last two point to the items Maja has settled on."
+          },
+          {
+            "option_id": "reversed",
+            "text": "Jeg vurderer den nye og det nye. Til slutt velger jeg en ny og et nytt.",
+            "why": "This points to the settled items first and leaves the open phrases for last."
+          }
+        ],
+        "answer_id": "correct",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Velg den riktige replikken."
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Vi har en gammel lampe og et gammelt bord på lageret."
+                }
+              ]
+            },
+            {
+              "speaker": "Erik",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Vi trenger noe nytt før kundene kommer. Hva foreslår du?"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_forms_of_liten",
+      "operation": "recall_fill",
+      "objective_id": "obj-adjectives-as-nouns-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fyll ut pakkelisten med riktig form av liten."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Ubestemte former brukes om nye eller uspesifiserte ting, bestemte former om ting som allerede er valgt, og flertallsformer om flere ting."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Vi har en sekk. Vi vil ha"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "common-indefinite",
+            "options": [
+              "den lille",
+              "en liten"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Hun tar teltet. Hun tar"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "neuter-definite",
+            "options": [
+              "et lite",
+              "det lille"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Vi kjøper"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "plural-indefinite",
+            "options": [
+              "de små",
+              "små"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Hun vil ha"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "neuter-indefinite",
+            "options": [
+              "en liten",
+              "et lite"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Blant sekkene tar hun"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "common-definite",
+            "options": [
+              "den lille",
+              "en liten"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Vi kjøper"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "plural-definite",
+            "options": [
+              "små",
+              "de små"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "."
+              }
+            ]
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Teltet og sitteunderlagene er allerede valgt. Av to telt valgte Nora teltet som var minst. Hun trenger også en ny sekk, et bord og lamper til turen."
+                }
+              ]
+            },
+            {
+              "speaker": "Erik",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Nora skal pakke til helgeturen. Hun velger mellom flere sekker. Bordet og lampene er nye innkjøp, og størrelsen er ennå ikke bestemt."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_core_patterns",
+      "operation": "write",
+      "objective_id": "obj-adjectives-as-nouns-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Skriv seks fraser med «grønn»: ubestemt og bestemt felleskjønn og intetkjønn, samt ubestemt og bestemt flertall. Bruk adjektivet uten substantiv i alle seks frasene."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "response_language": "no",
+        "min_words": 6,
+        "max_words": 24,
+        "judge_prompt": "Check criteria C1 through C6, one requested phrase each. Do not add requirements beyond the criteria.",
+        "criteria": [
+          {
+            "id": "C1-common-indefinite",
+            "instruction": "Provides an indefinite common-gender phrase with en and the common-gender form of grønn, without a noun."
+          },
+          {
+            "id": "C2-neuter-indefinite",
+            "instruction": "Provides an indefinite neuter phrase with et and the neuter form of grønn, without a noun."
+          },
+          {
+            "id": "C3-common-definite",
+            "instruction": "Provides a definite common-gender phrase with den and the definite form of grønn, without a noun."
+          },
+          {
+            "id": "C4-neuter-definite",
+            "instruction": "Provides a definite neuter phrase with det and the definite form of grønn, without a noun."
+          },
+          {
+            "id": "C5-plural-indefinite",
+            "instruction": "Provides an indefinite plural adjective-only phrase for grønn, using grønne without de."
+          },
+          {
+            "id": "C6-plural-definite",
+            "instruction": "Provides a definite plural adjective-only phrase for grønn, using de grønne."
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Til kontoret trenger vi en stol, et bord og flere hyller."
+                }
+              ]
+            },
+            {
+              "speaker": "Erik",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Skriv de seks frasene til meg, så bestiller jeg malingen i samme farge."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "speak_core_chunk",
+      "operation": "recall_fill",
+      "objective_id": "obj-adjectives-as-nouns-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fullfør meldingen om hva Maja og Erik tar med."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Vi tar"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "common-definite",
+            "options": [
+              "det lille",
+              "den lille"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ","
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "neuter-definite",
+            "options": [
+              "det store",
+              "den store"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "og"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "plural-definite",
+            "options": [
+              "de blå",
+              "den blå"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "."
+              }
+            ]
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Vi ser på en stol, et bord og flere lamper."
+                }
+              ]
+            },
+            {
+              "speaker": "Erik",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Vi har bestemt oss for å ta med dem."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "practice_groups": [
@@ -3512,7 +4291,12 @@
         "retrieve_forms_of_liten",
         "track_reference_across_the_dialogue",
         "transfer_adjective_noun_phrases_to_the_bakery",
-        "recall_the_core_patterns"
+        "recall_the_core_patterns",
+        "review_definite_gender_and_number",
+        "review_contrast_indefinite_and_definite_singular",
+        "review_forms_of_liten",
+        "review_core_patterns",
+        "speak_core_chunk"
       ]
     }
   ],

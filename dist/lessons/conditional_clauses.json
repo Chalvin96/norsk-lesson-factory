@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "conditional_clauses",
   "kind": "grammar",
   "language": "nb-NO",
@@ -87,7 +87,31 @@
     },
     {
       "kind": "exercise",
-      "id": "retrieve_hvis_condition_patterns"
+      "id": "review_real_condition_negation"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_condition_first_inversion"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_condition_second_order"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_real_or_imagined"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_imagined_condition"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_imagined_negation"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_hvis_jeg_var_deg"
     }
   ],
   "sections": [
@@ -806,15 +830,16 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Hvis butikken er åpen, jeg kjøper kaffe."
+                  "value": "Hvis butikken er åpen, jeg kjøper kaffe."
                 }
               ],
               "en": [
                 {
                   "kind": "text",
-                  "value": "Intended meaning: If the shop is open, I’ll buy coffee."
+                  "value": "If the shop is open, I’ll buy coffee."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "real-conditions-block-22"
@@ -1100,15 +1125,16 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Vi tar taxi hvis bussen kommer ikke."
+                  "value": "Vi tar taxi hvis bussen kommer ikke."
                 }
               ],
               "en": [
                 {
                   "kind": "text",
-                  "value": "Intended meaning: We’ll take a taxi if the bus doesn’t come."
+                  "value": "We’ll take a taxi if the bus doesn’t come."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "putting-condition-second-block-11"
@@ -2261,15 +2287,16 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Hvis vi hadde ikke bil, ville vi tatt bussen."
+                  "value": "Hvis vi hadde ikke bil, ville vi tatt bussen."
                 }
               ],
               "en": [
                 {
                   "kind": "text",
-                  "value": "Intended meaning: If we didn’t have a car, we would take the bus."
+                  "value": "If we didn’t have a car, we would take the bus."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "imagined-condition-word-order-block-16"
@@ -2323,15 +2350,16 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Hvis vi ikke hadde bil, vi ville tatt bussen."
+                  "value": "Hvis vi ikke hadde bil, vi ville tatt bussen."
                 }
               ],
               "en": [
                 {
                   "kind": "text",
-                  "value": "Intended meaning: If we didn’t have a car, we would take the bus."
+                  "value": "If we didn’t have a car, we would take the bus."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "imagined-condition-word-order-block-20"
@@ -2709,13 +2737,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each real condition by selecting the order that places ikke before the finite verb. The result clauses already show supporting verb–subject order."
+          "value": "Fullfør setningene."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "In a hvis-clause, put ikke before the finite verb: hvis det ikke regner."
+          "value": "I en hvis-setning står «ikke» foran det finitte verbet: «hvis det ikke regner»."
         }
       ],
       "payload": {
@@ -2784,13 +2812,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Build the complete cabin decision: If the bus does not come, we will take a taxi. Begin the result clause with the finite verb followed by the subject."
+          "value": "Sett sammen setningen med hvis-setningen først."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "After the hvis-clause, keep the main-clause verb second by placing it before the subject: tar vi taxi."
+          "value": "Når hvis-setningen står først, kommer det finitte verbet før subjektet i hovedsetningen: «tar vi taxi»."
         }
       ],
       "payload": {
@@ -2850,10 +2878,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Rewrite Vi går en lang tur hvis det ikke regner. by moving the hvis-clause to the beginning. Keep the meaning and subordinate-clause order unchanged, and invert the following main clause."
+          "value": "Sett sammen setningen med hvis-setningen først."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Når hvis-setningen flyttes først, bytter rekkefølgen i hovedsetningen: «vi går» blir «går vi»."
+        }
+      ],
       "payload": {
         "tokens": [
           {
@@ -2923,31 +2956,35 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write exactly four brief hvis-sentences in Norwegian for Maja's plan: the train may arrive on time, the weather may improve, Jonas may not make dinner, and the bus may not come for the return trip. Present all four as real possibilities. Put the condition first in two sentences and second in two. Use correct word order in both clauses, including ikke before the finite verb inside each negative hvis-clause. Vocabulary variety is not scored."
+          "value": "Maja og Jonas planlegger helga sammen. Melding fra Maja til Jonas: Toget kan komme i tide → vi rekker bussen. Været kan bli bedre → vi går ut. Jonas lager kanskje ikke middag → Maja lager mat. Bussen kommer kanskje ikke → de tar taxi. Skriv en melding med alle fire opplysningene og «hvis». Bruk naturlig ordstilling."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 28,
-        "max_words": 80,
-        "judge_prompt": "Check the four Norwegian sentences against the supplied situations. Accept natural variants that preserve real-condition meaning and required word order. Report evidence for every criterion; do not score vocabulary variety.",
+        "min_words": 35,
+        "max_words": 70,
+        "judge_prompt": "Evaluate the response only against the listed criteria. A response passes when all criteria without the -observation suffix are met. Criteria ending in -observation are diagnostic and never cause failure. Anchors: Must pass: \"Hei Jonas! Hvis toget kommer i tide, rekker vi bussen. Vi går ut hvis været blir bedre. Hvis du ikke lager middag, lager jeg mat. De tar taxi hvis bussen ikke kommer. Kan du gi meg beskjed i kveld? Vi snakkes!\" Must fail: \"Hei Jonas! Toget, været, middag og buss kan endre planen.\" It does not express the four supplied condition-result relationships with hvis. Must fail while flagging word-order: \"Hei Jonas! Hvis toget kommer i tide, vi rekker bussen. Vi går ut hvis været blir bedre. Hvis du ikke lager middag, lager jeg mat. De tar taxi hvis bussen ikke kommer. Kan du gi meg beskjed i kveld? Vi snakkes!\" The first result uses incorrect inversion after a leading hvis-clause, so word-order is not met.",
         "criteria": [
           {
-            "id": "real-possibilities",
-            "instruction": "Presents all four supplied situations as real possibilities rather than imagined alternatives."
+            "id": "audience-purpose",
+            "instruction": "Writes a Norwegian message to Jonas that communicates the weekend plan."
           },
           {
-            "id": "clause-order-variation",
-            "instruction": "Uses two condition-first sentences and two condition-second sentences."
+            "id": "supplied-facts",
+            "instruction": "Expresses all four supplied condition-result relationships without contradicting them."
           },
           {
-            "id": "subordinate-order",
-            "instruction": "Places ikke before the finite verb in each negative hvis-clause."
+            "id": "hvis-use",
+            "instruction": "Uses hvis to connect every supplied condition with its result."
           },
           {
-            "id": "main-clause-order",
-            "instruction": "Uses verb–subject inversion after each initial hvis-clause and ordinary main-clause order when the result comes first."
+            "id": "word-order",
+            "instruction": "Places ikke before the finite verb in each hvis-clause and uses inversion, with the finite verb before the subject, after a leading hvis-clause."
+          },
+          {
+            "id": "closing-tone-observation",
+            "instruction": "Observation only: note whether the message ends with a natural friendly close; do not fail a message that communicates the plan."
           }
         ]
       }
@@ -2960,24 +2997,24 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Classify each cabin statement by the meaning and verb-form contrast shown. Use the present-pattern versus past-in-the-hvis-clause plus ville-in-the-result evidence. Word order is not separately scored."
+          "value": "Sorter setningene i mulige og tenkte situasjoner."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Use present forms for a real or open condition; past in the hvis-clause plus ville marks an imagined present situation."
+          "value": "Presens uttrykker en åpen mulighet. Fortid i hvis-setningen sammen med «ville» i hovedsetningen uttrykker en tenkt situasjon."
         }
       ],
       "payload": {
         "buckets": [
           {
             "bucket_id": "real",
-            "label": "Real possibility: present pattern"
+            "label": "Real or open possibility"
           },
           {
             "bucket_id": "imagined",
-            "label": "Imagined or remote: past form plus ville"
+            "label": "Imagined alternative"
           }
         ],
         "items": [
@@ -3022,10 +3059,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "The cabin does not have internet. Build a sentence imagining the present situation as different, using past tense in the hvis-clause and ville in the result."
+          "value": "Skriv Majas tenkte situasjon."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "En tenkt situasjon i nåtid kan uttrykkes med fortid i hvis-setningen og «ville» i hovedsetningen."
+        }
+      ],
       "payload": {
         "tokens": [
           {
@@ -3095,13 +3137,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete the imagined sentences. In the first, negate the condition; in the second, negate the result. Select the placement of ikke relative to the finite verb in its clause."
+          "value": "Fullfør begge tenkte setningene."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Put ikke before the finite verb in the hvis-clause, but after ville in the main clause."
+          "value": "I hvis-setningen står «ikke» foran det finitte verbet. I hovedsetningen står «ikke» etter «ville»."
         }
       ],
       "payload": {
@@ -3170,10 +3212,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Rewrite Hvis hytta lå nærmere byen, ville vi ikke trengt bil. with the result first. Keep the imagined meaning, past tense, ville, and the intended negation."
+          "value": "Sett sammen setningen med resultatet først."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Når resultatet står først, bruker hovedsetningen vanlig ordstilling: «Vi ville ikke trengt bil»."
+        }
+      ],
       "payload": {
         "tokens": [
           {
@@ -3249,10 +3296,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete the revised plan. Choose real forms for possibilities that can still affect the weekend and imagined forms for facts that do not match the present cabin. Keep the displayed clause order correct."
+          "value": "Fullfør den nye hytteplanen med riktig verbform i hver situasjon."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Bruk presens om en åpen mulighet og fortid + «ville» om en tenkt situasjon."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -3260,7 +3312,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "The forecast may still improve. Hvis været"
+                "value": "Hvis været"
               },
               {
                 "kind": "text",
@@ -3294,17 +3346,17 @@
             "kind": "blank",
             "blank_id": "possible-weather-result",
             "options": [
-              "ville vi gå ut",
-              "kan vi gå ut"
+              "kan vi gå ut",
+              "ville vi gå ut"
             ],
-            "answer_index": 1
+            "answer_index": 0
           },
           {
             "kind": "span",
             "spans": [
               {
                 "kind": "text",
-                "value": ". The cabin is not nearer town. Hvis hytta"
+                "value": ". Hvis hytta"
               },
               {
                 "kind": "text",
@@ -3316,10 +3368,10 @@
             "kind": "blank",
             "blank_id": "imagined-location-condition",
             "options": [
-              "lå nærmere byen",
-              "er nærmere byen"
+              "er nærmere byen",
+              "lå nærmere byen"
             ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
@@ -3338,8 +3390,8 @@
             "kind": "blank",
             "blank_id": "imagined-location-result",
             "options": [
-              "kan vi gå ut",
-              "ville vi gå ut"
+              "kan vi gå ut og spise",
+              "ville vi gå ut og spise"
             ],
             "answer_index": 1
           },
@@ -3348,7 +3400,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": ". The bus may still fail to arrive. Vi tar taxi hvis bussen"
+                "value": ". Vi tar taxi hvis bussen"
               },
               {
                 "kind": "text",
@@ -3375,7 +3427,50 @@
             ]
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hvordan blir planen for hytteturen nå?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Jonas",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Været er fortsatt usikkert, men det kan bli fint. Da kan vi være ute.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Vi vil gjerne gå ut og spise i byen, men hytta ligger for langt unna. Tenk om den var nærmere!»"
+                }
+              ]
+            },
+            {
+              "speaker": "Jonas",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Ja, det hadde vært mye enklere. Bussen er også usikker, så vi kan ta taxi.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -3385,69 +3480,530 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write exactly four Norwegian planning sentences for a neighbourhood meal. Sentence 1: rain remains possible; put a negative real condition first and say that the group can eat outside if it does not rain. Sentence 2: tables may be available; state the result first and the real condition second. Sentence 3: the current venue is not larger; put an imagined condition first and use a negative ville-result. Sentence 4: the bus may not come; state the real result first and put the negative condition second. Use hvis in every sentence, place ikke according to its clause, and use inversion after each initial hvis-clause."
+          "value": "Melding til nabolagsgruppen: Det kan bli opphold → gruppen kan spise ute. Bordene kan være ledige → gruppen reserverer dem. Lokalet er ikke større → gruppen forestiller seg at det er større og at de ikke trenger ekstrabord. Bussen kommer kanskje ikke → gjestene tar taxi. Skriv en melding med alle fire opplysningene og «hvis». Skriv om både åpne muligheter og den tenkte situasjonen med naturlig ordstilling."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 32,
-        "max_words": 90,
-        "judge_prompt": "Check each planning sentence against its supplied fact, required condition type, clause order, negation location, and main-clause order. Accept natural Bokmål variants that preserve those constraints.",
+        "min_words": 45,
+        "max_words": 85,
+        "judge_prompt": "Evaluate the response only against the listed criteria. A response passes when all criteria without the -observation suffix are met. Criteria ending in -observation are diagnostic and never cause failure. Anchors: Must pass: \"Hei alle! Hvis det blir opphold, kan vi spise ute. Vi reserverer bordene hvis de er ledige. Hvis lokalet var større, ville vi ikke trengt ekstrabord. Gjestene tar taxi hvis bussen ikke kommer. Vi møtes klokka seks på fredag hjemme hos meg. Si fra om planen passer.\" Must fail: \"Hei alle! Vi håper på fint vær og et større lokale. Gi beskjed.\" It omits the supplied condition-result relationships. Must fail while flagging form-accuracy: \"Hei alle! Hvis det blir opphold, vi kan spise ute. Vi reserverer bordene hvis de er ledige. Hvis lokalet var større, ville vi ikke trengt ekstrabord. Gjestene tar taxi hvis bussen kommer ikke. Vi møtes klokka seks på fredag hjemme hos meg. Si fra om planen passer.\" Two clauses use incorrect word order, so form-accuracy is not met.",
         "criteria": [
           {
-            "id": "condition-patterns",
-            "instruction": "Uses real forms for the possible weather, tables, and bus events, and an imagined past-plus-ville pattern for the venue that is not larger."
+            "id": "audience-purpose",
+            "instruction": "Writes a Norwegian planning message to the neighbourhood group."
           },
           {
-            "id": "negation-placement",
-            "instruction": "Places ikke before the finite verb in negative hvis-clauses and after ville in the requested negative imagined result."
+            "id": "supplied-facts",
+            "instruction": "Communicates all four supplied condition-result relationships without contradicting them."
           },
           {
-            "id": "inversion",
-            "instruction": "Begins each result following an initial hvis-clause with finite verb followed by subject."
+            "id": "hvis-use",
+            "instruction": "Uses hvis to connect every supplied condition with its result."
           },
           {
-            "id": "integrated-plan",
-            "instruction": "Produces four complete hvis-sentences covering all supplied meal-planning facts and required clause orders."
+            "id": "form-accuracy",
+            "instruction": "Uses present forms for open possibilities and past tense with ville for the imagined alternative, places ikke before the finite verb in hvis-clauses, and inverts after a leading hvis-clause."
+          },
+          {
+            "id": "closing-tone-observation",
+            "instruction": "Observation only: note whether the message ends with a natural invitation to reply; do not fail a message that communicates the plan."
           }
         ]
       }
     },
     {
       "kind": "exercise",
-      "id": "retrieve_hvis_condition_patterns",
-      "operation": "write",
+      "id": "review_real_condition_negation",
+      "operation": "recall_fill",
       "objective_id": "obj-conditional-clauses-01",
       "prompt": [
         {
           "kind": "text",
-          "value": "Write exactly four complete Norwegian hvis-sentences for these new situations. 1: A train may be delayed; put the real condition first and state what you will do. 2: A friend may not find the meeting place; state a real result first and put the negative condition second. 3: Your home does not have more space; put an imagined condition first and state what you would do. 4: Give advice to another person with Hvis jeg var deg, placing the advice result first. Use correct subordinate-clause and main-clause word order throughout."
+          "value": "Fullfør setningen om butikken. Pass på ordstillingen i hvis-setningen."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "I en hvis-setning står nektelsen foran det finitte verbet."
+        }
+      ],
       "payload": {
-        "response_language": "no",
-        "min_words": 28,
-        "max_words": 80,
-        "judge_prompt": "Check independent retrieval of the required real and imagined hvis-patterns. Accept natural Bokmål wording when meaning, specified clause order, verb forms, and word order are correct. Report evidence for each criterion.",
-        "criteria": [
+        "segments": [
           {
-            "id": "real-retrieval",
-            "instruction": "Produces real conditions for the possible train delay and the possible failure to find the meeting place."
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "«Hvis butikken"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
           },
           {
-            "id": "imagined-retrieval",
-            "instruction": "Uses an imagined past-plus-ville pattern for the home and an appropriate Hvis jeg var deg advice pattern."
+            "kind": "blank",
+            "blank_id": "shop-negation",
+            "options": [
+              "er ikke åpen",
+              "ikke er åpen"
+            ],
+            "answer_index": 1
           },
           {
-            "id": "subordinate-order",
-            "instruction": "Uses subordinate-clause order, including ikke before the finite verb in the negative hvis-clause."
-          },
-          {
-            "id": "main-clause-order",
-            "instruction": "Uses inversion after the initial conditions and ordinary subject–verb order when the result is placed first."
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ", handler vi i morgen.»"
+              }
+            ]
           }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hvis butikken ___, handler vi i morgen.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_condition_first_inversion",
+      "operation": "build",
+      "objective_id": "obj-conditional-clauses-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Skriv én setning som begynner med «hvis»."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Etter en innledende hvis-setning står det finitte verbet før subjektet: «rekker Nora»."
+        }
+      ],
+      "payload": {
+        "tokens": [
+          {
+            "token_id": "tok-6",
+            "text": "rekker",
+            "fixed": false
+          },
+          {
+            "token_id": "tok-2",
+            "text": "toget",
+            "fixed": false
+          },
+          {
+            "token_id": "tok-8",
+            "text": "møtet.",
+            "fixed": false
+          },
+          {
+            "token_id": "tok-4",
+            "text": "i",
+            "fixed": false
+          },
+          {
+            "token_id": "tok-1",
+            "text": "Hvis",
+            "fixed": false
+          },
+          {
+            "token_id": "tok-7",
+            "text": "Nora",
+            "fixed": false
+          },
+          {
+            "token_id": "tok-3",
+            "text": "kommer",
+            "fixed": false
+          },
+          {
+            "token_id": "tok-5",
+            "text": "tide,",
+            "fixed": false
+          }
+        ],
+        "answer_order": [
+          "tok-1",
+          "tok-2",
+          "tok-3",
+          "tok-4",
+          "tok-5",
+          "tok-6",
+          "tok-7",
+          "tok-8"
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_condition_second_order",
+      "operation": "recall_fill",
+      "objective_id": "obj-conditional-clauses-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fullfør meldingen. Pass på ordstillingen i den siste hvis-setningen."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "En hvis-setning til slutt har leddsetningsordstilling, med «ikke» foran det finitte verbet."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "«Jeg sender Nora en melding hvis hun"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "final-condition-negation",
+            "options": [
+              "svarer ikke",
+              "ikke svarer"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ".»"
+              }
+            ]
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg sender Nora en melding hvis hun ___.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_real_or_imagined",
+      "operation": "categorize",
+      "objective_id": "obj-conditional-clauses-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Sorter svarene etter situasjonen."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "En åpen mulighet uttrykkes med presens. En tenkt situasjon uttrykkes med fortid og «ville»."
+        }
+      ],
+      "payload": {
+        "buckets": [
+          {
+            "bucket_id": "open",
+            "label": "Real or open possibility"
+          },
+          {
+            "bucket_id": "imagined",
+            "label": "Imagined alternative"
+          }
+        ],
+        "items": [
+          {
+            "item_id": "item-1",
+            "text": "Hvis toget går i tide, rekker vi møtet.",
+            "bucket_id": "open"
+          },
+          {
+            "item_id": "item-2",
+            "text": "Hvis toget gikk i tide, ville vi rukket møtet.",
+            "bucket_id": "imagined"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_imagined_condition",
+      "operation": "recall_fill",
+      "objective_id": "obj-conditional-clauses-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fullfør den tenkte setningen om leiligheten til Ola. Bruk riktig verbform."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "En tenkt situasjon i nåtid uttrykkes med fortid i hvis-setningen og «ville» i hovedsetningen."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "«Hvis leiligheten"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "imagined-home-condition",
+            "options": [
+              "hadde balkong",
+              "har balkong"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ","
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "imagined-home-result",
+            "options": [
+              "spiser Ola frokost ute",
+              "ville Ola spist frokost ute"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ".»"
+              }
+            ]
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Sara",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hvis leiligheten "
+                },
+                {
+                  "kind": "strong",
+                  "value": ", "
+                },
+                {
+                  "kind": "text",
+                  "value": ".»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_imagined_negation",
+      "operation": "recall_fill",
+      "objective_id": "obj-conditional-clauses-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fullfør resultatet i den tenkte setningen. Bruk vanlig ordstilling uten kontrasttrykk."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "I resultatsetningen står «ikke» etter det finitte modalverbet «ville»."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "«Hvis hytta lå ved togstasjonen,"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "imagined-negative-result",
+            "options": [
+              "ville vi ikke hatt behov for bil",
+              "ville vi hatt ikke behov for bil"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ".»"
+              }
+            ]
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Jonas",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Hvis hytta lå ved togstasjonen, ___.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_hvis_jeg_var_deg",
+      "operation": "build",
+      "objective_id": "obj-conditional-clauses-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Skriv den tenkte rådssetningen om å bestille billetten i dag."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Hvis jeg var deg» innleder et tenkt råd. I resultatet bruker du «ville» + partisipp."
+        }
+      ],
+      "payload": {
+        "tokens": [
+          {
+            "token_id": "tok-5",
+            "text": "ville",
+            "fixed": false
+          },
+          {
+            "token_id": "tok-8",
+            "text": "billetten",
+            "fixed": false
+          },
+          {
+            "token_id": "tok-1",
+            "text": "Hvis jeg",
+            "fixed": false
+          },
+          {
+            "token_id": "tok-6",
+            "text": "jeg",
+            "fixed": false
+          },
+          {
+            "token_id": "tok-9",
+            "text": "i",
+            "fixed": false
+          },
+          {
+            "token_id": "tok-3",
+            "text": "var",
+            "fixed": false
+          },
+          {
+            "token_id": "tok-10",
+            "text": "dag.",
+            "fixed": false
+          },
+          {
+            "token_id": "tok-4",
+            "text": "deg,",
+            "fixed": false
+          },
+          {
+            "token_id": "tok-7",
+            "text": "bestilt",
+            "fixed": false
+          }
+        ],
+        "answer_order": [
+          "tok-1",
+          "tok-3",
+          "tok-4",
+          "tok-5",
+          "tok-6",
+          "tok-7",
+          "tok-8",
+          "tok-9",
+          "tok-10"
         ]
       }
     }
@@ -3467,7 +4023,13 @@
         "reorder_imagined_condition_sentences",
         "revise_the_cabin_plan",
         "plan_neighbourhood_meal_with_conditions",
-        "retrieve_hvis_condition_patterns"
+        "review_real_condition_negation",
+        "review_condition_first_inversion",
+        "review_condition_second_order",
+        "review_real_or_imagined",
+        "review_imagined_condition",
+        "review_imagined_negation",
+        "review_hvis_jeg_var_deg"
       ]
     }
   ],

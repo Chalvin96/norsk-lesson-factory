@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "ta_med_or_ha_med",
   "kind": "phraseology",
   "language": "nb-NO",
@@ -88,6 +88,14 @@
     {
       "kind": "exercise",
       "id": "retrieval_and_review"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_ta_med_action"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_ha_med_state"
     }
   ],
   "sections": [
@@ -2009,39 +2017,92 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Classify every listed use below. Put each use that arranges for something to come along in arranging-accompaniment; put each use that checks what is already with someone in already-present. Use the situation, not a translation of both expressions as bring."
+          "value": "Sort the lines by whether they are about bringing someone or something along, or having it with you."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Ta med views bringing as an action or preparation; ha med views the item as already accompanying the person."
+          "value": "«Ta med» beskriver handlingen der noe blir med. «Ha med» forteller at noe allerede er med."
         }
       ],
       "payload": {
         "buckets": [
           {
             "bucket_id": "arranging-accompaniment",
-            "label": "Arranging for something to come along"
+            "label": "Sørge for at noen eller noe blir med"
           },
           {
             "bucket_id": "already-present",
-            "label": "Checking what is already with someone"
+            "label": "Sjekke eller si at noe allerede er med"
           }
         ],
         "items": [
           {
-            "item_id": "emil-ta-med",
-            "text": "Emil: ta med",
+            "item_id": "food-before-departure",
+            "text": "Skal jeg ta med noe mat?",
             "bucket_id": "arranging-accompaniment"
           },
           {
-            "item_id": "nora-ha-med",
-            "text": "Nora: ha med",
+            "item_id": "key-on-bus",
+            "text": "Jeg har ikke med nøkkelen.",
+            "bucket_id": "already-present"
+          },
+          {
+            "item_id": "key-from-home",
+            "text": "Da kan jeg ta den med.",
+            "bucket_id": "arranging-accompaniment"
+          },
+          {
+            "item_id": "clothes-on-journey",
+            "text": "Har du med varme klær?",
             "bucket_id": "already-present"
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Emil",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Skal jeg ta med noe mat?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Nora",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg har ikke med nøkkelen.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Emil",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Da kan jeg ta den med.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Nora",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Har du med varme klær?»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2051,10 +2112,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete the travel sequence by choosing one appropriate Norwegian expression in each gap. The same passport is first made part of the journey, then checked and confirmed at the airport."
+          "value": "Fill in the three blanks in the airport dialogue."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "I det første feltet beskriver verbet at passet blir tatt med fra ett sted til et annet. I de to siste feltene spør og forteller man om passet allerede er med."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -2062,7 +2128,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Før Lea går til flyplassen, må hun"
+                "value": "«Når jeg drar hjemmefra, må jeg"
               },
               {
                 "kind": "text",
@@ -2088,7 +2154,7 @@
               },
               {
                 "kind": "text",
-                "value": "passet. På flyplassen spør venninnen:"
+                "value": "passet fra bordet til flyplassen.» Ida: «Nå som vi står ved sikkerhetskontrollen,"
               },
               {
                 "kind": "text",
@@ -2100,10 +2166,10 @@
             "kind": "blank",
             "blank_id": "airport-question",
             "options": [
-              "Har du med",
-              "Tar du med"
+              "tar du med",
+              "har du"
             ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
@@ -2114,7 +2180,7 @@
               },
               {
                 "kind": "text",
-                "value": "passet? Lea åpner veska og sier at hun"
+                "value": "passet med deg?» Lea: «Ja, jeg"
               },
               {
                 "kind": "text",
@@ -2140,223 +2206,145 @@
               },
               {
                 "kind": "text",
-                "value": "passet."
+                "value": "passet i vesken.»"
               }
             ]
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Lea",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Når jeg drar hjemmefra, må jeg ___ passet fra bordet til flyplassen.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Ida",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Nå som vi står ved sikkerhetskontrollen, ___ passet med deg?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Lea",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Ja, jeg ___ passet i vesken.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
       "id": "change_the_viewpoint",
-      "operation": "build",
+      "operation": "write",
       "objective_id": "obj-ta-med-or-ha-med-01",
       "prompt": [
         {
           "kind": "text",
-          "value": "Build six complete Norwegian sentences from the tokens. First build a later check or report for each preparation or movement sentence: Sander tar med dokumentene til kontoret; Vi tar med håndklær til stranda; Mina tar med søsteren sin på konserten. Then build the earlier preparation or movement sentence for each corresponding report: Sander har med dokumentene; Vi har med håndklær; Mina har med søsteren sin. Keep people and objects unchanged."
+          "value": "Rewrite the six details as short sentences in Norwegian. Use «ha med» for what people have with them now, and «ta med» for what they plan to bring."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "De tre første setningene forteller hva personene har med seg nå. De tre siste beskriver noe de planlegger å ta med. Begge plasseringene av «med» kan være naturlige på norsk."
+        }
+      ],
       "payload": {
-        "tokens": [
+        "response_language": "no",
+        "min_words": 30,
+        "max_words": 60,
+        "judge_prompt": "Evaluate six-facts, viewpoint-contrast, norwegian. Accept natural Bokmål variants that preserve each fact and meaning, including «Sander har med dokumentene» and «Sander har dokumentene med»; do not require a single position for med.",
+        "criteria": [
           {
-            "token_id": "s1-1",
-            "text": "Sander",
-            "fixed": false
+            "id": "six-facts",
+            "instruction": "Preserves all six facts: Sander has the documents; we have towels; Mina has her sister with her; Sander plans to take the documents to the office; we plan to take towels to the beach; Mina plans to take her sister to the concert."
           },
           {
-            "token_id": "s1-2",
-            "text": "har",
-            "fixed": false
+            "id": "viewpoint-contrast",
+            "instruction": "Uses ha med to report what is currently with someone in the first three sentences, and ta med for planned actions in the last three; accept natural placement of med before or after the object."
           },
           {
-            "token_id": "s1-3",
-            "text": "med",
-            "fixed": false
-          },
-          {
-            "token_id": "s1-4",
-            "text": "dokumentene.",
-            "fixed": false
-          },
-          {
-            "token_id": "s2-1",
-            "text": "Vi",
-            "fixed": false
-          },
-          {
-            "token_id": "s2-2",
-            "text": "har",
-            "fixed": false
-          },
-          {
-            "token_id": "s2-3",
-            "text": "med",
-            "fixed": false
-          },
-          {
-            "token_id": "s2-4",
-            "text": "håndklær.",
-            "fixed": false
-          },
-          {
-            "token_id": "s3-1",
-            "text": "Mina",
-            "fixed": false
-          },
-          {
-            "token_id": "s3-2",
-            "text": "har",
-            "fixed": false
-          },
-          {
-            "token_id": "s3-3",
-            "text": "med",
-            "fixed": false
-          },
-          {
-            "token_id": "s3-4",
-            "text": "søsteren",
-            "fixed": false
-          },
-          {
-            "token_id": "s3-5",
-            "text": "sin.",
-            "fixed": false
-          },
-          {
-            "token_id": "s4-1",
-            "text": "Sander",
-            "fixed": false
-          },
-          {
-            "token_id": "s4-2",
-            "text": "tar",
-            "fixed": false
-          },
-          {
-            "token_id": "s4-3",
-            "text": "med",
-            "fixed": false
-          },
-          {
-            "token_id": "s4-4",
-            "text": "dokumentene",
-            "fixed": false
-          },
-          {
-            "token_id": "s4-5",
-            "text": "til",
-            "fixed": false
-          },
-          {
-            "token_id": "s4-6",
-            "text": "kontoret.",
-            "fixed": false
-          },
-          {
-            "token_id": "s5-1",
-            "text": "Vi",
-            "fixed": false
-          },
-          {
-            "token_id": "s5-2",
-            "text": "tar",
-            "fixed": false
-          },
-          {
-            "token_id": "s5-3",
-            "text": "med",
-            "fixed": false
-          },
-          {
-            "token_id": "s5-4",
-            "text": "håndklær",
-            "fixed": false
-          },
-          {
-            "token_id": "s5-5",
-            "text": "til",
-            "fixed": false
-          },
-          {
-            "token_id": "s5-6",
-            "text": "stranda.",
-            "fixed": false
-          },
-          {
-            "token_id": "s6-1",
-            "text": "Mina",
-            "fixed": false
-          },
-          {
-            "token_id": "s6-2",
-            "text": "tar",
-            "fixed": false
-          },
-          {
-            "token_id": "s6-3",
-            "text": "med",
-            "fixed": false
-          },
-          {
-            "token_id": "s6-4",
-            "text": "søsteren",
-            "fixed": false
-          },
-          {
-            "token_id": "s6-5",
-            "text": "sin",
-            "fixed": false
-          },
-          {
-            "token_id": "s6-6",
-            "text": "på",
-            "fixed": false
-          },
-          {
-            "token_id": "s6-7",
-            "text": "konserten.",
-            "fixed": false
+            "id": "norwegian",
+            "instruction": "The sentences are understandable, natural Bokmål."
           }
-        ],
-        "answer_order": [
-          "s1-1",
-          "s1-2",
-          "s1-3",
-          "s1-4",
-          "s2-1",
-          "s2-2",
-          "s2-3",
-          "s2-4",
-          "s3-1",
-          "s3-2",
-          "s3-3",
-          "s3-4",
-          "s3-5",
-          "s4-1",
-          "s4-2",
-          "s4-3",
-          "s4-4",
-          "s4-5",
-          "s4-6",
-          "s5-1",
-          "s5-2",
-          "s5-3",
-          "s5-4",
-          "s5-5",
-          "s5-6",
-          "s6-1",
-          "s6-2",
-          "s6-3",
-          "s6-4",
-          "s6-5",
-          "s6-6",
-          "s6-7"
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Sander",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg har dokumentene hos meg.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Mina",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Vi har håndklærne hos oss.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Sander",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Mina har søsteren sin hos seg.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Mina",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Før avreise sørger Sander for at dokumentene blir med til kontoret.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Sander",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Vi sørger for at håndklærne blir med til stranda.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Mina",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg sørger for at søsteren min blir med på konserten.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2366,39 +2354,48 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write four short Norwegian sentences for these moments: before departure, state that one person will bring food; at the bus stop, ask whether another person has a blanket with them; at the park, report that someone has two friends with them; while discussing the next picnic, ask someone to bring a ball. Use ta med when arranging accompaniment and ha med when describing existing presence."
+          "value": "Write a message to your teacher about the picnic day. Ali made sure the food was brought along before they left. At the bus stop, Nora checked whether Liv had a blanket with her. In the park, Mina had two friends with her. For the next picnic, Nora asked Ali to make sure a ball is brought along. Use both «ta med» and «ha med» naturally in the message."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Før avreise handler det om å sørge for at noe blir med. Senere spør man om noe allerede er med eller forteller at det er det."
+        }
+      ],
       "payload": {
         "response_language": "no",
-        "min_words": null,
-        "max_words": null,
-        "judge_prompt": "Check the response against every criterion and report evidence for each. Accept natural equivalent Norwegian wording and suitable names, but require the requested meanings and the distinction between ta med and ha med.",
+        "min_words": 45,
+        "max_words": 65,
+        "judge_prompt": "Evaluate criteria message-purpose, supplied-facts, norwegian-text, action-form, and state-form as gating criteria. Record the observation criteria diagnostically, but do not fail a response based on them. The prompt requests both taught expressions, so require them for the two form criteria.",
         "criteria": [
           {
-            "id": "four-sentences",
-            "instruction": "Provides four short Norwegian sentences, one for each requested moment."
+            "id": "message-purpose",
+            "instruction": "Writes a coherent message to the teacher that reports the planning and course of the picnic day."
           },
           {
-            "id": "food-before-departure",
-            "instruction": "States before departure that one person will bring food, using a natural ta med expression."
+            "id": "supplied-facts",
+            "instruction": "Communicates all four supplied facts without materially changing who acts, what accompanies them, or when each event occurs."
           },
           {
-            "id": "blanket-bus-stop",
-            "instruction": "At the bus stop, asks whether another person has a blanket with them, using a natural ha med expression."
+            "id": "norwegian-text",
+            "instruction": "Writes the message in understandable Norwegian."
           },
           {
-            "id": "friends-at-park",
-            "instruction": "At the park, reports that someone has two friends with them, using a natural ha med expression."
+            "id": "action-form",
+            "instruction": "Uses a natural ta med form for both actions that arrange accompaniment."
           },
           {
-            "id": "ball-next-picnic",
-            "instruction": "During discussion of the next picnic, asks someone to bring a ball, using a natural ta med expression."
+            "id": "state-form",
+            "instruction": "Uses a natural ha med form for the bus-stop check and park report."
           },
           {
-            "id": "consistent-distinction",
-            "instruction": "Applies the distinction consistently across all four sentences."
+            "id": "action-form-observation",
+            "instruction": "Observation only: note whether the taught ta med form appears; do not fail a natural equivalent."
+          },
+          {
+            "id": "state-form-observation",
+            "instruction": "Observation only: note whether the taught ha med form appears; do not fail a natural equivalent."
           }
         ]
       }
@@ -2411,23 +2408,104 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write two connected Norwegian sentences about one object. In the first, arrange for it to accompany someone; in the second, confirm that the person has it with them."
+          "value": "You and Erik are by the car before going for a walk. Write a short message asking him to bring the umbrella from the car and saying that you want to have it with you on the walk. Use both «ta med» and «ha med»."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Begge setningene gjelder før turen. Den første ber om at paraplyen blir tatt med, og den andre sier at dere skal ha den med på turen."
+        }
+      ],
+      "payload": {
+        "response_language": "no",
+        "min_words": 12,
+        "max_words": 20,
+        "judge_prompt": "Evaluate criteria recipient-and-purpose, single-setting, same-object, norwegian-text, action-form, and state-form as gating criteria. The prompt requests both taught expressions, so require them for the two form criteria while accepting natural inflection and placement variants.",
+        "criteria": [
+          {
+            "id": "recipient-and-purpose",
+            "instruction": "Addresses Erik with one coherent message before the walk, asking him to bring the umbrella from the car and expressing that it is wanted on the walk."
+          },
+          {
+            "id": "single-setting",
+            "instruction": "Both clauses make sense in the same setting and at the same time, before the walk begins."
+          },
+          {
+            "id": "same-object",
+            "instruction": "Both clauses concern the same umbrella."
+          },
+          {
+            "id": "norwegian-text",
+            "instruction": "Writes the message in understandable Norwegian."
+          },
+          {
+            "id": "action-form",
+            "instruction": "Uses a natural ta med form to ask Erik to bring the umbrella from the car."
+          },
+          {
+            "id": "state-form",
+            "instruction": "Uses a natural ha med form to say that they want the umbrella with them on the walk."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_ta_med_action",
+      "operation": "write",
+      "objective_id": "obj-ta-med-or-ha-med-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "You are packing sunglasses for a mountain trip. Write one sentence saying that you will make sure to bring them. Use «ta med» in the correct form."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Ta med» beskriver handlingen der solbrillene blir pakket til turen."
+        }
+      ],
       "payload": {
         "response_language": "no",
         "min_words": null,
         "max_words": null,
-        "judge_prompt": "Check the response against the two connected Norwegian-sentence criteria and report evidence for each. Accept natural equivalent wording with the requested change from arranging accompaniment to confirming presence.",
+        "judge_prompt": "Evaluate only criterion action-expression. Accept a grammatical sentence using the taught expression for the planned action of bringing the sunglasses along, and add no other gating requirement.",
         "criteria": [
           {
-            "id": "connected-norwegian-sentences",
-            "instruction": "Writes two connected Norwegian sentences about one object."
-          },
+            "id": "action-expression",
+            "instruction": "Uses ta med to express the planned action of bringing the sunglasses along."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_ha_med_state",
+      "operation": "write",
+      "objective_id": "obj-ta-med-or-ha-med-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "You are at the cabin, and the flashlight is already in your backpack. Write one sentence saying that you have it with you on the hike. Use «ha med» in the correct form."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Ha med» forteller at lommelykten allerede er med på turen."
+        }
+      ],
+      "payload": {
+        "response_language": "no",
+        "min_words": null,
+        "max_words": null,
+        "judge_prompt": "Evaluate only criterion state-expression. Accept a grammatical sentence using the taught expression for the flashlight already being with the speaker, and add no other gating requirement.",
+        "criteria": [
           {
-            "id": "viewpoint-change",
-            "instruction": "Uses a Norwegian ta med expression for arranging accompaniment first and a Norwegian ha med expression for confirming presence second."
+            "id": "state-expression",
+            "instruction": "Uses ha med to report that the flashlight is already with the speaker."
           }
         ]
       }
@@ -2442,7 +2520,9 @@
         "complete_travel_sequence",
         "change_the_viewpoint",
         "guided_context_practice",
-        "retrieval_and_review"
+        "retrieval_and_review",
+        "review_ta_med_action",
+        "review_ha_med_state"
       ]
     }
   ],

@@ -1,0 +1,547 @@
+- handle: notice_real_condition_order
+  op: recall_fill
+  objective: obj-conditional-clauses-01
+  bloom: understand
+  prompt_md: Complete the sentences.
+  explanation_md: 'In a hvis-clause, ikke comes before the finite verb: hvis det ikke regner.'
+  audio_target: Hvis det ikke regner, går vi en lang tur. Hvis du ikke tar med kaffe, kjøper jeg kaffe.
+  segments:
+  - text_md: 'Hvis det '
+  - blank_id: weather-order
+    options:
+    - ikke regner
+    - regner ikke
+    answer_index: 0
+  - text_md: ', går vi en lang tur. Hvis du '
+  - blank_id: coffee-order
+    options:
+    - tar ikke med kaffe
+    - ikke tar med kaffe
+    answer_index: 1
+  - text_md: ', kjøper jeg kaffe.'
+  derived_from:
+  - section_id: real-conditions
+- handle: build_condition_first_results
+  op: build
+  objective: obj-conditional-clauses-01
+  bloom: apply
+  prompt_md: 'Facts to express: the condition is that the bus fails to arrive; the result is that the group takes a taxi. Build the complete cabin decision.'
+  explanation_md: 'After an initial hvis-clause, the finite verb precedes the subject in the result: tar
+    vi taxi.'
+  tokens:
+  - token_id: tok-2
+    text: bussen
+  - token_id: tok-3
+    text: ikke
+  - token_id: tok-4
+    text: kommer,
+  - token_id: tok-5
+    text: tar
+  - token_id: tok-6
+    text: vi
+  - token_id: tok-7
+    text: taxi.
+  - token_id: tok-1
+    text: Hvis
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  derived_from:
+  - section_id: real-conditions
+- handle: move_real_condition
+  op: build
+  objective: obj-conditional-clauses-01
+  bloom: apply
+  prompt_md: Rebuild the sentence without changing its meaning.
+  explanation_md: When the condition moves to the beginning, the result changes from vi går to går vi.
+  tokens:
+  - token_id: tok-2
+    text: det
+  - token_id: tok-3
+    text: ikke
+  - token_id: tok-4
+    text: regner,
+  - token_id: tok-5
+    text: går
+  - token_id: tok-6
+    text: vi
+  - token_id: tok-7
+    text: en
+  - token_id: tok-8
+    text: lang
+  - token_id: tok-9
+    text: tur.
+  - token_id: tok-1
+    text: Hvis
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  derived_from:
+  - section_id: putting-condition-second
+- handle: write_real_plan_conditions
+  op: write
+  objective: obj-conditional-clauses-01
+  bloom: apply
+  prompt_md: 'Melding fra Maja til Jonas: Toget kan komme i tide → vi rekker bussen. Været kan bli bedre
+    → vi går ut. Jonas lager kanskje ikke middag → Maja lager mat. Bussen kommer kanskje ikke → de tar
+    taxi. Write Maja''s 35–70-word planning message using all four facts and hvis. Use correct word order:
+    in a hvis-clause ikke stands before the finite verb, and a leading hvis-clause is followed by the
+    finite verb before the subject.'
+  response_language: 'no'
+  min_words: 35
+  max_words: 70
+  judge_prompt: 'Evaluate the response only against the listed criteria. A response passes when all criteria
+    without the -observation suffix are met. Criteria ending in -observation are diagnostic and never
+    cause failure. Anchors: Must pass: "Hei Jonas! Hvis toget kommer i tide, rekker vi bussen. Vi går
+    ut hvis været blir bedre. Hvis du ikke lager middag, lager jeg mat. De tar taxi hvis bussen ikke kommer.
+    Kan du gi meg beskjed i kveld? Vi snakkes!" Must fail: "Hei Jonas! Toget, været, middag og buss kan
+    endre planen." It does not express the four supplied condition-result relationships with hvis. Must
+    fail while flagging word-order: "Hei Jonas! Hvis toget kommer i tide, vi rekker bussen. Vi går ut
+    hvis været blir bedre. Hvis du ikke lager middag, lager jeg mat. De tar taxi hvis bussen ikke kommer.
+    Kan du gi meg beskjed i kveld? Vi snakkes!" The first result uses incorrect inversion after a leading
+    hvis-clause, so word-order is not met.'
+  criteria:
+  - id: audience-purpose
+    instruction: Writes a Norwegian message to Jonas that communicates the weekend plan.
+  - id: supplied-facts
+    instruction: Expresses all four supplied condition-result relationships without contradicting them.
+  - id: word-bound
+    instruction: Uses 35–70 words.
+  - id: hvis-use
+    instruction: Uses hvis to connect every supplied condition with its result.
+  - id: word-order
+    instruction: Places ikke before the finite verb in each hvis-clause and uses inversion, with the finite
+      verb before the subject, after a leading hvis-clause.
+  - id: closing-tone-observation
+    instruction: 'Observation only: note whether the message ends with a natural friendly close; do not
+      fail a message that communicates the plan.'
+  derived_from:
+  - section_id: real-condition-uses
+- handle: distinguish_real_and_imagined_conditions
+  op: categorize
+  objective: obj-conditional-clauses-01
+  bloom: analyze
+  prompt_md: Sort the statements as real or imagined.
+  explanation_md: Present forms present an open possibility; past tense in the condition with ville in
+    the result presents an imagined alternative.
+  buckets:
+  - bucket_id: real
+    label: Real or open possibility
+  - bucket_id: imagined
+    label: Imagined alternative
+  items:
+  - item_id: item-1
+    text: Hvis hytta har internett, tar jeg med datamaskinen.
+    bucket_id: real
+  - item_id: item-2
+    text: Hvis hytta hadde internett, ville jeg tatt med datamaskinen.
+    bucket_id: imagined
+  - item_id: item-3
+    text: Hvis jeg har tid, hjelper jeg deg.
+    bucket_id: real
+  - item_id: item-4
+    text: Hvis jeg hadde tid, ville jeg hjulpet deg.
+    bucket_id: imagined
+  - item_id: item-5
+    text: Hvis vi bor nærmere, besøker vi dem oftere.
+    bucket_id: real
+  - item_id: item-6
+    text: Hvis vi bodde nærmere, ville vi besøkt dem oftere.
+    bucket_id: imagined
+  derived_from:
+  - section_id: imagined-conditions
+- handle: form_imagined_conditions
+  op: build
+  objective: obj-conditional-clauses-01
+  bloom: apply
+  prompt_md: Build Maja's imagined condition.
+  explanation_md: An imagined present alternative can use past tense in the hvis-clause and ville in the
+    result.
+  tokens:
+  - token_id: tok-2
+    text: hytta
+  - token_id: tok-3
+    text: hadde
+  - token_id: tok-4
+    text: internett,
+  - token_id: tok-5
+    text: ville
+  - token_id: tok-6
+    text: jeg
+  - token_id: tok-7
+    text: tatt
+  - token_id: tok-8
+    text: med
+  - token_id: tok-9
+    text: datamaskinen.
+  - token_id: tok-1
+    text: Hvis
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  derived_from:
+  - section_id: imagined-conditions
+- handle: place_negation_in_imagined_conditions
+  op: recall_fill
+  objective: obj-conditional-clauses-01
+  bloom: apply
+  prompt_md: Complete both imagined sentences.
+  explanation_md: Ikke precedes the finite verb inside a hvis-clause, but follows ville in the main clause.
+  audio_target: Hvis vi ikke hadde bil, ville vi tatt bussen. Hvis vi hadde bil, ville vi ikke tatt bussen.
+  segments:
+  - text_md: 'Hvis vi '
+  - blank_id: negative-condition
+    options:
+    - ikke hadde bil
+    - hadde ikke bil
+    answer_index: 0
+  - text_md: ', ville vi tatt bussen. Hvis vi hadde bil, ville vi '
+  - blank_id: negative-result
+    options:
+    - tatt ikke bussen
+    - ikke tatt bussen
+    answer_index: 1
+  - text_md: .
+  derived_from:
+  - section_id: imagined-condition-word-order
+- handle: reorder_imagined_condition_sentences
+  op: build
+  objective: obj-conditional-clauses-01
+  bloom: apply
+  prompt_md: Rebuild the sentence without changing its meaning.
+  explanation_md: 'With the result first, ordinary main-clause order returns: Vi ville ikke trengt bil.'
+  tokens:
+  - token_id: tok-2
+    text: ville
+  - token_id: tok-3
+    text: ikke
+  - token_id: tok-4
+    text: trengt
+  - token_id: tok-5
+    text: bil
+  - token_id: tok-6
+    text: hvis
+  - token_id: tok-7
+    text: hytta
+  - token_id: tok-8
+    text: lå
+  - token_id: tok-9
+    text: nærmere
+  - token_id: tok-10
+    text: byen.
+  - token_id: tok-1
+    text: Vi
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+  derived_from:
+  - section_id: imagined-condition-word-order
+- handle: revise_the_cabin_plan
+  op: recall_fill
+  objective: obj-conditional-clauses-01
+  bloom: apply
+  prompt_md: Complete the revised cabin plan with the correct form for each situation.
+  explanation_md: Use a real pattern for open possibilities and a past-plus-ville pattern for an imagined
+    alternative.
+  audio_target: Hvis været blir bedre, kan vi gå ut. Hvis hytta lå nærmere byen, ville vi gå ut og spise.
+    Vi tar taxi hvis bussen ikke kommer.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: «Hvordan blir planen for hytteturen nå?»
+    - speaker: Jonas
+      text_md: «Været er fortsatt usikkert, men det kan bli fint. Da kan vi være ute.»
+    - speaker: Maja
+      text_md: «Vi vil gjerne gå ut og spise i byen, men hytta ligger for langt unna. Tenk om den var nærmere!»
+    - speaker: Jonas
+      text_md: «Ja, det hadde vært mye enklere. Bussen er også usikker, så vi kan ta taxi.»
+  segments:
+  - text_md: 'Hvis været '
+  - blank_id: possible-weather-condition
+    options:
+    - blir bedre
+    - var bedre
+    answer_index: 0
+  - text_md: ', '
+  - blank_id: possible-weather-result
+    options:
+    - kan vi gå ut
+    - ville vi gå ut
+    answer_index: 0
+  - text_md: '. Hvis hytta '
+  - blank_id: imagined-location-condition
+    options:
+    - er nærmere byen
+    - lå nærmere byen
+    answer_index: 1
+  - text_md: ', '
+  - blank_id: imagined-location-result
+    options:
+    - kan vi gå ut og spise
+    - ville vi gå ut og spise
+    answer_index: 1
+  - text_md: '. Vi tar taxi hvis bussen '
+  - blank_id: possible-negative-condition
+    options:
+    - ikke kommer
+    - kommer ikke
+    answer_index: 0
+  - text_md: .
+  derived_from:
+  - section_id: back-at-the-cabin-plan
+- handle: plan_neighbourhood_meal_with_conditions
+  op: write
+  objective: obj-conditional-clauses-01
+  bloom: apply
+  prompt_md: 'Melding til nabolagsgruppen: Det kan bli opphold → gruppen kan spise ute. Bordene kan være
+    ledige → gruppen reserverer dem. Lokalet er ikke større → gruppen forestiller seg at det er større
+    og at de ikke trenger ekstrabord. Bussen kommer kanskje ikke → gjestene tar taxi. Write a 45–85-word
+    planning message using all four facts and hvis. Use correct form and word order: present forms for
+    open possibilities, past tense with ville for the imagined alternative, ikke before the finite verb
+    in a hvis-clause, and inversion after a leading hvis-clause.'
+  response_language: 'no'
+  min_words: 45
+  max_words: 85
+  judge_prompt: 'Evaluate the response only against the listed criteria. A response passes when all criteria
+    without the -observation suffix are met. Criteria ending in -observation are diagnostic and never
+    cause failure. Anchors: Must pass: "Hei alle! Hvis det blir opphold, kan vi spise ute. Vi reserverer
+    bordene hvis de er ledige. Hvis lokalet var større, ville vi ikke trengt ekstrabord. Gjestene tar
+    taxi hvis bussen ikke kommer. Vi møtes klokka seks på fredag hjemme hos meg. Si fra om planen passer."
+    Must fail: "Hei alle! Vi håper på fint vær og et større lokale. Gi beskjed." It omits the supplied
+    condition-result relationships. Must fail while flagging form-accuracy: "Hei alle! Hvis det blir opphold,
+    vi kan spise ute. Vi reserverer bordene hvis de er ledige. Hvis lokalet var større, ville vi ikke
+    trengt ekstrabord. Gjestene tar taxi hvis bussen kommer ikke. Vi møtes klokka seks på fredag hjemme
+    hos meg. Si fra om planen passer." Two clauses use incorrect word order, so form-accuracy is not met.'
+  criteria:
+  - id: audience-purpose
+    instruction: Writes a Norwegian planning message to the neighbourhood group.
+  - id: supplied-facts
+    instruction: Communicates all four supplied condition-result relationships without contradicting them.
+  - id: word-bound
+    instruction: Uses 45–85 words.
+  - id: hvis-use
+    instruction: Uses hvis to connect every supplied condition with its result.
+  - id: form-accuracy
+    instruction: Uses present forms for open possibilities and past tense with ville for the imagined
+      alternative, places ikke before the finite verb in hvis-clauses, and inverts after a leading hvis-clause.
+  - id: closing-tone-observation
+    instruction: 'Observation only: note whether the message ends with a natural invitation to reply;
+      do not fail a message that communicates the plan.'
+  derived_from:
+  - section_id: transfer-to-new-situation
+- handle: review_real_condition_negation
+  op: recall_fill
+  objective: obj-conditional-clauses-01
+  bloom: apply
+  prompt_md: Complete the shop sentence with the correct word order in the hvis-clause.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: «Hvis butikken ___, handler vi i morgen.»
+  audio_target: Hvis butikken ikke er åpen, handler vi i morgen.
+  segments:
+  - text_md: '«Hvis butikken '
+  - blank_id: shop-negation
+    options:
+    - er ikke åpen
+    - ikke er åpen
+    answer_index: 1
+  - text_md: ', handler vi i morgen.»'
+  explanation_md: In a hvis-clause the negation comes before the finite verb.
+  derived_from:
+  - section_id: short-retrieval-review
+- handle: review_condition_first_inversion
+  op: build
+  objective: obj-conditional-clauses-01
+  bloom: apply
+  prompt_md: Build one sentence beginning with hvis.
+  explanation_md: 'An initial hvis-clause is followed by finite verb plus subject: rekker Nora.'
+  tokens:
+  - token_id: tok-6
+    text: rekker
+  - token_id: tok-2
+    text: toget
+  - token_id: tok-8
+    text: møtet.
+  - token_id: tok-4
+    text: i
+  - token_id: tok-1
+    text: Hvis
+  - token_id: tok-7
+    text: Nora
+  - token_id: tok-3
+    text: kommer
+  - token_id: tok-5
+    text: tide,
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  derived_from:
+  - section_id: short-retrieval-review
+- handle: review_condition_second_order
+  op: recall_fill
+  objective: obj-conditional-clauses-01
+  bloom: apply
+  prompt_md: Complete the message with the correct word order in the final hvis-clause.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: «Jeg sender Nora en melding hvis hun ___.»
+  audio_target: Jeg sender Nora en melding hvis hun ikke svarer.
+  segments:
+  - text_md: '«Jeg sender Nora en melding hvis hun '
+  - blank_id: final-condition-negation
+    options:
+    - svarer ikke
+    - ikke svarer
+    answer_index: 1
+  - text_md: .»
+  explanation_md: A final hvis-clause keeps subordinate-clause order, with ikke before the finite verb.
+  derived_from:
+  - section_id: short-retrieval-review
+- handle: review_real_or_imagined
+  op: categorize
+  objective: obj-conditional-clauses-01
+  bloom: analyze
+  prompt_md: Sort each reply by its situation.
+  explanation_md: The open possibility uses present forms; the imagined alternative uses past tense with
+    ville.
+  buckets:
+  - bucket_id: open
+    label: Real or open possibility
+  - bucket_id: imagined
+    label: Imagined alternative
+  items:
+  - item_id: item-1
+    text: Hvis toget går i tide, rekker vi møtet.
+    bucket_id: open
+  - item_id: item-2
+    text: Hvis toget hadde gått i tide, ville vi rukket møtet.
+    bucket_id: imagined
+  derived_from:
+  - section_id: short-retrieval-review
+- handle: review_imagined_condition
+  op: recall_fill
+  objective: obj-conditional-clauses-01
+  bloom: apply
+  prompt_md: Complete the imagined sentence about Ola's flat with the correct verb forms.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Sara
+      text_md: «Hvis leiligheten ___, ___.»
+  audio_target: Hvis leiligheten hadde balkong, ville Ola spist frokost ute.
+  segments:
+  - text_md: '«Hvis leiligheten '
+  - blank_id: imagined-home-condition
+    options:
+    - hadde balkong
+    - har balkong
+    answer_index: 0
+  - text_md: ', '
+  - blank_id: imagined-home-result
+    options:
+    - spiser Ola frokost ute
+    - ville Ola spist frokost ute
+    answer_index: 1
+  - text_md: .»
+  explanation_md: An imagined present alternative uses past tense in the hvis-clause and ville in the
+    result.
+  derived_from:
+  - section_id: short-retrieval-review
+- handle: review_imagined_negation
+  op: recall_fill
+  objective: obj-conditional-clauses-01
+  bloom: apply
+  prompt_md: Complete the imagined result using standard word order with no contrastive emphasis.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Jonas
+      text_md: «Hvis hytta lå ved togstasjonen, ___.»
+  audio_target: Hvis hytta lå ved togstasjonen, ville vi ikke hatt behov for bil.
+  segments:
+  - text_md: «Hvis hytta lå ved togstasjonen,
+  - blank_id: imagined-negative-result
+    options:
+    - ville vi ikke hatt behov for bil
+    - ville vi hatt ikke behov for bil
+    answer_index: 0
+  - text_md: .»
+  explanation_md: In the result clause, ikke follows the finite modal ville.
+  derived_from:
+  - section_id: short-retrieval-review
+- handle: review_hvis_jeg_var_deg
+  op: build
+  objective: obj-conditional-clauses-01
+  bloom: apply
+  prompt_md: Build the imagined advice sentence about ordering the ticket today.
+  explanation_md: Hvis jeg var deg introduces imagined advice; the imagined result uses ville with the
+    past participle.
+  tokens:
+  - token_id: tok-5
+    text: ville
+  - token_id: tok-8
+    text: billetten
+  - token_id: tok-1
+    text: Hvis jeg
+  - token_id: tok-6
+    text: jeg
+  - token_id: tok-9
+    text: i
+  - token_id: tok-3
+    text: var
+  - token_id: tok-10
+    text: dag.
+  - token_id: tok-4
+    text: deg,
+  - token_id: tok-7
+    text: bestilt
+  answer_order:
+  - tok-1
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+  derived_from:
+  - section_id: short-retrieval-review

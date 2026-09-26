@@ -1,0 +1,446 @@
+- handle: identify_deciding_factor
+  op: choose
+  objective: obj-det-kommer-an-paa-01
+  bloom: understand
+  prompt_md: Koble hvert spørsmål til opplysningen som avgjør svaret.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Hvor lang tid tar turen?»
+    - speaker: Context
+      text_md: Hurtigtoget bruker én time. Lokaltoget bruker halvannen time.
+    - speaker: Amir
+      text_md: «Er det kaldt på hytta?»
+    - speaker: Context
+      text_md: Hytta blir varm i sol og kald i overskyet vær.
+    - speaker: Amir
+      text_md: «Hva skal vi spise?»
+    - speaker: Context
+      text_md: Sara spiser ikke kjøtt. De andre spiser kjøtt.
+  options:
+  - id: swapped-connections
+    text: Reisetiden kommer an på hvem som blir med, temperaturen kommer an på
+      toget, og maten kommer an på været.
+    correct: false
+    why: The same three facts are reused, but each one is attached to the wrong
+      question.
+  - id: opinions-only
+    text: Alle tre svarene kommer an på hva Nora mener.
+    correct: false
+    why: The facts describe practical conditions, not what Nora thinks.
+  - id: correct-connections
+    text: Reisetiden kommer an på toget, temperaturen kommer an på været, og
+      maten kommer an på hvem som blir med.
+    correct: true
+    why: Each answer changes when the fact attached to it changes.
+  explanation_md: Reisetiden avhenger av toget, temperaturen av været og maten
+    av gjestenes behov.
+  derived_from:
+  - section_id: identify-deciding-factor
+- handle: choose_direct_or_dependent_answer
+  op: choose
+  objective: obj-det-kommer-an-paa-01
+  bloom: understand
+  prompt_md: Velg svarparet som passer til opplysningene.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Skilt: Stengt hver søndag.'
+    - speaker: Kunde
+      text_md: «Er butikken åpen på søndag?»
+    - speaker: Context
+      text_md: 'Kaféregel: Uteserveringen åpner i tørt vær og stenger når det regner.'
+    - speaker: Kunde
+      text_md: «Kan vi sitte ute?»
+  options:
+  - id: dependent-then-direct
+    text: '1: Det kommer an på været. 2: Ja, vi kan sitte ute.'
+    correct: false
+    why: This reverses which question has a fixed answer and which one varies.
+  - id: dependent-twice
+    text: '1: Det kommer an på dagen. 2: Det kommer an på været.'
+    correct: false
+    why: Sunday is already specified, so the first answer does not vary.
+  - id: direct-then-dependent
+    text: '1: Nei, butikken er stengt. 2: Det kommer an på været.'
+    correct: true
+    why: The first fact gives one settled answer, while the second outcome
+      changes with a condition.
+  explanation_md: Gi et direkte svar når saken er avgjort. Når svaret varierer
+    med forholdene, må du si hva det avhenger av.
+  derived_from:
+  - section_id: common-mistakes
+- handle: complete_answer_with_named_noun
+  op: recall_fill
+  objective: obj-det-kommer-an-paa-01
+  bloom: apply
+  prompt_md: Fullfør svarene med opplysningen de avhenger av.
+  audio_target: Det kommer an på toget. Det kommer an på været.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Noen tog stopper på alle stasjonene. Andre tog er direktetog.
+    - speaker: Context
+      text_md: Dere spiser ute hvis det er tørt, men inne hvis det regner.
+  segments:
+  - text_md: '**Spørsmål:** Går reisen fort? **Svar:**'
+  - blank_id: train-factor
+    options:
+    - Det kommer an på været.
+    - Det kommer an på toget.
+    answer_index: 1
+  - text_md: '**Spørsmål:** Kan vi spise ute? **Svar:**'
+  - blank_id: weather-factor
+    options:
+    - Det kommer an på været.
+    - Det kommer an på toget.
+    answer_index: 0
+  explanation_md: Substantivet skal navngi forholdet som kan endre svaret.
+  derived_from:
+  - section_id: complete-answer-with-named-noun
+- handle: choose_enough_detail
+  op: choose
+  objective: obj-det-kommer-an-paa-01
+  bloom: analyze
+  prompt_md: Velg det mest nyttige svaret.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Amir
+      text_md: «Skal vi gå tur på lørdag? Jeg vil gå hvis det er tørt, men jeg
+        vil ikke gå hvis det regner.»
+  options:
+  - id: irrelevant-temperature-condition
+    text: Det kommer an på temperaturen. Hvis det er varmt, går vi.
+    correct: false
+    why: Temperature could affect some walks, but it is not the condition stated
+      in this plan.
+  - id: precise-rain-condition
+    text: Det kommer an på om det regner. Hvis det er tørt, går vi.
+    correct: true
+    why: The reply identifies the exact unresolved condition in Amir's plan.
+  - id: broad-weather-factor
+    text: Det kommer an på været. Hvis været blir annerledes, bestemmer vi oss.
+    correct: false
+    why: Weather is relevant, but this wording leaves the decisive rain
+      condition unclear.
+  explanation_md: Når situasjonen peker på én bestemt usikkerhet, bør svaret
+    nevne hva den avhenger av.
+  derived_from:
+  - section_id: choose-enough-detail
+- handle: discriminate_complete_expression
+  op: choose
+  objective: obj-det-kommer-an-paa-01
+  bloom: analyze
+  prompt_md: Velg svaret som passer til opplysningene og bruker uttrykket «det
+    kommer an på».
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Uten kø tar kjøreturen 20 minutter. I rushtiden tar den 50 minutter.
+        Spørsmålet er: Tar kjøreturen lang tid?'
+  options:
+  - id: wrong-expression
+    text: Det kommer på trafikken.
+    correct: false
+    why: The noun is relevant, but the fixed expression is broken without an.
+  - id: wrong-factor
+    text: Det kommer an på været.
+    correct: false
+    why: The expression is complete, but the facts are about traffic, not
+      weather.
+  - id: expression-and-factor
+    text: Det kommer an på trafikken.
+    correct: true
+    why: This uses the complete expression and names the fact that actually
+      changes the drive time.
+  explanation_md: Uttrykket heter «kommer an på», og her avhenger kjøretiden av
+    trafikken.
+  derived_from:
+  - section_id: common-mistakes
+- handle: explain_two_possible_outcomes
+  op: write
+  objective: obj-det-kommer-an-paa-01
+  bloom: apply
+  prompt_md: Svar kollegaen på norsk i 25–45 ord, forklar hvordan prisen
+    varierer, og bruk uttrykket «det kommer an på».
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Kollega
+      text_md: «Er restauranten dyr? Jeg må vite om den passer til
+        avdelingsmiddagen.»
+    - speaker: Context
+      text_md: 'Tid og pris for dagens meny: lunsj 165 kr; kveld 390 kr.'
+  response_language: "no"
+  min_words: 25
+  max_words: 45
+  judge_prompt: Check criteria colleague-reply, price-contrast, word-bound, and
+    uses-fixed-expression. Record factor-observation diagnostically only.
+  criteria:
+  - id: colleague-reply
+    instruction: Replies coherently to the colleague and helps assess whether
+      the restaurant suits the dinner.
+  - id: price-contrast
+    instruction: States that lunch is affordable or cheaper and that the evening
+      meal is expensive or more expensive.
+  - id: word-bound
+    instruction: Contains 25–45 Norwegian words.
+  - id: uses-fixed-expression
+    instruction: Uses the complete expression det kommer an på.
+  - id: factor-observation
+    instruction: 'Observation only: note whether the reply names time of day, meal
+      time, or an equivalent deciding factor; do not fail a natural reply.'
+  explanation_md: Et godt svar knytter hver pris til tidspunktet den gjelder.
+  derived_from:
+  - section_id: explain-two-possible-outcomes
+- handle: continue_planning_conversation
+  op: write
+  objective: obj-det-kommer-an-paa-01
+  bloom: apply
+  prompt_md: Svar Amir på norsk i én melding på 45–75 ord som hjelper ham med
+    alle tre spørsmålene, og bruk uttrykket «det kommer an på».
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Amir
+      text_md: «Rekker vi fram før mørket? Kan vi spise ute? Hvor mye mat skal
+        jeg kjøpe?»
+    - speaker: Context
+      text_md: 'Reisen: hurtigtoget kommer fram før mørket, lokaltoget gjør det ikke.
+        Måltidet: dere spiser ute hvis det ikke regner. Matmengden: Sara har ikke
+        svart, og mengden avhenger av hvor mange som kommer.'
+  response_language: "no"
+  min_words: 45
+  max_words: 75
+  judge_prompt: Check criteria three-answers, supplied-facts, useful-message,
+    word-bound, and uses-fixed-expression. Record factor-precision-observation
+    diagnostically only.
+  criteria:
+  - id: three-answers
+    instruction: Addresses arrival before dark, eating outside, and how much
+      food Amir should buy.
+  - id: supplied-facts
+    instruction: Keeps all three answers consistent with the train, rain, and
+      guest facts shown in the task.
+  - id: useful-message
+    instruction: Forms one coherent message that helps Amir continue planning.
+  - id: word-bound
+    instruction: Contains 45–75 Norwegian words.
+  - id: uses-fixed-expression
+    instruction: Uses the complete expression det kommer an på.
+  - id: factor-precision-observation
+    instruction: 'Observation only: note whether the reply uses precise factors such
+      as which train, whether it rains, and how many people are coming; do not fail
+      a natural reply.'
+  explanation_md: De relevante forholdene er hvilket tog dere tar, om det
+    regner, og hvor mange som kommer.
+  derived_from:
+  - section_id: continue-planning-conversation
+- handle: revise_cabin_reply
+  op: choose
+  objective: obj-det-kommer-an-paa-01
+  bloom: analyze
+  prompt_md: Velg det beste forslaget til retting.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Rekker vi fram før mørket?»
+    - speaker: Context
+      text_md: Hurtigtoget kommer fram klokka 15. Lokaltoget kommer fram klokka
+        18, etter at det er mørkt.
+    - speaker: Context
+      text_md: 'Utkast: «Det kommer på. Vi rekker fram før mørket.»'
+  options:
+  - id: complete-but-wrong-factor
+    text: Det kommer an på hvem som blir med. Med hurtigtoget rekker vi fram før
+      mørket.
+    correct: false
+    why: The expression is repaired, but the guests do not determine the arrival
+      time.
+  - id: unsupported-direct-answer
+    text: Ja, vi rekker fram før mørket.
+    correct: false
+    why: This ignores that the answer changes according to the selected train.
+  - id: complete-and-relevant
+    text: Det kommer an på hvilket tog vi tar. Med hurtigtoget rekker vi fram
+      før mørket.
+    correct: true
+    why: The revision repairs the expression, names the unresolved factor, and
+      gives a conclusion supported by the facts.
+  explanation_md: En god retting bruker uttrykket riktig og knytter svaret til
+    forholdet som avgjør det.
+  derived_from:
+  - section_id: back-to-cabin-plan
+- handle: final_retrieval
+  op: write
+  objective: obj-det-kommer-an-paa-01
+  bloom: apply
+  prompt_md: Svar gruppen på norsk i én melding på 45–80 ord, gjør usikkerheten
+    i alle tre avgjørelsene tydelig, og bruk uttrykket «det kommer an på».
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Prosjektgruppen
+      text_md: «Bør vi ta toget til konferansen? Kan vi ha sommerfesten ute?
+        Hvor mye kaffe skal vi lage til kurset?»
+    - speaker: Context
+      text_md: 'Tog: billettene koster 299 kr eller 899 kr avhengig av avgangen. Sommerfest:
+        det finnes uteplass, men ikke tak, og værmeldingen er usikker. Kaffe: 12–30
+        deltakere kan komme.'
+  response_language: "no"
+  min_words: 45
+  max_words: 80
+  judge_prompt: Check criteria conference-answer, party-answer, coffee-answer,
+    clear-variation, word-bound, and uses-fixed-expression. Record
+    precise-clause-observation diagnostically only.
+  criteria:
+  - id: conference-answer
+    instruction: Addresses the train decision using the differing ticket prices
+      or departures.
+  - id: party-answer
+    instruction: Addresses the outdoor party using the uncertain weather or
+      rain.
+  - id: coffee-answer
+    instruction: Addresses the coffee quantity using the uncertain attendance.
+  - id: clear-variation
+    instruction: Makes clear that each decision can change when its relevant
+      fact changes.
+  - id: word-bound
+    instruction: Contains 45–80 Norwegian words.
+  - id: uses-fixed-expression
+    instruction: Uses the complete expression det kommer an på.
+  - id: precise-clause-observation
+    instruction: 'Observation only: note whether at least one factor is expressed
+      with an om, hva, hvem, hvor, når, or hvordan clause; do not fail a natural reply.'
+  explanation_md: 'Usikkerheten gjelder ulike forhold: pris, vær og hvor mange som
+    kommer.'
+  derived_from:
+  - section_id: final-retrieval
+- handle: review_choose_direct_or_dependent_answer
+  op: choose
+  objective: obj-det-kommer-an-paa-01
+  bloom: apply
+  prompt_md: Velg svaret som passer til opplysningene.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Det lille møterommet har plass til seks personer. Mellom fire og ti
+        personer kan komme. Spørsmålet er: Er møterommet stort nok?'
+  options:
+  - id: unconditional-no
+    text: Nei, møterommet er ikke stort nok.
+    correct: false
+    why: This treats every possible attendance number as if it were greater than
+      six.
+  - id: attendance-dependent
+    text: Det kommer an på hvor mange som kommer.
+    correct: true
+    why: The room is large enough for some possible attendance numbers but not
+      for others.
+  - id: unconditional-yes
+    text: Ja, møterommet er stort nok.
+    correct: false
+    why: This treats every possible attendance number as if it were six or
+      fewer.
+  explanation_md: Når antallet deltakere er usikkert, avhenger svaret av hvor
+    mange som kommer.
+  derived_from:
+  - section_id: common-mistakes
+- handle: review_fixed_expression
+  op: choose
+  objective: obj-det-kommer-an-paa-01
+  bloom: apply
+  prompt_md: Velg svaret som passer til opplysningene og bruker uttrykket «det
+    kommer an på».
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Du har et fast budsjett på 1 000 kr. Du liker en jakke i butikken,
+        men prislappen har falt av. Spørsmålet er: Har du råd til den?'
+  options:
+  - id: wrong-expression
+    text: Det kommer på prisen.
+    correct: false
+    why: The noun is relevant, but the fixed expression is broken without an.
+  - id: expression-and-factor
+    text: Det kommer an på prisen.
+    correct: true
+    why: This uses the complete expression and names the fact that differs
+      between the two jackets.
+  - id: right-expression-wrong-factor
+    text: Det kommer an på fargen.
+    correct: false
+    why: The expression is complete, but the two jackets are alike in colour, so
+      colour is not the fact that changes here.
+  explanation_md: Budsjettet er fast, men prisen på jakka er ukjent. Derfor
+    avhenger svaret av prisen.
+  derived_from:
+  - section_id: common-mistakes
+- handle: review_complete_answer_with_named_noun
+  op: recall_fill
+  objective: obj-det-kommer-an-paa-01
+  bloom: apply
+  prompt_md: Fullfør hvert svar med opplysningen det avhenger av.
+  audio_target: Det kommer an på dagen. Det kommer an på om du er student.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Butikken har åpent til 20 på hverdager og til 16 i helgen.
+    - speaker: Context
+      text_md: Kurset koster 500 kr for studenter og 900 kr for andre.
+  segments:
+  - text_md: '**Spørsmål:** Kan vi handle etter jobb? **Svar:**'
+  - blank_id: day-factor
+    options:
+    - Det kommer an på prisen.
+    - Det kommer an på dagen.
+    answer_index: 1
+  - text_md: '**Spørsmål:** Er kurset billig? **Svar:**'
+  - blank_id: student-factor
+    options:
+    - Det kommer an på om du er student.
+    - Det kommer an på været.
+    - Det kommer an på dagen.
+    answer_index: 0
+  explanation_md: Åpningstiden avhenger av dagen. Kursprisen avhenger av om
+    deltakeren er student; selve prisen er svaret, ikke forholdet det avhenger
+    av.
+  derived_from:
+  - section_id: complete-answer-with-named-noun
+- handle: review_precise_condition
+  op: recall_fill
+  objective: obj-det-kommer-an-paa-01
+  bloom: apply
+  prompt_md: Fullfør svaret med det mest presise vilkåret.
+  audio_target: Det kommer an på om bussen går.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Vi har satt av hele kvelden til et arrangement i nabobyen, og
+        rutebussen er den eneste måten vi kan komme dit. Busselskapet bekrefter
+        kveldsruten dag for dag.
+    - speaker: Venn
+      text_md: «Reiser dere i kveld?»
+  segments:
+  - text_md: '**Svar:** Det kommer an på '
+  - blank_id: bus-condition
+    options:
+    - om det regner
+    - om bussen går
+    - om vi har tid
+    answer_index: 1
+  - text_md: .
+  explanation_md: Dere har satt av hele kvelden, og rutebussen er eneste
+    reisemåte. Om bussen går, avgjør derfor om dere kan dra.
+  derived_from:
+  - section_id: choose-enough-detail

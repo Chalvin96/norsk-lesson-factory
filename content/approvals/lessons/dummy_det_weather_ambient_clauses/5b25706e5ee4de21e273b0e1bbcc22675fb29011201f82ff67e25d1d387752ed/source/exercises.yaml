@@ -1,0 +1,360 @@
+- handle: notice_fixed_det_in_the_cafe_call
+  op: choose
+  objective: obj-dummy-det-weather-ambient-clauses-01
+  bloom: understand
+  prompt_md: Velg den beste forklaringen.
+  derived_from:
+  - section_id: a-change-of-plans
+  stem_md: 'Mina: «Det regner, og det blåser ganske mye.» Mina: «Det er kaldt, og det begynner å bli mørkt.»'
+  options:
+  - id: named-weather
+    text: «Det» refers to a particular thing called været.
+    correct: false
+    why: No particular thing is being described; the sentences report weather and surrounding conditions.
+  - id: verb-only
+    text: «Det» is fixed only before regner and blåser.
+    correct: false
+    why: The clauses with er and blir also describe conditions without a named semantic subject.
+  - id: fixed-subject
+    text: «Det» fills the subject position without naming a particular thing.
+    correct: true
+    why: Norwegian uses fixed «det» in weather and ambient clauses that have no semantic subject.
+  explanation_md: 'Mina: «Det regner, og det blåser ganske mye.» Mina: «Det er kaldt, og det begynner å bli mørkt.»'
+- handle: complete_weather_verb_reports
+  op: recall_fill
+  objective: obj-dummy-det-weather-ambient-clauses-01
+  bloom: apply
+  prompt_md: Fyll ut værmeldingene.
+  explanation_md: Værverbene regner, snør og blåser står direkte etter det faste «det». Vi setter ikke inn «er».
+  derived_from:
+  - section_id: weather-verbs-with-det
+  stem_md: 'Værmelding: Bergen: regn Oslo: snø Kysten: vind'
+  audio_target: 'I Bergen: Det regner. I Oslo: Det snør. Ved kysten: Det blåser.'
+  segments:
+  - text_md: 'I Bergen:'
+  - blank_id: bergen-rain
+    options:
+    - Det regner
+    - Det er regner
+    - Regner
+    answer_index: 0
+  - text_md: '. I Oslo:'
+  - blank_id: oslo-snow
+    options:
+    - Snør
+    - Det er snør
+    - Det snør
+    answer_index: 2
+  - text_md: '. Ved kysten:'
+  - blank_id: coast-wind
+    options:
+    - Det er blåser
+    - Det blåser
+    - Blåser
+    answer_index: 1
+  - text_md: .
+- handle: distinguish_named_subject_from_ambient_det
+  op: categorize
+  objective: obj-dummy-det-weather-ambient-clauses-01
+  bloom: analyze
+  prompt_md: Sorter setningene etter hva de beskriver.
+  derived_from:
+  - section_id: named-subject-and-ambient-det
+  stem_md: Kaffen står på bordet. Rommet har ingen lamper. Ovnen er slått på. Ute er lufttemperaturen lav, men inne er temperaturen behagelig.
+  buckets:
+  - bucket_id: named-subject
+    label: A named thing
+  - bucket_id: ambient-det
+    label: The general surroundings
+  items:
+  - item_id: coffee-named
+    text: Kaffen er kald.
+    bucket_id: named-subject
+  - item_id: outdoor-cold
+    text: Det er kaldt ute.
+    bucket_id: ambient-det
+  - item_id: room-named
+    text: Rommet er mørkt.
+    bucket_id: named-subject
+  - item_id: ambient-dark
+    text: Det er mørkt.
+    bucket_id: ambient-det
+  - item_id: oven-named
+    text: Ovnen er varm.
+    bucket_id: named-subject
+  - item_id: indoor-warm
+    text: Det er varmt inne.
+    bucket_id: ambient-det
+- handle: build_ambient_condition_statements
+  op: build
+  objective: obj-dummy-det-weather-ambient-clauses-01
+  bloom: apply
+  prompt_md: 'Bygg et fullstendig svar. Mina vil fortelle at temperaturen er behagelig og at stemningen er trivelig.'
+  derived_from:
+  - section_id: named-subject-and-ambient-det
+  stem_md: 'Jonas spør: «Hvordan er det inne på kafeen?»'
+  tokens:
+  - token_id: tok-2
+    text: er
+  - token_id: tok-6
+    text: der
+  - token_id: tok-4
+    text: og
+  - token_id: tok-1
+    text: Det
+  - token_id: tok-7
+    text: inne.
+  - token_id: tok-3
+    text: varmt
+  - token_id: tok-5
+    text: hyggelig
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  explanation_md: 'Fast «det» er subjektet, og stedsordet «der» står foran «inne».'
+- handle: choose_current_or_changing_condition
+  op: choose
+  objective: obj-dummy-det-weather-ambient-clauses-01
+  bloom: analyze
+  prompt_md: Velg meldingen som passer til begge observasjonene.
+  explanation_md: «Er» beskriver en tilstand nå, mens «blir» beskriver en forandring.
+  derived_from:
+  - section_id: reporting-a-change-with-blir
+  stem_md: 'Kl. 15: Det er lyst ute. Kl. 17: Det begynner å bli mørkt.'
+  options:
+  - id: two-current
+    text: Det er lyst klokka 15. Det er mørkt klokka 17.
+    correct: false
+    why: The second sentence presents darkness as a state rather than a change in progress.
+  - id: two-changing
+    text: Det blir lyst klokka 15. Det blir mørkt klokka 17.
+    correct: false
+    why: The first observation says it is already light, not that it is becoming light.
+  - id: reversed-change
+    text: Det blir mørkt klokka 15. Det er lyst klokka 17.
+    correct: false
+    why: This reverses the supplied observations.
+  - id: current-then-change
+    text: Det er lyst klokka 15. Det blir mørkt klokka 17.
+    correct: true
+    why: The first sentence reports the current light; the second reports increasing darkness.
+- handle: respond_to_local_weather_questions
+  op: write
+  objective: obj-dummy-det-weather-ambient-clauses-01
+  bloom: apply
+  prompt_md: "Lea skriver: «Hei! Hvordan er været i Bergen i dag? Kan vi spise ute?» Notater: regn, lav temperatur, uteserveringen stengt. Svar Lea, så hun kan bestemme hvor dere skal spise. Formuler vær- og tilstandsopplysningene naturlig."
+  derived_from:
+  - section_id: adding-place-and-time
+  response_language: "no"
+  min_words: 12
+  max_words: 30
+  judge_prompt: "Judge only the visible reply task using criteria reply-to-lea, fixed-det, supplied-facts."
+  criteria:
+  - id: reply-to-lea
+    instruction: Writes a coherent Norwegian reply to Lea that helps her decide where to eat.
+  - id: fixed-det
+    instruction: Weather and ambient clauses in the reply use fixed «det».
+  - id: supplied-facts
+    instruction: 'Reports all three facts: it is raining, it is cold, and the café terrace is closed.'
+- handle: restore_det_in_minas_updates
+  op: find_fix
+  objective: obj-dummy-det-weather-ambient-clauses-01
+  bloom: analyze
+  prompt_md: Finn ordet som må få et ord foran seg.
+  derived_from:
+  - section_id: returning-to-mina-and-jonas
+  stem_md: 'Jonas: «Regner det fortsatt? Blåser det også?» Mina: «Ja, regner fortsatt, og det blåser mer enn før.»'
+  tokens:
+  - token_id: tok-1
+    text: Ja,
+  - token_id: tok-2
+    text: regner
+  - token_id: tok-3
+    text: fortsatt,
+  - token_id: tok-4
+    text: og
+  - token_id: tok-5
+    text: det
+  - token_id: tok-6
+    text: blåser
+  - token_id: tok-7
+    text: mer
+  - token_id: tok-8
+    text: enn
+  - token_id: tok-9
+    text: før.
+  error_token_id: tok-2
+  feedback: 'A weather statement needs fixed «det» when no subject is already present: «Ja, det regner fortsatt, og det blåser mer enn før.» A coordinated verb can share that subject.'
+- handle: repair_incomplete_weather_messages
+  op: find_fix
+  objective: obj-dummy-det-weather-ambient-clauses-01
+  bloom: analyze
+  prompt_md: Finn ordet som må få et ord foran seg.
+  derived_from:
+  - section_id: common-mistakes-to-avoid
+  stem_md: 'Turgruppa spør om forholdene på fjellet. Svar: «Snør på fjellet.»'
+  tokens:
+  - token_id: tok-1
+    text: Snør
+  - token_id: tok-2
+    text: på
+  - token_id: tok-3
+    text: fjellet.
+  error_token_id: tok-1
+  feedback: 'A complete weather statement needs fixed «det»: «Det snør på fjellet.»'
+- handle: report_conditions_from_the_cabin
+  op: write
+  objective: obj-dummy-det-weather-ambient-clauses-01
+  bloom: apply
+  prompt_md: "Mina spør om dere kan gå tur nå. Hyttenotat: snør og lav temperatur ute; lunt inne; mørkt om kort tid. Skriv Mina en melding med opplysningene, og anbefal om dere bør gå nå eller vente. Bruk vanlige vær- og tilstandsuttrykk, og beskriv mørkets frambrudd som en endring."
+  derived_from:
+  - section_id: transfer-a-morning-at-the-cabin
+  response_language: "no"
+  min_words: 15
+  max_words: 35
+  judge_prompt: "Judge only the visible message task using criteria message-to-mina, all-cabin-facts, fixed-det, change-form, recommendation."
+  criteria:
+  - id: message-to-mina
+    instruction: Writes a coherent Norwegian message to Mina about the proposed walk.
+  - id: all-cabin-facts
+    instruction: 'Reports all four facts: it is snowing outside, it is cold outside, it is warm inside, and the daylight is fading or it is getting dark.'
+  - id: fixed-det
+    instruction: Weather and ambient clauses in the message use fixed «det».
+  - id: change-form
+    instruction: The fading daylight is expressed as a changing condition with «blir».
+  - id: recommendation
+    instruction: Recommends either going now or waiting.
+- handle: retrieve_fixed_det_weather_rule
+  op: write
+  objective: obj-dummy-det-weather-ambient-clauses-01
+  bloom: apply
+  prompt_md: "Mina skriver til Jonas fra Bergen. Notat: regn og lav temperatur. Svar med en naturlig melding. Bruk en værsetning og en setning om tilstanden."
+  derived_from:
+  - section_id: final-retrieval
+  response_language: "no"
+  min_words: 7
+  max_words: 12
+  judge_prompt: "Judge the correction using criteria two-correct-clauses. A valid variant that must pass is «Det regner i Bergen, og det er kaldt ute.» A near-miss that must fail is «Det er regner i Bergen, og det er kaldt.» because the rain clause still has the wrong form «er regner»; the cold clause «det er kaldt» is itself correct."
+  criteria:
+  - id: two-correct-clauses
+    instruction: The corrected message has a complete rain clause with fixed «det» and no «er», and a complete cold ambient clause with the neuter form «kaldt».
+- handle: review_weather_verb_det
+  op: recall_fill
+  objective: obj-dummy-det-weather-ambient-clauses-01
+  bloom: apply
+  prompt_md: Fullfør svaret.
+  explanation_md: Et værverb står direkte etter det faste «det», uten «er».
+  derived_from:
+  - section_id: final-retrieval
+  stem_md: 'A: «Hvordan er været i Tromsø?»'
+  segments:
+  - text_md: 'B:'
+  - blank_id: hail-reply
+    options:
+    - Det er hagler.
+    - Det hagler.
+    - Hagler.
+    answer_index: 1
+  audio_target: 'B: Det hagler.'
+- handle: review_ambient_det_or_named_subject
+  op: choose
+  objective: obj-dummy-det-weather-ambient-clauses-01
+  bloom: analyze
+  prompt_md: 'A spør: «Hvorfor tar du på deg jakken?» Velg det mest naturlige svaret.'
+  derived_from:
+  - section_id: final-retrieval
+  stem_md: 'A spør hvorfor du tar på deg jakka: «Hvorfor tar du på deg jakken?»'
+  options:
+  - id: jacket
+    text: Jakken er kald ute.
+    correct: false
+    why: This describes the jacket rather than the outdoor temperature.
+  - id: weather-noun
+    text: Været er kaldt ute.
+    correct: false
+    why: This makes været a named subject instead of using the ordinary ambient expression.
+  - id: ambient
+    text: Det er kjølig ute.
+    correct: true
+    why: This reports the general outdoor temperature without naming a thing.
+- handle: review_ambient_adjective_form
+  op: recall_fill
+  objective: obj-dummy-det-weather-ambient-clauses-01
+  bloom: apply
+  prompt_md: Fullfør svaret.
+  explanation_md: Med fast «det» bruker vi intetkjønnsformen «varmt».
+  derived_from:
+  - section_id: final-retrieval
+  stem_md: 'A: «Hvordan er temperaturen inne på kafeen?»'
+  segments:
+  - text_md: 'B: Det er '
+  - blank_id: warm-form
+    options:
+    - varm
+    - varmt
+    - varme
+    answer_index: 1
+  - text_md: ' her.'
+  audio_target: 'B: Det er varmt her.'
+- handle: review_current_or_changing
+  op: choose
+  objective: obj-dummy-det-weather-ambient-clauses-01
+  bloom: analyze
+  prompt_md: Velg setningen som passer til Jonas’ observasjon.
+  derived_from:
+  - section_id: final-retrieval
+  stem_md: 'Mina: «Det er fortsatt varmt i rommet.» Jonas: «Ja, men varmen forsvinner nå som ovnen er av.»'
+  options:
+  - id: already-dark
+    text: Det er kaldt.
+    correct: false
+    why: «Er» presents cold as an existing state, which conflicts with the remaining warmth.
+  - id: becoming-light
+    text: Det blir varmt.
+    correct: false
+    why: This describes the opposite change.
+  - id: becoming-dark
+    text: Det blir kaldt.
+    correct: true
+    why: «Blir» presents cold as a developing condition.
+- handle: review_det_with_place
+  op: recall_fill
+  objective: obj-dummy-det-weather-ambient-clauses-01
+  bloom: apply
+  prompt_md: Fullfør værmeldingen.
+  explanation_md: Et stedsuttrykk erstatter ikke det grammatiske subjektet «det».
+  derived_from:
+  - section_id: final-retrieval
+  stem_md: 'Kari: «Hvordan er været på Vestlandet i dag?» Ola: «___»'
+  segments:
+  - blank_id: bergen-snow
+    options:
+    - Snør på Vestlandet i dag
+    - Det snør på Vestlandet i dag
+    - Vestlandet snør i dag
+    answer_index: 1
+  - text_md: .
+  audio_target: Det snør på Vestlandet i dag.
+- handle: review_det_in_each_clause
+  op: recall_fill
+  objective: obj-dummy-det-weather-ambient-clauses-01
+  bloom: apply
+  prompt_md: Fullfør den andre helsetningen.
+  explanation_md: Hver enkelt værsetning trenger sitt eget faste subjekt «det».
+  derived_from:
+  - section_id: final-retrieval
+  stem_md: 'Kari: «Hvordan er været ved kysten?» Ola: «Det snør. ___»'
+  segments:
+  - text_md: 'Det snør. '
+  - blank_id: wind-clause
+    options:
+    - Det hagler.
+    - Hagler.
+    - Det er hagler.
+    answer_index: 0
+  audio_target: Det snør. Det hagler.

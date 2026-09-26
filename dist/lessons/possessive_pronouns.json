@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "possessive_pronouns",
   "kind": "grammar",
   "language": "nb-NO",
@@ -84,6 +84,30 @@
     {
       "kind": "exercise",
       "id": "final_my_your_our_retrieval"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_pool_belongings_my_agreement"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_your_agreement"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_shared_home_our_agreement"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_owner_selection"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_possessive_position_consistency"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_final_my_your_our_retrieval"
     }
   ],
   "sections": [
@@ -3902,13 +3926,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Mina is checking the remaining objects on the bench after swimming. Complete each Norwegian statement with the form of my that agrees with the visible noun. Mina is the owner in every sentence. The nouns test masculine singular, feminine singular, neuter singular, and plural."
+          "value": "Fill in the correct form of «min»."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "The possessive agrees with the gender and number of the possessed noun, rather than with the owner."
+          "value": "Substantivets kjønn og tall avgjør om vi bruker «min», «mi», «mitt» eller «mine»."
         }
       ],
       "payload": {
@@ -4029,10 +4053,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Mina’s original statement is Dette er bilen min, veska mi, håndkleet mitt og skoene mine. Rebuild it after she realizes the belongings belong to Jonas. Keep the nouns, agreement categories, and order; change only the owner."
+          "value": "Build Mina's correction."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Når eieren er den du snakker til, bruker du «din»-formene. Substantivets kjønn og tall avgjør hvilken form som passer."
+        }
+      ],
       "payload": {
         "tokens": [
           {
@@ -4114,10 +4143,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Two people have moved into an apartment and are describing their shared possessions. Complete each Norwegian statement with the form of our that agrees with the visible noun. The nouns provide masculine singular, feminine singular, neuter singular, and plural examples."
+          "value": "Fill in the correct form of «vår»."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Vår» står til hankjønn og hunkjønn entall, «vårt» til intetkjønn entall og «våre» til flertall."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -4255,10 +4289,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Lea is handing objects back at the swimming pool. She tells Jonas: Here are my bag, your card, and our clothes. Build the Norwegian sentence with a definite noun followed by the matching possessive in every phrase."
+          "value": "Build Lea's sentence with a postposed possessive."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "I den vanlige etterstilte formen står eiendomsordet etter det bestemte substantivet: «veska mi», «kortet ditt» og «klærne våre»."
+        }
+      ],
       "payload": {
         "tokens": [
           {
@@ -4328,13 +4367,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "A person is changing two phrases while keeping their meanings. Transform jakka mi to the before-noun pattern and min bil to the after-noun pattern. Build one Norwegian sentence saying both resulting phrases are here. Preserve noun agreement."
+          "value": "Build one sentence using both phrases."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Changing jakka mi to min jakke moves the possessive and also removes the definite ending from the noun."
+          "value": "Foranstilt eiendomsord står med ubestemt substantiv, mens etterstilt eiendomsord står med bestemt substantiv: «mi jakke» og «bilen min»."
         }
       ],
       "payload": {
@@ -4394,33 +4433,38 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "During cabin packing, Mina points to her own key. Choose the Norwegian phrase that expresses her intended owner meaning."
+          "value": "Choose the phrase that expresses what Mina means."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Mina snakker om sin egen nøkkel og bruker derfor «min»-formene."
+        }
+      ],
       "payload": {
         "options": [
           {
+            "option_id": "cabin-our-key",
+            "text": "nøkkelen vår",
+            "why": "Vår would make the key a shared possession."
+          },
+          {
             "option_id": "cabin-my-key",
             "text": "nøkkelen min",
-            "why": "min expresses Mina’s ownership of the masculine singular key."
+            "why": "Min marks the speaker as the owner of the masculine singular key."
           },
           {
             "option_id": "cabin-your-key",
             "text": "nøkkelen din",
-            "why": "din expresses the addressee’s ownership, not Mina’s."
-          },
-          {
-            "option_id": "cabin-our-key",
-            "text": "nøkkelen vår",
-            "why": "vår expresses shared ownership, not Mina’s individual ownership."
+            "why": "Din would make the person Mina addresses the owner."
           }
         ],
         "answer_id": "cabin-my-key",
         "stem": [
           {
             "kind": "text",
-            "value": "Mina points to her own cabin key. Which phrase means my key?"
+            "value": "The cabin key belongs to Mina alone. She says “my key”."
           }
         ]
       }
@@ -4433,10 +4477,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "The travelers are packing for a cabin trip. Mina points to her own key, addresses Jonas about his bag, points to her own map, and then she and Jonas identify the jackets they own together. Complete each Norwegian statement with the possessive form that matches the owner and the visible noun."
+          "value": "Fill in the sentences with the possessive that fits."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Finn først ut hvem som eier tingen. Velg deretter eiendomsordet som passer til substantivet."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -4583,27 +4632,36 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write from Mina to Jonas in Norwegian. Express: my bag is by the door; your card is on the table; our clothes are in the car. Use the common after-noun possessive structure."
+          "value": "You are Mina. Write Jonas a packing message. The bag belongs to you and is by the door. Jonas owns the card on the table. The clothes in the car belong to both of you. Say where the things are and use suitable possessives."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Meldingen forteller hvor tingene er og bruker eiendomsord som passer til substantivene."
+        }
+      ],
       "payload": {
         "response_language": "no",
-        "min_words": 10,
-        "max_words": 30,
-        "judge_prompt": "Check the response against the task and report evidence for each criterion. Accept natural sentence framing and punctuation, but require all three requested meanings and the specified noun-plus-possessive constructions.",
+        "min_words": 15,
+        "max_words": 35,
+        "judge_prompt": "Report verdicts for bag-location, card-location, clothes-location, and possessive-agreement. All listed criteria are gating. Anchor that must pass: \"Hei Jonas! Veska mi står ved døra, kortet ditt ligger på bordet, og klærne våre er i bilen.\" Near-miss that must fail card-location: \"Hei Jonas! Veska mi står ved døra, og klærne våre er i bilen.\" Form-error message that must fail possessive-agreement: \"Hei Jonas! Veska min står ved døra, kortet ditt ligger på bordet, og klærne våre er i bilen.\"",
         "criteria": [
           {
-            "id": "bag-by-door",
-            "instruction": "States that Mina’s bag is by the door with a definite noun followed by the matching possessive, such as veska mi."
+            "id": "bag-location",
+            "instruction": "States that Mina's bag is by the door."
           },
           {
-            "id": "card-on-table",
-            "instruction": "States that Jonas’s card is on the table with a definite noun followed by the matching possessive, such as kortet ditt."
+            "id": "card-location",
+            "instruction": "States that Jonas's card is on the table."
           },
           {
-            "id": "clothes-in-car",
-            "instruction": "States that the shared clothes are in the car with a definite noun followed by the matching possessive, such as klærne våre."
+            "id": "clothes-location",
+            "instruction": "States that the clothes shared by Mina and Jonas are in the car."
+          },
+          {
+            "id": "possessive-agreement",
+            "instruction": "Uses Norwegian possessives that agree with their nouns."
           }
         ]
       }
@@ -4616,27 +4674,461 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Three unlabeled belongings remain: a bag, a towel, and several keys. Write one short Norwegian phrase or sentence for each: identify the bag as mine, the towel as yours, and the keys as ours. Use the noun forms veska, håndkleet, and nøklene so the three items show different gender or number forms."
+          "value": "Write a packing label. The bag is yours, the towel belongs to the person you are writing to, and the keys belong to both of you. Use suitable possessives."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Merkelappen viser hvem tingene tilhører og bruker formene som passer til substantivenes kjønn og tall."
+        }
+      ],
       "payload": {
         "response_language": "no",
         "min_words": 6,
-        "max_words": 24,
-        "judge_prompt": "Check the three requested Norwegian phrases or sentences against the task and report evidence for each criterion. Accept natural sentence framing and punctuation, but require the specified noun forms, owner meanings, and possessive agreement.",
+        "max_words": 18,
+        "judge_prompt": "Report verdicts for bag-is-mine, towel-is-yours, keys-are-ours. All listed criteria are gating. Accept a list or complete sentences. Anchor that must pass: \"Veska mi, håndkleet ditt og nøklene våre.\" Near-miss that must fail towel-is-yours: \"Veska mi, håndkleet mitt og nøklene våre.\"",
         "criteria": [
           {
             "id": "bag-is-mine",
-            "instruction": "Identifies the bag as mine with the specified feminine form and matching possessive, such as veska mi."
+            "instruction": "Identifies veska as belonging to the writer with matching feminine singular agreement."
           },
           {
             "id": "towel-is-yours",
-            "instruction": "Identifies the towel as yours with the specified neuter form and matching possessive, such as håndkleet ditt."
+            "instruction": "Identifies håndkleet as belonging to the addressee with matching neuter singular agreement."
           },
           {
             "id": "keys-are-ours",
-            "instruction": "Identifies the several keys as ours with the specified plural form and matching possessive, such as nøklene våre."
+            "instruction": "Identifies nøklene as shared with matching plural agreement."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_pool_belongings_my_agreement",
+      "operation": "recall_fill",
+      "objective_id": "obj-possessive-pronouns-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fill in the sentences with the correct form of «min»."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Substantivets kjønn og tall avgjør om vi bruker «min», «mi», «mitt» eller «mine»."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Dette er sykkelen"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-pool-bike-possessive",
+            "options": [
+              "mi",
+              "mitt",
+              "min",
+              "mine"
+            ],
+            "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Dette er jakka"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-pool-jacket-possessive",
+            "options": [
+              "mi",
+              "min",
+              "mitt",
+              "mine"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Dette er eplet"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-pool-apple-possessive",
+            "options": [
+              "min",
+              "mi",
+              "mine",
+              "mitt"
+            ],
+            "answer_index": 3
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Dette er nøklene"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-pool-keys-possessive",
+            "options": [
+              "min",
+              "mine",
+              "mitt",
+              "mi"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_your_agreement",
+      "operation": "write",
+      "objective_id": "obj-possessive-pronouns-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Jonas gives Mina a bunch of keys and says “your keys”. Write the phrase in Norwegian."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Nøklene tilhører lytteren. Siden «nøkler» står i flertall, bruker vi «dine»."
+        }
+      ],
+      "payload": {
+        "response_language": "no",
+        "min_words": 2,
+        "max_words": 4,
+        "judge_prompt": "Report verdicts for your-keys. The listed criterion is gating. Accept \"nøklene dine\" and a short frame such as \"Her er nøklene dine.\"",
+        "criteria": [
+          {
+            "id": "your-keys",
+            "instruction": "Expresses your keys with a plural noun and the matching possessive dine."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_shared_home_our_agreement",
+      "operation": "recall_fill",
+      "objective_id": "obj-possessive-pronouns-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fill in the sentences with the correct form of «vår»."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Vår» står til hankjønn og hunkjønn entall, «vårt» til intetkjønn entall og «våre» til flertall."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Dette er sofaen"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-shared-sofa-possessive",
+            "options": [
+              "våre",
+              "vår",
+              "vårt"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Dette er lampa"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-shared-lamp-possessive",
+            "options": [
+              "vår",
+              "våre",
+              "vårt"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Dette er bordet"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-shared-table-possessive",
+            "options": [
+              "vår",
+              "våre",
+              "vårt"
+            ],
+            "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Dette er stolene"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-shared-chairs-possessive",
+            "options": [
+              "våre",
+              "vår",
+              "vårt"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Dette er gardinene"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-shared-curtains-possessive",
+            "options": [
+              "vår",
+              "vårt",
+              "våre"
+            ],
+            "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_owner_selection",
+      "operation": "choose",
+      "objective_id": "obj-possessive-pronouns-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose Lea's reply."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Lea bekrefter at jakka tilhører henne og bruker derfor «mi»."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "review-owner-our",
+            "text": "Ja, det er jakka vår.",
+            "why": "Vår would present the coat as shared."
+          },
+          {
+            "option_id": "review-owner-my",
+            "text": "Ja, det er jakka mi.",
+            "why": "Mi presents the speaker, Lea, as the owner."
+          },
+          {
+            "option_id": "review-owner-your",
+            "text": "Ja, det er jakka di.",
+            "why": "Di would present Jonas, the addressee, as the owner."
+          }
+        ],
+        "answer_id": "review-owner-my",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Jonas points to the jacket and asks Lea: «Er dette jakka di?» The jacket belongs to Lea."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_possessive_position_consistency",
+      "operation": "choose",
+      "objective_id": "obj-possessive-pronouns-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the rewrite with a preposed possessive. The meaning should be the same."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Når eiendomsordet flyttes foran substantivet, endres bestemt form «jakka» til ubestemt form «jakke»."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "review-position-double-definite",
+            "text": "Jeg har mi jakka.",
+            "why": "This keeps the definite noun ending after moving the possessive before the noun."
+          },
+          {
+            "option_id": "review-position-missing-definite",
+            "text": "Jeg har jakke mi.",
+            "why": "This puts the possessive after a noun that lacks the expected definite ending."
+          },
+          {
+            "option_id": "review-position-consistent",
+            "text": "Jeg har mi jakke.",
+            "why": "The before-noun pattern combines mi with the indefinite noun jakke."
+          }
+        ],
+        "answer_id": "review-position-consistent",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Original sentence: «Jeg har jakka mi.»"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_final_my_your_our_retrieval",
+      "operation": "write",
+      "objective_id": "obj-possessive-pronouns-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Write a short label. The scarf is yours, the hat belongs to the recipient, and the mittens belong to both of you. Use suitable possessives."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Merkelappen viser hvem tingene tilhører og bruker formene som passer til substantivenes kjønn og tall."
+        }
+      ],
+      "payload": {
+        "response_language": "no",
+        "min_words": 6,
+        "max_words": 18,
+        "judge_prompt": "Report verdicts for scarf-is-mine, hat-is-yours, mittens-are-ours. All listed criteria are gating. Accept a list or complete sentences. Anchor that must pass: \"Skjerfet mitt, lua di og vottene våre.\" Near-miss that must fail hat-is-yours: \"Skjerfet mitt, lua mi og vottene våre.\"",
+        "criteria": [
+          {
+            "id": "scarf-is-mine",
+            "instruction": "Identifies skjerfet as belonging to the writer with matching neuter singular agreement."
+          },
+          {
+            "id": "hat-is-yours",
+            "instruction": "Identifies lua as belonging to the addressee with matching feminine singular agreement."
+          },
+          {
+            "id": "mittens-are-ours",
+            "instruction": "Identifies vottene as shared with matching plural agreement."
           }
         ]
       }
@@ -4655,7 +5147,13 @@
         "cabin_trip_owner_selection",
         "cabin_trip_possessive_agreement",
         "cabin_trip_message_building",
-        "final_my_your_our_retrieval"
+        "final_my_your_our_retrieval",
+        "review_pool_belongings_my_agreement",
+        "review_your_agreement",
+        "review_shared_home_our_agreement",
+        "review_owner_selection",
+        "review_possessive_position_consistency",
+        "review_final_my_your_our_retrieval"
       ]
     }
   ],

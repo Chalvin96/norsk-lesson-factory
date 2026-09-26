@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "report_workplace_absence",
   "kind": "communicative",
   "language": "nb-NO",
@@ -84,6 +84,46 @@
     {
       "kind": "exercise",
       "id": "final_retrieval_and_review"
+    },
+    {
+      "kind": "exercise",
+      "id": "notice_timing_contrast"
+    },
+    {
+      "kind": "exercise",
+      "id": "notice_contact_deadline"
+    },
+    {
+      "kind": "exercise",
+      "id": "notice_resolved_handover"
+    },
+    {
+      "kind": "exercise",
+      "id": "discriminate_complete_absence_message"
+    },
+    {
+      "kind": "exercise",
+      "id": "revise_vague_absence_message"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_state_workplace_absence"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_make_timing_precise"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_add_next_contact"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_complete_handover"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_discriminate_complete_message"
     }
   ],
   "sections": [
@@ -1484,7 +1524,7 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Jeg kan ikke komme jobb i dag."
+                  "value": "Jeg kan ikke komme jobb i dag."
                 }
               ],
               "en": [
@@ -1492,7 +1532,8 @@
                   "kind": "text",
                   "value": "I can’t come work today."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "sec-common-mistakes-in-a-complete-message-block-5"
@@ -1717,41 +1758,62 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Sara says: «Hei, Henrik. Det er Sara. Jeg er dessverre syk og kan ikke komme på jobb i dag.» Choose the option that identifies both the absence and its timing, without using later meeting details."
+          "value": "Choose the sentence that says Sara is away and which day it is."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "The central message combines the absence with the day it applies."
+        }
+      ],
       "payload": {
         "options": [
           {
+            "option_id": "absent-unknown",
+            "text": "Sara må holde seg hjemme fra arbeid.",
+            "why": "This states the absence, but leaves its timing unclear."
+          },
+          {
+            "option_id": "absent-tomorrow",
+            "text": "Sara blir hjemme fra arbeid onsdag.",
+            "why": "This changes the absence from today to Wednesday."
+          },
+          {
             "option_id": "central-today",
-            "text": "Jeg er syk og kan ikke komme på jobb i dag.",
-            "why": "This identifies both the absence and the fact that it applies today."
+            "text": "Sara kan ikke komme på jobb tirsdag.",
+            "why": "Sara says she cannot come to work today, which is Tuesday in the stated context."
           },
           {
-            "option_id": "central-tomorrow",
-            "text": "Jeg kan ikke komme på jobb i morgen.",
-            "why": "This gives tomorrow as the timing, not today."
-          },
-          {
-            "option_id": "at-work-now",
-            "text": "Jeg er på jobb nå.",
-            "why": "This says that the speaker is at work, not absent."
-          },
-          {
-            "option_id": "after-lunch",
-            "text": "Jeg kan komme på jobb etter lunsj, men ikke før.",
-            "why": "This describes coming after lunch rather than being unable to come today."
+            "option_id": "sick-today",
+            "text": "Sara kommer på jobb senere denne tirsdagen.",
+            "why": "This says Sara will attend later that day rather than that she will be absent."
           }
         ],
         "answer_id": "central-today",
         "stem": [
           {
             "kind": "text",
-            "value": "Which option states both Sara's absence and its timing?"
+            "value": "What is the main point of Sara's message?"
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Tirsdag klokka 07.15 sier Sara: «Hei, Henrik. Det er Sara. Jeg er dessverre syk og kan ikke komme på jobb i dag.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -1761,7 +1823,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Build the complete Norwegian timing message. Say that Sara stays home today (Tuesday) and does not yet know whether she can come tomorrow (Wednesday). Use every token exactly once."
+          "value": "Write a two-sentence update from Sara saying how long she will be away."
         }
       ],
       "explanation": null,
@@ -1860,7 +1922,23 @@
           "tok-14",
           "tok-15"
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Tirsdag: Sara blir hjemme hele dagen. Hun vet ikke ennå om hun kan arbeide onsdag."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -1870,7 +1948,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Build one Norwegian sentence for Sara to say to her team leader on Tuesday. Promise an update by a specific time."
+          "value": "Write Sara's promise to contact Henrik by the deadline."
         }
       ],
       "explanation": null,
@@ -1921,7 +1999,23 @@
           "contact-06",
           "contact-07"
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Mottaker: Henrik. Frist for oppdatering: tirsdag klokka 15.00."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -1931,7 +2025,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Build one short Norwegian handover sentence. State that Nora can take the ten o'clock meeting and that you have sent her the notes."
+          "value": "Write the sentence that makes the handover clear."
         }
       ],
       "explanation": null,
@@ -2012,7 +2106,23 @@
           "handover-11",
           "handover-12"
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Oppgave: møtet klokka 10.00 Overtar: Nora Notater: sendt til Nora"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2022,7 +2132,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Build one Norwegian absence statement for Emil. Say that he cannot come to work on Thursday and will be away all day."
+          "value": "Write Emil's absence message."
         }
       ],
       "explanation": null,
@@ -2109,7 +2219,23 @@
           "central-12",
           "central-13"
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Vakt: Ansatt: Emil Dag: torsdag Emil kan ikke møte. Fravær: hele vakten"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2119,7 +2245,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Build one Norwegian handover sentence saying that Lise can receive the delivery."
+          "value": "Write one sentence saying that Lise will receive the delivery."
         }
       ],
       "explanation": null,
@@ -2158,7 +2284,23 @@
           "lise-04",
           "lise-05"
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Levering torsdag: Emil er borte. Lise er kontaktpersonen for sjåføren."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2168,7 +2310,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write a concise professional Norwegian message for Emil. State that he cannot come to work on Thursday, will be away all day, and will update his manager by four about whether he can work on Friday."
+          "value": "To Emil's manager: Emil cannot come to work on Thursday and will be away all day. He does not yet know whether he can work on Friday, and will send an update by 4 p.m. on Thursday at the latest. Write a short, clear message in Norwegian."
         }
       ],
       "explanation": null,
@@ -2176,7 +2318,7 @@
         "response_language": "no",
         "min_words": 15,
         "max_words": 35,
-        "judge_prompt": "Check the response against the task and report evidence for each criterion. Accept equivalent natural Bokmål wording and either one sentence or several short sentences, provided all requested facts remain clear.",
+        "judge_prompt": "Evaluate criteria emil-absence, emil-timing, and emil-next-contact from the visible task. Record emil-wording-observation diagnostically; it must not affect the pass result. Accept equivalent natural Bokmål and one or more short sentences.",
         "criteria": [
           {
             "id": "emil-absence",
@@ -2184,11 +2326,15 @@
           },
           {
             "id": "emil-timing",
-            "instruction": "States that Emil will be away all day."
+            "instruction": "States that Emil will be away all day Thursday."
           },
           {
             "id": "emil-next-contact",
-            "instruction": "States that Emil will update his manager by four about whether he can work on Friday."
+            "instruction": "States that Emil will provide an update by four on Thursday about Friday."
+          },
+          {
+            "id": "emil-wording-observation",
+            "instruction": "Records whether the message uses a clear workplace-absence expression such as «kan ikke komme på jobb»; this criterion is diagnostic only."
           }
         ]
       }
@@ -2201,34 +2347,496 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Imagine you work at a library and cannot attend your Friday shift. Write a short Norwegian workplace absence message for this new situation. Use original wording. State that you cannot come to work, give clear timing, and finish with either a specific next contact or a practical handover."
+          "value": "You cannot work the Friday shift and will be away all day. Jonas can open the library and has the key. Write a short absence message in Norwegian to your manager, Anne."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 15,
-        "max_words": 35,
-        "judge_prompt": "Check the response against the task and report evidence for each criterion. Accept equivalent natural Bokmål wording and either a concrete next contact or a concrete handover. Do not require exact lesson wording.",
+        "min_words": 18,
+        "max_words": 40,
+        "judge_prompt": "Evaluate criteria library-absence, library-timing, and library-handover from the visible task. Record library-form-observation diagnostically; it must not affect the pass result. Accept equivalent natural Bokmål and do not require exact lesson wording.",
         "criteria": [
           {
-            "id": "new-situation",
-            "instruction": "Uses the new library and Friday-shift situation without copying a complete lesson sentence."
+            "id": "library-absence",
+            "instruction": "States that the writer cannot attend the Friday shift."
           },
           {
-            "id": "absence",
-            "instruction": "States that the writer cannot attend work."
+            "id": "library-timing",
+            "instruction": "Makes clear that the absence applies all day Friday."
           },
           {
-            "id": "timing",
-            "instruction": "Gives clear timing for the absence."
+            "id": "library-handover",
+            "instruction": "States that Jonas can open the library and has received the key."
           },
           {
-            "id": "next-step",
-            "instruction": "Finishes with either a specific next contact or a practical handover."
+            "id": "library-form-observation",
+            "instruction": "Records whether the message uses «på jobb» correctly if that expression appears; this criterion is diagnostic only."
           }
         ]
       }
+    },
+    {
+      "kind": "exercise",
+      "id": "notice_timing_contrast",
+      "operation": "choose",
+      "objective_id": "obj-report-workplace-absence-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the sentence that says how long Emil will be away."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Useful timing identifies both the relevant day and the known duration."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "daytime",
+            "text": "Jeg blir borte på dagen.",
+            "why": "This describes a general part of the day rather than identifying the Thursday shift."
+          },
+          {
+            "option_id": "whole-day",
+            "text": "Jeg blir borte hele dagen på torsdag.",
+            "why": "This covers the full Thursday shift."
+          },
+          {
+            "option_id": "today",
+            "text": "Jeg blir borte hele dagen i dag.",
+            "why": "This changes the stated day from Thursday to today."
+          },
+          {
+            "option_id": "after-lunch",
+            "text": "Jeg kommer på jobb etter lunsj.",
+            "why": "This says Emil will attend part of the shift."
+          }
+        ],
+        "answer_id": "whole-day",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "How long will Emil be unable to work?"
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Onsdag lager lederen vaktplanen for torsdag: Emil kan ikke arbeide noen del av vakten 08.00–16.00."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "notice_contact_deadline",
+      "operation": "choose",
+      "objective_id": "obj-report-workplace-absence-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the promise that says when Henrik will receive an update at the latest, without promising an exact time."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Innen klokka tre means that the update will arrive no later than three."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "at-three",
+            "text": "Jeg gir deg beskjed klokka tre.",
+            "why": "This promises contact at exactly three rather than no later than three."
+          },
+          {
+            "option_id": "later",
+            "text": "Jeg gir deg beskjed senere.",
+            "why": "This promises contact but gives no useful deadline."
+          },
+          {
+            "option_id": "tomorrow",
+            "text": "Jeg gir deg beskjed i morgen.",
+            "why": "This places the update after Henrik's Tuesday deadline."
+          },
+          {
+            "option_id": "by-three",
+            "text": "Jeg gir deg beskjed innen klokka tre.",
+            "why": "This names the contact action and sets three o'clock as the latest time."
+          }
+        ],
+        "answer_id": "by-three",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Which reply gives Henrik a deadline without naming an exact time?"
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Tirsdag morgen: Sara vet ikke om hun kan arbeide onsdag. Henrik trenger svar senest klokka 15.00 tirsdag."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "notice_resolved_handover",
+      "operation": "choose",
+      "objective_id": "obj-report-workplace-absence-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the reply that solves the important task."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "A useful handover says what will happen to the task, not only that the task exists."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "task-only",
+            "text": "Jeg har et kundemøte klokka ti.",
+            "why": "This identifies the urgent task but does not say who will handle it."
+          },
+          {
+            "option_id": "person-only",
+            "text": "Nora er på jobb i dag.",
+            "why": "This identifies an available colleague but does not assign the meeting."
+          },
+          {
+            "option_id": "notes-only",
+            "text": "Notatene er ferdige.",
+            "why": "This describes the notes but does not resolve responsibility for the meeting."
+          },
+          {
+            "option_id": "resolved",
+            "text": "Nora kan ta kundemøtet, og hun har fått notatene.",
+            "why": "This names the replacement, the task, and access to the needed information."
+          }
+        ],
+        "answer_id": "resolved",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Which reply tells Henrik who is leading the meeting and has the notes?"
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Klokka 10.00: Sara skulle lede et kundemøte. Nora kan lede møtet. Nora har fått notatene."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "discriminate_complete_absence_message",
+      "operation": "choose",
+      "objective_id": "obj-report-workplace-absence-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the message that gives the manager all the information they need."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "A complete message lets the manager understand what is happening, when it applies, and what happens next."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "no-duration",
+            "text": "Jeg kan ikke komme på jobb på torsdag. Lise kan ta imot leveransen.",
+            "why": "This gives the day and handover but omits the known full-day duration."
+          },
+          {
+            "option_id": "no-absence",
+            "text": "Leveransen kommer på torsdag. Lise kan ta imot den.",
+            "why": "This gives the delivery handover but does not state Emil's absence or how long it lasts."
+          },
+          {
+            "option_id": "unresolved-task",
+            "text": "Jeg kan ikke komme på jobb på torsdag og blir borte hele dagen. Det kommer en levering.",
+            "why": "This mentions the delivery but does not say who will receive it."
+          },
+          {
+            "option_id": "complete",
+            "text": "Jeg kan ikke komme på jobb på torsdag og blir borte hele dagen. Lise kan ta imot leveransen.",
+            "why": "This covers the absence, its full-day timing, and the practical handover."
+          }
+        ],
+        "answer_id": "complete",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Which message says Emil is away all Thursday and that Lise will receive the delivery?"
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Torsdag morgen: Emil kan ikke arbeide torsdag. Han blir borte hele dagen. Lise kan ta imot leveransen."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "revise_vague_absence_message",
+      "operation": "write",
+      "objective_id": "obj-report-workplace-absence-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Rewrite the message to Henrik so the absence and deadline are clear. Draft: «Hei. Jeg kan ikke komme på jobb. Jeg sier fra senere.» Sara is away all day Tuesday and will send an update by 3 p.m. at the latest."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "response_language": "no",
+        "min_words": 14,
+        "max_words": 32,
+        "judge_prompt": "Evaluate criteria revision-absence, revision-timing, and revision-contact from the visible task. Record revision-style-observation diagnostically; it must not affect the pass result. Accept natural Bokmål variants that preserve the supplied facts.",
+        "criteria": [
+          {
+            "id": "revision-absence",
+            "instruction": "Clearly states that Sara cannot attend work."
+          },
+          {
+            "id": "revision-timing",
+            "instruction": "Makes clear that the absence covers all of Tuesday."
+          },
+          {
+            "id": "revision-contact",
+            "instruction": "Promises the next update no later than three o'clock on Tuesday."
+          },
+          {
+            "id": "revision-style-observation",
+            "instruction": "Records whether the revision is concise and professionally phrased; this criterion is diagnostic only."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_state_workplace_absence",
+      "operation": "write",
+      "objective_id": "obj-report-workplace-absence-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "You were supposed to work today, but cannot come in. Write the expression that means you are absent from work: «Jeg kan ____ i dag.»"
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "response_language": "no",
+        "min_words": 4,
+        "max_words": 4,
+        "judge_prompt": "Evaluate criterion absence-chunk only. Accept capitalization and terminal-punctuation variants.",
+        "criteria": [
+          {
+            "id": "absence-chunk",
+            "instruction": "Supplies a natural expression for being absent from work, such as «ikke komme på jobb» or «ikke møte på jobb»."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_make_timing_precise",
+      "operation": "write",
+      "objective_id": "obj-report-workplace-absence-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "The shift is Thursday from 8 a.m. to 4 p.m. You cannot work during that whole time. Fill in two words: «Jeg blir borte ____.»"
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "response_language": "no",
+        "min_words": 2,
+        "max_words": 2,
+        "judge_prompt": "Evaluate criterion timing-chunk only. Accept capitalization and terminal-punctuation variants.",
+        "criteria": [
+          {
+            "id": "timing-chunk",
+            "instruction": "Supplies a natural phrase for the full Thursday shift, such as «hele vakten» or «hele dagen»."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_add_next_contact",
+      "operation": "write",
+      "objective_id": "obj-report-workplace-absence-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "It is Thursday morning. You will send your next update by 4 p.m. at the latest. Fill in the three missing words: «Jeg sender en oppdatering ____.»"
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "response_language": "no",
+        "min_words": 3,
+        "max_words": 3,
+        "judge_prompt": "Evaluate criterion deadline-chunk only. Accept «innen klokka fire» and «senest klokka fire», with capitalization or terminal-punctuation variants.",
+        "criteria": [
+          {
+            "id": "deadline-chunk",
+            "instruction": "Supplies a three-word phrase meaning no later than four o'clock."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_complete_handover",
+      "operation": "write",
+      "objective_id": "obj-report-workplace-absence-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Today's deliveries need to be received while Emil is away. Lise takes over the task. Fill in the four missing words: «Lise ____.»"
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "response_language": "no",
+        "min_words": 4,
+        "max_words": 4,
+        "judge_prompt": "Evaluate criterion handover-chunk only. Accept capitalization and terminal-punctuation variants.",
+        "criteria": [
+          {
+            "id": "handover-chunk",
+            "instruction": "Says that Lise can receive today's goods or delivery. Accepts natural Bokmål such as «kan ta imot varene» or «kan ta imot leveransen»."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_discriminate_complete_message",
+      "operation": "choose",
+      "objective_id": "obj-report-workplace-absence-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the message that is ready to send."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "The ready-to-send message preserves every supplied fact without leaving the manager to ask when or what happens next."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "wrong-day",
+            "text": "Jeg kan ikke komme på jobb tirsdag og blir borte hele dagen. Jeg ringer deg innen klokka to.",
+            "why": "This changes the absence from Monday to Tuesday."
+          },
+          {
+            "option_id": "all-three",
+            "text": "Jeg kan ikke komme på jobb mandag og blir borte hele dagen. Jeg ringer deg innen klokka to om tirsdag.",
+            "why": "This includes the Monday absence, its duration, and the promised deadline for the next contact."
+          },
+          {
+            "option_id": "missing-duration",
+            "text": "Jeg kan ikke komme på jobb mandag. Jeg ringer deg innen klokka to om tirsdag.",
+            "why": "This omits the known fact that the absence lasts all day."
+          },
+          {
+            "option_id": "vague-contact",
+            "text": "Jeg kan ikke komme på jobb mandag og blir borte hele dagen. Jeg ringer deg senere.",
+            "why": "This makes the next contact vague instead of preserving the two o'clock deadline."
+          }
+        ],
+        "answer_id": "all-three",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Which message says you are away all Monday and tells when you will contact Maja again?"
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Context",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "Til: Maja, butikksjef Fakta: Du kan ikke arbeide mandag. Du blir borte hele dagen. Du ringer Maja senest klokka 14.00 om tirsdag."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "practice_groups": [
@@ -2243,7 +2851,17 @@
         "build_central_absence_message",
         "add_handover_to_message",
         "add_next_contact_to_staged_message",
-        "final_retrieval_and_review"
+        "final_retrieval_and_review",
+        "notice_timing_contrast",
+        "notice_contact_deadline",
+        "notice_resolved_handover",
+        "discriminate_complete_absence_message",
+        "revise_vague_absence_message",
+        "review_state_workplace_absence",
+        "review_make_timing_precise",
+        "review_add_next_contact",
+        "review_complete_handover",
+        "review_discriminate_complete_message"
       ]
     }
   ],

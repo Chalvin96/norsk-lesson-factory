@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "adjective_agreement",
   "kind": "grammar",
   "language": "nb-NO",
@@ -13,7 +13,7 @@
     },
     {
       "id": "obj-adjective-agreement-02",
-      "statement": "Use the definite adjective ending -e after den, det, and de."
+      "statement": "Use the definite adjective ending -e after den, det, and de (regular adjectives; liten has the irregular plural små)."
     }
   ],
   "content": [
@@ -100,6 +100,34 @@
     {
       "kind": "exercise",
       "id": "five-form-review"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_indefinite-room-labels"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_unpacking-one-or-more"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_description-position-check"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_small-object-genders"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_little-or-small-across-number"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_known-small-furniture"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_identify-the-known-object"
     }
   ],
   "sections": [
@@ -4075,13 +4103,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete Maja's labels with the supplied adjective in the form that matches each article and noun."
+          "value": "Fill in the labels with the correct adjective form."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Use the base adjective after en or ei, and add -t after et: en fin stol, ei kald natt, et dyrt bord."
+          "value": "Etter en og ei står adjektivet i grunnform. Etter et får det vanligvis endelsen -t."
         }
       ],
       "payload": {
@@ -4091,7 +4119,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "fin: en"
+                "value": "Majas rometiketter: en"
               },
               {
                 "kind": "text",
@@ -4118,7 +4146,7 @@
               },
               {
                 "kind": "text",
-                "value": "stol; kald: ei"
+                "value": "stol; ei"
               },
               {
                 "kind": "text",
@@ -4145,7 +4173,7 @@
               },
               {
                 "kind": "text",
-                "value": "natt; dyr: et"
+                "value": "natt; et"
               },
               {
                 "kind": "text",
@@ -4187,13 +4215,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Update Elias's inventory by changing each supplied phrase to the requested number."
+          "value": "Rewrite the phrases for the requested number."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Plural adjectives normally take -e, while an indefinite singular phrase returns to the gender-matching singular form: grønne stoler, ei grønn lampe."
+          "value": "I flertall får vanlige adjektiver vanligvis endelsen -e. I ubestemt entall bøyes adjektivet etter substantivet: grønne stoler, ei grønn lampe."
         }
       ],
       "payload": {
@@ -4203,7 +4231,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Change «en grønn stol» to plural:"
+                "value": "Write “en grønn stol” in the plural:"
               },
               {
                 "kind": "text",
@@ -4216,7 +4244,7 @@
             "blank_id": "plural-green-chairs",
             "options": [
               "grønne stoler",
-              "grønn stol",
+              "grønn stoler",
               "grønt bord"
             ],
             "answer_index": 0
@@ -4226,7 +4254,11 @@
             "spans": [
               {
                 "kind": "text",
-                "value": ". Change «grønne lamper» to singular with ei:"
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "Skriv «grønne lamper» i entall med ei:"
               },
               {
                 "kind": "text",
@@ -4259,102 +4291,112 @@
     {
       "kind": "exercise",
       "id": "identify-the-known-object",
-      "operation": "build",
+      "operation": "recall_fill",
       "objective_id": "obj-adjective-agreement-02",
       "prompt": [
         {
           "kind": "text",
-          "value": "Maja changes «en fin stol», «et fint rom» and «fine stoler» into known objects. Build one complete sentence saying that she points to the nice chair, the nice room and the nice chairs."
+          "value": "Complete the sentence about the specific items."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Before a definite noun, use den, det, or de plus the adjective in -e, while the noun also keeps its definite ending: den fine stolen."
+          "value": "Foran et bestemt substantiv bruker vi den, det eller de og adjektivet i -e-form. Substantivet står også i bestemt form."
         }
       ],
       "payload": {
-        "tokens": [
+        "segments": [
           {
-            "token_id": "tok-2",
-            "text": "peker",
-            "fixed": false
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Maja peker på den"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
           },
           {
-            "token_id": "tok-3",
-            "text": "på",
-            "fixed": false
+            "kind": "blank",
+            "blank_id": "definite-chair",
+            "options": [
+              "fin",
+              "fine",
+              "fint"
+            ],
+            "answer_index": 1
           },
           {
-            "token_id": "tok-4",
-            "text": "den",
-            "fixed": false
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "stolen, det"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
           },
           {
-            "token_id": "tok-5",
-            "text": "fine",
-            "fixed": false
+            "kind": "blank",
+            "blank_id": "definite-room",
+            "options": [
+              "fint",
+              "fin",
+              "fine"
+            ],
+            "answer_index": 2
           },
           {
-            "token_id": "tok-6",
-            "text": "stolen,",
-            "fixed": false
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "rommet og de"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
           },
           {
-            "token_id": "tok-7",
-            "text": "det",
-            "fixed": false
+            "kind": "blank",
+            "blank_id": "definite-chairs",
+            "options": [
+              "fine",
+              "fin",
+              "fint"
+            ],
+            "answer_index": 0
           },
           {
-            "token_id": "tok-8",
-            "text": "fine",
-            "fixed": false
-          },
-          {
-            "token_id": "tok-9",
-            "text": "rommet",
-            "fixed": false
-          },
-          {
-            "token_id": "tok-10",
-            "text": "og",
-            "fixed": false
-          },
-          {
-            "token_id": "tok-11",
-            "text": "de",
-            "fixed": false
-          },
-          {
-            "token_id": "tok-12",
-            "text": "fine",
-            "fixed": false
-          },
-          {
-            "token_id": "tok-13",
-            "text": "stolene.",
-            "fixed": false
-          },
-          {
-            "token_id": "tok-1",
-            "text": "Maja",
-            "fixed": false
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "stolene."
+              }
+            ]
           }
-        ],
-        "answer_order": [
-          "tok-1",
-          "tok-2",
-          "tok-3",
-          "tok-4",
-          "tok-5",
-          "tok-6",
-          "tok-7",
-          "tok-8",
-          "tok-9",
-          "tok-10",
-          "tok-11",
-          "tok-12",
-          "tok-13"
         ]
       }
     },
@@ -4366,13 +4408,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete Elias's notes. Choose the adjective form according to whether it is inside a definite noun phrase or follows «er»."
+          "value": "Fill in the descriptions with the correct adjective forms."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Inside a definite noun phrase the adjective takes -e; after er it agrees with the noun: det store bordet, but bordet er stort."
+          "value": "I en bestemt substantivfrase står adjektivet i -e-form. Etter «er» bøyes det etter substantivet: det store bordet, men bordet er stort."
         }
       ],
       "payload": {
@@ -4382,7 +4424,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Det"
+                "value": "Elias skriver: Det"
               },
               {
                 "kind": "text",
@@ -4497,13 +4539,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete Maja's box labels with forms of «liten». For the feminine box, select the option that lists both accepted labels; either «lita» or «liten» is valid after «ei»."
+          "value": "Fill in the labels with the correct form of the adjective liten."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Liten has the neuter form lite; after ei, both lita and liten are accepted in Bokmål."
+          "value": "«Liten» har intetkjønnsformen «lite». Etter «ei» godtas både «lita» og «liten» på bokmål."
         }
       ],
       "payload": {
@@ -4513,7 +4555,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Box 1: en"
+                "value": "Majas etiketter: 1 – en"
               },
               {
                 "kind": "text",
@@ -4540,7 +4582,7 @@
               },
               {
                 "kind": "text",
-                "value": "stol. Box 2, both accepted labels:"
+                "value": "stol. 2 – begge godkjente former:"
               },
               {
                 "kind": "text",
@@ -4563,7 +4605,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": ". Box 3: et"
+                "value": ". 3 – et"
               },
               {
                 "kind": "text",
@@ -4605,13 +4647,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Update Elias's inventory by changing each phrase to the requested number."
+          "value": "Rewrite the phrases for the requested number."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "The plural of liten is små, while an indefinite neuter singular uses lite: små stoler, et lite bord."
+          "value": "Flertallsformen av «liten» er «små». I ubestemt intetkjønn entall bruker vi «lite»: små stoler, et lite bord."
         }
       ],
       "payload": {
@@ -4621,7 +4663,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Change «en liten stol» to plural:"
+                "value": "Write “en liten stol” in the plural:"
               },
               {
                 "kind": "text",
@@ -4635,7 +4677,7 @@
             "options": [
               "små stoler",
               "lille stoler",
-              "liten stol"
+              "liten stoler"
             ],
             "answer_index": 0
           },
@@ -4644,7 +4686,11 @@
             "spans": [
               {
                 "kind": "text",
-                "value": ". Change «små bord» to indefinite singular with et:"
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "Skriv «små bord» i ubestemt entall med et:"
               },
               {
                 "kind": "text",
@@ -4682,13 +4728,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete Maja's references to known furniture. Use the definite singular or definite plural form of «liten»."
+          "value": "Fill in the phrases with the correct form of liten."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Use lille after den or det in the singular, and små after de in the plural."
+          "value": "Bruk «lille» etter «den» eller «det» i entall, og «små» etter «de» i flertall."
         }
       ],
       "payload": {
@@ -4698,7 +4744,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "den"
+                "value": "Maja peker på de kjente møblene: den"
               },
               {
                 "kind": "text",
@@ -4794,7 +4840,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Select the one token that is wrong/needs changing."
+          "value": "Choose the word that needs to change."
         }
       ],
       "explanation": null,
@@ -4806,7 +4852,7 @@
           },
           {
             "token_id": "tok-2",
-            "text": "lille"
+            "text": "store"
           },
           {
             "token_id": "tok-3",
@@ -4846,12 +4892,37 @@
           },
           {
             "token_id": "tok-12",
-            "text": "store."
+            "text": "stor."
           }
         ],
         "error_token_id": "tok-12",
-        "feedback": "Replace «store» with «stort». After «er», the adjective describes one neuter noun, so use «stort» even though «bordet» itself is definite."
-      }
+        "feedback": "Bytt ut «stor» med «stort». Adjektivet beskriver intetkjønnsordet «bordet»."
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Bordet er stort. Jeg skriver det på lappen.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Elias",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Da retter jeg setningen.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -4861,10 +4932,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete Nora's café instructions with the correct adjective forms. Use gender, number, definiteness and adjective position. For the feminine note, select the option listing both accepted forms after «ei»."
+          "value": "Fill in Nora's café instructions with the correct adjective forms."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Velg form etter substantivets kjønn og tall, om frasen er bestemt, og om adjektivet står etter «er». Etter «ei» godtas både «lita» og «liten»."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -4872,7 +4948,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Det"
+                "value": "Noras første beskjed: Det"
               },
               {
                 "kind": "text",
@@ -4961,11 +5037,11 @@
             "kind": "blank",
             "blank_id": "irregular-masculine-singular",
             "options": [
-              "lille",
               "lite",
-              "liten"
+              "liten",
+              "lille"
             ],
-            "answer_index": 2
+            "answer_index": 1
           },
           {
             "kind": "span",
@@ -5015,11 +5091,11 @@
             "kind": "blank",
             "blank_id": "irregular-definite-singular",
             "options": [
+              "små",
               "lite",
-              "lille",
-              "små"
+              "lille"
             ],
-            "answer_index": 1
+            "answer_index": 2
           },
           {
             "kind": "span",
@@ -5042,36 +5118,9 @@
             "kind": "blank",
             "blank_id": "irregular-definite-plural",
             "options": [
+              "små",
               "lite",
-              "lille",
-              "små"
-            ],
-            "answer_index": 2
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "lampene i vinduet. For a feminine label, both accepted versions are"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "irregular-feminine-variants",
-            "options": [
-              "ei lita lampe / ei liten lampe",
-              "ei lite lampe / ei lille lampe",
-              "ei små lampe / ei lita lampe"
+              "lille"
             ],
             "answer_index": 0
           },
@@ -5080,7 +5129,11 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "."
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "lampene i vinduet."
               }
             ]
           }
@@ -5095,10 +5148,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete the quick review from memory. The feminine item asks for both accepted alternatives. The table item also includes a regular neuter contrast."
+          "value": "Fill in the phrases without looking at the examples."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Ulike former av adjektivet passer til substantivets kjønn, tall og bestemthet."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -5106,7 +5164,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "one small chair: en"
+                "value": "Møbelliste: en"
               },
               {
                 "kind": "text",
@@ -5119,10 +5177,10 @@
             "blank_id": "review-masculine-liten",
             "options": [
               "lite",
-              "liten",
-              "lille"
+              "lille",
+              "liten"
             ],
-            "answer_index": 1
+            "answer_index": 2
           },
           {
             "kind": "span",
@@ -5133,7 +5191,7 @@
               },
               {
                 "kind": "text",
-                "value": "stol; both accepted versions of one small lamp:"
+                "value": "stol;"
               },
               {
                 "kind": "text",
@@ -5156,7 +5214,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "; one small, new table: et"
+                "value": "; et"
               },
               {
                 "kind": "text",
@@ -5206,7 +5264,7 @@
               },
               {
                 "kind": "text",
-                "value": "bord; the known small cupboard: det"
+                "value": "bord; det"
               },
               {
                 "kind": "text",
@@ -5233,7 +5291,7 @@
               },
               {
                 "kind": "text",
-                "value": "skapet; several small chairs:"
+                "value": "skapet; flere"
               },
               {
                 "kind": "text",
@@ -5266,6 +5324,918 @@
           }
         ]
       }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_indefinite-room-labels",
+      "operation": "recall_fill",
+      "objective_id": "obj-adjective-agreement-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fill in the phrases with the correct adjective form."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Etter «en» og «ei» står adjektivet i grunnform. Etter «et» får det endelsen -t: en kald stol, ei dyr lampe, et fint rom."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Maja svarer: en"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "label-cold",
+            "options": [
+              "kaldt",
+              "kald",
+              "kalde"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "stol, ei"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "label-expensive",
+            "options": [
+              "dyrt",
+              "dyre",
+              "dyr"
+            ],
+            "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "lampe og et"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "label-nice",
+            "options": [
+              "fine",
+              "fint",
+              "fin"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "rom."
+              }
+            ]
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg skriver om tingene i stua.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Elias",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Ja, hvordan skriver du det?»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_unpacking-one-or-more",
+      "operation": "recall_fill",
+      "objective_id": "obj-adjective-agreement-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fill in the two phrases with the correct adjective form."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Flertallsadjektiver får -e. Etter «ei» står adjektivet i grunnform: grønne stoler, ei grønn lampe."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Elias svarer: flere"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "plural-green",
+            "options": [
+              "grønn",
+              "grønne",
+              "grønt"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "stoler og ei"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "singular-green",
+            "options": [
+              "grønt",
+              "grønne",
+              "grønn"
+            ],
+            "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "lampe."
+              }
+            ]
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg har én stol og ei lampe. Begge har samme farge som gress.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Elias",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg har flere stoler og ei lampe i den samme fargen. Hva skriver jeg?»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_description-position-check",
+      "operation": "recall_fill",
+      "objective_id": "obj-adjective-agreement-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fill in the note about the furniture with the correct adjective forms."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "I en bestemt frase får adjektivet endelsen -e. Etter «er» bøyes det etter substantivet: den nye stolen, men stolen er ny."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Den"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "definite-masculine",
+            "options": [
+              "ny",
+              "nytt",
+              "nye"
+            ],
+            "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "stolen står her. Stolen er"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "after-er-masculine",
+            "options": [
+              "ny",
+              "nye",
+              "nytt"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ". Det"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "definite-neuter",
+            "options": [
+              "ny",
+              "nytt",
+              "nye"
+            ],
+            "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "bordet står i stua. Bordet er"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "after-er-neuter",
+            "options": [
+              "nye",
+              "nytt",
+              "ny"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "."
+              }
+            ]
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Nora",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg skriver om møblene vi har i stua.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Elias",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Les det for meg.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_small-object-genders",
+      "operation": "recall_fill",
+      "objective_id": "obj-adjective-agreement-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fill in the three labels with the correct adjective form."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Velg formen som passer til hvert substantiv. På bokmål godtas to former i hunkjønn entall, men bare én av dem er blant valgene her."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Maja skriver: en"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "masculine-liten",
+            "options": [
+              "lita",
+              "lite",
+              "liten"
+            ],
+            "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "sofa, ei"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "feminine-liten",
+            "options": [
+              "lite",
+              "lita",
+              "lille"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "dør og et"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "neuter-liten",
+            "options": [
+              "liten",
+              "lite",
+              "lita"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "skap."
+              }
+            ]
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg skriver om tingene i stua.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Nora",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Ja, hvordan skriver du det?»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_little-or-small-across-number",
+      "operation": "recall_fill",
+      "objective_id": "obj-adjective-agreement-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fill in the two phrases with the correct adjective form."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Flertallsformen er «små». I ubestemt intetkjønn entall bruker vi «lite»."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Elias svarer: flere"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "plural-small",
+            "options": [
+              "lille",
+              "lite",
+              "små"
+            ],
+            "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "lamper og et"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "neuter-small",
+            "options": [
+              "lille",
+              "lite",
+              "små"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "bord."
+              }
+            ]
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg har én liten lampe.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Elias",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg har flere lamper og ett bord. Hvordan beskriver jeg alt sammen?»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_known-small-furniture",
+      "operation": "recall_fill",
+      "objective_id": "obj-adjective-agreement-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fill in the three sentences with the correct adjective form."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Etter «er» får «liten» formen «liten» med felleskjønn, «lite» med intetkjønn og «små» i flertall."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Maja sier: Bordet er"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "neuter-predicate-liten",
+            "options": [
+              "lite",
+              "liten",
+              "små"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ", sofaen er"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "feminine-predicate-liten",
+            "options": [
+              "liten",
+              "lite",
+              "små"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ", og skapene er"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "plural-predicate-liten",
+            "options": [
+              "lille",
+              "lite",
+              "små"
+            ],
+            "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "."
+              }
+            ]
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Nå peker jeg på møblene våre.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Elias",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Ja, si det.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_identify-the-known-object",
+      "operation": "recall_fill",
+      "objective_id": "obj-adjective-agreement-02",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fill in the three phrases with the correct adjective form."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Etter «den», «det» og «de» får adjektivet endelsen -e. Substantivet beholder bestemt form: den kalde dagen."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Maja sier: den"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "definite-masculine",
+            "options": [
+              "kald",
+              "kaldt",
+              "kalde"
+            ],
+            "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "dagen, det"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "definite-neuter",
+            "options": [
+              "kaldt",
+              "kalde",
+              "kald"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "rommet og de"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "definite-plural",
+            "options": [
+              "kald",
+              "kaldt",
+              "kalde"
+            ],
+            "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "nettene."
+              }
+            ]
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Maja",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Dagen er kald, rommet er kaldt, og nettene er kalde.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Elias",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Ja, hva sier du?»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "practice_groups": [
@@ -5281,14 +6251,21 @@
         "known-small-furniture",
         "moving-note-correction",
         "cafe-agreement-transfer",
-        "five-form-review"
+        "five-form-review",
+        "review_indefinite-room-labels",
+        "review_unpacking-one-or-more",
+        "review_description-position-check",
+        "review_small-object-genders",
+        "review_little-or-small-across-number",
+        "review_known-small-furniture"
       ]
     },
     {
       "id": "practice-obj-adjective-agreement-02",
       "objective_id": "obj-adjective-agreement-02",
       "exercise_ids": [
-        "identify-the-known-object"
+        "identify-the-known-object",
+        "review_identify-the-known-object"
       ]
     }
   ],

@@ -1,0 +1,190 @@
+- handle: interpret_jo_shared_ground_in_lines
+  op: choose
+  objective: obj-vel-jo-nok-da-in-conversation-01
+  bloom: understand
+  prompt_md: "Du besøker vennen Haavard i Trondheim. Moren hans hilser på deg i døra: «Dere har jo møtt meg før.» Senere venter du og Haavard på bussen dere tar sammen hver uke. Dere har begge sett rutetidene før, og han sier: «Bussen går jo hvert tiende minutt.» Velg tolkningen som passer til replikkene."
+  stem_md: Hva uttrykker «jo» i begge replikkene?
+  options:
+  - id: shared-next-step
+    text: In both lines the speaker marks the sentence as the natural next step in the talk and coaxes the listener along.
+    correct: false
+    why: Marking a shared next step with coaxing is the job of conversational da.
+  - id: shared-ground-reminder
+    text: In both lines the speaker treats the claim as something both speakers already know, reminding the listener of shared ground.
+    correct: true
+    why: Jo marks a claim as shared property—a reminder, not news.
+  - id: guess-for-confirmation
+    text: In both lines the speaker floats a best guess and asks the listener to confirm or correct it.
+    correct: false
+    why: Floating a claim for confirmation is the job of vel.
+  - id: likely-assessment
+    text: In both lines the speaker marks the claim as a likely assessment or prediction.
+    correct: false
+    why: Likelihood is a common contribution of nok, not jo.
+- handle: choose_jo_or_vel_for_stance
+  op: recall_fill
+  objective: obj-vel-jo-nok-da-in-conversation-01
+  bloom: apply
+  prompt_md: "Du og Marit avtalte forrige uke å kjøre til Bergen i dag. Hun pakket bilen i går kveld, og du tror så vidt at veikartet ble med. Fullfør replikkene. 1. «Vi skulle ... dra til Bergen i dag.» Minn Marit på planen dere avtalte sammen. 2. «Du har ... kartet med deg?» Du er usikker og vil at Marit skal bekrefte."
+  audio_target: Vi skulle jo dra til Bergen i dag. Du har vel kartet med deg?
+  segments:
+  - text_md: 'Vi skulle '
+  - blank_id: line1-particle
+    options:
+    - jo
+    - vel
+    answer_index: 0
+  - text_md: ' dra til Bergen i dag. Du har '
+  - blank_id: line2-particle
+    options:
+    - jo
+    - vel
+    answer_index: 1
+  - text_md: ' kartet med deg?'
+  explanation_md: 'Line 1 takes jo: the plan was made together, so the speaker treats it as shared ground and expects agreement. Line 2 takes vel: the speaker is unsure and holds the claim out for Marit to confirm.'
+- handle: interpret_nok_as_likelihood
+  op: choose
+  objective: obj-vel-jo-nok-da-in-conversation-01
+  bloom: understand
+  prompt_md: 'Du og Sindre skal gå fra kontoret. Reiseappen viser mange passasjerer på trikken, og du sier: «Trikken er nok full nå.»'
+  stem_md: Hva uttrykker «nok» her?
+  options:
+  - id: shared-fact
+    text: It marks the tram's fullness as a fact already shared by both speakers.
+    correct: false
+    why: Treating a claim as shared ground is a common function of jo, not this nok.
+  - id: settled-next-step
+    text: It marks taking the tram as a next step the speakers have settled together.
+    correct: false
+    why: Conversational da can connect a turn to a settled next step; this nok evaluates the likelihood of the claim.
+  - id: likely-assessment
+    text: It presents a full tram as the speaker's likely assessment.
+    correct: true
+    why: Here nok marks likelihood. The app provides a reason, but nok can also mark a likely assessment based on experience or expectation.
+  - id: enough-tram
+    text: It says that there is a sufficient quantity of tram.
+    correct: false
+    why: Quantity nok means enough, but in this clause nok comments on how likely the claim is.
+- handle: soften_request_with_conversational_da
+  op: recall_fill
+  objective: obj-vel-jo-nok-da-in-conversation-01
+  bloom: apply
+  prompt_md: "Du og Sofie skal på kino, men hun nøler og er usikker på når filmen begynner. Fullfør begge replikkene som vennlige oppmuntringer: inviter henne med, og foreslå å spørre kinobetjenten."
+  audio_target: Bli med, da! Vi spør vakten, da.
+  segments:
+  - text_md: 'Bli med, '
+  - blank_id: coax-particle
+    options:
+    - da
+    - vel
+    - jo
+    answer_index: 0
+  - text_md: '! '
+  - blank_id: placement-choice
+    options:
+    - Da spør vi vakten.
+    - Vi spør vakten, da.
+    answer_index: 1
+  explanation_md: I en vennlig invitasjon kan «da» etter verbet virke oppmuntrende. I «Vi spør vakten, da» har «da» denne funksjonen. Først i «Da spør vi vakten» betyr «da» omtrent «så».
+- handle: diagnose_particle_misfit_in_exchange
+  op: choose
+  objective: obj-vel-jo-nok-da-in-conversation-01
+  bloom: analyze
+  prompt_md: Kari er på besøk hos fetteren Ola i Oslo. Hun vil kjøpe et bor i jernvarehandelen, men har ikke vært der før. Ola kjenner området. Kari antar at butikken stenger klokka seks, men vil at Ola skal bekrefte det. Hvilken partikkel passer i spørsmålet?
+  stem_md: "«Butikken stenger ___ klokka seks?»"
+  derived_from:
+  - section_id: one-sentence-four-moves
+  options:
+  - id: jo-shared
+    text: jo
+    correct: false
+    why: Jo presents the closing time as shared knowledge, but Kari is unsure and seeks confirmation.
+  - id: vel-confirmation
+    text: vel
+    correct: true
+    why: Vel marks Kari's tentative assumption and invites Ola to confirm or correct it.
+  - id: nok-inference
+    text: nok
+    correct: false
+    why: Nok would present her own likely assessment, rather than ask Ola to confirm the time.
+- handle: produce_particle_dialogue_in_new_situation
+  op: write
+  objective: obj-vel-jo-nok-da-in-conversation-01
+  bloom: apply
+  prompt_md: "Det er torsdag ettermiddag på kontoret. Ida og kollegaen Ben planlegger overraskelsesfest for sjefen fredag. Skriv en dialog på 3–5 replikker og 25–60 ord, med navn foran hver replikk. Bruk to av partiklene jo, vel, nok og da, med en funksjon som passer situasjonen."
+  response_language: 'no'
+  min_words: 25
+  max_words: 60
+  judge_prompt: Check the response against the task and report evidence for each criterion.
+  criteria:
+  - id: dialogue-situation
+    instruction: Writes a coherent Norwegian dialogue between the two named colleagues, set in the office party-planning situation, in three to five lines with a speaker label on each line.
+  - id: exactly-two-target-particles
+    instruction: Uses exactly two different target words from jo, vel, nok, and conversational da, with each chosen word used at least once.
+  - id: particle-functions-fit-context
+    instruction: Each chosen word has a context-supported function specified in the prompt; any use of da has a tone supported by the surrounding situation and wording.
+- handle: review_choose_jo_or_vel_for_stance
+  op: recall_fill
+  objective: obj-vel-jo-nok-da-in-conversation-01
+  bloom: apply
+  prompt_md: "Lars sier at de ikke avtalte møtetid. Eva husker at begge skrev klokka seks i kalenderen i går. Fullfør Evas svar med partikkelen som viser til en avtale de kjenner til."
+  audio_target: Vi avtalte jo klokka seks i går.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lars
+      text_md: «Vi avtalte ikke noe klokkeslett.»
+    - speaker: Eva
+      text_md: «Vi avtalte ___ klokka seks i går.»
+  segments:
+  - text_md: '«Vi avtalte '
+  - blank_id: corrective-reminder-particle
+    options:
+    - vel
+    - jo
+    - nok
+    answer_index: 1
+  - text_md: ' klokka seks i går.»'
+  explanation_md: Eva corrects Lars by treating yesterday's agreement as knowledge they already share, so jo fits. Vel would seek confirmation, while nok would present the time as a likely assessment.
+- handle: review_soften_request_with_conversational_da
+  op: recall_fill
+  objective: obj-vel-jo-nok-da-in-conversation-01
+  bloom: apply
+  prompt_md: "Den siste bussen går om ett minutt. Amir knyter fortsatt skoene, og Nora ber ham utålmodig skynde seg. Fullfør replikken med partikkelen som passer den insisterende tonen."
+  audio_target: Kom igjen, da!
+  segments:
+  - text_md: '«Kom igjen, '
+  - blank_id: insistent-particle
+    options:
+    - vel
+    - jo
+    - da
+    answer_index: 2
+  - text_md: '!»'
+  explanation_md: Setningsfinalt «da» kan gjøre en oppfordring mer insisterende når situasjonen og tonen tilsier det. «Vel» gjør replikken mer forsiktig, mens «jo» viser til noe taleren regner som felles kjent.
+- handle: review_nok_likelihood_fill
+  op: write
+  objective: obj-vel-jo-nok-da-in-conversation-01
+  bloom: apply
+  prompt_md: "En veiarbeider melder nettopp om ferske steinras ovenfor Fjellveien. Skriv en setning der Liv sier at veien sannsynligvis blir stengt etter raset. Bruk nok for en sannsynlig vurdering eller vel for en usikker forventning."
+  response_language: 'no'
+  min_words: 6
+  max_words: 7
+  judge_prompt: Accept a natural forecast using either «nok» for a likely conclusion based on the rockfall or «vel» for a tentative expectation. Do not require one particle when both convey a defensible reading.
+  criteria:
+  - id: likelihood-forecast
+    instruction: The response says Fjellveien will likely be closed after the rockfall and uses «nok» or «vel» naturally.
+- handle: review_produce_dialogue_particles
+  op: write
+  objective: obj-vel-jo-nok-da-in-conversation-01
+  bloom: apply
+  prompt_md: "Mina er usikker på om Eirik tok med hyttenøkkelen og ber ham bekrefte. Eirik svarer at han har den. Et værvarsel melder deretter kraftig regn hele lørdagen. Skriv Minas to replikker: Bruk vel i bekreftelsesspørsmålet. Anbefal at dere spiser inne på lørdag, og uttrykk med nok eller vel hvor sannsynlig det er."
+  response_language: 'no'
+  min_words: 12
+  max_words: 20
+  judge_prompt: Require Mina's two requested lines in order. Eirik's reply and the weather alert are background context, not lines the learner must reproduce. Accept «vel» in Mina's confirmation question. For her weather-based assessment, accept either natural «nok» or tentative «vel». Do not fail a response for choosing vel in the second line.
+  criteria:
+  - id: confirmation-question
+    instruction: Mina naturally asks Eirik to confirm whether he has the key, using «vel».
+  - id: weather-assessment
+    instruction: Mina naturally concludes that they will likely eat inside on Saturday, using «nok» or «vel».

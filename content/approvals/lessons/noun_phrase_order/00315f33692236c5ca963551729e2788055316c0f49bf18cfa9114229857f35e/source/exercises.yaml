@@ -1,0 +1,360 @@
+- handle: cabin_demonstrative_map
+  op: categorize
+  objective: obj-noun-phrase-order-01
+  bloom: analyze
+  prompt_md: "Sorter hvert uttrykk etter demonstrativ, tall og kjønn."
+  explanation_md: A demonstrative requires definite adjective and noun forms; a possessive after the noun
+    also requires the definite noun, while a possessive before it takes the indefinite noun.
+  derived_from:
+  - section_id: cabin-demonstrative-map
+  buckets:
+  - bucket_id: singular-masculine
+    label: Demonstrative + definite adjective + definite noun; singular masculine
+  - bucket_id: singular-neuter
+    label: Demonstrative + definite adjective + definite noun; singular neuter
+  - bucket_id: plural
+    label: Demonstrative + definite adjective + definite noun; plural
+  items:
+  - item_id: phrase-1
+    text: denne gamle sekken
+    bucket_id: singular-masculine
+  - item_id: phrase-2
+    text: dette tunge skjerfet
+    bucket_id: singular-neuter
+  - item_id: phrase-3
+    text: disse våte klærne
+    bucket_id: plural
+- handle: identify_cabin_objects
+  op: build
+  objective: obj-noun-phrase-order-01
+  bloom: apply
+  prompt_md: "Skriv én naturlig setning der Mina peker ut en rød lykt, et lite kart og tørre sokker i nærheten. Bruk demonstrativ, bestemt adjektiv og bestemt substantiv i hvert uttrykk."
+  derived_from:
+  - section_id: identify-cabin-objects
+  tokens:
+  - token_id: identify-1
+    text: Mina
+  - token_id: identify-2
+    text: peker
+  - token_id: identify-3
+    text: på
+  - token_id: identify-4
+    text: denne
+  - token_id: identify-5
+    text: røde
+  - token_id: identify-6
+    text: lykta,
+  - token_id: identify-7
+    text: dette
+  - token_id: identify-8
+    text: lille
+  - token_id: identify-9
+    text: kartet
+  - token_id: identify-10
+    text: og
+  - token_id: identify-11
+    text: disse
+  - token_id: identify-12
+    text: tørre
+  - token_id: identify-13
+    text: sokkene.
+  answer_order:
+  - identify-1
+  - identify-2
+  - identify-3
+  - identify-4
+  - identify-5
+  - identify-6
+  - identify-7
+  - identify-8
+  - identify-9
+  - identify-10
+  - identify-11
+  - identify-12
+  - identify-13
+- handle: match_owners_to_packed_objects
+  op: build
+  objective: obj-noun-phrase-order-01
+  bloom: apply
+  prompt_md: "En forteller beskriver pakkingen. Mina sorterer en annen kvinnes sekk, fortellerens og Minas felles skjerf og klær som tilhører flere andre. Sett sammen setningen med eiendomsord etter substantivet."
+  derived_from:
+  - section_id: match-owners-to-packed-objects
+  tokens:
+  - token_id: owners-1
+    text: Mina
+  - token_id: owners-2
+    text: sorterer
+  - token_id: owners-3
+    text: den
+  - token_id: owners-4
+    text: gamle
+  - token_id: owners-5
+    text: sekken
+  - token_id: owners-6
+    text: hennes,
+  - token_id: owners-7
+    text: det
+  - token_id: owners-8
+    text: tunge
+  - token_id: owners-9
+    text: skjerfet
+  - token_id: owners-10
+    text: vårt
+  - token_id: owners-11
+    text: og
+  - token_id: owners-12
+    text: de
+  - token_id: owners-13
+    text: våte
+  - token_id: owners-14
+    text: klærne
+  - token_id: owners-15
+    text: deres.
+  answer_order:
+  - owners-1
+  - owners-2
+  - owners-3
+  - owners-4
+  - owners-5
+  - owners-6
+  - owners-7
+  - owners-8
+  - owners-9
+  - owners-10
+  - owners-11
+  - owners-12
+  - owners-13
+  - owners-14
+  - owners-15
+- handle: repair_the_packing_labels
+  op: find_fix
+  objective: obj-noun-phrase-order-01
+  bloom: analyze
+  prompt_md: "Velg ordet som bryter mønsteret med eiendomsordet etter substantivet."
+  derived_from:
+  - section_id: repair-the-packing-labels
+  tokens:
+  - token_id: repair-1
+    text: den
+  - token_id: repair-2
+    text: gamle
+  - token_id: repair-3
+    text: sekk
+  - token_id: repair-4
+    text: min
+  error_token_id: repair-3
+  feedback: Replace sekk with sekken. The noun must stay definite before the postposed possessive min;
+    keep den before the adjective.
+- handle: move_the_owner
+  op: build
+  objective: obj-noun-phrase-order-01
+  bloom: apply
+  prompt_md: "Skriv om de tre pakkelappene med eiendomsordet først: den gamle sekken min, det tunge skjerfet vårt og de våte klærne deres. Bruk ubestemt substantiv etter eiendomsordet."
+  explanation_md: After the noun, the possessive requires a definite noun; before the noun, it requires
+    the indefinite noun form.
+  derived_from:
+  - section_id: move-the-owner
+  tokens:
+  - token_id: move-1
+    text: Mina
+  - token_id: move-2
+    text: viser
+  - token_id: move-3
+    text: fram
+  - token_id: move-4
+    text: min
+  - token_id: move-5
+    text: gamle
+  - token_id: move-6
+    text: sekk,
+  - token_id: move-7
+    text: vårt
+  - token_id: move-8
+    text: tunge
+  - token_id: move-9
+    text: skjerf
+  - token_id: move-10
+    text: og
+  - token_id: move-11
+    text: deres
+  - token_id: move-12
+    text: våte
+  - token_id: move-13
+    text: klær.
+  answer_order:
+  - move-1
+  - move-2
+  - move-3
+  - move-4
+  - move-5
+  - move-6
+  - move-7
+  - move-8
+  - move-9
+  - move-10
+  - move-11
+  - move-12
+  - move-13
+- handle: choose_and_complete_a_possessive_frame
+  op: recall_fill
+  objective: obj-noun-phrase-order-01
+  bloom: apply
+  prompt_md: "Fullfør begge hyttemeldingene. Sett eiendomsordet først i det første uttrykket og sist i det andre."
+  derived_from:
+  - section_id: choose-and-complete-a-possessive-frame
+  audio_target: Mitt grønne skjerf. Den store matboksen vår.
+  segments:
+  - text_md: 'Første melding – eiendomsord først:'
+  - blank_id: preposed-scarf
+    options:
+    - mitt grønne skjerf
+    - mitt grønne skjerfet
+    answer_index: 0
+  - text_md: '. Andre melding – eiendomsord sist:'
+  - blank_id: postposed-lunchbox
+    options:
+    - den store matboks vår
+    - den store matboksen vår
+    answer_index: 1
+  - text_md: .
+- handle: point_out_the_correct_belongings
+  op: build
+  objective: obj-noun-phrase-order-01
+  bloom: apply
+  prompt_md: "Skriv som Mina. Pek ut sekken som er hennes blant de andre sekkene. Bruk demonstrativ, bestemt adjektiv og substantiv, og sett eiendomsordet til slutt."
+  derived_from:
+  - section_id: point-out-the-correct-belongings
+  tokens:
+  - token_id: point-1
+    text: Jeg
+  - token_id: point-2
+    text: peker
+  - token_id: point-3
+    text: på
+  - token_id: point-4
+    text: denne
+  - token_id: point-5
+    text: gamle
+  - token_id: point-6
+    text: sekken
+  - token_id: point-7
+    text: min.
+  answer_order:
+  - point-1
+  - point-2
+  - point-3
+  - point-4
+  - point-5
+  - point-6
+  - point-7
+- handle: finish_packing_the_cabin
+  op: recall_fill
+  objective: obj-noun-phrase-order-01
+  bloom: apply
+  prompt_md: "Fullfør de fire replikkene med riktig uttrykksmåte: bare demonstrativ, eiendomsord først, eiendomsord sist eller demonstrativ med eiendomsord sist."
+  derived_from:
+  - section_id: finish-packing-the-cabin
+  audio_target: 'Mina: Se på denne gamle jakken. Eirik: Ta med mine svarte støvler. Mina: Her er de tunge
+    veskene våre. Eirik: Vi trenger dette felles utstyret vårt.'
+  segments:
+  - text_md: 'Mina: Se på '
+  - blank_id: demonstrative-jacket
+    options:
+    - denne gamle jakken
+    - denne gamle jakke
+    answer_index: 0
+  - text_md: '. Eirik: Ta med '
+  - blank_id: preposed-boots
+    options:
+    - mine svarte støvler
+    - mine svarte støvlene
+    answer_index: 0
+  - text_md: '. Mina: Her er '
+  - blank_id: postposed-bags
+    options:
+    - de tunge veske våre
+    - de tunge veskene våre
+    answer_index: 1
+  - text_md: '. Eirik: Vi trenger '
+  - blank_id: combined-equipment
+    options:
+    - dette felles utstyr vårt
+    - dette felles utstyret vårt
+    answer_index: 1
+  - text_md: .
+- handle: find_the_station_luggage
+  op: write
+  objective: obj-noun-phrase-order-01
+  bloom: apply
+  prompt_md: "Du er Mina på stasjonen. Skriv fire uttrykk: Pek ut én liten koffert med «denne», si at flere tunge vesker er dine med eiendomsord først, og beskriv den røde ryggsekken dere eier sammen med «vår» til slutt. Pek så ut den samme sekken med «denne» og behold «vår» til slutt. Bruk «koffert», «veske» og «ryggsekk»."
+  derived_from:
+  - section_id: find-the-station-luggage
+  response_language: 'no'
+  judge_prompt: >-
+    Check all four requested meanings and report evidence for every criterion. Treat Mina as the speaker:
+    the heavy bags belong to her, so that phrase means “my heavy bags.” Require natural Bokmål
+    agreement and the specified order. Require denne for the fourth demonstrative frame. Accept
+    ordinary Bokmål inflection of the specified station nouns, but do not accept a cabin phrase that ignores
+    the new luggage meanings.
+  criteria:
+  - id: demonstrative-suitcase
+    instruction: Produces a phrase meaning one small suitcase using denne, a definite adjective, and a
+      definite noun.
+  - id: preposed-heavy-bags
+    instruction: Produces a phrase for several heavy bags belonging to Mina (the speaker), with
+      the possessive first, followed by an adjective and an indefinite plural noun.
+  - id: postposed-shared-backpack
+    instruction: Produces a phrase meaning the shared red backpack, using den + definite adjective + definite
+      noun + postposed vår.
+  - id: combined-shared-backpack
+    instruction: Produces a phrase meaning this shared red backpack of ours, using denne, a definite adjective,
+      a definite noun, and a postposed possessive.
+  - id: station-transfer
+    instruction: Uses the specified station luggage vocabulary and applies the requested noun-phrase frames
+      to the changed situation rather than copying a cabin expression.
+- handle: short_retrieval_review
+  op: recall_fill
+  objective: obj-noun-phrase-order-01
+  bloom: remember
+  prompt_md: Fullfør hver frase fra hukommelsen. Velg riktig grammatisk term for hver regel.
+  derived_from:
+  - section_id: short-retrieval-review
+  audio_target: Denne gamle sekken. Mitt grønne skjerf. Den store matboksen vår. Disse våte hanskene mine.
+  segments:
+  - text_md: 'En sekk nær meg: «denne gamle '
+  - blank_id: review-old-backpack
+    options:
+    - sekken
+    - sekk
+    answer_index: 0
+  - text_md: '. Et grønt skjerf er mitt; eiendomsordet står først: «mitt grønne '
+  - blank_id: review-green-scarf
+    options:
+    - skjerf
+    - skjerfet
+    answer_index: 0
+  - text_md: '. Matboksen er stor og tilhører oss; eiendomsordet står sist: «den store matboksen '
+  - blank_id: review-lunchbox
+    options:
+    - vår
+    - vårt
+    answer_index: 0
+  - text_md: '. Hanskene er våte, mine og nær meg: «disse våte hanskene '
+  - blank_id: review-wet-gloves
+    options:
+    - mine
+    - min
+    answer_index: 0
+  - text_md: '. Etter et foranstilt eiendomsord står substantivet i '
+  - blank_id: review-preposed-rule
+    options:
+    - ubestemt form
+    - bestemt form
+    answer_index: 0
+  - text_md: '; før et etterstilt eiendomsord står substantivet i '
+  - blank_id: review-postposed-rule
+    options:
+    - ubestemt form
+    - bestemt form
+    answer_index: 1
+  - text_md: .

@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "coordinating_conjunctions",
   "kind": "grammar",
   "language": "nb-NO",
@@ -112,6 +112,26 @@
     {
       "kind": "section",
       "id": "quick-retrieval-and-review"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_og_addition"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_men_contrast"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_eller_choice"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_for_reason"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_sa_result"
     }
   ],
   "sections": [
@@ -2580,43 +2600,33 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Choose the sentence where both items belong together and og expresses simple addition."
+          "value": "Choose the sentence that matches the order."
         }
       ],
       "explanation": null,
       "payload": {
         "options": [
           {
-            "option_id": "addition",
-            "text": "Mina kjøper kaffe og kake.",
-            "why": "Both items are included, so og expresses addition."
-          },
-          {
-            "option_id": "reason",
-            "text": "Mina kjøper kaffe, for hun er trøtt.",
-            "why": "For introduces a reason."
-          },
-          {
             "option_id": "choice",
             "text": "Mina kjøper kaffe eller kake.",
-            "why": "Eller presents the items as alternatives."
-          },
-          {
-            "option_id": "result",
-            "text": "Mina er trøtt, så hun kjøper kaffe.",
-            "why": "Så introduces a result."
+            "why": "Eller presents alternatives rather than two included items."
           },
           {
             "option_id": "contrast",
             "text": "Mina kjøper kaffe, men ikke kake.",
-            "why": "Men introduces a contrast rather than simple addition."
+            "why": "Men contrasts coffee with a cake that is not included."
+          },
+          {
+            "option_id": "addition",
+            "text": "Mina kjøper kaffe og kake.",
+            "why": "Og includes both ordered items."
           }
         ],
         "answer_id": "addition",
         "stem": [
           {
             "kind": "text",
-            "value": "Mina wants both coffee and cake. Which sentence matches?"
+            "value": "Coffee: yes. Cake: yes."
           }
         ]
       }
@@ -2624,78 +2634,109 @@
     {
       "kind": "exercise",
       "id": "build_with_og",
-      "operation": "build",
+      "operation": "recall_fill",
       "objective_id": "obj-coordinating-conjunctions-01",
       "prompt": [
         {
           "kind": "text",
-          "value": "Build three sentences. Use og to connect equal words or actions, and do not repeat a shared subject."
+          "value": "Fill in the conjunction that includes both details."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Use og between parallel nouns, verbs, or descriptions; when one subject performs both actions, state it once."
+          "value": "«Og» binder sammen ord eller handlinger som legges til hverandre."
         }
       ],
       "payload": {
-        "tokens": [
+        "segments": [
           {
-            "token_id": "og-02",
-            "text": "og",
-            "fixed": false
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Kafeen er liten"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
           },
           {
-            "token_id": "og-03",
-            "text": "kake.",
-            "fixed": false
+            "kind": "blank",
+            "blank_id": "add-01",
+            "options": [
+              "og",
+              "eller"
+            ],
+            "answer_index": 0
           },
           {
-            "token_id": "og-04",
-            "text": "Jonas går en tur",
-            "fixed": false
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "koselig. Mina bestiller kaffe"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
           },
           {
-            "token_id": "og-05",
-            "text": "og",
-            "fixed": false
+            "kind": "blank",
+            "blank_id": "add-02",
+            "options": [
+              "eller",
+              "og"
+            ],
+            "answer_index": 1
           },
           {
-            "token_id": "og-06",
-            "text": "spiser lunsj ute.",
-            "fixed": false
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "kake. Jonas går en tur"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
           },
           {
-            "token_id": "og-07",
-            "text": "Kafeen er liten",
-            "fixed": false
+            "kind": "blank",
+            "blank_id": "add-03",
+            "options": [
+              "og",
+              "eller"
+            ],
+            "answer_index": 0
           },
           {
-            "token_id": "og-08",
-            "text": "og",
-            "fixed": false
-          },
-          {
-            "token_id": "og-09",
-            "text": "koselig.",
-            "fixed": false
-          },
-          {
-            "token_id": "og-01",
-            "text": "Mina bestiller kaffe",
-            "fixed": false
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "spiser lunsj ute."
+              }
+            ]
           }
-        ],
-        "answer_order": [
-          "og-01",
-          "og-02",
-          "og-03",
-          "og-04",
-          "og-05",
-          "og-06",
-          "og-07",
-          "og-08",
-          "og-09"
         ]
       }
     },
@@ -2707,24 +2748,24 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Classify each connection by meaning. Put simple additions under Addition and connections that require men under Contrast."
+          "value": "Sort each sentence by the relationship expressed by the conjunction."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Og adds compatible information, while men marks a contrast between an expectation and what follows."
+          "value": "«Og» legger til informasjon. «Men» uttrykker en motsetning."
         }
       ],
       "payload": {
         "buckets": [
           {
             "bucket_id": "addition",
-            "label": "Addition"
+            "label": "Tillegg"
           },
           {
             "bucket_id": "contrast",
-            "label": "Contrast requiring men"
+            "label": "Kontrast"
           }
         ],
         "items": [
@@ -2764,10 +2805,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each change of plan with the joining word that connects an expectation to a contrasting reality."
+          "value": "Fill in the conjunction that shows the contrast in each sentence."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Men» innleder en opplysning som bryter med forventningen i første del av setningen."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -2776,10 +2822,6 @@
               {
                 "kind": "text",
                 "value": "Vi vil sitte ute,"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -2803,10 +2845,6 @@
               {
                 "kind": "text",
                 "value": "det regner. Kafeen er liten,"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -2830,10 +2868,6 @@
               {
                 "kind": "text",
                 "value": "den er populær. Jonas vil gå en lang tur,"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -2856,7 +2890,7 @@
               },
               {
                 "kind": "text",
-                "value": "Mina vil gå en kort tur."
+                "value": "Mina vil bli hjemme."
               }
             ]
           }
@@ -2871,13 +2905,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each sentence with og when both things are included or eller when they are alternatives."
+          "value": "Fill in the conjunction in each sentence. Use the clues to distinguish between two things happening and a choice between alternatives."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Use og when both items or actions apply; use eller when the listener must choose between possibilities."
+          "value": "«Og» binder sammen ting som begge skjer. «Eller» viser alternativer når man velger én av dem. «Både» viser at begge gjelder, mens «velger én» viser et valg."
         }
       ],
       "payload": {
@@ -2913,7 +2947,7 @@
               },
               {
                 "kind": "text",
-                "value": "kake. Vil Jonas ha kaffe"
+                "value": "kake. Jonas velger én drikk: kaffe"
               },
               {
                 "kind": "text",
@@ -2939,7 +2973,7 @@
               },
               {
                 "kind": "text",
-                "value": "te? På lørdag kan de gå på kafé"
+                "value": "te. På lørdag velger de én aktivitet: gå på kafé"
               },
               {
                 "kind": "text",
@@ -2965,7 +2999,7 @@
               },
               {
                 "kind": "text",
-                "value": "lage mat hjemme. Etterpå går Mina en tur"
+                "value": "lage mat hjemme. Etterpå gjør Mina begge deler: går en tur"
               },
               {
                 "kind": "text",
@@ -3001,73 +3035,109 @@
     {
       "kind": "exercise",
       "id": "ask_about_alternatives",
-      "operation": "build",
+      "operation": "recall_fill",
       "objective_id": "obj-coordinating-conjunctions-01",
       "prompt": [
         {
           "kind": "text",
-          "value": "Build three questions in which Mina asks Jonas to choose between two genuine alternatives."
+          "value": "Fill in the conjunction that shows two alternatives in each question."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Eller» setter ett mulig valg opp mot et annet."
+        }
+      ],
       "payload": {
-        "tokens": [
+        "segments": [
           {
-            "token_id": "ask-02",
-            "text": "eller",
-            "fixed": false
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Skal vi møtes klokka ti"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
           },
           {
-            "token_id": "ask-03",
-            "text": "te?",
-            "fixed": false
+            "kind": "blank",
+            "blank_id": "ask-01",
+            "options": [
+              "eller",
+              "og"
+            ],
+            "answer_index": 0
           },
           {
-            "token_id": "ask-04",
-            "text": "Skal vi møtes klokka ti",
-            "fixed": false
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "klokka elleve? Vil du ha kaffe"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
           },
           {
-            "token_id": "ask-05",
-            "text": "eller",
-            "fixed": false
+            "kind": "blank",
+            "blank_id": "ask-02",
+            "options": [
+              "og",
+              "eller"
+            ],
+            "answer_index": 1
           },
           {
-            "token_id": "ask-06",
-            "text": "klokka elleve?",
-            "fixed": false
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "te? Skal vi gå på kafé"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
           },
           {
-            "token_id": "ask-07",
-            "text": "Skal vi gå på kafé",
-            "fixed": false
+            "kind": "blank",
+            "blank_id": "ask-03",
+            "options": [
+              "og",
+              "eller"
+            ],
+            "answer_index": 1
           },
           {
-            "token_id": "ask-08",
-            "text": "eller",
-            "fixed": false
-          },
-          {
-            "token_id": "ask-09",
-            "text": "lage mat hjemme?",
-            "fixed": false
-          },
-          {
-            "token_id": "ask-01",
-            "text": "Vil du ha kaffe",
-            "fixed": false
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "lage mat hjemme?"
+              }
+            ]
           }
-        ],
-        "answer_order": [
-          "ask-01",
-          "ask-02",
-          "ask-03",
-          "ask-04",
-          "ask-05",
-          "ask-06",
-          "ask-07",
-          "ask-08",
-          "ask-09"
         ]
       }
     },
@@ -3079,10 +3149,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Match each decision on the left with its sensible reason on the right. Each completed sentence places the decision before for and the reason after it."
+          "value": "Match each choice with its reason."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Med «for» kommer valget først og forklaringen etterpå."
+        }
+      ],
       "payload": {
         "left": [
           {
@@ -3091,11 +3166,11 @@
           },
           {
             "left_id": "decision-02",
-            "text": "Vi går inn, for"
+            "text": "Jeg tar på meg votter, for"
           },
           {
             "left_id": "decision-03",
-            "text": "Jeg bestiller te, for"
+            "text": "Jeg bestiller vann, for"
           }
         ],
         "right": [
@@ -3109,7 +3184,7 @@
           },
           {
             "right_id": "reason-03",
-            "text": "jeg liker ikke kaffe."
+            "text": "jeg er tørst."
           }
         ],
         "pairs": [
@@ -3136,13 +3211,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each everyday decision with a logical reason introduced by for."
+          "value": "Choose the continuation that fits each blank."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Place the action or decision first, then for and the cause: Jeg tar på en jakke, for det er kaldt."
+          "value": "«For» innleder grunnen til handlingen eller valget i første del av setningen."
         }
       ],
       "payload": {
@@ -3153,10 +3228,6 @@
               {
                 "kind": "text",
                 "value": "Jeg tar på en jakke,"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -3176,10 +3247,6 @@
               {
                 "kind": "text",
                 "value": ". Vi tar bussen,"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -3199,10 +3266,6 @@
               {
                 "kind": "text",
                 "value": ". Vi møtes inne,"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -3236,13 +3299,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Choose for when the second clause explains the first. Choose så when the second clause is a consequence of the first."
+          "value": "Fill in the correct conjunction in each sentence."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Use for when the second clause is the reason; use så when the second clause is the result."
+          "value": "«For» innleder en grunn. «Så» innleder et resultat."
         }
       ],
       "payload": {
@@ -3252,11 +3315,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Vi går på kafé,"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "Vi tar med paraply,"
               }
             ]
           },
@@ -3278,11 +3337,7 @@
               },
               {
                 "kind": "text",
-                "value": "det regner. Det regner,"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "det regner. Det er glatt ute,"
               }
             ]
           },
@@ -3304,11 +3359,7 @@
               },
               {
                 "kind": "text",
-                "value": "vi går på kafé. Jeg spiser lunsj,"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "vi går forsiktig. Nora blir hjemme,"
               }
             ]
           },
@@ -3330,11 +3381,7 @@
               },
               {
                 "kind": "text",
-                "value": "jeg er sulten. Jeg er sulten,"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "hun er syk. Bussen er forsinket,"
               }
             ]
           },
@@ -3356,7 +3403,7 @@
               },
               {
                 "kind": "text",
-                "value": "jeg spiser lunsj."
+                "value": "vi kommer senere."
               }
             ]
           }
@@ -3366,55 +3413,83 @@
     {
       "kind": "exercise",
       "id": "reverse_the_connection",
-      "operation": "build",
+      "operation": "recall_fill",
       "objective_id": "obj-coordinating-conjunctions-01",
       "prompt": [
         {
           "kind": "text",
-          "value": "Build two sentences from the same facts. First place the action before its reason with for. Then reverse the ideas and place the situation before its result with så."
+          "value": "Fill in «for» or «så». In one sentence, the reason comes first; in the other, the result does."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Med «for» kommer grunnen sist. Med «så» kommer resultatet sist."
+        }
+      ],
       "payload": {
-        "tokens": [
+        "segments": [
           {
-            "token_id": "reverse-02",
-            "text": "for",
-            "fixed": false
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Bussen er forsinket,"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
           },
           {
-            "token_id": "reverse-03",
-            "text": "bussen er forsinket.",
-            "fixed": false
+            "kind": "blank",
+            "blank_id": "reverse-01",
+            "options": [
+              "så",
+              "for"
+            ],
+            "answer_index": 0
           },
           {
-            "token_id": "reverse-04",
-            "text": "Bussen er forsinket,",
-            "fixed": false
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "Lea tar taxi. Lea tar taxi,"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
           },
           {
-            "token_id": "reverse-05",
-            "text": "så",
-            "fixed": false
+            "kind": "blank",
+            "blank_id": "reverse-02",
+            "options": [
+              "for",
+              "så"
+            ],
+            "answer_index": 0
           },
           {
-            "token_id": "reverse-06",
-            "text": "Lea tar taxi.",
-            "fixed": false
-          },
-          {
-            "token_id": "reverse-01",
-            "text": "Lea tar taxi,",
-            "fixed": false
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "bussen er forsinket."
+              }
+            ]
           }
-        ],
-        "answer_order": [
-          "reverse-01",
-          "reverse-02",
-          "reverse-03",
-          "reverse-04",
-          "reverse-05",
-          "reverse-06"
         ]
       }
     },
@@ -3426,57 +3501,62 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Classify each sentence by the relationship expressed by its joining word. Production and punctuation are not scored."
+          "value": "Sort each sentence by the relationship expressed by the conjunction."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Bindeordet viser om setningen uttrykker tillegg, kontrast, valg, grunn eller resultat."
+        }
+      ],
       "payload": {
         "buckets": [
           {
             "bucket_id": "addition",
-            "label": "Addition"
+            "label": "Tillegg"
           },
           {
             "bucket_id": "contrast",
-            "label": "Contrast"
+            "label": "Kontrast"
           },
           {
             "bucket_id": "choice",
-            "label": "Choice"
+            "label": "Valg"
           },
           {
             "bucket_id": "reason",
-            "label": "Reason"
+            "label": "Grunn"
           },
           {
             "bucket_id": "result",
-            "label": "Result"
+            "label": "Resultat"
           }
         ],
         "items": [
           {
             "item_id": "relationship-01",
-            "text": "Mina drikker kaffe, og Jonas drikker te.",
+            "text": "Iben leser boka, og Noor lager middag.",
             "bucket_id": "addition"
           },
           {
             "item_id": "relationship-02",
-            "text": "Mina drikker kaffe, men Jonas drikker te.",
+            "text": "Lia sykler til jobb, men Eva tar bussen.",
             "bucket_id": "contrast"
           },
           {
             "item_id": "relationship-03",
-            "text": "Mina drikker kaffe, eller Jonas drikker te.",
+            "text": "Vi kan møtes tirsdag, eller vi kan møtes onsdag.",
             "bucket_id": "choice"
           },
           {
             "item_id": "relationship-04",
-            "text": "Mina drikker kaffe, for hun er trøtt.",
+            "text": "Noor tar med paraply, for det skal regne.",
             "bucket_id": "reason"
           },
           {
             "item_id": "relationship-05",
-            "text": "Mina er trøtt, så hun drikker kaffe.",
+            "text": "Bussen er forsinket, så Eva kommer sent.",
             "bucket_id": "result"
           }
         ]
@@ -3485,109 +3565,176 @@
     {
       "kind": "exercise",
       "id": "join_two_simple_clauses",
-      "operation": "build",
+      "operation": "recall_fill",
       "objective_id": "obj-coordinating-conjunctions-01",
       "prompt": [
         {
           "kind": "text",
-          "value": "Build five sentences from the supplied clause pairs. Use the requested relationships in this order: addition, contrast, choice, reason, result. Preserve both ideas in every pair."
+          "value": "Join each pair of sentences with the conjunction that shows their relationship. In the first pair, the conjunction should combine the orders."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Og» legger til, «men» viser kontrast, «eller» gir et valg, «for» gir en grunn, og «så» viser et resultat."
+        }
+      ],
       "payload": {
-        "tokens": [
+        "segments": [
           {
-            "token_id": "join-02",
-            "text": "og",
-            "fixed": false
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Mina bestiller kaffe,"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
           },
           {
-            "token_id": "join-03",
-            "text": "Jonas bestiller te.",
-            "fixed": false
+            "kind": "blank",
+            "blank_id": "join-01",
+            "options": [
+              "og",
+              "men",
+              "eller",
+              "for",
+              "så"
+            ],
+            "answer_index": 0
           },
           {
-            "token_id": "join-04",
-            "text": "Det er kaldt,",
-            "fixed": false
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "Jonas bestiller te. Det er kaldt,"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
           },
           {
-            "token_id": "join-05",
-            "text": "men",
-            "fixed": false
+            "kind": "blank",
+            "blank_id": "join-02",
+            "options": [
+              "og",
+              "men",
+              "eller",
+              "for",
+              "så"
+            ],
+            "answer_index": 1
           },
           {
-            "token_id": "join-06",
-            "text": "vi sitter ute.",
-            "fixed": false
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "vi sitter ute. Vi kan møtes klokka ti,"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
           },
           {
-            "token_id": "join-07",
-            "text": "Vi kan møtes klokka ti,",
-            "fixed": false
+            "kind": "blank",
+            "blank_id": "join-03",
+            "options": [
+              "og",
+              "men",
+              "eller",
+              "for",
+              "så"
+            ],
+            "answer_index": 2
           },
           {
-            "token_id": "join-08",
-            "text": "eller",
-            "fixed": false
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "vi kan møtes klokka elleve. Vi sitter inne,"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
           },
           {
-            "token_id": "join-09",
-            "text": "vi kan møtes klokka elleve.",
-            "fixed": false
+            "kind": "blank",
+            "blank_id": "join-04",
+            "options": [
+              "og",
+              "men",
+              "eller",
+              "for",
+              "så"
+            ],
+            "answer_index": 3
           },
           {
-            "token_id": "join-10",
-            "text": "Vi sitter inne,",
-            "fixed": false
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "det regner. Bussen er forsinket,"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
           },
           {
-            "token_id": "join-11",
-            "text": "for",
-            "fixed": false
+            "kind": "blank",
+            "blank_id": "join-05",
+            "options": [
+              "og",
+              "men",
+              "eller",
+              "for",
+              "så"
+            ],
+            "answer_index": 4
           },
           {
-            "token_id": "join-12",
-            "text": "det regner.",
-            "fixed": false
-          },
-          {
-            "token_id": "join-13",
-            "text": "Bussen er forsinket,",
-            "fixed": false
-          },
-          {
-            "token_id": "join-14",
-            "text": "så",
-            "fixed": false
-          },
-          {
-            "token_id": "join-15",
-            "text": "Jonas kommer sent.",
-            "fixed": false
-          },
-          {
-            "token_id": "join-01",
-            "text": "Mina bestiller kaffe,",
-            "fixed": false
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "Jonas kommer sent."
+              }
+            ]
           }
-        ],
-        "answer_order": [
-          "join-01",
-          "join-02",
-          "join-03",
-          "join-04",
-          "join-05",
-          "join-06",
-          "join-07",
-          "join-08",
-          "join-09",
-          "join-10",
-          "join-11",
-          "join-12",
-          "join-13",
-          "join-14",
-          "join-15"
         ]
       }
     },
@@ -3599,104 +3746,109 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Reconstruct the café update. Use the supplied clauses and all five joining words so each message expresses its intended meaning."
+          "value": "Put the conversation together as Nora and Lea wait for the bus. First Nora mentions the delay. Then she asks where they should wait, and Lea answers. Finally, Lea comments on the rain."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Forsinkelsen forklarer den sene ankomsten. At de har god tid, forklarer det rolige svaret. Ventestedene er alternativer, aktivitetene legges sammen, og været står i kontrast til planen."
+        }
+      ],
       "payload": {
         "tokens": [
           {
+            "token_id": "cafe-01",
+            "text": "jeg kommer senere enn planlagt.",
+            "fixed": false
+          },
+          {
             "token_id": "cafe-02",
-            "text": "så",
-            "fixed": false
-          },
-          {
-            "token_id": "cafe-03",
-            "text": "jeg kommer litt sent.",
-            "fixed": false
-          },
-          {
-            "token_id": "cafe-04",
-            "text": "Det går bra,",
-            "fixed": false
-          },
-          {
-            "token_id": "cafe-05",
             "text": "for",
             "fixed": false
           },
           {
+            "token_id": "cafe-03",
+            "text": "ved døra?",
+            "fixed": false
+          },
+          {
+            "token_id": "cafe-04",
+            "text": "Nora: Bussen er forsinket,",
+            "fixed": false
+          },
+          {
+            "token_id": "cafe-05",
+            "text": "drikker kaffe.",
+            "fixed": false
+          },
+          {
             "token_id": "cafe-06",
-            "text": "jeg har en bok med meg.",
-            "fixed": false
-          },
-          {
-            "token_id": "cafe-07",
-            "text": "Vil du vente inne",
-            "fixed": false
-          },
-          {
-            "token_id": "cafe-08",
-            "text": "eller",
-            "fixed": false
-          },
-          {
-            "token_id": "cafe-09",
-            "text": "ute?",
-            "fixed": false
-          },
-          {
-            "token_id": "cafe-10",
-            "text": "Jeg sitter inne",
-            "fixed": false
-          },
-          {
-            "token_id": "cafe-11",
-            "text": "og",
-            "fixed": false
-          },
-          {
-            "token_id": "cafe-12",
-            "text": "leser.",
-            "fixed": false
-          },
-          {
-            "token_id": "cafe-13",
-            "text": "Det regner,",
-            "fixed": false
-          },
-          {
-            "token_id": "cafe-14",
             "text": "men",
             "fixed": false
           },
           {
-            "token_id": "cafe-15",
-            "text": "jeg har paraply.",
+            "token_id": "cafe-07",
+            "text": "Nora: Vil du vente ved vinduet",
             "fixed": false
           },
           {
-            "token_id": "cafe-01",
-            "text": "Bussen er forsinket,",
+            "token_id": "cafe-08",
+            "text": "vi har god tid.",
+            "fixed": false
+          },
+          {
+            "token_id": "cafe-09",
+            "text": "og",
+            "fixed": false
+          },
+          {
+            "token_id": "cafe-10",
+            "text": "vi kan sitte under taket.",
+            "fixed": false
+          },
+          {
+            "token_id": "cafe-11",
+            "text": "Lea: Det er greit,",
+            "fixed": false
+          },
+          {
+            "token_id": "cafe-12",
+            "text": "eller",
+            "fixed": false
+          },
+          {
+            "token_id": "cafe-13",
+            "text": "Lea: Det regner kraftig,",
+            "fixed": false
+          },
+          {
+            "token_id": "cafe-14",
+            "text": "Lea: Jeg sitter ved vinduet",
+            "fixed": false
+          },
+          {
+            "token_id": "cafe-15",
+            "text": "så",
             "fixed": false
           }
         ],
         "answer_order": [
-          "cafe-01",
-          "cafe-02",
-          "cafe-03",
           "cafe-04",
-          "cafe-05",
-          "cafe-06",
-          "cafe-07",
-          "cafe-08",
-          "cafe-09",
-          "cafe-10",
+          "cafe-15",
+          "cafe-01",
           "cafe-11",
+          "cafe-02",
+          "cafe-08",
+          "cafe-07",
           "cafe-12",
-          "cafe-13",
+          "cafe-03",
           "cafe-14",
-          "cafe-15"
+          "cafe-09",
+          "cafe-05",
+          "cafe-13",
+          "cafe-06",
+          "cafe-10"
         ]
       }
     },
@@ -3708,10 +3860,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete Amir and Lea's dinner exchange. Use each joining word once so addition, contrast, choice, reason, and result remain distinct."
+          "value": "Complete the conversation about dinner."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "De fem tomrommene skiller mellom tillegg, kontrast, valg, grunn og resultat."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -3748,7 +3905,7 @@
               },
               {
                 "kind": "text",
-                "value": "på restaurant? Lea: Jeg vil lage suppe"
+                "value": "på restaurant? Lea: Jeg vil lage både suppe"
               },
               {
                 "kind": "text",
@@ -3778,10 +3935,6 @@
               {
                 "kind": "text",
                 "value": "salat. Amir: Jeg liker suppe,"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -3807,10 +3960,6 @@
               {
                 "kind": "text",
                 "value": "jeg har ikke mye tid. Lea: Vi kan spise hjemme,"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -3836,10 +3985,6 @@
               {
                 "kind": "text",
                 "value": "restauranten er stengt. Amir: Butikken er også stengt,"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -3879,35 +4024,333 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write five short Norwegian sentences about one evening involving food, weather, transport, and a change of plan. Write one sentence with og for addition, one with men for contrast, one with eller for choice, one with for for a reason, and one with så for a result."
+          "value": "Read Lea’s message and reply in Norwegian. Confirm or adjust the dinner plan, explain your choices, and connect the details with «og», «men», «eller», «for», and «så»."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 20,
-        "max_words": 70,
-        "judge_prompt": "Check that the response contains five short Norwegian sentences and report evidence for each criterion. Judge each conjunction by the relationship it creates. Do not score vocabulary variety.",
+        "min_words": 30,
+        "max_words": 60,
+        "judge_prompt": "Evaluate criteria reply-purpose, explains-choices, uses-conjunctions as gating criteria; record og-addition-observation, men-contrast-observation, eller-choice-observation, for-reason-observation, and sa-result-observation diagnostically; observations must never make the response fail.",
         "criteria": [
           {
-            "id": "og-addition",
-            "instruction": "Contains one sentence using og to express addition."
+            "id": "reply-purpose",
+            "instruction": "The reply is a Norwegian reply to Lea that confirms or adjusts the dinner plan."
           },
           {
-            "id": "men-contrast",
-            "instruction": "Contains one sentence using men to express contrast."
+            "id": "explains-choices",
+            "instruction": "The reply explains the choices, for example why the meal is at home or which time fits, using the supplied facts."
           },
           {
-            "id": "eller-choice",
-            "instruction": "Contains one sentence using eller to present alternatives."
+            "id": "uses-conjunctions",
+            "instruction": "The reply links ideas with all five coordinating conjunctions og, men, eller, for, and så, each used accurately."
           },
           {
-            "id": "for-reason",
-            "instruction": "Contains one sentence placing a statement or action before for and a logical reason after it."
+            "id": "og-addition-observation",
+            "instruction": "Observation only: note whether og expresses addition accurately; do not fail the reply on this observation."
           },
           {
-            "id": "sa-result",
-            "instruction": "Contains one sentence placing a situation before så and a logical result after it."
+            "id": "men-contrast-observation",
+            "instruction": "Observation only: note whether men expresses contrast accurately; do not fail the reply on this observation."
+          },
+          {
+            "id": "eller-choice-observation",
+            "instruction": "Observation only: note whether eller presents alternatives accurately; do not fail the reply on this observation."
+          },
+          {
+            "id": "for-reason-observation",
+            "instruction": "Observation only: note whether for introduces a logical reason accurately; do not fail the reply on this observation."
+          },
+          {
+            "id": "sa-result-observation",
+            "instruction": "Observation only: note whether så introduces a logical result accurately; do not fail the reply on this observation."
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Lea",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Middag hjemme i kveld. Restauranten er stengt. Suppe, salat, brød. Amir har liten tid. Mulige tider: klokka seks; klokka sju.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_og_addition",
+      "operation": "recall_fill",
+      "objective_id": "obj-coordinating-conjunctions-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Complete the café order. Mina wants both items."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Og» binder sammen de to tingene Mina bestiller."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Jeg bestiller te"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-og-01",
+            "options": [
+              "eller",
+              "og",
+              "men"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "kake."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_men_contrast",
+      "operation": "recall_fill",
+      "objective_id": "obj-coordinating-conjunctions-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Complete the sentence to show the contrast between the weather and the plan."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Men» viser kontrasten mellom været og planen om å være ute."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Det blåser,"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-men-01",
+            "options": [
+              "men",
+              "og",
+              "så"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "vi sitter ute."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_eller_choice",
+      "operation": "choose",
+      "objective_id": "obj-coordinating-conjunctions-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the question where the barista asks the customer to choose one drink."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "review-both",
+            "text": "Vil du ha kaffe og te?",
+            "why": "Og would offer both drinks together instead of asking for a choice."
+          },
+          {
+            "option_id": "review-contrast",
+            "text": "Vil du ha kaffe, men ikke te?",
+            "why": "Men marks a contrast between the drinks, not a choice between them."
+          },
+          {
+            "option_id": "review-choice",
+            "text": "Vil du ha kaffe eller juice?",
+            "why": "Eller presents the two drinks as alternatives, so the customer picks one."
+          }
+        ],
+        "answer_id": "review-choice",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Kunde",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Jeg vil gjerne ha noe å drikke.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_for_reason",
+      "operation": "recall_fill",
+      "objective_id": "obj-coordinating-conjunctions-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Complete the explanation of why the light is switched on."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Den andre setningsdelen forklarer hvorfor personen slår på lyset."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Jeg slår på lyset,"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-for-01",
+            "options": [
+              "så",
+              "for",
+              "eller"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "det er mørkt."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_sa_result",
+      "operation": "recall_fill",
+      "objective_id": "obj-coordinating-conjunctions-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Complete the sentence about what happens when the café is closed."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Den stengte kafeen fører til en endret plan. «Så» innleder resultatet."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Kafeen er stengt,"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "review-sa-01",
+            "options": [
+              "for",
+              "men",
+              "så"
+            ],
+            "answer_index": 2
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "vi går hjem."
+              }
+            ]
           }
         ]
       }
@@ -3932,7 +4375,12 @@
         "join_two_simple_clauses",
         "reconstruct_the_cafe_update",
         "plan_dinner_together",
-        "five_connections_from_one_evening"
+        "five_connections_from_one_evening",
+        "review_og_addition",
+        "review_men_contrast",
+        "review_eller_choice",
+        "review_for_reason",
+        "review_sa_result"
       ]
     }
   ],

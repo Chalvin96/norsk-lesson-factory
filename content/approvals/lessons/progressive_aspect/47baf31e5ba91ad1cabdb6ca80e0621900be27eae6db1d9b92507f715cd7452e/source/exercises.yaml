@@ -1,0 +1,584 @@
+- handle: notice_ongoing_focus
+  op: choose
+  objective: obj-progressive-aspect-01
+  bloom: understand
+  prompt_md: Choose the interpretation that matches the contrast.
+  derived_from:
+  - section_id: main-meaning-choice
+  stem_md: At seven o’clock, Jonas says either «Jeg lagde kaffe» or «Jeg holdt på å lage kaffe». What
+    contrast does the activity frame express?
+  options:
+  - id: reversed-contrast
+    text: «Jeg lagde kaffe» highlights an ongoing activity, while «Jeg holdt på å lage kaffe» reports
+      a completed event neutrally.
+    correct: false
+    why: This reverses the contrast between the simple past and the activity frame.
+  - id: completion-contrast
+    text: «Jeg holdt på å lage kaffe» says that Jonas finished the coffee before seven.
+    correct: false
+    why: The activity frame highlights what was in progress around seven; it does not state completion.
+  - id: neutral-versus-focus
+    text: «Jeg lagde kaffe» reports the action, while «Jeg holdt på å lage kaffe» highlights it as ongoing
+      around seven.
+    correct: true
+    why: Holdt på å places the activity in progress around the stated past moment.
+  explanation_md: The simple past can report an action, while holdt på å gives its ongoing phase extra
+    focus.
+- handle: build_holde_pa_a_frame
+  op: recall_fill
+  objective: obj-progressive-aspect-01
+  bloom: apply
+  prompt_md: Complete the current and past activity frames.
+  derived_from:
+  - section_id: using-holde-pa-a
+  audio_target: Nå holder Sara på å lage kaffe. I går holdt Amir på å lage kaffe.
+  segments:
+  - text_md: 'Nå '
+  - blank_id: present-holde
+    options:
+    - holder
+    - holdt
+    answer_index: 0
+  - text_md: ' Sara på å '
+  - blank_id: present-activity
+    options:
+    - lage
+    - lagde
+    answer_index: 0
+  - text_md: ' kaffe. I går '
+  - blank_id: past-holde
+    options:
+    - holder
+    - holdt
+    answer_index: 1
+  - text_md: ' Amir på å '
+  - blank_id: past-activity
+    options:
+    - lage
+    - lagde
+    answer_index: 0
+  - text_md: ' kaffe.'
+  explanation_md: Holder marks present time, holdt marks past time, and the activity verb stays in the
+    infinitive after å.
+- handle: choose_meaningful_activity_frame
+  op: choose
+  objective: obj-progressive-aspect-01
+  bloom: analyze
+  prompt_md: Velg paret som gjengir både aktiviteten og den oppgitte kroppsstillingen i scenene.
+  derived_from:
+  - section_id: showing-posture-as-well-as-activity
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Hva ser du, Tom?»
+    - speaker: Tom
+      text_md: «Liv er ved bussholdeplassen. Hun står og ser etter bussen.»
+    - speaker: Nora
+      text_md: «Og Amir?»
+    - speaker: Tom
+      text_md: «Han er på kjøkkenet og bruker kaffemaskinen, men jeg ser ham ikke, så jeg vet ikke hvilken
+        stilling han har.»
+  options:
+  - id: neutral-and-unsupported-posture
+    text: Liv holder på å se etter bussen. 2. Amir sitter og lager kaffe.
+    correct: false
+    why: Den første formuleringen utelater den synlige kroppsstillingen, mens den andre finner på at Amir
+      sitter.
+  - id: wrong-posture-and-neutral
+    text: Liv sitter og ser etter bussen. 2. Amir holder på å lage kaffe.
+    correct: false
+    why: Den nøytrale formuleringen passer den andre scenen, men sitter passer ikke med at Liv står.
+  - id: posture-and-unsupported-posture
+    text: Liv står og ser etter bussen. 2. Amir står og lager kaffe.
+    correct: false
+    why: Den første formuleringen passer, men den andre finner på at Amir står.
+  - id: posture-and-neutral
+    text: Liv står og ser etter bussen. 2. Amir holder på å lage kaffe.
+    correct: true
+    why: Den første formuleringen tar med den synlige kroppsstillingen, mens den andre unngår å påstå
+      en ukjent stilling.
+  explanation_md: En formulering med kroppsstilling passer når stillingen er synlig. «Holder på å» framhever
+    aktiviteten uten å påstå en ukjent kroppsstilling.
+- handle: match_tense_posture_frame
+  op: recall_fill
+  objective: obj-progressive-aspect-01
+  bloom: apply
+  prompt_md: Complete both posture frames with matching tense forms.
+  derived_from:
+  - section_id: posture-frames-present-past
+  audio_target: Nå sitter Ida og leser meldinger. I går satt Ida og leste meldinger.
+  segments:
+  - text_md: 'Nå '
+  - blank_id: now-posture
+    options:
+    - sitter
+    - satt
+    answer_index: 0
+  - text_md: ' Ida og '
+  - blank_id: now-activity
+    options:
+    - leser
+    - leste
+    answer_index: 0
+  - text_md: ' meldinger. I går '
+  - blank_id: past-posture
+    options:
+    - sitter
+    - satt
+    answer_index: 1
+  - text_md: ' Ida og '
+  - blank_id: past-activity
+    options:
+    - leser
+    - leste
+    answer_index: 1
+  - text_md: ' meldinger.'
+  explanation_md: Both verbs use present forms in the current scene and past forms in the past scene.
+- handle: distinguish_a_from_og
+  op: recall_fill
+  objective: obj-progressive-aspect-01
+  bloom: apply
+  prompt_md: Complete both activity frames.
+  derived_from:
+  - section_id: posture-frames-present-past
+  audio_target: Jeg holder på å lese meldingene. Amir står og venter ved døra.
+  segments:
+  - text_md: 'Jeg holder på '
+  - blank_id: a-connector
+    options:
+    - å
+    - og
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: a-verb
+    options:
+    - lese
+    - leser
+    answer_index: 0
+  - text_md: ' meldingene. Amir står '
+  - blank_id: og-connector
+    options:
+    - å
+    - og
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: og-verb
+    options:
+    - vente
+    - venter
+    answer_index: 1
+  - text_md: ' ved døra.'
+  explanation_md: Holde på takes å and an infinitive, while a posture verb takes og and an activity verb
+    marked for tense.
+- handle: place_activity_right_time
+  op: recall_fill
+  objective: obj-progressive-aspect-01
+  bloom: apply
+  prompt_md: Complete the current scene and the past scene.
+  derived_from:
+  - section_id: choosing-present-or-past-focus
+  audio_target: Akkurat nå holder jeg på å lage kaffe. Da telefonen ringte, satt Sara og leste spørsmålene.
+  segments:
+  - text_md: 'Akkurat nå '
+  - blank_id: current-holde
+    options:
+    - holder
+    - holdt
+    answer_index: 0
+  - text_md: ' jeg på å '
+  - blank_id: current-activity
+    options:
+    - lage
+    - lagde
+    answer_index: 0
+  - text_md: ' kaffe. Da telefonen ringte, '
+  - blank_id: past-posture
+    options:
+    - sitter
+    - satt
+    answer_index: 1
+  - text_md: ' Sara og '
+  - blank_id: past-activity
+    options:
+    - leser
+    - leste
+    answer_index: 1
+  - text_md: ' spørsmålene.'
+  explanation_md: Akkurat nå selects present forms, while the phone call supplies the past reference point
+    for both verbs in the posture frame.
+- handle: repair_mixed_activity_frames
+  op: find_fix
+  objective: obj-progressive-aspect-01
+  bloom: analyze
+  prompt_md: Select the token that must change.
+  derived_from:
+  - section_id: back-at-quiz-night
+  tokens:
+  - token_id: tok-1
+    text: Da
+  - token_id: tok-2
+    text: du
+  - token_id: tok-3
+    text: ringte,
+  - token_id: tok-4
+    text: sto
+  - token_id: tok-5
+    text: jeg
+  - token_id: tok-6
+    text: å
+  - token_id: tok-7
+    text: ventet
+  - token_id: tok-8
+    text: på
+  - token_id: tok-9
+    text: bussen.
+  error_token_id: tok-6
+  feedback: Replace å with og because sto og ventet is a posture frame and both verbs are in the past.
+- handle: report_current_preparations
+  op: write
+  objective: obj-progressive-aspect-01
+  bloom: apply
+  prompt_md: 'Mari texts, «Hva skjer hjemme før bursdagsbesøket?» Facts: Nora decorates the room; Per
+    makes soup; Eva waits by the door; Ali rests on the sofa. Reply to Mari in 35–55 Norwegian words so
+    she can picture what everyone is doing now. Use both a natural Norwegian present «holder på å» + infinitive
+    construction and a suitable present posture construction, such as «ligger og» for Ali resting on the
+    sofa.'
+  derived_from:
+  - section_id: cumulative-transfer-preparing-birthday-visit
+  response_language: 'no'
+  min_words: 35
+  max_words: 55
+  judge_prompt: 'Judge the criteria message-purpose, fact-coverage, current-time, progressive-aspect,
+    and word-bound as gating requirements. Valid anchor that must pass: «Hei Mari! Nå holder Nora på å
+    pynte rommet med ballonger og bannere. Per holder på å lage suppe på kjøkkenet, Eva venter ved døra
+    på gjestene, og Ali ligger på sofaen og hviler. Alt blir klart snart. Vi gleder oss!» Near-miss that
+    must fail fact-coverage: «Hei! Alle gjør seg klare til festen nå.»'
+  criteria:
+  - id: message-purpose
+    instruction: The response is a Norwegian reply to Mari that helps her picture the current preparation
+      scene.
+  - id: fact-coverage
+    instruction: The response covers Nora decorating, Per making soup, Eva waiting by the door, and Ali
+      resting on the sofa.
+  - id: current-time
+    instruction: The response presents the supplied activities as happening now.
+  - id: word-bound
+    instruction: The response contains 35–55 words.
+  - id: neutral-frame-observation
+    instruction: Observe whether a present holder på å + infinitive frame appears and flag any form error
+      without failing the response.
+  - id: posture-frame-observation
+    instruction: Observe whether a suitable present posture frame appears and flag any form error without
+      failing the response.
+  - id: progressive-aspect
+    instruction: The response uses both a natural Norwegian present holder på å + infinitive construction
+      for an ongoing activity and a suitable present posture construction, such as «ligger og» for Ali
+      resting on the sofa.
+- handle: reconstruct_arrival_moment
+  op: write
+  objective: obj-progressive-aspect-01
+  bloom: apply
+  prompt_md: 'Mari asks, «Hva skjedde da bursdagsgjesten kom klokka sju?» Facts at seven: Nora decorated
+    the room; Per stood at the stove and made soup; Eva sat by the door and checked the guest list; Ali
+    rested on the sofa. Reply to Mari in 40–70 Norwegian words so she understands what was in progress
+    when the guest arrived. Use holdt på å + infinitive for Nora’s ongoing activity, and use og with past
+    forms for both verbs in each posture frame.'
+  derived_from:
+  - section_id: cumulative-transfer-preparing-birthday-visit
+  response_language: 'no'
+  min_words: 40
+  max_words: 70
+  judge_prompt: 'Judge all criteria as gating requirements. The response must use holdt på å + infinitive
+    for Nora’s past ongoing activity and past posture frames with og and past forms for both verbs. Valid
+    anchor that must pass: «Da gjesten kom klokka sju, holdt Nora på å pynte rommet. Per sto ved komfyren
+    og lagde suppe, Eva satt ved døra og sjekket gjestelista, og Ali lå og hvilte på sofaen. Alt var nesten
+    klart da hun ringte på døra.»'
+  criteria:
+  - id: reply-purpose
+    instruction: The response is a connected Norwegian reply explaining the scene to Mari.
+  - id: fact-coverage
+    instruction: The response covers all four supplied activities without contradicting the facts.
+  - id: arrival-reference
+    instruction: The response relates the activities to the guest’s arrival at seven.
+  - id: word-bound
+    instruction: The response contains 40–70 words.
+  - id: past-holde-frame-observation
+    instruction: The response uses holdt på å + infinitive for Nora’s past ongoing activity.
+  - id: past-posture-frame-observation
+    instruction: The response uses og with past forms for both verbs in each past posture frame.
+- handle: retrieval_and_review
+  op: write
+  objective: obj-progressive-aspect-01
+  bloom: apply
+  prompt_md: Your study partner asks, «Hva er forskjellen på holder på å lage og står og lager, og hvordan
+    blir begge uttrykkene i fortid?» Write a 45–80-word Norwegian reply that explains the meaning difference,
+    gives both past forms, and includes «Nå holder jeg på å lage ...» and one example tied to a specific
+    time yesterday using «sto og lagde».
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  min_words: 45
+  max_words: 80
+  judge_prompt: 'Judge all criteria reply-purpose, meaning-difference, past-recasts, time-examples, example-form-observation,
+    and word-bound as gating requirements. Valid anchor that must pass: «Holder på å lage framhever aktiviteten
+    uten å si noe om kroppsstilling. Står og lager viser også at personen står. I fortid heter det holdt
+    på å lage og sto og lagde. Nå holder jeg på å lage middag. Klokka åtte i går sto jeg og lagde middag.»
+    Near-miss that must fail meaning-difference: «De betyr akkurat det samme. I fortid bruker vi holdt
+    og sto. Nå holder jeg på å lage middag, og i går sto jeg og lagde middag.» Good-message-with-form-error
+    anchor that must fail example-form-observation: «Holder på å lage fokuserer på aktiviteten, mens står
+    og lager viser stillingen. Fortidsformene er holdt på å lage og sto og lagde. Nå holder jeg på å lager
+    middag. Klokka ni i går sto jeg og lagde middag.»'
+  criteria:
+  - id: reply-purpose
+    instruction: The response is a Norwegian reply that answers the study partner’s full question.
+  - id: meaning-difference
+    instruction: The response explains that holde på å highlights an ongoing activity without specifying
+      posture, while står og also presents standing posture.
+  - id: past-recasts
+    instruction: The response supplies holdt på å lage and sto og lagde as the requested past forms.
+  - id: time-examples
+    instruction: The response includes one current example and one past example tied to a specific time
+      yesterday.
+  - id: word-bound
+    instruction: The response contains 45–80 words.
+  - id: example-form-observation
+    instruction: The current example must use the target frame holder på å lage, and the past example
+      tied to a specific time yesterday must use the target frame sto og lagde; both examples must use
+      grammatical Norwegian verb forms and connectors.
+- handle: review_notice_ongoing_focus
+  op: choose
+  objective: obj-progressive-aspect-01
+  bloom: understand
+  prompt_md: Choose the interpretation that matches the contrast in this scene.
+  derived_from:
+  - section_id: main-meaning-choice
+  stem_md: Da telefonen ringte klokka åtte, beskrev Amir ryddingen med enten enkel preteritum eller uttrykket
+    «holdt på å». Hvilken kontrast uttrykker aktivitetsrammen?
+  options:
+  - id: reversed-contrast
+    text: «Jeg ryddet kjøkkenet» fremhever en aktivitet som var i gang, mens «Jeg holdt på å rydde kjøkkenet»
+      rapporterer en avsluttet handling nøytralt.
+    correct: false
+    why: Dette snur kontrasten mellom enkel preteritum og aktivitetsrammen.
+  - id: completion-contrast
+    text: «Jeg holdt på å rydde kjøkkenet» sier at Amir var ferdig med ryddingen før klokka åtte.
+    correct: false
+    why: Aktivitetsrammen fremhever det som pågikk rundt det oppgitte tidspunktet; den sier ikke at handlingen
+      ble avsluttet.
+  - id: neutral-versus-focus
+    text: «Jeg ryddet kjøkkenet» rapporterer handlingen, mens «Jeg holdt på å rydde kjøkkenet» fremhever
+      at den pågikk rundt klokka åtte.
+    correct: true
+    why: Holdt på å plasserer aktiviteten i gang rundt det oppgitte tidspunktet i fortiden.
+  explanation_md: The simple past can report an action, while holdt på å gives its ongoing phase extra
+    focus.
+- handle: review_build_holde_pa_a_frame
+  op: recall_fill
+  objective: obj-progressive-aspect-01
+  bloom: apply
+  prompt_md: Complete the current and past frames with the correct verb forms.
+  derived_from:
+  - section_id: using-holde-pa-a
+  audio_target: Nå holder Jonas på å skrive brev. I går holdt Ida på å skrive brev.
+  segments:
+  - text_md: 'Nå '
+  - blank_id: present-holde
+    options:
+    - holder
+    - holdt
+    answer_index: 0
+  - text_md: ' Jonas på å '
+  - blank_id: present-activity
+    options:
+    - skrive
+    - skrev
+    answer_index: 0
+  - text_md: ' brev. I går '
+  - blank_id: past-holde
+    options:
+    - holder
+    - holdt
+    answer_index: 1
+  - text_md: ' Ida på å '
+  - blank_id: past-activity
+    options:
+    - skrive
+    - skrev
+    answer_index: 0
+  - text_md: ' brev.'
+  explanation_md: Holder marks present time, holdt marks past time, and the activity verb stays in the
+    infinitive after å.
+- handle: review_choose_meaningful_activity_frame
+  op: choose
+  objective: obj-progressive-aspect-01
+  bloom: analyze
+  prompt_md: Velg paret som passer til begge scenene i dialogen.
+  derived_from:
+  - section_id: showing-posture-as-well-as-activity
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Sara
+      text_md: «Ser du hva Ida og Jonas gjør?»
+    - speaker: Per
+      text_md: «Ida ligger på sofaen og leser i ei bok. Jonas lager mat på kjøkkenet, men jeg ser ham
+        ikke.»
+    - speaker: Sara
+      text_md: «Så vi vet ikke hvilken stilling Jonas har mens han lager maten?»
+    - speaker: Per
+      text_md: «Nettopp.»
+  options:
+  - id: neutral-and-unsupported-posture
+    text: Ida holder på å lese på sofaen. 2. Jonas sitter og lager mat.
+    correct: false
+    why: Den første setningen utelater stillingen, men den andre legger til en stilling vi ikke kjenner.
+  - id: wrong-posture-and-neutral
+    text: Ida sitter og leser på sofaen. 2. Jonas holder på å lage mat.
+    correct: false
+    why: Den nøytrale formuleringen passer til Jonas, men «sitter» stemmer ikke med at Ida har lagt seg
+      på sofaen.
+  - id: posture-and-unsupported-posture
+    text: Ida er på sofaen med ei bok. 2. Jonas står og lager mat.
+    correct: false
+    why: Den første setningen unngår en ubekreftet stilling, men den andre legger til at Jonas står.
+  - id: posture-and-neutral
+    text: Ida ligger og leser på sofaen. 2. Jonas holder på å lage mat.
+    correct: true
+    why: Stillingsformen bevarer den synlige opplysningen om at Ida ligger, mens den nøytrale formen unngår
+      å legge til en ukjent stilling for Jonas.
+  explanation_md: En stillingsform passer der stillingen er viktig; «holde på å» kan framheve en aktivitet
+    uten å si noe om stillingen.
+- handle: review_match_tense_posture_frame
+  op: recall_fill
+  objective: obj-progressive-aspect-01
+  bloom: apply
+  prompt_md: Complete both posture frames with matching present and past forms.
+  derived_from:
+  - section_id: posture-frames-present-past
+  audio_target: Nå står Per og venter på bussen. I går sto Per og ventet på bussen.
+  segments:
+  - text_md: 'Nå '
+  - blank_id: now-posture
+    options:
+    - står
+    - sto
+    answer_index: 0
+  - text_md: ' Per og '
+  - blank_id: now-activity
+    options:
+    - venter
+    - ventet
+    answer_index: 0
+  - text_md: ' på bussen. I går '
+  - blank_id: past-posture
+    options:
+    - står
+    - sto
+    answer_index: 1
+  - text_md: ' Per og '
+  - blank_id: past-activity
+    options:
+    - venter
+    - ventet
+    answer_index: 1
+  - text_md: ' på bussen.'
+  explanation_md: Both verbs use present forms in the current scene and past forms in the past scene.
+- handle: review_distinguish_a_from_og
+  op: recall_fill
+  objective: obj-progressive-aspect-01
+  bloom: apply
+  prompt_md: Complete both frames with the right connector and verb form.
+  derived_from:
+  - section_id: posture-frames-present-past
+  audio_target: Sara holder på å skrive brev. Jonas sitter og leser avisa.
+  segments:
+  - text_md: 'Sara holder på '
+  - blank_id: a-connector
+    options:
+    - å
+    - og
+    answer_index: 0
+  - text_md: ' '
+  - blank_id: a-verb
+    options:
+    - skrive
+    - skriver
+    answer_index: 0
+  - text_md: ' brev. Jonas sitter '
+  - blank_id: og-connector
+    options:
+    - å
+    - og
+    answer_index: 1
+  - text_md: ' '
+  - blank_id: og-verb
+    options:
+    - lese
+    - leser
+    answer_index: 1
+  - text_md: ' avisa.'
+  explanation_md: Holde på takes å and an infinitive, while a posture verb takes og and an activity verb
+    marked for tense.
+- handle: review_place_activity_right_time
+  op: recall_fill
+  objective: obj-progressive-aspect-01
+  bloom: apply
+  prompt_md: Complete the current and past scenes with matching forms.
+  derived_from:
+  - section_id: choosing-present-or-past-focus
+  audio_target: Akkurat nå sitter jeg og leser. Da du ringte, holdt Per på å lage mat.
+  segments:
+  - text_md: 'Akkurat nå '
+  - blank_id: current-posture
+    options:
+    - sitter
+    - satt
+    answer_index: 0
+  - text_md: ' jeg og '
+  - blank_id: current-activity
+    options:
+    - leser
+    - leste
+    answer_index: 0
+  - text_md: '. Da du ringte, '
+  - blank_id: past-holde
+    options:
+    - holder
+    - holdt
+    answer_index: 1
+  - text_md: ' Per på å '
+  - blank_id: past-activity
+    options:
+    - lagde
+    - lage
+    answer_index: 1
+  - text_md: ' mat.'
+  explanation_md: Akkurat nå selects present forms, while the phone call supplies the past reference point
+    for the holdt på å frame.
+- handle: review_repair_mixed_activity_frames
+  op: choose
+  objective: obj-progressive-aspect-01
+  bloom: analyze
+  prompt_md: Choose the corrected reply.
+  derived_from:
+  - section_id: back-at-quiz-night
+  stem_md: Ida asks, «Hva gjorde du da jeg ringte?» Jonas was standing at the bus stop and waiting.
+  options:
+  - id: wrong-connector
+    text: Da du ringte, sto jeg å ventet på bussen.
+    correct: false
+    why: A posture frame joins two tense-marked verbs with og, not å.
+  - id: wrong-activity-tense
+    text: Da du ringte, sto jeg og venter på bussen.
+    correct: false
+    why: The past reference point requires the activity verb to be in the past as well.
+  - id: infinitive-after-og
+    text: Da du ringte, sto jeg og vente på bussen.
+    correct: false
+    why: The activity verb after og must carry tense rather than remain an infinitive.
+  - id: corrected-posture-frame
+    text: Da du ringte, sto jeg og ventet på bussen.
+    correct: true
+    why: Sto and ventet are both past forms joined by og.
+  explanation_md: A past posture frame uses og between two past-tense verbs.

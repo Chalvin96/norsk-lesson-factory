@@ -1,0 +1,720 @@
+- handle: identify_count_or_amount
+  op: categorize
+  objective: obj-quantity-and-countability-01
+  bloom: analyze
+  prompt_md: Sort the nouns into countable items or uncountable amounts.
+  explanation_md: Countable plural nouns select forms such as mange, noen, få, and alle; uncountable amounts
+    select mye, noe, lite, all, or alt according to meaning and gender.
+  derived_from:
+  - section_id: things-you-count-and-amounts-you-measure
+  buckets:
+  - bucket_id: countable
+    label: Individual countable items
+  - bucket_id: amount
+    label: Uncountable amounts
+  items:
+  - item_id: noun-guests
+    text: gjester
+    bucket_id: countable
+  - item_id: noun-carrots
+    text: gulrøtter
+    bucket_id: countable
+  - item_id: noun-rice
+    text: ris
+    bucket_id: amount
+  - item_id: noun-milk
+    text: melk
+    bucket_id: amount
+  - item_id: noun-time
+    text: tid
+    bucket_id: amount
+- handle: choose_mange_or_mye
+  op: recall_fill
+  objective: obj-quantity-and-countability-01
+  bloom: apply
+  prompt_md: Fullfør handlemeldingen med riktig mengdeord.
+  explanation_md: Use mange for plural countable items and mye for uncountable amounts; penger is normally
+    treated as an amount.
+  derived_from:
+  - section_id: many-or-much-mange-and-mye
+  audio_target: 'Jonas skriver til Sara: Vi trenger mange tallerkener til festen. Kan du kjøpe mye melk?
+    Hvor mange kopper kaffe skal vi servere? Vi har mye penger igjen. I kveld kommer mange gjester.'
+  segments:
+  - text_md: 'Jonas skriver til Sara: Vi trenger '
+  - blank_id: plates
+    options:
+    - mange
+    - mye
+    answer_index: 0
+  - text_md: ' tallerkener til festen. Kan du kjøpe '
+  - blank_id: milk
+    options:
+    - mye
+    - mange
+    answer_index: 0
+  - text_md: ' melk? Hvor '
+  - blank_id: coffee-cups
+    options:
+    - mye
+    - mange
+    answer_index: 1
+  - text_md: ' kopper kaffe skal vi servere? Vi har '
+  - blank_id: money
+    options:
+    - mange
+    - mye
+    answer_index: 1
+  - text_md: ' penger igjen. I kveld kommer '
+  - blank_id: guests
+    options:
+    - mange
+    - mye
+    answer_index: 0
+  - text_md: ' gjester.'
+- handle: choose_some_for_count_or_amount
+  op: recall_fill
+  objective: obj-quantity-and-countability-01
+  bloom: apply
+  prompt_md: Complete the notes with noen, noe, or litt.
+  explanation_md: Use noen with plural countable nouns, noe for an unspecified uncountable amount, and
+    litt when a small amount is intended.
+  derived_from:
+  - section_id: some-noen-noe-and-litt
+  audio_target: 'På kjøkkenbenken ligger noen epler. Jonas skriver: Kjøp noe brød; mengden er ikke viktig.
+    Kan du hente litt melk til kaffen? Det trengs bare en liten mengde. Det står noe juice i kjøleskapet;
+    vi vet ikke hvor mye. Har vi noen tomater til salaten?'
+  segments:
+  - text_md: 'På kjøkkenbenken ligger '
+  - blank_id: some-apples
+    options:
+    - noen
+    - noe
+    - litt
+    answer_index: 0
+  - text_md: ' epler. Jonas skriver: Kjøp '
+  - blank_id: some-bread
+    options:
+    - noen
+    - noe
+    - litt
+    answer_index: 1
+  - text_md: ' brød; mengden er ikke viktig. Kan du hente '
+  - blank_id: little-milk
+    options:
+    - noen
+    - noe
+    - litt
+    answer_index: 2
+  - text_md: ' melk til kaffen? Det trengs bare en liten mengde. Det står '
+  - blank_id: some-juice
+    options:
+    - noen
+    - noe
+    - litt
+    answer_index: 1
+  - text_md: ' juice i kjøleskapet; vi vet ikke hvor mye. Har vi '
+  - blank_id: some-tomatoes
+    options:
+    - noen
+    - noe
+    - litt
+    answer_index: 0
+  - text_md: ' tomater til salaten?'
+- handle: express_small_quantity
+  op: recall_fill
+  objective: obj-quantity-and-countability-01
+  bloom: apply
+  prompt_md: Complete the descriptions with få or lite.
+  explanation_md: Få modifies a small number of plural countable items; lite modifies a small uncountable
+    amount.
+  derived_from:
+  - section_id: few-and-little-fa-lite-and-litt
+  audio_target: Det er få gulrøtter igjen, så vi må kjøpe flere. Vi har lite melk igjen, så Sara må kjøpe
+    mer. Jonas har lite tid før gjestene kommer.
+  segments:
+  - text_md: 'Det er '
+  - blank_id: few-carrots
+    options:
+    - få
+    - lite
+    answer_index: 0
+  - text_md: ' gulrøtter igjen, så vi må kjøpe flere. Vi har '
+  - blank_id: little-milk
+    options:
+    - få
+    - lite
+    answer_index: 1
+  - text_md: ' melk igjen, så Sara må kjøpe mer. Jonas har '
+  - blank_id: little-time
+    options:
+    - få
+    - lite
+    answer_index: 1
+  - text_md: ' tid før gjestene kommer.'
+- handle: contrast_litt_and_lite
+  op: choose
+  objective: obj-quantity-and-countability-01
+  bloom: analyze
+  prompt_md: Choose the reply that matches both facts.
+  derived_from:
+  - section_id: few-and-little-fa-lite-and-litt
+  stem_md: 'Fact 1: There is enough milk for the coffee. Fact 2: There is not enough milk, so more must
+    be bought.'
+  options:
+  - id: insufficient-then-available
+    text: 1) Vi har lite melk til kaffen. 2) Vi har litt melk, og det er nok til kaffen.
+    correct: false
+    why: The forms reverse the intended perspectives; the first amount is sufficient, while the second
+      is insufficient.
+  - id: available-then-insufficient
+    text: 1) Vi har litt melk til kaffen. 2) Vi har lite melk, så vi må kjøpe mer.
+    correct: true
+    why: Litt presents the available small amount neutrally, while lite presents the second amount as
+      insufficient.
+  - id: available-twice
+    text: 1) Vi har litt melk til kaffen. 2) Vi har litt melk, så vi trenger ikke kjøpe mer.
+    correct: false
+    why: The second form does not express the stated shortage as clearly as lite.
+  - id: insufficient-twice
+    text: 1) Vi har lite melk til kaffen. 2) Vi har lite melk, så vi må kjøpe mer.
+    correct: false
+    why: The first form suggests a shortage even though the stated amount is enough.
+- handle: choose_all_form
+  op: recall_fill
+  objective: obj-quantity-and-countability-01
+  bloom: apply
+  prompt_md: Complete the kitchen update with all, alt, or alle.
+  explanation_md: Alle accompanies plural nouns, all accompanies common-gender singular nouns, and alt
+    accompanies neuter singular nouns or means everything independently.
+  derived_from:
+  - section_id: all-members-of-a-group-all-alt-and-alle
+  audio_target: På kjøkkenet er all kaffen varm. Ved springen er alt vannet kaldt. Rundt bordet sitter
+    alle gjestene. Etter ryddingen er alt klart.
+  segments:
+  - text_md: 'På kjøkkenet er '
+  - blank_id: common-gender-amount
+    options:
+    - all
+    - alt
+    - alle
+    answer_index: 0
+  - text_md: ' kaffen varm. Ved springen er '
+  - blank_id: neuter-amount
+    options:
+    - all
+    - alt
+    - alle
+    answer_index: 1
+  - text_md: ' vannet kaldt. Rundt bordet sitter '
+  - blank_id: plural-group
+    options:
+    - all
+    - alt
+    - alle
+    answer_index: 2
+  - text_md: ' gjestene. Etter ryddingen er '
+  - blank_id: everything
+    options:
+    - all
+    - alt
+    - alle
+    answer_index: 1
+  - text_md: ' klart.'
+- handle: distinguish_all_members_from_whole_item
+  op: choose
+  objective: obj-quantity-and-countability-01
+  bloom: analyze
+  prompt_md: Choose the report that matches both cleaning results.
+  derived_from:
+  - section_id: every-member-or-one-complete-thing
+  stem_md: 'Result 1: Sara washed every glass in a plural set. Result 2: Sara cleaned one complete kitchen.'
+  options:
+  - id: whole-twice
+    text: Sara vasket ett glass. Sara vasket hele kjøkkenet.
+    correct: false
+    why: Ett selects one glass rather than every glass in the plural set, even though hele fits the complete
+      kitchen.
+  - id: members-then-whole
+    text: Sara vasket alle glassene. Sara vasket hele kjøkkenet.
+    correct: true
+    why: Alle includes every member of the plural set, while hele presents the kitchen as one complete
+      thing.
+  - id: whole-then-members
+    text: Sara vasket alle glassene. Sara vasket hele kjøkkenene.
+    correct: false
+    why: Alle fits the plural glasses, but hele kjøkkenene refers to multiple complete kitchens rather
+      than one complete kitchen.
+  - id: members-twice
+    text: Sara vasket alle glassene. Sara vasket alle kjøkkenene.
+    correct: false
+    why: Alle fits the plural glasses but refers to multiple kitchens instead of one complete singular
+      kitchen.
+- handle: choose_begge_or_alle
+  op: recall_fill
+  objective: obj-quantity-and-countability-01
+  bloom: apply
+  prompt_md: Complete the descriptions with the correct quantity word.
+  explanation_md: Use the word for two members of an explicitly two-member group; use the other word for
+    every member of a larger or unspecified plural group.
+  derived_from:
+  - section_id: exactly-two-begge
+  audio_target: Sara og Jonas skal bære kartene. Begge skal hjelpe. Det er seks gjester ved bordet. Alle
+    gjestene hjelper til. Sara har to flasker. Hun tar med begge flaskene.
+  segments:
+  - text_md: 'Sara og Jonas er de to som skal bære kartene. '
+  - blank_id: exactly-two-people
+    options:
+    - Begge
+    - Alle
+    answer_index: 0
+  - text_md: ' skal hjelpe. Det er seks gjester ved bordet. '
+  - blank_id: larger-guest-group
+    options:
+    - Begge
+    - Alle
+    answer_index: 1
+  - text_md: ' gjestene hjelper til. Sara har to flasker. Hun tar med '
+  - blank_id: exactly-two-bottles
+    options:
+    - begge
+    - alle
+    answer_index: 0
+  - text_md: ' flaskene.'
+- handle: repair_dinner_update
+  op: find_fix
+  objective: obj-quantity-and-countability-01
+  bloom: analyze
+  prompt_md: Select the one quantity word that must change.
+  derived_from:
+  - section_id: back-at-saras-flat
+  tokens:
+  - token_id: tok-1
+    text: Nå
+  - token_id: tok-2
+    text: har
+  - token_id: tok-3
+    text: vi
+  - token_id: tok-4
+    text: mye
+  - token_id: tok-5
+    text: melk
+  - token_id: tok-6
+    text: og
+  - token_id: tok-7
+    text: mye
+  - token_id: tok-8
+    text: gulrøtter.
+  - token_id: tok-9
+    text: Alle
+  - token_id: tok-10
+    text: gjestene
+  - token_id: tok-11
+    text: har
+  - token_id: tok-12
+    text: kommet.
+  - token_id: tok-13
+    text: Begge
+  - token_id: tok-14
+    text: naboene
+  - token_id: tok-15
+    text: hjelper
+  - token_id: tok-16
+    text: til.
+  - token_id: tok-17
+    text: Barna
+  - token_id: tok-18
+    text: har
+  - token_id: tok-19
+    text: dekket
+  - token_id: tok-20
+    text: hele
+  - token_id: tok-21
+    text: bordet.
+  - token_id: tok-22
+    text: Alt
+  - token_id: tok-23
+    text: er
+  - token_id: tok-24
+    text: klart.
+  error_token_id: tok-7
+  feedback: Replace mye with mange because gulrøtter is a plural countable noun.
+- handle: pack_for_cabin_trip
+  op: write
+  objective: obj-quantity-and-countability-01
+  bloom: apply
+  prompt_md: 'Two friends are packing for a cabin trip: they have two maps, six bags, bread, water, a
+    little coffee that is enough for breakfast, too little milk for the weekend, three flashlights with
+    only one working, one complete weekend, and five jobs that everyone must finish. Write a 55–90-word
+    Norwegian message to the other friend explaining what they have and what they must buy. Use accurate
+    Norwegian quantity expressions for countable items and uncountable amounts. You must distinguish the
+    sufficient small amount of coffee from the insufficient amount of milk, and express the complete weekend,
+    the exact group of two, and that everyone must finish the jobs.'
+  derived_from:
+  - section_id: transfer-preparing-for-a-weekend-trip
+  response_language: 'no'
+  min_words: 55
+  max_words: 90
+  judge_prompt: 'Vurder hyttemeldingen mot de synlige kravene: Den skal være en sammenhengende norsk melding
+    på 55–90 ord som gjengir faktaene riktig, bruker passende mengdeuttrykk for tellelige ting og utellelige
+    mengder, og uttrykker de små mengdene, hele helgen, gruppen på to og at alle må fullføre oppgavene.
+    Bestått eksempel: Meldingen oppfyller alle disse kravene. Ikke bestått eksempel: Meldingen har færre
+    enn 55 ord, mangler ett av de uttrykkelig etterspurte mengdeområdene eller bruker en grammatisk feil
+    mengdeform.'
+  criteria:
+  - id: cabin-message
+    instruction: Writes a comprehensible Norwegian message to the other friend explaining what they have
+      and what they must buy.
+  - id: supplied-facts
+    instruction: Uses the supplied cabin facts without materially contradicting them.
+  - id: word-bound
+    instruction: Contains 55–90 words.
+  - id: countability
+    instruction: Uses accurate Norwegian quantity forms for countable items and uncountable amounts, including
+      forms such as «to kart», «seks vesker», «litt kaffe» and «for lite melk».
+  - id: scope
+    instruction: Accurately expresses the exact group of two, the whole weekend, and that everyone must
+      finish the jobs.
+  - id: small-quantity
+    instruction: Accurately distinguishes the small amount of coffee that is sufficient from the insufficient
+      amount of milk.
+- handle: quantity_words_quick_review
+  op: write
+  objective: obj-quantity-and-countability-01
+  bloom: apply
+  prompt_md: 'Romkameraten spør om en oppdatering av matforrådet: Det er mange epler, rikelig med ris,
+    noen tomater, for lite melk til frokosten, alle fire familiemedlemmene er hjemme, én hel kveld til
+    matlaging, begge rene flaskene er tilgjengelige, og all tilberedning er ferdig. Skriv et norsk svar
+    på 35–60 ord som rapporterer situasjonen, sier uttrykkelig at melk må kjøpes, og bruker passende mengdeord.'
+  derived_from:
+  - section_id: final-retrieval-request-quantity-words-quick-review
+  response_language: 'no'
+  min_words: 35
+  max_words: 60
+  judge_prompt: Vurder de synlige kravene til svaret om matforrådet, med kriteriene svarformål, oppgitte
+    matforrådsfakta, hva som må kjøpes, riktige mengdeord og ordgrense. Et svar består bare hvis det er
+    naturlig norsk, er på 35–60 ord, gjengir de oppgitte matforrådsfaktaene, sier uttrykkelig at melk
+    må kjøpes, og bruker mengdeord som passer til tellelighet, mengde, totalomfang, helhet og en gruppe
+    på nøyaktig to. Et svar som sier «mye epler» i stedet for et tellelig antall, skal underkjennes. Et
+    svar som utelater hva som må kjøpes, skal underkjennes.
+  criteria:
+  - id: reply-purpose
+    instruction: Writes a comprehensible Norwegian reply that updates the housemate about the pantry and
+      preparations.
+  - id: supplied-pantry-facts
+    instruction: Reports the supplied facts, including the milk shortage, without materially contradicting
+      them, explicitly says that milk must be bought, and uses quantity words that accurately express
+      countability, amount, total scope, wholeness, and an exactly-two group.
+  - id: word-bound
+    instruction: Contains 35–60 words.
+  - id: quantity-selection-observation
+    instruction: Uses quantity words accurately for countable nouns, uncountable amounts, total scope,
+      wholeness, and an exactly-two group; incorrect quantity selection fails this criterion.
+- handle: review_identify_count_or_amount
+  op: categorize
+  objective: obj-quantity-and-countability-01
+  bloom: analyze
+  prompt_md: Sort these nouns into things you can count or amounts you measure.
+  explanation_md: Countable plural nouns select forms such as mange, noen, få, and alle; uncountable amounts
+    select mye, noe, lite, all, or alt according to meaning and gender.
+  derived_from:
+  - section_id: things-you-count-and-amounts-you-measure
+  buckets:
+  - bucket_id: count
+    label: Things you can count
+  - bucket_id: mass
+    label: Amounts you measure
+  items:
+  - item_id: noun-apples
+    text: epler
+    bucket_id: count
+  - item_id: noun-chairs
+    text: stoler
+    bucket_id: count
+  - item_id: noun-sugar
+    text: sukker
+    bucket_id: mass
+  - item_id: noun-water
+    text: vann
+    bucket_id: mass
+  - item_id: noun-bread
+    text: brøddeig
+    bucket_id: mass
+  - item_id: noun-oranges
+    text: appelsiner
+    bucket_id: count
+- handle: review_choose_mange_or_mye
+  op: recall_fill
+  objective: obj-quantity-and-countability-01
+  bloom: apply
+  prompt_md: Complete the kitchen note with the correct quantity word.
+  explanation_md: Choose the plural form for countable items and the amount form for uncountable amounts;
+    tid and frukt are treated as amounts here.
+  derived_from:
+  - section_id: many-or-much-mange-and-mye
+  audio_target: 'Sara skriver til Jonas: På kjøkkenet står mange flasker. Vi har mye juice i kjøleskapet.
+    Hvor mye tid trenger vi? Det er mange oppgaver igjen. Hun kjøper mye frukt.'
+  segments:
+  - text_md: 'Sara skriver til Jonas: På kjøkkenet står '
+  - blank_id: bottles
+    options:
+    - mange
+    - mye
+    answer_index: 0
+  - text_md: ' flasker. Vi har '
+  - blank_id: juice
+    options:
+    - mange
+    - mye
+    answer_index: 1
+  - text_md: ' juice i kjøleskapet. Hvor '
+  - blank_id: time
+    options:
+    - mange
+    - mye
+    answer_index: 1
+  - text_md: ' tid trenger vi? Det er '
+  - blank_id: tasks
+    options:
+    - mange
+    - mye
+    answer_index: 0
+  - text_md: ' oppgaver igjen. Hun kjøper '
+  - blank_id: fruit
+    options:
+    - mange
+    - mye
+    answer_index: 1
+  - text_md: ' frukt.'
+- handle: review_choose_some_for_count_or_amount
+  op: recall_fill
+  objective: obj-quantity-and-countability-01
+  bloom: apply
+  prompt_md: Complete the fridge note with noen, noe, or litt.
+  explanation_md: Use noen with plural countable nouns, noe for an unspecified uncountable amount, and
+    litt when a small amount is intended.
+  derived_from:
+  - section_id: some-noen-noe-and-litt
+  audio_target: I kjøleskapet ligger noen sitroner. Vi trenger litt smør til frokosten; bare en liten
+    mengde trengs. Det er noe vann igjen i flasken; vi vet ikke hvor mye. Har vi noen poteter? Kjøp noe
+    kaffe hvis det er tomt; mengden spiller ingen rolle.
+  segments:
+  - text_md: 'I kjøleskapet ligger '
+  - blank_id: some-lemons
+    options:
+    - noen
+    - noe
+    - litt
+    answer_index: 0
+  - text_md: ' sitroner. Vi trenger '
+  - blank_id: little-butter
+    options:
+    - noen
+    - noe
+    - litt
+    answer_index: 2
+  - text_md: ' smør til frokosten; bare en liten mengde trengs. Det er '
+  - blank_id: some-water
+    options:
+    - noen
+    - noe
+    - litt
+    answer_index: 1
+  - text_md: ' vann igjen i flasken; vi vet ikke hvor mye. Har vi '
+  - blank_id: some-potatoes
+    options:
+    - noen
+    - noe
+    - litt
+    answer_index: 0
+  - text_md: ' poteter? Kjøp '
+  - blank_id: some-coffee
+    options:
+    - noen
+    - noe
+    - litt
+    answer_index: 1
+  - text_md: ' kaffe hvis det er tomt; mengden spiller ingen rolle.'
+- handle: review_express_small_quantity
+  op: recall_fill
+  objective: obj-quantity-and-countability-01
+  bloom: apply
+  prompt_md: Complete the report with få or lite.
+  explanation_md: Få modifies a small number of plural countable items; lite modifies a small uncountable
+    amount.
+  derived_from:
+  - section_id: few-and-little-fa-lite-and-litt
+  audio_target: Det er få epler igjen, så vi må kjøpe flere. Vi har lite sukker hjemme. Det er lite tid
+    til å handle.
+  segments:
+  - text_md: 'Det er '
+  - blank_id: few-apples
+    options:
+    - få
+    - lite
+    answer_index: 0
+  - text_md: ' epler igjen, så vi må kjøpe flere. Vi har '
+  - blank_id: little-sugar
+    options:
+    - lite
+    - få
+    answer_index: 0
+  - text_md: ' sukker hjemme. Det er '
+  - blank_id: little-time
+    options:
+    - få
+    - lite
+    answer_index: 1
+  - text_md: ' tid til å handle.'
+- handle: review_contrast_litt_and_lite
+  op: choose
+  objective: obj-quantity-and-countability-01
+  bloom: analyze
+  prompt_md: Choose the reply that matches both facts.
+  derived_from:
+  - section_id: few-and-little-fa-lite-and-litt
+  stem_md: 'Fact 1: There is enough water for the tea. Fact 2: There is not enough water, so more must
+    be bought.'
+  options:
+  - id: available-then-insufficient
+    text: 1) Vi har litt vann til teen. 2) Vi har lite vann, så vi må kjøpe mer.
+    correct: true
+    why: Litt presents the available small amount neutrally, while lite presents the second amount as
+      insufficient.
+  - id: insufficient-then-available
+    text: 1) Vi har lite vann til teen. 2) Vi har litt vann, så vi trenger ikke kjøpe mer.
+    correct: false
+    why: The forms reverse the intended perspectives; the first amount is sufficient, while the second
+      is insufficient.
+  - id: available-twice
+    text: 1) Vi har litt vann til teen. 2) Vi har nok vann, så vi trenger ikke kjøpe mer.
+    correct: false
+    why: The second sentence contradicts the stated need to buy more water.
+  - id: insufficient-twice
+    text: 1) Vi har lite vann til teen. 2) Vi har lite vann, så vi må kjøpe mer.
+    correct: false
+    why: The first form suggests a shortage even though the stated amount is enough.
+- handle: review_choose_all_form
+  op: recall_fill
+  objective: obj-quantity-and-countability-01
+  bloom: apply
+  prompt_md: Complete the table update with all, alt, or alle.
+  explanation_md: Alle accompanies plural nouns, all accompanies common-gender singular nouns, and alt
+    accompanies neuter singular nouns or means everything independently.
+  derived_from:
+  - section_id: all-members-of-a-group-all-alt-and-alle
+  audio_target: På bordet står all teen. I glasset er alt vannet kaldt. Ute leker alle barna. Etter festen
+    er alt ryddet.
+  segments:
+  - text_md: 'På bordet står '
+  - blank_id: common-gender-amount
+    options:
+    - alt
+    - all
+    - alle
+    answer_index: 1
+  - text_md: ' teen. I glasset er '
+  - blank_id: neuter-amount
+    options:
+    - all
+    - alt
+    - alle
+    answer_index: 1
+  - text_md: ' vannet kaldt. Ute leker '
+  - blank_id: plural-group
+    options:
+    - alle
+    - all
+    - alt
+    answer_index: 0
+  - text_md: ' barna. Etter festen er '
+  - blank_id: everything
+    options:
+    - alt
+    - alle
+    - all
+    answer_index: 0
+  - text_md: ' ryddet.'
+- handle: review_distinguish_all_members_from_whole_item
+  op: choose
+  objective: obj-quantity-and-countability-01
+  bloom: analyze
+  prompt_md: Choose the report that matches both tidying results.
+  derived_from:
+  - section_id: every-member-or-one-complete-thing
+  stem_md: 'Result 1: Jonas packed every book in a plural set. Result 2: Jonas cleaned one complete garage.'
+  options:
+  - id: whole-twice
+    text: Jonas pakket hele bøkene. Jonas ryddet hele garasjen.
+    correct: false
+    why: Hele fits the complete garage but does not select every member of the plural book set.
+  - id: whole-then-members
+    text: Jonas pakket hele bøkene. Jonas ryddet alle garasjene.
+    correct: false
+    why: The first noun denotes plural members and the second denotes multiple garages, so the forms do
+      not fit their targets.
+  - id: members-twice
+    text: Jonas pakket alle bøkene. Jonas ryddet alle garasjene.
+    correct: false
+    why: Alle fits the plural books but cannot express one complete singular garage.
+  - id: members-then-whole
+    text: Jonas pakket alle bøkene. Jonas ryddet hele garasjen.
+    correct: true
+    why: Alle includes every member of the plural set, while hele presents the garage as one complete
+      thing.
+- handle: review_choose_begge_or_alle
+  op: recall_fill
+  objective: obj-quantity-and-countability-01
+  bloom: apply
+  prompt_md: Fullfør klasseoppdateringen med riktig mengdeord.
+  explanation_md: Velg ordet for begge medlemmer i en gruppe på to, eller ordet for hvert medlem i en
+    større eller uspesifisert gruppe.
+  derived_from:
+  - section_id: exactly-two-begge
+  audio_target: De to vennene skal male. Begge hjelper til. Det er åtte elever i klassen. Alle elevene
+    møter opp. Nora har to nøkler. Hun bruker begge nøklene.
+  segments:
+  - text_md: 'De to vennene skal male. '
+  - blank_id: exactly-two-people
+    options:
+    - Begge
+    - Alle
+    answer_index: 0
+  - text_md: ' hjelper til. Det er åtte elever i klassen. '
+  - blank_id: larger-student-group
+    options:
+    - Alle
+    - Begge
+    answer_index: 0
+  - text_md: ' elevene møter opp. Nora har to nøkler. Hun bruker '
+  - blank_id: exactly-two-keys
+    options:
+    - alle
+    - begge
+    answer_index: 1
+  - text_md: ' nøklene.'
+- handle: review_repair_dinner_update
+  op: find_fix
+  objective: obj-quantity-and-countability-01
+  bloom: analyze
+  prompt_md: Finn mengdeordet som ikke passer til substantivet.
+  derived_from:
+  - section_id: back-at-saras-flat
+  tokens:
+  - token_id: tok-1
+    text: I
+  - token_id: tok-2
+    text: kjøleskapet
+  - token_id: tok-3
+    text: står
+  - token_id: tok-4
+    text: mange
+  - token_id: tok-5
+    text: melk
+  - token_id: tok-6
+    text: på
+  - token_id: tok-7
+    text: øverste
+  - token_id: tok-8
+    text: hylle.
+  error_token_id: tok-4
+  feedback: Bytt ut «mange» med «mye», fordi melk betegner en mengde som ikke telles enkeltvis.

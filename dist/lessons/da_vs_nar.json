@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "da_vs_nar",
   "kind": "grammar",
   "language": "nb-NO",
@@ -2058,7 +2058,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Choose the interpretation that explains why the time word fits the single completed past event."
+          "value": "Choose what the time clause tells us about the person coming home."
         }
       ],
       "explanation": null,
@@ -2066,17 +2066,17 @@
         "options": [
           {
             "option_id": "repeated-past",
-            "text": "The clause describes a repeated routine every time I came home; the connector should be når, not da.",
-            "why": "The sentence identifies one Friday arrival, not a recurring routine."
+            "text": "It happened on Fridays as a regular routine.",
+            "why": "The sentence names one Friday, not a recurring routine, so når would not fit."
           },
           {
             "option_id": "specific-past",
-            "text": "The clause Da jeg kom hjem på fredag describes one particular completed arrival on Friday; da is appropriate.",
+            "text": "It happened once, on one particular Friday.",
             "why": "The Friday arrival is one identified, completed past occasion, so da fits."
           },
           {
             "option_id": "future-time",
-            "text": "The clause describes a future arrival; the connector should be når, not da.",
+            "text": "It will happen on an upcoming Friday.",
             "why": "The sentence describes a completed past arrival, not a future event."
           }
         ],
@@ -2084,7 +2084,7 @@
         "stem": [
           {
             "kind": "text",
-            "value": "Read: Da jeg kom hjem på fredag, lå det en melding på telefonen. Choose the complete meaning of the time clause and connector."
+            "value": "Read: Da jeg kom hjem på fredag, lå det en melding på telefonen."
           }
         ]
       }
@@ -2097,13 +2097,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Classify each sentence by its past-time meaning. Use one bucket per sentence; each bucket matches the connector for that meaning."
+          "value": "The time word is missing from the start of each sentence. Sort the sentences by their meaning in the past. Use one group for each sentence."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Use da for one specific past occasion and når for events that happened repeatedly."
+          "value": "Bruk «da» om én bestemt anledning i fortiden og «når» om noe som skjedde flere ganger."
         }
       ],
       "payload": {
@@ -2120,22 +2120,22 @@
         "items": [
           {
             "item_id": "sunday-visit",
-            "text": "Da jeg besøkte bestemor på søndag, bakte hun vafler. (When I visited Grandma on Sunday, she made waffles.)",
+            "text": "jeg åpnet døra klokka åtte på tirsdag, sto naboen utenfor med en pakke.",
             "bucket_id": "single-past"
           },
           {
             "item_id": "regular-visit",
-            "text": "Når jeg besøkte bestemor, bakte hun alltid vafler. (When I visited Grandma, she always made waffles.)",
+            "text": "jeg kom hjem fra skolen, tok jeg alltid en matbit.",
             "bucket_id": "repeated-past"
           },
           {
             "item_id": "train-yesterday",
-            "text": "Da toget kom i går, sto Anna på perrongen. (When the train arrived yesterday, Anna was standing on the platform.)",
+            "text": "jeg fant nøklene i går, ringte jeg straks til verten.",
             "bucket_id": "single-past"
           },
           {
             "item_id": "train-mornings",
-            "text": "Når toget kom om morgenen, sto Anna vanligvis på perrongen. (When the train arrived in the morning, Anna was usually standing on the platform.)",
+            "text": "jeg gikk til svømmehallen om vinteren, møtte jeg ofte naboen.",
             "bucket_id": "repeated-past"
           }
         ]
@@ -2149,13 +2149,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each future-time sentence with the correct taught time word. The future event in the time clause sets the time for the main event."
+          "value": "Fill in the time word that fits each sentence."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Use når for a future time condition, followed by present tense in the subordinate clause."
+          "value": "Bruk «når» om framtidig tid. I tidssetningen står verbet i presens."
         }
       ],
       "payload": {
@@ -2166,10 +2166,6 @@
               {
                 "kind": "text",
                 "value": "Item 1:"
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -2192,10 +2188,6 @@
               {
                 "kind": "text",
                 "value": "jeg kommer hjem neste uke, skal jeg ringe hotellet."
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -2204,11 +2196,11 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Item 2:"
+                "value": " "
               },
               {
                 "kind": "text",
-                "value": " "
+                "value": "Item 2:"
               }
             ]
           },
@@ -2216,10 +2208,10 @@
             "kind": "blank",
             "blank_id": "future-work",
             "options": [
-              "Når",
-              "Da"
+              "Da",
+              "Når"
             ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
@@ -2231,10 +2223,6 @@
               {
                 "kind": "text",
                 "value": "jeg avslutter arbeidet, skal jeg møte en venn."
-              },
-              {
-                "kind": "text",
-                "value": " "
               }
             ]
           },
@@ -2243,11 +2231,11 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Item 3:"
+                "value": " "
               },
               {
                 "kind": "text",
-                "value": " "
+                "value": "Item 3:"
               }
             ]
           },
@@ -2284,7 +2272,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Classify each sentence as one specific past occasion, repeated time, or future time. The correct connector follows from the bucket; classify by meaning rather than verb tense."
+          "value": "The time word is missing from the start of each sentence. Sort the sentences by meaning: one event in the past, a repeated situation, or a future situation. Look at the meaning, not only the verb tense."
         }
       ],
       "explanation": null,
@@ -2305,18 +2293,18 @@
         ],
         "items": [
           {
-            "item_id": "dinner-yesterday",
-            "text": "Da gjestene kom i går, serverte Liv suppa. (When the guests arrived yesterday, Liv served the soup.)",
+            "item_id": "lost-gloves-walk",
+            "text": "Arne gikk tur ved elva på lørdag, mistet han vottene.",
             "bucket_id": "single-past"
           },
           {
-            "item_id": "dinner-routine",
-            "text": "Når gjestene kommer, serverer Liv ofte suppe først. (When guests arrive, Liv often serves soup first.)",
+            "item_id": "delayed-bus",
+            "text": "bussen er forsinket, går Mina vanligvis til jobb.",
             "bucket_id": "repeated-time"
           },
           {
-            "item_id": "dinner-tomorrow",
-            "text": "Når gjestene kommer i morgen, skal Liv servere suppe. (When the guests arrive tomorrow, Liv is going to serve soup.)",
+            "item_id": "next-bus-trip",
+            "text": "Arne reiser til sentrum neste fredag, skal han gå av ved biblioteket.",
             "bucket_id": "future-time"
           }
         ]
@@ -2330,7 +2318,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Correct this Norwegian sentence by changing the time word: «Da jeg besøkte bestemor, bakte hun alltid vafler.» Then explain in Norwegian why the corrected word fits the repeated-past meaning."
+          "value": "Consider the sentence: «Da jeg var på hytta, fisket vi alltid etter middag.» Write in Norwegian whether «da» fits here. Explain how the one cabin stay and the repeated fishing affect your answer."
         }
       ],
       "explanation": null,
@@ -2338,15 +2326,15 @@
         "response_language": "no",
         "min_words": null,
         "max_words": null,
-        "judge_prompt": "Check the corrected time word and the Norwegian meaning explanation against every criterion. Accept natural wording when repeated past conditions are clear.",
+        "judge_prompt": "Check the context-based assessment and Norwegian explanation against every criterion. Require an answer to the stated specific-stay context. Do not accept an alternative repeated-stay interpretation that changes the facts in the prompt.",
         "criteria": [
           {
-            "id": "corrected-time-word",
-            "instruction": "Changes Da to Når in the sentence."
+            "id": "context-based-assessment",
+            "instruction": "States whether da is defensible in the sentence and gives a context-based reason."
           },
           {
-            "id": "repeated-past-reason",
-            "instruction": "Explains in Norwegian that alltid signals repeated past conditions rather than one specific occasion."
+            "id": "meaning-distinction",
+            "instruction": "Explains in Norwegian that da can frame one specific cabin stay while alltid describes repeated fishing during that stay. Do not accept a reading that changes the stay into repeated visits."
           }
         ]
       }
@@ -2359,7 +2347,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete the connected account with the correct taught time word in each blank. Use the time expressions and routine marker to distinguish one past occasion, repeated time, and future time."
+          "value": "Complete the story with «da» or «når»."
         }
       ],
       "explanation": null,
@@ -2463,7 +2451,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Rewrite this sentence in two ways while keeping the basic event: Da jeg kom hjem på fredag, ringte jeg pappa. (When I came home on Friday, I called Dad.) First write a repeated routine with når; then write a future plan with når. Adjust tense or time expressions naturally."
+          "value": "Rewrite the sentence in two ways without changing the main action: «Da jeg kom hjem på fredag, ringte jeg pappa.» First describe a repeated routine with «når», then a future plan with «når». Change the verb tense and time phrase to fit."
         }
       ],
       "explanation": null,
@@ -2475,11 +2463,11 @@
         "criteria": [
           {
             "id": "repeated-time-version",
-            "instruction": "Writes a repeated-time version of the arrival-and-call event and uses **når**."
+            "instruction": "Writes a repeated-time version of the arrival-and-call event and uses når."
           },
           {
             "id": "future-time-version",
-            "instruction": "Writes a future-time version of the arrival-and-call event and uses **når**."
+            "instruction": "Writes a future-time version of the arrival-and-call event and uses når."
           },
           {
             "id": "same-event",
@@ -2496,7 +2484,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write a short connected account in Norwegian about Sander’s driving lessons. Include one sentence for each cue: one specific earlier lesson, something that normally happens during lessons, and tomorrow’s lesson or plan. Use da for the single past occasion and når for both the routine and future plan. Use your own wording."
+          "value": "Write a short, connected text in Norwegian about Nora's visit to the swimming pool. Write one sentence about a visit last Tuesday, one about something she usually does, and one about her planned visit tomorrow. Choose linking words to match the time meaning in each situation. Explain the time meaning of each word."
         }
       ],
       "explanation": null,
@@ -2504,23 +2492,27 @@
         "response_language": "no",
         "min_words": 25,
         "max_words": 55,
-        "judge_prompt": "Check the connected Norwegian account against the task and report evidence for each criterion. Require meaning-based use of da and når, not tense-only matching.",
+        "judge_prompt": "Check the connected Norwegian account against the task and report evidence for each criterion. Require meaning-based use of da and når, not tense-only matching. Check that the account also explains the intended time meaning of each connector.",
         "criteria": [
           {
             "id": "specific-past-memory",
-            "instruction": "Describes one specific completed earlier driving lesson and uses **da** for its time clause."
+            "instruction": "Describes one specific completed swimming-pool visit last Tuesday and uses da for its time clause."
           },
           {
             "id": "repeated-routine",
-            "instruction": "Describes something that normally happens during driving lessons and uses **når**."
+            "instruction": "Describes something Nora usually does on her swimming-pool visits and uses når."
           },
           {
             "id": "future-plan",
-            "instruction": "Describes tomorrow’s driving lesson or plan and uses **når**, even if the time clause uses present tense."
+            "instruction": "Describes Nora’s planned swimming-pool visit tomorrow and uses når, even if the time clause uses present tense."
           },
           {
             "id": "connected-original",
             "instruction": "Connects all three contexts in one short account with original wording."
+          },
+          {
+            "id": "explains-time-meanings",
+            "instruction": "Explains that da frames the specific past occasion while når frames the repeated routine and planned future time."
           }
         ]
       }

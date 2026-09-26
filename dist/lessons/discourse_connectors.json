@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "discourse_connectors",
   "kind": "communicative",
   "language": "nb-NO",
@@ -592,7 +592,7 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Derfor jeg ringte byggevarebutikken."
+                  "value": "Derfor jeg ringte byggevarebutikken."
                 }
               ],
               "en": [
@@ -600,7 +600,8 @@
                   "kind": "text",
                   "value": "Therefore, I called the hardware store."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "connectors-v2-rule-block-8"
@@ -658,7 +659,7 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Likevel vi begynte som planlagt."
+                  "value": "Likevel vi begynte som planlagt."
                 }
               ],
               "en": [
@@ -666,7 +667,8 @@
                   "kind": "text",
                   "value": "Nevertheless, we started as planned."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "connectors-v2-rule-block-12"
@@ -2262,7 +2264,7 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Selv om det regnet, vi fortsatte arbeidet."
+                  "value": "Selv om det regnet, vi fortsatte arbeidet."
                 }
               ],
               "en": [
@@ -2270,7 +2272,8 @@
                   "kind": "text",
                   "value": "Although it was raining, we continued the work."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "expressing-contrast-concession-block-33"
@@ -3750,7 +3753,7 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Deretter elevene reparerte porten."
+                  "value": "Deretter elevene reparerte porten."
                 }
               ],
               "en": [
@@ -3758,7 +3761,8 @@
                   "kind": "text",
                   "value": "After that, the pupils repaired the gate."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "common-mistakes-to-avoid-block-4"
@@ -3980,32 +3984,32 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Classify each Norwegian excerpt by the structural pattern it demonstrates. Identify the connector when one is present, the finite verb, and the subject from the words shown. Items 2 and 3 are the two parts of one sentence; item 3 is the main clause following item 2. Distinguish connector-initial V2, subject-before-verb order inside an opening selv om clause, inversion in the following main clause, and ordinary subject–verb order after men. Do not treat men as a fronted adverbial connector."
+          "value": "Sorter tekstutdragene etter ordstilling: hovedsetning, leddsetning eller sideordnet setning. I utdrag 2 og 3 hører delene sammen. Finn det finitte verbet og subjektet, og se hvilket som kommer først."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "An opening connector occupies the first position of a Norwegian main clause, so the finite verb comes next. Inside a subordinate clause such as «selv om …», the subject stays before the verb."
+          "value": "Når et adverbial eller en leddsetning står først i en hovedsetning, kommer det finitte verbet etterpå. I en leddsetning står subjektet før det finitte verbet."
         }
       ],
       "payload": {
         "buckets": [
           {
             "bucket_id": "connector_initial_v2",
-            "label": "Connector-initial main clause with finite verb before subject"
+            "label": "Hovedsetning med innledende adverbial og verb før subjekt"
           },
           {
             "bucket_id": "selv_om_subordinate_order",
-            "label": "Subject–verb order inside an selv om clause"
+            "label": "Leddsetning med subjekt før verb"
           },
           {
             "bucket_id": "selv_om_following_main_v2",
-            "label": "Inversion in the main clause following an opening selv om clause"
+            "label": "Hovedsetning etter innledende leddsetning, med verb før subjekt"
           },
           {
             "bucket_id": "men_subject_verb",
-            "label": "Ordinary subject–verb order after men"
+            "label": "Sideordnet setning med subjekt før verb"
           }
         ],
         "items": [
@@ -4035,121 +4039,37 @@
     {
       "kind": "exercise",
       "id": "build_clear_timeline",
-      "operation": "build",
+      "operation": "write",
       "objective_id": "obj-discourse-connectors-01",
       "prompt": [
         {
           "kind": "text",
-          "value": "Arrange all supplied tokens into the four-sentence garden-workday timeline. Use every token exactly once. Begin each stage with its supplied sequence connector and place the finite verb directly after that connector."
+          "value": "Skriv fire korte setninger om arbeidsdagen i hagen. Notater: klokka ni kom seks frivillige; senere kom skoleklassen; etter besøket malte gruppa benkene; til slutt ryddet de området. Sett hendelsene i rekkefølge. Begynn hver setning med et passende tidsbindeord, og følg norsk V2-ordstilling."
         }
       ],
       "explanation": null,
       "payload": {
-        "tokens": [
+        "response_language": "no",
+        "min_words": 15,
+        "max_words": 50,
+        "judge_prompt": "Evaluate the response against the four-event retelling, chronological order, sequence-connectors, V2 criteria. Accept natural Bokmål wording and suitable sequence connectors. Each of the four events must be stated, and each sentence must place its finite verb immediately after the fronted connector.",
+        "criteria": [
           {
-            "token_id": "timeline-01",
-            "text": "Først",
-            "fixed": false
+            "id": "four-events",
+            "instruction": "Includes the arrival of the six volunteers, the school class, the bench painting, and the area cleanup."
           },
           {
-            "token_id": "timeline-02",
-            "text": "undersøkte",
-            "fixed": false
+            "id": "chronological-order",
+            "instruction": "Presents the four events in the supplied chronological order."
           },
           {
-            "token_id": "timeline-03",
-            "text": "vi",
-            "fixed": false
+            "id": "sequence-connectors",
+            "instruction": "Begins each stage with an appropriate sequence connector."
           },
           {
-            "token_id": "timeline-04",
-            "text": "gjerdet.",
-            "fixed": false
-          },
-          {
-            "token_id": "timeline-05",
-            "text": "Deretter",
-            "fixed": false
-          },
-          {
-            "token_id": "timeline-06",
-            "text": "kjøpte",
-            "fixed": false
-          },
-          {
-            "token_id": "timeline-07",
-            "text": "vi",
-            "fixed": false
-          },
-          {
-            "token_id": "timeline-08",
-            "text": "materialer.",
-            "fixed": false
-          },
-          {
-            "token_id": "timeline-09",
-            "text": "Så",
-            "fixed": false
-          },
-          {
-            "token_id": "timeline-10",
-            "text": "reparerte",
-            "fixed": false
-          },
-          {
-            "token_id": "timeline-11",
-            "text": "vi",
-            "fixed": false
-          },
-          {
-            "token_id": "timeline-12",
-            "text": "porten.",
-            "fixed": false
-          },
-          {
-            "token_id": "timeline-13",
-            "text": "Til",
-            "fixed": false
-          },
-          {
-            "token_id": "timeline-14",
-            "text": "slutt",
-            "fixed": false
-          },
-          {
-            "token_id": "timeline-15",
-            "text": "ryddet",
-            "fixed": false
-          },
-          {
-            "token_id": "timeline-16",
-            "text": "vi",
-            "fixed": false
-          },
-          {
-            "token_id": "timeline-17",
-            "text": "området.",
-            "fixed": false
+            "id": "v2-after-connector",
+            "instruction": "Places the finite verb directly after each fronted sequence connector."
           }
-        ],
-        "answer_order": [
-          "timeline-01",
-          "timeline-02",
-          "timeline-03",
-          "timeline-04",
-          "timeline-05",
-          "timeline-06",
-          "timeline-07",
-          "timeline-08",
-          "timeline-09",
-          "timeline-10",
-          "timeline-11",
-          "timeline-12",
-          "timeline-13",
-          "timeline-14",
-          "timeline-15",
-          "timeline-16",
-          "timeline-17"
         ]
       }
     },
@@ -4161,7 +4081,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write 35–70 words in Norwegian for Ingrid and Samir's council report. Add two coherent supporting facts, with one sentence beginning with I tillegg and one beginning with Dessuten. Then respond to Skoleklassen kom. with a follow-up about the teacher's tools. Choose i tillegg if the tools are extra information or deretter if they are a later event, and explain in Norwegian how the alternative would change the listener's interpretation from addition to sequence or from sequence to addition. Use verb–subject order after every fronted adverbial connector."
+          "value": "til Ingrid og Samirs rapport til kommunen. Ta med to støttende opplysninger. Begynn én setning med «I tillegg» og én med «Dessuten». Svar også på «Skoleklassen kom» med en opplysning om lærerens utstyr; vis om dette er en tilleggsopplysning eller noe som skjedde etterpå. Forklar kort hvordan et annet bindeord ville endret betydningen. Bruk omvendt ordstilling etter innledende adverbial."
         }
       ],
       "explanation": null,
@@ -4169,27 +4089,31 @@
         "response_language": "no",
         "min_words": 35,
         "max_words": 70,
-        "judge_prompt": "Check the response against the task and report evidence for every criterion. Accept natural Bokmål variants, but require both added facts, the requested connector choices, the explanation of the alternative interpretation, and correct verb–subject order after each fronted adverbial connector.",
+        "judge_prompt": "Check the response against the task and report evidence for every criterion. Accept natural Bokmål variants, but require both added facts with I tillegg and Dessuten each beginning a sentence, the follow-up about the teacher's tools, the requested connector choices, the explanation of the alternative interpretation, and correct verb–subject order after each fronted adverbial connector.",
         "criteria": [
           {
             "id": "coherent-supporting-details",
-            "instruction": "Adds coherent supporting details to the council report."
+            "instruction": "Adds two coherent supporting facts to the council report."
           },
           {
-            "id": "i-tillegg-fact",
-            "instruction": "Uses i tillegg to introduce one added fact."
+            "id": "i-tillegg-sentence",
+            "instruction": "Begins one sentence with I tillegg to add a supporting fact."
           },
           {
-            "id": "dessuten-fact",
-            "instruction": "Uses dessuten to introduce one added fact."
+            "id": "dessuten-sentence",
+            "instruction": "Begins one sentence with Dessuten to add a supporting fact."
+          },
+          {
+            "id": "follow-up-tools",
+            "instruction": "Responds to Skoleklassen kom. with a follow-up about the teacher's tools."
           },
           {
             "id": "relationship-choice",
-            "instruction": "Selects a connector that matches the intended addition or sequence relationship."
+            "instruction": "Selects i tillegg or deretter to match the intended addition or sequence relationship."
           },
           {
             "id": "alternative-interpretation",
-            "instruction": "Explains how the alternative connector changes the listener's interpretation."
+            "instruction": "Explains in Norwegian how the alternative connector would change the listener's interpretation."
           },
           {
             "id": "fronted-adverbial-order",
@@ -4206,13 +4130,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write a brief Norwegian response about the volunteer day. Present the rain as one problem and the distant shop as another. Use one likevel construction beginning with fronted Likevel to connect a problem with its response. Write one sentence beginning with an opening Selv om clause to connect the other problem with its response. Add one direct contrast between two people, things, or situations using men or derimot. Make every relationship clear and use inversion in the main clauses after fronted Likevel and after the opening Selv om clause."
+          "value": "Skriv et kort svar om arbeidsdagen. Nevn regnet som ett problem og den fjerne butikken som et annet. Bruk «likevel» først i en setning for å knytte et problem til løsningen. Begynn en annen setning med en «selv om»-leddsetning. Vis også en tydelig kontrast med «men» eller «derimot». Bruk omvendt ordstilling i hovedsetningene etter innledende ledd."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 30,
+        "min_words": null,
         "max_words": 65,
         "judge_prompt": "Check the response against the task and report evidence for every criterion. Require a clear rain response, a clear distant-shop response, one direct contrast, the requested likevel and selv om constructions, and correct inversion in both relevant main clauses.",
         "criteria": [
@@ -4247,7 +4171,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Arrange the supplied tokens into two linked versions of one bad-weather cause-and-result relationship. First state the bad weather and introduce its consequence with derfor. Then express the same relationship with fordi. Use every token exactly once and preserve the modeled word order in both clauses."
+          "value": "Sett ordene sammen til to versjoner av samme årsak og resultat. Først: årsak, så resultat i en ny hovedsetning. Deretter: resultat først, med årsaken som forklaring. Bruk alle ordene én gang og riktig ordstilling."
         }
       ],
       "explanation": null,
@@ -4255,17 +4179,17 @@
         "tokens": [
           {
             "token_id": "cause-01",
-            "text": "Det",
+            "text": "Det regnet kraftig.",
             "fixed": false
           },
           {
             "token_id": "cause-02",
-            "text": "regnet",
+            "text": "vi under tak.",
             "fixed": false
           },
           {
             "token_id": "cause-03",
-            "text": "kraftig.",
+            "text": "fordi",
             "fixed": false
           },
           {
@@ -4280,77 +4204,29 @@
           },
           {
             "token_id": "cause-06",
-            "text": "vi",
+            "text": "Vi arbeidet under tak",
             "fixed": false
           },
           {
             "token_id": "cause-07",
-            "text": "under",
-            "fixed": false
-          },
-          {
-            "token_id": "cause-08",
-            "text": "tak.",
-            "fixed": false
-          },
-          {
-            "token_id": "cause-09",
-            "text": "Vi",
-            "fixed": false
-          },
-          {
-            "token_id": "cause-10",
-            "text": "arbeidet",
-            "fixed": false
-          },
-          {
-            "token_id": "cause-11",
-            "text": "under",
-            "fixed": false
-          },
-          {
-            "token_id": "cause-12",
-            "text": "tak",
-            "fixed": false
-          },
-          {
-            "token_id": "cause-13",
-            "text": "fordi",
-            "fixed": false
-          },
-          {
-            "token_id": "cause-14",
             "text": "det",
             "fixed": false
           },
           {
-            "token_id": "cause-15",
-            "text": "regnet",
-            "fixed": false
-          },
-          {
-            "token_id": "cause-16",
-            "text": "kraftig.",
+            "token_id": "cause-08",
+            "text": "regnet kraftig.",
             "fixed": false
           }
         ],
         "answer_order": [
           "cause-01",
-          "cause-02",
-          "cause-03",
           "cause-04",
           "cause-05",
+          "cause-02",
           "cause-06",
+          "cause-03",
           "cause-07",
-          "cause-08",
-          "cause-09",
-          "cause-10",
-          "cause-11",
-          "cause-12",
-          "cause-13",
-          "cause-14",
-          "cause-15",
-          "cause-16"
+          "cause-08"
         ]
       }
     },
@@ -4362,7 +4238,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write 12–35 words in Norwegian to end the volunteer-day report. First state a final event using Til slutt. Then add an overall evaluation using Alt i alt or a conclusion containing altså. Use each connector for its intended purpose and maintain correct word order."
+          "value": "Avslutt rapporten om arbeidsdagen. Fortell først om den siste hendelsen med «Til slutt». Vurder deretter dagen som helhet med «Alt i alt», eller gi en vurdering med «altså». Bruk uttrykkene riktig og pass på ordstillingen."
         }
       ],
       "explanation": null,
@@ -4378,7 +4254,7 @@
           },
           {
             "id": "overall-conclusion",
-            "instruction": "Uses alt i alt or altså for the conclusion."
+            "instruction": "Uses alt i alt for an overall evaluation, or uses altså for an evaluative conclusion about the day."
           },
           {
             "id": "connector-functions",
@@ -4394,36 +4270,40 @@
     {
       "kind": "exercise",
       "id": "repair_fronted_connector",
-      "operation": "find_fix",
+      "operation": "choose",
       "objective_id": "obj-discourse-connectors-01",
       "prompt": [
         {
           "kind": "text",
-          "value": "Select the one token misplaced in the Norwegian sentence. The feedback explains the word-order repair and the connector meaning."
+          "value": "Velg setningen med riktig ordstilling etter det innledende tidsuttrykket."
         }
       ],
       "explanation": null,
       "payload": {
-        "tokens": [
+        "options": [
           {
-            "token_id": "repair-01",
-            "text": "Deretter"
+            "option_id": "correct-v2",
+            "text": "Deretter malte elevene porten.",
+            "why": "Deretter is in first position, followed by the finite verb malte and then the subject elevene."
           },
           {
-            "token_id": "repair-02",
-            "text": "elevene"
+            "option_id": "subject-before-verb",
+            "text": "Deretter elevene malte porten.",
+            "why": "A fronted Deretter requires the finite verb before the subject in a main clause."
           },
           {
-            "token_id": "repair-03",
-            "text": "reparerte"
-          },
-          {
-            "token_id": "repair-04",
-            "text": "porten."
+            "option_id": "verb-at-end",
+            "text": "Deretter elevene porten malte.",
+            "why": "The finite verb cannot remain at the end of this main clause after a fronted connector."
           }
         ],
-        "error_token_id": "repair-02",
-        "feedback": "Deretter marks a later step and fills the first position. The finite verb reparerte must come before the subject elevene; identify this placement error and rewrite the complete sentence."
+        "answer_id": "correct-v2",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Vaktmesteren reparerte porten først. Elevene malte den etterpå."
+          }
+        ]
       }
     },
     {
@@ -4434,7 +4314,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write an 80–130-word Norwegian council update as one coherent account of the garden workday, without copying the dialogue line by line. Begin with the initial situation, organize the work in sequence, add supporting information, mention an obstacle and its response, explain a cause-and-result relationship, and end with a final event and an overall conclusion. Use connectors for distinct functions, including sequence, addition, cause, result, and conclusion. Include a fronted adverbial connector with finite verb before subject; an opening selv om clause followed by an inverted main clause; a fordi clause and the opening selv om clause with subject before finite verb; one men clause whose first constituent after men is the subject; and one men clause with a taught adverbial fronted after men, so the finite verb comes before the subject. Do not count men itself as a fronted adverbial."
+          "value": "Skriv en oppdatering til kommunen etter en arbeidsdag i hagen. Begynn med planen, fortell i rekkefølge hva dere gjorde, og ta også med én detalj om arbeidet med «i tillegg» eller «dessuten». Forklar et problem og hvordan dere løste det. Vis årsaken til en endring med «fordi» og resultatet med «derfor». Bruk «selv om» først i en setning om et hinder. Vis to kontraster med «men»: én der helsetningen etter «men» begynner med subjektet, og én der den begynner med «deretter» eller «likevel». Avslutt med den siste hendelsen og en samlet vurdering av dagen."
         }
       ],
       "explanation": null,
@@ -4442,19 +4322,43 @@
         "response_language": "no",
         "min_words": 80,
         "max_words": 130,
-        "judge_prompt": "Check the response against the task and report evidence for every criterion. Require one coherent garden-project report with distinct connector functions, all requested subordinate and main-clause word orders, and both contrasting men patterns. Accept natural Bokmål variants grounded in the lesson.",
+        "judge_prompt": "Check one coherent garden-work update against the task. Require the stated plan, chronological events, one relevant detail, an obstacle and response, the cause and result of a change, and a final event with an overall assessment. Check that the specified connectors express those relationships. For word order, check the clause following «selv om», the subject-first clause after one «men», and the finite-verb-before-subject order after «deretter» or «likevel» following the other «men».",
         "criteria": [
           {
             "id": "coherent-report",
             "instruction": "Reads as one coherent report rather than isolated sentences."
           },
           {
+            "id": "opening-initial-situation",
+            "instruction": "Begins the report with the initial situation."
+          },
+          {
+            "id": "sequence",
+            "instruction": "Organizes the work in a clear chronological sequence."
+          },
+          {
+            "id": "supporting-information",
+            "instruction": "Adds one relevant detail about the work beyond the main sequence."
+          },
+          {
+            "id": "obstacle-and-response",
+            "instruction": "Mentions an obstacle and the response to it."
+          },
+          {
+            "id": "cause-and-result",
+            "instruction": "Explains a clear cause-and-result relationship."
+          },
+          {
+            "id": "final-event-and-conclusion",
+            "instruction": "Ends with the final event and an overall assessment of the day."
+          },
+          {
             "id": "distinct-connector-functions",
-            "instruction": "Uses connectors for distinct functions."
+            "instruction": "Uses sequence and addition connectors to guide the report, and «fordi» and «derfor» to show cause and result."
           },
           {
             "id": "fronted-adverbial-v2",
-            "instruction": "Places the finite verb before the subject after fronted adverbial connectors."
+            "instruction": "Places the finite verb before the subject after a fronted adverbial connector."
           },
           {
             "id": "opening-selv-om-inversion",
@@ -4470,7 +4374,7 @@
           },
           {
             "id": "men-fronted-adverbial-v2",
-            "instruction": "Uses verb–subject order when a taught adverbial is fronted after men."
+            "instruction": "Includes one men clause beginning with «deretter» or «likevel», followed by the finite verb before the subject."
           }
         ]
       }
@@ -4483,15 +4387,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Without looking back, write six numbered sentences in Norwegian, one for each relationship: sequence, addition, direct contrast, concession, cause, and conclusion. Use fresh situations and lexical frames rather than copying complete lesson sentences. Set the addition sentence outside the garden report in an everyday grocery-shopping context, using i tillegg or dessuten. Use men or derimot for direct contrast, likevel or selv om for concession, and fordi for cause with subject before finite verb in its subordinate clause. Use a fronted adverbial connector in at least four sentences. Before submitting, check second-position finite verbs after each fronted adverbial connector. Do not treat men itself as a fronted adverbial. If a taught adverbial follows men, apply the V2 check to that adverbial; if concession uses selv om, do not apply the main-clause check inside its subordinate clause."
+          "value": "Skriv seks nummererte setninger på norsk fra nye situasjoner. La dem uttrykke rekkefølge, tillegg, direkte kontrast, innrømmelse, årsak og konklusjon. Legg tilleggsetningen til en dagligvaresituasjon. Bruk «men» eller «derimot» ved direkte kontrast og «likevel» eller «selv om» ved innrømmelse. Bruk «fordi» i årsakssetningen. Begynn minst fire setninger med et bindeord som tar førsteplassen i hovedsetningen, og bruk «i tillegg» eller «dessuten» i tilleggsetningen."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 35,
+        "min_words": null,
         "max_words": 90,
-        "judge_prompt": "Check the response against the task and report evidence for every criterion. Verify six distinct relationship sentences, the grocery-shopping addition context, the required connector choices, at least four fronted adverbials, and the separate main-clause and subordinate-clause word-order rules. Reject copied complete lesson sentences.",
+        "judge_prompt": "Check the response against the task and report evidence for every criterion. Verify six distinct relationship sentences, the grocery-shopping addition context, the required connector choices, at least four sentences with a fronted adverbial connector, and the separate main-clause and subordinate-clause word-order rules. Reject copied complete lesson sentences.",
         "criteria": [
           {
             "id": "six-relationships",

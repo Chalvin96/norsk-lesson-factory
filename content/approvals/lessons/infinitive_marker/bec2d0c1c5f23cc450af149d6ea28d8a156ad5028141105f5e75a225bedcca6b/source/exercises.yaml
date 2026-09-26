@@ -1,0 +1,320 @@
+- handle: notice_infinitive_marker_in_context
+  op: choose
+  objective: obj-infinitive-marker-01
+  bloom: understand
+  prompt_md: Velg gruppa der begge setningene er riktige.
+  derived_from:
+  - section_id: infinitive-and-marker
+  stem_md: 'A: Maja kan å spise. Elias skal å reise. B: Maja liker spise. Elias håper reise. C: Maja liker å spise. Elias håper å reise.'
+  options:
+  - id: group-a
+    text: Gruppe A
+    correct: false
+    why: Etter modalverbene «kan» og «skal» bruker vi infinitiv uten «å».
+  - id: group-b
+    text: Gruppe B
+    correct: false
+    why: Etter «liker» og «håper» bruker vi «å» foran infinitiven.
+  - id: group-c
+    text: Gruppe C
+    correct: true
+    why: Etter «liker» og «håper» står «å» foran infinitiven, som beholder grunnformen.
+- handle: choose_marker_after_first_verb
+  op: recall_fill
+  objective: obj-infinitive-marker-01
+  bloom: apply
+  prompt_md: Fyll ut setningene med riktig infinitivform.
+  explanation_md: Modalverb står med infinitiv uten «å». Verb som «håpe» og «prøve» står med «å» foran infinitiven.
+  derived_from:
+  - section_id: after-modal-verbs
+  audio_target: På mandag håper jeg å besøke Bergen. I kveld må jeg lage middag. På lørdag vil vi møte Anna. Etter jobb prøver hun å lese på norsk.
+  segments:
+  - text_md: 'På mandag håper jeg '
+  - blank_id: visit-form
+    options:
+    - besøke
+    - å besøke
+    answer_index: 1
+  - text_md: ' Bergen. I kveld må jeg '
+  - blank_id: dinner-form
+    options:
+    - lage
+    - å lage
+    answer_index: 0
+  - text_md: ' middag. På lørdag vil vi '
+  - blank_id: meet-form
+    options:
+    - å møte
+    - møte
+    answer_index: 1
+  - text_md: ' Anna. Etter jobb prøver hun '
+  - blank_id: read-form
+    options:
+    - å lese
+    - lese
+    answer_index: 0
+  - text_md: ' på norsk.'
+- handle: contrast_same_infinitive_patterns
+  op: build
+  objective: obj-infinitive-marker-01
+  bloom: apply
+  prompt_md: Lag setningen med «prøver»-delen først og «kan»-delen etterpå.
+  derived_from:
+  - section_id: one-decision-at-a-time
+  tokens:
+  - token_id: tok-2
+    text: prøver
+  - token_id: tok-3
+    text: å
+  - token_id: tok-4
+    text: møte
+  - token_id: tok-5
+    text: Anna,
+  - token_id: tok-6
+    text: men
+  - token_id: tok-7
+    text: hun
+  - token_id: tok-8
+    text: kan
+  - token_id: tok-9
+    text: møte
+  - token_id: tok-10
+    text: Anna.
+  - token_id: tok-1
+    text: Maja
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+- handle: repair_infinitive_marker_errors
+  op: find_fix
+  objective: obj-infinitive-marker-01
+  bloom: analyze
+  prompt_md: Velg ordet som skal bort.
+  derived_from:
+  - section_id: common-mistake
+  tokens:
+  - token_id: tok-1
+    text: Maja
+  - token_id: tok-2
+    text: kan
+  - token_id: tok-3
+    text: å
+  - token_id: tok-4
+    text: møte
+  - token_id: tok-5
+    text: Elias,
+  - token_id: tok-6
+    text: men
+  - token_id: tok-7
+    text: hun
+  - token_id: tok-8
+    text: håper
+  - token_id: tok-9
+    text: å
+  - token_id: tok-10
+    text: møte
+  - token_id: tok-11
+    text: Elias.
+  error_token_id: tok-3
+  feedback: Remove å after the modal verb kan. Keep å before møte after the non-modal verb håper.
+- handle: complete_contextual_two_verb_messages
+  op: recall_fill
+  objective: obj-infinitive-marker-01
+  bloom: apply
+  prompt_md: Fyll ut museumsbeskjedene med riktig infinitivform.
+  explanation_md: «Kan» og «bør» er modalverb. «Håper» og «har lyst til» etterfølges av infinitiv med «å».
+  derived_from:
+  - section_id: back-to-maja-and-elias
+  audio_target: Maja kan møte Elias ved museet. Elias håper å kjøpe billetter ved inngangen. Vi bør gå inn etterpå. Etter besøket har Elias lyst til å spise noe.
+  segments:
+  - text_md: 'Maja kan '
+  - blank_id: museum-meet-form
+    options:
+    - å møte
+    - møte
+    answer_index: 1
+  - text_md: ' Elias ved museet. Elias håper '
+  - blank_id: ticket-form
+    options:
+    - å kjøpe
+    - kjøpe
+    answer_index: 0
+  - text_md: ' billetter ved inngangen. Vi bør '
+  - blank_id: enter-form
+    options:
+    - å gå
+    - gå
+    answer_index: 1
+  - text_md: ' inn etterpå. Etter besøket har Elias lyst til '
+  - blank_id: eat-form
+    options:
+    - å spise
+    - spise
+    answer_index: 0
+  - text_md: ' noe.'
+- handle: produce_bounded_everyday_sentences
+  op: build
+  objective: obj-infinitive-marker-01
+  bloom: apply
+  prompt_md: Skriv den norske setningen for «I am trying to read in Norwegian tonight.»
+  derived_from:
+  - section_id: building-short-personal-statements
+  tokens:
+  - token_id: tok-2
+    text: prøver
+  - token_id: tok-3
+    text: å
+  - token_id: tok-4
+    text: lese
+  - token_id: tok-5
+    text: på
+  - token_id: tok-6
+    text: norsk
+  - token_id: tok-7
+    text: i
+  - token_id: tok-8
+    text: kveld.
+  - token_id: tok-1
+    text: Jeg
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+- handle: transfer_infinitive_marker_to_evening_plan
+  op: build
+  objective: obj-infinitive-marker-01
+  bloom: apply
+  prompt_md: 'Nora planlegger kvelden. Bygg en kort tekst der hun først forteller om middagen. Fortsett med vennen, lesingen på norsk og hjemkomsten.'
+  derived_from:
+  - section_id: cumulative-transfer
+  tokens:
+  - token_id: tok-2
+    text: skal
+  - token_id: tok-3
+    text: lage
+  - token_id: tok-4
+    text: middag.
+  - token_id: tok-5
+    text: Hun
+  - token_id: tok-6
+    text: vil
+  - token_id: tok-7
+    text: snakke
+  - token_id: tok-8
+    text: med
+  - token_id: tok-9
+    text: en
+  - token_id: tok-10
+    text: venn,
+  - token_id: tok-11
+    text: håper
+  - token_id: tok-12
+    text: å
+  - token_id: tok-13
+    text: lese
+  - token_id: tok-14
+    text: på
+  - token_id: tok-15
+    text: norsk
+  - token_id: tok-16
+    text: og
+  - token_id: tok-17
+    text: må
+  - token_id: tok-18
+    text: komme
+  - token_id: tok-19
+    text: hjem
+  - token_id: tok-20
+    text: tidlig.
+  - token_id: tok-1
+    text: Nora
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+  - tok-11
+  - tok-12
+  - tok-13
+  - tok-14
+  - tok-15
+  - tok-16
+  - tok-17
+  - tok-18
+  - tok-19
+  - tok-20
+- handle: review_choose_marker_after_first_verb
+  op: choose
+  objective: obj-infinitive-marker-01
+  bloom: understand
+  prompt_md: Velg setningen med riktig infinitivform.
+  derived_from:
+  - section_id: after-modal-verbs
+  stem_md: En deltaker forteller om planen sin for kvelden.
+  options:
+  - id: missing-marker
+    text: Hun prøver lese på norsk.
+    correct: false
+    why: The non-modal verb prøver needs å before lese.
+  - id: extra-marker
+    text: Hun vil å lese på norsk.
+    correct: false
+    why: The modal verb vil takes a bare infinitive, so å must not appear.
+  - id: correct-marker
+    text: Hun prøver å lese på norsk.
+    correct: true
+    why: The non-modal verb prøver takes å before the infinitive lese.
+- handle: review_complete_contextual_two_verb_messages
+  op: recall_fill
+  objective: obj-infinitive-marker-01
+  bloom: apply
+  prompt_md: Fyll ut bibliotekmeldingene med riktig infinitivform.
+  explanation_md: «Kan» og «må» er modalverb. «Håper» og «har lyst til» innleder infinitiv med «å».
+  derived_from:
+  - section_id: back-to-maja-and-elias
+  audio_target: I dag kan vi besøke biblioteket. Nora håper å låne en bok. Vi må dra hjem tidlig. Etterpå har Nora lyst til å se en film.
+  segments:
+  - text_md: 'I dag kan vi '
+  - blank_id: library-form
+    options:
+    - å besøke
+    - besøke
+    answer_index: 1
+  - text_md: ' biblioteket. Nora håper '
+  - blank_id: borrow-form
+    options:
+    - å låne
+    - låne
+    answer_index: 0
+  - text_md: ' en bok. Vi må '
+  - blank_id: home-form
+    options:
+    - å dra
+    - dra
+    answer_index: 1
+  - text_md: ' hjem tidlig. Etterpå har Nora lyst til '
+  - blank_id: film-form
+    options:
+    - å se
+    - se
+    answer_index: 0
+  - text_md: ' en film.'

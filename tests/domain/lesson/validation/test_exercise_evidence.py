@@ -46,6 +46,21 @@ def test_scan_exercise_evidence_given_visible_repair_message_expect_no_source_wa
     assert scan_exercise_evidence(exercise, "translation_error_repair") == []
 
 
+def test_scan_exercise_evidence_given_dialogue_stimulus_expect_no_source_warning() -> None:
+    exercise = {
+        "op": "write",
+        "prompt_md": "Correct the Norwegian message, then explain why.",
+        "stimulus": [
+            {
+                "kind": "dialogue",
+                "turns": [{"speaker": "Lea", "text_md": "Jeg vet ikke hvis bussen er forsinket."}],
+            }
+        ],
+    }
+
+    assert scan_exercise_evidence(exercise, "translation_error_repair") == []
+
+
 def test_scan_exercise_evidence_given_unsupported_sentence_field_expect_source_warning() -> None:
     exercise = {
         "op": "write",
@@ -241,3 +256,63 @@ def test_scan_exercise_evidence_given_burde_ha_with_different_actions_expect_rev
     findings = scan_exercise_evidence(exercise, "choose_retrospective_advice")
 
     assert [finding.code for finding in findings] == ["evidence-action-options-review"]
+
+
+def test_scan_exercise_evidence_given_parallel_complete_mapping_options_expect_composite_warning() -> None:
+    exercise = {
+        "op": "choose",
+        "options": [
+            {
+                "id": "swapped-statement-question",
+                "text": "Hei! = greeting; Jeg heter Mina. and Jeg heter Jonas. = ask for a name; "
+                "Hva heter du? = state a name; Ha det! = close.",
+            },
+            {
+                "id": "complete-mapping",
+                "text": "Hei! = greeting; Jeg heter Mina. and Jeg heter Jonas. = state a name; "
+                "Hva heter du? = ask for a name; Ha det! = close.",
+            },
+        ],
+    }
+
+    findings = scan_exercise_evidence(exercise, "notice_four_jobs")
+
+    assert [finding.code for finding in findings] == ["evidence-composite-choice-mapping"]
+    finding = findings[0]
+    assert finding.severity == "minor"
+    assert finding.location == "notice_four_jobs.options"
+    assert "swapped-statement-question=4" in finding.evidence
+    assert "complete-mapping=4" in finding.evidence
+    assert "match_pairs" in finding.explanation
+
+
+def test_scan_exercise_evidence_given_long_single_decision_options_expect_no_composite_warning() -> None:
+    exercise = {
+        "op": "choose",
+        "options": [
+            {
+                "id": "correct",
+                "text": "The speaker gives her name and then asks the other person to give theirs, "
+                "which is the balanced way to open a first meeting at the language school.",
+            },
+            {
+                "id": "distractor",
+                "text": "The speaker only closes the conversation with a goodbye and does not "
+                "exchange any identity information with the other person in the exchange.",
+            },
+        ],
+    }
+
+    assert scan_exercise_evidence(exercise, "notice_exchange_opening") == []
+
+
+def test_scan_exercise_evidence_given_single_equals_expression_expect_no_composite_warning() -> None:
+    exercise = {
+        "op": "choose",
+        "options": [
+            {"id": "first", "text": "jeg = I"},
+            {"id": "second", "text": "jeg = you"},
+        ],
+    }
+
+    assert scan_exercise_evidence(exercise, "notice_subject_pronouns") == []

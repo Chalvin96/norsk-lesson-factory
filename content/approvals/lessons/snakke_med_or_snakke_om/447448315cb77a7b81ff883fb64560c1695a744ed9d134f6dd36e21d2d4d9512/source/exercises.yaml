@@ -1,0 +1,370 @@
+- handle: first_checkpoint_identify_role
+  op: categorize
+  objective: obj-snakke-med-or-snakke-om-01
+  bloom: analyze
+  prompt_md: Sort each sentence by the role of the person or thing shown in square brackets.
+  explanation_md: Med introduces a participant in the conversation; om introduces what or whom the conversation
+    concerns.
+  derived_from:
+  - section_id: first-checkpoint-identify-role
+  buckets:
+  - bucket_id: conversation-partner
+    label: Conversation partner
+  - bucket_id: topic
+    label: Topic
+  items:
+  - item_id: item-1
+    text: Mina snakker med [Ingrid].
+    bucket_id: conversation-partner
+  - item_id: item-2
+    text: Jonas snakker om [rommet].
+    bucket_id: topic
+  - item_id: item-3
+    text: Mina snakker om [Jonas].
+    bucket_id: topic
+  - item_id: item-4
+    text: Vi snakker med [de frivillige].
+    bucket_id: conversation-partner
+  - item_id: item-5
+    text: Ingrid snakker om [vaktmesteren].
+    bucket_id: topic
+  - item_id: item-6
+    text: Jonas snakker med [vaktmesteren].
+    bucket_id: conversation-partner
+- handle: contrast_same_person_role
+  op: categorize
+  objective: obj-snakke-med-or-snakke-om-01
+  bloom: analyze
+  prompt_md: Sort each message by Ingrid's role.
+  explanation_md: 'A person can be either a participant or the topic: med Ingrid means that Ingrid participates;
+    om Ingrid means that Ingrid is discussed.'
+  derived_from:
+  - section_id: compare-the-meanings
+  buckets:
+  - bucket_id: ingrid-participates
+    label: Ingrid participates
+  - bucket_id: ingrid-is-discussed
+    label: Ingrid is discussed
+  items:
+  - item_id: item-1
+    text: 'Jonas: Jeg snakker med Ingrid nå.'
+    bucket_id: ingrid-participates
+  - item_id: item-2
+    text: 'Mina: Jeg snakker om Ingrid med Jonas.'
+    bucket_id: ingrid-is-discussed
+  - item_id: item-4
+    text: 'Jonas: Vi snakket om Ingrid på møtet.'
+    bucket_id: ingrid-is-discussed
+  - item_id: item-3
+    text: 'Vaktmesteren: Jeg må snakke med Ingrid.'
+    bucket_id: ingrid-participates
+- handle: second_checkpoint_complete_meaning
+  op: recall_fill
+  objective: obj-snakke-med-or-snakke-om-01
+  bloom: apply
+  prompt_md: Complete each sentence with med or om.
+  explanation_md: Choose from the role in the shown situation, not from whether the following noun denotes
+    a person. A participant takes med; a topic takes om.
+  derived_from:
+  - section_id: second-checkpoint-complete-the-meaning
+  segments:
+  - text_md: 'Ingrid deltar i samtalen. Mina snakker '
+  - blank_id: partner-ingrid
+    options:
+    - med
+    - om
+    answer_index: 0
+  - text_md: ' Ingrid. Rommet er temaet. Jonas snakker '
+  - blank_id: topic-room
+    options:
+    - med
+    - om
+    answer_index: 1
+  - text_md: ' rommet. Jonas er ikke til stede, men de diskuterer ham. Mina snakker '
+  - blank_id: topic-jonas
+    options:
+    - med
+    - om
+    answer_index: 1
+  - text_md: ' Jonas. De frivillige deltar i samtalen. Maten er temaet. Vi snakker '
+  - blank_id: partner-volunteers
+    options:
+    - med
+    - om
+    answer_index: 0
+  - text_md: ' de frivillige '
+  - blank_id: topic-food
+    options:
+    - med
+    - om
+    answer_index: 1
+  - text_md: ' maten.'
+  audio_target: Ingrid deltar i samtalen. Mina snakker med Ingrid. Rommet er temaet. Jonas snakker om
+    rommet. Jonas er ikke til stede, men de diskuterer ham. Mina snakker om Jonas. De frivillige deltar
+    i samtalen. Maten er temaet. Vi snakker med de frivillige om maten.
+- handle: full_response_role_discrimination
+  op: choose
+  objective: obj-snakke-med-or-snakke-om-01
+  bloom: apply
+  prompt_md: Choose the reply that accurately reports both Erik's role and the subject of the planned
+    conversation.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lederen
+      text_md: «Kan du snakke med Erik om budsjettet etter møtet?»
+    - speaker: Kollegaen
+      text_md: «Hva skal du gjøre etter møtet?»
+  options:
+  - id: topic-erik-partner-budget
+    text: Jeg skal snakke om Erik og budsjettet etter møtet.
+    correct: false
+    why: "This reverses the roles: Erik is the conversation partner, while both Erik and the budget are presented as topics."
+  - id: both-as-topics
+    text: Jeg skal snakke om Erik samt budsjettet etter møtet.
+    correct: false
+    why: This reports both Erik and the budget as topics instead of making Erik the conversation partner.
+  - id: erik-only
+    text: Jeg skal snakke med Erik, men ikke om budsjettet.
+    correct: false
+    why: This identifies the conversation partner but leaves out the required subject.
+  - id: partner-erik-topic-budget
+    text: Jeg skal snakke med Erik etter møtet om budsjettet.
+    correct: true
+    why: Erik will participate in the conversation, and the budget will be its subject.
+  derived_from:
+  - section_id: compare-the-meanings
+- handle: question_role_recognition
+  op: categorize
+  objective: obj-snakke-med-or-snakke-om-01
+  bloom: understand
+  prompt_md: Sort each question by the missing information it requests.
+  explanation_md: Questions ending in med request a conversation partner. Questions ending in om request
+    a topic, which can be a thing or a person.
+  derived_from:
+  - section_id: useful-questions
+  buckets:
+  - bucket_id: asks-partner
+    label: Asks for the conversation partner
+  - bucket_id: asks-topic
+    label: Asks for the topic
+  items:
+  - item_id: item-1
+    text: Hvem snakker Mina med?
+    bucket_id: asks-partner
+  - item_id: item-2
+    text: Hva snakker Jonas om?
+    bucket_id: asks-topic
+  - item_id: item-3
+    text: Hvem snakker de om?
+    bucket_id: asks-topic
+  - item_id: item-4
+    text: Hvem skal vi snakke med?
+    bucket_id: asks-partner
+- handle: question_contrast_supported
+  op: recall_fill
+  objective: obj-snakke-med-or-snakke-om-01
+  bloom: apply
+  prompt_md: Complete each question with med or om.
+  explanation_md: The first situation asks for the other participant in Mina's call, so the question ends
+    in med. The second asks for the subject of Jonas's conversation, so it ends in om.
+  derived_from:
+  - section_id: third-checkpoint-ask-the-right-question
+  segments:
+  - text_md: 'Notat: Mina og en ukjent person snakker sammen på telefonen. Hvem snakker Mina '
+  - blank_id: question-partner
+    options:
+    - med
+    - om
+    answer_index: 0
+  - text_md: '? Notat: Jonas har en samtale, og du vil vite hva den gjelder. Hva snakker Jonas '
+  - blank_id: question-topic
+    options:
+    - med
+    - om
+    answer_index: 1
+  - text_md: '?'
+  audio_target: 'Notat: Mina og en ukjent person snakker sammen på telefonen. Hvem snakker Mina med? Notat:
+    Jonas har en samtale, og du vil vite hva den gjelder. Hva snakker Jonas om?'
+- handle: third_checkpoint_ask_right_question
+  op: write
+  objective: obj-snakke-med-or-snakke-om-01
+  bloom: apply
+  prompt_md: 'Melding fra Mina: «Jeg snakker med noen om rommet. Jonas snakker med Ingrid om noe annet.»
+    Svar Mina med to spørsmål for å finne samtalepartneren hennes og temaet til Jonas. Skriv 8–20 ord.'
+  derived_from:
+  - section_id: third-checkpoint-ask-the-right-question
+  response_language: 'no'
+  min_words: 8
+  max_words: 20
+  judge_prompt: Evaluate partner-question-form, topic-question-form, and word-bound as gating criteria.
+    Record partner-information-observation and topic-information-observation diagnostically; an observation
+    must not make an otherwise successful answer fail.
+  criteria:
+  - id: partner-question-form
+    instruction: The reply asks who Mina is speaking with using a natural hvem ... med pattern.
+  - id: topic-question-form
+    instruction: The reply asks what or whom Jonas is discussing using a natural hva/hvem ... om pattern.
+  - id: word-bound
+    instruction: The complete reply contains 8–20 words.
+  - id: partner-information-observation
+    instruction: Observe whether the reply asks Mina who her conversation partner is; this is diagnostic
+      only.
+  - id: topic-information-observation
+    instruction: Observe whether the reply asks what or whom Jonas is discussing; this is diagnostic only.
+- handle: fourth_checkpoint_correct_intended_meaning
+  op: find_fix
+  objective: obj-snakke-med-or-snakke-om-01
+  bloom: analyze
+  prompt_md: The sentence should mean that Mina is talking with Jonas and that their conversation concerns
+    Ingrid. Select the one token that must change.
+  explanation_md: Jonas participates in the conversation, while Ingrid is the person being discussed.
+    The second med must therefore change to om.
+  derived_from:
+  - section_id: fourth-checkpoint-correct-the-intended-meaning
+  tokens:
+  - token_id: tok-1
+    text: Mina
+  - token_id: tok-2
+    text: snakker
+  - token_id: tok-3
+    text: med
+  - token_id: tok-4
+    text: Jonas
+  - token_id: tok-5
+    text: med
+  - token_id: tok-6
+    text: Ingrid.
+  error_token_id: tok-5
+  feedback: 'Replace the second med with om: Mina snakker med Jonas om Ingrid.'
+- handle: final_practice_build_complete_messages
+  op: write
+  objective: obj-snakke-med-or-snakke-om-01
+  bloom: apply
+  prompt_md: 'Til: kollegaen Sara. Formål: Få hjelp før et møte. Rektor skal delta i samtalen, og den nye
+    timeplanen er saken dere skal ta opp. Møtet bør skje tirsdag. Spør om Sara kan delta. Skriv meldingen
+    på 30–55 ord.'
+  derived_from:
+  - section_id: final-practice-build-complete-messages
+  response_language: 'no'
+  min_words: 30
+  max_words: 55
+  judge_prompt: Evaluate audience-purpose, required-facts, request, word-bound, and partner-topic-marking
+    criteria as gating criteria. Require natural Norwegian forms that mark the principal as a conversation
+    participant and the new schedule as the topic; accept natural word order and inflection.
+  criteria:
+  - id: audience-purpose
+    instruction: The response is a coherent Norwegian message to Sara asking for help before a meeting.
+  - id: required-facts
+    instruction: The message conveys that the writer needs a conversation with the principal about the
+      new schedule and prefers Tuesday.
+  - id: request
+    instruction: The message asks whether Sara can join.
+  - id: word-bound
+    instruction: The message contains 30–55 words.
+  - id: partner-topic-marking
+    instruction: The message clearly marks the principal as the conversation partner and the new schedule
+      as the topic, using appropriate forms of snakke with the appropriate prepositions.
+- handle: retrieval_and_review
+  op: write
+  objective: obj-snakke-med-or-snakke-om-01
+  bloom: apply
+  prompt_md: 'Revisjonskort til en klassekamerat: 1. en setning med bare en samtalepartner 2. en setning
+    med bare et tema 3. en setning med både partner og en person som tema 4. et spørsmål om hvem man snakker
+    med 5. et spørsmål om hva eller hvem man snakker om Skriv fem norske linjer på til sammen 20–50 ord,
+    og bruk snakke med og snakke om.'
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  min_words: 20
+  max_words: 50
+  judge_prompt: Evaluate five-lines, partner-only-sentence, topic-only-sentence, combined-sentence, partner-question,
+    topic-question, role-distinction, and word-bound as gating criteria.
+  criteria:
+  - id: five-lines
+    instruction: The response contains five identifiable Norwegian lines in the requested order.
+  - id: partner-only-sentence
+    instruction: Line 1 uses snakke med to name only a conversation partner.
+  - id: topic-only-sentence
+    instruction: Line 2 uses snakke om to name only a topic.
+  - id: combined-sentence
+    instruction: Line 3 uses snakke med ... om ... with a partner and a person as the topic.
+  - id: partner-question
+    instruction: Line 4 asks who participates by using hvem ... med.
+  - id: topic-question
+    instruction: Line 5 asks what or whom is discussed by using hva/hvem ... om.
+  - id: role-distinction
+    instruction: The five lines consistently distinguish a participant from a topic.
+  - id: word-bound
+    instruction: The complete response contains 20–50 words.
+- handle: review_partner_med
+  op: write
+  objective: obj-snakke-med-or-snakke-om-01
+  bloom: remember
+  prompt_md: 'Ingrid skal delta i samtalen. Fullfør med 1 ord: «Jeg må snakke ___ Ingrid.»'
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  min_words: 1
+  max_words: 1
+  judge_prompt: Evaluate partner-word as the only gating criterion.
+  criteria:
+  - id: partner-word
+    instruction: The answer is med; capitalization or surrounding punctuation does not matter.
+- handle: review_topic_om
+  op: write
+  objective: obj-snakke-med-or-snakke-om-01
+  bloom: remember
+  prompt_md: 'Rommet er temaet. Fullfør med 1 ord: «Vi må snakke ___ rommet.»'
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  min_words: 1
+  max_words: 1
+  judge_prompt: Evaluate topic-word as the only gating criterion.
+  criteria:
+  - id: topic-word
+    instruction: The answer is om; capitalization or surrounding punctuation does not matter.
+- handle: review_combined_roles
+  op: write
+  objective: obj-snakke-med-or-snakke-om-01
+  bloom: remember
+  prompt_md: 'Læreren deltar. Prøven er temaet. Skriv de 2 manglende ordene i rekkefølge: «Jeg må snakke
+    ___ læreren ___ prøven.»'
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  min_words: 2
+  max_words: 2
+  judge_prompt: Evaluate combined-words as the only gating criterion.
+  criteria:
+  - id: combined-words
+    instruction: The response gives med followed by om; commas or surrounding punctuation are acceptable.
+- handle: review_partner_question
+  op: write
+  objective: obj-snakke-med-or-snakke-om-01
+  bloom: remember
+  prompt_md: Mina skal ha en samtale med en ukjent person. Skriv et spørsmål der hun spør hvem hun skal snakke med.
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  min_words: 4
+  max_words: 12
+  judge_prompt: Require a natural Norwegian question using «snakke med» to ask who Mina will speak with. Accept grammatical direct or embedded question forms without imposing an unstated word count.
+  criteria:
+  - id: partner-question
+    instruction: The response is a natural Norwegian question using «snakke med» to ask who Mina will speak with.
+- handle: review_topic_question
+  op: write
+  objective: obj-snakke-med-or-snakke-om-01
+  bloom: remember
+  prompt_md: Dere skal ha en samtale, men temaet er ukjent. Skriv et spørsmål der du spør hva Jonas skal snakke om.
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  min_words: 4
+  max_words: 12
+  judge_prompt: Require a natural Norwegian question using «snakke om» to ask for the topic of Jonas's conversation. Accept grammatical direct or embedded question forms without imposing an unstated word count.
+  criteria:
+  - id: topic-question
+    instruction: The response is a natural Norwegian question using «snakke om» to ask for the topic.

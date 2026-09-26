@@ -1,0 +1,518 @@
+- handle: read_dinner_line
+  op: choose
+  objective: obj-conditional-perfect-01
+  bloom: understand
+  prompt_md: "Velg hva Mina mener med setningen sin."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Jonas
+      text_md: «Jeg trodde du hadde kjøpt brød.»
+    - speaker: Mina
+      text_md: «Vi avtalte i morges at du skulle kjøpe det. Du skulle ha kjøpt brød.»
+  options:
+  - id: later-judgment
+    text: Mina now thinks buying bread would have been wiser.
+    correct: false
+    why: This is retrospective advice, which in this context would select burde ha; Mina instead recalls
+      their morning agreement.
+  - id: unused-option
+    text: Buying bread was merely one available option.
+    correct: false
+    why: An available but unused option would select kunne ha; here the purchase was something the two
+      had agreed on.
+  - id: expected-not-done
+    text: Buying bread was an agreed task that was not carried out.
+    correct: true
+    why: Skulle ha presents an unfulfilled earlier arrangement that Mina and Jonas had made.
+  derived_from:
+  - section_id: looking-back-from-the-present
+- handle: read_jonas_line
+  op: choose
+  objective: obj-conditional-perfect-01
+  bloom: understand
+  prompt_md: "Velg hva Jonas mener med setningen sin."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Mina
+      text_md: «Toget ble innstilt, og jeg hørte ingenting fra deg.»
+    - speaker: Jonas
+      text_md: «Jeg burde ha sendt deg en melding.»
+  options:
+  - id: arrangement
+    text: He had promised or arranged to send a message.
+    correct: false
+    why: An unfulfilled promise or arrangement would select skulle ha.
+  - id: self-criticism
+    text: He thinks sending a message would have been the better action.
+    correct: true
+    why: Burde ha evaluates an earlier action retrospectively.
+  - id: possibility
+    text: Sending a message was possible, without any judgment.
+    correct: false
+    why: A neutral unrealized possibility would select kunne ha.
+  derived_from:
+  - section_id: looking-back-from-the-present
+- handle: skulle_arrangements
+  op: recall_fill
+  objective: obj-conditional-perfect-01
+  bloom: apply
+  prompt_md: "Fyll inn riktig partisipp etter «skulle ha»."
+  audio_target: Jonas skulle ha tatt taxi klokka åtte, men drosjen kom ikke. Nora skulle ha bestilt bord,
+    men hun glemte det. Jeg skulle ha møtt dem klokka ni, men jeg våknet for sent.
+  segments:
+  - text_md: 'Jonas skulle ha '
+  - blank_id: taxi-1
+    options:
+    - ta
+    - tatt
+    - tok
+    answer_index: 1
+  - text_md: ' taxi klokka åtte, men drosjen kom ikke. Nora skulle ha '
+  - blank_id: restaurant-1
+    options:
+    - bestilte
+    - bestille
+    - bestilt
+    answer_index: 2
+  - text_md: ' bord, men hun glemte det. Jeg skulle ha '
+  - blank_id: meet-1
+    options:
+    - møtt
+    - møte
+    - møtte
+    answer_index: 0
+  - text_md: ' dem klokka ni, men jeg våknet for sent.'
+  explanation_md: "Etter «skulle ha» bruker du partisipp: «tatt», «bestilt», «møtt»."
+  derived_from:
+  - section_id: unfulfilled-plans-and-expectations
+- handle: ville_unreal_outcomes
+  op: choose
+  objective: obj-conditional-perfect-01
+  bloom: understand
+  prompt_md: "Velg hva talerne mener med setningen."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Da vi var bortreist, skjedde det en vannlekkasje hos naboen. Vi hadde avtalt å hjelpe hvis
+        noe skjedde. Hvis vi hadde vært hjemme, ville vi ha hjulpet.
+  options:
+  - id: agreed-outcome
+    text: Helping is presented as the outcome of the earlier agreement under a condition that did not occur.
+    correct: true
+    why: The speakers state what would have happened if they had been home, and the context gives their prior agreement.
+  - id: mere-possibility
+    text: Helping is presented only as one possible action, with no outcome stated.
+    correct: false
+    why: This would describe a possibility rather than the outcome expressed in the sentence.
+  - id: retrospective-advice
+    text: The speakers now think they ought to have helped, whether or not they were home.
+    correct: false
+    why: This is a retrospective judgment, while the sentence describes a result under an unreal past condition.
+  derived_from:
+  - section_id: unreal-past-outcomes-ville-ha
+- handle: regret_completed_action
+  op: build
+  objective: obj-conditional-perfect-01
+  bloom: apply
+  prompt_md: "Sett sammen setningen Kari bruker når hun tenker tilbake på valget sitt."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Kari svarte på spørsmål én først og brukte nesten all tiden på det. Etterpå så hun at hun
+        hadde mistet poeng ved å la de korte spørsmålene stå ubesvart.
+  explanation_md: "I hovedsetningen står «ikke» etter «burde» og før «ha» + partisipp."
+  derived_from:
+  - section_id: negating-burde-ha
+  tokens:
+  - token_id: tok-1
+    text: Kari
+  - token_id: tok-2
+    text: burde
+  - token_id: tok-3
+    text: ikke
+  - token_id: tok-4
+    text: ha
+  - token_id: tok-5
+    text: svart
+  - token_id: tok-6
+    text: på
+  - token_id: tok-7
+    text: spørsmål én
+  - token_id: tok-8
+    text: først.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+- handle: kunne_missed_possibilities
+  op: recall_fill
+  objective: obj-conditional-perfect-01
+  bloom: apply
+  prompt_md: "Fullfør setningene om muligheter som ikke ble brukt."
+  audio_target: Jeg kunne ha sjekket appen. Jonas kunne ha tatt en tidligere buss. Vi kunne ha sittet
+    på kafeen.
+  segments:
+  - text_md: 'Toget var to timer forsinket. Appen virket. Jeg '
+  - blank_id: app-1
+    options:
+    - skulle ha sjekket appen
+    - kunne ha sjekket appen
+    answer_index: 1
+  - text_md: '. En tidligere buss gikk, men Jonas tok den ikke. Jonas '
+  - blank_id: bus-2
+    options:
+    - kunne ha tatt en tidligere buss
+    - skulle ha tatt en tidligere buss
+    answer_index: 0
+  - text_md: '. Kafeen var åpen, men vi ventet ute. Vi '
+  - blank_id: cafe-1
+    options:
+    - skulle ha sittet på kafeen
+    - kunne ha sittet på kafeen
+    answer_index: 1
+  - text_md: .
+  explanation_md: "«Kunne ha» viser til en mulighet i fortiden som ikke ble brukt."
+  derived_from:
+  - section_id: missed-possibilities-kunne-ha
+- handle: interpret_nora_visit
+  op: choose
+  objective: obj-conditional-perfect-01
+  bloom: understand
+  prompt_md: "Velg hva Mina mener med setningen sin."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Jeg visste ikke at dere manglet mat.»
+    - speaker: Mina
+      text_md: «Du kunne ha reddet hele middagen.»
+  options:
+  - id: arrangement
+    text: Nora had agreed in advance to save the dinner.
+    correct: false
+    why: An unfulfilled agreement would select skulle ha.
+  - id: unreal-condition
+    text: Saving the dinner would definitely have followed from a stated condition.
+    correct: false
+    why: A resulting outcome under a different condition would select ville ha.
+  - id: unrealized-option
+    text: Nora had an opportunity to save the dinner, but it was not realized.
+    correct: true
+    why: Kunne ha presents a possible past outcome that did not become real.
+  derived_from:
+  - section_id: returning-to-mina-and-jonas
+- handle: categorize_modal_perspectives
+  op: categorize
+  objective: obj-conditional-perfect-01
+  bloom: analyze
+  prompt_md: "Sorter setningene etter hva de uttrykker om fortiden."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Fire personer snakker om en avlyst tur.
+  explanation_md: Skulle ha reports an expectation; burde ha evaluates; ville ha gives an unreal result;
+    kunne ha presents a possibility.
+  derived_from:
+  - section_id: returning-to-mina-and-jonas
+  buckets:
+  - bucket_id: earlier-arrangement
+    label: Earlier arrangement
+  - bucket_id: retrospective-judgment
+    label: Retrospective judgment
+  - bucket_id: unreal-result
+    label: Unreal past result
+  - bucket_id: missed-possibility
+    label: Missed possibility
+  items:
+  - item_id: arrange-1
+    text: Jeg skulle ha møtt Nora på stasjonen, men jeg glemte avtalen.
+    bucket_id: earlier-arrangement
+  - item_id: judgment-1
+    text: Jeg burde ha sjekket værmeldingen.
+    bucket_id: retrospective-judgment
+  - item_id: judgment-neg-1
+    text: Vi burde ikke ha ventet så lenge.
+    bucket_id: retrospective-judgment
+  - item_id: unreal-1
+    text: Nora ville ha kjørt hvis bilen hadde virket.
+    bucket_id: unreal-result
+  - item_id: possibility-1
+    text: Vi kunne ha tatt toget.
+    bucket_id: missed-possibility
+  - item_id: arrangement-plan-1
+    text: Han skulle ha reist alene, men han ble hjemme.
+    bucket_id: earlier-arrangement
+- handle: distinguish_skulle_burde
+  op: choose
+  objective: obj-conditional-perfect-01
+  bloom: analyze
+  prompt_md: Velg setningen som rapporterer Eriks avtalte plan om å møte Lea klokka seks.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lea
+      text_md: «Erik lovet å komme klokka seks, men han kom klokka sju.»
+  options:
+  - id: judgment
+    text: Erik burde ha møtt Lea klokka seks.
+    correct: false
+    why: This evaluates six o'clock as the better choice rather than reporting the promise.
+  - id: planned
+    text: Erik skulle ha møtt Lea klokka seks.
+    correct: true
+    why: The stated promise selects skulle ha.
+  - id: possibility
+    text: Erik kunne ha møtt Lea klokka seks.
+    correct: false
+    why: This presents six o'clock as an available option rather than a promise.
+  explanation_md: >-
+    Forskjellen er «skulle ha» og «burde ha». En avtale uttrykkes med «skulle ha», mens et råd i
+    ettertid uttrykkes med «burde ha».
+  derived_from:
+  - section_id: skulle-ha-and-burde-ha-are-not-identical
+- handle: distinguish_skulle_ville
+  op: choose
+  objective: obj-conditional-perfect-01
+  bloom: analyze
+  prompt_md: "Velg tolkningen som passer til rapporten om innsjøen."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Innsjøen frøs i løpet av den kalde natta. «Hvis temperaturen hadde steget over null, ville isen ha smeltet.»
+  options:
+  - id: planned-or-expected
+    text: The ice had been expected to melt, but it did not.
+    correct: false
+    why: This describes an expectation, while the report gives the result of a different past condition.
+  - id: judgment
+    text: The speaker thinks the ice ought to have melted, whatever the temperature was.
+    correct: false
+    why: This is a retrospective judgment, not the meaning of the conditional report.
+  - id: unreal-result
+    text: The ice would have melted as a result of the higher temperature.
+    correct: true
+    why: Ville ha describes the physical result under the unrealized temperature condition.
+  explanation_md: >-
+    Rapporten beskriver smelting som resultatet av en betingelse som ikke inntraff. «Skulle ha»
+    ville uttrykt en plan eller forventning, mens «burde ha» ville uttrykt en vurdering.
+  derived_from:
+  - section_id: do-not-replace-ville-with-skulle-automatically
+- handle: workshop_email_skulle
+  op: write
+  objective: obj-conditional-perfect-01
+  bloom: apply
+  prompt_md: >-
+    I går ledet du et verksted for kollegaen Eva. Du skulle bestille rom 204, men bestillingen gikk
+    ikke gjennom. Eva hadde lovet å ta med prosjektoren, men den kom ikke. Skriv en e-post på 15–35
+    ord der du forteller om de to avtalene som ikke ble fulgt. Bruk «skulle ha» + partisipp i begge
+    setningene.
+  response_language: 'no'
+  min_words: 15
+  max_words: 35
+  judge_prompt: Check the email against criteria room-arrangement, projector-arrangement, email-purpose,
+    workshop-word-bounds, and skulle-ha-forms. Only criteria whose ids do not end in -observation are
+    gating. Accept natural Bokmål variants.
+  criteria:
+  - id: room-arrangement
+    instruction: The email explains that room 204 was an earlier arrangement that was not fulfilled.
+  - id: projector-arrangement
+    instruction: The email explains that Eva's projector promise was not fulfilled.
+  - id: email-purpose
+    instruction: The response is an intelligible email or direct message to Eva about the workshop problem.
+  - id: workshop-word-bounds
+    instruction: The response contains 15 to 35 words.
+  - id: skulle-ha-forms
+    instruction: Each failed arrangement is expressed with skulle ha plus a past participle.
+  derived_from:
+  - section_id: unfulfilled-plans-and-expectations
+- handle: regret_reply_burde
+  op: write
+  objective: obj-conditional-perfect-01
+  bloom: apply
+  prompt_md: >-
+    Kari skriver: «Jeg brukte nesten all tiden på spørsmål én. Da jeg endelig spurte læreren om
+    hjelp, var prøven nesten slutt.» Svar Kari på norsk med 15–35 ord. Skriv støttende om hva hun
+    burde ha gjort, og bruk «burde ha» og «burde ikke ha» + partisipp.
+  response_language: 'no'
+  min_words: 15
+  max_words: 35
+  judge_prompt: Check the reply against criteria earlier-help, excessive-time, supportive-reply, regret-word-bounds,
+    and burde-forms. Only criteria whose ids do not end in -observation are gating. Accept natural Bokmål
+    variants.
+  criteria:
+  - id: earlier-help
+    instruction: The email conveys that Kari would have been wiser to ask the teacher earlier.
+  - id: excessive-time
+    instruction: The reply conveys that spending so much time on question one was unwise.
+  - id: supportive-reply
+    instruction: The response is an intelligible and reasonably supportive reply to Kari.
+  - id: regret-word-bounds
+    instruction: The response contains 15 to 35 words.
+  - id: burde-forms
+    instruction: The reply uses burde ha and burde ikke ha with past participles.
+  derived_from:
+  - section_id: negating-burde-ha
+- handle: afternoon_message_kunne
+  op: write
+  objective: obj-conditional-perfect-01
+  bloom: apply
+  prompt_md: >-
+    Jonas rakk ikke avgangen etter at jernbanestrekningen ble stengt. Telefonen og reiseappen
+    virket, en senere buss hadde ledige seter, og Nora hadde tilbudt seg å hente ham. Han brukte
+    ingen av mulighetene. Skriv en melding på 20–45 ord til Nora om mulighetene han ikke brukte.
+    Bruk «kunne ha» + partisipp om hver mulighet.
+  response_language: 'no'
+  min_words: 20
+  max_words: 45
+  judge_prompt: Check the message against criteria app-option, bus-option, pickup-option, unused-options,
+    message-word-bounds, and kunne-forms. Only criteria whose ids do not end in -observation are gating.
+    Accept natural Bokmål variants.
+  criteria:
+  - id: app-option
+    instruction: The message mentions checking the working travel app as an available option.
+  - id: bus-option
+    instruction: The message mentions taking the later bus as an available option.
+  - id: pickup-option
+    instruction: The message mentions Nora's offer to collect him as an available option that was not
+      used.
+  - id: unused-options
+    instruction: The message makes clear that Jonas used none of the three options.
+  - id: message-word-bounds
+    instruction: The response contains 20 to 45 words.
+  - id: kunne-forms
+    instruction: Each unused option is expressed with kunne ha plus a past participle.
+  derived_from:
+  - section_id: missed-possibilities-kunne-ha
+- handle: hike_regret_story
+  op: write
+  objective: obj-conditional-perfect-01
+  bloom: apply
+  prompt_md: >-
+    Skriv en melding på 45–80 ord til turvennen din etter den mislykkede turen på lørdag. Dere
+    skulle møtes på stasjonen klokka åtte, men du ble hjemme fordi det regnet. Værmeldingen hadde
+    meldt sol hele uka. Du kunne ha bedt turvennen kjøre, men gjorde det ikke. Fortell hva som gikk
+    galt, hva som kunne skjedd, hva du burde gjort annerledes og hvilken mulighet du ikke brukte.
+    Bruk «skulle ha», «ville ha», «burde ha» eller «burde ikke ha» og «kunne ha» + partisipp.
+  response_language: 'no'
+  min_words: 45
+  max_words: 80
+  judge_prompt: Check the message against criteria failed-plan, different-result, retrospective-judgment,
+    unused-option, coherent-message, hike-word-bounds, and target-forms. Only criteria whose ids do not
+    end in -observation are gating. Accept natural Bokmål variants.
+  criteria:
+  - id: failed-plan
+    instruction: The message reports the unfulfilled agreement to meet at the station at eight.
+  - id: different-result
+    instruction: The message describes a past result that depended on different circumstances.
+  - id: retrospective-judgment
+    instruction: The message evaluates at least one past action or decision as wise or unwise.
+  - id: unused-option
+    instruction: The message identifies asking the partner for a lift as an available option that was
+      not used.
+  - id: coherent-message
+    instruction: The response is one intelligible message about the supplied hike situation.
+  - id: hike-word-bounds
+    instruction: The response contains 45 to 80 words.
+  - id: target-forms
+    instruction: The message uses skulle ha, ville ha, burde ha or burde ikke ha, and kunne ha with past
+      participles.
+  derived_from:
+  - section_id: retrieval-and-review
+- handle: review_skulle_choice
+  op: recall_fill
+  objective: obj-conditional-perfect-01
+  bloom: apply
+  prompt_md: "Fullfør rapporten ved å vise til løftet Per ikke holdt."
+  audio_target: Per skulle ha vasket bilen.
+  segments:
+  - text_md: 'Per lovet å vaske bilen på lørdag, men han gjorde det ikke. «Per '
+  - blank_id: wash-1
+    options:
+    - burde ha vasket
+    - skulle ha vasket
+    answer_index: 1
+  - text_md: ' bilen.»'
+  explanation_md: "«Skulle ha» viser til løftet Per ikke holdt. «Burde ha» ville lagt til en vurdering i ettertid."
+  derived_from:
+  - section_id: unfulfilled-plans-and-expectations
+- handle: review_ville_condition
+  op: recall_fill
+  objective: obj-conditional-perfect-01
+  bloom: apply
+  prompt_md: "Fullfør setningen med resultatet av den tenkte betingelsen."
+  audio_target: Hvis vinduene hadde vært større, ville det ha kommet mer dagslys inn i stua.
+  segments:
+  - text_md: 'Stuevinduene er små, og rommet får lite dagslys. «Hvis vinduene hadde vært større, '
+  - blank_id: daylight-result
+    options:
+    - ville det ha kommet
+    - skulle det ha kommet
+    - burde det ha kommet
+    answer_index: 0
+  - text_md: ' mer dagslys inn i stua.»'
+  explanation_md: >-
+    «Ville ha» viser hva som ville skjedd dersom den urealiserte betingelsen var oppfylt. Setningen
+    sier ikke at vinduene var ventet å gjøre noe, eller at de burde ha gjort det.
+  derived_from:
+  - section_id: unreal-past-outcomes-ville-ha
+- handle: review_burde_regret
+  op: recall_fill
+  objective: obj-conditional-perfect-01
+  bloom: apply
+  prompt_md: "Fullfør setningen om valget Ola angrer på."
+  audio_target: Ola burde ikke ha parkert foran porten.
+  segments:
+  - text_md: 'Ola parkerte foran porten og blokkerte en ambulanse. Nå angrer han. «Ola '
+  - blank_id: park-1
+    options:
+    - skulle ha parkert
+    - burde ikke ha parkert
+    answer_index: 1
+  - text_md: ' foran porten.»'
+  explanation_md: "«Burde ikke ha» vurderer en handling som faktisk skjedde. «Skulle ha» ville vist til en avtale."
+  derived_from:
+  - section_id: negating-burde-ha
+- handle: review_kunne_possibility
+  op: recall_fill
+  objective: obj-conditional-perfect-01
+  bloom: apply
+  prompt_md: Fullfør setningen om den ubrukte muligheten.
+  audio_target: Vi kunne ha tatt bussen.
+  segments:
+  - text_md: 'Bilen brøt sammen. Bussen hadde ledige plasser, men ingen brukte den. «Vi '
+  - blank_id: train-1
+    options:
+    - skulle ha tatt
+    - kunne ha tatt
+    answer_index: 1
+  - text_md: ' bussen.»'
+  explanation_md: Kunne ha uttrykker en tilgjengelig, men ubrukt mulighet. Det andre alternativet ville
+    uttrykt en tidligere plan.
+  derived_from:
+  - section_id: missed-possibilities-kunne-ha
+- handle: review_modal_order
+  op: recall_fill
+  objective: obj-conditional-perfect-01
+  bloom: apply
+  prompt_md: "Fullfør setningen med riktig verbfrase."
+  audio_target: Hun visste ikke adressen vår. Med adressen ville hun ha skrevet til oss.
+  segments:
+  - text_md: 'Hun visste ikke adressen vår. Med adressen '
+  - blank_id: order-1
+    options:
+    - ville hun ha skrevet til oss
+    - ville hun ha skrive til oss
+    - ville hun hadde skrevet til oss
+    answer_index: 0
+  - text_md: .

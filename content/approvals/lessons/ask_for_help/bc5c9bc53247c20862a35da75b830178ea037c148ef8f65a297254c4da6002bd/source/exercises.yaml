@@ -1,0 +1,122 @@
+- handle: checkpoint_identify_situation
+  op: choose
+  objective: obj-ask-for-help-01
+  bloom: understand
+  prompt_md: Les dialogen på togstasjonen. Velg setningen som forteller hva Mina ikke får til.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Mina
+      text_md: «Unnskyld, jeg skal ta toget til Bergen.»
+    - speaker: Ansatt
+      text_md: «Det går fra spor fire om ti minutter.»
+    - speaker: Mina
+      text_md: «Takk, men jeg klarer ikke å finne spor fire.»
+  options:
+  - id: timing
+    text: Toget går om ti minutter.
+    correct: false
+    why: This gives the departure time, not something that is blocking Mina.
+  - id: missing-platform
+    text: Jeg finner ikke spor fire.
+    correct: true
+    why: Mina says she cannot find platform four, so this sentence states her obstacle.
+  - id: help-request
+    text: Kan du hjelpe meg?
+    correct: false
+    why: This asks for help but does not state what is wrong.
+  - id: other-problem
+    text: Jeg forstår ikke beskjeden.
+    correct: false
+    why: This states a different problem and does not match Mina's situation.
+  derived_from:
+  - section_id: at-the-train-station
+- handle: checkpoint_choose_obstacle
+  op: recall_fill
+  objective: obj-ask-for-help-01
+  bloom: apply
+  prompt_md: "Fullfør setningen som forteller at Mina ikke har fått øye på billetten."
+  audio_target: Jeg finner ikke billetten her.
+  segments:
+  - text_md: "Mina leter etter billetten. Hun sier: «Jeg "
+  - blank_id: missing-ticket
+    options:
+    - finner ikke
+    - trenger ikke
+    - har med
+    - venter på
+    answer_index: 0
+  - text_md: ' billetten her.'
+  derived_from:
+  - section_id: stating-the-obstacle
+- handle: checkpoint_build_approach
+  op: write
+  objective: obj-ask-for-help-01
+  bloom: apply
+  prompt_md: 'Henvend deg til en ansatt på norsk. Få oppmerksomheten deres, forklar at du ikke forstår instruksjonen du har fått, og be om hjelp.'
+  response_language: 'no'
+  min_words: 7
+  max_words: 15
+  judge_prompt: Check the Norwegian response against the task and report evidence for each criterion. Judge whether the response communicates each requested meaning in natural Norwegian. Accept valid wording variants; do not require a memorized sentence or reject a clear equivalent.
+  criteria:
+  - id: approach-attention
+    instruction: Politely gets the nearby employee's attention.
+  - id: approach-obstacle
+    instruction: Explains that the speaker does not understand the instruction.
+  - id: approach-request
+    instruction: Clearly asks the employee for help.
+  derived_from:
+  - section_id: asking-directly-for-help
+- handle: checkpoint_listen_next_action
+  op: choose
+  objective: obj-ask-for-help-01
+  bloom: understand
+  prompt_md: Les dialogen. Velg alternativet som viser handlingene Mina skal gjøre, i samme rekkefølge som svarene.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Mina
+      text_md: «Unnskyld, kan du hjelpe meg?»
+    - speaker: Ansatt
+      text_md: «Ja, vent litt.»
+    - speaker: Mina
+      text_md: «Hva gjør jeg nå?»
+    - speaker: Ansatt
+      text_md: «Ja, trykk her.»
+    - speaker: Mina
+      text_md: «Kan du vise meg veien?»
+    - speaker: Ansatt
+      text_md: «Ja, selvfølgelig. Bli med meg.»
+  options:
+  - id: swapped-first-two
+    text: '1: Bli med den ansatte. 2: Vent litt. 3: Trykk her.'
+    correct: false
+    why: De to første handlingene står ikke i samme rekkefølge som svarene.
+  - id: correct-actions
+    text: '1: Vent litt. 2: Trykk her. 3: Bli med den ansatte.'
+    correct: true
+    why: «Vent litt», «trykk her» og «bli med meg» angir handlingene i riktig rekkefølge.
+  - id: wrong-third
+    text: '1: Vent litt. 2: Trykk her. 3: Gå til informasjonsskranken.'
+    correct: false
+    why: Det siste svaret ber Mina bli med den ansatte, ikke gå til en skranke.
+  derived_from:
+  - section_id: understanding-a-helpful-response
+- handle: checkpoint_complete_sequence
+  op: write
+  objective: obj-ask-for-help-01
+  bloom: apply
+  prompt_md: 'Den ansatte svarer: «Ja, selvfølgelig. Prøv igjen nå.» Skriv først en replikk der du sier at du ikke får åpnet døra og ber om hjelp. Svar deretter at du vil prøve igjen.'
+  response_language: 'no'
+  min_words: 8
+  max_words: 20
+  judge_prompt: Check the learner's lines before and after the quoted employee reply. Report evidence for every criterion and verify that the acceptance follows the reply.
+  criteria:
+  - id: door-obstacle
+    instruction: Explains that the speaker cannot open the door.
+  - id: complete-request
+    instruction: Clearly asks for help with the door problem.
+  - id: retry-acceptance
+    instruction: After the employee's reply, says in Norwegian that they will try again.
+  derived_from:
+  - section_id: accepting-the-next-action

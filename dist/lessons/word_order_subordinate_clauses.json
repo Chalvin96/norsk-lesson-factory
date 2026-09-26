@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "word_order_subordinate_clauses",
   "kind": "grammar",
   "language": "nb-NO",
@@ -776,7 +776,7 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Hun blir hjemme fordi hun kommer ikke tidsnok."
+                  "value": "Hun blir hjemme fordi hun kommer ikke tidsnok."
                 }
               ],
               "en": [
@@ -784,7 +784,8 @@
                   "kind": "text",
                   "value": "She is staying home because she is not arriving in time."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "main-clauses-and-subordinate-clauses-block-21"
@@ -1501,7 +1502,7 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Henrik spør om kommer Anna på møtet."
+                  "value": "Henrik spør om kommer Anna på møtet."
                 }
               ],
               "en": [
@@ -1509,7 +1510,8 @@
                   "kind": "text",
                   "value": "Henrik asks whether Anna is coming to the meeting."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "questions-and-time-relationships-inside-larger-sentences-block-9"
@@ -1901,7 +1903,7 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ naboen som han kommer tidlig"
+                  "value": "naboen som han kommer tidlig"
                 }
               ],
               "en": [
@@ -1909,7 +1911,8 @@
                   "kind": "text",
                   "value": "the neighbour who he arrives early"
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "relative-clauses-with-som-block-13"
@@ -3173,24 +3176,24 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Classify each displayed clause by its word-order pattern. Choose the main-clause bucket for subject + finite verb + ikke, or the subordinate-clause bucket for linker + subject + ikke + finite verb. Score word-order recognition only; linker meaning is supporting context."
+          "value": "Sort the sentences by whether they use main-clause word order or subordinate-clause word order."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "A subordinate clause normally places the subject before sentence adverbs such as ikke and then the finite verb."
+          "value": "I en leddsetning står subjektet vanligvis før setningsadverb som ikke, som igjen står før det finitte verbet."
         }
       ],
       "payload": {
         "buckets": [
           {
             "bucket_id": "main-clause-order",
-            "label": "Main-clause order: subject + finite verb + ikke"
+            "label": "Hovedsetningsordstilling"
           },
           {
             "bucket_id": "subordinate-clause-order",
-            "label": "Subordinate-clause order: linker + subject + ikke + finite verb"
+            "label": "Leddsetningsordstilling"
           }
         ],
         "items": [
@@ -3225,13 +3228,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Build the complete Norwegian sentence from the supplied tokens. The linker is provided as fordi. Meaning: Maja takes a taxi because the bus is not running. Place the subordinate-clause subject, sentence adverb, and finite verb in that order; linker selection is not scored."
+          "value": "Maja is taking a taxi. The bus is not running today. Put the information together in one sentence explaining why she is taking a taxi."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Fordi starts a subordinate clause, so the subject comes before ikke and the finite verb."
+          "value": "Fordi innleder en leddsetning. Derfor står subjektet før ikke, som står før det finitte verbet."
         }
       ],
       "payload": {
@@ -3297,13 +3300,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Move the final hvis clause in Vi åpner døra hvis naboen ikke finner nøkkelen. to the beginning and build the resulting complete Norwegian sentence. Keep subordinate order, add a comma after the initial clause, and open the following main clause with the finite verb before its subject. The primary score is clause linking after the initial subordinate clause."
+          "value": "Move the if-clause to the beginning in «Vi åpner døra hvis naboen ikke finner nøkkelen» and rebuild the whole sentence."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Fronting the hvis-clause does not change its internal order, but it triggers verb-second order in the following main clause."
+          "value": "Når hvis-setningen står først, beholder den sin ordstilling. Hovedsetningen får verbet foran subjektet."
         }
       ],
       "payload": {
@@ -3369,13 +3372,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Build the complete Norwegian sentence from the supplied tokens. Meaning: Henrik asks Maja whether Anna already has the document. Use om + subject + sentence adverb + finite verb in the embedded question. Do not use direct-question verb-first order after om; punctuation is not scored."
+          "value": "Henrik wants to know whether Anna already has the document. Put the whole question together with the words provided."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "An indirect yes/no question begins with om and keeps subordinate-clause order rather than direct-question inversion."
+          "value": "Et indirekte ja/nei-spørsmål begynner med om og har leddsetningsordstilling, uten omvendt ordstilling fra direkte spørsmål."
         }
       ],
       "payload": {
@@ -3441,24 +3444,24 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Classify each complete noun phrase by the role of som. Use the first bucket when som represents the subject and no explicit subject follows som. Use the second bucket when the noun is the object and an explicit subject follows som. Score the relative-clause role distinction; ikke is supporting context."
+          "value": "Sort the expressions by the role of «som»: does it refer to the person doing the action, or to the person or thing the action affects?"
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Som is the subject when no other subject appears inside the relative clause; otherwise it represents the object."
+          "value": "Når ingen annen gjør handlingen i leddsetningen, viser «som» til den som handler. Når et eget subjekt gjør handlingen, viser «som» til objektet."
         }
       ],
       "payload": {
         "buckets": [
           {
             "bucket_id": "som-subject",
-            "label": "Som is the subject; no explicit subject follows som"
+            "label": "Som viser til den som gjør handlingen"
           },
           {
             "bucket_id": "som-object",
-            "label": "The noun is the object; an explicit subject follows som"
+            "label": "Som viser til personen eller tingen handlingen gjelder"
           }
         ],
         "items": [
@@ -3503,13 +3506,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Build the complete Norwegian sentence from the supplied tokens. Meaning: The neighbour who is not coming today sends the document. Use som as the relative-clause subject, with no extra subject after som, and put ikke before the finite verb kommer. Score adverb placement, not the choice between people and things."
+          "value": "The neighbour is sending the document. The neighbour is not coming today. Put the sentence together by describing the neighbour with a relative clause. Use the words provided, and put a comma after the time expression."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Inside a relative clause, ikke comes before the finite verb."
+          "value": "I en relativsetning står ikke foran det finitte verbet."
         }
       ],
       "payload": {
@@ -3541,7 +3544,7 @@
           },
           {
             "token_id": "relative-6",
-            "text": "dag",
+            "text": "dag,",
             "fixed": false
           },
           {
@@ -3575,60 +3578,60 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "The source sentences are Jeg håper at Anna snart ser meldingen når hun ikke lenger sitter på bussen. and Maja sier at de trenger en nabo som kan åpne døra hvis Henrik ikke finner nøkkelen. Classify each displayed clause excerpt as a main clause, linker-led subordinate clause, or relative clause. Use each excerpt as one clause boundary and inspect its local subject, sentence adverb, and finite verb. Boundary recognition, not sentence production, is scored."
+          "value": "Read each complete sentence and find the boundaries between the subordinate clauses. Then sort them by structure: one clause introduced by a conjunction, two clauses nested inside each other, or a relative clause together with another subordinate clause."
         }
       ],
       "explanation": null,
       "payload": {
         "buckets": [
           {
-            "bucket_id": "boundary-main",
-            "label": "Main clause"
+            "bucket_id": "one-linker",
+            "label": "Én leddsetning med bindeord"
           },
           {
-            "bucket_id": "boundary-linker",
-            "label": "Linker-led subordinate clause: linker + subject + optional sentence adverb + finite verb"
+            "bucket_id": "nested-linkers",
+            "label": "To leddsetninger inni hverandre"
           },
           {
-            "bucket_id": "boundary-relative",
-            "label": "Relative clause introduced by som"
+            "bucket_id": "relative-and-linker",
+            "label": "Relativsetning og en annen leddsetning"
           }
         ],
         "items": [
           {
             "item_id": "boundary-1",
-            "text": "Jeg håper",
-            "bucket_id": "boundary-main"
+            "text": "Fordi rommet er opptatt, øver bandet hjemme.",
+            "bucket_id": "one-linker"
           },
           {
             "item_id": "boundary-2",
-            "text": "at Anna snart ser meldingen",
-            "bucket_id": "boundary-linker"
+            "text": "Elias tror at butikken stenger tidlig.",
+            "bucket_id": "one-linker"
           },
           {
             "item_id": "boundary-3",
-            "text": "når hun ikke lenger sitter på bussen",
-            "bucket_id": "boundary-linker"
+            "text": "Aksel sier at han blir hjemme hvis datteren er syk.",
+            "bucket_id": "nested-linkers"
           },
           {
             "item_id": "boundary-4",
-            "text": "Maja sier",
-            "bucket_id": "boundary-main"
+            "text": "Jeg håper at bussen går når skolen slutter.",
+            "bucket_id": "nested-linkers"
           },
           {
             "item_id": "boundary-5",
-            "text": "at de trenger en nabo",
-            "bucket_id": "boundary-linker"
+            "text": "Vi ansatte en vaktmester som låser døra når bygget er tomt.",
+            "bucket_id": "relative-and-linker"
           },
           {
             "item_id": "boundary-6",
-            "text": "som kan åpne døra",
-            "bucket_id": "boundary-relative"
+            "text": "Hun har en hund som blir rolig hvis vi går en tur.",
+            "bucket_id": "relative-and-linker"
           },
           {
             "item_id": "boundary-7",
-            "text": "hvis Henrik ikke finner nøkkelen",
-            "bucket_id": "boundary-linker"
+            "text": "De fant et verksted som åpner tidlig fordi mange pendlere kommer dit.",
+            "bucket_id": "relative-and-linker"
           }
         ]
       }
@@ -3641,7 +3644,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Build the complete Norwegian sentence from the supplied tokens. Meaning: Henrik writes that Anna says she does not send the document before she gets home. Construct it from the inside outward, starting with the før clause, then placing it inside the nested at clauses and attaching the structure to the main clause. Keep each subordinate clause in its own local word order."
+          "value": "Henrik is passing on Anna's message: she is not sending the document until she gets home. Put the whole sentence together from the words provided, with the clauses in the right order."
         }
       ],
       "explanation": null,
@@ -3744,7 +3747,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write two parallel Norwegian sentences. In the first, say that Henrik does not say that Anna is coming. In the second, say that Henrik says that Anna is not coming. Keep the same subjects, reporting verb, linker, and embedded verb in both sentences; move ikke to the clause whose meaning is negative."
+          "value": "Write two sentences using Henrik, «fortelle», «at», and «Anna kommer». In the first, «ikke» should apply to the telling; in the second, «ikke» should apply to whether Anna is coming."
         }
       ],
       "explanation": null,
@@ -3752,11 +3755,11 @@
         "response_language": "no",
         "min_words": 8,
         "max_words": 16,
-        "judge_prompt": "Check both sentences against the task and report evidence for each criterion. Accept optional final punctuation, but require the same lexical frame and the two specified negation scopes.",
+        "judge_prompt": "Check both sentences against the task and report evidence for each criterion. Accept natural Norwegian reporting verbs and optional final punctuation, but require the two specified negation scopes.",
         "criteria": [
           {
             "id": "main-report-negation",
-            "instruction": "The first sentence places ikke in the main clause after the finite verb sier, negating the reporting action."
+            "instruction": "The first sentence places ikke after the finite reporting verb, negating the act of telling."
           },
           {
             "id": "embedded-event-negation",
@@ -3773,7 +3776,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write a short connected Norwegian update to another resident about a home repair visit. Mention a technician, a spare key, a neighbour, and a possible delay. Include a reported fact with at; a reason with fordi or a condition with hvis; a relative clause with som or der identifying a person or object; one sentence in which a subordinate clause is nested inside another structure; and ikke or another taught sentence adverb in a subordinate clause where it naturally clarifies word order. Use your own wording rather than copying a complete lesson sentence, and connect the ideas clearly."
+          "value": "Write a short, connected update in Norwegian to another resident about a repair visit at home. Mention a technician, a spare key, a neighbour, and a possible delay. Include a statement with «at», a reason with «fordi» or a condition with «hvis», a relative clause with «som» about a person or thing, and «ikke» or another sentence adverb in a subordinate clause where it fits naturally. Write your own sentences."
         }
       ],
       "explanation": null,
@@ -3781,7 +3784,7 @@
         "response_language": "no",
         "min_words": 35,
         "max_words": 65,
-        "judge_prompt": "Check the update against the task and report evidence for every criterion. Accept natural Bokmål wording for the repair context, either fordi or hvis, and either som or der. Require clear clause relationships and correct local subordinate-clause word order; do not require exact wording or a particular placement of the subordinate clauses.",
+        "judge_prompt": "Check the update against the task and report evidence for every criterion. Accept natural Bokmål wording for the repair context, either fordi or hvis, and require a som relative clause. Require clear clause relationships and correct local subordinate-clause word order; do not require exact wording or a particular placement of the subordinate clauses.",
         "criteria": [
           {
             "id": "repair-context",
@@ -3797,11 +3800,7 @@
           },
           {
             "id": "relative-description",
-            "instruction": "Includes a som or der relative clause that identifies a person or object."
-          },
-          {
-            "id": "nested-subordination",
-            "instruction": "Includes a sentence in which one subordinate clause is nested inside another structure."
+            "instruction": "Includes a som relative clause that identifies a person or object."
           },
           {
             "id": "adverb-placement",

@@ -1,0 +1,589 @@
+- handle: identify_lexical_s_verbs_in_context
+  op: categorize
+  objective: obj-s-verbs-01
+  bloom: analyze
+  prompt_md: Classify each sentence by the meaning of its s-ending verb.
+  explanation_md: Lexical s-verbs have established meanings; an s-ending can instead mark an action done
+    to the subject.
+  derived_from:
+  - section_id: first-checkpoint-notice-difference
+  buckets:
+  - bucket_id: lexical-opinion
+    label: Personal opinion
+  - bucket_id: lexical-comfort
+    label: Comfort in a situation
+  - bucket_id: lexical-existence
+    label: Existence or availability
+  - bucket_id: lexical-mutual-meeting
+    label: Mutual meeting
+  - bucket_id: lexical-seeing
+    label: Seeing one another
+  - bucket_id: passive-action
+    label: Action done to the subject
+  items:
+  - item_id: opinion
+    text: Jeg synes byen er fin.
+    bucket_id: lexical-opinion
+  - item_id: comfort
+    text: Amir trives på jobben.
+    bucket_id: lexical-comfort
+  - item_id: existence
+    text: Det finnes en kafé ved biblioteket.
+    bucket_id: lexical-existence
+  - item_id: meeting
+    text: Amir og Nora møtes på kafeen.
+    bucket_id: lexical-mutual-meeting
+  - item_id: seeing
+    text: Vi ses i morgen!
+    bucket_id: lexical-seeing
+  - item_id: passive
+    text: Kafeen stenges klokka seks.
+    bucket_id: passive-action
+- handle: choose_synes_for_personal_opinion
+  op: recall_fill
+  objective: obj-s-verbs-01
+  bloom: understand
+  prompt_md: Complete both sentences with the correct verb form.
+  explanation_md: Synes keeps its final s when it introduces an opinion or occurs in synes om.
+  derived_from:
+  - section_id: synes-expressing-an-opinion
+  audio_target: Jeg synes byen er fin. Hva synes du om den nye jobben?
+  segments:
+  - text_md: 'Jeg '
+  - blank_id: synes-statement
+    options:
+    - synes
+    - syne
+    answer_index: 0
+  - text_md: ' byen er fin. Hva '
+  - blank_id: synes-om
+    options:
+    - syne
+    - synes
+    answer_index: 1
+  - text_md: ' du om den nye jobben?'
+- handle: use_trives_for_comfort_in_a_situation
+  op: build
+  objective: obj-s-verbs-01
+  bloom: apply
+  prompt_md: Build the sentence that says the speaker feels comfortable with the colleagues.
+  explanation_md: Trives describes feeling comfortable or happy in a place, group, job, or situation.
+  derived_from:
+  - section_id: trives-feeling-comfortable-in-a-situation
+  tokens:
+  - token_id: tok-1
+    text: Jeg
+  - token_id: tok-2
+    text: trives
+  - token_id: tok-3
+    text: godt
+  - token_id: tok-4
+    text: sammen
+  - token_id: tok-5
+    text: med
+  - token_id: tok-6
+    text: kollegene
+  - token_id: tok-7
+    text: mine.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+- handle: distinguish_finnes_from_finne
+  op: recall_fill
+  objective: obj-s-verbs-01
+  bloom: understand
+  prompt_md: Complete each sentence with the verb that fits its meaning.
+  explanation_md: Finnes expresses existence or availability; finner says that someone locates something.
+  derived_from:
+  - section_id: finnes-saying-that-something-exists-or-is-available
+  audio_target: Det finnes en kafé ved biblioteket. Jeg finner kafeen.
+  segments:
+  - text_md: 'Det '
+  - blank_id: existence-verb
+    options:
+    - finnes
+    - finner
+    answer_index: 0
+  - text_md: ' en kafé ved biblioteket. Jeg '
+  - blank_id: locating-verb
+    options:
+    - finnes
+    - finner
+    answer_index: 1
+  - text_md: ' kafeen.'
+- handle: build_mutual_meetings_with_motes
+  op: build
+  objective: obj-s-verbs-01
+  bloom: apply
+  prompt_md: Build the sentence in which Amir and Nora meet one another at the café.
+  explanation_md: With møtes, all the people meeting one another belong in the subject.
+  derived_from:
+  - section_id: motes-meeting-one-another
+  tokens:
+  - token_id: tok-1
+    text: Amir
+  - token_id: tok-2
+    text: og
+  - token_id: tok-3
+    text: Nora
+  - token_id: tok-4
+    text: møtes
+  - token_id: tok-5
+    text: på
+  - token_id: tok-6
+    text: kafeen.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+- handle: select_motes_or_ses_by_intended_meaning
+  op: choose
+  objective: obj-s-verbs-01
+  bloom: understand
+  prompt_md: Choose Nora's reply that explicitly says they will see each other at the station and closes
+    the exchange naturally.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Amir
+      text_md: «Vi møtes på stasjonen klokka åtte.»
+  explanation_md: Ses naturally refers to seeing one another and is common when an exchange ends with
+    future contact.
+  derived_from:
+  - section_id: motes-and-ses-together
+  options:
+  - id: motes-line
+    text: Jeg har aldri vært på stasjonen.
+    correct: false
+    why: Dette sier noe om stasjonen, men bekrefter ikke at de skal møtes.
+  - id: ser-line
+    text: Flott. Jeg sender deg adressen senere.
+    correct: false
+    why: Dette handler om å sende informasjon senere og bekrefter ikke at de skal ses igjen.
+  - id: ses-line
+    text: Flott. Vi ses der!
+    correct: true
+    why: Svaret bekrefter at de skal ha kontakt senere og avslutter samtalen naturlig.
+- handle: contrast_lexical_s_meaning_with_passive_meaning
+  op: categorize
+  objective: obj-s-verbs-01
+  bloom: analyze
+  prompt_md: Classify each sentence as lexical or passive.
+  explanation_md: The confusable pair is a lexical s-verb versus a passive s-form; use the sentence meaning,
+    not the final letter, to distinguish them.
+  derived_from:
+  - section_id: one-spelling-different-grammatical-jobs
+  buckets:
+  - bucket_id: lexical-s-verb
+    label: Lexical s-verb
+  - bucket_id: passive-s-form
+    label: Passive s-form
+  items:
+  - item_id: lexical-existence
+    text: Det finnes et ledig bord ved vinduet.
+    bucket_id: lexical-s-verb
+  - item_id: passive-closing
+    text: Kafeen stenges klokka seks.
+    bucket_id: passive-s-form
+  - item_id: lexical-meeting
+    text: Vi møtes utenfor biblioteket.
+    bucket_id: lexical-s-verb
+  - item_id: passive-cleaning
+    text: Bordene vaskes hver kveld.
+    bucket_id: passive-s-form
+  - item_id: lexical-opinion
+    text: Nora synes kaffen er god.
+    bucket_id: lexical-s-verb
+  - item_id: passive-serving
+    text: Kaffen serveres ved bordet.
+    bucket_id: passive-s-form
+- handle: complete_amirs_update_with_target_s_verbs
+  op: recall_fill
+  objective: obj-s-verbs-01
+  bloom: apply
+  prompt_md: Complete Amir's update with the verb that fits each meaning.
+  explanation_md: The five lexical s-verbs express opinion, comfort, existence, mutual meeting, and seeing
+    one another.
+  derived_from:
+  - section_id: guided-production
+  audio_target: Jeg synes den nye byen er interessant, og jeg trives sammen med kollegene mine. Det finnes
+    et ledig bord i nærheten. Kollegene mine møtes etter jobb, og vi ses ofte i helgene.
+  segments:
+  - text_md: 'Jeg '
+  - blank_id: amirs-synes
+    options:
+    - synes
+    - trives
+    answer_index: 0
+  - text_md: ' den nye byen er interessant, og jeg '
+  - blank_id: amirs-trives
+    options:
+    - trives
+    - synes
+    answer_index: 0
+  - text_md: ' sammen med kollegene mine. Det '
+  - blank_id: amirs-finnes
+    options:
+    - finner
+    - finnes
+    answer_index: 1
+  - text_md: ' et ledig bord i nærheten. Kollegene mine '
+  - blank_id: amirs-motes
+    options:
+    - møter
+    - møtes
+    answer_index: 1
+  - text_md: ' etter jobb, og vi '
+  - blank_id: amirs-ses
+    options:
+    - ser
+    - ses
+    answer_index: 1
+  - text_md: ' ofte i helgene.'
+- handle: reformulate_without_removing_lexical_s
+  op: find_fix
+  objective: obj-s-verbs-01
+  bloom: analyze
+  prompt_md: Select the one token that must change.
+  explanation_md: The opinion verb is synes, not syne; the final s belongs to the lexical verb.
+  derived_from:
+  - section_id: guided-production
+  tokens:
+  - token_id: tok-1
+    text: Jeg
+  - token_id: tok-2
+    text: syne
+  - token_id: tok-3
+    text: Bergen
+  - token_id: tok-4
+    text: er
+  - token_id: tok-5
+    text: fin.
+  - token_id: tok-6
+    text: Jeg
+  - token_id: tok-7
+    text: trives
+  - token_id: tok-8
+    text: på
+  - token_id: tok-9
+    text: jobben.
+  - token_id: tok-10
+    text: Det
+  - token_id: tok-11
+    text: finnes
+  - token_id: tok-12
+    text: et
+  - token_id: tok-13
+    text: apotek
+  - token_id: tok-14
+    text: i
+  - token_id: tok-15
+    text: nærheten.
+  - token_id: tok-16
+    text: Kollegene
+  - token_id: tok-17
+    text: mine
+  - token_id: tok-18
+    text: møtes
+  - token_id: tok-19
+    text: etter
+  - token_id: tok-20
+    text: jobb.
+  - token_id: tok-21
+    text: Vi
+  - token_id: tok-22
+    text: ses
+  - token_id: tok-23
+    text: ofte.
+  error_token_id: tok-2
+  feedback: Replace syne with synes; the other four lexical s-verbs are complete.
+- handle: respond_to_everyday_questions_with_s_verbs
+  op: write
+  objective: obj-s-verbs-01
+  bloom: apply
+  prompt_md: 'Nora writes: «Hva synes du om kafeen?» Facts: quiet room, comfortable chairs, good coffee.
+    Write Nora a 15–25-word Norwegian reply that gives your opinion. Use synes.'
+  explanation_md: A useful reply answers the question with a clear personal opinion supported by the supplied
+    facts and uses synes.
+  derived_from:
+  - section_id: guided-production
+  response_language: 'no'
+  min_words: 15
+  max_words: 25
+  judge_prompt: 'Evaluate only criteria reply-purpose, supplied-fact, word-bound, and opinion-form-observation
+    when deciding whether the answer passes. Anchor that must pass: «Jeg synes kafeen er hyggelig. Rommet
+    er stille, stolene er komfortable, og kaffen er god.» Any otherwise valid answer without synes must
+    fail opinion-form-observation.'
+  criteria:
+  - id: reply-purpose
+    instruction: Replies to Nora in Norwegian and gives an opinion about the café.
+  - id: supplied-fact
+    instruction: Supports the opinion with at least one supplied fact.
+  - id: word-bound
+    instruction: Contains 15–25 words.
+  - id: opinion-form-observation
+    instruction: Uses synes as a complete lexical s-verb.
+- handle: transfer_s_verbs_to_an_evening_course
+  op: write
+  objective: obj-s-verbs-01
+  bloom: apply
+  prompt_md: 'Message from Jonas: «Hvordan går kveldskurset?» Facts: The speaker is comfortable in the
+    group; the teacher explains clearly; a quiet reading room is available upstairs; the class gathers
+    there before lessons; the speaker sees Jonas during the break. Write Jonas a connected 35–60-word
+    Norwegian update. Use synes, trives, finnes, møtes, and ses naturally as complete lexical s-verbs.'
+  explanation_md: The facts invite the five central meanings in a new setting and require the target s-verbs
+    in a connected update without requiring a fixed wording.
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+  response_language: 'no'
+  min_words: 35
+  max_words: 60
+  judge_prompt: 'Evaluate only criteria message-purpose, fact-coverage, word-bound, lexical-forms-required,
+    and mutual-subjects-observation when deciding whether the answer passes. Anchor that must pass: «Hei
+    Jonas! Jeg trives godt i gruppa og synes læreren forklarer tydelig. Det finnes et stille leserom oppe,
+    så jeg kan lese der etter jobb. Klassen møtes der før timen, og du og jeg ses i pausen.» Near-miss
+    that must fail fact-coverage: «Hei Jonas! Kurset går fint, og jeg liker skolen veldig godt. Vi har
+    mye å gjøre hver uke.»'
+  criteria:
+  - id: message-purpose
+    instruction: Gives Jonas a connected Norwegian update about the speaker's evening course.
+  - id: fact-coverage
+    instruction: Communicates all five supplied facts without contradicting them.
+  - id: word-bound
+    instruction: Contains 35–60 words.
+  - id: lexical-forms-required
+    instruction: Contains synes, trives, finnes, møtes, and ses naturally as complete lexical s-verbs.
+  - id: mutual-subjects-observation
+    instruction: Requires that statements with møtes or ses include all mutual participants in the subject;
+      fail if a statement uses an invalid reciprocal subject.
+- handle: retrieve_five_lexical_s_verbs
+  op: write
+  objective: obj-s-verbs-01
+  bloom: apply
+  prompt_md: 'Your friend asks about your new club. Facts: you think it is interesting; you feel comfortable
+    there; a quiet room is available; the members meet on Tuesdays; you and your friend will see one another
+    tomorrow. Write a 25–45-word Norwegian reply using synes, trives, finnes, møtes, and ses once each.'
+  explanation_md: Each required lexical s-verb corresponds to one supplied meaning.
+  derived_from:
+  - section_id: short-retrieval-review
+  response_language: 'no'
+  min_words: 25
+  max_words: 45
+  judge_prompt: 'Decide the pass result only from criteria reply-purpose, five-complete-forms, supplied-meanings,
+    mutual-subjects, and word-bound. Anchor that must pass: «Jeg synes klubben er interessant, og jeg
+    trives godt der. Det finnes et stille rom. Medlemmene møtes på tirsdager, og du og jeg ses i morgen.»
+    Near-miss that must fail five-complete-forms: «Jeg liker klubben og har det bra der. Det finnes et
+    rom. Medlemmene samles tirsdag, og vi treffes i morgen.»'
+  criteria:
+  - id: reply-purpose
+    instruction: Writes a Norwegian reply to a friend about the new club.
+  - id: five-complete-forms
+    instruction: Uses synes, trives, finnes, møtes, and ses exactly once each as complete lexical s-verbs.
+  - id: supplied-meanings
+    instruction: Expresses the five supplied facts with the corresponding taught meanings.
+  - id: word-bound
+    instruction: Contains 25–45 words.
+  - id: mutual-subjects
+    instruction: Uses møtes with the members as mutual participants and ses with both the writer and the
+      friend as mutual participants, matching the supplied facts.
+- handle: review_choose_synes_for_personal_opinion
+  op: choose
+  objective: obj-s-verbs-01
+  bloom: apply
+  prompt_md: Choose Ingrid's reply that gives a personal opinion about the film.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Omar
+      text_md: «Filmen er ferdig. Hvordan var den?»
+  explanation_md: Synes introduces the speaker's personal assessment; the other replies describe comfort
+    or report practical information.
+  derived_from:
+  - section_id: short-retrieval-review
+  options:
+  - id: comfort-reply
+    text: Jeg trives godt i denne kinosalen.
+    correct: false
+    why: This describes Ingrid's comfort in the cinema rather than evaluating the film.
+  - id: fact-reply
+    text: Det finnes en ekstra visning klokka åtte.
+    correct: false
+    why: This gives practical information about another showing rather than evaluating the film.
+  - id: opinion-reply
+    text: Jeg synes den var spennende, men litt lang.
+    correct: true
+    why: This gives Ingrid's personal assessment of the film.
+- handle: review_trives_for_comfort
+  op: choose
+  objective: obj-s-verbs-01
+  bloom: apply
+  prompt_md: Velg setningen som uttrykker at Ingrid har det godt og føler seg hjemme i den nye jobben.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Ingrid har det godt og føler seg hjemme i den nye jobben.
+  explanation_md: Trives describes a person's comfortable experience of a place, group, job, or situation.
+  derived_from:
+  - section_id: short-retrieval-review
+  options:
+  - id: ansettes
+    text: Ingrid ansettes i den nye jobben.
+    correct: false
+    why: This is a passive employment event, not Ingrid's feeling about the job.
+  - id: trives
+    text: Ingrid trives i den nye jobben.
+    correct: true
+    why: The sentence expresses how Ingrid experiences her work situation.
+  - id: liker
+    text: Ingrid liker den nye jobben.
+    correct: false
+    why: This expresses liking the job, but not specifically feeling comfortable in the situation.
+- handle: review_distinguish_finnes_from_finne
+  op: choose
+  objective: obj-s-verbs-01
+  bloom: apply
+  prompt_md: Choose Liv's reply that says a pharmacy is available nearby.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Mats
+      text_md: «Er det noe apotek i nærheten?»
+  explanation_md: Finnes states that something exists or is available; finner describes someone locating
+    it.
+  derived_from:
+  - section_id: short-retrieval-review
+  options:
+  - id: locating
+    text: Ja, jeg finner apoteket ved torget.
+    correct: false
+    why: This says that Liv locates a particular pharmacy rather than that one is available.
+  - id: passive
+    text: Nei, det finnes ikke noe apotek i nærheten av Livs arbeidsplass.
+    correct: false
+    why: This says that no pharmacy exists near Liv's workplace.
+  - id: availability
+    text: Ja, det finnes et apotek ved torget.
+    correct: true
+    why: This answers the availability question by stating that a pharmacy exists nearby.
+- handle: review_motes_with_mutual_subject
+  op: choose
+  objective: obj-s-verbs-01
+  bloom: apply
+  prompt_md: Choose the sentence that matches the situation.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Nora and Amir have agreed to meet one another outside the library.
+  explanation_md: Møtes takes a subject that includes the people meeting one another and no direct object
+    naming the other participant.
+  derived_from:
+  - section_id: short-retrieval-review
+  options:
+  - id: direct-object
+    text: Nora møtes Amir utenfor biblioteket.
+    correct: false
+    why: Møtes cannot take Amir as a direct object in this meaning.
+  - id: missing-participant
+    text: Nora møtes utenfor biblioteket.
+    correct: false
+    why: The situation names two participants, but this subject names only Nora.
+  - id: mutual-subject
+    text: Nora og Amir møtes utenfor biblioteket.
+    correct: true
+    why: Both participants are in the subject of the reciprocal verb.
+- handle: review_select_motes_or_ses_by_intended_meaning
+  op: choose
+  objective: obj-s-verbs-01
+  bloom: analyze
+  prompt_md: Choose the explanation of the difference between Nora's two highlighted lines.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Vi møtes utenfor kinoen klokka sju.»
+    - speaker: Nora
+      text_md: «Ha det bra! Vi ses i kveld.»
+  explanation_md: Møtes presents the arranged meeting event, while ses refers to seeing one another and
+    works naturally in a farewell.
+  derived_from:
+  - section_id: short-retrieval-review
+  options:
+  - id: same-function
+    text: Both verbs merely repeat the same meeting arrangement, so either line can replace the other
+      without changing the exchange.
+    correct: false
+    why: The first line arranges the meeting, while the second closes the exchange by anticipating future
+      contact.
+  - id: passive-contrast
+    text: Møtes is active, but ses is a passive form meaning that someone will look at the speakers.
+    correct: false
+    why: Both are lexical reciprocal s-verbs here; ses does not describe an action done to the speakers.
+  - id: arrangement-and-farewell
+    text: Møtes gives the arranged meeting place and time; ses refers back to the future contact in the
+      farewell.
+    correct: true
+    why: This accounts for both the practical arrangement and the closing function.
+- handle: review_ses_with_mutual_subject
+  op: choose
+  objective: obj-s-verbs-01
+  bloom: apply
+  prompt_md: Choose the sentence that matches the situation.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Lea og Omar jobber i samme bygning og ser hverandre nesten hver dag, uten å avtale møter.
+  explanation_md: Ses expresses seeing one another, so the subject includes both participants.
+  derived_from:
+  - section_id: short-retrieval-review
+  options:
+  - id: direct-object
+    text: Lea ses Omar nesten hver dag.
+    correct: false
+    why: Ses does not take Omar as a direct object in the mutual meaning.
+  - id: meeting-focus
+    text: Lea og Omar møtes til et planlagt møte nesten hver dag.
+    correct: false
+    why: This adds a planned-meeting meaning that is absent from the situation.
+  - id: mutual-seeing
+    text: Lea og Omar ses nesten hver dag.
+    correct: true
+    why: Both people who see one another are included in the subject.
+- handle: review_lexical_s_or_passive
+  op: choose
+  objective: obj-s-verbs-01
+  bloom: analyze
+  prompt_md: Choose the explanation that fits the sentence. Remember that passive s-forms describe an
+    action done to the subject.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Ane
+      text_md: «Det finnes et apotek ved stasjonen.»
+  explanation_md: In this confusable pair, finnes expresses existence; it does not describe an action
+    done to the pharmacy.
+  derived_from:
+  - section_id: short-retrieval-review
+  options:
+  - id: passive
+    text: Finnes is passive because someone performs an action on the pharmacy.
+    correct: false
+    why: No agent acts on the pharmacy; the sentence expresses existence.
+  - id: finding
+    text: Finnes means that an unnamed person finds the pharmacy.
+    correct: false
+    why: A locating event would use a form of finne, such as finner.
+  - id: lexical
+    text: Finnes is a lexical s-verb meaning that the pharmacy exists or is available.
+    correct: true
+    why: The sentence states that a pharmacy is available at that location.

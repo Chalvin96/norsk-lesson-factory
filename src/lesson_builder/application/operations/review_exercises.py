@@ -21,7 +21,10 @@ from lesson_builder.application.operations.review_lesson import open_rubric_revi
 from lesson_builder.application.operations.review_lesson import open_semantic_review
 from lesson_builder.domain.lesson.models.reviewer import ReviewerAgent
 from lesson_builder.domain.lesson.validation.checks.validators.answer_valid import answer_valid_check
+from lesson_builder.domain.lesson.validation.review_evidence import unsupported_semantic_findings
 from lesson_builder.domain.lesson.validation.review_payloads import build_expected_answers
+from lesson_builder.domain.lesson.validation.review_payloads import extract_answer_questions
+from lesson_builder.domain.lesson.validation.review_payloads import extract_open_semantic_questions
 
 K_EXERCISE_REVIEW_PASS = "pass"
 K_EXERCISE_REVIEW_NEEDS_HUMAN = "needs_human"
@@ -113,6 +116,7 @@ def verify_exercises(
 
     _results, comparison = answer_valid_check(lesson, payload, strict=True)
     semantic_issues = _semantic_issue_report(payload)
+    unsupported_findings = unsupported_semantic_findings(semantic_issues, extract_answer_questions(lesson))
     status = K_EXERCISE_REVIEW_PASS if comparison["passed"] and not semantic_issues else K_EXERCISE_REVIEW_NEEDS_HUMAN
     report = {
         "status": status,
@@ -126,6 +130,7 @@ def verify_exercises(
         "extra": comparison["extra"],
         "duplicates": comparison["duplicates"],
         "semantic_issues": semantic_issues,
+        "unsupported_findings": unsupported_findings,
         "open_handles": open_handles,
         "open_tasks_unverified": bool(open_handles),
     }
@@ -207,7 +212,7 @@ def verify_open_semantics(
         }
         _raise_if_strict(report, strict)
         return report
-    report = _build_semantic_report(handles, payload)
+    report = _build_semantic_report(handles, payload, extract_open_semantic_questions(lesson))
     if strict and report["status"] != K_EXERCISE_REVIEW_PASS:
         raise ExerciseReviewError(report)
     return report
@@ -267,6 +272,7 @@ def verify_exercise_package(
         "missing": _merge_report_lists(reports, "missing"),
         "mismatches": _merge_report_lists(reports, "mismatches"),
         "semantic_issues": _merge_report_lists(reports, "semantic_issues"),
+        "unsupported_findings": _merge_report_lists(reports, "unsupported_findings"),
         "ambiguous": _merge_report_lists(reports, "ambiguous"),
         "unanswerable": _merge_report_lists(reports, "unanswerable"),
         "duplicates": _merge_report_lists(reports, "duplicates"),
@@ -320,7 +326,9 @@ def _semantic_issue_report(payload: dict[str, Any]) -> list[dict[str, Any]]:
     ]
 
 
-def _build_semantic_report(handles: list[str], payload: dict[str, Any]) -> dict[str, Any]:
+def _build_semantic_report(
+    handles: list[str], payload: dict[str, Any], questions: list[dict[str, Any]]
+) -> dict[str, Any]:
     """Index open-task semantic findings and fail on any grounded issue."""
     duplicates, by_id = _surface_check_index(payload)
     missing = [handle for handle in handles if handle not in by_id]
@@ -330,6 +338,7 @@ def _build_semantic_report(handles: list[str], payload: dict[str, Any]) -> dict[
         for handle in handles
         if handle in by_id and by_id[handle].get("semantic_issues")
     ]
+    unsupported_findings = unsupported_semantic_findings(findings, questions)
     status = (
         K_EXERCISE_REVIEW_PASS
         if not missing and not extra and not duplicates and not findings
@@ -343,6 +352,7 @@ def _build_semantic_report(handles: list[str], payload: dict[str, Any]) -> dict[
         "extra": extra,
         "duplicates": duplicates,
         "semantic_issues": findings,
+        "unsupported_findings": unsupported_findings,
         "open_handles": handles,
     }
 

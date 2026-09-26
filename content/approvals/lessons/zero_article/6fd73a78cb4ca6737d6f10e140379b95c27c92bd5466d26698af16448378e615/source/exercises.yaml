@@ -1,0 +1,861 @@
+- handle: identify_role_zero_article
+  op: choose
+  objective: obj-zero-article-01
+  bloom: understand
+  prompt_md: Choose the set containing only sentences in which the noun names a person's role and appears
+    without an article.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: What kind of work are you considering?
+    - speaker: Amir
+      text_md: I am looking at several occupations.
+  stem_md: Compare the four sentence sets.
+  explanation_md: Role nouns after er, blir, or jobber som normally have no article.
+  derived_from:
+  - section_id: roles-and-occupations
+  options:
+  - id: mixed-role-object
+    text: Sara er lege. Amir snakker med en lege. Nora er en student.
+    correct: false
+    why: The set includes a person being talked to and a role with an article.
+  - id: all-role-zero
+    text: Amir er lærer. Nora blir journalist. Hun jobber som kokk.
+    correct: true
+    why: All three nouns name roles and appear without an article.
+  - id: mixed-articles
+    text: Sara er en lege. Faren min er lege. Hun jobber som en kokk.
+    correct: false
+    why: Two role nouns incorrectly have articles.
+  - id: mixed-patterns
+    text: Jeg vil bli journalist. De snakker et tysk. Amir kjøper en fotball.
+    correct: false
+    why: The set includes a language with an article and a physical object.
+- handle: produce_common_role
+  op: recall_fill
+  objective: obj-zero-article-01
+  bloom: apply
+  prompt_md: Complete each role statement with the correct form.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Complete the role statements.
+  explanation_md: Norwegian normally omits the article for roles after være, language names, unspecified
+    mass nouns, transport with med, and indefinite plurals.
+  derived_from:
+  - section_id: roles-and-occupations
+  audio_target: Amir er lærer. Nora vil bli journalist. Hun jobber som kokk.
+  segments:
+  - text_md: 'Amir er '
+  - blank_id: role-amir
+    options:
+    - lærer
+    - en lærer
+    answer_index: 0
+  - text_md: '. Nora vil bli '
+  - blank_id: role-nora
+    options:
+    - en journalist
+    - journalist
+    answer_index: 1
+  - text_md: '. Hun jobber som '
+  - blank_id: role-hun
+    options:
+    - kokk
+    - en kokk
+    answer_index: 0
+  - text_md: .
+- handle: complete_language_activity
+  op: recall_fill
+  objective: obj-zero-article-01
+  bloom: apply
+  prompt_md: Complete each language statement with the correct form.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Complete the language statements.
+  explanation_md: 'Language names normally appear without an article: hun lærer spansk.'
+  derived_from:
+  - section_id: languages
+  audio_target: Jeg snakker norsk. Amir forstår engelsk. Nora lærer spansk. Vi leser norsk på skolen.
+    Skriver du arabisk?
+  segments:
+  - text_md: 'Jeg snakker '
+  - blank_id: language-speak
+    options:
+    - norsk
+    - et norsk
+    answer_index: 0
+  - text_md: '. Amir forstår '
+  - blank_id: language-understand
+    options:
+    - engelsk
+    - et engelsk
+    answer_index: 0
+  - text_md: '. Nora lærer '
+  - blank_id: language-learn
+    options:
+    - et spansk
+    - spansk
+    answer_index: 1
+  - text_md: '. Vi leser '
+  - blank_id: language-read
+    options:
+    - et norsk
+    - norsk
+    answer_index: 1
+  - text_md: ' på skolen. Skriver du '
+  - blank_id: language-write
+    options:
+    - arabisk
+    - et arabisk
+    answer_index: 0
+  - text_md: '?'
+- handle: contrast_role_and_language
+  op: recall_fill
+  objective: obj-zero-article-01
+  bloom: apply
+  prompt_md: Complete Nora's introduction with the noun forms that fit her role and the language she is learning.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Nora studies at the university and is learning the Spanish language.
+  explanation_md: >-
+    In the taught unmodified role and language-name patterns, use no article: Nora er student;
+    hun lærer spansk.
+  derived_from:
+  - section_id: languages
+  audio_target: Nora er student. Hun lærer spansk.
+  segments:
+  - text_md: 'Nora er '
+  - blank_id: role-zero-article
+    options:
+    - student.
+    - en student.
+    answer_index: 0
+  - text_md: ' Hun lærer '
+  - blank_id: language-zero-article
+    options:
+    - spansk.
+    - et spansk.
+    answer_index: 0
+- handle: distinguish_sport_from_object
+  op: choose
+  objective: obj-zero-article-01
+  bloom: understand
+  prompt_md: Choose the sentence in which the noun names a sport rather than one physical object.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: What are the children doing after the course?
+    - speaker: Amir
+      text_md: They have planned an outdoor activity.
+  stem_md: At the café, Nora and Amir talk about activities.
+  explanation_md: Sport names after spille have no article; a physical object uses en.
+  derived_from:
+  - section_id: sports-and-activities
+  options:
+  - id: object
+    text: Amir sparker en ball over plenen.
+    correct: false
+    why: «En ball» names one physical object, not the sport.
+  - id: mass-noun
+    text: Nora drikker kaffe.
+    correct: false
+    why: Kaffe is a mass noun here, not a sport.
+  - id: sport
+    text: Barna spiller volleyball etter skolen.
+    correct: true
+    why: «Volleyball» names the sport, so it has no article.
+- handle: describe_sport_habits
+  op: write
+  objective: obj-zero-article-01
+  bloom: apply
+  prompt_md: 'Write a short profile for the language café notice. Use these facts: Amir plays chess with
+    a neighbor after work; Nora practises karate after school. Use complete sentences and no article before
+    each sport or game name.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Amir plays chess with a neighbor after work; Nora practises karate after school.
+  explanation_md: Sport and game names after spille, gå på ski, or trene normally have no article.
+  derived_from:
+  - section_id: sports-and-activities
+  response_language: 'no'
+  min_words: 8
+  max_words: 20
+  judge_prompt: Check the response against criteria sport-zero-article and complete-profiles.
+  criteria:
+  - id: sport-zero-article
+    instruction: Uses each supplied sport or game name, sjakk and karate, without an article.
+  - id: complete-profiles
+    instruction: Writes a short Norwegian profile in complete sentences that expresses both supplied facts.
+- handle: recognize_mass_noun_meaning
+  op: choose
+  objective: obj-zero-article-01
+  bloom: understand
+  prompt_md: 'Choose the pair that shows both taught zero-article mass-noun meanings: substance in general
+    and an unspecified quantity.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: We need to shop before the guests arrive.
+    - speaker: Amir
+      text_md: Yes, let us check the food and drinks.
+  stem_md: Nora and Amir talk about food and drink.
+  explanation_md: Mass nouns can refer to a substance generally or to an unspecified quantity; both use
+    no article.
+  derived_from:
+  - section_id: mass-nouns-food-drink-and-other-substances
+  options:
+  - id: definite-and-serving
+    text: Teen er varm. Nora bestiller en te.
+    correct: false
+    why: The first noun is definite and the second refers to one serving.
+  - id: both-general
+    text: Melk inneholder kalsium. Melk er en viktig matvare.
+    correct: false
+    why: Both sentences describe milk generally; neither gives an unspecified amount.
+  - id: both-zero-mass
+    text: Melk inneholder kalsium. Det er melk på gulvet.
+    correct: true
+    why: The first sentence describes milk as a substance generally; the second refers to an unspecified amount spilled on the floor.
+  - id: substance-and-serving
+    text: Nora liker melk. Nora kjøper en melk.
+    correct: false
+    why: The second noun refers to one serving with an article.
+- handle: complete_cafe_supplies
+  op: recall_fill
+  objective: obj-zero-article-01
+  bloom: apply
+  prompt_md: Complete the café note with the appropriate noun forms. A quantity word can count a serving while the noun still names the substance.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Complete the café inventory.
+  explanation_md: Substance nouns such as kaffe and ost take no article, including after a quantity word such as kopp. A countable item takes an article, as in et brød for one loaf.
+  derived_from:
+  - section_id: mass-nouns-food-drink-and-other-substances
+  audio_target: 'Nora sjekker kjøkkenet: Vi lager kaffe i kanna. Hun bestiller én kopp kaffe til seg selv.
+    Hun river ost over pastaen. Til buffeen kjøper Amir et brød, ett helt brød som skal skjæres opp.'
+  segments:
+  - text_md: 'Nora sjekker kjøkkenet: Vi lager '
+  - blank_id: supply-coffee-substance
+    options:
+    - kaffe
+    - en kaffe
+    answer_index: 0
+  - text_md: ' i kanna. Hun bestiller én kopp '
+  - blank_id: supply-coffee-serving
+    options:
+    - kaffe
+    - en kaffe
+    answer_index: 0
+  - text_md: ' til seg selv. Hun river '
+  - blank_id: supply-cheese-substance
+    options:
+    - ost
+    - en ost
+    answer_index: 0
+  - text_md: ' over pastaen. Til buffeen kjøper Amir '
+  - blank_id: supply-bread-item
+    options:
+    - brød
+    - et brød
+    answer_index: 1
+  - text_md: ', ett helt brød som skal skjæres opp.'
+- handle: select_transport_mode_form
+  op: recall_fill
+  objective: obj-zero-article-01
+  bloom: apply
+  prompt_md: Complete each journey. Where the context identifies a vehicle, refer back to that vehicle
+    with a definite form. Otherwise, name only the general mode of travel.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Amir's bus is not a particular departure; we travel on the eight o'clock train to school that we booked; she has just collected her car and now uses that car to go to work; their flight to Bergen is already identified; Nora rides the red bicycle she showed us earlier.
+  explanation_md: 'The bare forms med buss, med tog, med bil, med fly, and på sykkel name a mode of travel.
+    When the context identifies one vehicle, definite forms such as med bussen, med toget, and på sykkelen
+    can also be natural.'
+  derived_from:
+  - section_id: taught-transport-expressions
+  audio_target: Amir kommer med buss til kaféen. Vi reiser med toget til skolen. Hun drar til jobb med bilen.
+    De kommer med flyet til Bergen. Nora kommer på sykkelen til møtet.
+  segments:
+  - text_md: 'Amir kommer '
+  - blank_id: transport-bus
+    options:
+    - med buss
+    - med bussen
+    answer_index: 0
+  - text_md: ' til kaféen. Vi reiser '
+  - blank_id: transport-train
+    options:
+    - med toget
+    - med tog
+    answer_index: 0
+  - text_md: '. Hun drar til jobb '
+  - blank_id: transport-car
+    options:
+    - med bil
+    - med bilen
+    answer_index: 1
+  - text_md: '. De kommer '
+  - blank_id: transport-plane
+    options:
+    - med fly
+    - med flyet
+    answer_index: 1
+  - text_md: ' til Bergen. Nora kommer '
+  - blank_id: transport-bike
+    options:
+    - på sykkel
+    - på sykkelen
+    answer_index: 1
+  - text_md: ' til møtet.'
+- handle: write_journey_plans
+  op: write
+  objective: obj-zero-article-01
+  bloom: apply
+  prompt_md: 'Write a travel plan message to a friend. Use these facts: Amir — work — med buss; Nora —
+    school — med tog; Sara — the station — med bil; Jonas — a social event — med fly; Liv — the café —
+    på sykkel. Use the taught transport expression required by each plan.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Amir — work — med buss; Nora — school — med tog; Sara — the station — med bil; Jonas —
+        a social event — med fly; Liv — the café — på sykkel.
+  explanation_md: Taught transport expressions use med + bare noun, except på sykkel.
+  derived_from:
+  - section_id: taught-transport-expressions
+  response_language: 'no'
+  min_words: 20
+  max_words: 45
+  judge_prompt: Check the response against criteria taught-transport-forms and complete-journeys.
+  criteria:
+  - id: taught-transport-forms
+    instruction: Uses med buss, med tog, med bil, med fly, and på sykkel with the corresponding supplied
+      facts.
+  - id: complete-journeys
+    instruction: Writes one complete Norwegian journey statement for each of the five supplied facts.
+- handle: change_singular_to_indefinite_plural
+  op: recall_fill
+  objective: obj-zero-article-01
+  bloom: apply
+  prompt_md: Complete the revised sentence with the noun form for several unspecified cups, rather than one cup or a specific set.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: The plan has changed from bringing one cup to bringing several unspecified cups.
+  explanation_md: >-
+    An indefinite plural has no article: en kopp becomes kopper when the number is several
+    and no specific set is meant.
+  derived_from:
+  - section_id: indefinite-plural-nouns
+  audio_target: Jeg tar med kopper.
+  segments:
+  - text_md: 'Jeg tar med '
+  - blank_id: revised-unspecified-plural
+    options:
+    - kopper.
+    - en kopp.
+    - koppene.
+    answer_index: 0
+- handle: supply_indefinite_plural_items
+  op: recall_fill
+  objective: obj-zero-article-01
+  bloom: apply
+  prompt_md: Complete each statement with the correct indefinite plural form.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Complete the plural statements.
+  explanation_md: Indefinite plural nouns have no article and use the plural form.
+  derived_from:
+  - section_id: indefinite-plural-nouns
+  audio_target: Jeg kjøper bøker. Vi trenger kopper. Nora tar med tallerkener. Det kommer studenter på
+    lørdag. Amir kjøper epler.
+  segments:
+  - text_md: 'Jeg kjøper '
+  - blank_id: plural-books
+    options:
+    - bøker
+    - en bok
+    answer_index: 0
+  - text_md: '. Vi trenger '
+  - blank_id: plural-cups
+    options:
+    - kopper
+    - en kopp
+    answer_index: 0
+  - text_md: '. Nora tar med '
+  - blank_id: plural-plates
+    options:
+    - en tallerken
+    - tallerkener
+    answer_index: 1
+  - text_md: '. Det kommer '
+  - blank_id: plural-students
+    options:
+    - en student
+    - studenter
+    answer_index: 1
+  - text_md: ' på lørdag. Amir kjøper '
+  - blank_id: plural-apples
+    options:
+    - epler
+    - et eple
+    answer_index: 0
+  - text_md: .
+- handle: classify_zero_article_context
+  op: categorize
+  objective: obj-zero-article-01
+  bloom: analyze
+  prompt_md: Classify each sentence by the single taught meaning that licenses its zero article.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: What will the group practise today?
+    - speaker: Amir
+      text_md: They will sort sentences from the café evening.
+  explanation_md: 'Each zero-article noun matches one taught construction: role, language, sport, mass
+    noun, transport, or indefinite plural.'
+  derived_from:
+  - section_id: one-meaning-several-zero-article-patterns
+  buckets:
+  - bucket_id: role
+    label: Basic role or occupation
+  - bucket_id: language
+    label: Language
+  - bucket_id: sport
+    label: Sport or game
+  - bucket_id: mass
+    label: Mass noun
+  - bucket_id: transport
+    label: Taught transport expression
+  - bucket_id: plural
+    label: Indefinite plural
+  items:
+  - item_id: context-role
+    text: Nora er student.
+    bucket_id: role
+  - item_id: context-language
+    text: Hun lærer norsk.
+    bucket_id: language
+  - item_id: context-sport
+    text: Han spiller sjakk med naboen.
+    bucket_id: sport
+  - item_id: context-mass
+    text: Hun drikker te.
+    bucket_id: mass
+  - item_id: context-transport
+    text: Vi reiser med tog.
+    bucket_id: transport
+  - item_id: context-plural
+    text: Vi trenger kopper.
+    bucket_id: plural
+- handle: repair_unnecessary_articles
+  op: find_fix
+  objective: obj-zero-article-01
+  bloom: analyze
+  prompt_md: Select the one token that is wrong and needs changing.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Amir er en lærer, men han kjøper en bok.
+  explanation_md: Remove en before lærer because lærer names Amir's role after er; keep en before bok
+    because bok is one ordinary countable object.
+  derived_from:
+  - section_id: one-meaning-several-zero-article-patterns
+  tokens:
+  - token_id: repair-1
+    text: Amir
+  - token_id: repair-2
+    text: er
+  - token_id: repair-3
+    text: en
+  - token_id: repair-4
+    text: lærer,
+  - token_id: repair-5
+    text: men
+  - token_id: repair-6
+    text: han
+  - token_id: repair-7
+    text: kjøper
+  - token_id: repair-8
+    text: en
+  - token_id: repair-9
+    text: bok.
+  error_token_id: repair-3
+  feedback: Remove en before lærer because lærer names Amir's role after er; keep en before bok because
+    bok is one ordinary countable object.
+- handle: build_study_evening_message
+  op: write
+  objective: obj-zero-article-01
+  bloom: apply
+  prompt_md: 'Write a short connected planning message to the study group. Use these facts: Mina works
+    as a teacher, Amir writes Norwegian for the group, and the group has coffee and bread. Use the taught
+    zero-article forms.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Mina works as a teacher, Amir writes Norwegian for the group, and the group has coffee
+        and bread.
+  explanation_md: Use no article with the supplied role, language, and mass nouns.
+  derived_from:
+  - section_id: cumulative-transfer-planning-a-study-evening
+  response_language: 'no'
+  min_words: 12
+  max_words: 35
+  judge_prompt: Check the response against criteria three-zero-article-patterns and connected-study-message.
+  criteria:
+  - id: three-zero-article-patterns
+    instruction: Uses no article with the supplied role, language, and mass nouns.
+  - id: connected-study-message
+    instruction: Writes a connected Norwegian planning message using all three supplied facts.
+- handle: contrast_one_item_and_general_category
+  op: recall_fill
+  objective: obj-zero-article-01
+  bloom: apply
+  prompt_md: >-
+    Complete each sentence so it expresses the meaning in its context: one item versus several,
+    a sport versus equipment, and a drink generally versus one serving.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Nora buys exactly one cup for one guest, then several cups for a group. Coffee is her everyday drink. At the café, Amir orders one serving of coffee.
+  explanation_md: Zero article appears for indefinite plurals, sports, and mass nouns; en appears for
+    one countable item or serving.
+  derived_from:
+  - section_id: cumulative-transfer-planning-a-study-evening
+  audio_target: Nora kjøper en kopp til gjesten. Nora kjøper kopper til gjestene. Vi spiller håndball hver uke. Nora kjøper en håndball til laget. Hun drikker kaffe hver morgen. Amir bestiller en kaffe på kafeen.
+  segments:
+  - text_md: 'Nora kjøper '
+  - blank_id: one-cup
+    options:
+    - en kopp
+    - kopper
+    answer_index: 0
+  - text_md: ' til gjesten. Nora kjøper '
+  - blank_id: several-cups
+    options:
+    - en kopp
+    - kopper
+    answer_index: 1
+  - text_md: ' til gjestene. Vi spiller '
+  - blank_id: sport-or-ball
+    options:
+    - en håndball
+    - håndball
+    answer_index: 1
+  - text_md: ' hver uke. Nora kjøper '
+  - blank_id: equipment
+    options:
+    - en håndball
+    - håndball
+    answer_index: 0
+  - text_md: ' til laget. Hun drikker '
+  - blank_id: general-drink
+    options:
+    - kaffe
+    - en kaffe
+    answer_index: 0
+  - text_md: ' hver morgen. Amir bestiller '
+  - blank_id: one-serving
+    options:
+    - kaffe
+    - en kaffe
+    answer_index: 1
+  - text_md: ' på kafeen.'
+- handle: review_role_zero_article
+  op: recall_fill
+  objective: obj-zero-article-01
+  bloom: apply
+  prompt_md: Complete each role statement with the correct form.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Sara
+      text_md: Who are the new volunteers?
+    - speaker: Jonas
+      text_md: Let us write their introductions.
+  explanation_md: Role nouns after er, blir, or jobber som normally have no article.
+  derived_from:
+  - section_id: roles-and-occupations
+  audio_target: Sara arbeider som lege. Jonas blir elektriker. Maja er student.
+  segments:
+  - text_md: 'Sara arbeider som '
+  - blank_id: review-role-sara
+    options:
+    - lege
+    - en lege
+    answer_index: 0
+  - text_md: '. Jonas blir '
+  - blank_id: review-role-jonas
+    options:
+    - en elektriker
+    - elektriker
+    answer_index: 1
+  - text_md: '. Maja er '
+  - blank_id: review-role-maja
+    options:
+    - student
+    - en student
+    answer_index: 0
+  - text_md: .
+- handle: review_language_zero_article
+  op: recall_fill
+  objective: obj-zero-article-01
+  bloom: apply
+  prompt_md: Complete each language statement with the correct form.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lea
+      text_md: Which languages does the group use?
+    - speaker: Omar
+      text_md: Let us describe their language practice.
+  explanation_md: Language names normally appear without an article.
+  derived_from:
+  - section_id: languages
+  audio_target: Lea lærer fransk. Omar snakker somali. Kan du skrive tysk? Vi forstår svensk. De leser
+    engelsk hjemme.
+  segments:
+  - text_md: 'Lea lærer '
+  - blank_id: review-language-lea
+    options:
+    - fransk
+    - et fransk
+    answer_index: 0
+  - text_md: '. Omar snakker '
+  - blank_id: review-language-omar
+    options:
+    - somali
+    - et somali
+    answer_index: 0
+  - text_md: '. Kan du skrive '
+  - blank_id: review-language-write
+    options:
+    - et tysk
+    - tysk
+    answer_index: 1
+  - text_md: '? Vi forstår '
+  - blank_id: review-language-understand
+    options:
+    - et svensk
+    - svensk
+    answer_index: 1
+  - text_md: '. De leser '
+  - blank_id: review-language-read
+    options:
+    - engelsk
+    - et engelsk
+    answer_index: 0
+  - text_md: ' hjemme.'
+- handle: review_sport_zero_article
+  op: recall_fill
+  objective: obj-zero-article-01
+  bloom: apply
+  prompt_md: Complete each new sport statement with the correct form.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Review: new sport situations.'
+  explanation_md: Sport names after spille, gå på ski, or trene normally have no article.
+  derived_from:
+  - section_id: sports-and-activities
+  audio_target: Laget spiller volleyball. Barna spiller innebandy etter skolen. Lea spiller tennis på tirsdager.
+    Isak går på ski om vinteren. Maja trener karate etter trening.
+  segments:
+  - text_md: 'Laget spiller '
+  - blank_id: review-sport-football
+    options:
+    - volleyball
+    - en volleyball
+    answer_index: 0
+  - text_md: '. Barna spiller '
+  - blank_id: review-sport-handball
+    options:
+    - innebandy
+    - en innebandy
+    answer_index: 0
+  - text_md: '. Lea spiller '
+  - blank_id: review-sport-chess
+    options:
+    - en tennis
+    - tennis
+    answer_index: 1
+  - text_md: ' på tirsdager. Isak går på '
+  - blank_id: review-sport-ski
+    options:
+    - en ski
+    - ski
+    answer_index: 1
+  - text_md: ' om vinteren. Maja trener '
+  - blank_id: review-sport-karate
+    options:
+    - karate
+    - en karate
+    answer_index: 0
+  - text_md: ' etter trening.'
+- handle: review_mass_noun_zero_article
+  op: recall_fill
+  objective: obj-zero-article-01
+  bloom: apply
+  prompt_md: Complete each food or drink statement with the correct form.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: What do we need for breakfast and baking?
+    - speaker: Amir
+      text_md: Let us update the shopping list.
+  explanation_md: Unspecified mass nouns normally appear without an article.
+  derived_from:
+  - section_id: mass-nouns-food-drink-and-other-substances
+  audio_target: Vi trenger sukker til kaken. Barna drikker melk til frokost. Hun bruker smør i panna.
+    Amir kjøper mel til brødet.
+  segments:
+  - text_md: 'Vi trenger '
+  - blank_id: review-mass-sugar
+    options:
+    - sukker
+    - et sukker
+    answer_index: 0
+  - text_md: ' til kaken. Barna drikker '
+  - blank_id: review-mass-milk
+    options:
+    - melk
+    - en melk
+    answer_index: 0
+  - text_md: ' til frokost. Hun bruker '
+  - blank_id: review-mass-butter
+    options:
+    - et smør
+    - smør
+    answer_index: 1
+  - text_md: ' i panna. Amir kjøper '
+  - blank_id: review-mass-flour
+    options:
+    - et mel
+    - mel
+    answer_index: 1
+  - text_md: ' til brødet.'
+- handle: review_transport_zero_article
+  op: recall_fill
+  objective: obj-zero-article-01
+  bloom: apply
+  prompt_md: Fullfør hver reiseytring. Når et bestemt kjøretøy er identifisert, vis tilbake til det med
+    bestemt form. Ellers skal uttrykket bare angi reisemåten.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Mina
+      text_md: Sara har billett til flyet til Bergen. Liv sykler til trening som reisemåte, uten at en bestemt sykkel er poenget. Hvordan reiser de?
+    - speaker: Jonas
+      text_md: Mina skal ta bussen vi nettopp snakket om til jobb. Jonas drar til butikken med bil, uten at en bestemt bil er poenget. Vi har billetter til toget til Lillehammer. Hvordan reiser hver av oss?
+  explanation_md: Bare nouns in med buss, med tog, med bil, med fly and på sykkel name a mode of travel.
+    When a specific vehicle is identified, forms such as med bussen, med flyet, and med toget are natural.
+  derived_from:
+  - section_id: taught-transport-expressions
+  audio_target: Sara reiser med flyet til Bergen. Liv kommer på sykkel til trening. Mina drar med bussen
+    til jobb. Jonas drar med bil til butikken. Vi reiser med toget til Lillehammer.
+  segments:
+  - text_md: 'Sara reiser '
+  - blank_id: review-transport-plane
+    options:
+    - med flyet
+    - med fly
+    answer_index: 0
+  - text_md: ' til Bergen. Liv kommer '
+  - blank_id: review-transport-bike
+    options:
+    - på sykkel
+    - på sykkelen
+    answer_index: 0
+  - text_md: ' til trening. Mina drar '
+  - blank_id: review-transport-bus
+    options:
+    - med bussen
+    - med buss
+    answer_index: 0
+  - text_md: ' til jobb. Jonas drar '
+  - blank_id: review-transport-car
+    options:
+    - med bil
+    - med bilen
+    answer_index: 0
+  - text_md: ' til butikken. Vi reiser '
+  - blank_id: review-transport-train
+    options:
+    - med tog
+    - med toget
+    answer_index: 1
+  - text_md: ' til Lillehammer.'
+- handle: review_indefinite_plural_zero_article
+  op: recall_fill
+  objective: obj-zero-article-01
+  bloom: apply
+  prompt_md: Complete each statement with the correct indefinite plural form.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: What is still missing for the gathering? Jeg leser [blank]. Vi trenger [blank]. Nora tar
+        med [blank].
+    - speaker: Amir
+      text_md: Let us add several unspecified items. Det kommer [blank]. Amir kjøper [blank].
+  explanation_md: Indefinite plural nouns have no article and use the plural form.
+  derived_from:
+  - section_id: indefinite-plural-nouns
+  audio_target: Jeg leser aviser. Vi trenger stoler. Nora tar med flasker. Det kommer gjester. Amir kjøper
+    bananer.
+  segments:
+  - text_md: 'Jeg leser '
+  - blank_id: review-plural-newspapers
+    options:
+    - aviser
+    - en avis
+    answer_index: 0
+  - text_md: '. Vi trenger '
+  - blank_id: review-plural-chairs
+    options:
+    - stoler
+    - en stol
+    answer_index: 0
+  - text_md: '. Nora tar med '
+  - blank_id: review-plural-bottles
+    options:
+    - en flaske
+    - flasker
+    answer_index: 1
+  - text_md: '. Det kommer '
+  - blank_id: review-plural-guests
+    options:
+    - en gjest
+    - gjester
+    answer_index: 1
+  - text_md: '. Amir kjøper '
+  - blank_id: review-plural-bananas
+    options:
+    - bananer
+    - en banan
+    answer_index: 0
+  - text_md: .

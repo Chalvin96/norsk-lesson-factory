@@ -1,0 +1,281 @@
+- handle: notice_jo_in_dialogue
+  op: choose
+  objective: obj-answering-ja-nei-jo-01
+  bloom: understand
+  prompt_md: What do we learn about Sara?
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Jonas
+      text_md: «Kommer ikke Sara på filmkvelden?»
+    - speaker: Maja
+      text_md: «Jo, men hun kommer litt senere.»
+  options:
+  - id: already-arrived
+    text: She has already arrived.
+    correct: false
+    why: Nothing says she is there now — only that she comes later.
+  - id: coming-later
+    text: She is coming, but later.
+    correct: true
+    why: Jo rejects the negative assumption — Sara IS coming.
+  - id: not-coming
+    text: She is not coming.
+    correct: false
+    why: That would be the answer if Maja had said Nei; Jo means the opposite of the negative question.
+  derived_from:
+  - section_id: negative-question-meaning-practice
+- handle: response_word_supported
+  op: recall_fill
+  objective: obj-answering-ja-nei-jo-01
+  bloom: understand
+  prompt_md: Fill in Ja, Nei or Jo.
+  audio_target: Kommer du på filmkvelden? Ja. Liker du kaffe? Nei. Kommer du ikke på filmkvelden? Jo.
+    Jobber du ikke i morgen? Nei. Er du ikke hjemme? Jo. Spiser du fisk? Nei.
+  segments:
+  - text_md: 'Item 1: You are coming to film night. «Kommer du på filmkvelden?» '
+  - blank_id: response-1
+    options:
+    - Nei
+    - Ja
+    - Jo
+    answer_index: 1
+  - text_md: '. Item 2: You do not like coffee. «Liker du kaffe?» '
+  - blank_id: response-2
+    options:
+    - Jo
+    - Nei
+    - Ja
+    answer_index: 1
+  - text_md: '. Item 3: You are coming to film night. «Kommer du ikke på filmkvelden?» '
+  - blank_id: response-3
+    options:
+    - Nei
+    - Ja
+    - Jo
+    answer_index: 2
+  - text_md: '. Item 4: You do not work tomorrow. «Jobber du ikke i morgen?» '
+  - blank_id: response-4
+    options:
+    - Jo
+    - Nei
+    - Ja
+    answer_index: 1
+  - text_md: '. Item 5: You are at home. «Er du ikke hjemme?» '
+  - blank_id: response-5
+    options:
+    - Nei
+    - Ja
+    - Jo
+    answer_index: 2
+  - text_md: '. Item 6: You do not eat fish. «Spiser du fisk?» '
+  - blank_id: response-6
+    options:
+    - Nei
+    - Jo
+    - Ja
+    answer_index: 0
+  - text_md: .
+  explanation_md: Jo answers a negative question when the fact is yes; Nei when the fact is no — whatever
+    the question's polarity.
+  derived_from:
+  - section_id: negative-question-response-word-practice
+- handle: response_word_unsupported
+  op: write
+  objective: obj-answering-ja-nei-jo-01
+  bloom: apply
+  prompt_md: 'Fact 1: You are bringing drinks. «Tar du ikke med drikke?» Fact 2: You are not attending
+    film night. «Kommer du på filmkvelden?» Fact 3: You like tea. «Liker du ikke te?» Fact 4: You do not
+    eat fish. «Spiser du ikke fisk?» Answer each question with one word.'
+  response_language: 'no'
+  judge_prompt: Check the response words against the task and report evidence for each criterion.
+  criteria:
+  - id: response-words-correct
+    instruction: Answers Jo to items 1 and 3 and Nei to items 2 and 4, one word each.
+  - id: response-format-observation
+    instruction: Observation, not gating — note capitalization or punctuation only; do not fail correct
+      response words.
+  derived_from:
+  - section_id: negative-question-response-word-practice
+- handle: choose_full_response
+  op: choose
+  objective: obj-answering-ja-nei-jo-01
+  bloom: apply
+  prompt_md: You are coming to film night. Choose your answer.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: «Kommer du ikke på filmkvelden?»
+  options:
+  - id: nei-mismatch
+    text: Nei, jeg kommer.
+    correct: false
+    why: Nei would confirm that you are not coming — the sentence contradicts it.
+  - id: jo-full
+    text: Jo, jeg kommer.
+    correct: true
+    why: Jo rejects the negative assumption and the sentence states the true fact.
+  - id: ja-mismatch
+    text: Ja, jeg kommer ikke.
+    correct: false
+    why: Ja does not fit a negative question here, and the sentence contradicts the fact.
+  derived_from:
+  - section_id: negative-question-full-response-practice
+- handle: reply_to_emil
+  op: write
+  objective: obj-answering-ja-nei-jo-01
+  bloom: apply
+  prompt_md: 'Emil writes: «Jeg kommer ikke på filmkvelden. Jeg må jobbe.» You are coming, and Maja is
+    coming too. Reply to Emil with that information in 5–20 words.'
+  response_language: 'no'
+  judge_prompt: Check the reply against the task and report evidence for each criterion.
+  criteria:
+  - id: conveys-coming
+    instruction: The reply makes clear that the writer is coming to film night.
+  - id: conveys-maja
+    instruction: The reply makes clear that Maja is coming as well.
+  - id: ogsa-observation
+    instruction: Observation, not gating — the reply adds the second person with også or equally natural
+      wording.
+  derived_from:
+  - section_id: affirmative-addition-with-ogsa-practice
+- handle: ogsa_heller_replies
+  op: recall_fill
+  objective: obj-answering-ja-nei-jo-01
+  bloom: apply
+  prompt_md: Complete the replies with også or heller.
+  audio_target: Jeg jobber i dag. Jeg jobber også i dag. Jeg liker ikke kaffe. Jeg liker ikke kaffe heller.
+    Maja lager popcorn. Jeg lager også popcorn. Jonas tar ikke buss. Jeg tar ikke buss heller.
+  segments:
+  - text_md: 'Item 1: «Jeg jobber i dag.» — «Jeg jobber '
+  - blank_id: addition-1
+    options:
+    - heller
+    - også
+    answer_index: 1
+  - text_md: ' i dag.» Item 2: «Jeg liker ikke kaffe.» — «Jeg liker ikke kaffe '
+  - blank_id: addition-2
+    options:
+    - også
+    - heller
+    answer_index: 1
+  - text_md: '. Item 3: «Maja lager popcorn.» — «Jeg lager '
+  - blank_id: addition-3
+    options:
+    - også
+    - heller
+    answer_index: 0
+  - text_md: ' popcorn.» Item 4: «Jonas tar ikke buss.» — «Jeg tar ikke buss '
+  - blank_id: addition-4
+    options:
+    - heller
+    - også
+    answer_index: 0
+  - text_md: .
+  explanation_md: Også adds you to an affirmative statement; heller adds you to a negative one.
+  derived_from:
+  - section_id: affirmative-addition-with-ogsa-practice
+- handle: cabin_trip_transfer
+  op: write
+  objective: obj-answering-ja-nei-jo-01
+  bloom: apply
+  prompt_md: 'Your friend writes: «Kjører du ikke bil? Ola tar ikke med kaffe.» You are driving, and you
+    do not drink coffee either. Reply to your friend in 10–30 words.'
+  response_language: 'no'
+  judge_prompt: Check the reply against the task and report evidence for each criterion.
+  criteria:
+  - id: conveys-driving
+    instruction: The reply makes clear that the writer is driving.
+  - id: conveys-no-coffee
+    instruction: The reply makes clear that the writer does not drink coffee either.
+  - id: jo-observation
+    instruction: Observation, not gating — answers the negative question with Jo.
+  - id: heller-observation
+    instruction: Observation, not gating — adds the negative fact with heller or equally natural wording.
+  derived_from:
+  - section_id: trip-plan-response-transfer-practice
+- handle: review_response_word
+  op: recall_fill
+  objective: obj-answering-ja-nei-jo-01
+  bloom: apply
+  prompt_md: Choose the Norwegian response word for each new situation.
+  audio_target: Tar du bussen til jobben hver dag? Ja. Drikker du ikke melk? Jo. Liker du ikke regn? Nei.
+  segments:
+  - text_md: 'Item 1: You take the bus to work every day. «Tar du bussen til jobben hver dag?» '
+  - blank_id: response-1
+    options:
+    - Nei
+    - Ja
+    - Jo
+    answer_index: 1
+  - text_md: ' Item 2: You drink milk with breakfast. «Drikker du ikke melk?» '
+  - blank_id: response-2
+    options:
+    - Nei
+    - Ja
+    - Jo
+    answer_index: 2
+  - text_md: ' Item 3: You do not like rain. «Liker du ikke regn?» '
+  - blank_id: response-3
+    options:
+    - Jo
+    - Ja
+    - Nei
+    answer_index: 2
+  - text_md: .
+  explanation_md: Jo rejects a negative question when the fact is true; Nei confirms the negative when
+    the fact is false.
+  derived_from:
+  - section_id: negative-question-response-word-practice
+- handle: review_ogsa_heller
+  op: recall_fill
+  objective: obj-answering-ja-nei-jo-01
+  bloom: apply
+  prompt_md: Complete each reply with også or heller.
+  audio_target: Jeg liker å svømme. Jeg liker også å svømme. Jeg spiser ikke kjøtt. Jeg spiser heller
+    ikke kjøtt.
+  segments:
+  - text_md: 'Item 1: «Jeg liker å svømme.» — «Jeg liker '
+  - blank_id: addition-1
+    options:
+    - heller
+    - også
+    answer_index: 1
+  - text_md: ' å svømme.» Item 2: «Jeg spiser ikke kjøtt.» — «Jeg spiser '
+  - blank_id: addition-2
+    options:
+    - også
+    - heller
+    answer_index: 1
+  - text_md: ' ikke kjøtt.»'
+  explanation_md: Også adds you to an affirmative statement; heller adds you to a negative one.
+  derived_from:
+  - section_id: ogsa-and-heller-side-by-side
+- handle: review_jo_meaning
+  op: choose
+  objective: obj-answering-ja-nei-jo-01
+  bloom: understand
+  prompt_md: At a party, what does the reply mean?
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Friend
+      text_md: «Kommer du ikke på festen?»
+    - speaker: You
+      text_md: «Jo, jeg kommer.»
+  options:
+  - id: uncertain
+    text: Maybe, I am not sure.
+    correct: false
+    why: The reply gives a clear confirmation, not uncertainty.
+  - id: coming
+    text: Yes, I am coming; Jo rejects the negative.
+    correct: true
+    why: Jo rejects the negative question and confirms that you are coming.
+  - id: not-coming
+    text: No, I am not coming.
+    correct: false
+    why: This misreads Jo as a plain Nei and contradicts the reply.
+  derived_from:
+  - section_id: negative-question-meaning-practice

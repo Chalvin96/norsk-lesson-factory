@@ -100,10 +100,8 @@ def build_answer_prompt(lesson: dict[str, Any]) -> str:
         "choose → option_id; judge → boolean; recall_fill → zero-based option-index list in blank order; "
         "build → ordered token_id list; find_fix → erroneous token_id; match_pairs → "
         "left_id-to-right_id mapping; categorize → item_id-to-bucket_id mapping. If the "
-        "visible data is ambiguous or unsolvable, set the explicit status and explain "
-        "the concrete defect. Completion criterion: return every exercise id exactly once "
-        "with the matching answer shape or an explicit ambiguous/unanswerable status in the answers "
-        "array. Apply explicit requested forms and meanings before comparing alternatives; "
+        "visible data is ambiguous or unsolvable, explain the concrete defect. "
+        "Apply explicit requested forms and meanings before comparing alternatives; "
         "grammaticality alone does not satisfy a constrained task. Name concrete competing answers "
         "for ambiguity. For every closed option or recall blank, test each alternative against "
         "all stated facts; a keyed-looking option is not unique merely because the authored "
@@ -116,21 +114,49 @@ def build_answer_prompt(lesson: dict[str, Any]) -> str:
         "semantic_issues only for grounded defects, "
         "using one of these categories: factual_premise, competing_valid_answers, "
         "distractor_parallelism, supplied_answer_retrieval, reconstructed_output_completeness, "
-        "or rehearsal_vs_production. Check the exercise's factual claims and premises; identify "
+        "rehearsal_vs_production, composite_decision_load, or learner_voice. Check the exercise's factual claims and premises; identify "
         "a second valid answer under the stated context; compare choose options for comparable "
         "scope, specificity, and plausibility; flag retrieval tasks that supply the target form "
         "instead of requiring it; reconstruct keyed-looking sentences from visible spans/tokens "
         "and flag missing subjects, punctuation, or other incomplete output; and distinguish "
-        "reading an exact script from independent learner production. Each issue needs a concrete "
-        "reason and quoted evidence. These findings are blocking review signals even when the "
+        "reading an exact script from independent learner production. Use composite_decision_load "
+        "when one closed selection requires the learner to judge multiple independent mappings or "
+        "propositions at once, such as answer-sheet options bundling several `x = y` "
+        "correspondences; match_pairs and categorize payloads are not defective merely because "
+        "they expose multiple independently represented responses. For learner_voice, flag only "
+        "material breaches in learner-visible prompt, stem, options, or stimulus: task "
+        "directions in Norwegian for A1/A2 lessons or in English for B1+ lessons, "
+        "or meta-assessor/author narration that addresses an author, assessor, or AI "
+        "instead of the learner. Quote the offending text. "
+        "Do not flag useful English translations/glosses, quoted source text, proper names, or "
+        "minor style preferences. Flag a stray typo only when it changes the exercise's "
+        "target contrast. Intentional wrong forms may be absent from a dictionary. "
+        "Use the lesson's cefr_level to check instruction language; preserve Norwegian "
+        "target text, dialogue, and answer options where the task needs them. Read dialogue "
+        "turns in order and flag a reply shown "
+        "before the learner is asked to elicit it. Each issue needs a concrete "
+        "reason and evidence quoted as one verbatim contiguous passage of at least "
+        "eight characters from this exercise's supplied review text. Explain which "
+        "learner decision the issue affects. Never reconstruct or paraphrase evidence. "
+        "These findings are blocking review signals even when the "
         "answer key can be solved.\n\n"
+        f"LESSON CEFR LEVEL: {lesson.get('cefr_level')}\n"
         f"EXERCISES:\n{json.dumps(blinded, ensure_ascii=False)}"
     )
 
 
 def build_pedagogy_prompt(lesson: dict[str, Any]) -> str:
     """Build the pedagogy review prompt for one compiled lesson."""
-    return f"{K_JUDGES_PEDAGOGY_PROMPT_PREFIX}\nLESSON:\n{json.dumps(lesson, ensure_ascii=False)}"
+    return (
+        f"{K_JUDGES_PEDAGOGY_PROMPT_PREFIX}\n"
+        "Check each distractor against its rationale and the target contrast: report a typo when "
+        "it accidentally tests spelling instead of the intended grammar; deliberate wrong forms "
+        "are valid even if a lexicon lacks them. Reconstruct filled responses, compare them with "
+        "audio targets, and read dialogue turns chronologically. A rule explanation may support "
+        "practice, but should not be treated as proof that the learner can use the form in context. "
+        "Report concrete source evidence and avoid arbitrary operation quotas.\n"
+        f"LESSON:\n{json.dumps(lesson, ensure_ascii=False)}"
+    )
 
 
 def build_objective_alignment_prompt(lesson: dict[str, Any]) -> str:
@@ -225,6 +251,8 @@ class SemanticIssue(BaseModel):
         "supplied_answer_retrieval",
         "reconstructed_output_completeness",
         "rehearsal_vs_production",
+        "composite_decision_load",
+        "learner_voice",
     ]
     reason: str
     evidence: str
@@ -303,10 +331,9 @@ def build_attempt_prompt(lesson: dict[str, Any]) -> str:
     """Build the standalone reviewer prompt from attempt-time fields only."""
     attempt_questions = extract_attempt_questions(lesson)
     return (
-        "Review the standalone attempt-time surface of every exercise below. You see only "
-        "what the learner can see and submit: never infer or request lesson sections, "
-        "derived_from references, answer assignments, feedback, rationales, hidden speak "
-        "targets, or write criteria/judge prompts. Mark `clear` only when the visible cue "
+        "Review the standalone attempt-time surface of every exercise below. Judge only "
+        "supplied learner-visible fields; do not infer missing context from hidden "
+        "metadata. Mark `clear` only when the visible cue "
         "makes the requested learner action understandable and solvable. For every "
         "closed task, verify that at least one visible option or answer can satisfy the "
         "whole stated situation and requested meaning, not merely the grammatical shape; "
@@ -325,8 +352,7 @@ def build_attempt_prompt(lesson: dict[str, Any]) -> str:
         "learner to write, reorder, explain, or submit something its attempt surface does "
         "not collect. Identify each source object the instruction presupposes, such as a "
         "sentence to correct, text to summarize, or utterance to transform. The object "
-        "must appear in the visible prompt or another attempt-time field; `derived_from`, "
-        "feedback, audio targets, and hidden criteria cannot supply it. Return a checks "
+        "must appear in the visible prompt or another attempt-time field; hidden criteria cannot supply it. Return a checks "
         "array with exactly one {id, status, reason} per item, "
         "preserving ids and naming concrete defects in failure reasons.\n\n"
         f"EXERCISES:\n{json.dumps(attempt_questions, ensure_ascii=False)}"
@@ -374,12 +400,27 @@ def build_open_semantic_prompt(lesson: dict[str, Any]) -> str:
         "check whether a partner's words are actually supplied when that response is claimed. A "
         "focused task may practice part of a broader objective without independently proving the "
         "whole capability; flag it only if its prompt or evidence claim asserts that broader proof. "
+        "Do not use composite_decision_load for open write or speak tasks: that category applies "
+        "only when one closed selection bundles several independently judgeable answers. "
         "Also check for missing or contradictory obligations, incomplete reconstructed output, "
-        "factual premises, or competing valid answers. Return exactly one {id, semantic_issues} "
+        "and factual premises. Read dialogue turns in chronological "
+        "order: check each speaker's utterance and whether a reply is supplied before the "
+        "learner is asked to request it. A rule explanation can support the lesson, but if the "
+        "task claims evidence of using a form, require use of that form in a new context. "
+        "Return exactly one {id, semantic_issues} "
         "object per task. Every "
         "issue must include a concrete reason and quoted evidence from the supplied task. Return "
-        "an empty semantic_issues list when the evidence claim is sound. Do not solve the task or "
-        "compare it with an answer key.\n\n"
+        "an empty semantic_issues list when the evidence claim is sound. Quote evidence "
+        "as one verbatim contiguous passage of at least eight characters from this "
+        "task's supplied review text; explain which learner decision it affects. "
+        "Never reconstruct or paraphrase evidence. Do not solve the task or "
+        "compare it with an answer key. For learner_voice, inspect only learner-visible "
+        "prompt, stem, options, and stimulus. For A1/A2 lessons, flag material Norwegian "
+        "task directions; for B1+ lessons, flag material English task directions. Also flag "
+        "meta-assessor/author narration; quote the text. "
+        "Do not flag useful English glosses or translations, intentional source text, or small "
+        "style preferences.\n\n"
+        f"LESSON CEFR LEVEL: {lesson.get('cefr_level')}\n"
         f"LESSON GOAL AND OBJECTIVES:\n{json.dumps(lesson_claims, ensure_ascii=False)}\n\n"
         f"OPEN TASKS AND EVIDENCE CLAIMS:\n{json.dumps(questions, ensure_ascii=False)}"
     )
@@ -396,10 +437,14 @@ def build_open_rubric_prompt(lesson: dict[str, Any]) -> str:
         "prompt and require an observable criterion for each. Also require every criterion "
         "to follow from the visible prompt and response constraints; hidden, unrequested obligations "
         "are defects. Criteria can jointly cover obligations without one-to-one wording. Check "
-        "judge_prompt too: it must neither waive requested forms nor add requirements. Bounds and "
-        "response_language are visible constraints. "
+        "judge_prompt too: it must neither waive requested forms nor add requirements. "
+        "Structured min_words/max_words are displayed and enforced separately from the task "
+        "prompt and model judge; flag a numeric word budget repeated in prompt_md or judged "
+        "only through a criterion. response_language is a visible constraint. "
         "When response_language is `no`, reject any criterion or learner instruction that "
-        "requires English output (English instructions are allowed). Accept appropriate "
+        "requires English output. A1/A2 task directions should use concise English; "
+        "B1+ task directions should use natural Bokmål. This does not change the "
+        "required Norwegian response or quoted Norwegian source text. Accept appropriate "
         "standard Bokmål variants, including common-gender/feminine `en` forms, rather "
         "than making criteria reject a valid variant. Enforce explicitly requested tense, "
         "construction, and gender forms; a grammatical response that omits a requested form need not "
@@ -408,6 +453,7 @@ def build_open_rubric_prompt(lesson: dict[str, Any]) -> str:
         "are covered, `ambiguous` for a rubric that wrongly rejects a valid variant, and "
         "`unanswerable` for missing or contradictory coverage. Return exactly one check per "
         "write task, preserving ids, with a concise evidence-based reason for failures.\n\n"
+        f"LESSON CEFR LEVEL: {lesson.get('cefr_level')}\n"
         f"WRITE TASKS WITH RUBRICS:\n{json.dumps(questions, ensure_ascii=False)}"
     )
 
@@ -566,6 +612,9 @@ Rubric — score each axis 0-5 (5 = excellent, 4 = good, 3 = acceptable, 0-2 = a
 - depth: practice develops the target decision toward transfer. Judge what the learner
   retrieves, produces, or diagnoses, not operation names or counts. A meaning-based choice
   in a changed situation can demonstrate transfer; a token build is not automatically deep.
+  Review the whole sequence: supported practice can be useful early, but a claimed independent
+  outcome needs a later changed-context decision. Do not call an early drill defective merely
+  because it cannot prove the full lesson goal by itself.
 
 
 Defects to check for when present, with quoted evidence:

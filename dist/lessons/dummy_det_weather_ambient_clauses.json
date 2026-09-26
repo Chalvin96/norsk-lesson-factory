@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "dummy_det_weather_ambient_clauses",
   "kind": "grammar",
   "language": "nb-NO",
@@ -96,6 +96,30 @@
     {
       "kind": "exercise",
       "id": "retrieve_fixed_det_weather_rule"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_weather_verb_det"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_ambient_det_or_named_subject"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_ambient_adjective_form"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_current_or_changing"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_det_with_place"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_det_in_each_clause"
     }
   ],
   "sections": [
@@ -893,15 +917,16 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Regner i dag."
+                  "value": "Regner i dag."
                 }
               ],
               "en": [
                 {
                   "kind": "text",
-                  "value": "Incorrect: Raining today."
+                  "value": "Raining today."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             },
             {
               "id": "weather-verbs-with-det-block-10-item-2",
@@ -965,15 +990,16 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Det er regner."
+                  "value": "Det er regner."
                 }
               ],
               "en": [
                 {
                   "kind": "text",
-                  "value": "Incorrect: It is raining."
+                  "value": "It is raining."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             },
             {
               "id": "weather-verbs-with-det-block-13-item-2",
@@ -1497,15 +1523,16 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Det er kald."
+                  "value": "Det er kald."
                 }
               ],
               "en": [
                 {
                   "kind": "text",
-                  "value": "Incorrect for general temperature: It is cold."
+                  "value": "It is cold."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             },
             {
               "id": "named-subject-and-ambient-det-block-14-item-2",
@@ -1527,15 +1554,16 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Det er varm."
+                  "value": "Det er varm."
                 }
               ],
               "en": [
                 {
                   "kind": "text",
-                  "value": "Incorrect for general warmth: It is warm."
+                  "value": "It is warm."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             },
             {
               "id": "named-subject-and-ambient-det-block-14-item-4",
@@ -2460,15 +2488,16 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Snør på fjellet."
+                  "value": "Snør på fjellet."
                 }
               ],
               "en": [
                 {
                   "kind": "text",
-                  "value": "Incorrect: Snowing in the mountains."
+                  "value": "Snowing in the mountains."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             },
             {
               "id": "common-mistakes-to-avoid-block-3-item-2",
@@ -2524,15 +2553,16 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Det er blåser."
+                  "value": "Det er blåser."
                 }
               ],
               "en": [
                 {
                   "kind": "text",
-                  "value": "Incorrect: It is windy."
+                  "value": "It is windy."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             },
             {
               "id": "common-mistakes-to-avoid-block-6-item-2",
@@ -2588,7 +2618,7 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Været er kaldt."
+                  "value": "Været er kaldt."
                 }
               ],
               "en": [
@@ -2596,7 +2626,8 @@
                   "kind": "text",
                   "value": "Unnatural for the intended meaning: The weather is cold."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             },
             {
               "id": "common-mistakes-to-avoid-block-9-item-2",
@@ -2726,33 +2757,38 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Choose the interpretation that correctly covers Mina's weather and ambient statements in the café call. What does repeated «det» do, and what conditions do the statements report?"
+          "value": "Choose the best explanation."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Mina: «Det regner, og det blåser ganske mye.» Mina: «Det er kaldt, og det begynner å bli mørkt.»"
+        }
+      ],
       "payload": {
         "options": [
           {
-            "option_id": "named-object",
-            "text": "In each sentence, «det» names the weather or another object that is raining, windy, cold, dark, warm, or pleasant.",
-            "why": "In these statements, «det» does not refer to a named object."
+            "option_id": "named-weather",
+            "text": "«Det» refers to a particular thing called været.",
+            "why": "No particular thing is being described; the sentences report weather and surrounding conditions."
           },
           {
-            "option_id": "limited-det",
-            "text": "Only «det regner» and «det blåser ganske mye» use fixed «det». In the other sentences, «det» refers to a particular cold, dark, warm, or pleasant thing.",
-            "why": "The ambient sentences with «det er» and «det begynner å bli» also use fixed «det» without a named semantic subject."
+            "option_id": "verb-only",
+            "text": "«Det» is fixed only before regner and blåser.",
+            "why": "The clauses with er and blir also describe conditions without a named semantic subject."
           },
           {
-            "option_id": "fixed-ambient",
-            "text": "«Det regner», «det blåser ganske mye», «det er kaldt», «det begynner å bli mørkt», and «det er varmt og hyggelig der inne» all use fixed «det» as the grammatical subject. «Det» does not name an object.",
-            "why": "Norwegian uses fixed «det» when no person or thing is the semantic subject; the sentences report the listed weather and ambient conditions."
+            "option_id": "fixed-subject",
+            "text": "«Det» fills the subject position without naming a particular thing.",
+            "why": "Norwegian uses fixed «det» in weather and ambient clauses that have no semantic subject."
           }
         ],
-        "answer_id": "fixed-ambient",
+        "answer_id": "fixed-subject",
         "stem": [
           {
             "kind": "text",
-            "value": "Which interpretation is correct?"
+            "value": "Mina: «Det regner, og det blåser ganske mye.» Mina: «Det er kaldt, og det begynner å bli mørkt.»"
           }
         ]
       }
@@ -2765,13 +2801,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete the three Norwegian reports. The meanings are rain in Bergen today, snow in Oslo today, and wind by the sea today, in that order. Select the full weather expression; keep «det» and do not put «er» before the weather verb."
+          "value": "Complete the weather reports."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Weather and ambient clauses use fixed «det». Weather verbs are direct («det regner»), while adjective conditions use neuter singular after «er/blir» («det er varmt», «det blir mørkt»)."
+          "value": "Værverbene regner, snør og blåser står direkte etter det faste «det». Vi setter ikke inn «er»."
         }
       ],
       "payload": {
@@ -2781,11 +2817,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "I Bergen i dag:"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": "I Bergen:"
               }
             ]
           },
@@ -2793,22 +2825,18 @@
             "kind": "blank",
             "blank_id": "bergen-rain",
             "options": [
-              "det er regner",
-              "det regner",
-              "regner"
+              "Det regner",
+              "Det er regner",
+              "Regner"
             ],
-            "answer_index": 1
+            "answer_index": 0
           },
           {
             "kind": "span",
             "spans": [
               {
                 "kind": "text",
-                "value": ". I Oslo i dag:"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": ". I Oslo:"
               }
             ]
           },
@@ -2816,9 +2844,9 @@
             "kind": "blank",
             "blank_id": "oslo-snow",
             "options": [
-              "det er blåser",
-              "snør",
-              "det snør"
+              "Snør",
+              "Det er snør",
+              "Det snør"
             ],
             "answer_index": 2
           },
@@ -2827,23 +2855,19 @@
             "spans": [
               {
                 "kind": "text",
-                "value": ". Ved sjøen i dag:"
-              },
-              {
-                "kind": "text",
-                "value": " "
+                "value": ". Ved kysten:"
               }
             ]
           },
           {
             "kind": "blank",
-            "blank_id": "sea-wind",
+            "blank_id": "coast-wind",
             "options": [
-              "det blåser",
-              "blåser",
-              "det er blåser"
+              "Det er blåser",
+              "Det blåser",
+              "Blåser"
             ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
@@ -2865,7 +2889,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Classify each Norwegian sentence by what it describes: a named thing as subject, or a general ambient condition with fixed «det». Judge only whether the sentence has a named semantic subject; adjective agreement is not the focus."
+          "value": "Sort the sentences by what they describe."
         }
       ],
       "explanation": null,
@@ -2873,42 +2897,42 @@
         "buckets": [
           {
             "bucket_id": "named-subject",
-            "label": "Named subject: a particular thing is described."
+            "label": "A named thing"
           },
           {
             "bucket_id": "ambient-det",
-            "label": "Ambient condition: no named semantic subject; fixed «det» is used."
+            "label": "The general surroundings"
           }
         ],
         "items": [
           {
             "item_id": "coffee-named",
-            "text": "Kaffen er kald. — The coffee is cold.",
+            "text": "Kaffen er kald.",
             "bucket_id": "named-subject"
           },
           {
-            "item_id": "weather-cold",
-            "text": "Det er kaldt. — It’s cold.",
+            "item_id": "outdoor-cold",
+            "text": "Det er kaldt ute.",
             "bucket_id": "ambient-det"
           },
           {
             "item_id": "room-named",
-            "text": "Rommet er mørkt. — The room is dark.",
+            "text": "Rommet er mørkt.",
             "bucket_id": "named-subject"
           },
           {
             "item_id": "ambient-dark",
-            "text": "Det er mørkt. — It’s dark.",
+            "text": "Det er mørkt.",
             "bucket_id": "ambient-det"
           },
           {
             "item_id": "oven-named",
-            "text": "Ovnen er varm. — The oven is hot.",
+            "text": "Ovnen er varm.",
             "bucket_id": "named-subject"
           },
           {
-            "item_id": "ambient-warm",
-            "text": "Det er varmt. — It’s warm.",
+            "item_id": "indoor-warm",
+            "text": "Det er varmt inne.",
             "bucket_id": "ambient-det"
           }
         ]
@@ -2922,10 +2946,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Build the complete Norwegian sentence meaning “It is warm and pleasant inside.” Use every supplied token exactly once."
+          "value": "Build a complete reply. Mina wants to say that the temperature is comfortable and the mood is pleasant."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Fast «det» er subjektet, og stedsordet «der» står foran «inne»."
+        }
+      ],
       "payload": {
         "tokens": [
           {
@@ -2934,8 +2963,8 @@
             "fixed": false
           },
           {
-            "token_id": "tok-3",
-            "text": "varmt",
+            "token_id": "tok-6",
+            "text": "der",
             "fixed": false
           },
           {
@@ -2944,13 +2973,8 @@
             "fixed": false
           },
           {
-            "token_id": "tok-5",
-            "text": "hyggelig",
-            "fixed": false
-          },
-          {
-            "token_id": "tok-6",
-            "text": "der",
+            "token_id": "tok-1",
+            "text": "Det",
             "fixed": false
           },
           {
@@ -2959,8 +2983,13 @@
             "fixed": false
           },
           {
-            "token_id": "tok-1",
-            "text": "Det",
+            "token_id": "tok-3",
+            "text": "varmt",
+            "fixed": false
+          },
+          {
+            "token_id": "tok-5",
+            "text": "hyggelig",
             "fixed": false
           }
         ],
@@ -2978,73 +3007,48 @@
     {
       "kind": "exercise",
       "id": "choose_current_or_changing_condition",
-      "operation": "recall_fill",
+      "operation": "choose",
       "objective_id": "obj-dummy-det-weather-ambient-clauses-01",
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete two Norwegian observations: it is light outside right now, and it is getting dark this evening. Use «er» for the current condition and «blir» for the developing condition. Keep fixed «det» in both statements."
+          "value": "Choose the message that fits both observations."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Er» beskriver en tilstand nå, mens «blir» beskriver en forandring."
+        }
+      ],
       "payload": {
-        "segments": [
+        "options": [
           {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": "Current condition now:"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
+            "option_id": "two-current",
+            "text": "Det er lyst klokka 15. Det er mørkt klokka 17.",
+            "why": "The second sentence presents darkness as a state rather than a change in progress."
           },
           {
-            "kind": "blank",
-            "blank_id": "current-condition",
-            "options": [
-              "Det er lyst ute nå",
-              "Det er mørkt ute nå",
-              "Det blir mørkt ute nå",
-              "Lyst ute nå"
-            ],
-            "answer_index": 0
+            "option_id": "two-changing",
+            "text": "Det blir lyst klokka 15. Det blir mørkt klokka 17.",
+            "why": "The first observation says it is already light, not that it is becoming light."
           },
           {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": ". Developing condition this evening:"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
+            "option_id": "reversed-change",
+            "text": "Det blir mørkt klokka 15. Det er lyst klokka 17.",
+            "why": "This reverses the supplied observations."
           },
           {
-            "kind": "blank",
-            "blank_id": "changing-condition",
-            "options": [
-              "Det blir kaldt i kveld",
-              "Det blir mørkt i kveld",
-              "Det er mørkt i kveld",
-              "Blir mørkt i kveld"
-            ],
-            "answer_index": 1
-          },
+            "option_id": "current-then-change",
+            "text": "Det er lyst klokka 15. Det blir mørkt klokka 17.",
+            "why": "The first sentence reports the current light; the second reports increasing darkness."
+          }
+        ],
+        "answer_id": "current-then-change",
+        "stem": [
           {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": "."
-              }
-            ]
+            "kind": "text",
+            "value": "Kl. 15: Det er lyst ute. Kl. 17: Det begynner å bli mørkt."
           }
         ]
       }
@@ -3057,39 +3061,27 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Answer these three questions in Norwegian. Write one complete weather or ambient statement for each. Include the requested place or time information, and use rain for the first answer, cold for the second, and wind for the third. Include Bergen and i dag in the first answer, hytta and om morgenen in the second, and sjøen and i dag in the third. 1. «Hvordan er været i Bergen i dag?» — What is the weather like in Bergen today? 2. «Hvordan er det på hytta om morgenen?» — What is it like at the cabin in the morning? 3. «Hvordan er det ved sjøen i dag?» — What is it like by the sea today?"
+          "value": "Lea writes: «Hei! Hvordan er været i Bergen i dag? Kan vi spise ute?» Notes: rain, low temperature, outdoor seating closed. Reply to Lea so she can decide where to eat. Write the weather and condition details in a natural way."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
         "min_words": 12,
-        "max_words": 40,
-        "judge_prompt": "Check the three answers separately and report evidence for every required weather, place, time, and fixed-«det» criterion. Accept natural Bokmål variants when the requested numbered answer remains clear.",
+        "max_words": 30,
+        "judge_prompt": "Judge only the visible reply task using criteria reply-to-lea, fixed-det, supplied-facts.",
         "criteria": [
           {
-            "id": "three-complete-answers",
-            "instruction": "Gives one complete Norwegian weather or ambient statement for each of the three questions."
+            "id": "reply-to-lea",
+            "instruction": "Writes a coherent Norwegian reply to Lea that helps her decide where to eat."
           },
           {
-            "id": "fixed-det-each-answer",
-            "instruction": "Uses fixed «det» as the grammatical subject in every statement instead of omitting it."
+            "id": "fixed-det",
+            "instruction": "Weather and ambient clauses in the reply use fixed «det»."
           },
           {
-            "id": "requested-settings",
-            "instruction": "Includes Bergen and i dag in the first answer, hytta and om morgenen in the second, and sjøen and i dag in the third."
-          },
-          {
-            "id": "first-rain-answer",
-            "instruction": "Makes answer 1 a complete rain statement about Bergen i dag with fixed «det»."
-          },
-          {
-            "id": "second-cold-answer",
-            "instruction": "Makes answer 2 a complete cold ambient statement about hytta om morgenen with fixed «det»."
-          },
-          {
-            "id": "third-wind-answer",
-            "instruction": "Makes answer 3 a complete wind statement about sjøen i dag with fixed «det»."
+            "id": "supplied-facts",
+            "instruction": "Reports all three facts: it is raining, it is cold, and the café terrace is closed."
           }
         ]
       }
@@ -3102,7 +3094,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Select the one token that is wrong/needs changing."
+          "value": "Choose the word that needs a word before it."
         }
       ],
       "explanation": null,
@@ -3114,19 +3106,19 @@
           },
           {
             "token_id": "tok-2",
-            "text": "det"
-          },
-          {
-            "token_id": "tok-3",
             "text": "regner"
           },
           {
-            "token_id": "tok-4",
+            "token_id": "tok-3",
             "text": "fortsatt,"
           },
           {
-            "token_id": "tok-5",
+            "token_id": "tok-4",
             "text": "og"
+          },
+          {
+            "token_id": "tok-5",
+            "text": "det"
           },
           {
             "token_id": "tok-6",
@@ -3145,8 +3137,8 @@
             "text": "før."
           }
         ],
-        "error_token_id": "tok-6",
-        "feedback": "The second clause needs fixed «det» before «blåser»: «Ja, det regner fortsatt, og det blåser mer enn før.»"
+        "error_token_id": "tok-2",
+        "feedback": "A weather statement needs fixed «det» when no subject is already present: «Ja, det regner fortsatt, og det blåser mer enn før.» A coordinated verb can share that subject."
       }
     },
     {
@@ -3157,7 +3149,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Select the one token that is wrong/needs changing."
+          "value": "Choose the word that needs a word before it."
         }
       ],
       "explanation": null,
@@ -3165,7 +3157,7 @@
         "tokens": [
           {
             "token_id": "tok-1",
-            "text": "Regner"
+            "text": "Snør"
           },
           {
             "token_id": "tok-2",
@@ -3177,7 +3169,7 @@
           }
         ],
         "error_token_id": "tok-1",
-        "feedback": "The weather verb needs fixed «det» as its grammatical subject. Add «det» before «regner»: «Det regner på fjellet.»"
+        "feedback": "A complete weather statement needs fixed «det»: «Det snør på fjellet.»"
       }
     },
     {
@@ -3188,35 +3180,35 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "You are at a mountain cabin before deciding whether to go for a walk. Write a short connected report in Norwegian with four complete statements: report snow outside, cold outdoors, warmth inside, and darkness that is increasing. Use fixed «det» in every weather or ambient statement because no particular person or thing is the semantic subject. Use your own natural Bokmål wording and do not copy a lesson sentence verbatim."
+          "value": "Mina asks if you can go for a walk now. Cabin note: snow and low temperature outside; warm inside; it will be dark soon. Write Mina a message with these details, and say whether you should go now or wait. Use common weather and condition phrases, and describe it getting dark as a change."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 12,
-        "max_words": 40,
-        "judge_prompt": "Check the response against the task and report evidence for each criterion. Accept natural Bokmål variants that express the four requested conditions and use fixed «det» appropriately.",
+        "min_words": 15,
+        "max_words": 35,
+        "judge_prompt": "Judge only the visible message task using criteria message-to-mina, all-cabin-facts, fixed-det, change-form, recommendation.",
         "criteria": [
           {
-            "id": "reports-snow",
-            "instruction": "Reports snow outside with a complete Norwegian weather statement."
+            "id": "message-to-mina",
+            "instruction": "Writes a coherent Norwegian message to Mina about the proposed walk."
           },
           {
-            "id": "reports-outdoor-cold",
-            "instruction": "Reports that it is cold outdoors with a complete ambient statement."
+            "id": "all-cabin-facts",
+            "instruction": "Reports all four facts: it is snowing outside, it is cold outside, it is warm inside, and the daylight is fading or it is getting dark."
           },
           {
-            "id": "reports-indoor-warmth",
-            "instruction": "Reports that it is warm inside with a complete ambient statement."
+            "id": "fixed-det",
+            "instruction": "Weather and ambient clauses in the message use fixed «det»."
           },
           {
-            "id": "reports-increasing-darkness",
-            "instruction": "Reports increasing darkness with a complete statement using the change pattern."
+            "id": "change-form",
+            "instruction": "The fading daylight is expressed as a changing condition with «blir»."
           },
           {
-            "id": "fixed-det-all-statements",
-            "instruction": "Uses fixed «det» as the grammatical subject in all four statements."
+            "id": "recommendation",
+            "instruction": "Recommends either going now or waiting."
           }
         ]
       }
@@ -3229,31 +3221,282 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Forklar regelen om fast «det» på norsk. Gi deretter tre egne Bokmål-eksempler: ett med et værverb, ett med «det er» for en tilstand i omgivelsene, og ett med «det blir» for en tilstand i omgivelsene som endrer seg. Ikke kopier hele eksempelsetninger fra leksjonen."
+          "value": "Mina is writing to Jonas from Bergen. Note: rain and low temperature. Write a natural message. Use one sentence about the weather and one sentence about the conditions."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 20,
-        "max_words": 65,
-        "judge_prompt": "Check the Norwegian rule explanation and the three original Bokmål examples against every criterion. Accept natural Norwegian wording and do not require sentences from the lesson verbatim.",
+        "min_words": 7,
+        "max_words": 12,
+        "judge_prompt": "Judge the correction using criteria two-correct-clauses. A valid variant that must pass is «Det regner i Bergen, og det er kaldt ute.» A near-miss that must fail is «Det er regner i Bergen, og det er kaldt.» because the rain clause still has the wrong form «er regner»; the cold clause «det er kaldt» is itself correct.",
         "criteria": [
           {
-            "id": "explains-fixed-det-rule",
-            "instruction": "Explains in Norwegian that fixed «det» is used when weather or an ambient condition has no semantic subject."
+            "id": "two-correct-clauses",
+            "instruction": "The corrected message has a complete rain clause with fixed «det» and no «er», and a complete cold ambient clause with the neuter form «kaldt»."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_weather_verb_det",
+      "operation": "recall_fill",
+      "objective_id": "obj-dummy-det-weather-ambient-clauses-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Complete the reply."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Et værverb står direkte etter det faste «det», uten «er»."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "B:"
+              }
+            ]
           },
           {
-            "id": "weather-verb-example",
-            "instruction": "Gives one original complete Bokmål sentence with fixed «det» directly followed by regner, snør, or blåser, without «er» before the weather verb."
+            "kind": "blank",
+            "blank_id": "hail-reply",
+            "options": [
+              "Det er hagler.",
+              "Det hagler.",
+              "Hagler."
+            ],
+            "answer_index": 1
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_ambient_det_or_named_subject",
+      "operation": "choose",
+      "objective_id": "obj-dummy-det-weather-ambient-clauses-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "A asks why you are putting on your jacket: «Hvorfor tar du på deg jakken?» Choose the most natural reply."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "jacket",
+            "text": "Jakken er kald ute.",
+            "why": "This describes the jacket rather than the outdoor temperature."
           },
           {
-            "id": "det-er-example",
-            "instruction": "Gives one original complete Bokmål sentence using fixed «det» plus «er» for an ambient condition."
+            "option_id": "weather-noun",
+            "text": "Været er kaldt ute.",
+            "why": "This makes været a named subject instead of using the ordinary ambient expression."
           },
           {
-            "id": "det-blir-example",
-            "instruction": "Gives one original complete Bokmål sentence using fixed «det» plus «blir» for a changing ambient condition."
+            "option_id": "ambient",
+            "text": "Det er kjølig ute.",
+            "why": "This reports the general outdoor temperature without naming a thing."
+          }
+        ],
+        "answer_id": "ambient",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "A asks why you are putting on your jacket: «Hvorfor tar du på deg jakken?»"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_ambient_adjective_form",
+      "operation": "recall_fill",
+      "objective_id": "obj-dummy-det-weather-ambient-clauses-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Complete the reply."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Med fast «det» bruker vi intetkjønnsformen «varmt»."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "B: Det er"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "warm-form",
+            "options": [
+              "varm",
+              "varmt",
+              "varme"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "her."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_current_or_changing",
+      "operation": "choose",
+      "objective_id": "obj-dummy-det-weather-ambient-clauses-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the sentence that fits Jonas's observation."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "already-dark",
+            "text": "Det er kaldt.",
+            "why": "«Er» presents cold as an existing state, which conflicts with the remaining warmth."
+          },
+          {
+            "option_id": "becoming-light",
+            "text": "Det blir varmt.",
+            "why": "This describes the opposite change."
+          },
+          {
+            "option_id": "becoming-dark",
+            "text": "Det blir kaldt.",
+            "why": "«Blir» presents cold as a developing condition."
+          }
+        ],
+        "answer_id": "becoming-dark",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Mina: «Det er fortsatt varmt i rommet.» Jonas: «Ja, men varmen forsvinner nå som ovnen er av.»"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_det_with_place",
+      "operation": "recall_fill",
+      "objective_id": "obj-dummy-det-weather-ambient-clauses-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Complete the weather report."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Et stedsuttrykk erstatter ikke det grammatiske subjektet «det»."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "blank",
+            "blank_id": "bergen-snow",
+            "options": [
+              "Snør på Vestlandet i dag",
+              "Det snør på Vestlandet i dag",
+              "Vestlandet snør i dag"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_det_in_each_clause",
+      "operation": "recall_fill",
+      "objective_id": "obj-dummy-det-weather-ambient-clauses-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Complete the second main clause."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Hver enkelt værsetning trenger sitt eget faste subjekt «det»."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Det snør."
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "wind-clause",
+            "options": [
+              "Det hagler.",
+              "Hagler.",
+              "Det er hagler."
+            ],
+            "answer_index": 0
           }
         ]
       }
@@ -3273,7 +3516,13 @@
         "restore_det_in_minas_updates",
         "repair_incomplete_weather_messages",
         "report_conditions_from_the_cabin",
-        "retrieve_fixed_det_weather_rule"
+        "retrieve_fixed_det_weather_rule",
+        "review_weather_verb_det",
+        "review_ambient_det_or_named_subject",
+        "review_ambient_adjective_form",
+        "review_current_or_changing",
+        "review_det_with_place",
+        "review_det_in_each_clause"
       ]
     }
   ],

@@ -1,0 +1,400 @@
+- handle: notice_subject_first_order
+  op: recall_fill
+  objective: obj-word-order-main-clauses-01
+  bloom: understand
+  prompt_md: "Velg setningen med naturlig plassering av setningsadverbet."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Maja sier at Sara ikke kommer i dag.
+  explanation_md: I en nøytral subjektførstsetning står setningsadverbet «ikke» etter det finitte verbet.
+  derived_from:
+  - section_id: subject-first-statements
+  segments:
+  - text_md: 'Maja sier: «'
+  - blank_id: subject-first-notice
+    options:
+    - Sara ikke kommer i dag.
+    - Sara kommer ikke i dag.
+    - Kommer Sara ikke i dag?
+    answer_index: 1
+  - text_md: »
+  audio_target: 'Maja sier: «Sara kommer ikke i dag.»'
+- handle: build_subject_first_statements
+  op: build
+  objective: obj-word-order-main-clauses-01
+  bloom: apply
+  prompt_md: "Sett sammen setningen med subjektet først."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Sara is coming at ten.
+  derived_from:
+  - section_id: subject-first-statements
+  tokens:
+  - token_id: subject-first-1
+    text: Sara
+  - token_id: subject-first-2
+    text: kommer
+  - token_id: subject-first-3
+    text: klokka
+  - token_id: subject-first-4
+    text: ti.
+  answer_order:
+  - subject-first-1
+  - subject-first-2
+  - subject-first-3
+  - subject-first-4
+- handle: notice_fronted_phrase_inversion
+  op: recall_fill
+  objective: obj-word-order-main-clauses-01
+  bloom: understand
+  prompt_md: "Velg setningen med riktig ordstilling i hver situasjon."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: «Hvor møter Maja Jonas?»
+    - speaker: Context
+      text_md: Maja møter Jonas på den lille kafeen.
+    - speaker: Maja
+      text_md: «Når møtes gruppen her?»
+    - speaker: Context
+      text_md: Gruppen møtes her hver lørdagsmorgen.
+    - speaker: Maja
+      text_md: «Hvor sitter studentene?»
+    - speaker: Context
+      text_md: Studentene sitter ved vinduet.
+  explanation_md: Etter et foranstilt tids- eller stedsuttrykk kommer verbet før subjektet.
+  derived_from:
+  - section_id: beginning-with-time-or-place-phrase
+  audio_target: På den lille kafeen møter Maja Jonas. Hver lørdagsmorgen møtes gruppen her. Ved vinduet sitter studentene.
+  segments:
+  - text_md: 'Situasjon A: «'
+  - blank_id: fronted-1-order
+    options:
+    - På den lille kafeen møter Maja Jonas.
+    - På den lille kafeen Maja møter Jonas.
+    - Møter Maja Jonas på den lille kafeen?
+    answer_index: 0
+  - text_md: '» Situasjon B: «'
+  - blank_id: fronted-2-order
+    options:
+    - Hver lørdagsmorgen gruppen møtes her.
+    - Hver lørdagsmorgen møtes gruppen her.
+    - Møtes gruppen her hver lørdagsmorgen?
+    answer_index: 1
+  - text_md: '» Situasjon C: «'
+  - blank_id: fronted-3-order
+    options:
+    - Ved vinduet studentene sitter.
+    - Sitter studentene ved vinduet?
+    - Ved vinduet sitter studentene.
+    answer_index: 2
+  - text_md: »
+- handle: reframe_statements_with_time_first
+  op: build
+  objective: obj-word-order-main-clauses-01
+  bloom: apply
+  prompt_md: "Skriv setningen om med tidsuttrykket først."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Utgangspunkt: «Vi begynner klokka ti.» Begynn med tidsuttrykket «Klokka ti».'
+  explanation_md: Når tidsuttrykket står først, følger det finitte verbet. Subjektet «vi» kommer etter verbet.
+  derived_from:
+  - section_id: beginning-with-time-or-place-phrase
+  tokens:
+  - token_id: time-first-1
+    text: Klokka
+  - token_id: time-first-2
+    text: ti
+  - token_id: time-first-3
+    text: begynner
+  - token_id: time-first-4
+    text: vi.
+  answer_order:
+  - time-first-1
+  - time-first-2
+  - time-first-3
+  - time-first-4
+- handle: notice_sentence_adverb_position
+  op: recall_fill
+  objective: obj-word-order-main-clauses-01
+  bloom: understand
+  prompt_md: "Velg den nøytrale setningen i hver situasjon."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Studentene blir hjemme i dag i stedet for å bli med på den guidede omvisningen. Laget har faste møter på biblioteket hver mandag.
+  explanation_md: I en subjektførst-setning står «ikke» etter verbet. Etter et foranstilt ledd står «vanligvis» etter verb og subjekt.
+  derived_from:
+  - section_id: placing-common-sentence-adverbs
+  segments:
+  - text_md: «
+  - blank_id: adverb-notice-subject-first
+    options:
+    - Studentene ikke kommer på turen i dag.
+    - Studentene kommer ikke på omvisningen i dag.
+    - Kommer studentene ikke på turen i dag?
+    answer_index: 1
+  - text_md: » 2. «
+  - blank_id: adverb-notice-fronted
+    options:
+    - På mandager laget møtes vanligvis på biblioteket.
+    - På mandager vanligvis møtes laget på biblioteket.
+    - På mandager møtes laget vanligvis på biblioteket.
+    answer_index: 2
+  - text_md: »
+  audio_target: 1. «Studentene kommer ikke på omvisningen i dag.» 2. «På mandager møtes laget vanligvis på biblioteket.»
+- handle: place_sentence_adverbs_in_statements
+  op: recall_fill
+  objective: obj-word-order-main-clauses-01
+  bloom: apply
+  prompt_md: "Velg setningen med riktig ordstilling i hver situasjon."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Hun blir hjemme i dag. På lørdager pleier de å sitte ved vinduet.
+  explanation_md: I en nøytral påstand med subjekt først står setningsadverbet etter det finitte verbet. Etter et foranstilt ledd står det etter subjektet.
+  derived_from:
+  - section_id: placing-common-sentence-adverbs
+  audio_target: Hun kommer ikke i dag. På lørdager sitter de vanligvis ved vinduet.
+  segments:
+  - text_md: 'Situasjon A: «'
+  - blank_id: adverb-subject-first
+    options:
+    - Hun ikke kommer i dag.
+    - Hun kommer ikke i dag.
+    - Kommer hun ikke i dag?
+    answer_index: 1
+  - text_md: '» Situasjon B: «'
+  - blank_id: adverb-fronted
+    options:
+    - På lørdager de sitter vanligvis ved vinduet.
+    - På lørdager sitter vanligvis de ved vinduet.
+    - På lørdager sitter de vanligvis ved vinduet.
+    answer_index: 2
+  - text_md: '»'
+- handle: discriminate_yes_no_and_wh_questions
+  op: recall_fill
+  objective: obj-word-order-main-clauses-01
+  bloom: understand
+  prompt_md: "Velg spørsmålet som passer til hvert informasjonsbehov."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: «Jeg vet ikke om Sara kommer senere.»
+    - speaker: Elias
+      text_md: «Spør henne.»
+    - speaker: Maja
+      text_md: «Hun kommer, men jeg vet ikke når.»
+  explanation_md: Et ja/nei-spørsmål begynner med verbet. Et spørreordsspørsmål begynner med spørreordet, fulgt av verbet og subjektet.
+  derived_from:
+  - section_id: wh-questions-keep-the-verb-in-the-second-slot
+  segments:
+  - text_md: 'Maja spør: «'
+  - blank_id: question-family-yes-no
+    options:
+    - Kommer Sara senere?
+    - Kommer Sara snart?
+    - Når Sara kommer?
+    answer_index: 0
+  - text_md: '» 2. Maja spør: «'
+  - blank_id: question-family-wh
+    options:
+    - Kommer Sara på et senere tidspunkt?
+    - Når kommer Sara?
+    - Når Sara kommer?
+    answer_index: 1
+  - text_md: »
+  audio_target: '1. Maja spør: «Kommer Sara senere?» 2. Maja spør: «Når kommer Sara?»'
+- handle: turn_statements_into_yes_no_questions
+  op: build
+  objective: obj-word-order-main-clauses-01
+  bloom: apply
+  prompt_md: Gjør utsagnet om til et ja/nei-spørsmål.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Utsagn: «Hun kommer ikke i dag.»'
+  explanation_md: Et ja/nei-spørsmål begynner med det finitte verbet. Subjektet kommer etterpå, og ikke står etter subjektet.
+  derived_from:
+  - section_id: yes-no-questions-begin-with-the-verb
+  tokens:
+  - token_id: yes-no-1
+    text: Kommer
+  - token_id: yes-no-2
+    text: hun
+  - token_id: yes-no-3
+    text: ikke
+  - token_id: yes-no-4
+    text: i
+  - token_id: yes-no-5
+    text: dag?
+  answer_order:
+  - yes-no-1
+  - yes-no-2
+  - yes-no-3
+  - yes-no-4
+  - yes-no-5
+- handle: form_wh_questions_from_missing_information
+  op: build
+  objective: obj-word-order-main-clauses-01
+  bloom: apply
+  prompt_md: "Sett sammen spørsmålet som ber om den manglende opplysningen."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Studiegruppen sitter et sted. Spør hvor.
+  explanation_md: Et spørreordsspørsmål begynner med spørreordet, fulgt av det finitte verbet og deretter subjektet.
+  derived_from:
+  - section_id: wh-questions-keep-the-verb-in-the-second-slot
+  tokens:
+  - token_id: wh-question-1
+    text: Hvor
+  - token_id: wh-question-2
+    text: sitter
+  - token_id: wh-question-3
+    text: studiegruppen?
+  answer_order:
+  - wh-question-1
+  - wh-question-2
+  - wh-question-3
+- handle: transfer_word_order_to_library_plans
+  op: write
+  objective: obj-word-order-main-clauses-01
+  bloom: apply
+  prompt_md: "Du skriver til klassekameraten Maja for å avtale et møte. Onsdag klokka 17 på biblioteket passer. Du kan ikke før klokka 16.30. Du må spørre om Maja har tid, og hvor inne hun vil møtes. Skriv en melding på 25–45 ord med planen og spørsmålene."
+  derived_from:
+  - section_id: cumulative-transfer-weekday-appointment
+  response_language: 'no'
+  min_words: 25
+  max_words: 45
+  judge_prompt: 'Check audience-purpose, supplied-facts, word-bound, and natural main-clause word order as gating criteria. Record sentence-adverb-placement-observation diagnostically. Report a verdict for every criterion id. Anchors: Must pass: «Hei Maja! På onsdag møtes vi på biblioteket klokka fem. Jeg har ikke tid før halv fem. Har du tid da? Hvor vil du møtes inne på biblioteket?» Must fail supplied-facts: «Hei Maja! Skal vi møtes på kafeen på lørdag? Jeg kan hele dagen. Skriv tilbake når du har tid.»'
+  criteria:
+  - id: audience-purpose
+    instruction: Writes a Norwegian message to Maja whose purpose is to arrange the meeting and obtain the missing information.
+  - id: supplied-facts
+    instruction: States Wednesday, 17:00, the library, and unavailability before 16:30, and asks about Maja's availability and preferred place inside.
+  - id: word-bound
+    instruction: Contains 25–45 words.
+  - id: main-clause-frames-observation
+    instruction: Uses natural main-clause word order in statements, a yes/no question, and a wh-question.
+  - id: sentence-adverb-placement-observation
+    instruction: Diagnostically records whether any sentence adverb is placed naturally; this criterion never controls the pass result.
+- handle: retrieve_main_clause_frames
+  op: write
+  objective: obj-word-order-main-clauses-01
+  bloom: apply
+  prompt_md: "Skriv fire setninger på til sammen 16–35 ord: en vanlig påstand om hvor dere møtes, en påstand som begynner med et tidsuttrykk, et ja/nei-spørsmål med «ofte» om dere møtes, og et spørreordsspørsmål med «vanligvis» om møtestedet."
+  derived_from:
+  - section_id: final-retrieval-request
+  response_language: 'no'
+  min_words: 16
+  max_words: 35
+  judge_prompt: Check four-requested-meanings, frame-specific-verb-order, required-adverb-placement, and word-bound. All four are gating because the task explicitly requests these meanings and demonstrations. Report a verdict for every criterion id. Accept natural Bokmål lexical and punctuation variants that preserve each requested meaning.
+  criteria:
+  - id: four-requested-meanings
+    instruction: Includes an ordinary statement, a time-first statement, a yes/no question, and a wh-question expressing the four supplied meanings.
+  - id: frame-specific-verb-order
+    instruction: Places the present-tense verb after the subject in the ordinary statement, after the fronted time phrase and before the subject in the time-first statement, first in the yes/no question, and after the question word and before the subject in the wh-question.
+  - id: required-adverb-placement
+    instruction: Places ofte after the subject in the yes/no question and vanligvis after the subject in the wh-question, or uses meaning-preserving natural variants.
+  - id: word-bound
+    instruction: Contains 16–35 words.
+- handle: review_subject_first_statement
+  op: write
+  objective: obj-word-order-main-clauses-01
+  bloom: apply
+  prompt_md: 'Fakta: Sara ankommer klokken 10. Skriv en norsk setning på fire ord med subjektet først, og bruk verbet «ankommer».'
+  derived_from:
+  - section_id: final-retrieval-request
+  response_language: 'no'
+  min_words: 4
+  max_words: 4
+  judge_prompt: Sjekk at betydningen og ordstillingen er riktig. Begge kriteriene er avgjørende fordi oppgaven ber om både betydning og form. Rapporter en vurdering for hvert kriterie-id. Godta «Sara ankommer klokka ti.» samt varianter med annen tegnsetting eller bruk av store og små bokstaver.
+  criteria:
+  - id: subject-first-meaning
+    instruction: Sier på norsk at Sara ankommer klokken ti.
+  - id: subject-first-order
+    instruction: Bruker Sara som subjekt først og plasserer ankommer rett etter subjektet.
+- handle: review_fronted_phrase_order
+  op: write
+  objective: obj-word-order-main-clauses-01
+  bloom: apply
+  prompt_md: 'Han er her i dag. Fullfør setningen som begynner med «I dag»: «I dag         her.» Skriv de to ordene.'
+  derived_from:
+  - section_id: final-retrieval-request
+  response_language: 'no'
+  min_words: 2
+  max_words: 2
+  judge_prompt: Check fronted-completion and fronted-order. Both criteria are gating because the task explicitly requests the meaning and form. Report a verdict for each criterion id. Accept «er han» with capitalization or punctuation variants.
+  criteria:
+  - id: fronted-completion
+    instruction: Supplies words that complete the statement with the meaning that a man is here today.
+  - id: fronted-order
+    instruction: Places the present-tense verb before the subject after the fronted time phrase.
+- handle: review_sentence_adverb_order
+  op: recall_fill
+  objective: obj-word-order-main-clauses-01
+  bloom: apply
+  prompt_md: "Velg setningen med naturlig plassering av setningsadverbet."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Sara blir hjemme i dag.
+  explanation_md: In a neutral subject-first statement, ikke follows the present-tense verb.
+  derived_from:
+  - section_id: final-retrieval-request
+  segments:
+  - text_md: '«'
+  - blank_id: review-adverb
+    options:
+    - Sara ikke reiser i dag.
+    - Sara reiser ikke i dag.
+    - Reiser Sara ikke i dag?
+    answer_index: 1
+  - text_md: '»'
+  audio_target: «Sara reiser ikke i dag.»
+- handle: review_yes_no_question_order
+  op: write
+  objective: obj-word-order-main-clauses-01
+  bloom: apply
+  prompt_md: "Spør Maja direkte om hun har tid. Skriv et spørsmål på tre ord på norsk."
+  derived_from:
+  - section_id: final-retrieval-request
+  response_language: 'no'
+  min_words: 3
+  max_words: 3
+  judge_prompt: Check availability-question and yes-no-order. Both criteria are gating because the task explicitly requests this question. Report a verdict for each criterion id. Accept any natural three-word yes-no question asking Maja whether she is available, including «Har du tid?» or «Er du ledig?», and punctuation or capitalization variants.
+  criteria:
+  - id: availability-question
+    instruction: Directly asks Maja in Norwegian whether she has time.
+  - id: yes-no-order
+    instruction: Uses natural yes-no question order, with the finite verb before the subject.
+- handle: review_wh_question_order
+  op: write
+  objective: obj-word-order-main-clauses-01
+  bloom: apply
+  prompt_md: "Studiegruppa sitter et sted på kafé, men du vet ikke hvor. Still gruppa et spørsmål på tre ord på norsk."
+  derived_from:
+  - section_id: final-retrieval-request
+  response_language: 'no'
+  min_words: 3
+  max_words: 3
+  judge_prompt: Check location-question and wh-question-order. Both criteria are gating because the task explicitly requests this question. Report a verdict for each criterion id. Accept any natural three-word wh-question asking where the group is, including «Hvor sitter dere?» or «Hvor er dere?», and punctuation or capitalization variants.
+  criteria:
+  - id: location-question
+    instruction: Asks the group in Norwegian where they are sitting.
+  - id: wh-question-order
+    instruction: Uses a wh-word followed by the finite verb and then the subject.

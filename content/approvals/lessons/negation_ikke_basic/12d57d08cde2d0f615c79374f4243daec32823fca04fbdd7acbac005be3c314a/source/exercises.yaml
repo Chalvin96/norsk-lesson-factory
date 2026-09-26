@@ -1,0 +1,492 @@
+- handle: notice_ikke_in_anchor_statements
+  op: choose
+  objective: obj-negation-ikke-basic-01
+  bloom: understand
+  prompt_md: Velg den ordstillingen begge setningene viser.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Merk de to setningene: «Elias har ikke matpakke.» «Kantina er ikke åpen.»'
+  options:
+  - id: notice-subject-ikke-finite
+    text: subjekt + ikke + finit verb
+    correct: false
+    why: Da måtte ikke stått foran har eller er, men setningene har det etter verbet.
+  - id: notice-ikke-subject-finite
+    text: ikke + subjekt + finit verb
+    correct: false
+    why: Begge setningene begynner med subjektet, ikke med ikke.
+  - id: notice-subject-finite-ikke
+    text: subjekt + finit verb + ikke
+    correct: true
+    why: I begge setningene står ikke rett etter det finitte verbet (har, er).
+  derived_from:
+  - section_id: statements-finite-verb-subject
+- handle: place_ikke_in_basic_statements
+  op: recall_fill
+  objective: obj-negation-ikke-basic-01
+  bloom: apply
+  prompt_md: Fullfør setningene med nøytral norsk ordstilling uten kontrastivt trykk på subjektet, slik at de stemmer med faktaene.
+  audio_target: 1. Jeg drikker ikke kaffe. 2. På tirsdager har ikke Nora norsktime. 3. Etter lunsj jobber ikke Maja hjemme.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Merk: en subjektførst setning begynner med subjektet, det finitte verbet er tidsbøyd,
+        og et innledende tidsuttrykk står først, f.eks. I dag. Fakta: Jeg tar te i stedet for kaffe. Nora
+        har ingen norsktime på tirsdager. Maja jobber på biblioteket etter lunsj.'
+  segments:
+  - text_md: 'Jeg '
+  - blank_id: place-basic-statement
+    options:
+    - drikker kaffe ikke.
+    - drikker ikke kaffe.
+    - ikke drikker kaffe.
+    answer_index: 1
+  - text_md: ' På tirsdager '
+  - blank_id: place-fronted-statement
+    options:
+    - har Nora ikke norsktime.
+    - ikke har Nora norsktime.
+    - har ikke Nora norsktime.
+    answer_index: 2
+  - text_md: ' Etter lunsj '
+  - blank_id: place-fronted-work
+    options:
+    - ikke jobber Maja hjemme.
+    - jobber Maja ikke hjemme.
+    - jobber ikke Maja hjemme.
+    answer_index: 2
+  explanation_md: Etter et innledende tidsuttrykk kommer det finitte verbet på andre plass. Med et fullt substantivsubjekt står **ikke** vanligvis før subjektet. Med et trykksvakt pronomen står pronomenet før **ikke**.
+  derived_from:
+  - section_id: initial-element-statements
+- handle: distinguish_finite_verb_position
+  op: build
+  objective: obj-negation-ikke-basic-01
+  bloom: apply
+  prompt_md: Bygg setningen som uttrykker det nye faktumet.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Merk: det finitte verbet er tidsbøyd (kan), og infinitiven står i grunnform (vente). Maja
+        kan vente. Nytt faktum: det er ikke mulig likevel.'
+  derived_from:
+  - section_id: statements-two-verbs
+  tokens:
+  - token_id: distinguish-maja
+    text: Maja
+  - token_id: distinguish-kan
+    text: kan
+  - token_id: distinguish-ikke
+    text: ikke
+  - token_id: distinguish-vente
+    text: vente.
+  answer_order:
+  - distinguish-maja
+  - distinguish-kan
+  - distinguish-ikke
+  - distinguish-vente
+  explanation_md: '**Kan** er det finitte verbet, så **ikke** står mellom **kan** og infinitiven **vente**.'
+- handle: repair_statement_word_order
+  op: write
+  objective: obj-negation-ikke-basic-01
+  bloom: analyze
+  prompt_md: 'Til: en kollega Formål: rette lunsjbeskjeden uten å endre faktaene Utkast: «I dag ikke har
+    Elias matpakke. Vi kan vente ikke.» Skriv en rettet beskjed på 9–15 ord med standard norsk ordstilling.'
+  derived_from:
+  - section_id: statements-two-verbs
+  response_language: 'no'
+  min_words: 9
+  max_words: 15
+  judge_prompt: Vurder bare kriteriene statement-facts, fronted-order, modal-order og word-bound. Rapporter
+    evidens og dom for hver id. Alle fire er bindende.
+  criteria:
+  - id: statement-facts
+    instruction: Beholder begge faktaene i utkastet uten å legge til motstridende informasjon.
+  - id: fronted-order
+    instruction: Den første setningen følger norsk rekkefølge etter et innledende tidsuttrykk, med ikke
+      etter det finitte verbet.
+  - id: modal-order
+    instruction: Den andre setningen har ikke etter det finitte modalverbet og før infinitiven.
+  - id: word-bound
+    instruction: Inneholder 9–15 ord.
+- handle: build_negative_pronoun_questions
+  op: build
+  objective: obj-negation-ikke-basic-01
+  bloom: apply
+  prompt_md: Bygg det nøytrale negative spørsmålet.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Maja forventer at du skal spise med gruppen. Hun spør om dette likevel.
+  derived_from:
+  - section_id: negative-pronoun-questions
+  tokens:
+  - token_id: pronoun-question-skal
+    text: Skal
+  - token_id: pronoun-question-du
+    text: du
+  - token_id: pronoun-question-ikke
+    text: ikke
+  - token_id: pronoun-question-spise
+    text: spise
+  - token_id: pronoun-question-med
+    text: med
+  - token_id: pronoun-question-oss
+    text: oss?
+  answer_order:
+  - pronoun-question-skal
+  - pronoun-question-du
+  - pronoun-question-ikke
+  - pronoun-question-spise
+  - pronoun-question-med
+  - pronoun-question-oss
+  explanation_md: I et nøytralt ja–nei-spørsmål med pronomen står **ikke** etter pronomenet **du**.
+- handle: contrast_question_subject_types
+  op: recall_fill
+  objective: obj-negation-ikke-basic-01
+  bloom: analyze
+  prompt_md: Velg det nøytrale, ikke-kontrastive negative spørsmålet i hver situasjon.
+  audio_target: 'A: Blir hun ikke med på turen? B: Blir ikke Sander med på turen?'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Merk: et pronomen er et kort ord som hun eller du, et fullt substantiv er et navn eller
+        annet substantiv som Sander, og nøytral rekkefølge er den vanlige uten ekstra fokus. Situasjon A:
+        Spør om hun blir med på turen. Situasjon B: Spør om Sander blir med på turen.'
+  segments:
+  - text_md: 'A:'
+  - blank_id: contrast-pronoun-question
+    options:
+    - Blir ikke hun med på turen?
+    - Hun blir ikke med på turen?
+    - Blir hun ikke med på turen?
+    answer_index: 2
+  - text_md: ' B:'
+  - blank_id: contrast-full-noun-question
+    options:
+    - Blir ikke Sander med på turen?
+    - Blir Sander ikke med på turen?
+    - Sander blir ikke med på turen?
+    answer_index: 0
+  explanation_md: Med pronomen er den nøytrale rekkefølgen **verb + pronomen + ikke**. «Blir ikke hun»
+    fremhever *hun*. Med navnet Sander er den nøytrale rekkefølgen **verb + ikke + navn**. Alternativene
+    som begynner med subjektet, har utsagnsrekkefølge.
+  derived_from:
+  - section_id: negative-full-noun-questions
+- handle: complete_negative_wh_questions
+  op: recall_fill
+  objective: obj-negation-ikke-basic-01
+  bloom: apply
+  prompt_md: Gjør hvert utsagn om til et nøytralt hvorfor-spørsmål uten kontrastiv emfase.
+  audio_target: 1. Hvorfor sover du ikke nå? 2. Hvorfor venter ikke Elias ved inngangen? 3. Hvorfor jobber
+    dere ikke hjemme i dag? 4. Hvorfor tar ikke Maja bilen?
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Merk: nøytral rekkefølge er den vanlige uten ekstra emfase, emfase legger trykk på ett
+        ord, og utsagnsrekkefølge er subjekt før verb. Maja spør: Du sover ikke nå. Elias venter ikke ved
+        inngangen. Dere jobber ikke hjemme i dag. Maja tar ikke bilen.'
+  segments:
+  - text_md: ''
+  - blank_id: wh-question-pronoun-singular
+    options:
+    - Hvorfor sover ikke du nå?
+    - Hvorfor du sover ikke nå?
+    - Hvorfor sover du ikke nå?
+    answer_index: 2
+  - text_md: ''
+  - blank_id: wh-question-name-singular
+    options:
+    - Hvorfor Elias venter ikke ved inngangen?
+    - Hvorfor venter ikke Elias ved inngangen?
+    - Hvorfor venter Elias ikke ved inngangen?
+    answer_index: 1
+  - text_md: ''
+  - blank_id: wh-question-pronoun-plural
+    options:
+    - Hvorfor jobber ikke dere hjemme i dag?
+    - Hvorfor dere jobber ikke hjemme i dag?
+    - Hvorfor jobber dere ikke hjemme i dag?
+    answer_index: 2
+  - text_md: ''
+  - blank_id: wh-question-name
+    options:
+    - Hvorfor Maja tar ikke bilen?
+    - Hvorfor tar ikke Maja bilen?
+    - Hvorfor tar Maja ikke bilen?
+    answer_index: 1
+  explanation_md: Etter **hvorfor + finit verb** står et pronomen før **ikke**, mens et navn normalt står
+    etter **ikke**. Alternativene med subjektet foran verbet bruker ikke den lærte spørsmålsrekkefølgen;
+    de andre feilalternativene bytter plass på subjektet og **ikke**.
+  derived_from:
+  - section_id: negative-question-word-questions
+- handle: complete_return_to_cafeteria
+  op: recall_fill
+  objective: obj-negation-ikke-basic-01
+  bloom: apply
+  prompt_md: Velg replikkene som passer, med nøytral, standard norsk ordstilling.
+  audio_target: 'Maja: Bestiller du ikke suppe? Elias: Jeg velger ikke suppe i dag. Maja: Hvorfor tar
+    du ikke en salat?'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: Klokka er elleve, og kantina er åpen. Skal vi spise sammen?
+    - speaker: Elias
+      text_md: Gjerne, men jeg vil ha noe lett i dag.
+  segments:
+  - text_md: 'Maja:'
+  - blank_id: return-pronoun-question
+    options:
+    - Bestiller ikke du suppe?
+    - Du bestiller ikke suppe?
+    - Bestiller du ikke suppe?
+    answer_index: 2
+  - text_md: ' Elias:'
+  - blank_id: return-subject-statement
+    options:
+    - Jeg ikke velger suppe i dag.
+    - Ikke jeg velger suppe i dag.
+    - Jeg velger ikke suppe i dag.
+    answer_index: 2
+  - text_md: ' Maja:'
+  - blank_id: return-wh-question
+    options:
+    - Hvorfor du tar ikke en salat?
+    - Hvorfor tar du ikke en salat?
+    - Hvorfor tar ikke du en salat?
+    answer_index: 1
+  explanation_md: 'Replikkene bruker den nøytrale rekkefølgen for et pronomen: **verb + du + ikke**. Utsagnet
+    bruker **jeg + verb + ikke**. Feilalternativene flytter **ikke** eller bruker utsagnsrekkefølge i
+    spørsmålene.'
+  derived_from:
+  - section_id: back-at-cafeteria
+- handle: diagnose_ikke_across_sentence_types
+  op: write
+  objective: obj-negation-ikke-basic-01
+  bloom: analyze
+  prompt_md: 'Til: Maja Formål: rette spørsmålene før de sendes Fakta: Du kommer ikke. Maja kommer ikke.
+    Utkast: «Kommer ikke du? Kommer Maja ikke? Hvorfor kommer ikke du? Hvorfor kommer Maja ikke?» Skriv
+    de fire rettede spørsmålene på 12–20 ord med nøytral rekkefølge.'
+  derived_from:
+  - section_id: common-placement-mistakes
+  response_language: 'no'
+  min_words: 12
+  max_words: 20
+  judge_prompt: Vurder bare kriteriene four-questions, pronoun-yes-no, noun-yes-no, pronoun-wh, noun-wh
+    og revision-word-bound. Rapporter evidens og dom for hver id. Alle kriteriene er bindende.
+  criteria:
+  - id: four-questions
+    instruction: Leverer fire spørsmål som bevarer faktaene og spørsmålsfunksjonene i utkastet.
+  - id: pronoun-yes-no
+    instruction: Retter ja–nei-spørsmålet med pronomenet du til nøytral, ikke-kontrastiv rekkefølge.
+  - id: noun-yes-no
+    instruction: Retter ja–nei-spørsmålet med det fulle substantivet Maja til nøytral, ikke-kontrastiv
+      rekkefølge.
+  - id: pronoun-wh
+    instruction: Retter hvorfor-spørsmålet med du til nøytral, ikke-kontrastiv rekkefølge.
+  - id: noun-wh
+    instruction: Retter hvorfor-spørsmålet med Maja til nøytral, ikke-kontrastiv rekkefølge.
+  - id: revision-word-bound
+    instruction: Inneholder 12–20 ord.
+- handle: transfer_ikke_to_evening_plans
+  op: write
+  objective: obj-negation-ikke-basic-01
+  bloom: apply
+  prompt_md: 'Til: Maja Situasjon: planer etter jobb Formål: forklare hvorfor planen må flyttes og foreslå
+    en ny tid Fakta (på engelsk): Elias is unavailable tonight. The shop is closed tonight. You can meet tomorrow
+    at 17.00. Bruk ikke i setningen om Elias. Skriv en melding på 25–40 ord.'
+  derived_from:
+  - section_id: transfer-evening-plans
+  response_language: 'no'
+  min_words: 25
+  max_words: 40
+  judge_prompt: >-
+    Vurder kriteriene evening-facts, audience-purpose, transfer-word-bound og statement-placement-observation.
+    Id-en varied-placement-observation rapporteres diagnostisk og inngår ikke i beståttregelen. Godta
+    enhver naturlig melding som formidler faktaene og den nye tiden. Vurder plasseringen av «ikke» etter
+    leddtypen: I en helsetning følger hovedsetningsordstillingen, for eksempel «Elias har ikke tid» eller
+    «I kveld har ikke Elias tid». I en leddsetning som innledes med «fordi», står subjektet før «ikke»
+    og det finitte verbet, for eksempel «fordi Elias ikke har tid». Ikke krev en bestemt ordlyd.
+  criteria:
+  - id: evening-facts
+    instruction: Formidler at Elias er utilgjengelig i kveld, at butikken er stengt, og at møtet kan flyttes
+      til i morgen klokka 17.
+  - id: audience-purpose
+    instruction: Er en forståelig melding til Maja som forklarer endringen og foreslår den nye tiden.
+  - id: transfer-word-bound
+    instruction: Inneholder 25–40 ord.
+  - id: statement-placement-observation
+    instruction: >-
+      Plasserer «ikke» etter leddtypen i setningen om Elias: hovedsetningsordstilling i en helsetning,
+      eller subjekt + «ikke» + finitt verb i en leddsetning som «fordi Elias ikke har tid».
+  - id: varied-placement-observation
+    instruction: Registrerer diagnostisk eventuell korrekt bruk av ikke i andre setningstyper; dette kriteriet
+      kan ikke alene føre til underkjenning.
+- handle: review_subject_first_statement
+  op: recall_fill
+  objective: obj-negation-ikke-basic-01
+  bloom: apply
+  prompt_md: Fullfør setningen med standard, nøytral norsk ordstilling.
+  audio_target: Mina bruker ikke bilen.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Situasjon: Mina tar bussen i stedet for å kjøre.'
+  segments:
+  - text_md: 'Mina '
+  - blank_id: review-subject-first
+    options:
+    - bruker ikke bilen.
+    - ikke bruker bilen.
+    - bruker bilen ikke.
+    answer_index: 0
+  explanation_md: I et enkelt subjektførst utsagn står **ikke** etter det finitte verbet. De to andre
+    alternativene plasserer **ikke** henholdsvis før og etter verbfrasen.
+  derived_from:
+  - section_id: retrieval-review
+- handle: review_fronted_statement
+  op: recall_fill
+  objective: obj-negation-ikke-basic-01
+  bloom: apply
+  prompt_md: Fullfør den negative setningen med standard, nøytral norsk ordstilling.
+  audio_target: I morgen tar ikke Sara toget.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Situasjon: Sara reiser med buss til Bergen i morgen.'
+  segments:
+  - text_md: 'I morgen '
+  - blank_id: review-fronted
+    options:
+    - tar Sara ikke toget.
+    - Sara tar ikke toget.
+    - tar ikke Sara toget.
+    answer_index: 2
+  explanation_md: Etter **I morgen** står det finitte verbet først. Med et fullt substantivsubjekt står
+    **ikke** vanligvis før subjektet; et trykksvakt pronomen ville stått før **ikke**.
+  derived_from:
+  - section_id: retrieval-review
+- handle: review_two_verb_statement
+  op: recall_fill
+  objective: obj-negation-ikke-basic-01
+  bloom: apply
+  prompt_md: Fullfør den negative setningen med standard, nøytral norsk ordstilling.
+  audio_target: Amir kan ikke spise nå.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Situasjon: Personen i setningen har dårlig tid og må utsette måltidet.'
+  segments:
+  - text_md: 'Amir '
+  - blank_id: review-two-verbs
+    options:
+    - kan ikke spise nå.
+    - kan spise ikke nå.
+    - ikke kan spise nå.
+    answer_index: 0
+  explanation_md: '**Ikke** står etter det finitte modalverbet **kan** og før infinitiven **spise**. De
+    andre alternativene setter negasjonen etter infinitiven eller foran det finitte verbet.'
+  derived_from:
+  - section_id: retrieval-review
+- handle: review_pronoun_yes_no_question
+  op: recall_fill
+  objective: obj-negation-ikke-basic-01
+  bloom: apply
+  prompt_md: Fullfør det nøytrale spørsmålet uten kontrastiv emfase.
+  audio_target: Blir du ikke med?
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Situasjon: Maja regner med at du deltar, men vil kontrollere det.'
+  segments:
+  - text_md: 'Blir '
+  - blank_id: review-pronoun-yes-no
+    options:
+    - du ikke med?
+    - ikke du med?
+    - du med ikke?
+    answer_index: 0
+  explanation_md: Med pronomenet **du** står **ikke** etter subjektet. «Ikke du» gir en markert kontrast,
+    mens «du med ikke» setter negasjonen for sent.
+  derived_from:
+  - section_id: retrieval-review
+- handle: review_full_noun_yes_no_question
+  op: recall_fill
+  objective: obj-negation-ikke-basic-01
+  bloom: apply
+  prompt_md: Fullfør det nøytrale spørsmålet uten kontrastiv emfase.
+  audio_target: Kommer ikke læreren i dag?
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Situasjon: Maja regner med at læreren dukker opp, men vil kontrollere det.'
+  segments:
+  - text_md: 'Kommer '
+  - blank_id: review-noun-yes-no
+    options:
+    - ikke læreren i dag?
+    - læreren ikke i dag?
+    - læreren i dag ikke?
+    answer_index: 0
+  explanation_md: Med et fullt substantiv som subjekt står **ikke** normalt før subjektet. De andre alternativene
+    behandler substantivet som et pronomen eller setter negasjonen sist.
+  derived_from:
+  - section_id: retrieval-review
+- handle: review_pronoun_wh_question
+  op: recall_fill
+  objective: obj-negation-ikke-basic-01
+  bloom: apply
+  prompt_md: Fullfør spørsmålet med nøytral rekkefølge uten kontrastiv emfase.
+  audio_target: Hvorfor drikker dere ikke kaffe?
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Situasjon: Gruppen lar kaffen stå, og Maja spør etter grunnen.'
+  segments:
+  - text_md: 'Hvorfor '
+  - blank_id: review-pronoun-wh
+    options:
+    - drikker dere ikke kaffe?
+    - drikker ikke dere kaffe?
+    - dere drikker ikke kaffe?
+    answer_index: 0
+  explanation_md: Etter **hvorfor** kommer det finitte verbet, pronomenet og **ikke**. «Ikke dere» fremhever
+    subjektet, mens alternativet med **dere** først mangler spørsmålsinversjon.
+  derived_from:
+  - section_id: retrieval-review
+- handle: review_full_noun_wh_question
+  op: recall_fill
+  objective: obj-negation-ikke-basic-01
+  bloom: apply
+  prompt_md: Fullfør spørsmålet med nøytral rekkefølge uten kontrastiv emfase.
+  audio_target: Hvorfor stopper ikke bussen her?
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Situasjon: Kollektivtrafikken har endret ruten, og Elias spør etter grunnen.'
+  segments:
+  - text_md: 'Hvorfor '
+  - blank_id: review-noun-wh
+    options:
+    - stopper ikke bussen her?
+    - stopper bussen ikke her?
+    - bussen stopper ikke her?
+    answer_index: 0
+  explanation_md: Med et fullt substantiv står **ikke** før subjektet etter spørreordet og verbet. Det
+    andre alternativet bruker pronomenmønsteret; det tredje beholder utsagnsrekkefølge.
+  derived_from:
+  - section_id: retrieval-review

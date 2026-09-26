@@ -1,0 +1,285 @@
+- handle: notice_gender_articles_in_the_shop
+  op: categorize
+  objective: obj-noun-gender-01
+  bloom: analyze
+  prompt_md: "Sorter substantivene under en, ei eller et."
+  derived_from:
+  - section_id: checkpoint-notice-the-article
+  buckets:
+  - bucket_id: bucket-en
+    label: en
+  - bucket_id: bucket-ei
+    label: ei
+  - bucket_id: bucket-et
+    label: et
+  items:
+  - item_id: shop-chair
+    text: stol
+    bucket_id: bucket-en
+  - item_id: shop-lamp
+    text: lampe
+    bucket_id: bucket-ei
+  - item_id: shop-shelf
+    text: hylle
+    bucket_id: bucket-ei
+  - item_id: shop-table
+    text: bord
+    bucket_id: bucket-et
+  - item_id: shop-rug
+    text: teppe
+    bucket_id: bucket-et
+  - item_id: shop-picture
+    text: bilde
+    bucket_id: bucket-et
+- handle: choose_en_or_ei_for_known_objects
+  op: recall_fill
+  objective: obj-noun-gender-01
+  bloom: remember
+  prompt_md: Fyll inn artiklene etter tradisjonelt bokmål med tre kjønn.
+  audio_target: 'Maja lager en oversikt: Jeg trenger en stol. Jeg trenger en nøkkel. Jeg trenger ei lampe.
+    Jeg trenger ei bok. Jeg trenger ei hylle. Jeg trenger ei avis.'
+  segments:
+  - text_md: 'Maja lager en oversikt: Jeg trenger '
+  - blank_id: article-stol
+    options:
+    - en
+    - ei
+    answer_index: 0
+  - text_md: ' stol. Jeg trenger '
+  - blank_id: article-nokkel
+    options:
+    - en
+    - ei
+    answer_index: 0
+  - text_md: ' nøkkel. Jeg trenger '
+  - blank_id: article-lampe
+    options:
+    - en
+    - ei
+    answer_index: 1
+  - text_md: ' lampe. Jeg trenger '
+  - blank_id: article-bok
+    options:
+    - en
+    - ei
+    answer_index: 1
+  - text_md: ' bok. Jeg trenger '
+  - blank_id: article-hylle
+    options:
+    - en
+    - ei
+    answer_index: 1
+  - text_md: ' hylle. Jeg trenger '
+  - blank_id: article-avis
+    options:
+    - en
+    - ei
+    answer_index: 1
+  - text_md: ' avis.'
+  explanation_md: "I denne oversikten brukes en med substantivene som følger hankjønnsmønsteret, og ei med substantivene som følger hunkjønnsmønsteret. Mange hunkjønnsord kan også ha en i bokmål."
+  derived_from:
+  - section_id: checkpoint-retrieve-en-and-ei
+- handle: supply_en_ei_et_in_room_descriptions
+  op: recall_fill
+  objective: obj-noun-gender-01
+  bloom: apply
+  prompt_md: Fyll inn artiklene etter tradisjonelt bokmål med tre kjønn.
+  audio_target: På rommet står en stol ved et vindu. Ved siden av stolen står ei lampe. På gulvet ligger
+    et teppe. Ved veggen står ei hylle. På hylla ligger ei bok. Ved siden av boka ligger en nøkkel. Over
+    hylla henger et bilde. Midt i rommet står et bord.
+  segments:
+  - text_md: 'På rommet står '
+  - blank_id: room-chair
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 0
+  - text_md: ' stol ved '
+  - blank_id: room-window
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 2
+  - text_md: ' vindu. Ved siden av stolen står '
+  - blank_id: room-lamp
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 1
+  - text_md: ' lampe. På gulvet ligger '
+  - blank_id: room-rug
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 2
+  - text_md: ' teppe. Ved veggen står '
+  - blank_id: room-shelf
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 1
+  - text_md: ' hylle. På hylla ligger '
+  - blank_id: room-book
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 1
+  - text_md: ' bok. Ved siden av boka ligger '
+  - blank_id: room-key
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 0
+  - text_md: ' nøkkel. Over hylla henger '
+  - blank_id: room-picture
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 2
+  - text_md: ' bilde. Midt i rommet står '
+  - blank_id: room-table
+    options:
+    - en
+    - ei
+    - et
+    answer_index: 2
+  - text_md: ' bord.'
+  explanation_md: "Lær hvert substantiv sammen med artikkelen. Her brukes tradisjonelle hunkjønnsformer."
+  derived_from:
+  - section_id: checkpoint-distinguish-all-three-genders
+- handle: correct_gender_errors_on_majas_list
+  op: choose
+  objective: obj-noun-gender-01
+  bloom: analyze
+  prompt_md: Maja skrev handlelista «en stol, ei lampe, en hylle, et bord, ei bok». Velg den riktige
+    beskrivelsen av artikkelen i «en hylle».
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: '«Handleliste: en stol, ei lampe, en hylle, et bord, ei bok.»'
+  explanation_md: "«Hylle» kan ha tradisjonell hunkjønnsform med ei eller felleskjønnsform med en i bokmål."
+  derived_from:
+  - section_id: checkpoint-repair-article-mistakes
+  options:
+  - id: common-only
+    text: Bare «en hylle» er riktig; «ei hylle» må rettes.
+    correct: false
+    why: Dette utelukker den godkjente tradisjonelle hunkjønnsformen «ei hylle».
+  - id: both-accepted
+    text: Både «en hylle» og «ei hylle» er gyldige bokmålsformer.
+    correct: true
+    why: Bokmål godtar både felleskjønnsformen og den tradisjonelle hunkjønnsformen av «hylle».
+  - id: feminine-only
+    text: Bare «ei hylle» er riktig; «en hylle» må rettes.
+    correct: false
+    why: Dette utelukker den godkjente felleskjønnsformen «en hylle».
+- handle: complete_majas_purchase_summary
+  op: recall_fill
+  objective: obj-noun-gender-01
+  bloom: apply
+  prompt_md: Fyll inn riktig artikkel foran hvert substantiv.
+  audio_target: 'Maja sender en melding: I dag kjøpte jeg en stol. Nå trenger jeg ei lampe. Jeg fant et
+    bord, men jeg kjøpte en nøkkel og et teppe.'
+  segments:
+  - text_md: 'Maja sender en melding: I dag kjøpte jeg '
+  - blank_id: summary-chair
+    options:
+    - en
+    - et
+    answer_index: 0
+  - text_md: ' stol. Nå trenger jeg '
+  - blank_id: summary-lamp
+    options:
+    - et
+    - ei
+    answer_index: 1
+  - text_md: ' lampe. Jeg fant '
+  - blank_id: summary-table
+    options:
+    - ei
+    - et
+    answer_index: 1
+  - text_md: ' bord, men jeg kjøpte '
+  - blank_id: summary-key
+    options:
+    - en
+    - ei
+    answer_index: 0
+  - text_md: ' nøkkel og '
+  - blank_id: summary-rug
+    options:
+    - et
+    - en
+    answer_index: 0
+  - text_md: ' teppe.'
+  explanation_md: "Artikkelen følger substantivet: stol og nøkkel har en, lampe har ei, og bord og teppe har et."
+  derived_from:
+  - section_id: controlled-production
+- handle: describe_missing_items_in_the_study_room
+  op: write
+  objective: obj-noun-gender-01
+  bloom: apply
+  prompt_md: "Skriv en melding på 12–35 ord til en kollega. Fortell hvilke av de tre tingene – lampe, teppe og nøkkel – som finnes i rommet, og hvilke to som mangler. Bruk artikkel og substantiv. Bruk tradisjonell hunkjønnsform for «lampe»."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Jonas
+      text_md: «Jeg har sjekket studierommet. Det står ei lampe på pulten, og den virker. Gulvet er bart, og jeg finner ikke det som åpner skapet.»
+    - speaker: Ida
+      text_md: «Takk. Så det står ei lampe på pulten, men det ligger ikke noe teppe på gulvet, og skapet kan ikke låses opp?»
+    - speaker: Jonas
+      text_md: «Ja, det stemmer.»
+  response_language: 'no'
+  min_words: 12
+  max_words: 35
+  judge_prompt: Evaluate the response against study-audience, study-purpose, study-facts, study-articles,
+    and study-length.
+  criteria:
+  - id: study-audience
+    instruction: Is written as a message that can be sent to a colleague.
+  - id: study-purpose
+    instruction: Reports what is present and missing in the study room.
+  - id: study-facts
+    instruction: Says that the rug and key are missing and the lamp is present.
+  - id: study-articles
+    instruction: Uses the requested traditional article-noun phrases ei lampe, et teppe, and en nøkkel.
+  - id: study-length
+    instruction: Contains 12–35 words.
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+- handle: retrieve_three_gender_patterns
+  op: write
+  objective: obj-noun-gender-01
+  bloom: apply
+  prompt_md: "Skriv et notat på 25–70 ord til en klassekamerat. Ta med stol, lampe, bord, bok, nøkkel, teppe, hylle, vindu og bilde med tradisjonell artikkel. Skriv også tre korte setninger om ting som trengs i et rom. Bruk ett av substantivene fra lista i hver setning, og bruk en, ei og et én gang hver."
+  response_language: 'no'
+  min_words: 25
+  max_words: 70
+  judge_prompt: Evaluate the response against note-audience-purpose, note-nine-nouns, note-three-sentences,
+    note-article-accuracy, and note-length. For each of the three sentences, require one singular article-noun
+    phrase from the listed nouns, with one en, one ei, and one et phrase across the set. Accept natural short
+    sentences and correct traditional Bokmål forms.
+  criteria:
+  - id: note-audience-purpose
+    instruction: Is a Norwegian study note intended to help a classmate practise the nine nouns taught
+      in this lesson.
+  - id: note-nine-nouns
+    instruction: Includes stol, lampe, bord, bok, nøkkel, teppe, hylle, vindu, and bilde as article-noun
+      phrases.
+  - id: note-three-sentences
+    instruction: Includes three short sentences about objects needed in a room, each with a singular article-noun phrase from the list.
+  - id: note-article-accuracy
+    instruction: Uses correct traditional article-noun phrases for all nine listed nouns and includes one en, one ei, and one et phrase across the three sentences.
+  - id: note-length
+    instruction: Contains 25–70 words.
+  derived_from:
+  - section_id: retrieval-and-review

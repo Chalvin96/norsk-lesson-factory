@@ -28,10 +28,12 @@ K_SOURCE_AUDIT_REQUIRED_ENGLISH_RE = re.compile(
     r"\b(?:write|respond|answer|reply|produce|use)\b[^.\n]{0,100}\bin English\b|\bin English\b[^.\n]{0,100}\b(?:response|answer|reply)\b",
     re.IGNORECASE,
 )
+K_SOURCE_AUDIT_WRITE_WORD_BUDGET_RE = re.compile(
+    r"\b\d+\s*(?:[–-]\s*\d+)?\s+(?:(?:norske|Norwegian)\s+)?(?:ord|words?)\b"
+    r"|\b(?:minst|maks(?:imalt)?|at least|no more than|up to)\s+\d+\s+(?:(?:norske|Norwegian)\s+)?(?:ord|words?)\b",
+    re.IGNORECASE,
+)
 K_SOURCE_AUDIT_NORWEGIAN_EXAMPLE_BUT_RE = re.compile(r"^-\s+no:\s+.*\bbut\b.*$", re.IGNORECASE)
-K_SOURCE_AUDIT_EXAMPLE_NO_RE = re.compile(r"^\s*-\s+no:\s*(?P<value>.*)$")
-K_SOURCE_AUDIT_EXAMPLE_EN_RE = re.compile(r"^\s*-\s+en:\s*(?P<value>.*)$")
-K_SOURCE_AUDIT_EXPLICIT_INCORRECT_GLOSS_RE = re.compile(r"^(?:✗\s*)?(?:incorrect|wrong)\s*:", re.IGNORECASE)
 K_SOURCE_AUDIT_UNSUPPORTED_FIND_FIX_RE = re.compile(
     r"\b(?:write|type|enter|submit|reorder|rearrange|explain|give|provide)\b[^.\n]{0,100}\b(?:repair|replacement|correction|corrected answer|fixed sentence)\b"
     r"|\b(?:repair|replace|move|remove|rewrite|restore|correct|fix|change|edit)\s+(?:only\s+)?(?:the|a|an|your|this|that|it|each|one|token|sentence|word)\b"
@@ -49,11 +51,13 @@ K_SOURCE_AUDIT_BROAD_SPEAK_RE = re.compile(
     re.IGNORECASE,
 )
 K_SOURCE_AUDIT_EXACT_SPEAK_CUE_RE = re.compile(
-    r"\b(?:say|read|repeat)(?:\s+the\s+following)?\s+exactly\b",
+    r"(?:\b(?:say|read|repeat)(?:\s+the\s+following)?\s+exactly\b"
+    r"|\b(?:si|les|gjenta)\b[^.\n]{0,60}\b(?:akkurat|nøyaktig)\b)",
     re.IGNORECASE,
 )
 K_SOURCE_AUDIT_MIN_OPTIONS = 2
 K_SOURCE_AUDIT_MIN_QUOTED_VALUE_LENGTH = 2
+K_SOURCE_AUDIT_POSITION_MIN_BLANKS = 3
 K_SOURCE_AUDIT_HIDDEN_RESTATEMENT_FIELDS = frozenset(
     {
         "judge_prompt",
@@ -99,7 +103,6 @@ def audit_exercise_source(
     findings = list(initial_findings)
     marker_handles = _marker_handles(lesson_text, findings)
     _audit_norwegian_example_language(lesson_text, findings)
-    _audit_incorrect_example_markers(lesson_text, findings)
     _audit_typed_example_outer_quote_wrappers(lesson_text, findings)
     findings.extend(parsed_findings)
     raw_items = exercise_items
@@ -169,31 +172,6 @@ def _audit_norwegian_example_language(text: str, findings: list[MechanicalFindin
                 line,
                 "A Norwegian example line must use the Bokmål conjunction `men`, not English `but`.",
             )
-
-
-def _audit_incorrect_example_markers(text: str, findings: list[MechanicalFinding]) -> None:
-    """Require ``✗`` on Norwegian examples whose gloss says they are wrong."""
-    lines = text.splitlines()
-    for index, line in enumerate(lines[:-1]):
-        no_match = K_SOURCE_AUDIT_EXAMPLE_NO_RE.match(line)
-        en_match = K_SOURCE_AUDIT_EXAMPLE_EN_RE.match(lines[index + 1])
-        if no_match is None or en_match is None:
-            continue
-        english = _strip_example_yaml_quotes(en_match.group("value")).strip()
-        if not K_SOURCE_AUDIT_EXPLICIT_INCORRECT_GLOSS_RE.match(english):
-            continue
-        norwegian = no_match.group("value").lstrip()
-        if norwegian.startswith("✗"):
-            continue
-        _finding(
-            findings,
-            "incorrect-example-marker-missing",
-            "blocking",
-            K_SOURCE_AUDIT_LESSON_FILE,
-            f"line {index + 1}",
-            f"{line.strip()} / {lines[index + 1].strip()}",
-            "A Norwegian example explicitly labeled incorrect in English must begin with `✗`.",
-        )
 
 
 def _strip_example_yaml_quotes(value: str) -> str:
@@ -429,6 +407,47 @@ def _audit_recall_fill_operation_shape(raw: dict[str, Any], handle: str, finding
     for segment in segments:
         _audit_recall_segment_shape(segment, handle, findings)
     _audit_recall_rendering(segments, handle, findings)
+    _audit_answer_position_pattern(blanks, handle, findings)
+
+
+def _audit_answer_position_pattern(
+    blanks: list[dict[str, Any]], handle: str, findings: list[MechanicalFinding]
+) -> None:
+    """Flag keyed answer positions that are guessable without Norwegian.
+
+    A learner can pass a multi-blank recall exercise without reading it when
+    every blank keys the same option position, or when positions repeat in a
+    short fixed cycle. Both patterns are deterministic authoring defects.
+    """
+    positions = [item.get("answer_index") for item in blanks if isinstance(item.get("answer_index"), int)]
+    if len(positions) < K_SOURCE_AUDIT_POSITION_MIN_BLANKS:
+        return
+    evidence = repr(positions)
+    if len(set(positions)) == 1:
+        _finding(
+            findings,
+            "recall-answer-position-uniform",
+            "major",
+            K_SOURCE_AUDIT_EXERCISES_FILE,
+            handle,
+            evidence,
+            "Every blank keys the same option position, so the task is passable by position alone.",
+        )
+        return
+    for period in (2, 3):
+        if len(positions) >= 2 * period + 2 and all(
+            value == positions[index % period] for index, value in enumerate(positions)
+        ):
+            _finding(
+                findings,
+                "recall-answer-position-cyclic",
+                "major",
+                K_SOURCE_AUDIT_EXERCISES_FILE,
+                handle,
+                evidence,
+                f"Answer positions repeat with period {period}, so the pattern is guessable without reading the Norwegian.",
+            )
+            return
 
 
 def _audit_recall_segment_shape(segment: object, handle: str, findings: list[MechanicalFinding]) -> None:
@@ -842,6 +861,16 @@ def _has_unsupported_find_fix_instruction(prompt: str) -> bool:
 def _audit_write_attempt_surface(raw: dict[str, Any], handle: str, findings: list[MechanicalFinding]) -> None:
     """Check visible write instructions against language and rubric capabilities."""
     prompt = raw.get("prompt_md")
+    if isinstance(prompt, str) and (match := K_SOURCE_AUDIT_WRITE_WORD_BUDGET_RE.search(prompt)):
+        _finding(
+            findings,
+            "write-word-budget-in-prompt",
+            "blocking",
+            K_SOURCE_AUDIT_EXERCISES_FILE,
+            handle,
+            match.group(),
+            "Move numeric response-length limits to min_words/max_words; keep the prompt focused on the language task.",
+        )
     criteria = raw.get("criteria")
     texts = [value for value in (prompt, raw.get("judge_prompt")) if isinstance(value, str)]
     if isinstance(criteria, list):

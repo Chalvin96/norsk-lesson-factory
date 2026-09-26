@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "preterite_vs_present_perfect",
   "kind": "grammar",
   "language": "nb-NO",
@@ -96,6 +96,30 @@
     {
       "kind": "exercise",
       "id": "final_tense_retrieval"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_completed_past_time_choice"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_experience_or_occasion"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_present_result_choice"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_unfinished_period_viewpoint"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_duration_continuation"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_narrative_sequence"
     }
   ],
   "sections": [
@@ -629,15 +653,16 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Jeg har sett filmen i går."
+                  "value": "Jeg har sett filmen i går."
                 }
               ],
               "en": [
                 {
                   "kind": "text",
-                  "value": "Intended meaning: I watched the film yesterday."
+                  "value": "I watched the film yesterday."
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "specific-past-events-block-7"
@@ -2355,95 +2380,65 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Classify what motivates each highlighted verb in Leila and Jonas’s dialogue. Use the stated time expression, sequence, experience, present consequence, or continuing situation—not verb form alone."
+          "value": "Sorter hver replikk etter tidsforholdet."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Use preterite with a finished, specified past time; use present perfect for experience, present relevance, or a period continuing to now."
+          "value": "Preteritum plasserer en hendelse i en avsluttet fortid. Presens perfektum knytter noe som skjedde tidligere, til nåtiden."
         }
       ],
       "payload": {
         "buckets": [
           {
             "bucket_id": "completed-past",
-            "label": "Completed past time or completed sequence"
+            "label": "Avsluttet fortid"
           },
           {
             "bucket_id": "past-to-present",
-            "label": "Earlier situation connected to the present"
+            "label": "Knyttet til nåtiden"
           }
         ],
         "items": [
           {
-            "item_id": "item-01",
-            "text": "Har du vært på Fjordhuset før?",
+            "item_id": "restaurant-experience",
+            "text": "Jonas: Har du vært på Fjordhuset før?",
             "bucket_id": "past-to-present"
           },
           {
-            "item_id": "item-02",
-            "text": "Jeg var der forrige fredag.",
+            "item_id": "restaurant-occasion",
+            "text": "Leila: Jeg var der forrige fredag.",
             "bucket_id": "completed-past"
           },
           {
-            "item_id": "item-03",
-            "text": "Forrige fredag spiste vi middag.",
-            "bucket_id": "completed-past"
-          },
-          {
-            "item_id": "item-04",
-            "text": "Forrige fredag hørte vi på et band etter middagen.",
-            "bucket_id": "completed-past"
-          },
-          {
-            "item_id": "item-05",
-            "text": "Jeg har aldri spist der.",
+            "item_id": "meal-result",
+            "text": "Jonas: Jeg har allerede spist, så jeg vil bare ha kaffe.",
             "bucket_id": "past-to-present"
           },
           {
-            "item_id": "item-06",
-            "text": "Jeg har hørt mye positivt om stedet.",
-            "bucket_id": "past-to-present"
-          },
-          {
-            "item_id": "item-07",
-            "text": "Jeg har allerede spist.",
-            "bucket_id": "past-to-present"
-          },
-          {
-            "item_id": "item-08",
-            "text": "Du spiste tidlig!",
+            "item_id": "lunch-time",
+            "text": "Jonas: Jeg tok lunsj før elleve.",
             "bucket_id": "completed-past"
           },
           {
-            "item_id": "item-09",
-            "text": "Jeg har jobbet siden klokka åtte i dag.",
+            "item_id": "continuing-work",
+            "text": "Jonas: Jeg har jobbet siden klokka åtte i dag.",
             "bucket_id": "past-to-present"
           },
           {
-            "item_id": "item-10",
-            "text": "Jeg tok lunsj før elleve.",
-            "bucket_id": "completed-past"
-          },
-          {
-            "item_id": "item-11",
-            "text": "Jeg har bodd i dette området i tre år.",
+            "item_id": "continuing-home",
+            "text": "Leila: Jeg har bodd i området i tre år og bor her fortsatt.",
             "bucket_id": "past-to-present"
           },
           {
-            "item_id": "item-12",
-            "text": "Jeg bodde i Bergen i tre år før jeg flyttet hit.",
+            "item_id": "finished-home",
+            "text": "Jonas: Jeg bodde i Bergen i tre år før jeg flyttet hit.",
             "bucket_id": "completed-past"
           },
           {
-            "item_id": "item-13",
-            "text": "Jeg bodde i Bergen før jeg flyttet hit.",
-            "bucket_id": "completed-past"
-          },
-          {
-            "item_id": "item-14",
-            "text": "Da jeg bodde i Bergen, gikk jeg ofte på små konserter.",
+            "item_id": "completed-sequence",
+            "text": "Leila: Først spiste vi middag, og så hørte vi på et band.",
             "bucket_id": "completed-past"
           }
         ]
@@ -2457,10 +2452,15 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each report. Select the form required by the specific completed past time."
+          "value": "Fyll inn riktig verbform i rapportene."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "De gale alternativene bruker presens perfektum selv om setningen viser til et avsluttet tidspunkt."
+        }
+      ],
       "payload": {
         "segments": [
           {
@@ -2546,33 +2546,7 @@
               },
               {
                 "kind": "text",
-                "value": "den filmen i går kveld. Hun"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "call-last-monday",
-            "options": [
-              "har ringt",
-              "ringte"
-            ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "meg i mandags."
+                "value": "filmen i går kveld."
               }
             ]
           }
@@ -2587,13 +2561,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each pair. Use present perfect for experience before now and past tense for the specified occasion."
+          "value": "Fullfør dialogen."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Use present perfect for experience before now, but preterite when the sentence points to one finished occasion."
+          "value": "Presens perfektum uttrykker erfaring fram til nå. Preteritum viser til en avsluttet anledning."
         }
       ],
       "payload": {
@@ -2603,7 +2577,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Leila: Jeg"
+                "value": "Jonas: Kjenner du til Fjordhuset? Leila: Ja, jeg"
               },
               {
                 "kind": "text",
@@ -2629,7 +2603,7 @@
               },
               {
                 "kind": "text",
-                "value": "på Fjordhuset før. Jeg"
+                "value": "der før. Jeg"
               },
               {
                 "kind": "text",
@@ -2655,59 +2629,7 @@
               },
               {
                 "kind": "text",
-                "value": "der forrige fredag. Jonas: Jeg"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "film-experience",
-            "options": [
-              "har sett",
-              "så"
-            ],
-            "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "den filmen tre ganger. Jeg"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "film-occasion",
-            "options": [
-              "har sett",
-              "så"
-            ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "den sist i går kveld."
+                "value": "der forrige fredag."
               }
             ]
           }
@@ -2722,13 +2644,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each exchange according to its purpose. Use present perfect for a result that matters now and past tense for an event located at a completed time."
+          "value": "Fullfør dialogen med verbtiden som knytter det tidligere måltidet til behovet nå."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Present perfect highlights a result that matters now; preterite simply locates the event in a finished past situation."
+          "value": "Presens perfektum forklarer et resultat som gjelder nå. Preteritum forteller om noe som skjedde før."
         }
       ],
       "payload": {
@@ -2750,17 +2672,43 @@
             "kind": "blank",
             "blank_id": "meal-result",
             "options": [
-              "har spist",
-              "spiste"
+              "spiser",
+              "har spist"
             ],
-            "answer_index": 0
+            "answer_index": 1
           },
           {
             "kind": "span",
             "spans": [
               {
                 "kind": "text",
-                "value": ", så jeg vil bare ha kaffe. Kan du hjelpe meg inn? Jeg"
+                "value": ", så jeg vil bare ha kaffe. I går"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "meal-occasion",
+            "options": [
+              "har spist",
+              "spiste"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "jeg klokka fire. Kan du hjelpe meg inn? Jeg"
               },
               {
                 "kind": "text",
@@ -2772,34 +2720,8 @@
             "kind": "blank",
             "blank_id": "keys-result",
             "options": [
-              "mistet",
-              "har mistet"
-            ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "nøklene, og de er fortsatt borte. I går"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "keys-occasion",
-            "options": [
-              "mistet",
-              "har mistet"
+              "har mistet",
+              "mistet"
             ],
             "answer_index": 0
           },
@@ -2812,59 +2734,7 @@
               },
               {
                 "kind": "text",
-                "value": "jeg nøklene på bussen. Er leksene ferdige nå? Ja, hun"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "homework-result",
-            "options": [
-              "gjorde",
-              "har gjort"
-            ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "leksene. Klokka tre"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "message-occasion",
-            "options": [
-              "sendte",
-              "har sendt"
-            ],
-            "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "jeg meldingen."
+                "value": "nøklene, og de er fortsatt borte."
               }
             ]
           }
@@ -2879,13 +2749,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete the worker’s review. Distinguish broad summaries of an unfinished period from events at a definite past point within that period."
+          "value": "Fyll inn verbformene. Personen er fortsatt på jobb i dag."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "An unfinished period can take present perfect for a summary up to now, while a dated event inside it takes preterite."
+          "value": "Dagen er ikke over, så oppsummeringen fram til nå står i presens perfektum. En avsluttet hendelse står i preteritum."
         }
       ],
       "payload": {
@@ -2895,7 +2765,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Arbeidsdagen fortsetter, og jeg"
+                "value": "Jeg jobber fortsatt. Jeg"
               },
               {
                 "kind": "text",
@@ -2907,10 +2777,10 @@
             "kind": "blank",
             "blank_id": "today-summary",
             "options": [
-              "jobbet",
-              "har jobbet"
+              "har jobbet",
+              "jobbet"
             ],
-            "answer_index": 1
+            "answer_index": 0
           },
           {
             "kind": "span",
@@ -2921,7 +2791,7 @@
               },
               {
                 "kind": "text",
-                "value": "mye i dag. Klokka ni i dag"
+                "value": "mye i dag, men klokka ni"
               },
               {
                 "kind": "text",
@@ -2933,34 +2803,8 @@
             "kind": "blank",
             "blank_id": "exact-time-today",
             "options": [
-              "hadde",
-              "har hatt"
-            ],
-            "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "vi et møte. Denne uka er ikke over, og vi"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "week-summary",
-            "options": [
-              "hadde",
-              "har hatt"
+              "har snakket",
+              "snakket"
             ],
             "answer_index": 1
           },
@@ -2973,59 +2817,7 @@
               },
               {
                 "kind": "text",
-                "value": "tre møter. I år har sjefen"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "year-summary",
-            "options": [
-              "ringt",
-              "ringte"
-            ],
-            "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "meg flere ganger, men i fjor"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "finished-year",
-            "options": [
-              "har ringt",
-              "ringte"
-            ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "hun bare én gang."
+                "value": "jeg med sjefen."
               }
             ]
           }
@@ -3040,13 +2832,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Complete each biography or report. Let the context show whether the duration continues now or is finished."
+          "value": "Fullfør personbeskrivelsene."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "A duration continuing now takes present perfect; a duration that ended in the past takes preterite."
+          "value": "Når en periode fortsetter fram til nå, bruker vi presens perfektum. Preteritum passer når perioden er avsluttet."
         }
       ],
       "payload": {
@@ -3056,59 +2848,7 @@
             "spans": [
               {
                 "kind": "text",
-                "value": "Han studerer fortsatt norsk. Han"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "continuing-study",
-            "options": [
-              "har studert",
-              "studerte"
-            ],
-            "answer_index": 0
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "norsk i to år. Søsteren hans sluttet etter to år. Hun"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "finished-study",
-            "options": [
-              "har studert",
-              "studerte"
-            ],
-            "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "norsk i to år. Nora arbeider fortsatt på kontoret. Hun"
+                "value": "Nora jobber fortsatt her. Hun"
               },
               {
                 "kind": "text",
@@ -3134,7 +2874,7 @@
               },
               {
                 "kind": "text",
-                "value": "der siden 2021. Bussen kom til slutt, så vi"
+                "value": "her siden 2021. Amir sluttet i fjor. Han"
               },
               {
                 "kind": "text",
@@ -3144,38 +2884,12 @@
           },
           {
             "kind": "blank",
-            "blank_id": "finished-wait",
+            "blank_id": "finished-work",
             "options": [
-              "har ventet",
-              "ventet"
+              "har jobbet",
+              "jobbet"
             ],
             "answer_index": 1
-          },
-          {
-            "kind": "span",
-            "spans": [
-              {
-                "kind": "text",
-                "value": " "
-              },
-              {
-                "kind": "text",
-                "value": "i en time før den kom. Jeg bor fortsatt i området og"
-              },
-              {
-                "kind": "text",
-                "value": " "
-              }
-            ]
-          },
-          {
-            "kind": "blank",
-            "blank_id": "continuing-residence",
-            "options": [
-              "har bodd",
-              "bodde"
-            ],
-            "answer_index": 0
           },
           {
             "kind": "span",
@@ -3196,49 +2910,46 @@
     {
       "kind": "exercise",
       "id": "narrative_sequence",
-      "operation": "build",
+      "operation": "write",
       "objective_id": "obj-preterite-vs-present-perfect-01",
       "prompt": [
         {
           "kind": "text",
-          "value": "Build the complete account. Begin with experience before now, then use past tense throughout the particular completed evening."
+          "value": "Skriv en kort tekst på norsk. Du kjenner Fjordhuset fra før, men besøksdatoen er ukjent. Forrige fredag: tur dit med kollegene, middag, musikk og buss hjem. Fortell hendelsene i riktig rekkefølge."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Presens perfektum viser den tidligere turen som en erfaring. Preteritum forteller om hendelsene forrige fredag i riktig rekkefølge."
+        }
+      ],
       "payload": {
-        "tokens": [
+        "response_language": "no",
+        "min_words": 35,
+        "max_words": 55,
+        "judge_prompt": "Evaluate only the visible account task. Apply supplied-events, event-order, coherent-account, experience-form, and narrative-form as gating criteria. Record all ids ending in -observation diagnostically; they never make an otherwise successful account fail.",
+        "criteria": [
           {
-            "token_id": "tok-2",
-            "text": "Forrige fredag dro jeg dit med kollegaene mine.",
-            "fixed": false
+            "id": "supplied-events",
+            "instruction": "The account includes the prior visit, the trip last Friday with colleagues, dinner, listening to music, and the bus home."
           },
           {
-            "token_id": "tok-3",
-            "text": "Først spiste vi middag.",
-            "fixed": false
+            "id": "event-order",
+            "instruction": "The account presents dinner before listening to music and the bus journey home afterwards."
           },
           {
-            "token_id": "tok-4",
-            "text": "Så hørte vi på musikk.",
-            "fixed": false
+            "id": "coherent-account",
+            "instruction": "The events form one understandable Norwegian account."
           },
           {
-            "token_id": "tok-5",
-            "text": "Etterpå tok vi bussen hjem.",
-            "fixed": false
+            "id": "experience-form",
+            "instruction": "The earlier visit is expressed naturally with presens perfektum."
           },
           {
-            "token_id": "tok-1",
-            "text": "Jeg har vært på Fjordhuset én gang.",
-            "fixed": false
+            "id": "narrative-form",
+            "instruction": "The completed events last Friday are expressed naturally with preteritum."
           }
-        ],
-        "answer_order": [
-          "tok-1",
-          "tok-2",
-          "tok-3",
-          "tok-4",
-          "tok-5"
         ]
       }
     },
@@ -3250,39 +2961,64 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write Leila’s connected Norwegian message to a colleague. State that she has been to Fjordhuset before, that she was there last Friday, and what she did there. Explain that Jonas only wants coffee tonight because he has already eaten. Also state that Leila has lived in the area for three years and still lives there. Use appropriate past tense or present perfect for every relationship."
+          "value": "Til kollegaen din: Leila har skrevet: «Jeg har vært på Fjordhuset før, men besøket var forrige fredag. Først har vi spist middag, og så har vi hørt på et band. Jonas vil bare ha kaffe i kveld fordi han spiste allerede. Jeg bodde i området i tre år og bor her fortsatt.» Skriv meldingen om slik at tidsforholdene blir tydelige. Behold alle opplysningene, også Leilas tidligere erfaring."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "En tydelig omskriving skiller mellom tidligere erfaring, et datert besøk, avsluttede hendelser, et resultat som gjelder nå og en periode som fortsetter."
+        }
+      ],
       "payload": {
         "response_language": "no",
         "min_words": 45,
-        "max_words": 85,
-        "judge_prompt": "Check the message against each requested meaning. Accept natural Bokmål wording and word-order variants when tense and time relationship remain clear. Report evidence for every criterion.",
+        "max_words": 75,
+        "judge_prompt": "Evaluate only the visible revision task. Apply message-purpose, supplied-meanings, connected-message, experience-form, completed-past-form, current-result-form, and continuing-duration-form as gating criteria. Record all ids ending in -observation diagnostically; they never make an otherwise successful revision fail.",
         "criteria": [
           {
-            "id": "prior-experience",
-            "instruction": "Uses present perfect to state Leila’s prior experience with Fjordhuset."
+            "id": "message-purpose",
+            "instruction": "The response is a Norwegian message suitable for informing a colleague."
           },
           {
-            "id": "specific-occasion",
-            "instruction": "Uses past tense for Leila’s visit last Friday."
-          },
-          {
-            "id": "completed-actions",
-            "instruction": "Uses past tense for what Leila did during that completed visit."
-          },
-          {
-            "id": "current-result",
-            "instruction": "Uses present perfect to explain that Jonas only wants coffee because he has already eaten."
-          },
-          {
-            "id": "continuing-duration",
-            "instruction": "Uses present perfect to state that Leila has lived in the area for three years and still lives there."
+            "id": "supplied-meanings",
+            "instruction": "The message preserves Leila's prior experience, the visit last Friday, the meal and band, Jonas wanting only coffee because he has eaten, and Leila still living in the area after three years."
           },
           {
             "id": "connected-message",
-            "instruction": "Presents the requested meanings as one understandable connected message."
+            "instruction": "The supplied meanings form an understandable connected message."
+          },
+          {
+            "id": "experience-form",
+            "instruction": "Prior experience is expressed naturally with presens perfektum."
+          },
+          {
+            "id": "completed-past-form",
+            "instruction": "The dated visit and its completed actions are expressed naturally with preteritum."
+          },
+          {
+            "id": "current-result-form",
+            "instruction": "Jonas's present reason is expressed naturally with presens perfektum."
+          },
+          {
+            "id": "continuing-duration-form",
+            "instruction": "Leila's continuing residence is expressed naturally with presens perfektum."
+          },
+          {
+            "id": "experience-form-observation",
+            "instruction": "Observation only: note the exact form used for prior experience."
+          },
+          {
+            "id": "completed-past-form-observation",
+            "instruction": "Observation only: note the exact form used for the dated visit and completed actions."
+          },
+          {
+            "id": "current-result-form-observation",
+            "instruction": "Observation only: note the exact form used for Jonas's present reason."
+          },
+          {
+            "id": "continuing-duration-form-observation",
+            "instruction": "Observation only: note the exact form used for Leila's continuing residence."
           }
         ]
       }
@@ -3295,43 +3031,84 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write one coherent Norwegian paragraph about Sara. She is still cleaning for guests tonight and has cleaned a lot today. The food is ready now because she has made dinner. She sent a message at three o’clock. She has lived in the flat for four years and still lives there. She has hosted guests before. Last month she hosted a completed dinner: first the guests arrived, then they ate, and afterwards they went home. Express all six time relationships with appropriate tenses."
+          "value": "Sara skriver til samboeren før gjestene kommer. Notatene hennes: Vasking, oppstart i morges, fortsatt i gang. Middag, klar nå. Melding til gjestene, klokka tre. Bolig, innflytting for fire år siden, fortsatt samme sted. Tidligere gjester, dato ukjent. Forrige måned, først ankomst, så middag, til slutt hjemreise. Skriv Saras melding på norsk. Ta med alle opplysningene i riktig rekkefølge."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Opplysningene krever presens perfektum for forhold som gjelder nå og preteritum for daterte eller avsluttede hendelser."
+        }
+      ],
       "payload": {
         "response_language": "no",
-        "min_words": 65,
+        "min_words": 70,
         "max_words": 110,
-        "judge_prompt": "Check whether the paragraph expresses every supplied situation with the tense required by its viewpoint. Accept natural Bokmål variants that preserve all meanings. Report evidence for each criterion.",
+        "judge_prompt": "Evaluate only the visible message task. Apply audience-purpose, supplied-facts, completed-dinner, coherent-account, unfinished-period-form, current-result-form, specific-event-form, continuing-duration-form, experience-form, and narrative-form as gating criteria. Record all ids ending in -observation diagnostically; they never make an otherwise successful message fail.",
         "criteria": [
           {
-            "id": "unfinished-period",
-            "instruction": "Uses present perfect to summarize Sara’s cleaning within today, which is still continuing."
+            "id": "audience-purpose",
+            "instruction": "The response is a Norwegian message to Sara's housemate explaining the preparations."
           },
           {
-            "id": "current-result",
-            "instruction": "Uses present perfect for making dinner when its present result is that the food is ready."
+            "id": "supplied-facts",
+            "instruction": "The message includes today's cleaning, the ready meal, the message at three, four years in the flat, and prior experience hosting guests."
           },
           {
-            "id": "specific-event",
-            "instruction": "Uses past tense for sending a message at three o’clock."
-          },
-          {
-            "id": "continuing-duration",
-            "instruction": "Uses present perfect for living in the flat for four years when Sara still lives there."
-          },
-          {
-            "id": "prior-experience",
-            "instruction": "Uses present perfect to state that Sara has hosted guests before."
-          },
-          {
-            "id": "narrative-sequence",
-            "instruction": "Uses past tense consistently for the arrival, meal, and departure during last month’s completed dinner."
+            "id": "completed-dinner",
+            "instruction": "The message recounts last month's arrival, meal, and departure in the supplied order."
           },
           {
             "id": "coherent-account",
-            "instruction": "Integrates all requested meanings into one understandable paragraph."
+            "instruction": "The facts form one understandable message."
+          },
+          {
+            "id": "unfinished-period-form",
+            "instruction": "Expresses that cleaning started this morning and is continuing now. Accept presens perfektum or another natural construction that states both facts, such as «Jeg begynte å vaske i morges og holder fortsatt på»."
+          },
+          {
+            "id": "current-result-form",
+            "instruction": "Expresses that the meal is ready now. Accept presens perfektum or an equally natural present-state expression such as «Maten er klar nå»."
+          },
+          {
+            "id": "specific-event-form",
+            "instruction": "The message sent at three is expressed naturally with preteritum."
+          },
+          {
+            "id": "continuing-duration-form",
+            "instruction": "Expresses that residence began four years ago and continues now. Accept presens perfektum or another natural construction that states both facts, such as «Jeg flyttet inn for fire år siden og bor her fortsatt»."
+          },
+          {
+            "id": "experience-form",
+            "instruction": "Unspecified hosting experience is expressed naturally with presens perfektum."
+          },
+          {
+            "id": "narrative-form",
+            "instruction": "The completed dinner sequence is expressed naturally with preteritum."
+          },
+          {
+            "id": "unfinished-period-form-observation",
+            "instruction": "Observation only: note the form used for today's continuing work."
+          },
+          {
+            "id": "current-result-form-observation",
+            "instruction": "Observation only: note the form used for the ready meal."
+          },
+          {
+            "id": "specific-event-form-observation",
+            "instruction": "Observation only: note the form used for the message at three."
+          },
+          {
+            "id": "continuing-duration-form-observation",
+            "instruction": "Observation only: note the form used for the continuing residence."
+          },
+          {
+            "id": "experience-form-observation",
+            "instruction": "Observation only: note the form used for hosting experience."
+          },
+          {
+            "id": "narrative-form-observation",
+            "instruction": "Observation only: note the form used for the completed dinner sequence."
           }
         ]
       }
@@ -3344,35 +3121,418 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write five controlled Norwegian examples: one sentence about an unspecified experience, one about an event yesterday, one about a result that matters now, one about an activity continuing since a stated starting point, and one containing two completed events in sequence. Keep all five examples in Norwegian and make each time meaning clear."
+          "value": "Skriv en e-post på norsk til norsklæreren din om helgen. Notatene dine: tidligere besøk i Trondheim, dato ukjent; ankomst i går; mistet bagasje, fortsatt savnet; venting på svar startet mandag og fortsetter ennå; i går kveld: middag, deretter konsert. Ta med alle opplysningene og skriv hendelsene i riktig rekkefølge."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "E-posten kombinerer erfaring, en datert hendelse, et resultat som gjelder nå, en varighet som fortsetter og en avsluttet hendelsesrekke."
+        }
+      ],
       "payload": {
         "response_language": "no",
-        "min_words": 45,
-        "max_words": 100,
-        "judge_prompt": "Check each Norwegian example against its assigned meaning. Accept varied natural Bokmål vocabulary when tense and time reference agree. Report evidence for every criterion.",
+        "min_words": 55,
+        "max_words": 90,
+        "judge_prompt": "Evaluate only the visible email task. Apply audience-purpose, supplied-facts, sequence-order, understandable-email, experience-form, dated-event-form, result-form, duration-form, and sequence-form as gating criteria. Record all ids ending in -observation diagnostically; they never make an otherwise successful email fail.",
         "criteria": [
           {
-            "id": "unspecified-experience",
-            "instruction": "Uses present perfect to give a natural Norwegian sentence about an unspecified experience before now."
+            "id": "audience-purpose",
+            "instruction": "The response is a Norwegian email to the learner's Norwegian teacher reporting the weekend."
           },
           {
-            "id": "yesterday-event",
-            "instruction": "Uses past tense for a natural Norwegian sentence about an event yesterday."
+            "id": "supplied-facts",
+            "instruction": "The email includes prior Trondheim experience, arrival yesterday, missing luggage, waiting since Monday, and dinner plus a concert yesterday evening."
           },
           {
-            "id": "present-result",
-            "instruction": "Uses present perfect for a natural Norwegian sentence about a result that matters now."
+            "id": "sequence-order",
+            "instruction": "Dinner is presented before the concert."
           },
           {
-            "id": "continuing-since",
-            "instruction": "Uses present perfect for a natural Norwegian sentence about an activity continuing since a stated starting point."
+            "id": "understandable-email",
+            "instruction": "The supplied facts form an understandable email."
           },
           {
-            "id": "completed-sequence",
-            "instruction": "Uses past tense for a natural Norwegian sentence containing two completed events in sequence."
+            "id": "experience-form",
+            "instruction": "Unspecified Trondheim experience is expressed naturally with presens perfektum."
+          },
+          {
+            "id": "dated-event-form",
+            "instruction": "Arrival yesterday is expressed naturally with preteritum."
+          },
+          {
+            "id": "result-form",
+            "instruction": "Expresses that the lost luggage is still missing. Accept presens perfektum or a natural present-state expression such as «Bagasjen er fortsatt borte»."
+          },
+          {
+            "id": "duration-form",
+            "instruction": "Expresses that waiting began Monday and is continuing now. Accept presens perfektum or a natural construction such as «Jeg begynte å vente på svar mandag og venter fortsatt»."
+          },
+          {
+            "id": "sequence-form",
+            "instruction": "Yesterday evening's completed sequence is expressed naturally with preteritum."
+          },
+          {
+            "id": "experience-form-observation",
+            "instruction": "Observation only: note the form used for Trondheim experience."
+          },
+          {
+            "id": "dated-event-form-observation",
+            "instruction": "Observation only: note the form used for arrival."
+          },
+          {
+            "id": "result-form-observation",
+            "instruction": "Observation only: note the form used for the missing luggage."
+          },
+          {
+            "id": "duration-form-observation",
+            "instruction": "Observation only: note the form used for waiting."
+          },
+          {
+            "id": "sequence-form-observation",
+            "instruction": "Observation only: note the form used for the evening sequence."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_completed_past_time_choice",
+      "operation": "recall_fill",
+      "objective_id": "obj-preterite-vs-present-perfect-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fyll inn verbformen i rapporten."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«For ti år siden» viser til en avsluttet periode, så presens perfektum passer ikke her."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "For ti år siden"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "residence-dated-past",
+            "options": [
+              "har bodd",
+              "bodde"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "hun i Oslo."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_experience_or_occasion",
+      "operation": "recall_fill",
+      "objective_id": "obj-preterite-vs-present-perfect-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fyll inn riktig verbform i svaret."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Før» spør om erfaring fram til nå, ikke om en bestemt avsluttet anledning."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Jonas: Har du noen gang vært i Tromsø? Leila: Ja, jeg"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "tromso-experience",
+            "options": [
+              "besøkte",
+              "har besøkt"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "Tromsø før."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_present_result_choice",
+      "operation": "recall_fill",
+      "objective_id": "obj-preterite-vs-present-perfect-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fyll inn verbformen som forklarer hvorfor personen ikke trenger å se filmen igjen."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Det tidligere filmvalget forklarer behovet nå. Preteritum forteller bare om noe som skjedde før."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Jeg trenger ikke å se filmen igjen, for jeg"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "film-result",
+            "options": [
+              "har sett",
+              "så"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "den allerede."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_unfinished_period_viewpoint",
+      "operation": "recall_fill",
+      "objective_id": "obj-preterite-vs-present-perfect-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fullfør statusen."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Uka pågår fortsatt, så presens perfektum oppsummerer lesingen fram til nå. Preteritum ville framstilt lesingen som avsluttet."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Uka er ikke over ennå. Jeg"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "today-summary",
+            "options": [
+              "har lest",
+              "leste"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "to bøker allerede."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_duration_continuation",
+      "operation": "recall_fill",
+      "objective_id": "obj-preterite-vs-present-perfect-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fullfør profilen. Setningen må vise at perioden i Bergen er avsluttet."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Flyttingen til Oslo avsluttet perioden i Bergen, så preteritum passer; presens perfektum ville knyttet perioden til nå."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "Mina flyttet fra Bergen til Oslo i 2022. Hun"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "finished-residence",
+            "options": [
+              "har bodd",
+              "bodde"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "i Bergen i fem år før flyttingen."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_narrative_sequence",
+      "operation": "recall_fill",
+      "objective_id": "obj-preterite-vs-present-perfect-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Fyll inn verbformen i fortellingen."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Setningen fortsetter en avsluttet hendelsesrekke fra i går kveld. Derfor passer preteritum."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "I går kveld spiste vi middag. Etterpå"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "journey-home",
+            "options": [
+              "har gått",
+              "gikk"
+            ],
+            "answer_index": 1
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "vi hjem."
+              }
+            ]
           }
         ]
       }
@@ -3392,7 +3552,13 @@
         "narrative_sequence",
         "anchor_message_revision",
         "cumulative_evening_transfer",
-        "final_tense_retrieval"
+        "final_tense_retrieval",
+        "review_completed_past_time_choice",
+        "review_experience_or_occasion",
+        "review_present_result_choice",
+        "review_unfinished_period_viewpoint",
+        "review_duration_continuation",
+        "review_narrative_sequence"
       ]
     }
   ],

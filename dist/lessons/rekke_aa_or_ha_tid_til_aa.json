@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "rekke_aa_or_ha_tid_til_aa",
   "kind": "phraseology",
   "language": "nb-NO",
@@ -84,6 +84,34 @@
     {
       "kind": "exercise",
       "id": "final_retrieval"
+    },
+    {
+      "kind": "exercise",
+      "id": "distinguish_rekke_ha_tid"
+    },
+    {
+      "kind": "exercise",
+      "id": "transfer_daily_priorities"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_checkpoint_availability"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_checkpoint_intended_perspective"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_checkpoint_negative_problem"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_guided_nora_emil_plan"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_final_retrieval"
     }
   ],
   "sections": [
@@ -2141,26 +2169,81 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "For each situation, write a few words in Norwegian that identify the event limiting the available time and explain why the action must be completed before it. Situations: 1. At a station, you want to buy coffee, but the bus leaves in five minutes. 2. You need to buy food, but the shop closes soon. 3. You need to send an email, and the meeting starts shortly. 4. You need to finish a report, and it is due at the end of the day."
+          "value": "Skriv en kort melding til Nora. Bruk «rekke å» med riktig bøying og nektingsord. Finn fristen i hver situasjon ut fra opplysningene om buss, stengetid, møtestart og portal. Si hvilke oppgaver som rekker å bli ferdige, og hvilke som ikke gjør det."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 20,
-        "max_words": 75,
-        "judge_prompt": "Check all four situations separately and report evidence for each criterion. Accept concise natural Norwegian wording and equivalent endpoint descriptions.",
+        "min_words": 35,
+        "max_words": 70,
+        "judge_prompt": "Evaluate criteria bus-endpoint, shop-endpoint, meeting-endpoint, report-endpoint, and explicit-rekke-aa. Accept concise, natural Norwegian, but do not accept an equivalent expression in place of the required rekke å frame.",
         "criteria": [
           {
-            "id": "hidden-endpoints",
-            "instruction": "Identifies the relevant endpoint in each of the bus, shop, meeting, and report situations."
+            "id": "bus-endpoint",
+            "instruction": "Recognizes the 16.00 home bus as Nora's cutoff: with only five minutes remaining and at least ten minutes of work, she will not finish clearing the desk in time."
           },
           {
-            "id": "completion-before-endpoint",
-            "instruction": "Explains for each situation why the action must be completed before that endpoint."
+            "id": "shop-endpoint",
+            "instruction": "Recognizes the 16.30 closing time as Emil's cutoff: fifteen minutes of shopping will not fit into the ten minutes remaining."
+          },
+          {
+            "id": "meeting-endpoint",
+            "instruction": "Recognizes the 17.00 meeting as Nora's cutoff and that the twenty-minute task fits within the thirty-five minutes remaining."
+          },
+          {
+            "id": "report-endpoint",
+            "instruction": "Recognizes the 18.00 portal closing as Emil's cutoff and that the fifteen-minute task fits within the forty minutes remaining."
+          },
+          {
+            "id": "explicit-rekke-aa",
+            "instruction": "Uses the frame rekke å, with suitable tense or negation, for each task."
           }
         ]
-      }
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Nora",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Klokka er 15.55. Det tar minst ti minutter å rydde pulten. Bussen min hjem går kl. 16.00.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Emil",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Klokka er 16.20. Butikken stenger kl. 16.30, og jeg trenger minst femten minutter til å kjøpe melk.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Nora",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Klokka er 16.25. Møtet starter kl. 17.00, og sakspapirene trenger minst tjue minutter til.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Emil",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Klokka er 17.20. Rapporten mangler en avslutning som tar omtrent femten minutter å skrive. Innleveringsportalen stenger kl. 18.00.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "exercise",
@@ -2170,410 +2253,129 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Build the three complete Norwegian questions in order. All three ask about available time, so use ha tid til å. Contexts: 1. Nora asks Emil whether he can help with the figures. 2. A friend asks whether someone can meet after work. 3. A family member asks whether someone can help with dinner."
+          "value": "Spør Sam om hen har tid til å gjøre klart rommet etter timen."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Spørsmålet gjelder om Sam har ledig tid, ikke om en oppgave må fullføres før en frist."
+        }
+      ],
       "payload": {
         "tokens": [
           {
-            "token_id": "availq-1",
-            "text": "Emil,",
+            "token_id": "availq-sam",
+            "text": "Sam,",
             "fixed": false
           },
           {
-            "token_id": "availq-2",
+            "token_id": "availq-har",
             "text": "har",
             "fixed": false
           },
           {
-            "token_id": "availq-3",
+            "token_id": "availq-du",
             "text": "du",
             "fixed": false
           },
           {
-            "token_id": "availq-4",
+            "token_id": "availq-tid",
             "text": "tid",
             "fixed": false
           },
           {
-            "token_id": "availq-5",
+            "token_id": "availq-til",
             "text": "til",
             "fixed": false
           },
           {
-            "token_id": "availq-6",
+            "token_id": "availq-aa",
             "text": "å",
             "fixed": false
           },
           {
-            "token_id": "availq-7",
-            "text": "kontrollere",
+            "token_id": "availq-gjore",
+            "text": "gjøre",
             "fixed": false
           },
           {
-            "token_id": "availq-8",
-            "text": "tallene",
+            "token_id": "availq-klart",
+            "text": "klart",
             "fixed": false
           },
           {
-            "token_id": "availq-9",
-            "text": "for",
+            "token_id": "availq-rommet",
+            "text": "rommet",
             "fixed": false
           },
           {
-            "token_id": "availq-10",
-            "text": "meg?",
-            "fixed": false
-          },
-          {
-            "token_id": "availq-11",
-            "text": "Har",
-            "fixed": false
-          },
-          {
-            "token_id": "availq-12",
-            "text": "du",
-            "fixed": false
-          },
-          {
-            "token_id": "availq-13",
-            "text": "tid",
-            "fixed": false
-          },
-          {
-            "token_id": "availq-14",
-            "text": "til",
-            "fixed": false
-          },
-          {
-            "token_id": "availq-15",
-            "text": "å",
-            "fixed": false
-          },
-          {
-            "token_id": "availq-16",
-            "text": "møte",
-            "fixed": false
-          },
-          {
-            "token_id": "availq-17",
-            "text": "meg",
-            "fixed": false
-          },
-          {
-            "token_id": "availq-18",
+            "token_id": "availq-etter",
             "text": "etter",
             "fixed": false
           },
           {
-            "token_id": "availq-19",
-            "text": "jobb?",
-            "fixed": false
-          },
-          {
-            "token_id": "availq-20",
-            "text": "Har",
-            "fixed": false
-          },
-          {
-            "token_id": "availq-21",
-            "text": "du",
-            "fixed": false
-          },
-          {
-            "token_id": "availq-22",
-            "text": "tid",
-            "fixed": false
-          },
-          {
-            "token_id": "availq-23",
-            "text": "til",
-            "fixed": false
-          },
-          {
-            "token_id": "availq-24",
-            "text": "å",
-            "fixed": false
-          },
-          {
-            "token_id": "availq-25",
-            "text": "hjelpe",
-            "fixed": false
-          },
-          {
-            "token_id": "availq-26",
-            "text": "meg",
-            "fixed": false
-          },
-          {
-            "token_id": "availq-27",
-            "text": "med",
-            "fixed": false
-          },
-          {
-            "token_id": "availq-28",
-            "text": "middagen?",
+            "token_id": "availq-timen",
+            "text": "timen?",
             "fixed": false
           }
         ],
         "answer_order": [
-          "availq-1",
-          "availq-2",
-          "availq-3",
-          "availq-4",
-          "availq-5",
-          "availq-6",
-          "availq-7",
-          "availq-8",
-          "availq-9",
-          "availq-10",
-          "availq-11",
-          "availq-12",
-          "availq-13",
-          "availq-14",
-          "availq-15",
-          "availq-16",
-          "availq-17",
-          "availq-18",
-          "availq-19",
-          "availq-20",
-          "availq-21",
-          "availq-22",
-          "availq-23",
-          "availq-24",
-          "availq-25",
-          "availq-26",
-          "availq-27",
-          "availq-28"
+          "availq-sam",
+          "availq-har",
+          "availq-du",
+          "availq-tid",
+          "availq-til",
+          "availq-aa",
+          "availq-gjore",
+          "availq-klart",
+          "availq-rommet",
+          "availq-etter",
+          "availq-timen"
         ]
       }
     },
     {
       "kind": "exercise",
       "id": "checkpoint_intended_perspective",
-      "operation": "build",
+      "operation": "choose",
       "objective_id": "obj-rekke-aa-or-ha-tid-til-aa-01",
       "prompt": [
         {
           "kind": "text",
-          "value": "Build four complete Norwegian sentences in order, with the same action preserved within each pair. Pair 1 concerns reading a message: available time in the afternoon, then completion before a meeting. Pair 2 concerns making lunch: available time after a meeting, then completion before guests arrive. Use ha tid til å for availability and rekke å for timely completion."
+          "value": "Velg setningen som passer best til hver situasjon."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Ha tid til å describes available time; rekke å focuses on succeeding before a deadline."
+          "value": "The first and third situations highlight available periods; the second and fourth focus on finishing before a cutoff. The expressions can overlap in real contexts, but these cues foreground different perspectives."
         }
       ],
       "payload": {
-        "tokens": [
+        "options": [
           {
-            "token_id": "persp-1",
-            "text": "Har",
-            "fixed": false
+            "option_id": "availability-all",
+            "text": "Har du tid til å lese beskjeden i ettermiddag? Har du tid til å lese beskjeden før møtet begynner? Vi har tid til å lage lunsj etter møtet. Vi har tid til å lage lunsj før gjestene kommer.",
+            "why": "This overlooks the explicitly foregrounded cutoff in the meeting and guest situations."
           },
           {
-            "token_id": "persp-2",
-            "text": "du",
-            "fixed": false
+            "option_id": "perspectives-fit",
+            "text": "Har du tid til å lese beskjeden i ettermiddag? Rekker du å lese beskjeden før møtet begynner? Vi har tid til å lage lunsj etter møtet. Vi rekker å lage lunsj før gjestene kommer.",
+            "why": "The sentences match the stated availability periods and completion cutoffs."
           },
           {
-            "token_id": "persp-3",
-            "text": "tid",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-4",
-            "text": "til",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-5",
-            "text": "å",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-6",
-            "text": "lese",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-7",
-            "text": "beskjeden",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-8",
-            "text": "i",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-9",
-            "text": "ettermiddag?",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-10",
-            "text": "Rekker",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-11",
-            "text": "du",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-12",
-            "text": "å",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-13",
-            "text": "lese",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-14",
-            "text": "beskjeden",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-15",
-            "text": "før",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-16",
-            "text": "møtet",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-17",
-            "text": "begynner?",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-18",
-            "text": "Vi",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-19",
-            "text": "har",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-20",
-            "text": "tid",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-21",
-            "text": "til",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-22",
-            "text": "å",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-23",
-            "text": "lage",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-24",
-            "text": "lunsj",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-25",
-            "text": "etter",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-26",
-            "text": "møtet.",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-27",
-            "text": "Vi",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-28",
-            "text": "rekker",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-29",
-            "text": "å",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-30",
-            "text": "lage",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-31",
-            "text": "lunsj",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-32",
-            "text": "før",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-33",
-            "text": "gjestene",
-            "fixed": false
-          },
-          {
-            "token_id": "persp-34",
-            "text": "kommer.",
-            "fixed": false
+            "option_id": "cutoff-all",
+            "text": "Rekker du å lese beskjeden i ettermiddag? Rekker du å lese beskjeden før møtet begynner? Vi rekker å lage lunsj etter møtet. Vi rekker å lage lunsj før gjestene kommer.",
+            "why": "This casts the two open periods as completion-before-cutoff tasks."
           }
         ],
-        "answer_order": [
-          "persp-1",
-          "persp-2",
-          "persp-3",
-          "persp-4",
-          "persp-5",
-          "persp-6",
-          "persp-7",
-          "persp-8",
-          "persp-9",
-          "persp-10",
-          "persp-11",
-          "persp-12",
-          "persp-13",
-          "persp-14",
-          "persp-15",
-          "persp-16",
-          "persp-17",
-          "persp-18",
-          "persp-19",
-          "persp-20",
-          "persp-21",
-          "persp-22",
-          "persp-23",
-          "persp-24",
-          "persp-25",
-          "persp-26",
-          "persp-27",
-          "persp-28",
-          "persp-29",
-          "persp-30",
-          "persp-31",
-          "persp-32",
-          "persp-33",
-          "persp-34"
+        "answer_id": "perspectives-fit",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "En kollega spør om du har tid til å lese en melding i et ledig tidsrom i ettermiddag. En annen spør om meldingen kan leses før et møte begynner. Senere er det tid til å lage lunsj etter møtet, men lunsjen må være klar før gjestene kommer."
+          }
         ]
       }
     },
@@ -2585,38 +2387,43 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Read the four negative Norwegian sentences. Choose the interpretation set that classifies every sentence correctly. Available-time means lack of room in the schedule; cutoff means inability to complete before an endpoint. 1. Nora har ikke tid til å kontrollere tallene. 2. Nora rekker ikke å skrive om teksten før møtet begynner. 3. Emil har ikke tid til å forlate kontoret. 4. Emil rekker ikke å ta bussen."
+          "value": "Velg tolkningene som passer til alle fire setningene."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Har ikke tid til å» sier at tiden ikke er tilgjengelig. «Rekker ikke å» sier at handlingen ikke blir ferdig før et tidspunkt."
+        }
+      ],
       "payload": {
         "options": [
           {
             "option_id": "set-first-pair-swapped",
-            "text": "1: Manglende ferdigstillelse før et tidspunkt (failure to finish before a cutoff); 2: Mangel på tilgjengelig tid (lack of available time); 3: Mangel på tilgjengelig tid (lack of available time); 4: Manglende ferdigstillelse før et tidspunkt (failure to finish before a cutoff).",
-            "why": "This reverses the meanings of the first two sentences."
+            "text": "1: fullføring før frist; 2: ledig tid; 3: ledig tid; 4: fullføring før frist.",
+            "why": "Dette bytter om på betydningen av setning 1 og 2."
           },
           {
             "option_id": "set-second-pair-swapped",
-            "text": "1: Mangel på tilgjengelig tid (lack of available time); 2: Manglende ferdigstillelse før et tidspunkt (failure to finish before a cutoff); 3: Manglende ferdigstillelse før et tidspunkt (failure to finish before a cutoff); 4: Mangel på tilgjengelig tid (lack of available time).",
-            "why": "This reverses the meanings of the third and fourth sentences."
+            "text": "1: ledig tid; 2: fullføring før frist; 3: fullføring før frist; 4: ledig tid.",
+            "why": "Dette bytter om på betydningen av setning 3 og 4."
           },
           {
             "option_id": "set-all-cutoff",
-            "text": "1: Manglende ferdigstillelse før et tidspunkt (failure to finish before a cutoff); 2: Manglende ferdigstillelse før et tidspunkt (failure to finish before a cutoff); 3: Manglende ferdigstillelse før et tidspunkt (failure to finish before a cutoff); 4: Manglende ferdigstillelse før et tidspunkt (failure to finish before a cutoff).",
-            "why": "Sentences 1 and 3 describe lack of general available time, not failure against a stated or understood cutoff."
+            "text": "1: fullføring før frist; 2: fullføring før frist; 3: fullføring før frist; 4: fullføring før frist.",
+            "why": "Setning 1 og 3 sier at tiden ikke er tilgjengelig, ikke at noe må bli ferdig før et bestemt tidspunkt."
           },
           {
             "option_id": "set-correct",
-            "text": "1: Mangel på tilgjengelig tid (lack of available time); 2: Manglende ferdigstillelse før et tidspunkt (failure to finish before a cutoff); 3: Mangel på tilgjengelig tid (lack of available time); 4: Manglende ferdigstillelse før et tidspunkt (failure to finish before a cutoff).",
-            "why": "Sentences 1 and 3 use har ikke tid til å for lack of schedule room; sentences 2 and 4 use rekke ikke å for failure against a cutoff, including an understood bus departure."
+            "text": "1: ingen ledig tid; 2: ikke ferdig før møtet; 3: ingen ledig tid; 4: ikke ferdig før bussen går.",
+            "why": "Setning 1 og 3 sier at tiden ikke er tilgjengelig. Setning 2 og 4 sier at handlingen ikke blir ferdig før et oppgitt tidspunkt."
           }
         ],
         "answer_id": "set-correct",
         "stem": [
           {
             "kind": "text",
-            "value": "Choose the interpretation set that classifies all four sentences correctly."
+            "value": "Først: Nora har ikke tid til å kontrollere tallene. Deretter: Nora rekker ikke å skrive om teksten før møtet begynner. Så: Emil har ikke tid til å forlate kontoret. Til slutt: Emil rekker ikke å ta bussen."
           }
         ]
       }
@@ -2624,416 +2431,88 @@
     {
       "kind": "exercise",
       "id": "guided_schedule_to_deadline",
-      "operation": "build",
+      "operation": "choose",
       "objective_id": "obj-rekke-aa-or-ha-tid-til-aa-01",
       "prompt": [
         {
           "kind": "text",
-          "value": "Build three complete Norwegian sentences in order. Rewrite each availability-focused situation so timely completion is central. Use rekke å and keep an explicit cutoff: 1. Read a message during the afternoon; a meeting starts. 2. Buy food before a guest arrives. 3. Complete an online form before the system closes."
+          "value": "Velg setningsgruppen som viser at hver oppgave må fullføres før fristen."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "These situations foreground completion before fixed cutoffs, so rekke å is the clearest framing here."
+        }
+      ],
       "payload": {
-        "tokens": [
+        "options": [
           {
-            "token_id": "deadline-1",
-            "text": "Jeg",
-            "fixed": false
+            "option_id": "deadline-set",
+            "text": "Jeg rekker å lese meldingen før møtet begynner. Vi rekker å kjøpe mat før gjesten kommer. Hun rekker å fylle ut skjemaet før systemet stenger.",
+            "why": "Each sentence focuses on completing the task before the stated cutoff."
           },
           {
-            "token_id": "deadline-2",
-            "text": "rekker",
-            "fixed": false
+            "option_id": "availability-set",
+            "text": "Jeg har tid til å lese meldingen før møtet begynner. Vi har tid til å kjøpe mat før gjesten kommer. Hun har tid til å fylle ut skjemaet før systemet stenger.",
+            "why": "This can be grammatical, but it foregrounds available time rather than whether each task will be completed before the cutoff."
           },
           {
-            "token_id": "deadline-3",
-            "text": "å",
-            "fixed": false
-          },
-          {
-            "token_id": "deadline-4",
-            "text": "lese",
-            "fixed": false
-          },
-          {
-            "token_id": "deadline-5",
-            "text": "meldingen",
-            "fixed": false
-          },
-          {
-            "token_id": "deadline-6",
-            "text": "før",
-            "fixed": false
-          },
-          {
-            "token_id": "deadline-7",
-            "text": "møtet",
-            "fixed": false
-          },
-          {
-            "token_id": "deadline-8",
-            "text": "begynner.",
-            "fixed": false
-          },
-          {
-            "token_id": "deadline-9",
-            "text": "Vi",
-            "fixed": false
-          },
-          {
-            "token_id": "deadline-10",
-            "text": "rekker",
-            "fixed": false
-          },
-          {
-            "token_id": "deadline-11",
-            "text": "å",
-            "fixed": false
-          },
-          {
-            "token_id": "deadline-12",
-            "text": "kjøpe",
-            "fixed": false
-          },
-          {
-            "token_id": "deadline-13",
-            "text": "mat",
-            "fixed": false
-          },
-          {
-            "token_id": "deadline-14",
-            "text": "før",
-            "fixed": false
-          },
-          {
-            "token_id": "deadline-15",
-            "text": "gjesten",
-            "fixed": false
-          },
-          {
-            "token_id": "deadline-16",
-            "text": "kommer.",
-            "fixed": false
-          },
-          {
-            "token_id": "deadline-17",
-            "text": "Hun",
-            "fixed": false
-          },
-          {
-            "token_id": "deadline-18",
-            "text": "rekker",
-            "fixed": false
-          },
-          {
-            "token_id": "deadline-19",
-            "text": "å",
-            "fixed": false
-          },
-          {
-            "token_id": "deadline-20",
-            "text": "fylle",
-            "fixed": false
-          },
-          {
-            "token_id": "deadline-21",
-            "text": "ut",
-            "fixed": false
-          },
-          {
-            "token_id": "deadline-22",
-            "text": "skjemaet",
-            "fixed": false
-          },
-          {
-            "token_id": "deadline-23",
-            "text": "før",
-            "fixed": false
-          },
-          {
-            "token_id": "deadline-24",
-            "text": "systemet",
-            "fixed": false
-          },
-          {
-            "token_id": "deadline-25",
-            "text": "stenger.",
-            "fixed": false
+            "option_id": "mixed-set",
+            "text": "Jeg har tid til å lese meldingen før møtet begynner. Vi rekker å kjøpe mat før gjesten kommer. Hun har tid til å fylle ut skjemaet før systemet stenger.",
+            "why": "The task asks for a consistent deadline-focused perspective across all three situations."
           }
         ],
-        "answer_order": [
-          "deadline-1",
-          "deadline-2",
-          "deadline-3",
-          "deadline-4",
-          "deadline-5",
-          "deadline-6",
-          "deadline-7",
-          "deadline-8",
-          "deadline-9",
-          "deadline-10",
-          "deadline-11",
-          "deadline-12",
-          "deadline-13",
-          "deadline-14",
-          "deadline-15",
-          "deadline-16",
-          "deadline-17",
-          "deadline-18",
-          "deadline-19",
-          "deadline-20",
-          "deadline-21",
-          "deadline-22",
-          "deadline-23",
-          "deadline-24",
-          "deadline-25"
+        "answer_id": "deadline-set",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Meldingen må leses før neste møte. Gjestene kommer til et bestemt tidspunkt, og skjemaet stenger til et bestemt klokkeslett."
+          }
         ]
       }
     },
     {
       "kind": "exercise",
       "id": "guided_deadline_to_availability",
-      "operation": "build",
+      "operation": "choose",
       "objective_id": "obj-rekke-aa-or-ha-tid-til-aa-01",
       "prompt": [
         {
           "kind": "text",
-          "value": "Build four complete Norwegian sentences in order. Recast each deadline-focused situation as an availability-focused statement or question. Use ha tid til å and make available time, not a deadline, central: 1. Calling a colleague after lunch. 2. Preparing lunch today. 3. Reviewing a document this evening. 4. Visiting a friend this weekend."
+          "value": "Velg setningsgruppen som viser at aktivitetene passer inn i ledige tidsrom."
         }
       ],
-      "explanation": null,
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "With open periods as the focus and no completion cutoff, ha tid til å presents the activities as fitting into the schedule."
+        }
+      ],
       "payload": {
-        "tokens": [
+        "options": [
           {
-            "token_id": "available-1",
-            "text": "Jeg",
-            "fixed": false
+            "option_id": "availability-set",
+            "text": "Jeg har tid til å ringe kollegaen etter lunsj. Vi har tid til å lage lunsj i dag. Hun har tid til å gå gjennom dokumentet i kveld. Har du tid til å besøke en venn i helgen?",
+            "why": "Each sentence presents an activity as fitting an open period in someone's schedule."
           },
           {
-            "token_id": "available-2",
-            "text": "har",
-            "fixed": false
+            "option_id": "cutoff-set",
+            "text": "Jeg rekker å ringe kollegaen etter lunsj. Vi rekker å lage lunsj i dag. Hun rekker å gå gjennom dokumentet i kveld. Rekker du å besøke en venn i helgen?",
+            "why": "This presents the activities as completion goals rather than available periods."
           },
           {
-            "token_id": "available-3",
-            "text": "tid",
-            "fixed": false
-          },
-          {
-            "token_id": "available-4",
-            "text": "til",
-            "fixed": false
-          },
-          {
-            "token_id": "available-5",
-            "text": "å",
-            "fixed": false
-          },
-          {
-            "token_id": "available-6",
-            "text": "ringe",
-            "fixed": false
-          },
-          {
-            "token_id": "available-7",
-            "text": "kollegaen",
-            "fixed": false
-          },
-          {
-            "token_id": "available-8",
-            "text": "etter",
-            "fixed": false
-          },
-          {
-            "token_id": "available-9",
-            "text": "lunsj.",
-            "fixed": false
-          },
-          {
-            "token_id": "available-10",
-            "text": "Vi",
-            "fixed": false
-          },
-          {
-            "token_id": "available-11",
-            "text": "har",
-            "fixed": false
-          },
-          {
-            "token_id": "available-12",
-            "text": "tid",
-            "fixed": false
-          },
-          {
-            "token_id": "available-13",
-            "text": "til",
-            "fixed": false
-          },
-          {
-            "token_id": "available-14",
-            "text": "å",
-            "fixed": false
-          },
-          {
-            "token_id": "available-15",
-            "text": "lage",
-            "fixed": false
-          },
-          {
-            "token_id": "available-16",
-            "text": "lunsj",
-            "fixed": false
-          },
-          {
-            "token_id": "available-17",
-            "text": "i",
-            "fixed": false
-          },
-          {
-            "token_id": "available-18",
-            "text": "dag.",
-            "fixed": false
-          },
-          {
-            "token_id": "available-19",
-            "text": "Hun",
-            "fixed": false
-          },
-          {
-            "token_id": "available-20",
-            "text": "har",
-            "fixed": false
-          },
-          {
-            "token_id": "available-21",
-            "text": "tid",
-            "fixed": false
-          },
-          {
-            "token_id": "available-22",
-            "text": "til",
-            "fixed": false
-          },
-          {
-            "token_id": "available-23",
-            "text": "å",
-            "fixed": false
-          },
-          {
-            "token_id": "available-24",
-            "text": "gå",
-            "fixed": false
-          },
-          {
-            "token_id": "available-25",
-            "text": "gjennom",
-            "fixed": false
-          },
-          {
-            "token_id": "available-26",
-            "text": "dokumentet",
-            "fixed": false
-          },
-          {
-            "token_id": "available-27",
-            "text": "i",
-            "fixed": false
-          },
-          {
-            "token_id": "available-28",
-            "text": "kveld.",
-            "fixed": false
-          },
-          {
-            "token_id": "available-29",
-            "text": "Har",
-            "fixed": false
-          },
-          {
-            "token_id": "available-30",
-            "text": "du",
-            "fixed": false
-          },
-          {
-            "token_id": "available-31",
-            "text": "tid",
-            "fixed": false
-          },
-          {
-            "token_id": "available-32",
-            "text": "til",
-            "fixed": false
-          },
-          {
-            "token_id": "available-33",
-            "text": "å",
-            "fixed": false
-          },
-          {
-            "token_id": "available-34",
-            "text": "besøke",
-            "fixed": false
-          },
-          {
-            "token_id": "available-35",
-            "text": "en",
-            "fixed": false
-          },
-          {
-            "token_id": "available-36",
-            "text": "venn",
-            "fixed": false
-          },
-          {
-            "token_id": "available-37",
-            "text": "i",
-            "fixed": false
-          },
-          {
-            "token_id": "available-38",
-            "text": "helgen?",
-            "fixed": false
+            "option_id": "mixed-set",
+            "text": "Jeg rekker å ringe kollegaen etter lunsj. Vi har tid til å lage lunsj i dag. Hun rekker å gå gjennom dokumentet i kveld. Har du tid til å besøke en venn i helgen?",
+            "why": "The task asks for a consistent availability perspective across all four situations."
           }
         ],
-        "answer_order": [
-          "available-1",
-          "available-2",
-          "available-3",
-          "available-4",
-          "available-5",
-          "available-6",
-          "available-7",
-          "available-8",
-          "available-9",
-          "available-10",
-          "available-11",
-          "available-12",
-          "available-13",
-          "available-14",
-          "available-15",
-          "available-16",
-          "available-17",
-          "available-18",
-          "available-19",
-          "available-20",
-          "available-21",
-          "available-22",
-          "available-23",
-          "available-24",
-          "available-25",
-          "available-26",
-          "available-27",
-          "available-28",
-          "available-29",
-          "available-30",
-          "available-31",
-          "available-32",
-          "available-33",
-          "available-34",
-          "available-35",
-          "available-36",
-          "available-37",
-          "available-38"
+        "answer_id": "availability-set",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Fire personer har ledig tid etter lunsj, i dag, i kveld og i helgen. Ingen av aktivitetene har en frist."
+          }
         ]
       }
     },
@@ -3045,31 +2524,23 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Continue the office story in four short Norwegian lines. Write one positive and one negative line about actions Nora and Emil can complete before the bus leaves. Write one positive and one negative line about activities they have time to do during the journey. Use rekke å for the bus-cutoff lines and ha tid til å for the journey-availability lines."
+          "value": "Nora og Emil må forlate kontoret kl. 15.55. Skriveren er ute av drift til kl. 16.10, og bussen går kl. 16.00. Skriv en melding til Nora. Bruk «rekke å» om utskriften og «ha tid til å» om lesingen på bussen."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 20,
-        "max_words": 60,
-        "judge_prompt": "Check all four lines separately. Accept natural Norwegian variants, but require the requested polarity, time perspective, and target expression in each line.",
+        "min_words": 15,
+        "max_words": 35,
+        "judge_prompt": "Evaluate whether the message uses the requested rekke å frame for the printing deadline and ha tid til å frame for the reading opportunity, with the stated meanings. Accept natural Bokmål variants and verb inflections; do not pass an answer that uses unrelated frames for either meaning.",
         "criteria": [
           {
-            "id": "cutoff-positive",
-            "instruction": "Includes a positive rekke å line connecting completed action with the bus departure."
-          },
-          {
             "id": "cutoff-negative",
-            "instruction": "Includes a negative rekke å line connecting failure to complete an action with the bus departure."
+            "instruction": "Uses a natural negative form of rekke å + infinitive to state that the document cannot be printed before the 16.00 bus leaves."
           },
           {
             "id": "availability-positive",
-            "instruction": "Includes a positive ha tid til å line about an activity during the journey."
-          },
-          {
-            "id": "availability-negative",
-            "instruction": "Includes a negative ha tid til å line about an activity during the journey."
+            "instruction": "Uses ha tid til å + infinitive to state positively that there is an available period on the bus for reading."
           }
         ]
       }
@@ -3082,19 +2553,19 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Write the two Norwegian target frames from this lesson. Then write one Norwegian sentence with the frame for completing an action before a cutoff and one with the frame for having time available for an activity. Make the chosen expression fit its context clearly in Norwegian."
+          "value": "Du sender læreren en læringsnote. Skriv begge uttrykkene, ett eksempel om å fullføre før et endepunkt og ett eksempel om tilgjengelig tid."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 20,
-        "max_words": 70,
-        "judge_prompt": "Check that the response contains both exact taught frames and two natural Norwegian sentences with the required time perspectives. Accept natural Bokmål variants for sentence content, but do not accept swapped perspectives.",
+        "min_words": 25,
+        "max_words": 55,
+        "judge_prompt": "Evaluate criteria both-frames, cutoff-sentence, availability-sentence. Accept natural Bokmål examples, but reject examples that swap the two time perspectives.",
         "criteria": [
           {
             "id": "both-frames",
-            "instruction": "Writes both Norwegian frames rekke å + infinitive and ha tid til å + infinitive."
+            "instruction": "Writes both taught frames: rekke å plus an infinitive and ha tid til å plus an infinitive."
           },
           {
             "id": "cutoff-sentence",
@@ -3103,6 +2574,315 @@
           {
             "id": "availability-sentence",
             "instruction": "Provides one Norwegian sentence centered on available time for an activity."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "distinguish_rekke_ha_tid",
+      "operation": "choose",
+      "objective_id": "obj-rekke-aa-or-ha-tid-til-aa-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg setningen som passer til situasjonen."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Ha tid til å describes room in a schedule. Rekke å presents an action as something that must be completed before a cutoff."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "cutoff-reading",
+            "text": "Nora rekker å hjelpe Emil etter møtet.",
+            "why": "Rekker å suggests successful completion before a cutoff, but the situation gives no deadline for helping after the meeting."
+          },
+          {
+            "option_id": "missing-til",
+            "text": "Nora har tid å hjelpe Emil etter møtet.",
+            "why": "The availability meaning is appropriate, but the frame must include til before å."
+          },
+          {
+            "option_id": "availability-correct",
+            "text": "Nora har tid til å hjelpe Emil etter møtet.",
+            "why": "The sentence presents the period after the meeting as available time for helping."
+          }
+        ],
+        "answer_id": "availability-correct",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Nora og Emil må bli ferdige med en rapport før møtet klokka 15.00. Etter møtet vil Nora hjelpe Emil, men det haster ikke."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "transfer_daily_priorities",
+      "operation": "write",
+      "objective_id": "obj-rekke-aa-or-ha-tid-til-aa-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Du skriver til en kollega for å planlegge dagen. Kundesvaret må sendes før kl. 14. Du har en ledig halvtime etter lunsj til å kontrollere vedlegget, kollegaen kan hjelpe fra kl. 13.30, og møtet begynner kl. 14.15. Skriv en melding med et forslag til plan. Bruk «rekke å» om kundesvaret og «ha tid til å» om vedlegget, og spør om kollegaen kan hjelpe."
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "response_language": "no",
+        "min_words": 45,
+        "max_words": 70,
+        "judge_prompt": "Evaluate all gating criteria, including the required use of rekke å and ha tid til å. Record the two observation criteria diagnostically only.",
+        "criteria": [
+          {
+            "id": "plan-content",
+            "instruction": "Proposes a workable plan that accounts for the 14.00 customer deadline, the free half-hour, the colleague's availability, and the 14.15 meeting."
+          },
+          {
+            "id": "colleague-request",
+            "instruction": "Asks the colleague for help with a relevant part of the work."
+          },
+          {
+            "id": "rekke-required",
+            "instruction": "Uses rekke å appropriately for completing the customer reply before 14.00."
+          },
+          {
+            "id": "ha-tid-required",
+            "instruction": "Uses ha tid til å appropriately for the available time to check the attachment."
+          },
+          {
+            "id": "rekke-observation",
+            "instruction": "Observation only: note whether another use of rekke å is natural; do not fail the response."
+          },
+          {
+            "id": "ha-tid-observation",
+            "instruction": "Observation only: note whether another use of ha tid til å is natural; do not fail the response."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_checkpoint_availability",
+      "operation": "choose",
+      "objective_id": "obj-rekke-aa-or-ha-tid-til-aa-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg spørsmålet som handler om ledig tid, ikke om en frist."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Spørsmålet gjelder om Emil har tid; «har du tid til å» passer derfor."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "incomplete-frame-question",
+            "text": "Har du tid å kontrollere tallene etter lunsj?",
+            "why": "The availability meaning is appropriate, but the frame is missing til."
+          },
+          {
+            "option_id": "availability-question",
+            "text": "Har du tid til å kontrollere tallene etter lunsj?",
+            "why": "This asks whether checking the figures fits into Emil's available time."
+          },
+          {
+            "option_id": "implicit-cutoff-question",
+            "text": "Rekker du å kontrollere tallene etter lunsj?",
+            "why": "This presents the checking as a race against an implied limit rather than a question about schedule room."
+          }
+        ],
+        "answer_id": "availability-question",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Emil har et ledig tidsrom etter lunsj og skal se gjennom tallene."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_checkpoint_intended_perspective",
+      "operation": "choose",
+      "objective_id": "obj-rekke-aa-or-ha-tid-til-aa-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg setningen som tydeligst uttrykker det som er viktig i situasjonen."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "The meeting is the endpoint, and successful completion before it is central. Ha tid til å can describe available time, but does not state as directly whether the review will be completed in time."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "availability-with-endpoint",
+            "text": "Jeg har tid til å gå gjennom kontrakten før møtet begynner.",
+            "why": "This says there is time available for reviewing the contract, but does not directly say whether the review will be completed before the meeting."
+          },
+          {
+            "option_id": "explicit-cutoff",
+            "text": "Jeg rekker å gå gjennom kontrakten før møtet begynner.",
+            "why": "This most directly presents the contract review as something that must be completed before the meeting."
+          },
+          {
+            "option_id": "general-availability",
+            "text": "Jeg har tid til å lese kontrakten i dag.",
+            "why": "This says the activity fits into the day but does not express completion before the meeting."
+          }
+        ],
+        "answer_id": "explicit-cutoff",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Kontrakten må gjennomgås før møtet klokka 10.00. Det viktigste er at arbeidet blir ferdig i tide."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_checkpoint_negative_problem",
+      "operation": "choose",
+      "objective_id": "obj-rekke-aa-or-ha-tid-til-aa-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg svaret som uttrykker problemet."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Emil kan begynne å spise, men rekker ikke å bli ferdig før bussen går."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "negative-availability",
+            "text": "Emil har ikke tid til å spise frokost i dag.",
+            "why": "Dette sier at Emil ikke har tid i det hele tatt, men han kan begynne å spise nå."
+          },
+          {
+            "option_id": "positive-cutoff",
+            "text": "Emil rekker å spise frokost før avgang.",
+            "why": "Dette sier at Emil rekker å bli ferdig før bussen går."
+          },
+          {
+            "option_id": "negative-cutoff",
+            "text": "Emil rekker ikke å fullføre frokosten før bussen går.",
+            "why": "Dette sier at Emil ikke rekker å bli ferdig før bussen går."
+          }
+        ],
+        "answer_id": "negative-cutoff",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Bussen går om fire minutter. Emil kan begynne å spise nå, men han kan ikke fullføre frokosten før avgang."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_guided_nora_emil_plan",
+      "operation": "choose",
+      "objective_id": "obj-rekke-aa-or-ha-tid-til-aa-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg meldingen som uttrykker begge betydningene."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "Søknaden rekker ikke fram før portalen stenger, men de har tid til å ringe veilederen etter jobb."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "deadline-polarity-reversed",
+            "text": "De rekker å sende søknaden før portalen stenger kl. 18.00. De har tid til å ringe veilederen etter jobb.",
+            "why": "This claims they can submit the application in time, contrary to the time available for the attachments."
+          },
+          {
+            "option_id": "both-perspectives-correct",
+            "text": "De rekker ikke å sende søknaden før portalen stenger kl. 18.00. De har tid til å ringe veilederen etter jobb.",
+            "why": "The first sentence focuses on completing the application before a deadline; the second says the call fits into available time."
+          },
+          {
+            "option_id": "availability-denied",
+            "text": "De rekker ikke å sende søknaden før portalen stenger kl. 18.00. De har ikke tid til å ringe veilederen etter jobb.",
+            "why": "This denies the available hour for calling and reverses the intended availability meaning."
+          }
+        ],
+        "answer_id": "both-perspectives-correct",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Lea og Omar må sende søknaden før portalen stenger kl. 18.00. Det tar minst en halvtime å finne de tre vedleggene, men de har bare ti minutter igjen. Etter jobb har de en ledig time til å ringe veilederen."
+          }
+        ]
+      }
+    },
+    {
+      "kind": "exercise",
+      "id": "review_final_retrieval",
+      "operation": "choose",
+      "objective_id": "obj-rekke-aa-or-ha-tid-til-aa-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Velg uttrykksparet som beskriver begge situasjonene."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Rekke å» og «ha tid til å» etterfølges begge av infinitiv."
+        }
+      ],
+      "payload": {
+        "options": [
+          {
+            "option_id": "extra-til",
+            "text": "rekke til; ha tid til å",
+            "why": "«Rekke å» brukes uten «til»."
+          },
+          {
+            "option_id": "both-complete",
+            "text": "rekke å; ha tid til å",
+            "why": "Begge uttrykkene er fullstendige."
+          },
+          {
+            "option_id": "missing-til",
+            "text": "rekke å; ha tid å",
+            "why": "«Ha tid» må etterfølges av «til å»."
+          }
+        ],
+        "answer_id": "both-complete",
+        "stem": [
+          {
+            "kind": "text",
+            "value": "Stian må levere skjemaet før fristen. Sara vurderer å ringe i kveld."
           }
         ]
       }
@@ -3120,7 +2900,14 @@
         "guided_schedule_to_deadline",
         "guided_deadline_to_availability",
         "guided_nora_emil_plan",
-        "final_retrieval"
+        "final_retrieval",
+        "distinguish_rekke_ha_tid",
+        "transfer_daily_priorities",
+        "review_checkpoint_availability",
+        "review_checkpoint_intended_perspective",
+        "review_checkpoint_negative_problem",
+        "review_guided_nora_emil_plan",
+        "review_final_retrieval"
       ]
     }
   ],

@@ -1,0 +1,388 @@
+- handle: find_factual_core
+  op: write
+  objective: obj-report-a-problem-and-request-action-01
+  bloom: apply
+  prompt_md: "Skriv én kort setning på norsk om vinduet på hotellrommet som ikke lar seg lukke. Beskriv bare det du kan observere, uten å legge skylda på noen eller gjette på årsaken."
+  response_language: 'no'
+  judge_prompt: Check that the sentence naturally describes the hotel-room window as impossible to close,
+    without blame or speculation. Accept natural Bokmål variants.
+  criteria:
+  - id: factual-window-report
+    instruction: Describes the hotel-room window itself as impossible to close, without blame or a guessed
+      cause.
+  derived_from:
+  - section_id: observable-facts
+- handle: connect_problem_to_effect
+  op: write
+  objective: obj-report-a-problem-and-request-action-01
+  bloom: apply
+  prompt_md: "En levert eske inneholder ei knust flaske, og væske har skadet de andre varene. Skriv to korte setninger på norsk: først et observerbart faktum, deretter en praktisk følge. Hold opplysningene tydelig atskilt og knyttet sammen."
+  response_language: 'no'
+  judge_prompt: Check that the response contains two distinct, natural Bokmål sentences in the requested
+    order. The first must report an observable condition without speculation. The second must state a
+    practical consequence connected to that condition. Accept equivalent factual descriptions and plausible
+    practical effects.
+  criteria:
+  - id: observable-fact-first
+    instruction: States only an observable fact about the broken bottle or liquid damage in the first
+      sentence.
+  - id: practical-effect-second
+    instruction: Describes one practical effect in the second sentence.
+  - id: distinct-clear-connection
+    instruction: Keeps fact and effect distinct while making their connection clear.
+  derived_from:
+  - section_id: explain-effect
+- handle: add_suitable_request
+  op: write
+  objective: obj-report-a-problem-and-request-action-01
+  bloom: apply
+  prompt_md: "Vinduet på hotellrommet kan ikke lukkes, og rommet blir kaldt. Skriv én høflig forespørsel til hotellet om en konkret løsning på problemet."
+  response_language: 'no'
+  judge_prompt: Check for one natural Bokmål request naming one proportionate action that addresses the
+    window or cold room. Accept requests to inspect or repair the window or provide another room. Reject
+    vague, unrelated, or disproportionate demands.
+  criteria:
+  - id: one-clear-action
+    instruction: Requests one clear action from hotel staff.
+  - id: direct-remedy
+    instruction: Requests a practical remedy that responds directly to the window problem and cold room.
+  - id: no-unrelated-demands
+    instruction: Adds no unrelated demands.
+  derived_from:
+  - section_id: request-remedy
+- handle: confirm_agreement
+  op: write
+  objective: obj-report-a-problem-and-request-action-01
+  bloom: apply
+  prompt_md: "Transportfirmaet har lovet å hente den skadde pakken i morgen tidlig. Bekreft avtalen på norsk, sjekk tidspunktet og spør om du må skrive ut en returetikett."
+  response_language: 'no'
+  judge_prompt: Check that the response confirms both collection of the damaged parcel and tomorrow morning,
+    then asks whether the customer must print a return label. Accept natural Bokmål wording and either
+    a separate label question or a clearly separated question in the same message.
+  criteria:
+  - id: promised-collection
+    instruction: Restates that the delivery company will collect the damaged parcel.
+  - id: tomorrow-morning
+    instruction: Checks that the collection will happen tomorrow morning.
+  - id: return-label
+    instruction: Asks whether the customer needs to print a return label.
+  derived_from:
+  - section_id: confirm-next-step
+- handle: build_radiator_report
+  op: write
+  objective: obj-report-a-problem-and-request-action-01
+  bloom: apply
+  prompt_md: "Skriv en kort melding til utleieren. Si at radiatoren på soverommet fortsatt er kald når den er slått på, og be om én passende løsning."
+  response_language: 'no'
+  judge_prompt: Check for an observable radiator fact and one appropriate request. Accept natural Bokmål
+    variants, but require every sentence to remain relevant to resolving the radiator problem.
+  criteria:
+  - id: radiator-fact
+    instruction: States that the bedroom radiator remains cold when it is switched on.
+  - id: appropriate-action
+    instruction: Requests one appropriate action to resolve or inspect the radiator problem.
+  - id: focused-message
+    instruction: Keeps every sentence relevant to resolving the radiator problem.
+  derived_from:
+  - section_id: controlled-practice
+- handle: build_lamp_report
+  op: write
+  objective: obj-report-a-problem-and-request-action-01
+  bloom: apply
+  prompt_md: "Ordrebekreftelsen viser tre lamper, men bare to kom fram. Skriv en melding til butikken der du ber dem sende den manglende lampa. Bruk ord om levering."
+  response_language: 'no'
+  judge_prompt: Check for the two-of-three delivery fact and a request to send the missing lamp in natural
+    Bokmål. Reject housing-specific wording that changes the shop-delivery situation.
+  criteria:
+  - id: lamp-delivery-fact
+    instruction: States that only two of the three lamps arrived.
+  - id: missing-lamp-request
+    instruction: Asks the shop to send the missing lamp.
+  - id: delivery-context
+    instruction: Uses delivery-related language rather than housing-specific language.
+  derived_from:
+  - section_id: controlled-practice
+- handle: final_washing_machine_report
+  op: write
+  objective: obj-report-a-problem-and-request-action-01
+  bloom: apply
+  prompt_md: "Skriv en kort norsk dialog om vaskemaskinen som stopper midt i hver vask. Ta med et observerbart faktum, en praktisk følge og en passende forespørsel. Bruk svaret fra servicefirmaet: «Vi sender en tekniker på tirsdag mellom klokka to og fire.» Bekreft handlingen og tidspunktet. Skriv dialogen som fire naturlige replikker. Ta med faktum, følge, forespørsel og bekreftelse."
+  response_language: 'no'
+  judge_prompt: Check that the dialogue includes an observable fact that the washing machine stops during every wash, a practical effect, a proportionate request, and confirmation that a technician will come on Tuesday between two and four. Accept natural Bokmål variants.
+  criteria:
+  - id: washing-machine-fact
+    instruction: Includes an observable fact that the washing machine stops during every wash.
+  - id: practical-effect
+    instruction: Includes one practical effect of the washing-machine problem.
+  - id: proportionate-request
+    instruction: Includes one proportionate request addressing the washing-machine problem.
+  - id: technician-confirmation
+    instruction: Confirms that a technician will come on Tuesday between two and four.
+  derived_from:
+  - section_id: final-retrieval-review
+- handle: observable_fact_choice
+  op: choose
+  objective: obj-report-a-problem-and-request-action-01
+  bloom: understand
+  prompt_md: "Velg utsagnet som beskriver et observerbart faktum."
+  explanation_md: "Et observerbart faktum beskriver noe som kan kontrolleres direkte."
+  derived_from:
+  - section_id: observable-facts
+  options:
+  - id: opt-4
+    text: Jeg tror det er en lekkasje.
+    correct: false
+    why: Dette er en antakelse, ikke en direkte observasjon.
+  - id: opt-1
+    text: Det er en sprekk i vindusruta.
+    correct: true
+  - id: opt-2
+    text: Dette ser ut som dårlig vedlikehold.
+    correct: false
+    why: Dette er en vurdering av årsaken, ikke et direkte observerbart faktum.
+  - id: opt-3
+    text: Sprekken kom fordi noen slengte igjen vinduet.
+    correct: false
+    why: Dette tillegger noen skyld uten at årsaken kan observeres direkte.
+- handle: effect_choice
+  op: choose
+  objective: obj-report-a-problem-and-request-action-01
+  bloom: understand
+  prompt_md: "Velg den praktiske følgen av dette faktumet: «Varmeovnen virker ikke.»"
+  explanation_md: "Følgen beskriver en konkret praktisk konsekvens av at varmeovnen ikke virker."
+  derived_from:
+  - section_id: explain-effect
+  options:
+  - id: opt-2
+    text: så jeg er sint.
+    correct: false
+    why: This is an emotional reaction, not a practical effect.
+  - id: opt-3
+    text: så jeg får en ny jobb.
+    correct: false
+    why: This is unrelated to the heater not working.
+  - id: opt-4
+    text: så jeg blir rik.
+    correct: false
+    why: This is unrelated to the heater not working.
+  - id: opt-1
+    text: så jeg må bruke ekstra tepper for å holde varmen.
+    correct: true
+- handle: request_choice
+  op: choose
+  objective: obj-report-a-problem-and-request-action-01
+  bloom: apply
+  prompt_md: "Hotellet har levert kofferten din til feil rom, og du trenger den før du drar. Velg forespørselen som løser problemet."
+  explanation_md: "Be personalet levere kofferten til rommet ditt. Da får du den feilplasserte kofferten."
+  derived_from:
+  - section_id: request-remedy
+  options:
+  - id: opt-3
+    text: Kan dere bekrefte at hotellet har bagasjeoppbevaring?
+    correct: false
+    why: Information about storage does not recover the suitcase from the wrong room.
+  - id: opt-4
+    text: Kan jeg få en ekstra nøkkel til rommet?
+    correct: false
+    why: An extra room key does not bring back the suitcase.
+  - id: opt-1
+    text: Kan dere hente kofferten og levere den til rommet mitt?
+    correct: true
+  - id: opt-2
+    text: Kan dere flytte meg til et annet hotell?
+    correct: false
+    why: Moving hotels does not address the misplaced suitcase directly.
+- handle: confirmation_choice
+  op: choose
+  objective: obj-report-a-problem-and-request-action-01
+  bloom: apply
+  prompt_md: "Etter svaret «Vi ordner det snart» vil du vite når noen kommer for å hjelpe. Velg spørsmålet som avklarer tidspunktet."
+  explanation_md: "Et omtrentlig tidspunkt gjør avtalen tydeligere."
+  derived_from:
+  - section_id: confirm-next-step
+  options:
+  - id: opt-3
+    text: Kan du gjøre det nå?
+    correct: false
+    why: This is a demand, not a confirmation of the next step.
+  - id: opt-4
+    text: Hva er problemet?
+    correct: false
+    why: This asks for a problem description, not a confirmation.
+  - id: opt-1
+    text: Kan du si hvilken dag teknikeren kommer?
+    correct: true
+  - id: opt-2
+    text: Så du ordner det?
+    correct: false
+    why: This merely repeats the promise without checking a concrete detail.
+- handle: match_parts
+  op: match_pairs
+  objective: obj-report-a-problem-and-request-action-01
+  bloom: understand
+  prompt_md: "Koble hvert utsagn til riktig del av en problemmelding."
+  explanation_md: "En problemmelding kan beskrive et faktum, en følge, en løsning og neste avtalte steg."
+  derived_from:
+  - section_id: complete-pattern
+  left:
+  - left_id: l1
+    text: Badet har ikke hatt varmt vann siden i går.
+  - left_id: l2
+    text: Jeg må dusje hos naboen.
+  - left_id: l3
+    text: Kan dere undersøke varmtvannsberederen?
+  - left_id: l4
+    text: Så dere sender en tekniker i morgen?
+  right:
+  - right_id: r1
+    text: observerbart faktum
+  - right_id: r2
+    text: praktisk følge
+  - right_id: r3
+    text: forespørsel
+  - right_id: r4
+    text: bekreftelse
+  pairs:
+  - left_id: l1
+    right_id: r1
+  - left_id: l2
+    right_id: r2
+  - left_id: l3
+    right_id: r3
+  - left_id: l4
+    right_id: r4
+- handle: transfer_apartment_issue
+  op: write
+  objective: obj-report-a-problem-and-request-action-01
+  bloom: apply
+  prompt_md: "Vinduet i leiligheten er ødelagt og kan ikke lukkes. Skriv en kort melding til utleieren med det observerbare faktumet, den praktiske følgen og én passende forespørsel. Bekreft deretter neste steg med svaret: «Jeg kommer i morgen formiddag.»"
+  response_language: 'no'
+  judge_prompt: Check for an observable fact about the window, a practical effect, a proportionate request,
+    and a confirmation that the landlord will come tomorrow morning. Accept natural Bokmål variants.
+  criteria:
+  - id: window-fact
+    instruction: States an observable fact about the broken window.
+  - id: window-effect
+    instruction: Describes a practical effect of the broken window.
+  - id: window-request
+    instruction: Requests one proportionate action to address the window.
+  - id: window-confirmation
+    instruction: Confirms that the landlord will come tomorrow morning.
+  derived_from:
+  - section_id: complete-pattern
+- handle: review_observable_fact
+  op: choose
+  objective: obj-report-a-problem-and-request-action-01
+  bloom: understand
+  prompt_md: "Velg utsagnet som beskriver et observerbart faktum."
+  explanation_md: "Et observerbart faktum beskriver noe som kan konstateres direkte."
+  derived_from:
+  - section_id: observable-facts
+  options:
+  - id: opt-2
+    text: Dette er helt håpløst.
+    correct: false
+    why: This is an emotional reaction, not an observable fact.
+  - id: opt-3
+    text: Dere må ha ødelagt pakken min.
+    correct: false
+    why: This is an accusation, not an observable fact.
+  - id: opt-4
+    text: Kanskje det er en lekkasje.
+    correct: false
+    why: This is a guess, not a directly observable condition.
+  - id: opt-1
+    text: Det er bare én gaffel i esken.
+    correct: true
+- handle: review_effect
+  op: choose
+  objective: obj-report-a-problem-and-request-action-01
+  bloom: understand
+  prompt_md: "Velg en praktisk følge av at heisen ikke virker."
+  explanation_md: "En praktisk følge er en konkret konsekvens av at heisen ikke virker."
+  derived_from:
+  - section_id: explain-effect
+  options:
+  - id: opt-3
+    text: og jeg går derfor glipp av et møte.
+    correct: true
+  - id: opt-4
+    text: og jeg tror den er ødelagt.
+    correct: false
+    why: This is a guess, not an effect.
+  - id: opt-1
+    text: og jeg er veldig lei meg.
+    correct: false
+  - id: opt-2
+    text: og jeg håper på solskinn.
+    correct: false
+- handle: review_request
+  op: choose
+  objective: obj-report-a-problem-and-request-action-01
+  bloom: apply
+  prompt_md: 'Velg den mest passende konkrete forespørselen til dette problemet: «Nøkkelkortet virker
+    ikke.»'
+  explanation_md: "Forespørselen ber om en konkret løsning på problemet med adgangskortet."
+  derived_from:
+  - section_id: request-remedy
+  options:
+  - id: opt-3
+    text: Kan dere hjelpe med dette?
+    correct: false
+    why: Dette er vagt og ber ikke om en tydelig handling.
+  - id: opt-4
+    text: Kan jeg få en suite?
+    correct: false
+    why: Dette står ikke i forhold til problemet med nøkkelkortet.
+  - id: opt-1
+    text: Kan resepsjonen lage et nytt nøkkelkort til meg?
+    correct: true
+  - id: opt-2
+    text: Kan dere bytte hele låsesystemet?
+    correct: false
+    why: Dette står ikke i forhold til et problem med ett enkelt nøkkelkort.
+- handle: review_confirmation
+  op: choose
+  objective: obj-report-a-problem-and-request-action-01
+  bloom: apply
+  prompt_md: Velg det beste spørsmålet for å sjekke omtrent når hjelpen kommer etter svaret «Vi sender
+    noen senere.»
+  explanation_md: "Et spørsmål om omtrent når gjør det vage «senere» tydeligere."
+  derived_from:
+  - section_id: confirm-next-step
+  options:
+  - id: opt-3
+    text: Kan dere sende noen nå?
+    correct: false
+    why: Dette er et krav, ikke en bekreftelse.
+  - id: opt-4
+    text: Kan du forklare problemet?
+    correct: false
+    why: Dette ber om en problembeskrivelse, ikke en bekreftelse.
+  - id: opt-1
+    text: Vet dere hvilken dag noen kan komme?
+    correct: true
+  - id: opt-2
+    text: Så dere sender noen?
+    correct: false
+    why: Dette gjentar bare løftet uten å sjekke en konkret detalj.
+- handle: review_complete_report
+  op: write
+  objective: obj-report-a-problem-and-request-action-01
+  bloom: apply
+  prompt_md: "Skriv en kort dialog på norsk med en nabo om et felles problem i bygget. Ta med et observerbart faktum, en praktisk følge og én passende forespørsel. La naboen erkjenne problemet og love én konkret handling. Bekreft deretter handlingen. Skriv dialogen som fem naturlige replikker. Ta med faktum, følge, forespørsel, svar og bekreftelse."
+  response_language: 'no'
+  judge_prompt: Check that the dialogue includes an observable fact about a shared building problem, a practical effect, a proportionate request, the neighbor’s acknowledgment and agreement to a specific action, and confirmation of that action. Accept natural Bokmål variants.
+  criteria:
+  - id: elevator-fact
+    instruction: Includes an observable fact about a shared problem in the building.
+  - id: elevator-effect
+    instruction: Includes one practical effect of the problem.
+  - id: elevator-request
+    instruction: Includes one proportionate request addressing the problem.
+  - id: elevator-acknowledgment-action
+    instruction: Includes the neighbor’s acknowledgment and agreement to take one specific action.
+  - id: elevator-confirmation
+    instruction: Confirms the neighbor’s specific agreed action.
+  derived_from:
+  - section_id: final-retrieval-review

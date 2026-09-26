@@ -8,12 +8,15 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 from typing import Any
 
+from lesson_builder.domain.catalog.services.normalization import normalize_slug
 from lesson_builder.workflow.catalog_design.models import CandidateEvaluation
+from lesson_builder.workflow.catalog_design.models import CandidateResolution
 from lesson_builder.workflow.catalog_design.models import CatalogRequest
 from lesson_builder.workflow.catalog_design.nodes.node_support import candidate_list
 from lesson_builder.workflow.catalog_design.nodes.node_support import error_message
 from lesson_builder.workflow.catalog_design.nodes.node_support import request_from_state
 from lesson_builder.workflow.catalog_design.nodes.node_support import resolution_list
+from lesson_builder.workflow.catalog_design.settings import K_CATALOG_TITLE_BANNED_TERMS
 from lesson_builder.workflow.catalog_design.state import CatalogState
 from lesson_builder.workflow.catalog_design.state import resolution_fingerprint
 
@@ -29,6 +32,7 @@ def evaluate_candidates_node(state: CatalogState, deps: CatalogDesignDependencie
     try:
         result = deps.evaluate(request, candidates, resolutions)
         evaluations = [CandidateEvaluation.model_validate(item) for item in result.evaluations]
+        _validate_evaluation_coverage(evaluations, resolutions)
         architecture_question = state.get("architecture_question", False) or result.architecture_question
     except Exception as exc:  # noqa: BLE001 - structured failure is part of proposal status
         return {
@@ -60,6 +64,7 @@ def build_evaluate_candidates_prompt(
     resolutions_payload: str,
 ) -> str:
     """Build the catalog-review quality-evaluation prompt."""
+    banned_title_terms = ", ".join(K_CATALOG_TITLE_BANNED_TERMS)
     return f"""
 You are the offline quality evaluator for a Norwegian catalog proposal. Score
 each canonical resolution independently on [0,1] for distinctness, usefulness,
@@ -79,6 +84,7 @@ narrow unresolved semantic or pragmatic boundary when the other dimensions pass.
 Also check that each title is a short, active, learner-facing label in simple
 controlled English. A title that depends on internal jargon or a dense noun
 stack is not approval-ready; state the plain-language rewrite in the reason.
+The following internal labels are hard-banned: {banned_title_terms}.
 A score is advice; the graph enforces schema, exact-duplicate, and
 quality-threshold rules deterministically. Return concise reason_codes and put
 any non-compensable defects in hard_failures.
@@ -92,6 +98,25 @@ Candidates:
 Resolutions:
 {resolutions_payload}
 """
+
+
+def _validate_evaluation_coverage(
+    evaluations: list[CandidateEvaluation],
+    resolutions: list[CandidateResolution],
+) -> None:
+    """Require one evaluation for every canonical resolution identity."""
+    expected = [normalize_slug(item.canonical_slug) for item in resolutions]
+    actual = [normalize_slug(item.canonical_slug) for item in evaluations]
+    duplicate_resolutions = sorted({slug for slug in expected if expected.count(slug) > 1})
+    duplicates = sorted({slug for slug in actual if actual.count(slug) > 1})
+    missing = sorted(set(expected) - set(actual))
+    unknown = sorted(set(actual) - set(expected))
+    if duplicate_resolutions or duplicates or missing or unknown:
+        raise ValueError(
+            "evaluation coverage mismatch: "
+            f"duplicate resolutions={duplicate_resolutions!r}, "
+            f"duplicate evaluations={duplicates!r}, missing={missing!r}, unknown={unknown!r}"
+        )
 
 
 __all__ = ["build_evaluate_candidates_prompt", "evaluate_candidates_node"]

@@ -1,0 +1,177 @@
+- handle: choose-current-place
+  op: recall_fill
+  objective: obj-basic-prepositions-place-time-01
+  bloom: apply
+  prompt_md: Fullfør stedsbeskrivelsene med «i» eller «på».
+  audio_target: Kari og Per snakker om hvor de bor, arbeider og møtes.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Kari
+      text_md: «Jeg bor ___ Oslo.»
+    - speaker: Per
+      text_md: «Jeg er ___ jobb.»
+    - speaker: Kari
+      text_md: «Vi er ___ Norge.»
+    - speaker: Per
+      text_md: «De møtes ___ Bergen.»
+  segments:
+  - text_md: '«Jeg bor '
+  - blank_id: city-location
+    options:
+    - i
+    - på
+    answer_index: 0
+  - text_md: ' Oslo.» Per: «Jeg er '
+  - blank_id: work-location
+    options:
+    - i
+    - på
+    answer_index: 1
+  - text_md: ' jobb.» Kari: «Vi er '
+  - blank_id: country-location
+    options:
+    - på
+    - i
+    answer_index: 1
+  - text_md: ' Norge.» Per: «De møtes '
+  - blank_id: meeting-location
+    options:
+    - i
+    - på
+    answer_index: 0
+  - text_md: ' Bergen.»'
+  explanation_md: I brukes foran by- og landnavn, mens på jobb er et fast uttrykk for arbeidssted.
+  derived_from:
+  - section_id: being-in-a-place
+- handle: contrast-location-and-destination
+  op: recall_fill
+  objective: obj-basic-prepositions-place-time-01
+  bloom: apply
+  prompt_md: Fullfør reisebeskrivelsene med «til», «i» eller «på».
+  audio_target: Ali, Eva og Per forteller om reiser og steder de skal besøke.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Ali
+      text_md: «Jeg kjører ___ Tromsø. Senere er jeg ___ Tromsø.»
+    - speaker: Eva
+      text_md: «Jeg reiser ___ Spania. Etterpå er jeg ___ Spania.»
+    - speaker: Per
+      text_md: «Jeg går ___ garasjen. Når jeg kommer fram, er jeg ___ garasjen og henter sykkelen.»
+  segments:
+  - text_md: '«Jeg kjører '
+  - blank_id: tromso-destination
+    options:
+    - til
+    - i
+    - på
+    answer_index: 0
+  - text_md: ' Tromsø. Senere er jeg '
+  - blank_id: tromso-location
+    options:
+    - på
+    - i
+    - til
+    answer_index: 1
+  - text_md: ' Tromsø.» Eva: «Jeg reiser '
+  - blank_id: spania-destination
+    options:
+    - i
+    - til
+    - på
+    answer_index: 1
+  - text_md: ' Spania. Etterpå er jeg '
+  - blank_id: spania-location
+    options:
+    - på
+    - i
+    - til
+    answer_index: 1
+  - text_md: ' Spania.» Per: «Jeg går '
+  - blank_id: garage-destination
+    options:
+    - på
+    - til
+    - i
+    answer_index: 1
+  - text_md: ' garasjen. Når jeg kommer fram, er jeg '
+  - blank_id: garage-location
+    options:
+    - i
+    - til
+    - på
+    answer_index: 0
+  - text_md: ' garasjen og henter sykkelen.»'
+  explanation_md: Til viser reisemålet, mens i eller på viser hvor personen er etter ankomst.
+  derived_from:
+  - section_id: location-or-destination
+- handle: retrieve-preposition-meanings
+  op: write
+  objective: obj-basic-prepositions-place-time-01
+  bloom: apply
+  prompt_md: "Til Nora: Skriv en melding på norsk. Lars befinner seg på biblioteket nå. Sara skal til legekontoret. Omar tilbringer ettermiddagen sammen med bestemoren sin. Det er søndag, og møtet begynner om tre timer. Eva kom hjem to dager før i dag. Kurset varer i to timer. Formuler opplysningene naturlig."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Kan du fortelle meg hvor folk er, og hva som skjer senere?»
+    - speaker: Mina
+      text_md: «Ja, jeg sender deg en samlet oppdatering.»
+  response_language: 'no'
+  min_words: 35
+  max_words: 65
+  judge_prompt: "Assess the message purpose, all six facts and natural Norwegian prepositional expressions for location, destination, visiting a person, future and past time, and duration. Accept both «på biblioteket» and «i biblioteket» for Lars, and both «hos bestemoren» and «besøker bestemoren» for Omar."
+  criteria:
+  - id: message-purpose
+    instruction: Svaret er en sammenhengende norsk melding til Nora som forklarer hvor folk er og når hendelser skjer.
+  - id: six-updates
+    instruction: Meldingen formidler alle de seks opplysningene fra oppgaven med riktig betydning.
+  - id: relation-forms
+    instruction: "Uses natural Norwegian expressions for location, destination, visiting a person, future time, past time, and duration. Accept «hos bestemoren» or «besøker bestemoren» for Omar."
+  derived_from:
+  - section_id: final-retrieval
+- handle: first_day_exchange
+  op: write
+  objective: obj-basic-prepositions-place-time-01
+  bloom: apply
+  prompt_md: "Klokka er 16.00 på søndag. Aino står på stasjonen, Mikkel skal til tannlegen, og Liv skal tilbringe ettermiddagen sammen med onkelen. Toget går 16.20. Anders kom hjem etter skoledagen fredag, og konserten varer i 90 minutter. Skriv en melding til Nora med opplysningene."
+  min_words: 15
+  max_words: 30
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: Nora vil vite hvor vennene er og hva som skjer.
+  response_language: 'no'
+  judge_prompt: Check that the message conveys all six updates accurately, using natural expressions for location, destination, visiting a person, a future time, a past time, and duration. Accept departure at 16.20 or «om 20 minutter».
+  criteria:
+  - id: updates
+    instruction: Meldingen formidler alle de seks opplysningene med riktig betydning.
+  - id: relations
+    instruction: The message conveys all six facts accurately. For the train, accept either 16.20 or departure in 20 minutes.
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+- handle: review_complete_meeting
+  op: write
+  objective: obj-basic-prepositions-place-time-01
+  bloom: apply
+  prompt_md: "Skriv som Mina, i første person. Klokka er 10.00 på lørdag. Send en melding på norsk til en venn om turen. Du er på biblioteket nå, drar om 20 minutter til Trondheim og blir der i tre dager hos broren din. Broren besøkte Bergen én måned tidligere. Bruk naturlige uttrykk for sted, avreise, reisemål, varighet og tidligere tidspunkt."
+  min_words: 12
+  max_words: 24
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Venn
+      text_md: «Kan du fortelle meg om lørdagsturen din?»
+    - speaker: Mina
+      text_md: «Ja, jeg sender deg en kort melding.»
+  response_language: 'no'
+  judge_prompt: 'Vurder om meldingen formidler Minas nåværende sted, avreise klokka 10.20 (eller om 20 minutter), reisemål, tre dagers opphold hos broren og brorens besøk i Bergen én måned tidligere.'
+  criteria:
+  - id: updates
+    instruction: Meldingen formidler alle opplysningene med riktig betydning.
+  - id: relations
+    instruction: Meldingen bruker naturlige norske uttrykk for nåværende sted, framtidig tidspunkt, reisemål, varighet og et tidligere tidspunkt.
+  derived_from:
+  - section_id: transfer-to-a-new-situation

@@ -1,0 +1,559 @@
+- handle: notice_known_past_time
+  op: choose
+  objective: obj-past-tense-01
+  bloom: understand
+  prompt_md: Choose the interpretation that fits the exchange.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: «Hva gjorde du i går?»
+    - speaker: Jonas
+      text_md: «Jeg gikk til byen og tok bussen hjem.»
+  options:
+  - id: present-routine
+    text: «I går» beskriver en vanlig rutine, så «gikk» og «tok» uttrykker nåtid.
+    correct: false
+    why: A routine reading conflicts with the specific past expression «i går».
+  - id: separate-events
+    text: Bare «gjorde» hører til fortiden; verbene i svaret har ingen etablert tidsramme.
+    correct: false
+    why: The time frame established by the question also governs the answer.
+  - id: shared-known-past
+    text: «I går» etablerer en kjent fortid, og «gikk» og «tok» hører til den samme tidsrammen.
+    correct: true
+    why: The question establishes one shared past-time frame for the reply.
+  derived_from:
+  - section_id: checkpoint-notice-known-past-time
+- handle: discriminate_present_preteritum
+  op: choose
+  objective: obj-past-tense-01
+  bloom: understand
+  prompt_md: Choose the pair that fits both time frames.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Par: presens–preteritum. Forutsetning: presens. 1. Jonas [BLANK] hjemme hver mandag. 2.
+        I går [BLANK] Maja ham klokka ni.'
+  options:
+  - id: past-then-present
+    text: jobbet — ringer
+    correct: false
+    why: This reverses the tense choices licensed by «hver mandag» and «i går».
+  - id: both-present
+    text: jobber — ringer
+    correct: false
+    why: The second form ignores the stated past time.
+  - id: both-past
+    text: jobbet — ringte
+    correct: false
+    why: The first form treats a current recurring routine as a finished past occasion.
+  - id: present-then-past
+    text: jobber — ringte
+    correct: true
+    why: The recurring present situation and the specific past event require different tenses.
+  derived_from:
+  - section_id: known-past-time
+- handle: form_regular_preteritum
+  op: recall_fill
+  objective: obj-past-tense-01
+  bloom: apply
+  prompt_md: Complete the account with the forms that fit yesterday.
+  audio_target: I går etter jobb ventet Sara på bussen. Jonas ringte Maja. Sara prøvde å finne nøklene.
+    Til slutt nådde de stasjonen.
+  segments:
+  - text_md: 'I går etter jobb '
+  - blank_id: wait-past
+    options:
+    - ventet
+    - venter
+    answer_index: 0
+  - text_md: ' Sara på bussen. Jonas '
+  - blank_id: call-past
+    options:
+    - ringte
+    - ringer
+    answer_index: 0
+  - text_md: ' Maja. Sara '
+  - blank_id: try-past
+    options:
+    - prøver
+    - prøvde
+    answer_index: 1
+  - text_md: ' å finne nøklene. Til slutt '
+  - blank_id: reach-past
+    options:
+    - når
+    - nådde
+    answer_index: 1
+  - text_md: ' de stasjonen.'
+  derived_from:
+  - section_id: checkpoint-form-regular-preteritum
+- handle: distinguish_subject_invariance
+  op: choose
+  objective: obj-past-tense-01
+  bloom: understand
+  prompt_md: Choose the complete reply that fits the note.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Notat fra i går: Jonas jobbet hjemme. Sara og Maja gjorde det samme.'
+  options:
+  - id: plural-ending
+    text: Sara og Maja jobbetet hjemme.
+    correct: false
+    why: A plural subject does not add another ending to the past-tense verb.
+  - id: present-plural
+    text: Sara og Maja jobber hjemme.
+    correct: false
+    why: Changing the subject does not change the established past-time frame.
+  - id: unchanged-form
+    text: Sara og Maja jobbet hjemme.
+    correct: true
+    why: Norwegian uses the same preteritum form with singular and plural subjects.
+  derived_from:
+  - section_id: one-form-every-subject
+- handle: retrieve_common_irregular_preteritum
+  op: recall_fill
+  objective: obj-past-tense-01
+  bloom: remember
+  prompt_md: Complete the account with the forms that fit yesterday.
+  audio_target: I går var Jonas hjemme om morgenen. Senere gikk han til byen. Der tok han bussen. På veien
+    så han en venn og fikk en melding. Etterpå gjorde han noen ærender og kom hjem sent på kvelden.
+  segments:
+  - text_md: 'I går '
+  - blank_id: be-past
+    options:
+    - var
+    - er
+    answer_index: 0
+  - text_md: ' Jonas hjemme om morgenen. Senere '
+  - blank_id: go-past
+    options:
+    - gikk
+    - går
+    answer_index: 0
+  - text_md: ' han til byen. Der '
+  - blank_id: take-past
+    options:
+    - tar
+    - tok
+    answer_index: 1
+  - text_md: ' han bussen. På veien '
+  - blank_id: see-past
+    options:
+    - ser
+    - så
+    answer_index: 1
+  - text_md: ' han en venn og '
+  - blank_id: get-past
+    options:
+    - fikk
+    - får
+    answer_index: 0
+  - text_md: ' en melding. Etterpå '
+  - blank_id: do-past
+    options:
+    - gjorde
+    - gjør
+    answer_index: 0
+  - text_md: ' han noen ærender og '
+  - blank_id: come-past
+    options:
+    - kommer
+    - kom
+    answer_index: 1
+  - text_md: ' hjem sent på kvelden.'
+  derived_from:
+  - section_id: checkpoint-retrieve-common-irregular-preteritum
+- handle: maintain_preteritum_in_questions_and_negatives
+  op: build
+  objective: obj-past-tense-01
+  bloom: apply
+  prompt_md: Yesterday, Maja was unsure whether her friend traveled by bus. Build her negative question.
+  tokens:
+  - token_id: tok-1
+    text: Tok
+  - token_id: tok-2
+    text: Jonas
+  - token_id: tok-3
+    text: ikke
+  - token_id: tok-4
+    text: bussen?
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  derived_from:
+  - section_id: checkpoint-maintain-preteritum-questions-negatives
+- handle: discriminate_past_question
+  op: choose
+  objective: obj-past-tense-01
+  bloom: apply
+  prompt_md: Choose Maja’s natural question.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Kalender: kino lørdag 19.00. Maja vil vite om Jonas dro dit.'
+  options:
+  - id: present-question
+    text: Går du på kino på lørdag?
+    correct: false
+    why: This asks about a present or planned event rather than the completed Saturday event.
+  - id: direct-past-question
+    text: Gikk du på kino på lørdag?
+    correct: true
+    why: Norwegian places the complete past-tense verb before the subject.
+  - id: english-helper
+    text: Gjorde du gå på kino på lørdag?
+    correct: false
+    why: This imports an English-style past auxiliary before an infinitive.
+  derived_from:
+  - section_id: past-negatives-and-questions
+- handle: choose_tense_from_time_frame
+  op: choose
+  objective: obj-past-tense-01
+  bloom: understand
+  prompt_md: Choose the form that fits the shared time frame.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: «Hva gjorde du i går?»
+    - speaker: Jonas
+      text_md: «Jeg [BLANK] hjemme.»
+  options:
+  - id: present-form
+    text: er
+    correct: false
+    why: Present tense conflicts with the time frame established by «i går».
+  - id: past-form
+    text: var
+    correct: true
+    why: The question places Jonas’s reply within yesterday’s known past time.
+  derived_from:
+  - section_id: checkpoint-choose-tense-time-frame
+- handle: revise_past_message
+  op: choose
+  objective: obj-past-tense-01
+  bloom: apply
+  prompt_md: Choose the revision that fixes only the tense errors.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Melding: I går jobber jeg til fire. Etterpå går jeg hjem og spiste middag.'
+  options:
+  - id: last-present
+    text: I går jobbet jeg til fire. Etterpå gikk jeg hjem og spiser middag.
+    correct: false
+    why: The final event is incorrectly shifted into present tense.
+  - id: changed-meaning
+    text: I dag jobber jeg til fire. Etterpå går jeg hjem og spiser middag.
+    correct: false
+    why: This removes the errors by changing the message from yesterday to today.
+  - id: all-past
+    text: I går jobbet jeg til fire. Etterpå gikk jeg hjem og spiste middag.
+    correct: true
+    why: All three events belong to the same completed day.
+  - id: first-only
+    text: I går jobbet jeg til fire. Etterpå går jeg hjem og spiste middag.
+    correct: false
+    why: The second event remains in present tense despite the continuing past frame.
+  derived_from:
+  - section_id: choose-tense-time-frame
+- handle: reconstruct_the_evening
+  op: write
+  objective: obj-past-tense-01
+  bloom: apply
+  prompt_md: 'Til: Maja. Formål: Fortell hva som skjedde i går kveld. Fakta (bruk disse preteritumsformene):
+    17.00 Sara – ventet på bussen; 17.10 Jonas – ringte Maja; 17.20 Sara – prøvde å finne en kafé; 18.00
+    Jonas – gikk til stasjonen; Jonas – tok ikke bussen; 22.30 de – kom hjem. Skriv en melding på norsk
+    på 30–45 ord med hendelsene i denne rekkefølgen.'
+  response_language: 'no'
+  min_words: 30
+  max_words: 45
+  judge_prompt: Report a verdict for each criterion id. Determine the overall pass from all criteria.
+  criteria:
+  - id: audience-purpose
+    instruction: The response is a message to Maja that reports what happened during the evening.
+  - id: supplied-facts
+    instruction: The response includes all six supplied events without contradicting the facts.
+  - id: event-order
+    instruction: The six events appear in the supplied chronological order.
+  - id: word-bound
+    instruction: The response contains 30–45 words.
+  - id: norwegian-message
+    instruction: The message is intelligible Norwegian.
+  - id: regular-forms
+    instruction: The response uses «ventet», «ringte», and «prøvde» for the three supplied regular events.
+  - id: irregular-forms
+    instruction: The response uses «gikk», «tok ikke», and «kom» for the three supplied irregular events.
+  - id: shared-past-frame
+    instruction: The account maintains preteritum after the past time is established.
+  derived_from:
+  - section_id: practice-reconstruct-evening
+- handle: report_yesterdays_journey
+  op: recall_fill
+  objective: obj-past-tense-01
+  bloom: apply
+  prompt_md: Complete the delayed-journey report with the forms that fit yesterday.
+  audio_target: Jeg var klar for en tur til byen. Først ventet jeg på bussen. Så prøvde jeg å ringe en
+    venn. Jeg ringte ham fra holdeplassen. Derfor gikk jeg til stasjonen. Der tok jeg toget. Jeg kom fram.
+    Til slutt nådde jeg møtet.
+  segments:
+  - text_md: 'Forsinkelsesrapport, i går: Jeg '
+  - blank_id: journey-be
+    options:
+    - var
+    - er
+    answer_index: 0
+  - text_md: ' klar for en tur til byen. Først '
+  - blank_id: journey-wait
+    options:
+    - ventet
+    - venter
+    answer_index: 0
+  - text_md: ' jeg på bussen. Så '
+  - blank_id: journey-try
+    options:
+    - prøver
+    - prøvde
+    answer_index: 1
+  - text_md: ' jeg å ringe en venn. Jeg '
+  - blank_id: journey-call
+    options:
+    - ringer
+    - ringte
+    answer_index: 1
+  - text_md: ' ham fra holdeplassen. Derfor '
+  - blank_id: journey-go
+    options:
+    - gikk
+    - går
+    answer_index: 0
+  - text_md: ' jeg til stasjonen. Der '
+  - blank_id: journey-take
+    options:
+    - tok
+    - tar
+    answer_index: 0
+  - text_md: ' jeg toget. Jeg '
+  - blank_id: journey-come
+    options:
+    - kommer
+    - kom
+    answer_index: 1
+  - text_md: ' fram. Til slutt '
+  - blank_id: journey-reach
+    options:
+    - når
+    - nådde
+    answer_index: 1
+  - text_md: ' jeg møtet.'
+  derived_from:
+  - section_id: practice-report-yesterdays-journey
+- handle: past_tense_quick_recall
+  op: write
+  objective: obj-past-tense-01
+  bloom: apply
+  prompt_md: 'Til: kollegaen din. Formål: Forklar den sene ankomsten din i går. Fakta (verb i infinitiv):
+    bussen – å ikke komme; du – å vente i 20 minutter; du – å ta toget; du – å nå kontoret klokka 09.15.
+    Skriv en melding på norsk på 25–40 ord.'
+  response_language: 'no'
+  min_words: 25
+  max_words: 40
+  judge_prompt: Report a verdict for each criterion id. Determine the overall pass only if all criteria
+    are satisfied.
+  criteria:
+  - id: audience-purpose
+    instruction: The response is a message to a colleague explaining the late arrival.
+  - id: supplied-journey-facts
+    instruction: The response includes the absent bus, the twenty-minute wait, the train journey, and
+      arrival at 09.15 without contradicting them.
+  - id: word-bound
+    instruction: The response contains 25–40 words.
+  - id: norwegian-message
+    instruction: The message is intelligible Norwegian.
+  - id: regular-past-observation
+    instruction: The waiting event uses the expected regular preteritum form.
+  - id: irregular-past-observation
+    instruction: The supplied arrival and train events use appropriate preteritum forms.
+  - id: known-past-time-observation
+    instruction: The verbs remain compatible with the established time «i går» and use past tense.
+  derived_from:
+  - section_id: retrieval-review-past-tense
+- handle: review_notice_known_past_time
+  op: write
+  objective: obj-past-tense-01
+  bloom: apply
+  prompt_md: Jonas var på jobb fra ni til fire i går. Skriv Jonas sitt korte svar (2–3 ord) som starter
+    med «Jeg» og bruker «jobbet» i preteritum.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: «Hva gjorde du i går?»
+  response_language: 'no'
+  min_words: 2
+  max_words: 3
+  judge_prompt: Report a verdict for the criterion exact-reply only and add no other requirements.
+  criteria:
+  - id: exact-reply
+    instruction: Accept any 2–3-word answer that starts with «Jeg» and uses «jobbet», with optional final
+      punctuation and variation in letter case.
+  derived_from:
+  - section_id: retrieval-review-past-tense
+- handle: review_form_regular_preteritum
+  op: choose
+  objective: obj-past-tense-01
+  bloom: apply
+  prompt_md: Choose the sentence that reports yesterday with correct regular past forms.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Tid: i går. Verb: «å snakke», «å kjøpe».'
+  options:
+  - id: infinitive-form
+    text: I går snakket Sara med Maja, og de køpe billetter.
+    correct: false
+    why: The infinitive kjøpe is not a finite past form.
+  - id: regular-past
+    text: I går snakket Sara med Maja, og de kjøpte billetter.
+    correct: true
+    why: Regular preteritum adds -et or -te to these verb stems.
+  - id: present-forms
+    text: I går snakker Sara med Maja, og de kjøper billetter.
+    correct: false
+    why: Present tense conflicts with the past time «i går».
+  derived_from:
+  - section_id: retrieval-review-past-tense
+- handle: review_subject_invariance
+  op: write
+  objective: obj-past-tense-01
+  bloom: apply
+  prompt_md: Skriv én norsk setning med «Sara og Jonas» som subjekt. Fortell at de befant seg i boligen
+    sin dagen før, og bruk preteritum av «å være».
+  response_language: 'no'
+  judge_prompt: Report a verdict for the criteria plural-subject, same-past-form, and location-and-time
+    only. The criterion ending in -observation is diagnostic and never fails an otherwise successful response.
+  criteria:
+  - id: plural-subject
+    instruction: The rewritten note uses Sara og Jonas as the subject.
+  - id: same-past-form
+    instruction: The verb uses the preteritum form var, with no plural ending.
+  - id: location-and-time
+    instruction: The sentence states that Sara og Jonas were in their home the day before.
+  - id: length-observation
+    instruction: 'Observation only: note the note''s length; do not fail on length.'
+  derived_from:
+  - section_id: retrieval-review-past-tense
+- handle: review_retrieve_common_irregular_preteritum
+  op: choose
+  objective: obj-past-tense-01
+  bloom: apply
+  prompt_md: Choose the sentence that uses the irregular past forms correctly.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Verb: «å gå», «å ta», «å komme». Tid: i går.'
+  options:
+  - id: present-forms
+    text: I går går Mina til parken, tar en kaffe og kommer tilbake før middag.
+    correct: false
+    why: These present forms conflict with the past time «i går».
+  - id: regular-ending
+    text: I går gikkte Mina til parken, tokte en kaffe og komte tilbake før middag.
+    correct: false
+    why: Irregular verbs do not take the regular -te ending.
+  - id: correct-irregular
+    text: I går gikk Mina til parken, tok en kaffe og kom tilbake før middag.
+    correct: true
+    why: Gikk, tok, and kom are the correct irregular preteritum forms.
+  derived_from:
+  - section_id: retrieval-review-past-tense
+- handle: review_maintain_preteritum_in_questions_and_negatives
+  op: write
+  objective: obj-past-tense-01
+  bloom: apply
+  prompt_md: Maja vil spørre Jonas om toget i går. Skriv Maja sitt negative spørsmål på norsk med «å ta»
+    i preteritum og «ikke».
+  response_language: 'no'
+  judge_prompt: Rapporter en vurdering av kriteriene negativt-spørsmål, preteritum-form og spørsmålsordstilling
+    בלבד. Kriteriet som slutter på -observasjon er diagnostisk og skal aldri føre til underkjenning av
+    et ellers riktig svar.
+  criteria:
+  - id: negative-question
+    instruction: Svaret er det norske ja/nei-spørsmålet om hvorvidt Jonas tok toget, og det inneholder
+      ikke.
+  - id: past-form
+    instruction: Verbet «å ta» står i preteritumsformen tok, og spørsmålet handler om at Jonas tar toget.
+  - id: question-word-order
+    instruction: Det finitte verbet tok står foran subjektet Jonas.
+  - id: target-form-observation
+    instruction: 'Bare observasjon: Noter om spørsmålet samsvarer med Tok Jonas ikke toget?; ikke underkjenn
+      et naturlig alternativ.'
+  derived_from:
+  - section_id: retrieval-review-past-tense
+- handle: review_choose_tense_from_time_frame
+  op: choose
+  objective: obj-past-tense-01
+  bloom: apply
+  prompt_md: Velg tidsuttrykket som passer til verbet i preteritum.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Setning: Sara spiste på en liten restaurant ved en enkelt anledning.'
+  options:
+  - id: present-time
+    text: nå
+    correct: false
+    why: Nå viser til nåtid og passer ikke med verbet i preteritum.
+  - id: past-time
+    text: i går
+    correct: true
+    why: I går viser til en avsluttet hendelse i fortiden og passer med verbet i preteritum.
+  - id: routine-time
+    text: hver lørdag
+    correct: false
+    why: Hver lørdag uttrykker en gjentakende vane, ikke den bestemte hendelsen i setningen.
+  derived_from:
+  - section_id: retrieval-review-past-tense
+- handle: review_present_preteritum_pair
+  op: recall_fill
+  objective: obj-past-tense-01
+  bloom: apply
+  prompt_md: Fill in the verb forms that fit each message.
+  audio_target: Nå venter jeg på bussen. I går ventet jeg i tjue minutter.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Par: presens–preteritum. Forutsetning: presens.'
+    - speaker: A
+      text_md: «Nå ___ jeg på bussen.»
+    - speaker: B
+      text_md: «I går ___ jeg i tjue minutter.»
+  segments:
+  - text_md: '«Nå '
+  - blank_id: review-naa-form
+    options:
+    - venter
+    - ventet
+    answer_index: 0
+  - text_md: ' jeg på bussen.» «I går '
+  - blank_id: review-igaar-form
+    options:
+    - venter
+    - ventet
+    answer_index: 1
+  - text_md: ' jeg i tjue minutter.»'
+  derived_from:
+  - section_id: retrieval-review-past-tense

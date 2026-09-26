@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.0",
+  "schema_version": "4.1",
   "id": "ask_for_and_give_directions",
   "kind": "communicative",
   "language": "nb-NO",
@@ -76,6 +76,46 @@
     {
       "kind": "exercise",
       "id": "final_retrieval"
+    },
+    {
+      "kind": "exercise",
+      "id": "recognize_route_request"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_route_request"
+    },
+    {
+      "kind": "exercise",
+      "id": "recognize_landmark_relation"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_landmark_relation"
+    },
+    {
+      "kind": "exercise",
+      "id": "recognize_movement_location"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_turn_vs_location"
+    },
+    {
+      "kind": "exercise",
+      "id": "recognize_detail_check"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_detail_check"
+    },
+    {
+      "kind": "exercise",
+      "id": "recognize_route_confirmation"
+    },
+    {
+      "kind": "exercise",
+      "id": "review_route_confirmation"
     }
   ],
   "sections": [
@@ -2023,15 +2063,16 @@
               "no": [
                 {
                   "kind": "text",
-                  "value": "✗ Hvordan kommer jeg meg biblioteket?"
+                  "value": "Hvordan kommer jeg meg biblioteket?"
                 }
               ],
               "en": [
                 {
                   "kind": "text",
-                  "value": "✗ How do I get to the library?"
+                  "value": "How do I get to the library?"
                 }
-              ]
+              ],
+              "teaching_role": "incorrect"
             }
           ],
           "id": "common-problems-block-3"
@@ -2526,7 +2567,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "You are visiting a town and need directions to the hotel. A person nearby can help. Write one complete question beginning with Unnskyld. Use either Hvordan kommer jeg meg til …? or Kan du forklare veien til …?"
+          "value": "You are visiting a city and need directions from the square to the hotel. Politely ask a passerby how to get there. Write one question in Norwegian."
         }
       ],
       "explanation": null,
@@ -2534,15 +2575,23 @@
         "response_language": "no",
         "min_words": 7,
         "max_words": 12,
-        "judge_prompt": "Check that the response is one natural Bokmål question which begins with Unnskyld, politely identifies the hotel as the destination, and clearly asks for a route. Accept either taught question pattern.",
+        "judge_prompt": "Check gating criteria polite-address, names-destination, and asks-route-steps. Record taught-pattern-observation as an observation only; it never changes the pass result.",
         "criteria": [
           {
-            "id": "polite-destination",
-            "instruction": "Begins with \"Unnskyld\" and identifies the hotel as the destination."
+            "id": "polite-address",
+            "instruction": "Politely addresses the stranger before asking."
           },
           {
-            "id": "route-request",
-            "instruction": "Uses either \"Hvordan kommer jeg meg til …?\" or \"Kan du forklare veien til …?\" to request directions."
+            "id": "names-destination",
+            "instruction": "Names the hotel as the destination of the requested route."
+          },
+          {
+            "id": "asks-route-steps",
+            "instruction": "Asks for the route steps needed to reach the hotel from the square."
+          },
+          {
+            "id": "taught-pattern-observation",
+            "instruction": "Observation only: note whether the response uses Hvordan kommer jeg meg til … or Kan du forklare veien til …; do not fail an otherwise successful question."
           }
         ]
       }
@@ -2555,13 +2604,13 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "You are giving directions near a hotel, traffic lights, a bank, and a station. Build one complete command telling the listener to turn right at the bank."
+          "value": "Put together an instruction that tells someone to turn right at the bank."
         }
       ],
       "explanation": [
         {
           "kind": "text",
-          "value": "Use ta til høyre for turn right and ved plus the landmark for where the turn happens."
+          "value": "«Ta til høyre» uttrykker svingen, og «ved» angir landemerket der den skjer."
         }
       ],
       "payload": {
@@ -2609,7 +2658,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "You are at the station. The traffic lights are straight ahead, the bank is beyond them, and the pharmacy is on the right-hand side just after the bank. Write three short direction steps in logical order. Use først, så, or deretter where useful, and finish by locating the pharmacy."
+          "value": "You are at the station. The route goes via the traffic lights and past the bank. The pharmacy is on the right, just after the bank. Write three short sentences giving directions."
         }
       ],
       "explanation": null,
@@ -2617,19 +2666,23 @@
         "response_language": "no",
         "min_words": 15,
         "max_words": 40,
-        "judge_prompt": "Check that the response gives exactly three short, natural Bokmål route steps matching the described map. Verify their order, landmark use, and final statement locating the pharmacy.",
+        "judge_prompt": "Check gating criteria logical-order, accurate-landmarks, and destination-location. Record sequence-language-observation as an observation only; it never changes the pass result.",
         "criteria": [
           {
             "id": "logical-order",
-            "instruction": "Presents three route actions in a logical order from the station."
+            "instruction": "Presents three short direction sentences in a usable order from the station."
           },
           {
             "id": "accurate-landmarks",
-            "instruction": "Uses the traffic lights and bank consistently with the map description."
+            "instruction": "Directs the visitor to the traffic lights and then past the bank."
           },
           {
             "id": "destination-location",
-            "instruction": "Finishes by locating the pharmacy on the right-hand side after the bank."
+            "instruction": "Locates the pharmacy on the right-hand side immediately after the bank."
+          },
+          {
+            "id": "sequence-language-observation",
+            "instruction": "Observation only: note whether words such as først, så, or deretter clarify the order; do not fail an otherwise clear route."
           }
         ]
       }
@@ -2642,23 +2695,23 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "You hear: Gå rett fram til banken. Ta til høyre etter banken. You are unsure where to turn. Write one natural confirmation question that repeats only that turn and landmark detail."
+          "value": "Guide: «Gå rett fram til banken. Ta til høyre etter banken.» You understood the first step, but you are not sure where to turn. Ask the guide to confirm this. Write one question in Norwegian."
         }
       ],
       "explanation": null,
       "payload": {
         "response_language": "no",
-        "min_words": 4,
+        "min_words": 1,
         "max_words": 10,
-        "judge_prompt": "Check that the response is one natural Bokmål confirmation question isolating the instruction to turn right after the bank. Accept a shortened confirmation or a full question.",
+        "judge_prompt": "Evaluate criteria isolated-detail and confirmation-question only.",
         "criteria": [
           {
             "id": "isolated-detail",
-            "instruction": "Repeats only the uncertain right-turn and bank detail."
+            "instruction": "Checks that the visitor should turn right after the bank; a concise question such as «Etter banken?» is sufficient."
           },
           {
             "id": "confirmation-question",
-            "instruction": "Expresses the detail as a natural confirmation question."
+            "instruction": "Expresses that detail as a natural Bokmål confirmation question."
           }
         ]
       }
@@ -2671,7 +2724,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "Create a short Bokmål dialogue about reaching the museum. The visitor starts at the station. The route goes straight to the traffic lights, left at the kiosk, and past the hotel; the museum is then on the right-hand side. Include a clear route request, two or three ordered direction steps, a listener check beginning with Så …, and an explicit confirmation or one brief correction."
+          "value": "Write a dialogue between a visitor and a local person at the station. The visitor is going to the museum. The route goes straight ahead to the traffic lights, left at the kiosk, and past the hotel; the museum is on the right. Include a question asking the way, a short explanation, a repeat of the main directions, and a reply to the repeat."
         }
       ],
       "explanation": null,
@@ -2679,7 +2732,7 @@
         "response_language": "no",
         "min_words": 35,
         "max_words": 75,
-        "judge_prompt": "Check the dialogue against the stated route. Report evidence for the request, ordered directions, listener repetition beginning with Så, and final confirmation or correction. Dialogue labels may be present but are not required.",
+        "judge_prompt": "Check gating criteria clear-request, ordered-route, listener-check, and explicit-ending. Record taught-check-form-observation as an observation only; it never changes the pass result.",
         "criteria": [
           {
             "id": "clear-request",
@@ -2687,15 +2740,19 @@
           },
           {
             "id": "ordered-route",
-            "instruction": "Gives two or three ordered steps consistent with the traffic lights, kiosk, hotel, and museum description."
+            "instruction": "Gives an ordered route consistent with the traffic lights, kiosk, hotel, and museum facts."
           },
           {
             "id": "listener-check",
-            "instruction": "Includes a listener repetition of the route beginning with \"Så …\"."
+            "instruction": "The visitor repeats the route or its key steps to check understanding."
           },
           {
             "id": "explicit-ending",
-            "instruction": "Ends with an explicit confirmation or one brief correction."
+            "instruction": "Ends with an explicit confirmation or a brief correction in response to that check."
+          },
+          {
+            "id": "taught-check-form-observation",
+            "instruction": "Observation only: note whether the listener check begins with Så; do not fail an otherwise successful route check."
           }
         ]
       }
@@ -2708,7 +2765,7 @@
       "prompt": [
         {
           "kind": "text",
-          "value": "From memory, write a brief Bokmål direction exchange about reaching the bus terminal. Ask politely for the route, give three short direction steps that include a turn and a landmark, repeat the route beginning with Så …, and finish with Det stemmer or Helt riktig."
+          "value": "Write a dialogue between a visitor and a local person outside the swimming pool. The visitor is going to the post office. Go straight ahead to the roundabout, turn right there, and go past the bakery. The post office is next to the bookshop. Include a polite question asking the way, short directions, a repeat of the route, and a confirmation or short correction."
         }
       ],
       "explanation": null,
@@ -2716,26 +2773,666 @@
         "response_language": "no",
         "min_words": 35,
         "max_words": 75,
-        "judge_prompt": "Check that the response forms one coherent direction exchange and report evidence for every requested part. The final words must be Det stemmer or Helt riktig, allowing terminal punctuation.",
+        "judge_prompt": "Evaluate only the visible task and criteria. Accept natural Bokmål variants that convey the required route and exchange; do not require exact wording or taught phrases.",
         "criteria": [
           {
             "id": "polite-route-request",
-            "instruction": "Includes a polite request for directions to the bus terminal."
+            "instruction": "The visitor politely asks how to get to the post office."
           },
           {
-            "id": "three-direction-steps",
-            "instruction": "Includes three short direction steps containing a turn and a landmark."
+            "id": "accurate-direction-steps",
+            "instruction": "The local person gives brief, usable directions from the swimming pool via the roundabout and past the bakery, and locates the post office next to the bookshop."
           },
           {
-            "id": "route-repetition",
-            "instruction": "Includes a repetition of the route beginning with \"Så …\"."
+            "id": "route-check-back",
+            "instruction": "The visitor repeats the route or its key steps to check understanding."
           },
           {
-            "id": "required-confirmation",
-            "instruction": "Ends with \"Det stemmer\" or \"Helt riktig\"."
+            "id": "confirmation-response",
+            "instruction": "The local person clearly confirms an accurate check-back or briefly corrects an inaccurate one."
           }
         ]
       }
+    },
+    {
+      "kind": "exercise",
+      "id": "recognize_route_request",
+      "operation": "choose",
+      "objective_id": "obj-ask-for-and-give-directions-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "What does the visitor's question mean?"
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "location",
+            "text": "Excuse me, where is the town hall?",
+            "why": "A where-question would use Hvor ligger …, not Hvordan kommer jeg meg til …"
+          },
+          {
+            "option_id": "near-station",
+            "text": "Excuse me, is the town hall near the station?",
+            "why": "The question names no station and asks for the way, not for a yes/no location."
+          },
+          {
+            "option_id": "route",
+            "text": "Excuse me, how do I get to the town hall?",
+            "why": "The question asks how to reach the town hall."
+          }
+        ],
+        "answer_id": "route",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Visitor",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Unnskyld, hvordan kommer jeg meg til rådhuset?»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_route_request",
+      "operation": "recall_fill",
+      "objective_id": "obj-ask-for-and-give-directions-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Complete the polite question asking the way to the pharmacy."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Hvordan finner jeg veien til …?» spør hvordan man kommer fram. «Hvor ligger …?» spør om stedet, og «Hva heter …?» spør etter navnet."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "«Unnskyld, hvordan"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "route-verb",
+            "options": [
+              "finner",
+              "ligger",
+              "heter"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "jeg veien til apoteket?»"
+              }
+            ]
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Visitor",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Unnskyld, hvordan ___ jeg veien til apoteket?»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "recognize_landmark_relation",
+      "operation": "choose",
+      "objective_id": "obj-ask-for-and-give-directions-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "What does the instruction mean?"
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "to",
+            "text": "Go to the hotel.",
+            "why": "Til would make the hotel the endpoint instead of a landmark to pass."
+          },
+          {
+            "option_id": "at",
+            "text": "Stop at the hotel.",
+            "why": "Ved would tell the listener to stop by the hotel rather than walk past it."
+          },
+          {
+            "option_id": "past",
+            "text": "Go past the hotel.",
+            "why": "Forbi tells the listener to continue beyond the hotel."
+          }
+        ],
+        "answer_id": "past",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Guide",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Gå forbi hotellet.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_landmark_relation",
+      "operation": "recall_fill",
+      "objective_id": "obj-ask-for-and-give-directions-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Choose the phrase that shows where the turn is in relation to the bank."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Ved banken» viser at svingen skjer ved banken. «Forbi» betyr at man går forbi den, og «bak» viser til området bak den."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "«Gå rett fram til banken. Ta til venstre"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "landmark-relation",
+            "options": [
+              "ved banken",
+              "forbi banken",
+              "bak banken"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ".»"
+              }
+            ]
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Guide",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Gå rett fram til banken. Ta til venstre ___.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "recognize_movement_location",
+      "operation": "choose",
+      "objective_id": "obj-ask-for-and-give-directions-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "What does the local person's reply mean?"
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "wrong-location",
+            "text": "Turn right at the kiosk; the pharmacy is on the right-hand side.",
+            "why": "The turn matches, but the pharmacy side is wrong."
+          },
+          {
+            "option_id": "correct-contrast",
+            "text": "Turn right at the kiosk; the pharmacy is on the left-hand side.",
+            "why": "The turn and the pharmacy location both match the Norwegian."
+          },
+          {
+            "option_id": "swapped-forms",
+            "text": "Turn left at the kiosk; the pharmacy is on the right-hand side.",
+            "why": "This reverses both the movement and the location forms."
+          }
+        ],
+        "answer_id": "correct-contrast",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Local",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Ta til høyre ved kiosken. Apoteket ligger på venstre side.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_turn_vs_location",
+      "operation": "recall_fill",
+      "objective_id": "obj-ask-for-and-give-directions-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Complete the sentence that tells which side the library is on."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«På venstre side» forteller hvor biblioteket ligger. «Til venstre» viser hvilken vei man skal svinge. «Under» og «over» passer ikke i uttrykket."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "«Ta til venstre ved torget. Biblioteket ligger"
+              },
+              {
+                "kind": "text",
+                "value": " "
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "side-preposition",
+            "options": [
+              "på",
+              "under",
+              "over"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "venstre side.»"
+              }
+            ]
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Local",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Ta til venstre ved torget. Biblioteket ligger ___ venstre side.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "recognize_detail_check",
+      "operation": "choose",
+      "objective_id": "obj-ask-for-and-give-directions-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Which question repeats the guide's direction about the turn?"
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "wrong-place",
+            "text": "Så jeg tar til venstre før banken?",
+            "why": "This places the turn before the bank instead of after it."
+          },
+          {
+            "option_id": "focused",
+            "text": "Så jeg tar til venstre etter banken?",
+            "why": "This echoes only the guide's second step and asks whether the left turn comes after the bank."
+          },
+          {
+            "option_id": "wrong-turn",
+            "text": "Så jeg tar til høyre etter banken?",
+            "why": "This reverses the turn direction the guide gave."
+          }
+        ],
+        "answer_id": "focused",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Guide",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Gå rett fram til banken. Sving mot venstre når du har passert banken.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_detail_check",
+      "operation": "recall_fill",
+      "objective_id": "obj-ask-for-and-give-directions-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Complete the visitor's question that repeats the guide's second direction."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Så» innleder et spørsmål som gjentar guidens andre beskjed for å få den bekreftet."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "«"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "check-opener",
+            "options": [
+              "Så",
+              "Hvor",
+              "Hvordan"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": " "
+              },
+              {
+                "kind": "text",
+                "value": "tar jeg til venstre ved kirken?»"
+              }
+            ]
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Guide",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Gå rett fram til kirken. Ta til venstre ved kirken.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Visitor",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«___ tar jeg til venstre ved kirken?»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "recognize_route_confirmation",
+      "operation": "choose",
+      "objective_id": "obj-ask-for-and-give-directions-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "What does the local person's reply mean?"
+        }
+      ],
+      "explanation": null,
+      "payload": {
+        "options": [
+          {
+            "option_id": "correction",
+            "text": "The visitor must take a different turn.",
+            "why": "A correction would use Nei and a new instruction."
+          },
+          {
+            "option_id": "new-request",
+            "text": "The local person is asking for the route again.",
+            "why": "A new request would use a question such as Hvordan kommer jeg meg til …"
+          },
+          {
+            "option_id": "confirm",
+            "text": "The route the visitor repeated is correct.",
+            "why": "Ja, det stemmer confirms the repeated route."
+          }
+        ],
+        "answer_id": "confirm",
+        "stem": null
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Visitor",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Så jeg går forbi banken og tar til høyre?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Local",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Ja, det stemmer.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "exercise",
+      "id": "review_route_confirmation",
+      "operation": "recall_fill",
+      "objective_id": "obj-ask-for-and-give-directions-01",
+      "prompt": [
+        {
+          "kind": "text",
+          "value": "Complete the reply that confirms the route."
+        }
+      ],
+      "explanation": [
+        {
+          "kind": "text",
+          "value": "«Ja, helt riktig» bekrefter at ruten som ble gjentatt, stemmer. De andre alternativene avviser ruten eller avslutter samtalen."
+        }
+      ],
+      "payload": {
+        "segments": [
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": "«"
+              }
+            ]
+          },
+          {
+            "kind": "blank",
+            "blank_id": "confirmation",
+            "options": [
+              "Ja, helt riktig",
+              "Nei, du tar til høyre",
+              "Vi ses i morgen"
+            ],
+            "answer_index": 0
+          },
+          {
+            "kind": "span",
+            "spans": [
+              {
+                "kind": "text",
+                "value": ".»"
+              }
+            ]
+          }
+        ]
+      },
+      "stimulus": [
+        {
+          "kind": "dialogue",
+          "turns": [
+            {
+              "speaker": "Guide",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Gå rett fram til parken. Ta til venstre etter parken.»"
+                }
+              ]
+            },
+            {
+              "speaker": "Visitor",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«Så jeg tar til venstre etter parken?»"
+                }
+              ]
+            },
+            {
+              "speaker": "Local",
+              "text": [
+                {
+                  "kind": "text",
+                  "value": "«___.»"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "practice_groups": [
@@ -2748,7 +3445,17 @@
         "expand_route",
         "confirm_uncertain_detail",
         "complete_exchange",
-        "final_retrieval"
+        "final_retrieval",
+        "recognize_route_request",
+        "review_route_request",
+        "recognize_landmark_relation",
+        "review_landmark_relation",
+        "recognize_movement_location",
+        "review_turn_vs_location",
+        "recognize_detail_check",
+        "review_detail_check",
+        "recognize_route_confirmation",
+        "review_route_confirmation"
       ]
     }
   ],

@@ -65,6 +65,37 @@ def test_verify_exercises_given_solved_answer_with_semantic_issue_expect_strict_
     assert caught.value.report["semantic_issues"][0]["id"] == "choose-one"
 
 
+def test_verify_exercises_given_composite_decision_load_finding_expect_strict_failure():
+    opaque_answer = project_answer_review(_lesson()).questions[0]["options"][1]["option_id"]
+
+    with pytest.raises(ExerciseReviewError) as caught:
+        verify_exercises(
+            _lesson(),
+            reviewer_agent=_reviewer(
+                {
+                    "answers": [
+                        {
+                            "id": "choose-one",
+                            "answer": opaque_answer,
+                            "semantic_issues": [
+                                {
+                                    "category": "composite_decision_load",
+                                    "reason": "Each option bundles several independent form-to-function mappings.",
+                                    "evidence": "Hei! = greeting; Ha det! = close.",
+                                }
+                            ],
+                        }
+                    ]
+                }
+            ),
+            strict=True,
+        )
+
+    assert caught.value.report["status"] == "needs_human"
+    assert caught.value.report["matches"] == 1
+    assert caught.value.report["semantic_issues"][0]["id"] == "choose-one"
+
+
 def test_verify_exercises_given_key_agrees_but_english_cue_leaks_answer_expect_strict_failure():
     opaque_answer = project_answer_review(_lesson()).questions[0]["options"][1]["option_id"]
 

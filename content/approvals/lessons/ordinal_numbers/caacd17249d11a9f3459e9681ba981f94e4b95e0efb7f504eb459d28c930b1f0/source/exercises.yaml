@@ -1,0 +1,383 @@
+- handle: notice-order-in-the-quiz
+  op: choose
+  objective: obj-ordinal-numbers-01
+  bloom: understand
+  prompt_md: "Velg hva de fire norske uttrykkene har til felles."
+  derived_from:
+  - section_id: showing-order-rather-than-quantity
+  stem_md: 'Fire uttrykk fra quizen: for andre gang, det første bordet, den tredje runden, andreplass.'
+  options:
+  - id: quantity
+    text: They show how many visits, tables, rounds, or teams there are.
+    correct: false
+    why: A quantity reading would use cardinals such as to, tre, or fire.
+  - id: identifying-number
+    text: They give a label such as a table number or a shirt number.
+    correct: false
+    why: A label is an ordinary number; these forms mark a position in a sequence.
+  - id: order-rank-position
+    text: They show order, rank, or position.
+    correct: true
+    why: Each expression selects a visit, table, round, or rank by its place in a sequence.
+- handle: retrieve-common-ordinal-forms
+  op: recall_fill
+  objective: obj-ordinal-numbers-01
+  bloom: remember
+  prompt_md: "Fullfør lista med ordenstall."
+  derived_from:
+  - section_id: common-ordinal-numbers
+  audio_target: Første, andre, tredje, fjerde, femte, sjette, sjuende, åttende, niende, tiende, ellevte
+    og tolvte.
+  segments:
+  - text_md: 1 —
+  - blank_id: ordinal-1
+    options:
+    - andre
+    - første
+    answer_index: 1
+  - text_md: ; 2 —
+  - blank_id: ordinal-2
+    options:
+    - andre
+    - tredje
+    answer_index: 0
+  - text_md: ; 3 —
+  - blank_id: ordinal-3
+    options:
+    - fjerde
+    - tredje
+    answer_index: 1
+  - text_md: ; 4 —
+  - blank_id: ordinal-4
+    options:
+    - fjerde
+    - femte
+    answer_index: 0
+  - text_md: ; 5 —
+  - blank_id: ordinal-5
+    options:
+    - sjette
+    - femte
+    answer_index: 1
+  - text_md: ; 6 —
+  - blank_id: ordinal-6
+    options:
+    - sjette
+    - sjuende
+    answer_index: 0
+  - text_md: ; 7 —
+  - blank_id: ordinal-7
+    options:
+    - åttende
+    - sjuende
+    answer_index: 1
+  - text_md: ; 8 —
+  - blank_id: ordinal-8
+    options:
+    - åttende
+    - niende
+    answer_index: 0
+  - text_md: ; 9 —
+  - blank_id: ordinal-9
+    options:
+    - niende
+    - tiende
+    answer_index: 0
+  - text_md: ; 10 —
+  - blank_id: ordinal-10
+    options:
+    - ellevte
+    - tiende
+    answer_index: 1
+  - text_md: ; 11 —
+  - blank_id: ordinal-11
+    options:
+    - ellevte
+    - tolvte
+    answer_index: 0
+  - text_md: ; 12 —
+  - blank_id: ordinal-12
+    options:
+    - tolvte
+    - ellevte
+    answer_index: 0
+- handle: choose-quantity-or-order
+  op: choose
+  objective: obj-ordinal-numbers-01
+  bloom: understand
+  prompt_md: "Velg setningen som forteller hvilken runde som spilles nå."
+  derived_from:
+  - section_id: a-likely-mistake
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Quizmaster
+      text_md: «Vi har spilt én runde, og det er bare én runde igjen i kveld.»
+    - speaker: Deltaker
+      text_md: «Da fortsetter vi med runden som kommer nå.»
+  options:
+  - id: third-round
+    text: Vi spiller den tredje runden.
+    correct: false
+    why: This is an ordered expression, but it selects the third round instead of the second.
+  - id: current-round
+    text: Vi spiller den andre runden.
+    correct: true
+    why: The ordinal andre selects the round in second position.
+  - id: total-rounds
+    text: Vi spiller to runder.
+    correct: false
+    why: The cardinal to states how many rounds there are, not which one is being played.
+  explanation_md: "Grunntall uttrykker mengde, mens ordenstall viser plass i en rekkefølge."
+- handle: express-rank-and-position
+  op: write
+  objective: obj-ordinal-numbers-01
+  bloom: apply
+  prompt_md: "Resultatliste: Sofie løp raskest, deretter Omar, og Lina kom sist. Skriv en melding på norsk på 12–30 ord til løperne om resultatet. Bruk ordenstall."
+  derived_from:
+  - section_id: position-and-rank
+  response_language: 'no'
+  min_words: 12
+  max_words: 30
+  judge_prompt: Vurder bare kriteriene publikum og formål, Sofie på førsteplass, Omar på andreplass og
+    Lina på tredjeplass. En naturlig melding som «Gratulerer! Sofie kom på førsteplass, Omar på andreplass
+    og Lina på tredjeplass.» må godkjennes. En melding som sier at Omar kom på førsteplass, må underkjennes
+    for kriteriet om Omar på andreplass. Logg én vurdering for hvert kriterium.
+  criteria:
+  - id: audience-purpose
+    instruction: Henvender seg til eller informerer tydelig løperne om resultatene i 12–30 norske ord.
+  - id: sofie-first
+    instruction: Sier at Sofie kom på førsteplass, med et ordenstall.
+  - id: omar-second
+    instruction: Sier at Omar kom på andreplass, med et ordenstall.
+  - id: lina-third
+    instruction: Sier at Lina kom på tredjeplass, med et ordenstall.
+- handle: locate-by-ordered-position
+  op: write
+  objective: obj-ordinal-numbers-01
+  bloom: apply
+  prompt_md: "Besøkslapp: Møterommet ligger i den øverste etasjen i et bygg med fire etasjer. Setet ditt står i raden bak den fremste raden. Døra er den siste av tre dører på venstre side. Skriv en norsk melding på 15–35 ord som viser hvor alle tre stedene er. Bruk ordenstall."
+  derived_from:
+  - section_id: finding-places-in-an-ordered-setting
+  response_language: 'no'
+  min_words: 15
+  max_words: 35
+  judge_prompt: Evaluate only criteria visitor-message, fourth-floor, second-row, and third-door. «Møterommet
+    er i fjerde etasje. Setet ditt er på andre rad. Ta den tredje døra til venstre.» must pass. A message
+    placing the seat in the third row must fail second-row. Log one verdict for every criterion.
+  criteria:
+  - id: visitor-message
+    instruction: Provides the visitor with a comprehensible Norwegian message of 15–35 words.
+  - id: fourth-floor
+    instruction: Locates the meeting room on the fourth floor with a natural ordinal phrase; accept «i fjerde etasje», «i den fjerde etasjen», or another natural equivalent.
+  - id: second-row
+    instruction: Locates the visitor's seat in the second row with a natural ordinal phrase; accept «på andre rad», «på den andre raden», or another natural equivalent.
+  - id: third-door
+    instruction: Identifies the third door on the left with a natural ordinal phrase and correct agreement; accept «den tredje døra», «den tredje døren», or another natural equivalent. Do not require the exact wording «tredje dør».
+- handle: complete-the-quiz-result
+  op: write
+  objective: obj-ordinal-numbers-01
+  bloom: apply
+  prompt_md: "Quiznotat: Vi spilte tre runder, og det gikk best i den tredje og siste runden. Det var fire spørsmål, og vi svarte riktig på spørsmål én og fire i den tredje runden. Laget vårt vant, og laget ved bord én kom like bak. Skriv en melding på 25–55 ord til en lagkamerat som var borte. Bruk ordenstall om runden, spørsmålene og plasseringene."
+  derived_from:
+  - section_id: returning-to-the-quiz
+  response_language: 'no'
+  min_words: 25
+  max_words: 55
+  judge_prompt: Evaluate only criteria teammate-message, third-round, first-fourth-questions, team-first-place,
+    and first-table-second-place. Use ordinal forms for the round, questions, and team rankings; the table
+    identifier may remain cardinal. «I den tredje runden svarte vi riktig på det første og det fjerde spørsmålet. Vi kom
+    på førsteplass, og laget ved det første bordet kom på andreplass.» must pass. A message that omits
+    the fourth question must fail first-fourth-questions. Log one verdict for every criterion.
+  criteria:
+  - id: teammate-message
+    instruction: Gives an absent teammate a comprehensible Norwegian result message of 25–55 words.
+  - id: third-round
+    instruction: States with an ordinal form that the result concerns the third round.
+  - id: first-fourth-questions
+    instruction: States with ordinal forms that questions one and four were answered correctly.
+  - id: team-first-place
+    instruction: States with an ordinal form that the writer's team finished first.
+  - id: first-table-second-place
+    instruction: States that the team at table one finished second. Use an ordinal for the team's second-place ranking; the table identifier may remain cardinal, as in «bord én».
+- handle: describe-saras-ordered-day
+  op: write
+  objective: obj-ordinal-numbers-01
+  bloom: apply
+  prompt_md: 'Saras notater: Sara startet dagen med dagens første møte på kontoret i den øverste etasjen av et bygg
+    med fire etasjer. Deretter besøkte hun det andre kontoret langs korridoren og tok den siste av tre
+    busser hjem. Neste dag var hun på andreplass i kafékøen. Skriv en e-post på 30–65 ord på norsk til
+    Saras kollega om hvor hun dro og hva som skjedde. Bruk ordenstall for etasjen, møtet, kontoret, bussen
+    og plassen i køen.'
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+  response_language: 'no'
+  min_words: 30
+  max_words: 65
+  judge_prompt: Evaluate only criteria colleague-email, sara-fourth-floor, sara-first-meeting, sara-second-office,
+    sara-third-bus, sara-second-queue, and ordinal-forms. «Hei! Sara jobbet i fjerde etasje. Hun deltok på sitt første
+    møte, besøkte det andre kontoret og tok den tredje bussen hjem. Neste dag var hun på andreplass i
+    kafékøen.» must pass. A response placing the meeting on the fifth floor must fail sara-fourth-floor.
+    Log one verdict for every criterion.
+  criteria:
+  - id: colleague-email
+    instruction: Writes a comprehensible 30–65-word Norwegian email for Sara's colleague.
+  - id: sara-fourth-floor
+    instruction: States that Sara's meeting is in the fourth floor.
+  - id: sara-first-meeting
+    instruction: States that Sara attends her first meeting.
+  - id: sara-second-office
+    instruction: States that Sara visits the second office along the corridor.
+  - id: sara-third-bus
+    instruction: States that Sara takes the third bus in the departure order.
+  - id: sara-second-queue
+    instruction: States that Sara is second in the café queue the next day.
+  - id: ordinal-forms
+    instruction: >-
+      Uses natural Norwegian ordinal forms for all five positions: fourth floor, first meeting, second
+      office, third bus, and second place in the queue. Accept natural agreement and definiteness variants
+      such as «i fjerde etasje» or «i den fjerde etasjen», «sitt første møte» or «det første møtet»,
+      «det andre kontoret», «den tredje bussen», and «på andreplass».
+- handle: recall-and-use-three-ordinals
+  op: write
+  objective: obj-ordinal-numbers-01
+  bloom: apply
+  prompt_md: "Stasjonsmelding: Toget til Bergen går før toget til Oslo, og toget til Trondheim går til slutt. Skriv en norsk melding på 15–35 ord til en passasjer om rekkefølgen. Bruk «første», «andre» og «tredje»."
+  derived_from:
+  - section_id: quick-retrieval-and-review
+  response_language: 'no'
+  min_words: 15
+  max_words: 35
+  judge_prompt: Evaluate only criteria passenger-message, bergen-first, oslo-second, and trondheim-third.
+    «Hei! Her er rekkefølgen. Bergenstoget er det første toget, Oslo-toget er det andre toget, og Trondheimstoget
+    er det tredje toget.» must pass. A message that reverses Oslo and Trondheim must fail oslo-second
+    and trondheim-third. Log one verdict for every criterion.
+  criteria:
+  - id: passenger-message
+    instruction: Gives a passenger a comprehensible Norwegian message of 15–35 words.
+  - id: bergen-first
+    instruction: States in Norwegian that the Bergen train is the first departure, using an ordinal form
+      such as «første».
+  - id: oslo-second
+    instruction: States in Norwegian that the Oslo train is the second departure, using the ordinal form
+      «andre».
+  - id: trondheim-third
+    instruction: States in Norwegian that the Trondheim train is the third departure, using the ordinal
+      form «tredje».
+- handle: review_retrieve-common-ordinal-forms
+  op: recall_fill
+  objective: obj-ordinal-numbers-01
+  bloom: remember
+  prompt_md: "Fullfør kømeldingen med manglende ordenstall."
+  derived_from:
+  - section_id: common-ordinal-numbers
+  audio_target: Først kommer første kunde, deretter andre kunde, tredje kunde og til slutt fjerde kunde.
+  segments:
+  - text_md: '«Først kommer '
+  - blank_id: review-queue-1
+    options:
+    - første
+    - andre
+    answer_index: 0
+  - text_md: ' kunde, deretter '
+  - blank_id: review-queue-2
+    options:
+    - andre
+    - tredje
+    answer_index: 0
+  - text_md: ' kunde,'
+  - blank_id: review-queue-3
+    options:
+    - fjerde
+    - tredje
+    answer_index: 1
+  - text_md: ' kunde og til slutt '
+  - blank_id: review-queue-4
+    options:
+    - femte
+    - fjerde
+    answer_index: 1
+  - text_md: ' kunde.»'
+  explanation_md: "Ordenstall viser kundenes plass i køen, fra første til fjerde."
+- handle: review_quantity-or-order
+  op: choose
+  objective: obj-ordinal-numbers-01
+  bloom: understand
+  prompt_md: "Velg setningen som forteller hvilken etasje rommet ligger i."
+  derived_from:
+  - section_id: a-likely-mistake
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Resepsjonist
+      text_md: «Det er fem etasjer i hotellet, og rommet deres ligger helt øverst.»
+    - speaker: Gjest
+      text_md: «Så vi skal helt til topps?»
+  options:
+  - id: floor-quantity
+    text: Hotellet har en resepsjon i første etasje.
+    correct: false
+    why: This locates the reception but does not locate the room.
+  - id: wrong-position
+    text: Rommet ligger i fjerde etasje.
+    correct: false
+    why: This locates the room by order, but it selects floor four instead of floor five.
+  - id: room-position
+    text: Rommet ligger i femte etasje.
+    correct: true
+    why: The room is on the top floor of a five-storey building, so the ordinal is femte.
+  explanation_md: "Fem og femte viser forskjellen mellom mengde og plass i en rekkefølge. Grunntall læres først."
+- handle: review_rank-position
+  op: recall_fill
+  objective: obj-ordinal-numbers-01
+  bloom: apply
+  prompt_md: "Fullfør resultatet."
+  derived_from:
+  - section_id: position-and-rank
+  segments:
+  - text_md: 'I løpet deltok Nora, Ali og Emil. Nora vant, Emil kom sist. Ali kom på '
+  - blank_id: rank-result
+    options:
+    - to
+    - andreplass
+    - tredjeplass
+    answer_index: 1
+  - text_md: .
+  audio_target: I løpet deltok Nora, Ali og Emil. Nora vant, Emil kom sist. Ali kom på andreplass.
+- handle: review_location-position
+  op: recall_fill
+  objective: obj-ordinal-numbers-01
+  bloom: apply
+  prompt_md: "Fullfør veibeskrivelsen."
+  derived_from:
+  - section_id: finding-places-in-an-ordered-setting
+  segments:
+  - text_md: 'Papiret ligger i den første skuffen. Nøkkelen ligger i den '
+  - blank_id: drawer-position
+    options:
+    - andre
+    - tredje
+    - tre
+    answer_index: 1
+  - text_md: ' skuffen, med én skuff mellom den og papiret.'
+  audio_target: Papiret ligger i den første skuffen. Nøkkelen ligger i den tredje skuffen, med én skuff mellom den
+    og papiret.
+- handle: review_transfer-ordinals
+  op: recall_fill
+  objective: obj-ordinal-numbers-01
+  bloom: apply
+  prompt_md: "Fullfør Saras oppdatering."
+  derived_from:
+  - section_id: transfer-to-a-new-situation
+  segments:
+  - text_md: 'Buss 14 går først, buss 20 går etter, og buss 31 går til slutt. Sara skal hjem med buss
+      31, den '
+  - blank_id: bus-position
+    options:
+    - tre
+    - andre
+    - tredje
+    answer_index: 2
+  - text_md: ' bussen.'
+  audio_target: Buss 14 går først, buss 20 går etter, og buss 31 går til slutt. Sara skal hjem med buss
+    31, den tredje bussen.

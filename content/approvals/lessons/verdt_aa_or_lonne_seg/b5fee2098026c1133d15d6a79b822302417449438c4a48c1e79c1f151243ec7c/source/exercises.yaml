@@ -1,0 +1,220 @@
+- handle: identify_broad_evaluations
+  op: categorize
+  objective: obj-verdt-aa-or-lonne-seg-01
+  bloom: analyze
+  prompt_md: "Sorter de norske setningene etter om de uttrykker generell verdi eller praktisk nytte."
+  buckets:
+  - bucket_id: general-worth
+    label: General worth
+  - bucket_id: practical-payoff
+    label: Practical payoff
+  items:
+  - item_id: broad-1
+    text: Den nye forestillingen gjorde kvelden minneverdig.
+    bucket_id: general-worth
+  - item_id: practical-1
+    text: Forhåndskjøpet sparte familien flere hundre kroner.
+    bucket_id: practical-payoff
+  - item_id: broad-2
+    text: Romanen ga leseren noe å tenke på lenge etterpå.
+    bucket_id: general-worth
+  - item_id: practical-2
+    text: Direkteruten kutter reisetida med en halvtime.
+    bucket_id: practical-payoff
+  - item_id: broad-3
+    text: Turen langs fjorden ga oss en utsikt vi fortsatt snakker om.
+    bucket_id: general-worth
+  - item_id: practical-3
+    text: Ved å samle bestillingen fikk gruppa lavere fraktkostnad.
+    bucket_id: practical-payoff
+  explanation_md: Verdt å gives a broad evaluation of worth; lønne seg describes a practical payoff for the subject.
+  derived_from:
+  - section_id: general-worth-verdt-a
+- handle: find_practical_advantage
+  op: write
+  objective: obj-verdt-aa-or-lonne-seg-01
+  bloom: apply
+  prompt_md: "Tenk deg at du gir en venn råd. Skriv én kort setning på norsk for hvert punkt, og forklar den konkrete praktiske fordelen. Bruk uttrykket «lønner seg» hver gang. 1. Bestill togbilletter flere uker før avreise i stedet for i siste liten. 2. Sammenlign priser i flere butikker før du kjøper den samme varen. 3. Ta en direktebuss i stedet for en rute med bytte. 4. Kjøp flere varer sammen når butikken gir lavere samlet pris."
+  response_language: 'no'
+  min_words: 20
+  max_words: 70
+  judge_prompt: Check each sentence against its situation and report evidence for the criterion. Accept natural Bokmål variants when they clearly name a concrete benefit or saving and use the expression «lønner seg».
+  criteria:
+  - id: concrete-practical-payoff
+    instruction: For all four situations, uses the expression «lønner seg» and states a concrete benefit or saving such as money, time, fewer problems, or a better result rather than only pleasure or interest.
+  derived_from:
+  - section_id: practical-payoff-lonne-seg
+- handle: choose_according_to_reason
+  op: choose
+  objective: obj-verdt-aa-or-lonne-seg-01
+  bloom: analyze
+  prompt_md: 'Velg paret som passer til grunnene i riktig rekkefølge. Først får du se en vakker utsikt ved å ta omveien. Deretter er omveien praktisk fordi den gjør at du unngår kø.'
+  stem_md: "Velg det norske setningsparet som passer til grunnene."
+  options:
+  - id: payoff-then-worth
+    text: Det lønner seg å ta en omvei fordi utsikten er vakker. Det er verdt å ta en omvei fordi du unngår kø.
+    correct: false
+    why: 'Grunnene er byttet om: Den vakre utsikten er en god opplevelse, mens det å unngå kø er en praktisk fordel.'
+  - id: worth-then-payoff
+    text: Det er verdt å ta en omvei fordi utsikten er vakker. Det lønner seg å ta en omvei fordi du unngår kø.
+    correct: true
+    why: Den første setningen viser at utsikten gjør omveien til en fin opplevelse. Den andre viser den praktiske fordelen ved å unngå kø.
+  derived_from:
+  - section_id: either-expression
+- handle: build_complete_frames
+  op: build
+  objective: obj-verdt-aa-or-lonne-seg-01
+  bloom: apply
+  prompt_md: "Sett sammen tre fullstendige setninger på norsk av ordene du får, i denne rekkefølgen. Bruk hvert ord én gang. 1. Si at det generelt er verdt å se utstillingen. 2. Fraråd å ta taxi når bussen går hvert tiende minutt. 3. Spør om omveien generelt er verdt det."
+  tokens:
+  - token_id: frame-26
+    text: omvei?
+  - token_id: frame-25
+    text: en
+  - token_id: frame-24
+    text: ta
+  - token_id: frame-23
+    text: å
+  - token_id: frame-22
+    text: verdt
+  - token_id: frame-21
+    text: det
+  - token_id: frame-20
+    text: Er
+  - token_id: frame-19
+    text: minutt.
+  - token_id: frame-18
+    text: tiende
+  - token_id: frame-17
+    text: hvert
+  - token_id: frame-16
+    text: går
+  - token_id: frame-15
+    text: bussen
+  - token_id: frame-14
+    text: når
+  - token_id: frame-13
+    text: taxi
+  - token_id: frame-12
+    text: ta
+  - token_id: frame-11
+    text: å
+  - token_id: frame-10
+    text: ikke
+  - token_id: frame-09
+    text: seg
+  - token_id: frame-08
+    text: lønner
+  - token_id: frame-07
+    text: Det
+  - token_id: frame-06
+    text: utstillingen.
+  - token_id: frame-05
+    text: se
+  - token_id: frame-04
+    text: å
+  - token_id: frame-03
+    text: verdt
+  - token_id: frame-02
+    text: er
+  - token_id: frame-01
+    text: Det
+  answer_order:
+  - frame-01
+  - frame-02
+  - frame-03
+  - frame-04
+  - frame-05
+  - frame-06
+  - frame-07
+  - frame-08
+  - frame-09
+  - frame-10
+  - frame-11
+  - frame-12
+  - frame-13
+  - frame-14
+  - frame-15
+  - frame-16
+  - frame-17
+  - frame-18
+  - frame-19
+  - frame-20
+  - frame-21
+  - frame-22
+  - frame-23
+  - frame-24
+  - frame-25
+  - frame-26
+  derived_from:
+  - section_id: useful-sentence-frames
+- handle: repair_meaning_and_form
+  op: write
+  objective: obj-verdt-aa-or-lonne-seg-01
+  bloom: analyze
+  prompt_md: "Rett begge rådene på naturlig norsk, og behold handling og grunn. 1. Tidlig bestilling gir billigere billetter: «Det lønner å bestille tidlig fordi billettene koster mindre.» Rett uttrykket for praktisk nytte. 2. Du får se en vakker soloppgang hvis du står opp tidlig: «Det lønner seg å stå opp tidlig fordi soloppgangen er vakker.» Skriv setningen om slik at uttrykket passer til den generelle opplevelsen."
+  response_language: 'no'
+  min_words: 15
+  max_words: 50
+  judge_prompt: 'Evaluate both repairs against the stated meaning. Accept natural Norwegian alternatives that correctly restore the reflexive form in the first sentence and use an appropriate broad-worth frame in the second; do not require a single exact wording.'
+  criteria:
+  - id: practical-form-repair
+    instruction: The first recommendation uses a complete practical-payoff expression with seg and retains the lower-price reason for booking early.
+  - id: broad-worth-repair
+    instruction: The second recommendation uses a natural expression of broad worth, such as verdt å, and retains the beautiful-sunrise experience as its reason.
+  - id: word-bound
+    instruction: The response contains 15–50 words.
+  derived_from:
+  - section_id: common-mistakes
+- handle: guided_application_decisions
+  op: write
+  objective: obj-verdt-aa-or-lonne-seg-01
+  bloom: apply
+  prompt_md: "Gi Jonas og Selma ett råd for hver situasjon. Bruk ett av måluttrykkene og ta med en kort grunn. 1. Forhåndsbilletter er billigere. 2. Restauranten er svært god, men ligger langt unna. 3. Den langsommere ruta har vakker utsikt. 4. Reisekortet dekker flere reiser."
+  response_language: 'no'
+  min_words: 30
+  max_words: 80
+  judge_prompt: Check each recommendation against its development and report evidence for each criterion. Accept natural Bokmål variants with the required target expression and a clear reason.
+  criteria:
+  - id: broad-worth-experiences
+    instruction: Uses verdt å for the excellent distant restaurant and the scenic slow route, with a reason showing quality or experience.
+  - id: practical-benefit-actions
+    instruction: Uses lønner seg for the discounted advance tickets and the travel card, with a reason showing a measurable advantage.
+  derived_from:
+  - section_id: guided-application
+- handle: revise_dual_interpretations
+  op: write
+  objective: obj-verdt-aa-or-lonne-seg-01
+  bloom: apply
+  prompt_md: "Skriv to setninger til en reiseblogg om å sykle til jobben. Ta med to grunner: Du kan unngå kø, og du får en hyggelig tur langs fjorden. Behold samme handling i begge setningene, og ta med én grunn i hver."
+  response_language: 'no'
+  min_words: 20
+  max_words: 50
+  judge_prompt: Check both sentences for the same action, the requested reason, the matching target expression, and natural Norwegian. Report evidence for each criterion and accept natural Bokmål variants.
+  criteria:
+  - id: constant-action
+    instruction: Keeps cycling to work as the same action in both sentences.
+  - id: reason-matched-expressions
+    instruction: Uses lønner seg for the practical benefit of avoiding traffic and verdt å for the broadly enjoyable fjord-side ride, with both sentences written in natural Norwegian.
+  derived_from:
+  - section_id: guided-application
+- handle: retrieval_and_review
+  op: write
+  objective: obj-verdt-aa-or-lonne-seg-01
+  bloom: apply
+  prompt_md: "Skriv en kort anmeldelse for en språklæringsapp uten å se på eksemplene. Skriv på norsk: én setning som anbefaler en opplevelse med verdt å og en generell grunn; én setning som anbefaler en praktisk handling med lønner seg og en konkret fordel; og to spørsmål om den praktiske handlingen, ett med verdt å og en generell grunn, og ett med lønner seg og en praktisk grunn."
+  response_language: 'no'
+  min_words: 35
+  max_words: 80
+  judge_prompt: Vurder alle anbefalingene og begge spørsmålsversjonene opp mot oppgaven. Rapporter belegg for hvert kriterium, og godta naturlige bokmålsvarianter som tydelig beholder det tilsiktede skillet.
+  criteria:
+  - id: experience-recommendation
+    instruction: The experience recommendation uses verdt å and gives a short general-worth reason.
+  - id: practical-recommendation
+    instruction: The practical-action recommendation uses lønner seg and gives a short concrete-benefit reason.
+  - id: dual-question-forms
+    instruction: The practical action appears in both question versions, with verdt å for the broad reason and lønner seg for the practical reason.
+  - id: clear-reasons
+    instruction: Each sentence includes a short reason that makes its intended framing clear.
+  derived_from:
+  - section_id: retrieval-and-review

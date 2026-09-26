@@ -1,0 +1,169 @@
+- handle: notice_actual_consequence
+  op: choose
+  objective: obj-degree-result-and-threshold-constructions-01
+  bloom: understand
+  prompt_md: 'Velg setningen som uttrykker følgen: Jonas ser ikke trappetrinnene.'
+  stem_md: '**I gangen** Lyset har sluknet. Jonas ser ikke trappetrinnene.'
+  options:
+  - id: option-excess
+    text: Det er for mørkt til at Jonas kan se trappetrinnene.
+    correct: false
+    why: Denne setningen sier at mørket blokkerer handlingen ved en grense, ikke at manglende sikt presenteres som følgen.
+  - id: option-sufficiency
+    text: Lyset er ikke sterkt nok til at Jonas kan se trappetrinnene.
+    correct: false
+    why: Denne setningen sier at lyset ikke når den nødvendige terskelen for at Jonas skal se trappetrinnene.
+  - id: option-consequence
+    text: Det er så mørkt at Jonas ikke ser trappetrinnene.
+    correct: true
+    why: Graden av mørke følges av en hel leddsetning som uttrykker resultatet.
+  derived_from:
+  - section_id: sec-consequence-saa-at
+- handle: distinguish_result_from_excess
+  op: choose
+  objective: obj-degree-result-and-threshold-constructions-01
+  bloom: analyze
+  prompt_md: Velg svarparet der den første setningen viser at en grense overskrides, og den andre viser en konsekvens av svært høy temperatur.
+  stem_md: '**To situasjoner** 1. Kofferten veier 32 kilo, og vekten overskrider grensen for at Jonas kan løfte den alene. 2. Suppa er svært varm. Derfor må Mina vente.'
+  options:
+  - id: option-reversed-mapping
+    text: Kofferten er så tung at Jonas ikke klarer å løfte den. 2. Suppa er for varm til å spise nå.
+    correct: false
+    why: 'Begge setningene er naturlige, men de bytter om perspektivene: følgen står der grensevurderingen hører hjemme, og omvendt.'
+  - id: option-two-results
+    text: Kofferten er så tung at Jonas ikke klarer å løfte den. 2. Suppa er så varm at Mina må vente.
+    correct: false
+    why: Begge setningene presenterer følger; den første uttrykker ikke grensevurderingen som situasjon 1 ber om.
+  - id: option-correct-mapping
+    text: Kofferten er for tung til å løfte alene. 2. Suppa er så varm at Mina må vente.
+    correct: true
+    why: Første svar vurderer løftingen som blokkert av en grense, mens andre svar presenterer en følge i en hel leddsetning.
+  derived_from:
+  - section_id: sec-limit-for-til-aa
+- handle: place_nok_at_threshold
+  op: build
+  objective: obj-degree-result-and-threshold-constructions-01
+  bloom: apply
+  prompt_md: Bygg setningen som viser at Nora oppfyller alderskravet.
+  stem_md: '**Påmeldingen** Nora er 16 år. Kurset er åpent for alle fra fylte 16 år. Hun vil melde seg på.'
+  explanation_md: Nok står etter adjektivet, og til å etterfølges av handlingen som alderskravet gjør mulig.
+  tokens:
+  - token_id: tok-1
+    text: Nora
+  - token_id: tok-2
+    text: er
+  - token_id: tok-3
+    text: gammel
+  - token_id: tok-4
+    text: nok
+  - token_id: tok-5
+    text: til
+  - token_id: tok-6
+    text: å
+  - token_id: tok-7
+    text: melde
+  - token_id: tok-8
+    text: seg
+  - token_id: tok-9
+    text: på
+  - token_id: tok-10
+    text: kurset.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+  derived_from:
+  - section_id: sec-nok-til-aa
+- handle: contrast_excess_and_insufficiency
+  op: build
+  objective: obj-degree-result-and-threshold-constructions-01
+  bloom: apply
+  prompt_md: 'Bygg to beskrivelser: én med «for» om rullestolen og én med «ikke … nok» om døråpningen.'
+  stem_md: '**Døråpningen** Åpningen er 72 cm bred. Rullestolen er 78 cm bred. Rullestolen kommer ikke gjennom.'
+  explanation_md: Den første delen beskriver rullestolen som for bred til å passere; den andre sier at åpningen ikke er bred nok til å slippe den gjennom.
+  tokens:
+  - token_id: tok-01
+    text: Rullestolen
+  - token_id: tok-02
+    text: er
+  - token_id: tok-03
+    text: for
+  - token_id: tok-04
+    text: bred
+  - token_id: tok-05
+    text: til
+  - token_id: tok-06
+    text: å
+  - token_id: tok-07
+    text: komme
+  - token_id: tok-08
+    text: gjennom,
+  - token_id: tok-09
+    text: og
+  - token_id: tok-10
+    text: åpningen
+  - token_id: tok-11
+    text: er
+  - token_id: tok-12
+    text: ikke
+  - token_id: tok-13
+    text: bred
+  - token_id: tok-14
+    text: nok
+  - token_id: tok-15
+    text: til
+  - token_id: tok-16
+    text: å
+  - token_id: tok-17
+    text: slippe
+  - token_id: tok-18
+    text: den
+  - token_id: tok-19
+    text: gjennom.
+  answer_order:
+  - tok-01
+  - tok-02
+  - tok-03
+  - tok-04
+  - tok-05
+  - tok-06
+  - tok-07
+  - tok-08
+  - tok-09
+  - tok-10
+  - tok-11
+  - tok-12
+  - tok-13
+  - tok-14
+  - tok-15
+  - tok-16
+  - tok-17
+  - tok-18
+  - tok-19
+  derived_from:
+  - section_id: sec-nok-til-aa
+- handle: review_negative_sufficiency
+  op: write
+  objective: obj-degree-result-and-threshold-constructions-01
+  bloom: apply
+  prompt_md: '**Skiløypa:** Snøen er 12 cm dyp. Løypa krever minst 25 cm. Fullfør med 6 ord og bruk konstruksjonen ikke … nok til å slik at setningen forklarer hvorfor løypa ikke kan åpnes: «Snøen er ___ løypa.»'
+  response_language: "no"
+  min_words: 6
+  max_words: 6
+  judge_prompt: Vurder bare insufficient-meaning, insufficient-form og micro-bound som bindende kriterier. Ikke legg til andre bindende krav.
+  criteria:
+  - id: insufficient-meaning
+    instruction: Utfyllingen uttrykker at snøen ikke når den nødvendige dybden for å åpne løypa.
+  - id: insufficient-form
+    instruction: Utfyllingen bruker konstruksjonen ikke … nok til å, altså ikke + adjektiv + nok + til å + infinitiv.
+  - id: micro-bound
+    instruction: Svaret inneholder nøyaktig 6 ord.
+  derived_from:
+  - section_id: sec-short-retrieval-and-review

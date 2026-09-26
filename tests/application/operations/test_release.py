@@ -336,7 +336,7 @@ def test_run_release_given_approved_plan_expect_synthesizes_missing_and_publishe
     cache.mkdir(parents=True)
     reused_identity = identities[0]
     (cache / f"{reused_identity.fingerprint}.wav").write_bytes(_wav())
-    plan_result = run_release(repo_root=repo)
+    plan_result = run_release(repo_root=repo, tag=K_TAG)
     assert plan_result["reused_count"] == 1
     publication_order: list[str] = []
 
@@ -424,7 +424,7 @@ def test_run_release_given_tag_at_different_commit_expect_refusal_before_synthes
     monkeypatch.setenv("LESSON_AUDIO_PUBLIC_BASE_URL", "https://media.example.com")
     account = repo / "service-account.json"
     account.write_text("{}", encoding="utf-8")
-    run_release(repo_root=repo)
+    run_release(repo_root=repo, tag=K_TAG)
     client = FakeSynthesisClient(_wav())
     publication_calls: list[str] = []
     monkeypatch.setattr(
@@ -462,7 +462,7 @@ def test_run_release_given_tagged_head_with_uncommitted_source_expect_refusal(tm
     monkeypatch.setenv("LESSON_AUDIO_PUBLIC_BASE_URL", "https://media.example.com")
     account = repo / "service-account.json"
     account.write_text("{}", encoding="utf-8")
-    run_release(repo_root=repo)
+    run_release(repo_root=repo, tag=K_TAG)
     client = FakeSynthesisClient(_wav())
 
     with pytest.raises(ValueError, match="does not include the current source changes"):

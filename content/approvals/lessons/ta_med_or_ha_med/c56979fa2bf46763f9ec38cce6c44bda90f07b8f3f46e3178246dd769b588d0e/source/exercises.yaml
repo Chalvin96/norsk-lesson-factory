@@ -1,0 +1,313 @@
+- handle: identify_ta_med_ha_med
+  op: categorize
+  objective: obj-ta-med-or-ha-med-01
+  bloom: analyze
+  prompt_md: Sort the four lines by whether they arrange accompaniment or describe what is already present.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Emil
+      text_md: «Skal jeg ta med noe mat?»
+    - speaker: Nora
+      text_md: «Jeg har ikke med nøkkelen.»
+    - speaker: Emil
+      text_md: «Da kan jeg ta den med.»
+    - speaker: Nora
+      text_md: «Har du med varme klær?»
+  explanation_md: Ta med presents an action that makes something accompany a person; ha med presents something
+    as already accompanying the person.
+  derived_from:
+  - section_id: first-checkpoint-identify-action-and-situation
+  buckets:
+  - bucket_id: arranging-accompaniment
+    label: Arranging accompaniment
+  - bucket_id: already-present
+    label: Already present
+  items:
+  - item_id: food-before-departure
+    text: Skal jeg ta med noe mat?
+    bucket_id: arranging-accompaniment
+  - item_id: key-on-bus
+    text: Jeg har ikke med nøkkelen.
+    bucket_id: already-present
+  - item_id: key-from-home
+    text: Da kan jeg ta den med.
+    bucket_id: arranging-accompaniment
+  - item_id: clothes-on-journey
+    text: Har du med varme klær?
+    bucket_id: already-present
+- handle: complete_travel_sequence
+  op: recall_fill
+  objective: obj-ta-med-or-ha-med-01
+  bloom: understand
+  prompt_md: Complete the three gaps in the airport dialogue.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lea
+      text_md: «Når jeg drar hjemmefra, må jeg ___ passet fra bordet til flyplassen.»
+    - speaker: Ida
+      text_md: «Nå som vi står ved sikkerhetskontrollen, ___ du passet med deg?»
+    - speaker: Lea
+      text_md: «Ja, jeg ___ passet i vesken.»
+  explanation_md: In the first gap, the verb describes moving the passport from one place to another.
+    In the second and third gaps, the expression describes checking and reporting that the passport is
+    currently with the speaker.
+  derived_from:
+  - section_id: second-checkpoint-complete-the-travel-sequence
+  audio_target: Når jeg drar hjemmefra, må jeg ta med passet fra bordet til flyplassen. Nå som vi står
+    ved sikkerhetskontrollen, har du passet med deg? Ja, jeg har med passet i vesken.
+  segments:
+  - text_md: '«Når jeg drar hjemmefra, må jeg '
+  - blank_id: preparation-expression
+    options:
+    - ta med
+    - ha med
+    answer_index: 0
+  - text_md: ' passet fra bordet til flyplassen.» Ida: «Nå som vi står ved sikkerhetskontrollen, '
+  - blank_id: airport-question
+    options:
+    - Tar du med
+    - Har du
+    answer_index: 1
+  - text_md: ' passet med deg?» Lea: «Ja, jeg '
+  - blank_id: confirmed-expression
+    options:
+    - har med
+    - tar med
+    answer_index: 0
+  - text_md: ' passet i vesken.»'
+- handle: change_the_viewpoint
+  op: build
+  objective: obj-ta-med-or-ha-med-01
+  bloom: apply
+  prompt_md: 'Build the six sentences in the new viewpoint from the dialogue: use ha med for what each
+    person already has, and ta med for what is arranged.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Sander
+      text_md: «Jeg har dokumentene hos meg.»
+    - speaker: Mina
+      text_md: «Vi har håndklærne hos oss.»
+    - speaker: Sander
+      text_md: «Mina har søsteren sin hos seg.»
+    - speaker: Mina
+      text_md: «Før avreise sørger Sander for at dokumentene blir med til kontoret.»
+    - speaker: Sander
+      text_md: «Vi sørger for at håndklærne blir med til stranda.»
+    - speaker: Mina
+      text_md: «Jeg sørger for at søsteren min blir med på konserten.»
+  explanation_md: The first three sentences report existing accompaniment with ha med. The last three
+    present the action or plan with ta med.
+  derived_from:
+  - section_id: third-checkpoint-change-the-viewpoint
+  tokens:
+  - token_id: s1-1
+    text: Sander
+  - token_id: s1-2
+    text: har
+  - token_id: s1-3
+    text: med
+  - token_id: s1-4
+    text: dokumentene.
+  - token_id: s2-1
+    text: Vi
+  - token_id: s2-2
+    text: har
+  - token_id: s2-3
+    text: med
+  - token_id: s2-4
+    text: håndklær.
+  - token_id: s3-1
+    text: Mina
+  - token_id: s3-2
+    text: har
+  - token_id: s3-3
+    text: med
+  - token_id: s3-4
+    text: søsteren
+  - token_id: s3-5
+    text: sin.
+  - token_id: s4-1
+    text: Sander
+  - token_id: s4-2
+    text: tar
+  - token_id: s4-3
+    text: med
+  - token_id: s4-4
+    text: dokumentene
+  - token_id: s4-5
+    text: til
+  - token_id: s4-6
+    text: kontoret.
+  - token_id: s5-1
+    text: Vi
+  - token_id: s5-2
+    text: tar
+  - token_id: s5-3
+    text: med
+  - token_id: s5-4
+    text: håndklær
+  - token_id: s5-5
+    text: til
+  - token_id: s5-6
+    text: stranda.
+  - token_id: s6-1
+    text: Mina
+  - token_id: s6-2
+    text: tar
+  - token_id: s6-3
+    text: med
+  - token_id: s6-4
+    text: søsteren
+  - token_id: s6-5
+    text: sin
+  - token_id: s6-6
+    text: på
+  - token_id: s6-7
+    text: konserten.
+  answer_order:
+  - s1-1
+  - s1-2
+  - s1-3
+  - s1-4
+  - s2-1
+  - s2-2
+  - s2-3
+  - s2-4
+  - s3-1
+  - s3-2
+  - s3-3
+  - s3-4
+  - s3-5
+  - s4-1
+  - s4-2
+  - s4-3
+  - s4-4
+  - s4-5
+  - s4-6
+  - s5-1
+  - s5-2
+  - s5-3
+  - s5-4
+  - s5-5
+  - s5-6
+  - s6-1
+  - s6-2
+  - s6-3
+  - s6-4
+  - s6-5
+  - s6-6
+  - s6-7
+- handle: guided_context_practice
+  op: write
+  objective: obj-ta-med-or-ha-med-01
+  bloom: apply
+  prompt_md: 'Til: Læreren din. Formål: Fortell kort hvordan piknikdagen ble planlagt og gjennomført.
+    Før avreise skulle Ali sørge for at maten ble med. På busstoppet kontrollerte Nora om Liv hadde et
+    teppe hos seg. I parken hadde Mina to venner hos seg. Ved planleggingen av neste piknik ba Nora Ali
+    sørge for at en ball blir med. Bruk ta med for de to planlagte handlingene og ha med for kontrollen
+    og rapporten. Skriv en norsk melding på 45–65 ord.'
+  explanation_md: A natural message normally shifts from actions that arrange accompaniment before departure
+    to checks and reports about what is already present later.
+  derived_from:
+  - section_id: guided-context-practice
+  response_language: 'no'
+  judge_prompt: Evaluate criteria message-purpose, supplied-facts, norwegian-text, word-bound, action-form,
+    and state-form as gating criteria. Record action-form-observation and state-form-observation diagnostically,
+    but never fail the response because of either observation. Add no requirements beyond these criterion
+    ids.
+  criteria:
+  - id: message-purpose
+    instruction: Writes a coherent message to the teacher that reports the planning and course of the
+      picnic day.
+  - id: supplied-facts
+    instruction: Communicates all four supplied facts without materially changing who acts, what accompanies
+      them, or when each event occurs.
+  - id: norwegian-text
+    instruction: Writes the message in understandable Norwegian.
+  - id: word-bound
+    instruction: Uses 45–65 words.
+  - id: action-form
+    instruction: Uses a natural ta med form for both actions that arrange accompaniment.
+  - id: state-form
+    instruction: Uses a natural ha med form for the bus-stop check and park report.
+  - id: action-form-observation
+    instruction: 'Observation only: note whether the taught ta med form appears; do not fail a natural
+      equivalent.'
+  - id: state-form-observation
+    instruction: 'Observation only: note whether the taught ha med form appears; do not fail a natural
+      equivalent.'
+- handle: retrieval_and_review
+  op: write
+  objective: obj-ta-med-or-ha-med-01
+  bloom: apply
+  prompt_md: 'Situasjon: Før turen ber du Erik sørge for at paraplyen blir med. På møtestedet ser du etter
+    paraplyen og ber ham bekrefte at den er hos ham. Mottaker: Erik. Formål: Send én kort melding som
+    uttrykker begge tidspunktene. Bruk ta med i forespørselen og ha med i bekreftelsen. Skriv en norsk
+    melding på 18–30 ord.'
+  explanation_md: The message needs an earlier arrangement and a later confirmation about the same umbrella;
+    natural Norwegian commonly changes expression when the viewpoint changes.
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  judge_prompt: Evaluate criteria recipient-and-purpose, two-viewpoints, same-object, norwegian-text,
+    word-bound, action-form, and state-form as gating criteria. Record action-form-observation and state-form-observation
+    diagnostically, but never fail the response because of either observation. Add no requirements beyond
+    these criterion ids.
+  criteria:
+  - id: recipient-and-purpose
+    instruction: Addresses Erik with a coherent message that first requests an action and later asks for
+      confirmation.
+  - id: two-viewpoints
+    instruction: Clearly expresses both the request before the trip and the confirmation check at the
+      meeting place.
+  - id: same-object
+    instruction: Both parts concern the supplied umbrella.
+  - id: norwegian-text
+    instruction: Writes the message in understandable Norwegian.
+  - id: word-bound
+    instruction: Uses 18–30 words.
+  - id: action-form
+    instruction: Uses a natural ta med form for the request.
+  - id: state-form
+    instruction: Uses a natural ha med form for the later check.
+  - id: action-form-observation
+    instruction: 'Observation only: note whether the taught ta med form appears; do not fail a natural
+      equivalent.'
+  - id: state-form-observation
+    instruction: 'Observation only: note whether the taught ha med form appears; do not fail a natural
+      equivalent.'
+- handle: review_ta_med_action
+  op: write
+  objective: obj-ta-med-or-ha-med-01
+  bloom: apply
+  prompt_md: 'Situasjon: Du pakker til en fjelltur og vil uttrykke handlingen som får solbrillene med
+    på turen. Skriv denne setningen: «Jeg skal ta med solbrillene.»'
+  explanation_md: Before departure, the reply presents the action that makes the sunglasses accompany
+    the speaker, so ta med expresses the action.
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  judge_prompt: Evaluate only criterion action-expression. Accept the visible target sentence with harmless
+    punctuation variation, and add no other gating requirement.
+  criteria:
+  - id: action-expression
+    instruction: Supplies the action expression ta med in the sentence «Jeg skal ta med solbrillene.»
+- handle: review_ha_med_state
+  op: write
+  objective: obj-ta-med-or-ha-med-01
+  bloom: apply
+  prompt_md: 'Situasjon: Du er på en hytte og forteller at lommelykten allerede er hos deg. Skriv denne
+    setningen: «Jeg har med lommelykten.»'
+  explanation_md: The sentence reports an object as already accompanying the speaker, so har med expresses
+    the state.
+  derived_from:
+  - section_id: retrieval-and-review
+  response_language: 'no'
+  judge_prompt: Evaluate only criterion state-expression. Accept the visible target sentence with harmless
+    punctuation variation, and add no other gating requirement.
+  criteria:
+  - id: state-expression
+    instruction: Supplies the state expression har med in the sentence «Jeg har med lommelykten.»

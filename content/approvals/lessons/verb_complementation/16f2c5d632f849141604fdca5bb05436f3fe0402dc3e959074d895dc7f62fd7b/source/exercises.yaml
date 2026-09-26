@@ -1,0 +1,415 @@
+- handle: scene_relationship_check
+  op: choose
+  objective: obj-verb-complementation-01
+  bloom: understand
+  prompt_md: "Velg tolkningen som passer til dialogen."
+  derived_from:
+  - section_id: weekend-deadline
+  stem_md: 'Mina: «Jeg håper å bli med på hytta.» Erik: «Sjefen sier at vi må levere rapporten fredag.» Mina: «Da bør du begynne å pakke.»'
+  options:
+  - id: all-mina
+    text: '«Jeg håper å bli med på hytta» — Mina is understood to come; «vi må levere rapporten fredag» — vi must submit it; «du bør begynne å pakke» — Mina is addressed and should pack.'
+    correct: false
+    why: The quoted pronoun du addresses Erik, not Mina.
+  - id: all-erik
+    text: '«Jeg håper å bli med på hytta» — Erik is understood to come; «vi må levere rapporten fredag» — vi must submit it; «du bør begynne å pakke» — Erik is addressed and should pack.'
+    correct: false
+    why: Mina says the first-person jeg, so Erik is not the person who hopes to come.
+  - id: same-person-and-clause
+    text: '«Jeg håper å bli med på hytta» — Mina is understood to come; «vi må levere rapporten fredag» — vi must submit it; «du bør begynne å pakke» — Erik is addressed and should pack.'
+    correct: true
+    why: The å-infinitive links bli to Mina, the at-clause states vi, and du refers to Erik.
+- handle: same_person_infinitive_recognition
+  op: choose
+  objective: obj-verb-complementation-01
+  bloom: understand
+  prompt_md: 'For hvert utsagn: Finn den underforståtte personen etter å, og avgjør om leddet er en å-infinitiv eller en fullstendig at-setning.'
+  derived_from:
+  - section_id: a-infinitive
+  stem_md: 'Erik håper å bli med. Mina planlegger å reise på fredag. Jeg håper at Mina reiser på fredag. Jeg tror at jeg forstår.'
+  options:
+  - id: speaker
+    text: '«Erik håper å bli med» — Erik er underforstått som den som blir med i en å-infinitiv; «Mina planlegger å reise på fredag» — Mina er underforstått som den som reiser i en å-infinitiv; «Jeg håper at Mina reiser på fredag» — Mina er uttrykt som subjekt i en fullstendig at-setning; «Jeg tror at jeg forstår» — jeg er uttrykt som subjekt i en fullstendig at-setning.'
+    correct: true
+    why: I de to første setningene forstås subjektet til infinitiven ut fra personen knyttet til hovedverbet. At-setningene har hvert sitt uttrykte subjekt.
+  - id: listener
+    text: '«Erik håper å bli med» — Erik er uttrykt i en fullstendig at-setning; «Mina planlegger å reise på fredag» — Mina er uttrykt i en fullstendig at-setning; «Jeg håper at Mina reiser på fredag» — Mina står i en å-infinitiv; «Jeg tror at jeg forstår» — jeg står i en å-infinitiv.'
+    correct: false
+    why: De to første setningene har ikke et uttrykt subjekt etter å. Hovedverbet angir hvem som utfører handlingen.
+  - id: earlier-person
+    text: '«Erik håper å bli med» — Erik er underforstått som den som blir med i en å-infinitiv; «Mina planlegger å reise på fredag» — Mina er underforstått som den som reiser i en å-infinitiv; «Jeg håper at Mina reiser på fredag» — jeg er uttrykt som subjekt i en fullstendig at-setning; «Jeg tror at jeg forstår» — jeg er uttrykt som subjekt i en fullstendig at-setning.'
+    correct: false
+    why: I «Jeg håper at Mina reiser» er Mina subjektet i at-setningen; i «Jeg tror at jeg forstår» er jeg subjektet.
+- handle: infinitive_form_completion
+  op: write
+  objective: obj-verb-complementation-01
+  bloom: apply
+  prompt_md: "Fullfør «Maja bestemmer seg for ___ ___ i morgen» med et uttrykk om reisen."
+  explanation_md: Etter «bestemmer seg for» bruker vi å og et verb i infinitiv.
+  derived_from:
+  - section_id: a-infinitive
+  response_language: 'no'
+  judge_prompt: Check infinitive-phrase. Accept harmless capitalization or punctuation differences.
+  criteria:
+  - id: infinitive-phrase
+    instruction: The response is a natural two-word å-infinitive meaning “to travel,” such as «å reise» or «å dra».
+- handle: clause_structure_identification
+  op: write
+  objective: obj-verb-complementation-01
+  bloom: apply
+  prompt_md: "Erik jobber sent, og Mina vet det. Fullfør «Mina vet ___» med en at-setning på fire ord."
+  explanation_md: En fullstendig at-setning har eget subjekt og finitt verb.
+  derived_from:
+  - section_id: at-complete-clause
+  response_language: 'no'
+  judge_prompt: Check finite-clause. Accept harmless capitalization, final punctuation, and natural Norwegian verbs meaning “works.”
+  criteria:
+  - id: finite-clause
+    instruction: The response is a four-word at-clause stating that Erik works late, such as «at Erik jobber sent» or «at Erik arbeider sent».
+- handle: reporting_with_at
+  op: build
+  objective: obj-verb-complementation-01
+  bloom: apply
+  prompt_md: "Sett sammen setningen der Erik forteller Nora at han tar kveldsvakten."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: Hva gjør du i kveld?
+    - speaker: Erik
+      text_md: Jeg tar kveldsvakten.
+  derived_from:
+  - section_id: at-complete-clause
+  tokens:
+  - token_id: report-1
+    text: Erik
+  - token_id: report-2
+    text: sier
+  - token_id: report-3
+    text: at
+  - token_id: report-4
+    text: han
+  - token_id: report-5
+    text: tar
+  - token_id: report-6
+    text: kveldsvakten.
+  answer_order:
+  - report-1
+  - report-2
+  - report-3
+  - report-4
+  - report-5
+  - report-6
+- handle: meaning_contrast_selection
+  op: choose
+  objective: obj-verb-complementation-01
+  bloom: analyze
+  prompt_md: "Velg setningen som gjengir Minas to ønsker riktig."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Mina
+      text_md: «Jeg vil gjerne dra på fredag.»
+    - speaker: Mina
+      text_md: «Det hadde vært fint om Leo dro den dagen også.»
+  derived_from:
+  - section_id: compare-complements
+  options:
+  - id: leo-twice
+    text: «Mina håper at Leo reiser fredag, og Leo håper å reise fredag.»
+    correct: false
+    why: This changes both who is expected to make the first journey and whose hope the second statement reports.
+  - id: both-travelers
+    text: «Mina håper å reise fredag, og hun håper at Leo reiser fredag.»
+    correct: true
+    why: The å-infinitive presents Mina's hoped-for action, while the at-clause explicitly assigns the other trip to Leo.
+  - id: mina-twice
+    text: «Mina håper å reise fredag, og Leo håper at Mina reiser fredag.»
+    correct: false
+    why: This changes whose hope the second statement reports.
+- handle: subject_change_transformation
+  op: build
+  objective: obj-verb-complementation-01
+  bloom: apply
+  prompt_md: "Skriv en setning om Minas håp for Eriks reise på fredag, med en fullstendig at-setning."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Mina
+      text_md: «Det hadde vært fint om Erik tok turen på fredag.»
+    - speaker: Nora
+      text_md: «Hva håper du på?»
+  derived_from:
+  - section_id: compare-complements
+  tokens:
+  - token_id: change-1
+    text: Mina
+  - token_id: change-2
+    text: håper
+  - token_id: change-3
+    text: at
+  - token_id: change-4
+    text: Erik
+  - token_id: change-5
+    text: reiser
+  - token_id: change-6
+    text: på
+  - token_id: change-7
+    text: fredag.
+  answer_order:
+  - change-1
+  - change-2
+  - change-3
+  - change-4
+  - change-5
+  - change-6
+  - change-7
+- handle: modal_boundary_completion
+  op: write
+  objective: obj-verb-complementation-01
+  bloom: apply
+  prompt_md: "Nora har hjemmekontor i dag. Fullfør setningen om at hun kan fortsette slik i morgen: «I morgen kan Nora ___ hjemme.»"
+  explanation_md: Etter et modalverb følger infinitiven uten å.
+  derived_from:
+  - section_id: bare-infinitives
+  response_language: 'no'
+  judge_prompt: Check bare-infinitive. Accept harmless capitalization, final punctuation, and natural Norwegian verbs meaning “work.”
+  criteria:
+  - id: bare-infinitive
+    instruction: The response is a bare infinitive meaning “work,” such as «arbeide» or «jobbe».
+- handle: complement_chain_construction
+  op: build
+  objective: obj-verb-complementation-01
+  bloom: apply
+  prompt_md: "Sett sammen gruppas plan i én setning. Bruk skal med infinitiv uten å, fulgt av en infinitiv med å."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: «Rekker dere avgangen før klokken slår åtte?»
+    - speaker: Mina
+      text_md: «Vi gjør et forsøk.»
+  derived_from:
+  - section_id: bare-infinitives
+  tokens:
+  - token_id: chain-1
+    text: Vi
+  - token_id: chain-2
+    text: skal
+  - token_id: chain-3
+    text: prøve
+  - token_id: chain-4
+    text: å
+  - token_id: chain-5
+    text: dra
+  - token_id: chain-6
+    text: før
+  - token_id: chain-7
+    text: åtte.
+  answer_order:
+  - chain-1
+  - chain-2
+  - chain-3
+  - chain-4
+  - chain-5
+  - chain-6
+  - chain-7
+- handle: written_structure_check
+  op: recall_fill
+  objective: obj-verb-complementation-01
+  bloom: apply
+  prompt_md: Fullfør hvert tomrom med alternativet som passer.
+  explanation_md: Bruk å foran infinitiv, at foran en fullstendig setning og ingen infinitivsmerke etter et modalverb.
+  derived_from:
+  - section_id: written-forms
+  audio_target: Lina håper å finne en ledig plass. Naboen sier at døra er åpen. Vi må gå snart.
+  segments:
+  - text_md: 'Lina håper '
+  - blank_id: written-infinitive
+    options:
+    - å
+    - at
+    answer_index: 0
+  - text_md: ' finne en ledig plass. Naboen sier '
+  - blank_id: written-clause
+    options:
+    - å
+    - at
+    answer_index: 1
+  - text_md: ' døra er åpen. Vi må '
+  - blank_id: written-modal
+    options:
+    - gå
+    - å gå
+    answer_index: 0
+  - text_md: .
+- handle: targeted_error_repair
+  op: find_fix
+  objective: obj-verb-complementation-01
+  bloom: analyze
+  prompt_md: "Finn ordet som må endres."
+  derived_from:
+  - section_id: common-mistakes
+  tokens:
+  - token_id: repair-1
+    text: Vi
+  - token_id: repair-2
+    text: planlegger
+  - token_id: repair-3
+    text: å
+  - token_id: repair-4
+    text: reiser
+  - token_id: repair-5
+    text: før siste buss.
+  error_token_id: repair-4
+  feedback: Bytt ut «reiser» med infinitiven «reise» etter «å».
+- handle: return_to_scene_reconstruction
+  op: build
+  objective: obj-verb-complementation-01
+  bloom: apply
+  prompt_md: "Sett sammen Eriks tre oppdateringer: Fortell med en at-setning hva sjefen sier om dokumentet, hva Erik kan gjøre nå, og hva han har tenkt å prøve før middag."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Sjefen
+      text_md: «Alt ser bra ut; dokumentet trenger ingen flere endringer.»
+    - speaker: Mina
+      text_md: «Betyr det at du får tid til hytteturen?»
+    - speaker: Erik
+      text_md: «Ja, og jeg vil forsøke å være på hytta før middagen begynner.»
+  derived_from:
+  - section_id: back-to-mina-erik
+  tokens:
+  - token_id: scene-1
+    text: Sjefen
+  - token_id: scene-2
+    text: sier
+  - token_id: scene-3
+    text: at
+  - token_id: scene-4
+    text: dokumentet
+  - token_id: scene-5
+    text: er
+  - token_id: scene-6
+    text: ferdig.
+  - token_id: scene-7
+    text: Jeg
+  - token_id: scene-8
+    text: kan
+  - token_id: scene-9
+    text: dra
+  - token_id: scene-10
+    text: med dere.
+  - token_id: scene-11
+    text: Jeg
+  - token_id: scene-12
+    text: skal
+  - token_id: scene-13
+    text: prøve
+  - token_id: scene-14
+    text: å
+  - token_id: scene-15
+    text: komme
+  - token_id: scene-16
+    text: før
+  - token_id: scene-17
+    text: middag.
+  answer_order:
+  - scene-1
+  - scene-2
+  - scene-3
+  - scene-4
+  - scene-5
+  - scene-6
+  - scene-7
+  - scene-8
+  - scene-9
+  - scene-10
+  - scene-11
+  - scene-12
+  - scene-13
+  - scene-14
+  - scene-15
+  - scene-16
+  - scene-17
+- handle: dinner_plan_transfer
+  op: write
+  objective: obj-verb-complementation-01
+  bloom: apply
+  prompt_md: 'Skriv en oppdatering på norsk på 45–65 ord til vennegjengen ut fra notatene: Nora har ansvar for middagen klokka 19. Jonas er på jobb til klokka 18. Gjestebidrag: brød eller salat. Bruk setningsmønstre fra leksjonen til å beskrive planen, gjengi opplysningen fra Jonas og si hva gjestene kan gjøre.'
+  explanation_md: "Velg leddsetningsmønstre som passer naturlig til opplysningene og formålet."
+  derived_from:
+  - section_id: transfer-everyday-situation
+  response_language: 'no'
+  judge_prompt: Evaluate dinner-facts, audience-purpose, word-bound, a-infinitive, content-clause, and modal-bare-infinitive as gating criteria. Accept natural Bokmål wording and equivalent phrases that preserve the requested meanings and complement structures.
+  criteria:
+  - id: dinner-facts
+    instruction: The message communicates the dinner time, Jonas's work end time, and what the guests may bring.
+  - id: audience-purpose
+    instruction: The response is a coherent update addressed appropriately to the friend group.
+  - id: word-bound
+    instruction: The response contains 45–65 words.
+  - id: a-infinitive
+    instruction: Uses a natural å-infinitive with å followed by an infinitive to express Nora's dinner plan.
+  - id: content-clause
+    instruction: Uses a finite content clause to report Jonas's working hours, with an explicit subject and finite verb. Accept natural use or omission of at.
+  - id: modal-bare-infinitive
+    instruction: Uses a modal followed directly by a bare infinitive to say what the guests may bring.
+- handle: final_retrieval
+  op: write
+  objective: obj-verb-complementation-01
+  bloom: analyze
+  prompt_md: 'Til: Mina. Utkast: «Hei! Jeg planlegger at dra klokka fire. Sjefen sier å rapporten er ferdig. Jeg kan å møte deg ved bilen. Vi sees!» Fakta som må beholdes: avreise klokka fire, rapporten er ferdig og møte ved bilen. Skriv om meldingen på 30–45 ord og rett de tre feilene.'
+  explanation_md: "Riktige mønstre er planlegger å dra, sier at rapporten er ferdig og kan møte."
+  derived_from:
+  - section_id: quick-review
+  response_language: 'no'
+  judge_prompt: Evaluate preserved-facts, message-purpose, word-bound, and complement-corrections; add no other gating requirements.
+  criteria:
+  - id: preserved-facts
+    instruction: The revision preserves departure at four, the completed report, and meeting by the car.
+  - id: message-purpose
+    instruction: The response is a coherent message to Mina.
+  - id: word-bound
+    instruction: The response contains 30–45 words.
+  - id: complement-corrections
+    instruction: The revision corrects all three visible errors by using an å-infinitive after planlegger, a finite content clause after sier, and a bare infinitive after kan.
+- handle: review_infinitive_form_completion
+  op: write
+  objective: obj-verb-complementation-01
+  bloom: apply
+  prompt_md: "Nora må låse døra før hun legger seg. Fullfør «Nora må huske ___ ___ døra før hun legger seg» med to norske ord."
+  explanation_md: Etter «huske» bruker vi «å» foran et verb i infinitiv.
+  derived_from:
+  - section_id: a-infinitive
+  response_language: 'no'
+  judge_prompt: Check infinitive-phrase. Accept harmless capitalization or punctuation differences.
+  criteria:
+  - id: infinitive-phrase
+    instruction: The response is a natural two-word å-infinitive meaning “to lock,” such as «å låse».
+- handle: review_clause_structure_identification
+  op: write
+  objective: obj-verb-complementation-01
+  bloom: apply
+  prompt_md: "Et fergeselskap opplyser at dagens avgang er klokka ti. Fullfør «Selskapet forteller ___» med en at-setning på fem ord."
+  explanation_md: En fullstendig at-setning har eget subjekt og finitt verb.
+  derived_from:
+  - section_id: at-complete-clause
+  response_language: 'no'
+  judge_prompt: Check finite-clause. Accept harmless capitalization, final punctuation, and natural Bokmål variants stating that the ferry departs at ten.
+  criteria:
+  - id: finite-clause
+    instruction: The response is a five-word at-clause stating that the ferry leaves at ten, such as «at ferga går klokka ti» or «at båten drar klokka ti».
+- handle: review_modal_boundary_completion
+  op: write
+  objective: obj-verb-complementation-01
+  bloom: apply
+  prompt_md: "Maja har fått beskjed om at resepten er klar. Skriv hva hun må gjøre før apoteket stenger: «Maja må ___ resepten før apoteket stenger.»"
+  explanation_md: Et modalverb står rett foran et verb i infinitiv uten å.
+  derived_from:
+  - section_id: bare-infinitives
+  response_language: 'no'
+  judge_prompt: Check bare-infinitive. Accept harmless capitalization, final punctuation, and natural Norwegian verbs meaning “collect or pick up the prescription.”
+  criteria:
+  - id: bare-infinitive
+    instruction: The response is a bare infinitive meaning “collect or pick up the prescription,” such as «hente».

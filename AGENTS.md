@@ -58,7 +58,7 @@ the release complete.
 ## Authoring preview
 
 Use `uv run lesson-data preview <lesson-id> --no-browser` and open the printed
-loopback URL to inspect current source. Reload after edits; preview does not
+preview URL to inspect current source. Reload after edits; preview does not
 regenerate `dist/`, call providers, or establish learner-app behavior.
 
 - Browser inspection is required for changes to preview rendering, templates,
@@ -73,10 +73,9 @@ regenerate `dist/`, call providers, or establish learner-app behavior.
   scoping, and contrast. Exercise affected findings, unavailable-audio, malformed
   source, and reload/recovery states when those paths change; use temporary
   fixtures for invalid source rather than altering canonical lessons.
-- Keep the preview read-only, provider-free, and loopback-only. Renderer/server
-  changes must retain regression coverage for escaped untrusted content, source
-  path containment, and Host/Origin validation as applicable. Do not weaken
-  these boundaries to make a demo accessible.
+- Keep the preview read-only and provider-free. Renderer/server changes must
+  retain regression coverage for escaped untrusted content, source path
+  containment, and Host/Origin validation as applicable.
 - For visible UI changes, capture and inspect a screenshot of the actual browser
   result. Keep screenshots and requested demo recordings in ignored `reports/`
   or outside the repository, and link them in the handoff with the lesson and
@@ -94,6 +93,15 @@ base. `scripts/test_review_prompt.md` contains the semantic review rubric for te
 qualities that cannot be decided reliably by syntax. Review changes to packages,
 imports, models, or services against `knowledge/project/codebase.md` before reviewing
 implementation details.
+
+## Write-judge calibration seed labels
+
+The repository owner does not read Norwegian. Codex (`codex exec`) is the delegated
+seed label reviewer for `evals/promptfoo/cases/write_judge_calibration.yaml`: run it
+for every seed change, fix until it reports full agreement, and only then flip
+`label_provenance` to `human_reviewed` in the same change. Keep case ids stable even
+when a name becomes stale; correct the description and `primary_failed_criterion`
+instead.
 
 The enforced test-name shape is:
 

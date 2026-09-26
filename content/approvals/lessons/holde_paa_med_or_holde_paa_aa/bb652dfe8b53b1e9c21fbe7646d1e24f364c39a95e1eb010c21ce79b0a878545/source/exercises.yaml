@@ -1,0 +1,397 @@
+- handle: notice_form_contrast
+  op: choose
+  objective: obj-holde-paa-med-or-holde-paa-aa-01
+  bloom: understand
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Jonas
+      text_md: Jeg holder på med oppussingen.
+    - speaker: Jonas
+      text_md: Jeg holder på å male bokhylla.
+  prompt_md: Choose the description that matches both sentences.
+  options:
+  - id: both-projects
+    text: Both expressions introduce named projects.
+    correct: false
+    why: Male identifies an action rather than naming a project.
+  - id: both-actions
+    text: Both expressions identify the exact action happening now.
+    correct: false
+    why: Oppussingen leaves the exact action open.
+  - id: noun-then-infinitive
+    text: Med introduces the named project; å introduces the unfolding action.
+    correct: true
+    why: Oppussingen is a noun naming the project, while male is an infinitive naming the action.
+  - id: infinitive-then-noun
+    text: Med introduces the unfolding action; å introduces the named project.
+    correct: false
+    why: This reverses the contrast between a noun after med and an infinitive after å.
+  explanation_md: Med is followed by the named project oppussingen; å is followed by the infinitive male.
+  derived_from:
+  - section_id: room-in-the-middle-of-a-makeover
+- handle: select_named_activity_reply
+  op: choose
+  objective: obj-holde-paa-med-or-holde-paa-aa-01
+  bloom: apply
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lea
+      text_md: Jeg arbeider med norskleksene.
+    - speaker: Maja
+      text_md: Hva holder Lea på med?
+    - speaker: Lea
+      text_md: Jeg svarer på det siste spørsmålet.
+  prompt_md: Velg det brede svaret som sier hva Lea arbeider med.
+  options:
+  - id: aa-answer
+    text: Hun holder på å svare på det siste spørsmålet.
+    correct: false
+    why: Dette svaret angir den nøyaktige handlingen, ikke den brede oppgaven det spørres etter.
+  - id: aa-homework
+    text: Hun holder på å norskleksene.
+    correct: false
+    why: Å kan ikke stå direkte foran substantivet norskleksene.
+  - id: med-answer
+    text: Hun holder på med svare på det siste spørsmålet.
+    correct: false
+    why: Med kan ikke stå direkte foran infinitiven svare.
+  - id: med-homework
+    text: Hun holder på med norskleksene.
+    correct: true
+    why: Svaret beskriver oppgaven med med etterfulgt av et substantiv.
+  explanation_md: Spørsmålet ber om den brede oppgaven, så med pluss substantivet norskleksene passer.
+  derived_from:
+  - section_id: naming-an-activity
+- handle: select_unfolding_action_reply
+  op: choose
+  objective: obj-holde-paa-med-or-holde-paa-aa-01
+  bloom: apply
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Amir
+      text_md: Jeg holder på med sykkelen.
+    - speaker: Nora
+      text_md: Hva gjør Amir med sykkelen akkurat nå?
+    - speaker: Amir
+      text_md: Jeg strammer en skrue.
+  prompt_md: Choose the reply that identifies Amir's current action.
+  options:
+  - id: aa-bicycle
+    text: Han holder på å sykkelen.
+    correct: false
+    why: Å cannot introduce the noun sykkelen.
+  - id: aa-tighten
+    text: Han holder på å stramme en skrue.
+    correct: true
+    why: Å introduces the infinitive stramme and identifies the current action.
+  - id: med-bicycle
+    text: Han holder på med sykkelen.
+    correct: false
+    why: This grammatical reply names the broad project but does not identify the requested action.
+  - id: med-tighten
+    text: Han holder på med stramme en skrue.
+    correct: false
+    why: Med cannot directly introduce the infinitive stramme.
+  explanation_md: The cue asks for the exact action, so å plus the infinitive stramme is needed.
+  derived_from:
+  - section_id: showing-an-unfolding-action
+- handle: retrieve_named_activity_chunk
+  op: recall_fill
+  objective: obj-holde-paa-med-or-holde-paa-aa-01
+  bloom: apply
+  prompt_md: Velg ordet som fullfører Noras brede svar om oppgaven.
+  audio_target: Jeg holder på med månedsrapporten.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: Jeg holder på ___ månedsrapporten.
+  segments:
+  - text_md: 'Jeg holder på '
+  - blank_id: prep
+    options:
+    - med
+    - å
+    - for
+    answer_index: 0
+  - text_md: ' månedsrapporten.'
+  explanation_md: Med innleder det navngitte prosjektet månedsrapporten; å ville krevd et infinitiv.
+  derived_from:
+  - section_id: naming-an-activity
+- handle: retrieve_unfolding_action_chunk
+  op: recall_fill
+  objective: obj-holde-paa-med-or-holde-paa-aa-01
+  bloom: apply
+  prompt_md: Velg ordet som fullfører Noras svar om handlingen hun gjør akkurat nå.
+  audio_target: Jeg holder på å sjekke tallene.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nora
+      text_md: Jeg holder på ___ sjekke tallene.
+  segments:
+  - text_md: 'Jeg holder på '
+  - blank_id: prep
+    options:
+    - å
+    - med
+    - for
+    answer_index: 0
+  - text_md: ' sjekke tallene.'
+  explanation_md: Å innleder infinitivet sjekke, som viser handlingen akkurat nå.
+  derived_from:
+  - section_id: showing-an-unfolding-action
+- handle: repair_the_structure
+  op: find_fix
+  objective: obj-holde-paa-med-or-holde-paa-aa-01
+  bloom: analyze
+  prompt_md: Select the single token that does not fit the intended action.
+  tokens:
+  - token_id: tok-1
+    text: Jeg
+  - token_id: tok-2
+    text: holder
+  - token_id: tok-3
+    text: på
+  - token_id: tok-4
+    text: med
+  - token_id: tok-5
+    text: lage
+  - token_id: tok-6
+    text: middag.
+  error_token_id: tok-4
+  feedback: Replace med with å before the infinitive lage. A noun-focused alternative is «Jeg holder på
+    med middagen.»
+  derived_from:
+  - section_id: common-mistakes
+- handle: discriminate_full_response
+  op: choose
+  objective: obj-holde-paa-med-or-holde-paa-aa-01
+  bloom: analyze
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Eva
+      text_md: Jeg arbeider med bilen.
+    - speaker: Kunde
+      text_md: Hva gjør du med bilen akkurat nå?
+    - speaker: Eva
+      text_md: Jeg har jekket opp bilen og løsnet hjulboltene.
+  prompt_md: Choose the most informative reply to the customer's question.
+  options:
+  - id: med-change
+    text: Jeg holder på med skifte et dekk.
+    correct: false
+    why: Med cannot directly introduce the infinitive skifte.
+  - id: aa-car
+    text: Jeg holder på å bilen.
+    correct: false
+    why: Å cannot introduce the noun bilen.
+  - id: changing-tire
+    text: Jeg holder på å skifte et dekk.
+    correct: true
+    why: It answers the request for the exact current action.
+  - id: working-car
+    text: Jeg holder på med bilen.
+    correct: false
+    why: It gives only the broad project, not the exact action requested.
+  explanation_md: The customer asks for the exact action, so å plus the infinitive skifte is required.
+  derived_from:
+  - section_id: one-situation-two-viewpoints
+- handle: ask_then_narrow_the_focus
+  op: write
+  objective: obj-holde-paa-med-or-holde-paa-aa-01
+  bloom: apply
+  prompt_md: 'In the Teams chat, write a connected 25–40-word Norwegian exchange: Erik opens with «Hva
+    holder du på med?», Maja gives the broad answer with holde på med and a noun, and Erik asks what she
+    is doing right now using holde på å and an infinitive.'
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Erik
+      text_md: Maja, vi skal møtes klokka 13. Hvordan går det med presentasjonen?
+    - speaker: Maja
+      text_md: Jeg tester prosjektoren akkurat nå.
+  response_language: 'no'
+  judge_prompt: Evaluate opening-question, meeting-facts, broad-reply-form, specific-follow-up-form, and
+    word-bound as gating. Record specific-follow-up-form-observation diagnostically.
+  criteria:
+  - id: opening-question
+    instruction: The exchange opens with the visible question «Hva holder du på med?».
+  - id: meeting-facts
+    instruction: The connected exchange concerns the presentation and testing the projector before the
+      meeting.
+  - id: broad-reply-form
+    instruction: Maja's broad reply uses holde på med followed by a noun naming the presentation task.
+  - id: specific-follow-up-form
+    instruction: Erik follows up by asking what Maja is doing right now with holde på å followed by an
+      infinitive.
+  - id: word-bound
+    instruction: The exchange contains 25–40 words.
+  - id: specific-follow-up-form-observation
+    instruction: 'Observation only: note whether the follow-up also uses a natural alternative such as
+      Hva gjør du nå?; do not use this observation for gating.'
+  derived_from:
+  - section_id: questions-in-conversation
+- handle: revise_status_message
+  op: find_fix
+  objective: obj-holde-paa-med-or-holde-paa-aa-01
+  bloom: analyze
+  prompt_md: Select the single token that does not fit the intended named task.
+  tokens:
+  - token_id: tok-1
+    text: Jeg
+  - token_id: tok-2
+    text: holder
+  - token_id: tok-3
+    text: på
+  - token_id: tok-4
+    text: å
+  - token_id: tok-5
+    text: bagasjen
+  - token_id: tok-6
+    text: nå.
+  error_token_id: tok-4
+  feedback: Replace å with med because bagasjen is a noun naming the task.
+  derived_from:
+  - section_id: common-mistakes
+- handle: final_practice_new_situation
+  op: write
+  objective: obj-holde-paa-med-or-holde-paa-aa-01
+  bloom: apply
+  prompt_md: Your family leaves at 10:00. In the family chat, write a 45–65-word Norwegian status update
+    that says what each person is responsible for, uses holde på med plus a noun for responsibilities,
+    uses holde på å plus an infinitive for current actions, and asks someone to take over the final packing
+    task before departure.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Du
+      text_md: Jeg har ansvar for bagasjen og pakker klær nå.
+    - speaker: Ada
+      text_md: Jeg har ansvar for frokosten og lager smørbrød nå.
+    - speaker: Per
+      text_md: Jeg har ansvar for bilen og sjekker dekkene nå.
+  response_language: 'no'
+  judge_prompt: Check criteria audience-purpose, supplied-facts, broad-form, action-form, coordination,
+    and word-bound as gating. Record naturalness-observation diagnostically.
+  criteria:
+  - id: audience-purpose
+    instruction: The message is suitable for the family chat and gives a useful status update before departure.
+  - id: supplied-facts
+    instruction: The message accurately includes each person's responsibility and current action.
+  - id: broad-form
+    instruction: The message uses holde på med plus a noun for each person's responsibility.
+  - id: action-form
+    instruction: The message uses holde på å plus an infinitive for each person's current action.
+  - id: coordination
+    instruction: The message asks someone to take over the final packing task before departure.
+  - id: word-bound
+    instruction: The message contains 45–65 words.
+  - id: naturalness-observation
+    instruction: 'Observation only: note whether the coordination request sounds natural and clear; do
+      not use this observation for gating.'
+  derived_from:
+  - section_id: final-practice-in-a-new-situation
+- handle: review_retrieve_named_activity_chunk
+  op: choose
+  objective: obj-holde-paa-med-or-holde-paa-aa-01
+  bloom: apply
+  prompt_md: Velg linjen som navngir prosjektet på riktig måte etter spørsmålet.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Sjef
+      text_md: Hva holder du på med i dag?
+    - speaker: Lea
+      text_md: Jeg jobber med prosjektplanen.
+  options:
+  - id: aa-noun
+    text: Jeg holder på å prosjektplanen.
+    correct: false
+    why: Å kan ikke innlede substantivet prosjektplanen.
+  - id: med-inf
+    text: Jeg holder på med skrive prosjektplanen.
+    correct: false
+    why: Med kan ikke direkte innlede infinitivet skrive.
+  - id: aa-inf
+    text: Jeg holder på å skrive prosjektplanen.
+    correct: false
+    why: Denne beskriver handlingen, ikke det brede svaret som navngir prosjektet.
+  - id: med-noun
+    text: Jeg holder på med prosjektplanen.
+    correct: true
+    why: Med innleder substantivet prosjektplanen, som navngir prosjektet.
+  explanation_md: Spørsmålet ber om prosjektet, så med pluss substantivet prosjektplanen passer.
+  derived_from:
+  - section_id: retrieval-and-review
+- handle: review_retrieve_unfolding_action_chunk
+  op: choose
+  objective: obj-holde-paa-med-or-holde-paa-aa-01
+  bloom: apply
+  prompt_md: Velg linjen som beskriver handlingen akkurat nå med riktig form.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Nabo
+      text_md: Hva gjør du med gjerdet akkurat nå?
+    - speaker: Liv
+      text_md: Jeg maler gjerdet.
+  options:
+  - id: aa-noun
+    text: Jeg holder på å gjerdet.
+    correct: false
+    why: Å kan ikke innlede substantivet gjerdet.
+  - id: med-noun
+    text: Jeg holder på med gjerdet.
+    correct: false
+    why: Denne navngir prosjektet, ikke handlingen akkurat nå.
+  - id: aa-inf
+    text: Jeg holder på å male gjerdet.
+    correct: true
+    why: Å innleder infinitivet male, som beskriver handlingen akkurat nå.
+  - id: med-inf
+    text: Jeg holder på med male gjerdet.
+    correct: false
+    why: Med kan ikke direkte innlede infinitivet male.
+  explanation_md: Spørsmålet ber om handlingen akkurat nå, så å pluss infinitivet male passer.
+  derived_from:
+  - section_id: retrieval-and-review
+- handle: review_discriminate_full_response
+  op: choose
+  objective: obj-holde-paa-med-or-holde-paa-aa-01
+  bloom: analyze
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Tom
+      text_md: Jeg har grønnsaker på skjærebrettet.
+    - speaker: Kunde
+      text_md: Hva gjør du akkurat nå?
+    - speaker: Tom
+      text_md: Jeg deler dem i små biter.
+  prompt_md: Velg svaret som beskriver den nøyaktige handlingen som skjer nå.
+  options:
+  - id: broad-meal
+    text: Jeg holder på med middagen.
+    correct: false
+    why: Dette beskriver det overordnede prosjektet, men ikke den aktuelle handlingen.
+  - id: wrong-noun
+    text: Jeg holder på å middagen.
+    correct: false
+    why: Etter å må det komme et verb i infinitiv.
+  - id: exact-action
+    text: Jeg holder på å kutte grønnsaker.
+    correct: true
+    why: Infinitiven etter å beskriver den konkrete handlingen som foregår nå.
+  - id: wrong-preposition
+    text: Jeg holder på med kutte grønnsaker.
+    correct: false
+    why: Med brukes ikke direkte foran et verb i infinitiv.
+  explanation_md: Kunden spør om den aktuelle handlingen, så å etterfulgt av infinitiven kutte gir det
+    presise svaret.
+  derived_from:
+  - section_id: retrieval-and-review

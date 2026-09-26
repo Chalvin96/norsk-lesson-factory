@@ -391,11 +391,11 @@ Every exercise handle must be reviewed exactly once. Return all handles in
 `audited_handles`, even when no finding applies.
 
 The compiler derives model audio from typed `example(s)` and `reading` blocks.
-An example whose English side says `Incorrect`, `Wrong`, `Intended meaning`,
-`Not standard`, or `Not:` is a negative teaching example and must not become a
-model-audio transcript. If the source currently exposes one as an audio
-candidate, make the smallest safe source edit (usually an explicit negative
-label or moving only that example into an existing warning callout).
+An incorrect teaching example belongs in its own
+`::: {{.examples teaching_role=incorrect}}` block and must not become a model-audio
+transcript. If legacy source expresses that role with `✗`, `Incorrect`, `Wrong`,
+`Intended meaning`, `Not standard`, or `Not:`, make the smallest safe source edit:
+move only that pair into a typed incorrect block and remove the inline status text.
 
 Only use the source contract's supported callout syntax when a move is needed:
 `::: callout {{variant=warning}}` ... `:::`. Never invent a Pandoc class such as
@@ -426,9 +426,6 @@ content must be natural Bokmål. Preserve the lesson's teaching intent and all
 valid content. Prefer the smallest local edit.
 
 Before deciding that a package passes, perform this checklist:
-- Render every keyed recall answer by concatenating its text spans and keyed
-  option values. Flag a malformed result such as duplicate punctuation,
-  missing spaces, or an answer that changes the taught sentence.
 - Read every choose/recall/build/find_fix answer in its full visible context.
   A valid Bokmål variant, natural word order, or meaning-preserving English
   translation is not a defect merely because the author preferred another

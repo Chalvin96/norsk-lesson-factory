@@ -1,0 +1,607 @@
+- handle: notice_som_connections
+  op: choose
+  objective: obj-relative-clauses-01
+  bloom: understand
+  prompt_md: Velg hvilket substantiv hver beskrivelse gjelder.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Lea: «Jeg trenger en lader som passer til denne PC-en.» Amir: «Det ligger en lader i skapet
+        som står ved vinduet.»'
+  options:
+  - id: pc-skapet
+    text: 'Den første: PC-en. Den andre: skapet.'
+    correct: false
+    why: Den første beskrivelsen følger laderen, ikke substantivet inne i setningen.
+  - id: lader-lader
+    text: 'Den første: laderen. Den andre: laderen.'
+    correct: false
+    why: Den andre beskrivelsen står nærmest skapet, ikke laderen.
+  - id: lader-skapet
+    text: 'Den første: laderen. Den andre: skapet.'
+    correct: true
+    why: Den første beskrivelsen står rett etter laderen, den andre rett etter skapet.
+  explanation_md: En beskrivelse legger til informasjon om substantivfrasen den står rett etter.
+  derived_from:
+  - section_id: first-day-community-workshop
+- handle: select_som_for_people_and_things
+  op: choose
+  objective: obj-relative-clauses-01
+  bloom: understand
+  prompt_md: Velg settene som binder sammen hvert par riktig.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Det er Sara. Sara leder kurset. Vi bruker et program. Programmet fungerer på gamle PC-er.
+        Hun har sko. Skoene tåler mye regn.
+  options:
+  - id: at-mixed
+    text: Det er Sara at leder kurset. Vi bruker et program som fungerer på gamle PC-er. Hun har sko at
+      tåler mye regn.
+    correct: false
+    why: Her brukes at foran verbet i relativsetningen; norsk bruker som i alle tre tilfellene.
+  - id: reversed-actor
+    text: Det er kurset som leder Sara. Vi bruker et program som fungerer på gamle PC-er. Hun har sko
+      som tåler mye regn.
+    correct: false
+    why: Her beskriver den første relativsetningen kurset, men det er Sara som leder kurset.
+  - id: som-all
+    text: Det er Sara som leder kurset. Vi bruker et program som fungerer på gamle PC-er. Hun har sko
+      som tåler mye regn.
+    correct: true
+    why: Som brukes uendret om en person, en ting og flere ting, og hver relativsetning beskriver det
+      rette substantivet.
+  explanation_md: Som har samme form etter personord, tingord og substantiv i flertall.
+  derived_from:
+  - section_id: adding-information-relative-clause
+- handle: build_subject_relative_clauses
+  op: build
+  objective: obj-relative-clauses-01
+  bloom: apply
+  prompt_md: Bygg én setning som beskriver programmet.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Vi bruker et program. Programmet fungerer på gamle PC-er.
+  tokens:
+  - token_id: subject-1
+    text: Vi
+  - token_id: subject-2
+    text: bruker
+  - token_id: subject-3
+    text: et
+  - token_id: subject-4
+    text: program
+  - token_id: subject-5
+    text: som
+  - token_id: subject-6
+    text: fungerer
+  - token_id: subject-7
+    text: på
+  - token_id: subject-8
+    text: gamle
+  - token_id: subject-9
+    text: PC-er.
+  answer_order:
+  - subject-1
+  - subject-2
+  - subject-3
+  - subject-4
+  - subject-5
+  - subject-6
+  - subject-7
+  - subject-8
+  - subject-9
+  explanation_md: Programmet utfører handlingen, så verbet kommer direkte etter som.
+  derived_from:
+  - section_id: relative-clause-subject-action
+- handle: repair_extra_subjects
+  op: find_fix
+  objective: obj-relative-clauses-01
+  bloom: analyze
+  prompt_md: Velg ordet som må fjernes.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Situasjon: Mannen jobber her. Setning: Jeg kjenner en mann som han jobber her.'
+  tokens:
+  - token_id: extra-1
+    text: Jeg
+  - token_id: extra-2
+    text: kjenner
+  - token_id: extra-3
+    text: en
+  - token_id: extra-4
+    text: mann
+  - token_id: extra-5
+    text: som
+  - token_id: extra-6
+    text: han
+  - token_id: extra-7
+    text: jobber
+  - token_id: extra-8
+    text: her.
+  error_token_id: extra-6
+  feedback: Fjern «han». Mannen utfører handlingen, og som fyller subjektplassen i relativsetningen.
+  derived_from:
+  - section_id: relative-clause-subject-action
+- handle: distinguish_relative_clause_actors
+  op: choose
+  objective: obj-relative-clauses-01
+  bloom: analyze
+  prompt_md: Velg hvem som utfører handlingen i hver relativsetning.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: A. Jeg kjenner mannen som reparerer bilen. B. Jeg kjenner mannen som bilen skremte.
+  options:
+  - id: car-man
+    text: 'A: Bilen reparerer mannen. B: Mannen skremte bilen.'
+    correct: false
+    why: Alternativet leser det første substantivet som subjekt i begge setningene og overser ordene etter
+      som.
+  - id: man-man
+    text: 'A: Mannen reparerer bilen. B: Mannen skremte bilen.'
+    correct: false
+    why: A er riktig, men i B står bilen foran verbet og er derfor aktøren.
+  - id: man-car
+    text: 'A: Mannen reparerer bilen. B: Bilen skremte mannen.'
+    correct: true
+    why: I A står verbet rett etter som; i B står bilen som uttrykt subjekt etter som.
+  explanation_md: Ordene etter som viser om det beskrevne substantivet eller et uttrykt subjekt utfører
+    handlingen.
+  derived_from:
+  - section_id: relative-clause-object-action
+- handle: build_object_relative_clauses
+  op: build
+  objective: obj-relative-clauses-01
+  bloom: apply
+  prompt_md: Bygg én setning som beskriver boka.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Dette er boka. Amir anbefalte boka.
+  tokens:
+  - token_id: object-1
+    text: Dette
+  - token_id: object-2
+    text: er
+  - token_id: object-3
+    text: boka
+  - token_id: object-4
+    text: som
+  - token_id: object-5
+    text: Amir
+  - token_id: object-6
+    text: anbefalte.
+  answer_order:
+  - object-1
+  - object-2
+  - object-3
+  - object-4
+  - object-5
+  - object-6
+  explanation_md: Amir utfører handlingen, så subjektet Amir står mellom som og verbet.
+  derived_from:
+  - section_id: relative-clause-object-action
+- handle: repair_repeated_objects
+  op: find_fix
+  objective: obj-relative-clauses-01
+  bloom: analyze
+  prompt_md: Velg ordet som må fjernes.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Situasjon: Jeg kjøpte jakken. Setning: Jeg fant jakken som jeg kjøpte den.'
+  tokens:
+  - token_id: repeated-1
+    text: Jeg
+  - token_id: repeated-2
+    text: fant
+  - token_id: repeated-3
+    text: jakken
+  - token_id: repeated-4
+    text: som
+  - token_id: repeated-5
+    text: jeg
+  - token_id: repeated-6
+    text: kjøpte
+  - token_id: repeated-7
+    text: den.
+  error_token_id: repeated-7
+  feedback: Fjern «den». Jakken er allerede det som ble kjøpt, så objektet skal ikke gjentas.
+  derived_from:
+  - section_id: relative-clause-object-action
+- handle: attach_clause_to_intended_noun
+  op: build
+  objective: obj-relative-clauses-01
+  bloom: apply
+  prompt_md: Bygg setningen slik at beskrivelsen tydelig gjelder laderen.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Laderen passer til denne PC-en. Laderen ligger i skapet.
+  tokens:
+  - token_id: attach-1
+    text: Laderen
+  - token_id: attach-2
+    text: som
+  - token_id: attach-3
+    text: passer
+  - token_id: attach-4
+    text: til
+  - token_id: attach-5
+    text: denne
+  - token_id: attach-6
+    text: PC-en,
+  - token_id: attach-7
+    text: ligger
+  - token_id: attach-8
+    text: i
+  - token_id: attach-9
+    text: skapet.
+  answer_order:
+  - attach-1
+  - attach-2
+  - attach-3
+  - attach-4
+  - attach-5
+  - attach-6
+  - attach-7
+  - attach-8
+  - attach-9
+  explanation_md: Beskrivelsen står rett etter laderen og kan derfor ikke leses som en beskrivelse av
+    skapet.
+  derived_from:
+  - section_id: keeping-information-close
+- handle: complete_workshop_identifications
+  op: build
+  objective: obj-relative-clauses-01
+  bloom: apply
+  prompt_md: Bygg én beskjed som identifiserer både Erik og lampen.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Erik kan hjelpe deg med lampen. Jeg vil reparere denne lampen.
+  tokens:
+  - token_id: workshop-1
+    text: Erik
+  - token_id: workshop-2
+    text: er
+  - token_id: workshop-3
+    text: personen
+  - token_id: workshop-4
+    text: som
+  - token_id: workshop-5
+    text: kan
+  - token_id: workshop-6
+    text: hjelpe
+  - token_id: workshop-7
+    text: deg
+  - token_id: workshop-8
+    text: med
+  - token_id: workshop-9
+    text: lampen,
+  - token_id: workshop-10
+    text: og
+  - token_id: workshop-11
+    text: dette
+  - token_id: workshop-12
+    text: er
+  - token_id: workshop-13
+    text: lampen
+  - token_id: workshop-14
+    text: som
+  - token_id: workshop-15
+    text: jeg
+  - token_id: workshop-16
+    text: vil
+  - token_id: workshop-17
+    text: reparere.
+  answer_order:
+  - workshop-1
+  - workshop-2
+  - workshop-3
+  - workshop-4
+  - workshop-5
+  - workshop-6
+  - workshop-7
+  - workshop-8
+  - workshop-9
+  - workshop-10
+  - workshop-11
+  - workshop-12
+  - workshop-13
+  - workshop-14
+  - workshop-15
+  - workshop-16
+  - workshop-17
+  explanation_md: Den første relativsetningen har det beskrevne substantivet som aktør; den andre beholder
+    aktøren jeg.
+  derived_from:
+  - section_id: back-at-workshop
+- handle: describe_workshop_people_and_things
+  op: write
+  objective: obj-relative-clauses-01
+  bloom: apply
+  prompt_md: 'Til: En ny frivillig Formål: Hjelp den frivillige å finne riktig person og gjenstand. Fakta:
+    Erik kan hjelpe med lampen. Lampen står på arbeidsbenken. Du leverte lampen i morges. Skriv en norsk
+    melding på 20–35 ord med én som-setning som identifiserer Erik og én som-setning som identifiserer
+    lampen.'
+  response_language: 'no'
+  min_words: 20
+  max_words: 35
+  judge_prompt: Vurder kriteriene workshop-message, supplied-facts, word-bound og som-clarity-observation
+    som krav; rapporter også reference-form-observation diagnostisk.
+  criteria:
+  - id: workshop-message
+    instruction: Meldingen henvender seg til en ny frivillig og gjør det mulig å finne både riktig hjelper
+      og riktig lampe.
+  - id: supplied-facts
+    instruction: Meldingen er forenlig med de tre oppgitte faktaene og finner ikke på motstridende opplysninger.
+  - id: word-bound
+    instruction: Meldingen inneholder 20–35 ord.
+  - id: som-clarity-observation
+    instruction: Meldingen bruker tydelige og grammatisk korrekte som-setninger til å identifisere Erik
+      og lampen.
+  - id: reference-form-observation
+    instruction: Registrer eventuelle unødvendige subjekt- eller objektpronomen i som-setningene som diagnostisk
+      informasjon.
+  derived_from:
+  - section_id: back-at-workshop
+- handle: revise_workshop_message
+  op: find_fix
+  objective: obj-relative-clauses-01
+  bloom: analyze
+  prompt_md: Velg ordet som må fjernes før meldingen sendes.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Utkast til en ny frivillig: «Erik er personen som han kan hjelpe deg med lampen.»'
+  tokens:
+  - token_id: revise-1
+    text: Erik
+  - token_id: revise-2
+    text: er
+  - token_id: revise-3
+    text: personen
+  - token_id: revise-4
+    text: som
+  - token_id: revise-5
+    text: han
+  - token_id: revise-6
+    text: kan
+  - token_id: revise-7
+    text: hjelpe
+  - token_id: revise-8
+    text: deg
+  - token_id: revise-9
+    text: med
+  - token_id: revise-10
+    text: lampen.
+  error_token_id: revise-5
+  feedback: Fjern «han». Personen foran som er den som kan hjelpe.
+  derived_from:
+  - section_id: back-at-workshop
+- handle: transfer_som_to_station_scene
+  op: write
+  objective: obj-relative-clauses-01
+  bloom: apply
+  prompt_md: 'Til: En venn som skal møte Nora på stasjonen Formål: Gjør Nora og bagasjen hennes lette
+    å finne. Bruk to som-setninger: én der det beskrevne substantivet er aktør, og én der Nora er aktør.
+    Fakta: Nora står ved billettautomaten. Nora har en rød jakke. Kofferten hennes er blå. Nora kjøpte
+    kofferten i Bergen. Skriv en norsk melding på 25–50 ord.'
+  response_language: 'no'
+  min_words: 25
+  max_words: 50
+  judge_prompt: Vurder alle kriteriene station-purpose, station-facts, word-bound, actor-pattern-observation
+    og attachment-observation som krav.
+  criteria:
+  - id: station-purpose
+    instruction: Meldingen er skrevet til en venn og gir nok informasjon til å finne Nora og kofferten.
+  - id: station-facts
+    instruction: Meldingen gjengir de oppgitte faktaene.
+  - id: word-bound
+    instruction: Meldingen inneholder 25–50 ord.
+  - id: actor-pattern-observation
+    instruction: Teksten bruker både en som-setning der det beskrevne substantivet er aktør, og en der
+      Nora er uttrykt aktør.
+  - id: attachment-observation
+    instruction: Hver som-setning står slik at det er klart hvilket substantiv den beskriver.
+  derived_from:
+  - section_id: transfer-new-situation
+- handle: retrieve_core_som_patterns
+  op: write
+  objective: obj-relative-clauses-01
+  bloom: apply
+  prompt_md: 'Til: En kollega som skal låse skolen Fakta: En lærer arbeider fortsatt. Læreren underviser
+    i norsk. En bok ligger på kontoret. Amir lånte boka. Fullfør hvert hull med en relativsetning som
+    begynner med som (1–4 ord): «Læreren ___ må få beskjed. Boka ___ ligger på kontoret.»'
+  response_language: 'no'
+  min_words: 3
+  max_words: 8
+  judge_prompt: Vurder kriteriene teacher-completion og book-completion; rapporter reference-form-observation
+    diagnostisk.
+  criteria:
+  - id: teacher-completion
+    instruction: Første hull fullføres med en relativsetning som begynner med som og identifiserer læreren
+      i samsvar med de oppgitte faktaene, for eksempel at læreren arbeider fortsatt eller underviser i
+      norsk.
+  - id: book-completion
+    instruction: Andre hull fullføres med en relativsetning som begynner med som, slik at boka identifiseres
+      som den Amir lånte, uten å gjenta hovedordet eller vise tilbake til det med et pronomen.
+  - id: reference-form-observation
+    instruction: Registrer diagnostisk om svaret gjentar hovedordet eller viser tilbake til det med et
+      pronomen i relativsetningen; observasjonen skal ikke påvirke om svaret godkjennes.
+  derived_from:
+  - section_id: retrieval-and-review
+- handle: review_notice_som_connections
+  op: choose
+  objective: obj-relative-clauses-01
+  bloom: understand
+  prompt_md: Velg hvilket substantiv beskrivelsen gjelder.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lea
+      text_md: «Jeg trenger en ny mus til PC-en.»
+    - speaker: Amir
+      text_md: «Det ligger en mus på hylla som står ved døra.»
+  options:
+  - id: door
+    text: Beskrivelsen gjelder døra.
+    correct: false
+    why: Beskrivelsen står rett etter hylla, ikke etter døra.
+  - id: shelf
+    text: Beskrivelsen gjelder hylla.
+    correct: true
+    why: Beskrivelsen følger hylla og gjelder derfor hylla.
+  - id: mouse
+    text: Beskrivelsen gjelder musa.
+    correct: false
+    why: Beskrivelsen står ikke rett etter musa, men etter hylla.
+  explanation_md: En beskrivelse legger til informasjon om substantivfrasen den står rett etter.
+  derived_from:
+  - section_id: first-day-community-workshop
+- handle: review_select_som_for_people_and_things
+  op: choose
+  objective: obj-relative-clauses-01
+  bloom: understand
+  prompt_md: Velg relativsetningsordet for begge setningene.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Ida
+      text_md: «Jeg kjenner en gutt ___ spiller gitar.»
+    - speaker: Tom
+      text_md: «Jeg har en bil ___ er gammel.»
+  options:
+  - id: at-both
+    text: «at i begge setningene»
+    correct: false
+    why: At kan ikke innlede disse relativsetningene foran verbet; norsk bruker som.
+  - id: som-both
+    text: «som i begge setningene»
+    correct: true
+    why: Som har samme form foran verbet etter både en person og en ting.
+  - id: som-at
+    text: «som i den første, at i den andre»
+    correct: false
+    why: Den andre setningen trenger også som foran verbet er.
+  explanation_md: Som har samme form etter personord og tingord.
+  derived_from:
+  - section_id: adding-information-relative-clause
+- handle: review_subject_relative_clause
+  op: choose
+  objective: obj-relative-clauses-01
+  bloom: apply
+  prompt_md: Velg den naturlige identifikasjonen.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Du skal peke ut riktig mekaniker. Fakta: Syklene blir reparert av mekanikeren.'
+  options:
+  - id: at-connector
+    text: Det er mekanikeren at reparerer sykler.
+    correct: false
+    why: At innleder ikke relativsetningen her; norsk bruker som foran verbet.
+  - id: reversed-actor
+    text: Det er mekanikeren som syklene reparerer.
+    correct: false
+    why: Her står syklene som subjekt etter som, så syklene blir den som reparerer, ikke mekanikeren.
+  - id: subject-relative
+    text: Det er mekanikeren som reparerer sykler.
+    correct: true
+    why: Mekanikeren utfører handlingen, og som står foran verbet.
+  explanation_md: Når det beskrevne substantivet utfører handlingen, står verbet rett etter som.
+  derived_from:
+  - section_id: relative-clause-subject-action
+- handle: review_object_relative_clause
+  op: choose
+  objective: obj-relative-clauses-01
+  bloom: apply
+  prompt_md: Velg den naturlige identifikasjonen.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Du skal peke ut riktig sykkel. Fakta: Sykkelen ble reparert av Lea.'
+  options:
+  - id: at-connector
+    text: Det er sykkelen at Lea reparerte.
+    correct: false
+    why: At innleder ikke denne relativsetningen; norsk bruker som.
+  - id: changed-actor
+    text: Det er sykkelen som reparerte Lea.
+    correct: false
+    why: Her står verbet rett etter som, så sykkelen blir den som reparerer, ikke Lea.
+  - id: object-relative
+    text: Det er sykkelen som Lea reparerte.
+    correct: true
+    why: Lea utfører handlingen og står derfor som subjekt etter som.
+  explanation_md: Når en annen aktør handler på det beskrevne substantivet, beholdes aktøren etter som.
+  derived_from:
+  - section_id: relative-clause-object-action
+- handle: review_distinguish_relative_clause_actors
+  op: choose
+  objective: obj-relative-clauses-01
+  bloom: analyze
+  prompt_md: Velg tolkningen som skiller aktørene riktig.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: A. Jeg ser hunden som følger barnet. B. Jeg ser hunden som barnet følger.
+  options:
+  - id: dog-dog
+    text: 'A: Hunden følger barnet. B: Hunden følger barnet.'
+    correct: false
+    why: Første tolkning stemmer, men den andre overser subjektet barnet etter som.
+  - id: dog-child
+    text: 'A: Hunden følger barnet. B: Barnet følger hunden.'
+    correct: true
+    why: I A står verbet rett etter som; i B viser det uttrykte subjektet barnet hvem som følger.
+  - id: child-dog
+    text: 'A: Barnet følger hunden. B: Hunden følger barnet.'
+    correct: false
+    why: Alternativet bytter om aktøren og mottakeren i begge setningene.
+  explanation_md: Sammenlign om et uttrykt subjekt står mellom som og verbet.
+  derived_from:
+  - section_id: relative-clause-object-action
+- handle: review_attach_clause_to_intended_noun
+  op: choose
+  objective: obj-relative-clauses-01
+  bloom: analyze
+  prompt_md: Velg setningen der beskrivelsen tydelig gjelder tastaturet.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Fakta: Tastaturet passer til den nye PC-en. Tastaturet oppbevares i skuffen.'
+  options:
+  - id: drawer-reading
+    text: Tastaturet ligger i skuffen som passer til den nye PC-en.
+    correct: false
+    why: Beskrivelsen står rett etter skuffen og gjelder derfor skuffen.
+  - id: pc-reading
+    text: Tastaturet passer til den nye PC-en som ligger i skuffen.
+    correct: false
+    why: Beskrivelsen står rett etter PC-en og gjelder derfor PC-en.
+  - id: clear-keyboard
+    text: Tastaturet som passer til den nye PC-en, ligger i skuffen.
+    correct: true
+    why: Beskrivelsen står direkte etter tastaturet.
+  explanation_md: Sett beskrivelsen rett etter substantivfrasen den skal beskrive.
+  derived_from:
+  - section_id: keeping-information-close

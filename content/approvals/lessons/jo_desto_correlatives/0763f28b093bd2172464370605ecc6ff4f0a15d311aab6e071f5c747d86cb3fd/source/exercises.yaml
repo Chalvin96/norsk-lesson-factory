@@ -1,0 +1,597 @@
+- handle: notice_the_linked_changes
+  op: choose
+  objective: obj-jo-desto-correlatives-01
+  bloom: understand
+  prompt_md: Velg linjen som knytter sammen to endringer i kjøkkenplanleggingen.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: «Jo lenger vi venter, desto senere blir kjøkkenet ferdig.»
+    - speaker: Henrik
+      text_md: «Vi bør sammenligne tilbudene før vi bestemmer oss.»
+  options:
+  - id: loose-facts
+    text: Vi venter lenger. Kjøkkenet blir ferdig senere.
+    correct: false
+    why: Dette er to separate opplysninger, ikke én setning som viser sammenhengen.
+  - id: linked-line
+    text: Jo mer vi undersøker prisene, desto bedre grunnlag får vi for valget.
+    correct: true
+    why: Linjen viser hvordan grundigere undersøkelse gir et bedre grunnlag for valget.
+  - id: other-changes
+    text: Jo lenger vi venter, desto tidligere blir kjøkkenet ferdig.
+    correct: false
+    why: Dialogen sier at kjøkkenet blir ferdig senere, ikke tidligere, når vi venter lenger.
+  derived_from:
+  - section_id: a-kitchen-decision
+- handle: match_the_direction_of_change
+  op: choose
+  objective: obj-jo-desto-correlatives-01
+  bloom: understand
+  prompt_md: Choose the pair of sentences that keeps the direction of the facts.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Notat: Mer trening gjør deg tryggere. Mindre forbruk gir større sparing.'
+  options:
+  - id: practice-reversed
+    text: Jo mer du øver, desto mindre trygg blir du. Jo mindre vi kjøper, jo mer sparer vi.
+    correct: false
+    why: Den første setningen gjør økt trening til årsak til mindre trygghet.
+  - id: saving-reversed
+    text: Jo mer du øver, desto tryggere blir du. Jo mindre vi kjøper, jo mindre sparer vi.
+    correct: false
+    why: Den andre setningen gjør mindre forbruk til årsak til mindre sparing.
+  - id: both-directions-match
+    text: Jo mer du øver, desto stødigere blir du. Jo mindre vi kjøper, jo mer legger vi til side.
+    correct: true
+    why: Begge setningene beholder retningen mellom de oppgitte skalaene.
+  derived_from:
+  - section_id: one-change-follows-another
+- handle: identify_the_first_clause_order
+  op: choose
+  objective: obj-jo-desto-correlatives-01
+  bloom: analyze
+  prompt_md: Choose the natural first clause for the travel plan.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Reiseplan: Vi skal pakke mindre enn vanlig. Den første delen skal bety «the fewer things
+        we bring».'
+  options:
+  - id: comparative-verb-subject
+    text: Jo færre ting tar vi med, ...
+    correct: false
+    why: Dette bruker inversjon i den første delen, der subjektet normalt skal stå foran det finitte verbet.
+  - id: comparative-subject-verb
+    text: Jo færre ting vi tar med, ...
+    correct: true
+    why: Den sammenlignende frasen står etter jo, og subjektet vi står foran verbet tar.
+  - id: subject-before-comparative
+    text: Jo vi færre ting tar med, ...
+    correct: false
+    why: Dette plasserer subjektet inne i den sammenlignende frasen i stedet for etter færre ting.
+  derived_from:
+  - section_id: building-the-first-part
+- handle: complete_the_proportional_frame
+  op: build
+  objective: obj-jo-desto-correlatives-01
+  bloom: apply
+  prompt_md: Build the proportional sentence with every token.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Sykling: Amir trener flere ganger i uka og blir gradvis sterkere.'
+  explanation_md: In the first clause, the subject follows the comparative phrase. In the second clause, the finite verb comes before the subject after the comparative phrase.
+  derived_from:
+  - section_id: completing-the-relationship
+  tokens:
+  - token_id: tok-1
+    text: Jo
+  - token_id: tok-2
+    text: oftere
+  - token_id: tok-3
+    text: Amir
+  - token_id: tok-4
+    text: sykler,
+  - token_id: tok-5
+    text: desto
+  - token_id: tok-6
+    text: sterkere
+  - token_id: tok-7
+    text: blir
+  - token_id: tok-8
+    text: han.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+- handle: repair_the_clause_order
+  op: build
+  objective: obj-jo-desto-correlatives-01
+  bloom: analyze
+  prompt_md: Build the complete sentence with each token once, keeping neutral word order in both clauses.
+  derived_from:
+  - section_id: completing-the-relationship
+  tokens:
+  - token_id: tok-1
+    text: Jo
+  - token_id: tok-2
+    text: flere
+  - token_id: tok-3
+    text: dager
+  - token_id: tok-4
+    text: vi
+  - token_id: tok-5
+    text: venter,
+  - token_id: tok-6
+    text: desto
+  - token_id: tok-7
+    text: nærmere
+  - token_id: tok-8
+    text: fristen
+  - token_id: tok-9
+    text: vi.
+  - token_id: tok-10
+    text: kommer
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-10
+  - tok-9
+- handle: preserve_meaning_with_the_alternative_pairing
+  op: build
+  objective: obj-jo-desto-correlatives-01
+  bloom: apply
+  prompt_md: Build the editor's requested version with every token.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Maja
+      text_md: «Vi utsetter avreisen, og turen koster mer enn før.»
+    - speaker: Henrik
+      text_md: «Redaktøren vil ha samme betydning, men med jo som den andre markøren.»
+  explanation_md: Den andre markøren kan være jo i stedet for desto; sammenligningene og ordstillingen
+    forblir de samme.
+  derived_from:
+  - section_id: choosing-jo-desto-or-jo-jo
+  tokens:
+  - token_id: tok-1
+    text: Jo
+  - token_id: tok-2
+    text: lenger
+  - token_id: tok-3
+    text: vi
+  - token_id: tok-4
+    text: venter,
+  - token_id: tok-5
+    text: jo
+  - token_id: tok-6
+    text: dyrere
+  - token_id: tok-7
+    text: blir
+  - token_id: tok-8
+    text: reisen.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+- handle: distinguish_jo_desto_and_jo_jo
+  op: choose
+  objective: obj-jo-desto-correlatives-01
+  bloom: analyze
+  prompt_md: Choose the set that contains one valid jo ... desto pairing and one valid jo ... jo pairing.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'To forhold skal vises: lesing gjør forskjellene klarere, og en enklere plan gjør budsjettering
+        lettere.'
+  options:
+  - id: doubled-second-marker
+    text: 'A: Jo mer vi leser, desto jo tydeligere blir forskjellene. B: Jo enklere planen er, jo lettere
+      blir budsjetteringen.'
+    correct: false
+    why: A stabler desto og jo i samme andre del; bare én av markørene skal brukes der.
+  - id: missing-first-marker
+    text: 'A: Mer vi leser, desto tydeligere blir forskjellene. B: Jo enklere planen er, jo lettere blir
+      budsjetteringen.'
+    correct: false
+    why: A mangler den faste første markøren jo og danner derfor ikke det oppgitte paret.
+  - id: both-valid-pairings
+    text: 'A: Jo mer vi leser, desto tydeligere blir forskjellene. B: Jo enklere planen er, jo lettere
+      blir budsjetteringen.'
+    correct: true
+    why: Settet viser én gyldig jo ... desto-konstruksjon og én gyldig jo ... jo-konstruksjon.
+  derived_from:
+  - section_id: choosing-jo-desto-or-jo-jo
+- handle: select_comparative_forms
+  op: choose
+  objective: obj-jo-desto-correlatives-01
+  bloom: apply
+  prompt_md: Choose the natural proportional sentence for the log entry.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Treningslogg: Du legger ned mer arbeid. Framgangen øker.'
+  options:
+  - id: positive-forms
+    text: Jo mye du øver, desto godt blir resultatet.
+    correct: false
+    why: Mye og godt er positive former og uttrykker ikke den graderte endringen konstruksjonen krever.
+  - id: comparative-both-scales
+    text: Jo mer du øver, desto bedre blir resultatet.
+    correct: true
+    why: Mer og bedre uttrykker endring på begge skalaene.
+  - id: unnecessary-enn
+    text: Jo mer enn du øver, desto bedre blir resultatet.
+    correct: false
+    why: Enn innfører en direkte sammenligning som ikke hører til mellom de to skalaene her.
+  derived_from:
+  - section_id: one-change-follows-another
+- handle: combine_two_observations
+  op: build
+  objective: obj-jo-desto-correlatives-01
+  bloom: apply
+  prompt_md: Build one connected statement with every token.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Kveldsvær: Det blir mørkere etter solnedgang, og temperaturen synker.'
+  explanation_md: Connect two changes that move together by putting a comparative phrase at the start of each clause.
+  derived_from:
+  - section_id: making-the-relationship-explicit
+  tokens:
+  - token_id: tok-1
+    text: Jo
+  - token_id: tok-2
+    text: mørkere
+  - token_id: tok-3
+    text: det
+  - token_id: tok-4
+    text: blir
+  - token_id: tok-5
+    text: ute,
+  - token_id: tok-6
+    text: desto
+  - token_id: tok-7
+    text: lavere
+  - token_id: tok-8
+    text: synker
+  - token_id: tok-9
+    text: temperaturen.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+- handle: advise_maja_and_henrik
+  op: write
+  objective: obj-jo-desto-correlatives-01
+  bloom: apply
+  prompt_md: 'Melding fra Maja og Henrik: Sen bestilling gir senere ferdigstilling. Flere ekstrakostnader
+    gjør det billigste tilbudet mindre attraktivt. Færre endringer lar firmaet bli ferdig tidligere. Skriv
+    et råd på 35–55 ord til Maja og Henrik som hjelper dem å velge tilbud. Ta med alle tre sammenhengene
+    i meldingen: bestillingstidspunkt og ferdigstilling, ekstrakostnader og hvor attraktivt tilbudet er,
+    samt antall endringer og ferdigstilling. Bruk minst én jo ... desto- eller jo ... jo-konstruksjon.'
+  derived_from:
+  - section_id: back-to-maja-and-henrik
+  response_language: 'no'
+  min_words: 35
+  max_words: 55
+  judge_prompt: Apply renovation-facts, useful-advice, audience-purpose, word-bound, target-correlative,
+    and clause-order as gating criteria.
+  criteria:
+  - id: renovation-facts
+    instruction: The message preserves the supplied relationships about ordering, extra costs, and requested
+      changes.
+  - id: useful-advice
+    instruction: The message gives Maja and Henrik a usable recommendation based on the supplied facts.
+  - id: audience-purpose
+    instruction: The response is a Norwegian message addressed appropriately to Maja and Henrik for the
+      purpose of helping them choose.
+  - id: word-bound
+    instruction: The message contains 35–55 words.
+  - id: target-correlative
+    instruction: The message uses jo ... desto or jo ... jo to connect proportional changes described
+      in the prompt.
+  - id: clause-order-observation
+    instruction: If a target correlative appears, its first- and second-clause word order is accurate.
+- handle: revise_the_kitchen_message
+  op: choose
+  objective: obj-jo-desto-correlatives-01
+  bloom: analyze
+  prompt_md: More food lets the group invite more guests. Choose the sentence that expresses both changing amounts with correct clause order.
+  derived_from:
+  - section_id: back-to-maja-and-henrik
+  options:
+  - id: correct-pair
+    text: Jo mer mat vi lager, desto flere gjester kan vi invitere.
+    correct: true
+    why: The first clause names the food amount; the second names the number of guests it allows.
+  - id: first-clause-v2
+    text: Jo mer mat lager vi, desto flere gjester kan vi invitere.
+    correct: false
+    why: The first jo clause keeps subject before the finite verb.
+  - id: second-clause-subordinate-order
+    text: Jo mer mat vi lager, desto flere gjester vi kan invitere.
+    correct: false
+    why: The second clause begins with desto and puts the finite verb before the subject.
+- handle: build_journey_planning_statements
+  op: write
+  objective: obj-jo-desto-correlatives-01
+  bloom: apply
+  prompt_md: 'Notat til Nora og Elias: Senere bestilling gir dyrere billetter. Tidligere tog har færre
+    passasjerer. Mer bagasje gjør togbytter vanskeligere. Skriv en melding på 35–60 ord som hjelper Nora
+    og Elias å planlegge reisen. Ta med alle tre sammenhengene: bestillingstidspunkt og billettpris, avgangstidspunkt
+    og antall passasjerer, samt bagasjemengde og hvor vanskelig det er å bytte tog. Bruk jo ... desto
+    eller jo ... jo til å koble sammen proporsjonale endringer.'
+  derived_from:
+  - section_id: cumulative-transfer-planning-a-journey
+  response_language: 'no'
+  min_words: 35
+  max_words: 60
+  judge_prompt: Apply journey-facts, planning-help, message-fit, word-bound, target-correlative, and clause-order-observation
+    criteria as gating criteria.
+  criteria:
+  - id: journey-facts
+    instruction: The message preserves all three supplied relationships about booking, train occupancy,
+      and luggage.
+  - id: planning-help
+    instruction: The message turns the facts into useful travel-planning guidance for Nora and Elias.
+  - id: message-fit
+    instruction: The response is a coherent Norwegian message suitable for Nora and Elias.
+  - id: word-bound
+    instruction: The message contains 35–60 words.
+  - id: target-correlative
+    instruction: The message must use jo ... desto or jo ... jo to connect proportional changes.
+  - id: clause-order-observation
+    instruction: If a target correlative appears, require correct first- and second-clause word order;
+      an incorrect order fails the response.
+- handle: recall_and_apply
+  op: write
+  objective: obj-jo-desto-correlatives-01
+  bloom: apply
+  prompt_md: 'E-postgrunnlag: Mer regelmessig lesing gir bedre forståelse. Færre impulskjøp gir større
+    månedlig sparing. Tidligere avreise gir kortere reisetid. Skriv en e-post på 35–55 ord til en venn
+    med råd for en travel måned. Ta med alle tre sammenhengene: regelmessighet i lesingen og forståelse,
+    antall impulskjøp og månedlig sparing, samt avreisetidspunkt og reisetid. Bruk minst én jo ... desto-
+    eller jo ... jo-konstruksjon.'
+  derived_from:
+  - section_id: final-retrieval
+  response_language: 'no'
+  min_words: 35
+  max_words: 55
+  judge_prompt: Apply supplied-facts, advice-purpose, email-fit, word-bound, target-correlative-use, and
+    clause-order as gating criteria.
+  criteria:
+  - id: supplied-facts
+    instruction: The email preserves the supplied relationships about reading, spending, and departure
+      time.
+  - id: advice-purpose
+    instruction: The email gives the friend useful advice for managing a busy month.
+  - id: email-fit
+    instruction: The response is a coherent Norwegian email suitable for a friend.
+  - id: word-bound
+    instruction: The email contains 35–55 words.
+  - id: target-correlative-use
+    instruction: The email uses at least one grammatical jo ... desto or jo ... jo construction to connect
+      proportional changes.
+  - id: clause-order
+    instruction: Any target correlative has correct Norwegian word order in both clauses.
+- handle: review_linked_change_direction
+  op: find_fix
+  objective: obj-jo-desto-correlatives-01
+  bloom: analyze
+  prompt_md: 'Fakta: Når renta går opp, synker tallet på hjem vi kan kjøpe. Select the token that must
+    change so the sentence matches the fact.'
+  derived_from:
+  - section_id: one-change-follows-another
+  tokens:
+  - token_id: tok-1
+    text: Jo
+  - token_id: tok-2
+    text: høyere
+  - token_id: tok-3
+    text: renta
+  - token_id: tok-4
+    text: blir,
+  - token_id: tok-5
+    text: desto
+  - token_id: tok-6
+    text: flere
+  - token_id: tok-7
+    text: boliger
+  - token_id: tok-8
+    text: har
+  - token_id: tok-9
+    text: vi
+  - token_id: tok-10
+    text: råd
+  - token_id: tok-11
+    text: til.
+  error_token_id: tok-6
+  feedback: Bytt ut det markerte ordet med et komparativ som lar antallet boliger synke når renta stiger.
+- handle: review_first_clause_order
+  op: find_fix
+  objective: obj-jo-desto-correlatives-01
+  bloom: analyze
+  prompt_md: Setningen skal si at det går fortere å servere når gjestetallet synker. Select the token
+    that disrupts the neutral word order in the first clause.
+  derived_from:
+  - section_id: building-the-first-part
+  tokens:
+  - token_id: tok-1
+    text: Jo
+  - token_id: tok-2
+    text: færre
+  - token_id: tok-3
+    text: kommer
+  - token_id: tok-4
+    text: gjester,
+  - token_id: tok-5
+    text: desto
+  - token_id: tok-6
+    text: raskere
+  - token_id: tok-7
+    text: går
+  - token_id: tok-8
+    text: serveringen.
+  error_token_id: tok-3
+  feedback: Flytt det markerte verbet til etter subjektet gjester i den første delen.
+- handle: review_repair_the_clause_order
+  op: build
+  objective: obj-jo-desto-correlatives-01
+  bloom: apply
+  prompt_md: Build the sentence with every token in the correct order.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Prosjektlogg: Flere fullførte oppgaver gjør prosjektet raskere ferdig.'
+  explanation_md: I den andre delen står det finitte verbet blir foran subjektet prosjektet.
+  derived_from:
+  - section_id: completing-the-relationship
+  tokens:
+  - token_id: tok-1
+    text: Jo
+  - token_id: tok-2
+    text: flere
+  - token_id: tok-3
+    text: oppgaver
+  - token_id: tok-4
+    text: vi
+  - token_id: tok-5
+    text: fullfører,
+  - token_id: tok-6
+    text: desto
+  - token_id: tok-7
+    text: raskere
+  - token_id: tok-8
+    text: blir
+  - token_id: tok-9
+    text: prosjektet
+  - token_id: tok-10
+    text: ferdig.
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  - tok-5
+  - tok-6
+  - tok-7
+  - tok-8
+  - tok-9
+  - tok-10
+- handle: review_pairing_boundary
+  op: choose
+  objective: obj-jo-desto-correlatives-01
+  bloom: analyze
+  prompt_md: Choose the sentence that breaks the pairing rule.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: Biblioteket tømmes utover kvelden, og det blir stadig stillere i lokalet.
+  options:
+  - id: jo-jo
+    text: Jo senere det blir, jo roligere blir biblioteket.
+    correct: false
+    why: jo ... jo er en fullt gyldig paring.
+  - id: jo-desto
+    text: Jo senere det blir, desto roligere blir biblioteket.
+    correct: false
+    why: jo ... desto er en fullt gyldig paring.
+  - id: mixed-markers
+    text: Jo senere det blir, desto jo roligere blir biblioteket.
+    correct: true
+    why: Setningen blander desto og jo i den andre delen, noe paringsregelen ikke tillater.
+  derived_from:
+  - section_id: choosing-jo-desto-or-jo-jo
+- handle: review_comparative_choice
+  op: recall_fill
+  objective: obj-jo-desto-correlatives-01
+  bloom: apply
+  prompt_md: Fill the two blanks so the sentence says that cheaper tickets mean more frequent travel.
+  audio_target: Fyll inn de to komparativene i den proporsjonale setningen.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Notat: Vi følger med på billettprisene og på hvor ofte vi reiser.'
+  segments:
+  - text_md: 'Jo '
+  - blank_id: comparative-1
+    options:
+    - billig
+    - dyrere
+    - billigere
+    answer_index: 2
+  - text_md: ' billettene er, desto '
+  - blank_id: comparative-2
+    options:
+    - færre
+    - oftere
+    - mange
+    answer_index: 1
+  - text_md: ' reiser vi.'
+  explanation_md: 'Billigere og oftere er komparativer som følger retningen i setningen: lavere pris og
+    hyppigere reising.'
+  derived_from:
+  - section_id: making-the-relationship-explicit
+- handle: review_connect_two_facts
+  op: write
+  objective: obj-jo-desto-correlatives-01
+  bloom: apply
+  prompt_md: Write one Norwegian sentence (12–20 words) that links the two observations proportionally
+    using jo ... desto.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: 'Observasjoner: Antallet detaljer øker. Forklaringen blir tydeligere.'
+  response_language: 'no'
+  min_words: 12
+  max_words: 20
+  judge_prompt: Apply one-Norwegian-sentence, 12–20-words, links-both-observations, proportional-form,
+    and marker-choice-observation as gating criteria.
+  criteria:
+  - id: links-both-observations
+    instruction: Setningen nevner både antallet detaljer og hvor tydelig forklaringen er.
+  - id: proportional-form
+    instruction: Setningen viser at den ene endringen følger av den andre med jo ... desto-konstruksjonen,
+      ikke som to separate utsagn.
+  - id: marker-choice-observation
+    instruction: Setningen bruker den påkrevde jo ... desto-konstruksjonen.
+  - id: one-Norwegian-sentence
+    instruction: Svaret består av én norsk setning.
+  - id: 12–20-words
+    instruction: Svaret inneholder mellom 12 og 20 ord.

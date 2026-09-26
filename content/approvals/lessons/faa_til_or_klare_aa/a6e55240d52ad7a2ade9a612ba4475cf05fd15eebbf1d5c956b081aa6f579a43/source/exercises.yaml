@@ -1,0 +1,489 @@
+- handle: find_the_cause
+  op: choose
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: understand
+  prompt_md: Choose the explanation that best distinguishes the emphasis of the two expressions.
+  explanation_md: Both expressions can report that Mina succeeded. Fikk til foregrounds the result of getting the presentation to work; klarte å foregrounds Mina's ability or effort. The dialogue supports success but does not make one expression false.
+  derived_from:
+  - section_id: focusing-on-result-with-faa-til
+  stem_md: 'After replacing the cable, Mina successfully showed the presentation. Compare: «Mina fikk til å vise presentasjonen etter at de byttet kabel.» / «Mina klarte å vise presentasjonen etter at de byttet kabel.»'
+  options:
+  - id: result-versus-capacity
+    text: Both sentences report success; fikk til foregrounds the successful result, while klarte å foregrounds Mina’s ability or effort.
+    correct: true
+    why: The cable change explains the achieved result; the alternate wording can still truthfully describe Mina's success while focusing on what she managed to do.
+  - id: success-versus-attempt
+    text: Fikk til reports success, while klarte å only reports an unsuccessful attempt.
+    correct: false
+    why: Klarte å can describe successful completion too; it foregrounds capacity or effort rather than denying the result.
+  - id: identical-emphasis
+    text: Both sentences report success and necessarily emphasize the same thing.
+    correct: false
+    why: The result of the task and Mina's ability or effort are different possible points of focus.
+  - id: result-only
+    text: Only the first sentence can be used because Mina has already shown the presentation.
+    correct: false
+    why: The second sentence is also grammatical and compatible with the stated success.
+- handle: fordi_word_order
+  op: recall_fill
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: apply
+  prompt_md: Complete each sentence with the natural form of få til or klare å. Use the context to show
+    whether the focus is on the result or on personal effort.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lærer
+      text_md: «Hva skjedde med projektoren etter flere forsøk?»
+    - speaker: Elev
+      text_md: «Jeg vil beskrive både resultatet og Minas innsats.»
+  audio_target: Etter flere forsøk fikk Mina til å starte projektoren. Hun klarte å arbeide videre selv
+    om hun var sliten.
+  segments:
+  - text_md: 'Etter flere forsøk '
+  - blank_id: fordi-result
+    options:
+    - fikk Mina til å starte projektoren
+    - klarte Mina å starte projektoren
+    answer_index: 0
+  - text_md: '. Hun '
+  - blank_id: fordi-effort
+    options:
+    - fikk til å arbeide videre
+    - klarte å arbeide videre
+    answer_index: 1
+  - text_md: ' selv om hun var sliten.'
+  explanation_md: Fikk til highlights the successful result; klarte å highlights the effort needed to
+    continue.
+  derived_from:
+  - section_id: focusing-on-result-with-faa-til
+- handle: derfor_inversion
+  op: recall_fill
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: apply
+  prompt_md: Complete the result report with a grammatical form of «få til å».
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lærer
+      text_md: «Hva gjorde Mina etter at projektoren sluttet å virke?»
+    - speaker: Elev
+      text_md: «Projektoren startet ikke først, men presentasjonen ble vist etter flere forsøk.»
+  audio_target: Projektoren virket ikke først. Etter flere forsøk fikk Mina til å vise presentasjonen.
+  segments:
+  - text_md: 'Projektoren virket ikke først. Etter flere forsøk '
+  - blank_id: derfor-projector-result
+    options:
+    - fikk Mina til å vise presentasjonen
+    - fikk Mina å vise presentasjonen
+    answer_index: 0
+  - text_md: .
+  explanation_md: Fikk til emphasizes that the task eventually worked.
+  derived_from:
+  - section_id: focusing-on-result-with-faa-til
+- handle: sa_result_order
+  op: recall_fill
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: apply
+  prompt_md: Complete each sentence with the form that best expresses personal ability or effort.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lærer
+      text_md: «Hva måtte Jonas gjøre før møtet?»
+    - speaker: Elev
+      text_md: «Han måtte hjelpe til selv om oppgaven var vanskelig.»
+  audio_target: Jonas var sliten, men han klarte å bære høyttaleren. Mina klarte å begynne møtet i tide.
+  segments:
+  - text_md: 'Jonas var sliten, men han '
+  - blank_id: so-speaker-effort
+    options:
+    - fikk til å bære høyttaleren
+    - klarte å bære høyttaleren
+    answer_index: 1
+  - text_md: '. Mina '
+  - blank_id: so-meeting-effort
+    options:
+    - klarte å begynne møtet i tide
+    - fikk til å begynne møtet i tide
+    answer_index: 0
+  - text_md: .
+  explanation_md: Klarte å is a natural choice when the sentence highlights a person's effort or capacity.
+  derived_from:
+  - section_id: focusing-on-ability-or-effort-with-klare-aa
+- handle: connector_meaning_choice
+  op: choose
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: understand
+  prompt_md: Choose the interpretation that matches both sentences and their emphasis.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lea
+      text_md: «Hvordan gikk det med projektoren og høyttaleren?»
+    - speaker: Mina
+      text_md: «Jeg fikk projektoren til å virke etter flere forsøk. Jonas klarte å bære høyttaleren selv om han var sliten.»
+  options:
+  - id: result-capacity
+    text: The first sentence foregrounds the projector's eventual result; the second foregrounds Jonas's effort to carry the speaker while tired.
+    correct: true
+    why: Fikk til presents the successful outcome, while klarte å highlights personal ability or effort.
+  - id: effort-result
+    text: The first sentence mainly highlights Mina's effort; the second mainly reports that the speaker was carried, without focusing on Jonas's effort.
+    correct: false
+    why: The dialogue says the projector worked, and Jonas's tiredness makes his effort salient.
+  - id: both-result
+    text: Both sentences focus only on completed results and neither highlights effort.
+    correct: false
+    why: Klarte å highlights Jonas's capacity or effort despite being tired.
+  - id: no-success
+    text: The first sentence describes an attempt that failed, while the second describes a successful carry.
+    correct: false
+    why: The dialogue says the projector worked, and both expressions can describe successful completion.
+  explanation_md: Fikk til foregrounds a successful result; klarte å can foreground personal capacity or effort.
+  derived_from:
+  - section_id: central-contrast
+- handle: connector_and_verb_position
+  op: build
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: apply
+  prompt_md: Build one natural sentence from all the tokens.
+  stem_md: Før møtet virket projektoren ikke, men Jonas fikk den til å virke. Senere måtte Mina prøve
+    flere ganger før presentasjonen ble vist.
+  tokens:
+  - token_id: c-1
+    text: Mina
+  - token_id: c-2
+    text: fikk
+  - token_id: c-3
+    text: til
+  - token_id: c-4
+    text: å
+  - token_id: c-5
+    text: vise
+  - token_id: c-6
+    text: presentasjonen
+  - token_id: c-7
+    text: etter
+  - token_id: c-8
+    text: flere
+  - token_id: c-9
+    text: forsøk.
+  answer_order:
+  - c-1
+  - c-2
+  - c-3
+  - c-4
+  - c-5
+  - c-6
+  - c-7
+  - c-8
+  - c-9
+  explanation_md: In få til å + infinitive, få til comes before å and the verb. Here it describes Mina's
+    successful result after several attempts.
+  derived_from:
+  - section_id: focusing-on-result-with-faa-til
+- handle: follow_up_response_discrimination
+  op: choose
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: apply
+  prompt_md: Choose the reply that answers Jonas's question naturally and uses the target expression correctly.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Jonas
+      text_md: «Klarte du å snakke høyt nok uten mikrofon?»
+    - speaker: Mina
+      text_md: «Ja, jeg var sliten, men jeg holdt ut.»
+  options:
+  - id: follow-up-result-pattern
+    text: Ja, jeg fikk det til å snakke høyt nok selv om jeg var sliten.
+    correct: false
+    why: This does not express Mina's capacity naturally; use klarte å snakke.
+  - id: follow-up-correct
+    text: Ja, jeg klarte å snakke høyt nok selv om jeg var sliten.
+    correct: true
+    why: Klarte å snakke is natural and highlights Mina's effort.
+  - id: follow-up-mixed-pattern
+    text: Ja, jeg klarte til å snakke høyt nok selv om jeg var sliten.
+    correct: false
+    why: Til does not belong in the pattern klare å + infinitive.
+  explanation_md: Use klare å before an infinitive to describe capacity or effort.
+  derived_from:
+  - section_id: focusing-on-ability-or-effort-with-klare-aa-01
+- handle: revise_dinner_message
+  op: choose
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: apply
+  prompt_md: Choose the corrected message. It should use the target expressions naturally and preserve
+    the intended meaning.
+  stem_md: «Jeg klarte til å starte projektoren. Mina fikk projektoren til å vise presentasjonen etter flere forsøk.»
+  options:
+  - id: revise-result-only
+    text: Jeg klarte å starte projektoren. Mina fikk presentert presentasjonen etter flere forsøk.
+    correct: false
+    why: The second sentence uses a different reporting pattern instead of the target expression få til
+      å + infinitive.
+  - id: revise-correct
+    text: Jeg klarte å starte projektoren. Mina fikk projektoren til å vise presentasjonen etter flere forsøk.
+    correct: true
+    why: Klarte å is the correct pattern for ability or effort, and fikk + object + til å shows that Mina
+      got the projector to display the presentation after several attempts.
+  - id: revise-effort-only
+    text: Jeg klarte til å starte projektoren. Mina klarte å få projektoren til å vise presentasjonen etter flere forsøk.
+    correct: false
+    why: Til does not belong after klarte in the first sentence, and the second sentence focuses on the
+      effort involved in showing the presentation.
+  explanation_md: The first sentence uses klare å + infinitive for ability or effort. The second uses
+    få + object + til å + infinitive to report the successful result of getting the projector to show
+    the presentation.
+  derived_from:
+  - section_id: central-contrast
+- handle: dinner_plan_transfer
+  op: write
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: apply
+  prompt_md: Write a 35–55-word Norwegian message to a colleague about preparing a talk. Explain that
+    the speaker worked only after you adjusted its cable, and that you delivered the talk calmly despite
+    being nervous. Use both få til and klare å naturally, keeping the result and effort perspectives clear;
+    the expressions can overlap and are not exact opposites.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Kollega
+      text_md: «Hvordan gikk lydprøven før foredraget?»
+    - speaker: Du
+      text_md: «Høyttaleren virket først etter at jeg justerte kabelen. Jeg var nervøs, men holdt likevel
+        foredraget rolig.»
+  response_language: 'no'
+  min_words: 35
+  max_words: 55
+  judge_prompt: Check criteria message-purpose, uses-target-expressions, supplied-facts, word-bound,
+    target-patterns, and focus-distinction. For this task, require a form from the få til family to foreground
+    the sound working after the cable adjustment and a form from the klare å family to foreground the
+    speaker delivering despite nerves. Accept natural forms such as «fikk høyttaleren til å virke» and
+    «klarte å holde foredraget». Both expressions can be natural for either event in other contexts, but a
+    response that reverses or erases the requested result and effort distinction does not meet this task.
+    Record target-style-observation diagnostically.
+  criteria:
+  - id: message-purpose
+    instruction: The response is a message to a colleague about preparing for a talk.
+  - id: uses-target-expressions
+    instruction: The response uses both få til and klare å to describe the speaker working after a cable adjustment and the writer delivering the talk despite nerves.
+  - id: supplied-facts
+    instruction: The response remains consistent with the supplied talk-preparation facts and does not invent a conflicting account.
+  - id: word-bound
+    instruction: The response contains 35–55 words.
+  - id: target-patterns
+    instruction: The response uses natural Norwegian forms, including få til or få + object pronoun +
+      til, including a noun or pronoun as object, and klare å + infinitive.
+  - id: focus-distinction
+    instruction: The sound-working sentence foregrounds the successful result after the cable adjustment,
+      and the talk-delivery sentence foregrounds the writer’s effort or capacity despite nerves. Do not pass
+      a response that reverses these requested perspectives or uses both sentences to foreground only the
+      result or only the effort.
+  - id: target-style-observation
+    instruction: 'Observation only: note which expression is used for each event. Natural overlap remains
+      valid generally; this task specifically requests the result and effort perspectives above.'
+  derived_from:
+  - section_id: integrated-practice
+- handle: review_fordi_word_order
+  op: choose
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: understand
+  prompt_md: Both sentences are natural. Choose the explanation that best describes their focus.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lærer
+      text_md: «Hvordan gikk konserten, og hva gjorde dere før den?»
+    - speaker: Elev
+      text_md: «Maja fikk koret til å begynne presis ved å endre oppvarmingen. Jonas klarte å huske alle versene under konserten selv om han var nervøs.»
+  stem_md: Maja fikk koret til å begynne presis ved å endre oppvarmingen. Jonas klarte å huske alle versene under konserten selv om han var nervøs.
+  audio_target: Maja fikk koret til å begynne presis ved å endre oppvarmingen. Jonas klarte å huske alle versene under konserten selv om han var nervøs.
+  options:
+  - id: result-and-effort
+    text: The first sentence foregrounds the result of getting the choir started on time; the second highlights Jonas's effort or ability to remember the verses despite being nervous.
+    correct: true
+    why: Få til presents the achieved result, while the nerves context brings Jonas's effort or ability to the foreground.
+  - id: effort-and-result
+    text: The first sentence foregrounds Maja's effort; the second presents only the result that the verses were remembered.
+    correct: false
+    why: This reverses the focus suggested by each expression and its context.
+  - id: both-result
+    text: Both sentences focus only on completed outcomes, without highlighting effort.
+    correct: false
+    why: Jonas's nervousness makes the effort or capacity perspective salient in the second sentence.
+  explanation_md: Both expressions can describe completed achievements. In these examples, context makes
+    the choir's on-time start and Jonas's effort to remember the verses the more prominent perspectives.
+  derived_from:
+  - section_id: focusing-on-result-with-faa-til
+- handle: review_derfor_inversion
+  op: recall_fill
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: remember
+  prompt_md: >-
+    Complete each reply with the expression that best matches the question's focus: report the repair
+    outcome first, then describe the effort needed for a separate task.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lærer
+      text_md: «Virker kaffemaskinen igjen etter at du renset den? Og hvor krevende var det for deg å
+        reparere sykkelen mens du hadde feber?»
+    - speaker: Elev
+      text_md: «Kaffemaskinen virker igjen. Jeg var syk, men fikk likevel sykkelen til å skifte gir.»
+  audio_target: Etter rengjøringen fikk jeg kaffemaskinen til å virke igjen. Selv om jeg var syk, klarte
+    jeg å reparere sykkelen.
+  segments:
+  - text_md: 'Etter rengjøringen '
+  - blank_id: review-result-mina
+    options:
+    - fikk jeg kaffemaskinen til å virke igjen
+    - klarte jeg å få kaffemaskinen til å virke igjen
+    answer_index: 0
+  - text_md: '. Selv om jeg var syk, '
+  - blank_id: review-effort-speaker
+    options:
+    - klarte jeg å reparere sykkelen
+    - fikk jeg sykkelen til å bli reparert
+    answer_index: 0
+  - text_md: .
+  explanation_md: Fikk til centers the repaired machine's result, while klarte å centers the speaker's effort to repair the bike while ill.
+  derived_from:
+  - section_id: central-contrast
+- handle: review_sa_result_order
+  op: choose
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: understand
+  prompt_md: Choose the interpretation that best explains where each sentence places its focus.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lærer
+      text_md: «Hvordan gikk lydtesten og Jonas' presentasjon?»
+    - speaker: Elev
+      text_md: «Mina fikk lyden til å virke etter flere forsøk. Jonas klarte å gjennomføre hele presentasjonen
+        selv om han var sliten.»
+  options:
+  - id: result-and-effort
+    text: Mina's wording foregrounds the successful result of making the sound work; Jonas's wording highlights his effort or ability to finish a difficult presentation while tired.
+    correct: true
+    why: Fikk til presents the achieved outcome; klarte å with the difficulty context emphasizes Jonas's ability or effort.
+  - id: effort-and-cause
+    text: Both sentences report success, but Mina's wording mainly spotlights her effort while Jonas's wording only reports the finished presentation.
+    correct: false
+    why: The sentence with fikk til foregrounds the result, while klarte å and the tiredness context make Jonas's effort salient.
+  - id: result-only
+    text: Both sentences focus equally on completed results, and neither makes effort or ability especially salient.
+    correct: false
+    why: Klarte å and the context that Jonas was tired make his effort or ability salient.
+  derived_from:
+  - section_id: central-contrast
+- handle: review_connector_meaning_choice
+  op: choose
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: remember
+  prompt_md: Choose the explanation that fits both new situations.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lærer
+      text_md: «Hva skjedde med døra etter service, og fikk Kaja åpnet den?»
+    - speaker: Elev
+      text_md: «Etter servicen fikk låsen døra til å låse seg automatisk. Kaja klarte å åpne døra selv om håndtaket satt fast.»
+  options:
+  - id: review-result-and-effort
+    text: The first sentence highlights the achieved change in the door's operation; the second highlights Kaja's effort despite the stuck handle.
+    correct: true
+    why: Fikk ... til foregrounds the result; klarte å with the obstacle emphasizes Kaja's effort.
+  - id: review-effort-and-result
+    text: The first sentence mainly reports someone's effort to service the lock; the second focuses only on the door opening as a result.
+    correct: false
+    why: This reverses the perspectives made salient by the result and obstacle contexts.
+  - id: both-result
+    text: Both sentences focus only on completed results, with no emphasis on effort or capacity.
+    correct: false
+    why: Kaja's stuck handle makes her capacity to complete the task relevant in the second sentence.
+  explanation_md: Fikk ... til foregrounds an achieved result, while klarte å can foreground effort or capacity, especially when an obstacle is stated.
+  derived_from:
+  - section_id: central-contrast
+- handle: review_fordi_retrieval
+  op: recall_fill
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: remember
+  prompt_md: Complete the result sentence about the jammed padlock.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lærer
+      text_md: «Fikk Liv opp den fastlåste hengelåsen til slutt?»
+    - speaker: Elev
+      text_md: «Hun prøvde begge nøklene før den endelig åpnet seg.»
+  audio_target: Liv fikk til å åpne hengelåsen til slutt.
+  segments:
+  - text_md: 'Liv '
+  - blank_id: review-padlock-result
+    options:
+    - fikk til å åpne hengelåsen til slutt
+    - fikk å åpne hengelåsen til slutt
+    answer_index: 0
+  - text_md: .
+  explanation_md: "In this result pattern, få til is followed by å before the infinitive: fikk til å åpne."
+  derived_from:
+  - section_id: final-retrieval-and-review
+- handle: review_derfor_retrieval
+  op: recall_fill
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: remember
+  prompt_md: Complete the sentence to emphasize Nora's effort to read the small print.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lærer
+      text_md: «Hvordan gikk det for Nora med den lille teksten på skjermen?»
+    - speaker: Elev
+      text_md: «Hun satt nærmere skjermen og leste hele menyen høyt, selv om skriften var liten.»
+  audio_target: Nora klarte å lese hele menyen selv om skriften var liten.
+  segments:
+  - text_md: 'Nora '
+  - blank_id: review-small-print-effort
+    options:
+    - klarte å lese hele menyen selv om skriften var liten
+    - fikk til å lese hele menyen selv om skriften var liten
+    answer_index: 0
+  - text_md: .
+  explanation_md: Klarte å + infinitive presents Nora's capacity to read the small print despite the difficulty.
+  derived_from:
+  - section_id: final-retrieval-and-review
+- handle: review_sa_retrieval
+  op: choose
+  objective: obj-faa-til-or-klare-aa-01
+  bloom: understand
+  prompt_md: Both formulations are natural. Choose the explanation that best describes their difference in focus.
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Lærer
+      text_md: «Hvordan beskriver Mina at lyden fungerte igjen etter flere forsøk?»
+    - speaker: Elev
+      text_md: «Mina fikk lyden til å virke etter flere forsøk. Hun klarte å få lyden til å virke etter flere forsøk.»
+  stem_md: Mina fikk lyden til å virke etter flere forsøk. Hun klarte å få lyden til å virke etter flere forsøk.
+  audio_target: Mina fikk lyden til å virke etter flere forsøk. Hun klarte å få lyden til å virke etter flere forsøk.
+  options:
+  - id: result-and-effort
+    text: The first sentence foregrounds the sound working; the second also reports success but brings Mina's effort or capacity forward.
+    correct: true
+    why: Both are natural and describe a successful outcome; the difference is the emphasis.
+  - id: effort-and-result
+    text: The first sentence foregrounds Mina's effort, while the second focuses only on the sound working.
+    correct: false
+    why: This reverses the usual focus of these two formulations in this context.
+  - id: only-first-natural
+    text: Only the first sentence is natural Norwegian; the second is ungrammatical.
+    correct: false
+    why: Klarte å få lyden til å virke is also grammatical and natural.
+  explanation_md: Both sentences can truthfully describe the success. Fikk X til å foregrounds the result;
+    klarte å få X til å highlights the effort or capacity involved.
+  derived_from:
+  - section_id: final-retrieval-and-review

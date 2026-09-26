@@ -1,0 +1,290 @@
+- handle: anchor_causative_meanings
+  op: choose
+  objective: obj-causative-constructions-01
+  bloom: understand
+  prompt_md: "Velg forklaringen som passer til alle setningene."
+  derived_from:
+  - section_id: anchor-causative-meanings
+  stem_md: 'Sara: «Jeg fikk Jonas til å rydde bordene.» Sara: «Jeg lot Nora gjøre ferdig plakatene.» Jonas:
+    «Bråket gjorde meg trøtt.»'
+  options:
+  - id: reading-one
+    text: '1: gir tillatelse til en handling; 2: utløser en handling; 3: fører til en tilstand.'
+    correct: false
+    why: The first two relationships are reversed; influence produces the first action, while permission
+      allows the second.
+  - id: reading-two
+    text: '1: fører til en tilstand; 2: gir tillatelse til en handling; 3: utløser en handling.'
+    correct: false
+    why: The first result is an action by Jonas, while trøtt describes a resulting state.
+  - id: reading-three
+    text: '1: utløser en handling; 2: gir tillatelse til en handling; 3: fører til en tilstand.'
+    correct: true
+    why: Fikk Jonas til å rydde triggers an action, lot Nora gjøre gives permission for an action, and
+      gjorde meg trøtt brings about a state.
+- handle: build_faa_action_causatives
+  op: build
+  objective: obj-causative-constructions-01
+  bloom: apply
+  prompt_md: "Sett sammen setningen som passer til meldingen."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: '**Melding fra Sara:** «Jonas, kan du rydde møterommet?» Jonas rydder møterommet etterpå.'
+  explanation_md: "Bruk «få + person + til å + infinitiv» når noen påvirker en annen til å handle."
+  derived_from:
+  - section_id: build-faa-action-causatives
+  tokens:
+  - token_id: faa-subject
+    text: Sara
+  - token_id: faa-verb
+    text: får
+  - token_id: faa-object
+    text: Jonas
+  - token_id: faa-til
+    text: til
+  - token_id: faa-aa
+    text: å
+  - token_id: faa-infinitive
+    text: rydde
+  - token_id: faa-place
+    text: møterommet.
+  answer_order:
+  - faa-subject
+  - faa-verb
+  - faa-object
+  - faa-til
+  - faa-aa
+  - faa-infinitive
+  - faa-place
+- handle: contrast_faa_and_la
+  op: choose
+  objective: obj-causative-constructions-01
+  bloom: analyze
+  prompt_md: "Velg setningen som passer til situasjonen."
+  derived_from:
+  - section_id: contrast-faa-and-la
+  stem_md: 'Jonas: «Jeg vil gjerne gå hjem tidlig i dag.» Sara: «Det er greit. Du kan gå nå.»'
+  options:
+  - id: candidate-one
+    text: Sara får Jonas til å gå hjem tidlig.
+    correct: false
+    why: This says Sara's influence causes Jonas to leave, rather than that she permits what he already
+      wants to do.
+  - id: candidate-two
+    text: Sara lar Jonas gå hjem tidlig.
+    correct: true
+    why: This presents Jonas's departure as an action Sara permits.
+  - id: candidate-three
+    text: Sara gjør Jonas rolig.
+    correct: false
+    why: This describes a change in Jonas's state, not permission to leave.
+- handle: complete_gjoere_result_states
+  op: build
+  objective: obj-causative-constructions-01
+  bloom: apply
+  prompt_md: "Sett sammen setningen som forteller hva musikken førte til."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Context
+      text_md: '**Før den høye musikken:** «Naboene er rolige.» **Etter at den høye musikken starter:**
+        Naboene klager høyt og er tydelig misfornøyde.'
+  explanation_md: >-
+    Bruk «gjøre + objekt + adjektiv» for å beskrive resultatet. «Naboene» er flertall, derfor heter
+    det «sinte».
+  derived_from:
+  - section_id: complete-gjoere-result-states
+  tokens:
+  - token_id: state-cause-one
+    text: Den
+  - token_id: state-cause-two
+    text: høye
+  - token_id: state-cause-three
+    text: musikken
+  - token_id: state-verb
+    text: gjør
+  - token_id: state-object
+    text: naboene
+  - token_id: state-adjective
+    text: sinte.
+  answer_order:
+  - state-cause-one
+  - state-cause-two
+  - state-cause-three
+  - state-verb
+  - state-object
+  - state-adjective
+- handle: separate_action_and_state_results
+  op: choose
+  objective: obj-causative-constructions-01
+  bloom: analyze
+  prompt_md: "Velg setningsparet som beskriver begge resultatene riktig."
+  derived_from:
+  - section_id: separate-action-and-state-results
+  stem_md: >-
+    **Situasjon 1:** Jonas hadde ikke tenkt å ta oppvasken. Sara overtalte ham, og han tok den.
+    **Situasjon 2:** Nora var uthvilt før en lang reise. Etterpå var hun trøtt.
+  options:
+  - id: candidate-three
+    text: Sara fikk Jonas til å vaske opp. Den lange reisen fikk Nora til å sove.
+    correct: false
+    why: The second sentence changes the stated result from becoming tired to performing the action of
+      sleeping.
+  - id: candidate-four
+    text: Oppvasken gjorde Jonas sliten. Den lange reisen gjorde Nora trøtt.
+    correct: false
+    why: The first sentence replaces Sara's influence and Jonas's washing action with a caused state.
+  - id: candidate-one
+    text: Sara fikk Jonas til å vaske opp. Den lange reisen gjorde Nora trøtt.
+    correct: true
+    why: The first sentence reports an influenced action, while the second reports a resulting state.
+  - id: candidate-two
+    text: Sara lot Jonas vaske opp. Den lange reisen gjorde Nora trøtt.
+    correct: false
+    why: The first sentence presents Sara as permitting an action Jonas intended, which conflicts with
+      the persuasion in the situation.
+- handle: track_causative_roles
+  op: build
+  objective: obj-causative-constructions-01
+  bloom: apply
+  prompt_md: "Sett sammen en setning om at Emil gir Jonas tillatelse til å åpne døren."
+  stimulus:
+  - kind: dialogue
+    turns:
+    - speaker: Jonas
+      text_md: «Kan jeg åpne døren?»
+    - speaker: Emil
+      text_md: «Ja, det er greit.»
+  explanation_md: "Emil gir tillatelse, og Jonas utfører handlingen. Etter objektet står «åpne» uten «å»."
+  derived_from:
+  - section_id: track-causative-roles
+  tokens:
+  - token_id: role-subject
+    text: Emil
+  - token_id: role-verb
+    text: lar
+  - token_id: role-object
+    text: Jonas
+  - token_id: role-infinitive
+    text: åpne
+  - token_id: role-object-two
+    text: døren.
+  answer_order:
+  - role-subject
+  - role-verb
+  - role-object
+  - role-infinitive
+  - role-object-two
+- handle: family_dinner_causative_transfer
+  op: write
+  objective: obj-causative-constructions-01
+  bloom: apply
+  prompt_md: >-
+    **Melding fra broren din:** «Jeg kommer sent. Hva skjedde mens dere gjorde klar
+    familiemiddagen?» Per hadde ikke kjøpt brød, men Mari overtalte ham, og han kjøpte det. Barna
+    ville pynte bordet, og Mari lot dem gjøre det. Da gjestene ble forsinket, ble alle utålmodige.
+    Svar broren din med 20–40 ord. Fortell hva som skjedde, og bruk «få», «la» og «gjøre».
+  derived_from:
+  - section_id: family-dinner-causative-transfer
+  response_language: 'no'
+  judge_prompt: 'Evaluate the reply using dinner-audience, dinner-purpose, dinner-facts, dinner-causative-frames,
+    and dinner-length as gating criteria. Criteria ending in -observation are diagnostic only and must
+    never make the response fail. Dinner-causative-frames passes only when all three frames are well formed:
+    få + object + til å + infinitive for the persuaded action, la + object + bare infinitive for the permitted
+    action, and gjøre + object + adjective with correct agreement for the caused state. A missing til
+    å, an intrusive å after la, or a wrong adjective agreement fails dinner-causative-frames. Anchors:
+    Must pass while flagging relevant observations: «Hei! Mari fikk onkel Per til å kjøpe brød. Hun lot
+    barna pynte bordet. Forsinkelsen gjorde alle utålmodige. Nå er nesten alt klart til middagen.» Must
+    fail dinner-facts: «Hei! Onkel Per bakte en kake, og barna dro hjem. Alle var glade.» Must fail dinner-causative-frames:
+    «Hei! Mari fikk onkel Per kjøpe brød. Hun lot barna å pynte bordet. Forsinkelsen gjorde alle utålmodig.
+    Nå er nesten alt klart.»'
+  criteria:
+  - id: dinner-audience
+    instruction: The response is a coherent Norwegian reply addressed appropriately to the writer's brother.
+  - id: dinner-purpose
+    instruction: The response explains what happened while the family prepared dinner.
+  - id: dinner-facts
+    instruction: The response accurately covers Per buying bread after Mari's persuasion, the children
+      decorating after receiving permission, and everyone becoming impatient because of the delay.
+  - id: dinner-causative-frames
+    instruction: 'The response expresses all three causative relationships with well-formed constructions:
+      få + object + til å + infinitive for the persuaded action, la + object + bare infinitive for the
+      permitted action, and gjøre + object + adjective for the caused state; a missing til å, an intrusive
+      å after la, or a wrong adjective agreement fails this criterion.'
+  - id: dinner-length
+    instruction: The response contains 20–40 words.
+  - id: dinner-faa-frame-observation
+    instruction: Diagnose whether the persuaded action is expressed with a well-formed få + object + til
+      å + infinitive construction; do not fail the response for this criterion.
+  - id: dinner-la-frame-observation
+    instruction: Diagnose whether the permitted action is expressed with a well-formed la + object + bare
+      infinitive construction; do not fail the response for this criterion.
+  - id: dinner-gjoere-frame-observation
+    instruction: Diagnose whether the caused state is expressed with a well-formed gjøre + object + adjective
+      construction, including adjective agreement; do not fail the response for this criterion.
+- handle: retrieve_three_causative_frames
+  op: recall_fill
+  objective: obj-causative-constructions-01
+  bloom: remember
+  prompt_md: "Fyll inn «får», «lar» eller «gjør»."
+  derived_from:
+  - section_id: retrieve-three-causative-frames
+  audio_target: Jeg ___ naboen til å passe katten. Foreldrene ___ barna gå ut etter middagen. Den gode
+    nyheten ___ Ingrid glad.
+  segments:
+  - text_md: 'Jeg '
+  - blank_id: arranging-help-verb
+    options:
+    - får
+    - lar
+    - gjør
+    answer_index: 0
+  - text_md: ' naboen til å passe katten. Foreldrene '
+  - blank_id: granting-permission-verb
+    options:
+    - får
+    - lar
+    - gjør
+    answer_index: 1
+  - text_md: ' barna gå ut etter middagen. Den gode nyheten '
+  - blank_id: emotional-result-verb
+    options:
+    - får
+    - lar
+    - gjør
+    answer_index: 2
+  - text_md: ' Ingrid glad.'
+- handle: review_retrieve_three_causative_frames
+  op: recall_fill
+  objective: obj-causative-constructions-01
+  bloom: remember
+  prompt_md: "Velg situasjonen som passer til hvert årsaksverb."
+  derived_from:
+  - section_id: retrieve-three-causative-frames
+  audio_target: Læreren ___ elevene lese høyt. Regnet ___ gaten våt. Jeg ___ søsteren min til å lukke
+    vinduet.
+  segments:
+  - text_md: 'Læreren '
+  - blank_id: review-permission-verb
+    options:
+    - lar
+    - får
+    - gjør
+    answer_index: 0
+  - text_md: ' elevene lese høyt. Regnet '
+  - blank_id: review-state-verb
+    options:
+    - lar
+    - får
+    - gjør
+    answer_index: 2
+  - text_md: ' gaten våt. Jeg '
+  - blank_id: review-influence-verb
+    options:
+    - lar
+    - får
+    - gjør
+    answer_index: 1
+  - text_md: ' søsteren min til å lukke vinduet.'
