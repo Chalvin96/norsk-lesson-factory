@@ -46,16 +46,6 @@ K_SOURCE_AUDIT_FIND_FIX_NON_IMPERATIVE_RE = re.compile(
     r"(?:\bdo\s+not\b|\bdon['’]t\b|\bnever\b|\bnot\s+to\b|\b(?:helps|shows|lets|allows)\s+you(?:\s+to)?\b)\s*$",
     re.IGNORECASE,
 )
-K_SOURCE_AUDIT_BROAD_SPEAK_RE = re.compile(
-    r"\b(?:say something|speak about|talk about|describe|tell us|answer freely|respond freely|make up)\b",
-    re.IGNORECASE,
-)
-K_SOURCE_AUDIT_EXACT_SPEAK_CUE_RE = re.compile(
-    r"(?:\b(?:say|read|repeat)(?:\s+the\s+following)?\s+exactly\b"
-    r"|\b(?:si|les|gjenta)\b[^.\n]{0,60}\b(?:akkurat|nøyaktig)\b)",
-    re.IGNORECASE,
-)
-K_SOURCE_AUDIT_MIN_OPTIONS = 2
 K_SOURCE_AUDIT_MIN_QUOTED_VALUE_LENGTH = 2
 K_SOURCE_AUDIT_POSITION_MIN_BLANKS = 3
 K_SOURCE_AUDIT_HIDDEN_RESTATEMENT_FIELDS = frozenset(
@@ -93,9 +83,10 @@ def audit_exercise_source(
 ) -> MechanicalAudit:
     """Audit lesson text and parsed exercises without filesystem or providers.
 
-    ``exercise_items`` is the already-parsed strict YAML document. The caller
-    supplies ``source_validated=True`` when compiler validation succeeded so
-    the audit can preserve the existing build-answer gate. ``initial_findings``
+    ``exercise_items`` is the already-parsed strict YAML document. Pass
+    ``source_validated=True`` only after ``load_exercises`` accepted the same
+    items; operation checks then rely on loader and model invariants and do not
+    re-check structure. ``initial_findings``
     carries source-read errors and is emitted before policy findings. Parsed
     document and compiler-validation findings are inserted at their original
     audit boundaries so compatibility callers keep the existing order.
@@ -319,7 +310,7 @@ def _compare_handles(
 
 
 def _audit_operation_shape(raw: dict[str, Any], handle: str, findings: list[MechanicalFinding]) -> None:
-    """Check deterministic identifiers and answer containers for one operation."""
+    """Check authoring-policy rules for one loader-validated operation."""
     operation = raw.get("op")
     handlers = {
         "choose": _audit_choose_operation_shape,
@@ -328,8 +319,7 @@ def _audit_operation_shape(raw: dict[str, Any], handle: str, findings: list[Mech
         "categorize": _audit_categorize_operation_shape,
         "judge": _audit_judge_operation_shape,
         "find_fix": _audit_find_fix_operation_shape,
-        "speak": _audit_speak_operation_shape,
-        "write": _audit_write_operation_shape,
+        "write": _audit_write_attempt_surface,
     }
     handler = handlers.get(operation) if isinstance(operation, str) else None
     if handler is not None:
@@ -337,61 +327,16 @@ def _audit_operation_shape(raw: dict[str, Any], handle: str, findings: list[Mech
 
 
 def _audit_choose_operation_shape(raw: dict[str, Any], handle: str, findings: list[MechanicalFinding]) -> None:
-    """Audit choose options and the single correct answer."""
-    options = raw.get("options")
-    if not isinstance(options, list) or len(options) < K_SOURCE_AUDIT_MIN_OPTIONS:
-        _finding(
-            findings,
-            "choose-options-invalid",
-            "blocking",
-            K_SOURCE_AUDIT_EXERCISES_FILE,
-            handle,
-            repr(options),
-            "A choose exercise needs at least two option mappings.",
-        )
-        return
-    _audit_mapping_ids(options, "id", handle, "choose option", findings)
+    """Audit visible choose option text and sentence starts."""
+    options = raw["options"]
     _audit_text_values(options, "text", handle, "choose option", findings)
     _audit_nonempty_texts(options, "text", handle, "choose option", findings)
     _audit_sentence_initial_options(raw, handle, findings)
-    correct = [item for item in options if isinstance(item, dict) and item.get("correct") is True]
-    if len(correct) != 1:
-        _finding(
-            findings,
-            "choose-answer-cardinality",
-            "blocking",
-            K_SOURCE_AUDIT_EXERCISES_FILE,
-            handle,
-            repr(len(correct)),
-            "A choose exercise must expose exactly one correct option.",
-        )
 
 
 def _audit_recall_fill_operation_shape(raw: dict[str, Any], handle: str, findings: list[MechanicalFinding]) -> None:
-    """Audit recall audio, typed blanks, and rendered punctuation."""
-    audio_target = raw.get("audio_target")
-    if not isinstance(audio_target, str) or not audio_target.strip():
-        _finding(
-            findings,
-            "recall-audio-target-invalid",
-            "blocking",
-            K_SOURCE_AUDIT_EXERCISES_FILE,
-            handle,
-            repr(audio_target),
-            "A recall_fill exercise needs a non-empty Norwegian audio_target.",
-        )
-    segments = raw.get("segments")
-    if not isinstance(segments, list):
-        _finding(
-            findings,
-            "recall-segments-invalid",
-            "blocking",
-            K_SOURCE_AUDIT_EXERCISES_FILE,
-            handle,
-            repr(segments),
-            "A recall_fill exercise needs an ordered segment list.",
-        )
-        return
+    """Audit recall blank presence, choices, and rendered punctuation."""
+    segments = raw["segments"]
     blanks = [item for item in segments if isinstance(item, dict) and "blank_id" in item]
     if not blanks:
         _finding(
@@ -403,7 +348,6 @@ def _audit_recall_fill_operation_shape(raw: dict[str, Any], handle: str, finding
             repr(segments),
             "A recall_fill exercise needs at least one typed blank.",
         )
-    _audit_mapping_ids(blanks, "blank_id", handle, "recall blank", findings)
     for segment in segments:
         _audit_recall_segment_shape(segment, handle, findings)
     _audit_recall_rendering(segments, handle, findings)
@@ -450,19 +394,8 @@ def _audit_answer_position_pattern(
             return
 
 
-def _audit_recall_segment_shape(segment: object, handle: str, findings: list[MechanicalFinding]) -> None:
+def _audit_recall_segment_shape(segment: dict[str, Any], handle: str, findings: list[MechanicalFinding]) -> None:
     """Audit one recall span or typed blank mapping."""
-    if not isinstance(segment, dict):
-        _finding(
-            findings,
-            "recall-segment-invalid",
-            "blocking",
-            K_SOURCE_AUDIT_EXERCISES_FILE,
-            handle,
-            repr(segment),
-            "Every recall segment must be a text span or typed blank mapping.",
-        )
-        return
     text = segment.get("text_md")
     if isinstance(text, str) and "[BLANK]" in text:
         _finding(
@@ -475,35 +408,13 @@ def _audit_recall_segment_shape(segment: object, handle: str, findings: list[Mec
             "A typed recall blank must not also be encoded as an inline marker.",
         )
     if "blank_id" not in segment:
-        if not isinstance(text, str):
-            _finding(
-                findings,
-                "recall-span-invalid",
-                "blocking",
-                K_SOURCE_AUDIT_EXERCISES_FILE,
-                handle,
-                repr(segment),
-                "A recall span must carry a string text_md value.",
-            )
         return
     _audit_recall_blank_shape(segment, handle, findings)
 
 
 def _audit_recall_blank_shape(segment: dict[str, Any], handle: str, findings: list[MechanicalFinding]) -> None:
-    """Audit one typed recall blank's options and selected answer."""
-    options = segment.get("options")
-    answer_index = segment.get("answer_index")
-    if not isinstance(options, list) or len(options) < K_SOURCE_AUDIT_MIN_OPTIONS:
-        _finding(
-            findings,
-            "recall-options-invalid",
-            "blocking",
-            K_SOURCE_AUDIT_EXERCISES_FILE,
-            handle,
-            repr(options),
-            "Each typed recall blank needs at least two options.",
-        )
-        return
+    """Audit duplicate visible options in one typed recall blank."""
+    options = segment["options"]
     _audit_duplicate_strings(
         options,
         code="recall-option-duplicate",
@@ -511,35 +422,15 @@ def _audit_recall_blank_shape(segment: dict[str, Any], handle: str, findings: li
         label="recall option",
         findings=findings,
     )
-    if any(not isinstance(option, str) or not option.strip() for option in options):
-        _finding(
-            findings,
-            "recall-option-invalid",
-            "blocking",
-            K_SOURCE_AUDIT_EXERCISES_FILE,
-            handle,
-            repr(options),
-            "Recall options must be non-empty strings.",
-        )
-    if not isinstance(answer_index, int) or not 0 <= answer_index < len(options):
-        _finding(
-            findings,
-            "recall-answer-index-invalid",
-            "blocking",
-            K_SOURCE_AUDIT_EXERCISES_FILE,
-            handle,
-            repr(answer_index),
-            "Each recall answer_index must point to exactly one option.",
-        )
 
 
 def _audit_match_pairs_operation_shape(raw: dict[str, Any], handle: str, findings: list[MechanicalFinding]) -> None:
-    """Audit matching item lists and declared pair references."""
-    for field, id_key, label in (
-        ("left", "left_id", "left item"),
-        ("right", "right_id", "right item"),
+    """Audit matching item text and required non-empty collections."""
+    for field, label in (
+        ("left", "left item"),
+        ("right", "right item"),
     ):
-        _audit_match_side(raw.get(field), field, id_key, label, handle, findings)
+        _audit_match_side(raw.get(field), field, label, handle, findings)
     pairs = raw.get("pairs")
     if not isinstance(pairs, list) or not pairs:
         _finding(
@@ -551,14 +442,11 @@ def _audit_match_pairs_operation_shape(raw: dict[str, Any], handle: str, finding
             repr(pairs),
             "A matching exercise needs at least one declared pair.",
         )
-    if isinstance(pairs, list):
-        _audit_match_pair_references(raw, pairs, handle, findings)
 
 
 def _audit_match_side(
     items: object,
     field: str,
-    id_key: str,
     label: str,
     handle: str,
     findings: list[MechanicalFinding],
@@ -575,118 +463,29 @@ def _audit_match_side(
             f"A matching exercise needs a non-empty {field} item list.",
         )
         return
-    _audit_mapping_ids(items, id_key, handle, label, findings)
     _audit_nonempty_texts(items, "text", handle, label, findings)
     _audit_text_values(items, "text", handle, label, findings)
 
 
-def _audit_match_pair_references(
-    raw: dict[str, Any], pairs: list[Any], handle: str, findings: list[MechanicalFinding]
-) -> None:
-    """Audit matching pair uniqueness and references to both item lists."""
-    values = [(item.get("left_id"), item.get("right_id")) for item in pairs if isinstance(item, dict)]
-    _find_duplicate_values(
-        values,
-        code="match-pair-duplicate",
-        artifact=K_SOURCE_AUDIT_EXERCISES_FILE,
-        location=handle,
-        explanation="A matching pair must not be declared twice.",
-        findings=findings,
-        severity="blocking",
-    )
-    raw_left = raw.get("left")
-    raw_right = raw.get("right")
-    left_ids = {
-        item.get("left_id") for item in (raw_left if isinstance(raw_left, list) else []) if isinstance(item, dict)
-    }
-    right_ids = {
-        item.get("right_id") for item in (raw_right if isinstance(raw_right, list) else []) if isinstance(item, dict)
-    }
-    for left_id, right_id in values:
-        if left_id not in left_ids or right_id not in right_ids:
-            _finding(
-                findings,
-                "match-pair-reference-invalid",
-                "blocking",
-                K_SOURCE_AUDIT_EXERCISES_FILE,
-                handle,
-                repr((left_id, right_id)),
-                "Every pair must reference an existing left and right item.",
-            )
-
-
 def _audit_categorize_operation_shape(raw: dict[str, Any], handle: str, findings: list[MechanicalFinding]) -> None:
-    """Audit category collections and each item's bucket reference."""
-    for field, id_key, label in (
-        ("buckets", "bucket_id", "category bucket"),
-        ("items", "item_id", "category item"),
-    ):
-        items = raw.get(field)
-        if isinstance(items, list):
-            _audit_mapping_ids(items, id_key, handle, label, findings)
-    buckets = raw.get("buckets")
-    items = raw.get("items")
-    _audit_category_collection(
-        buckets,
-        minimum=2,
-        text_key="label",
-        label="category bucket",
-        code="categorize-buckets-invalid",
-        message="A categorize exercise needs at least two buckets.",
-        handle=handle,
-        findings=findings,
-    )
-    _audit_category_collection(
-        items,
-        minimum=1,
-        text_key="text",
-        label="category item",
-        code="categorize-items-empty",
-        message="A categorize exercise needs at least one item.",
-        handle=handle,
-        findings=findings,
-    )
-    bucket_ids = (
-        {item.get("bucket_id") for item in buckets if isinstance(item, dict)} if isinstance(buckets, list) else set()
-    )
-    for item in items if isinstance(items, list) else []:
-        if isinstance(item, dict) and item.get("bucket_id") not in bucket_ids:
-            _finding(
-                findings,
-                "categorize-reference-invalid",
-                "blocking",
-                K_SOURCE_AUDIT_EXERCISES_FILE,
-                handle,
-                repr(item.get("bucket_id")),
-                "Every category item must reference an existing bucket.",
-            )
-
-
-def _audit_category_collection(
-    items: object,
-    *,
-    minimum: int,
-    text_key: str,
-    label: str,
-    code: str,
-    message: str,
-    handle: str,
-    findings: list[MechanicalFinding],
-) -> None:
-    """Audit required size and visible text for one category collection."""
-    if not isinstance(items, list) or len(items) < minimum:
+    """Audit category item presence and visible collection text."""
+    buckets = raw["buckets"]
+    items = raw["items"]
+    _audit_nonempty_texts(buckets, "label", handle, "category bucket", findings)
+    _audit_text_values(buckets, "label", handle, "category bucket", findings)
+    if not items:
         _finding(
             findings,
-            code,
+            "categorize-items-empty",
             "blocking",
             K_SOURCE_AUDIT_EXERCISES_FILE,
             handle,
             repr(items),
-            message,
+            "A categorize exercise needs at least one item.",
         )
         return
-    _audit_nonempty_texts(items, text_key, handle, label, findings)
-    _audit_text_values(items, text_key, handle, label, findings)
+    _audit_nonempty_texts(items, "text", handle, "category item", findings)
+    _audit_text_values(items, "text", handle, "category item", findings)
 
 
 def _audit_judge_operation_shape(raw: dict[str, Any], handle: str, findings: list[MechanicalFinding]) -> None:
@@ -715,33 +514,9 @@ def _audit_judge_operation_shape(raw: dict[str, Any], handle: str, findings: lis
 
 
 def _audit_find_fix_operation_shape(raw: dict[str, Any], handle: str, findings: list[MechanicalFinding]) -> None:
-    """Audit find_fix token references and learner attempt surface."""
-    tokens = raw.get("tokens")
-    if not isinstance(tokens, list) or not tokens:
-        _finding(
-            findings,
-            "find-fix-tokens-invalid",
-            "blocking",
-            K_SOURCE_AUDIT_EXERCISES_FILE,
-            handle,
-            repr(tokens),
-            "A find_fix exercise needs a non-empty token list.",
-        )
-        return
-    _audit_mapping_ids(tokens, "token_id", handle, "find_fix token", findings)
+    """Audit find_fix token text, feedback, and learner instructions."""
+    tokens = raw["tokens"]
     _audit_nonempty_texts(tokens, "text", handle, "find_fix token", findings)
-    target = raw.get("error_token_id")
-    token_ids = {item.get("token_id") for item in tokens if isinstance(item, dict)}
-    if target not in token_ids:
-        _finding(
-            findings,
-            "find-fix-target-invalid",
-            "blocking",
-            K_SOURCE_AUDIT_EXERCISES_FILE,
-            handle,
-            repr(target),
-            "error_token_id must reference exactly one supplied token.",
-        )
     if not str(raw.get("feedback") or "").strip():
         _finding(
             findings,
@@ -753,84 +528,6 @@ def _audit_find_fix_operation_shape(raw: dict[str, Any], handle: str, findings: 
             "A find_fix exercise needs corrective feedback.",
         )
     _audit_find_fix_attempt_surface(raw, handle, findings)
-
-
-def _audit_speak_operation_shape(raw: dict[str, Any], handle: str, findings: list[MechanicalFinding]) -> None:
-    """Audit a speak target and its learner cue."""
-    target = raw.get("target")
-    prompt = raw.get("prompt_md")
-    if not isinstance(target, str) or not target.strip():
-        _finding(
-            findings,
-            "speak-target-invalid",
-            "blocking",
-            K_SOURCE_AUDIT_EXERCISES_FILE,
-            handle,
-            repr(target),
-            "A speak exercise needs one non-empty Norwegian target utterance.",
-        )
-    if isinstance(prompt, str) and K_SOURCE_AUDIT_BROAD_SPEAK_RE.search(prompt):
-        _finding(
-            findings,
-            "speak-target-cue-broad",
-            "major",
-            K_SOURCE_AUDIT_EXERCISES_FILE,
-            handle,
-            prompt,
-            "A hidden exact speak target is not justified by a broad or open learner cue.",
-        )
-    if isinstance(target, str) and isinstance(prompt, str):
-        normalized_target = _normalize_speak_text(target)
-        normalized_prompt = _normalize_speak_text(prompt)
-        if normalized_target and normalized_target not in normalized_prompt:
-            _finding(
-                findings,
-                "speak-target-not-visible",
-                "blocking",
-                K_SOURCE_AUDIT_EXERCISES_FILE,
-                handle,
-                target,
-                "A speak target must be visible in the learner cue so the exercise does not grade a hidden sentence.",
-            )
-        if not K_SOURCE_AUDIT_EXACT_SPEAK_CUE_RE.search(prompt):
-            _finding(
-                findings,
-                "speak-target-cue-exact-missing",
-                "blocking",
-                K_SOURCE_AUDIT_EXERCISES_FILE,
-                handle,
-                prompt,
-                "A visible speak target needs an explicit exact-production cue such as say exactly, read exactly, or repeat exactly.",
-            )
-
-
-def _audit_write_operation_shape(raw: dict[str, Any], handle: str, findings: list[MechanicalFinding]) -> None:
-    """Audit writing criteria, judging rubric, and response surface."""
-    criteria = raw.get("criteria")
-    if not isinstance(criteria, list) or not criteria:
-        _finding(
-            findings,
-            "write-criteria-invalid",
-            "blocking",
-            K_SOURCE_AUDIT_EXERCISES_FILE,
-            handle,
-            repr(criteria),
-            "A writing exercise needs at least one rubric criterion.",
-        )
-    else:
-        _audit_mapping_ids(criteria, "id", handle, "writing criterion", findings)
-        _audit_nonempty_texts(criteria, "instruction", handle, "writing criterion", findings)
-    if not isinstance(raw.get("judge_prompt"), str) or not raw["judge_prompt"].strip():
-        _finding(
-            findings,
-            "write-judge-prompt-invalid",
-            "blocking",
-            K_SOURCE_AUDIT_EXERCISES_FILE,
-            handle,
-            repr(raw.get("judge_prompt")),
-            "A writing exercise needs an explicit downstream judging rubric.",
-        )
-    _audit_write_attempt_surface(raw, handle, findings)
 
 
 def _audit_find_fix_attempt_surface(raw: dict[str, Any], handle: str, findings: list[MechanicalFinding]) -> None:
@@ -1185,26 +882,6 @@ def _audit_build_answer_quality(
         )
 
 
-def _audit_mapping_ids(
-    items: list[Any],
-    key: str,
-    handle: str,
-    label: str,
-    findings: list[MechanicalFinding],
-) -> None:
-    """Check unique IDs in one operation-specific mapping list."""
-    values = [item.get(key) for item in items if isinstance(item, dict)]
-    _find_duplicate_values(
-        values,
-        code=f"{_slug(label)}-id-duplicate",
-        artifact=K_SOURCE_AUDIT_EXERCISES_FILE,
-        location=handle,
-        explanation=f"{label.capitalize()} IDs must be unique.",
-        findings=findings,
-        severity="blocking",
-    )
-
-
 def _audit_text_values(items: list[Any], key: str, handle: str, label: str, findings: list[MechanicalFinding]) -> None:
     """Check duplicate visible text in an option-like list."""
     values = [item.get(key) for item in items if isinstance(item, dict)]
@@ -1318,14 +995,6 @@ def _normalize_visible_text(value: object) -> str:
     if not isinstance(value, str):
         return ""
     return re.sub(r"[.!?,;:]+$", "", " ".join(value.split()).casefold()).strip()
-
-
-def _normalize_speak_text(value: object) -> str:
-    """Normalize a speak cue while ignoring Markdown and quote decoration."""
-    if not isinstance(value, str):
-        return ""
-    plain = value.replace("*", "").replace("_", "").replace(chr(96), "").replace(chr(34), "")
-    return re.sub(r"[.!?,;:]+$", "", " ".join(plain.split()).casefold()).strip()
 
 
 def _has_terminal_punctuation(value: str) -> bool:

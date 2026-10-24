@@ -171,7 +171,7 @@ def require_complete_dependency_graph(payload: Mapping[str, Any]) -> None:
     ):
         raise ValueError(
             "approved catalog requires schema_version 3 with a complete dependency_graph; "
-            "run `lesson-data curriculum dependencies` and promote the reviewed result"
+            "review and resolve the located dependency findings in the workbench curriculum"
         )
     if dependency_graph.get("status") != "complete":
         raise ValueError(

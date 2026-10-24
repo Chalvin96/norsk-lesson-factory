@@ -90,22 +90,6 @@ def test_derive_transcript_blocks_given_foreign_reading_span_expect_no_audio_can
         )
 
 
-def test_derive_transcript_blocks_given_english_speak_target_expect_no_audio_candidate():
-    with pytest.raises(ValueError, match="at least one audio candidate"):
-        derive_transcript_blocks(
-            {
-                "elements": [
-                    {
-                        "element_kind": "exercise",
-                        "id": "speak-english",
-                        "operation": "speak",
-                        "payload": {"target": "hello"},
-                    }
-                ]
-            }
-        )
-
-
 def test_derive_transcript_blocks_given_request_section_expect_no_candidates() -> None:
     internal = _internal(
         [

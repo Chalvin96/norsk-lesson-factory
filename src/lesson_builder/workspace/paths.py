@@ -15,12 +15,15 @@ from lesson_builder.workspace.settings import K_WORKSPACE_CATALOG_DIR
 from lesson_builder.workspace.settings import K_WORKSPACE_CONTENT_DIR
 from lesson_builder.workspace.settings import K_WORKSPACE_CURRICULUM_DIR
 from lesson_builder.workspace.settings import K_WORKSPACE_DIST_DIR
+from lesson_builder.workspace.settings import K_WORKSPACE_DRAFTS_DIR
 from lesson_builder.workspace.settings import K_WORKSPACE_LEGACY_AUDIO_CACHE_DIR
 from lesson_builder.workspace.settings import K_WORKSPACE_LESSONS_DIR
 from lesson_builder.workspace.settings import K_WORKSPACE_RELEASE_SCRATCH_DIR
 from lesson_builder.workspace.settings import K_WORKSPACE_ROOT
 from lesson_builder.workspace.settings import K_WORKSPACE_TERMINOLOGY_DIR
 from lesson_builder.workspace.settings import K_WORKSPACE_TERMINOLOGY_FILE
+from lesson_builder.workspace.settings import K_WORKSPACE_WORKBENCH_SETTINGS_DIR
+from lesson_builder.workspace.settings import K_WORKSPACE_WORKBENCH_SETTINGS_FILENAME
 
 
 def get_workspace_root() -> Path:
@@ -79,12 +82,39 @@ class WorkspacePaths:
         return self.content_root / K_WORKSPACE_LESSONS_DIR
 
     @property
-    def lesson_approvals_root(self) -> Path:
-        return self.content_root / "approvals" / K_WORKSPACE_LESSONS_DIR
+    def drafts_root(self) -> Path:
+        """Resolve tracked per-lesson working drafts that shadow canonical source."""
+        return self.root / K_WORKSPACE_DRAFTS_DIR
 
     @property
-    def dependency_review_scratch_root(self) -> Path:
-        return self.root / "store" / "scratch" / "curriculum-dependencies"
+    def workbench_root(self) -> Path:
+        """Resolve ignored, unapproved workbench records."""
+        return self.root / "store" / "workbench"
+
+    @property
+    def workbench_settings(self) -> Path:
+        """Resolve local model and review-scope overrides for the workbench."""
+        return self.root / K_WORKSPACE_WORKBENCH_SETTINGS_DIR / K_WORKSPACE_WORKBENCH_SETTINGS_FILENAME
+
+    @property
+    def workbench_approvals_root(self) -> Path:
+        return self.content_root / "approvals" / "workbench"
+
+    @property
+    def workbench_baselines(self) -> Path:
+        return self.workbench_approvals_root / "baseline.yaml"
+
+    @property
+    def approval_evidence_root(self) -> Path:
+        return self.content_root / "approvals" / "evidence"
+
+    @property
+    def workbench_runs_root(self) -> Path:
+        return self.workbench_root / "runs"
+
+    @property
+    def lesson_approvals_root(self) -> Path:
+        return self.content_root / "approvals" / K_WORKSPACE_LESSONS_DIR
 
     @property
     def curriculum_scratch_root(self) -> Path:

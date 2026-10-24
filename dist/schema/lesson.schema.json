@@ -2278,135 +2278,6 @@
       "title": "ExportedSection",
       "type": "object"
     },
-    "ExportedSpeakExercise": {
-      "additionalProperties": false,
-      "properties": {
-        "kind": {
-          "const": "exercise",
-          "title": "Kind",
-          "type": "string"
-        },
-        "id": {
-          "title": "Id",
-          "type": "string"
-        },
-        "operation": {
-          "const": "speak",
-          "title": "Operation",
-          "type": "string"
-        },
-        "objective_id": {
-          "title": "Objective Id",
-          "type": "string"
-        },
-        "prompt": {
-          "items": {
-            "discriminator": {
-              "mapping": {
-                "code": "#/$defs/CodeSpan",
-                "emphasis": "#/$defs/EmphasisSpan",
-                "foreign_term": "#/$defs/ForeignTermSpan",
-                "strong": "#/$defs/StrongSpan",
-                "text": "#/$defs/TextSpan"
-              },
-              "propertyName": "kind"
-            },
-            "oneOf": [
-              {
-                "$ref": "#/$defs/TextSpan"
-              },
-              {
-                "$ref": "#/$defs/EmphasisSpan"
-              },
-              {
-                "$ref": "#/$defs/StrongSpan"
-              },
-              {
-                "$ref": "#/$defs/CodeSpan"
-              },
-              {
-                "$ref": "#/$defs/ForeignTermSpan"
-              }
-            ]
-          },
-          "title": "Prompt",
-          "type": "array"
-        },
-        "stimulus": {
-          "items": {
-            "$ref": "#/$defs/ExportedDialogueStimulus"
-          },
-          "title": "Stimulus",
-          "type": "array"
-        },
-        "explanation": {
-          "anyOf": [
-            {
-              "items": {
-                "discriminator": {
-                  "mapping": {
-                    "code": "#/$defs/CodeSpan",
-                    "emphasis": "#/$defs/EmphasisSpan",
-                    "foreign_term": "#/$defs/ForeignTermSpan",
-                    "strong": "#/$defs/StrongSpan",
-                    "text": "#/$defs/TextSpan"
-                  },
-                  "propertyName": "kind"
-                },
-                "oneOf": [
-                  {
-                    "$ref": "#/$defs/TextSpan"
-                  },
-                  {
-                    "$ref": "#/$defs/EmphasisSpan"
-                  },
-                  {
-                    "$ref": "#/$defs/StrongSpan"
-                  },
-                  {
-                    "$ref": "#/$defs/CodeSpan"
-                  },
-                  {
-                    "$ref": "#/$defs/ForeignTermSpan"
-                  }
-                ]
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Explanation"
-        },
-        "audio_id": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Audio Id"
-        },
-        "payload": {
-          "$ref": "#/$defs/SpeakPayload"
-        }
-      },
-      "required": [
-        "kind",
-        "id",
-        "operation",
-        "objective_id",
-        "prompt",
-        "explanation",
-        "payload"
-      ],
-      "title": "ExportedExerciseBase[Literal['speak'], SpeakPayload]",
-      "type": "object"
-    },
     "ExportedTableBlock": {
       "additionalProperties": false,
       "properties": {
@@ -2782,22 +2653,6 @@
       "title": "MatchPairsPayload",
       "type": "object"
     },
-    "SpeakPayload": {
-      "additionalProperties": false,
-      "description": "Authored target utterance for optional downstream recording and STT.",
-      "properties": {
-        "target": {
-          "minLength": 1,
-          "title": "Target",
-          "type": "string"
-        }
-      },
-      "required": [
-        "target"
-      ],
-      "title": "SpeakPayload",
-      "type": "object"
-    },
     "StrongSpan": {
       "additionalProperties": false,
       "description": "Strong-importance text leaf span (renders as bold).",
@@ -3076,6 +2931,7 @@
       "type": "string"
     },
     "kind": {
+      "description": "Authored lesson classification for downstream lesson selection.",
       "enum": [
         "grammar",
         "phraseology",
@@ -3145,7 +3001,6 @@
             "judge": "#/$defs/ExportedJudgeExercise",
             "match_pairs": "#/$defs/ExportedMatchPairsExercise",
             "recall_fill": "#/$defs/ExportedRecallFillExercise",
-            "speak": "#/$defs/ExportedSpeakExercise",
             "write": "#/$defs/ExportedWriteExercise"
           },
           "propertyName": "operation"
@@ -3171,9 +3026,6 @@
           },
           {
             "$ref": "#/$defs/ExportedFindFixExercise"
-          },
-          {
-            "$ref": "#/$defs/ExportedSpeakExercise"
           },
           {
             "$ref": "#/$defs/ExportedWriteExercise"

@@ -61,7 +61,6 @@ def _exercise_payload_integrity(el: dict[str, Any]) -> list[CheckResult]:
         "build": _build_payload_findings,
         "find_fix": _find_fix_payload_findings,
         "judge": _judge_payload_findings,
-        "speak": _speak_payload_findings,
         "write": _write_payload_findings,
     }
     handler = handlers.get(operation) if isinstance(operation, str) else None
@@ -237,13 +236,6 @@ def _judge_payload_findings(payload: dict[str, Any], handle: str) -> list[CheckR
     return findings
 
 
-def _speak_payload_findings(payload: dict[str, Any], handle: str) -> list[CheckResult]:
-    """Validate the target utterance of a speak payload."""
-    if not str(payload.get("target") or "").strip():
-        return [_payload_finding(handle, "speak target is empty")]
-    return []
-
-
 def _write_payload_findings(payload: dict[str, Any], handle: str) -> list[CheckResult]:
     """Validate writing criteria and the downstream judge prompt."""
     findings: list[CheckResult] = []
@@ -334,8 +326,6 @@ def _recall_fill_blanks(el: dict[str, Any]) -> list[CheckResult]:
 def _media_requests(data: dict[str, Any]) -> list[CheckResult]:
     results: list[CheckResult] = []
     for el in _exercises(data):
-        if el.get("operation") == "speak":
-            continue
         prompt_text = json.dumps(el.get("prompt", []), ensure_ascii=False).lower()
         if re.search(r"\b(?:audio|listen|listening)\b", prompt_text):
             results.append(

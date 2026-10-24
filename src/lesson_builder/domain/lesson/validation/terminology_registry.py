@@ -19,7 +19,7 @@ preferred label (``preferred_label``), zero or more alternative labels
 brief references and deterministic enforcement.
 
 Not a check itself — deterministic ban enforcement lives in
-``checks/validators/terminology.py`` and the brief/source boundary enforcement
+``domain/lesson/validation/checks/validators/terminology.py`` and the brief/source boundary enforcement
 lives in the lesson-generation workflow's rich authoring stages.
 """
 

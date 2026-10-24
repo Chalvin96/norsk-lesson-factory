@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 
 from lesson_builder.domain.lesson.models.source_audit import MechanicalFinding
-from lesson_builder.domain.lesson.validation.learner_visibility import is_internal_request_anchor
+from lesson_builder.domain.lesson.services.learner_visibility import is_internal_request_anchor
 
 K_AUTHORING_PROSE_LOOKBACK_LINES = 12
 K_AUTHORING_PROSE_METADATA_LABEL_RE = re.compile(

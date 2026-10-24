@@ -3,7 +3,7 @@ type: Lesson
 slug: double_definiteness
 title: "Double definiteness with adjectives"
 cefr_level: A2
-goal: "Use den, det, or de with a definite noun and an -e adjective."
+goal: "Use den, det, or de with a definite noun and an adjective in its definite form, usually ending in -e."
 default_lang: nb
 grounding_mode: grounded
 requirements_ref: plan.md
@@ -13,7 +13,7 @@ bloom_targets:
   - analyze
 objectives:
   - id: obj-double-definiteness-01
-    statement: "Use den, det, or de with a definite noun and an -e adjective."
+    statement: "Use den, det, or de with a definite noun and an adjective in its definite form, usually ending in -e."
     bloom_targets:
       - understand
       - apply
@@ -107,7 +107,7 @@ A feminine noun can also use den:
 
 The essential pattern is:
 
-**den + adjective in -e + definite singular noun**
+**den + adjective in its definite form + definite singular noun**
 
 **Singular neuter nouns: det**
 
@@ -124,7 +124,7 @@ The essential pattern is:
 
 The pattern is:
 
-**det + adjective in -e + definite singular neuter noun**
+**det + adjective in its definite form + definite singular neuter noun**
 
 **Plural nouns: de**
 
@@ -143,7 +143,7 @@ In the plural, use de regardless of the noun’s gender.
 
 The pattern is:
 
-**de + adjective in -e + definite plural noun**
+**de + adjective in its definite form + definite plural noun**
 
 Here is the complete contrast:
 
@@ -232,7 +232,7 @@ In the standard pattern taught here, include den:
 
 ## The adjective takes -e {#the-adjective-takes-e role=model objectives=obj-double-definiteness-01}
 
-In the target structure, the adjective normally takes the **-e form**:
+In the target structure, use the adjective’s **definite form**, usually ending in **-e**:
 
 ::: examples
 - no: grønn → den grønne stolen
@@ -263,10 +263,10 @@ This differs from an indefinite phrase:
 The compact rule is:
 
 ::: {.rule}
-To describe a specific definite noun, use den, det, or de + adjective in -e + noun in the definite form.
+To describe a specific definite noun, use den, det, or de + adjective in its definite form + noun in the definite form.
 :::
 
-Do not let the gender of a singular noun remove the adjective’s -e in this pattern.
+For regular adjectives such as **grønn** and **rund**, keep **-e** with every gender. Some adjectives have other definite forms: **liten** becomes **lille** in the singular and **små** in the plural. **Blå** can remain **blå**, as in **de blå lampene**; **blåe** is also possible.
 
 Incorrect:
 
@@ -477,7 +477,7 @@ A useful final check is to inspect the phrase from left to right:
 
 1. Is the noun singular masculine or feminine, singular neuter, or plural?
 2. Have you selected den, det, or de?
-3. Does the adjective have -e?
+3. Is the adjective in its definite form (usually -e; exceptions include små and blå)?
 4. Is the noun definite?
 
 ## Editing checkpoint {#editing-checkpoint role=contrast objectives=obj-double-definiteness-01}

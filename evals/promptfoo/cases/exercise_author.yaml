@@ -464,3 +464,90 @@
         config:
           job: reviewer
           json_response: true
+
+- description: Meaning retrieval does not disclose the answer through a stem translation
+  metadata:
+    surface: exercise_author
+    cefr: A1
+    kind: grammar
+    source_lesson: synthetic present-tense disclosure regression
+  vars:
+    surface: exercise_author
+    plan: |
+      ---
+      kind: grammar
+      cefr_level: A1
+      objectives:
+        - id: obj-present
+          statement: Interpret present tense for routines and actions now.
+      ---
+    lesson_md: |
+      ## A routine {#sec-routine objectives=obj-present}
+      Vi viser film hver fredag. We show films every Friday.
+      Norwegian present tense can describe a routine or an action now.
+    exercise_requests_yaml: |
+      - handle: present-meaning
+        objective_ref: obj-present
+        bloom: understand
+        evidence_route: meaning_selection
+        evidence: Choose whether a new present-tense sentence describes a routine or an action now.
+  assert:
+    - type: llm-rubric
+      metric: supplied_answer_retrieval
+      value: |
+        Temporarily ignore the Norwegian text: if English labels, prefatory
+        explanations, or parenthetical glosses already determine the intended
+        bucket, flag supplied-answer retrieval. Ordinary context and vocabulary
+        translations are useful support when they do not state the very
+        distinction being tested. Return pass=true only if the learner must
+        interpret Norwegian to choose the meaning. Return pass=false if the
+        prompt, stimulus, stem, or options translate the sentence or its decisive
+        time expression so that English alone determines the answer.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true
+
+- description: Recall gap does not supply the target form in a neighbouring example
+  metadata:
+    surface: exercise_author
+    cefr: A1
+    kind: grammar
+    source_lesson: synthetic present-tense recall regression
+  vars:
+    surface: exercise_author
+    plan: |
+      ---
+      kind: grammar
+      cefr_level: A1
+      objectives:
+        - id: obj-present
+          statement: Use the same present-tense verb form with different subjects.
+      ---
+    lesson_md: |
+      ## Work {#sec-work objectives=obj-present}
+      Jeg jobber her. I work here. Vi jobber her. We work here.
+      The present-tense verb form does not change with the subject.
+    exercise_requests_yaml: |
+      - handle: present-recall
+        objective_ref: obj-present
+        bloom: remember
+        evidence_route: bounded_retrieval
+        evidence: Recall the present-tense verb form in a new sentence with a plural subject.
+  assert:
+    - type: llm-rubric
+      metric: supplied_answer_retrieval
+      value: |
+        Flag retrieval tasks that supply the target form instead of requiring
+        it. Return pass=true only if the learner-visible prompt, stimulus, and
+        literal segments do not provide the keyed form in a worked sentence,
+        translation, gloss, or parenthetical cue. Options may contain the target
+        alongside plausible alternatives. Feedback after answering may explain
+        and translate it. Return pass=false for an example such as "Jeg jobber
+        her. Vi ___ her." that lets the learner copy the keyed form.
+      provider:
+        id: file://provider.py:call_api
+        config:
+          job: reviewer
+          json_response: true

@@ -6,6 +6,8 @@ import re
 import shutil
 from pathlib import Path
 
+import pytest
+
 from lesson_builder.application.operations.audit_source import audit_source_directory
 from lesson_builder.application.operations.audit_source import audit_source_text
 from tests.paths import K_CARDINAL_NUMBERS_FIXTURE_ROOT
@@ -337,23 +339,17 @@ def test_audit_source_directory_given_repair_only_instruction_expect_capability_
     assert any(finding.code == "find-fix-attempt-capability" for finding in audit.findings)
 
 
-def test_audit_source_directory_given_broad_speak_and_english_write_expect_surface_findings(tmp_path: Path):
+def test_audit_source_directory_given_english_write_expect_response_language_finding(tmp_path: Path):
     source = _copy_fixture(tmp_path)
     lesson_path = source / "lesson.md"
     lesson_path.write_text(
-        lesson_path.read_text(encoding="utf-8") + "\n{{exercise: speak-broad}}\n{{exercise: write-english}}\n",
+        lesson_path.read_text(encoding="utf-8") + "\n{{exercise: write-english}}\n",
         encoding="utf-8",
     )
     exercises_path = source / "exercises.yaml"
     exercises_path.write_text(
         exercises_path.read_text(encoding="utf-8")
         + """
-- handle: speak-broad
-  op: speak
-  objective: obj-question-order
-  bloom: apply
-  prompt_md: Talk about your morning.
-  target: Jeg står opp klokka sju.
 - handle: write-english
   op: write
   objective: obj-question-order
@@ -371,7 +367,6 @@ def test_audit_source_directory_given_broad_speak_and_english_write_expect_surfa
     audit = audit_source_directory(source)
 
     codes = {finding.code for finding in audit.findings}
-    assert "speak-target-cue-broad" in codes
     assert "write-response-language-conflict" in codes
 
 
@@ -536,64 +531,6 @@ def test_audit_source_directory_given_internal_or_typographic_quotes_expect_no_w
     assert not any(finding.code == "typed-example-outer-quote-wrapper" for finding in audit.findings)
 
 
-def test_audit_source_directory_given_visible_exact_speak_target_expect_no_speak_surface_finding(tmp_path: Path):
-    source = _copy_fixture(tmp_path)
-    lesson_path = source / "lesson.md"
-    lesson_path.write_text(
-        lesson_path.read_text(encoding="utf-8") + "\n{{exercise: speak-exact}}\n",
-        encoding="utf-8",
-    )
-    exercises_path = source / "exercises.yaml"
-    exercises_path.write_text(
-        exercises_path.read_text(encoding="utf-8")
-        + """
-- handle: speak-exact
-  op: speak
-  objective: obj-question-order
-  bloom: apply
-  prompt_md: In the morning, say exactly: Jeg star opp klokka sju.
-  target: Jeg star opp klokka sju.
-""",
-        encoding="utf-8",
-    )
-
-    audit = audit_source_directory(source)
-
-    codes = {finding.code for finding in audit.findings}
-    assert "speak-target-cue-exact-missing" not in codes
-    assert "speak-target-not-visible" not in codes
-
-
-def test_audit_source_directory_given_visible_norwegian_exact_speak_target_expect_no_speak_surface_finding(
-    tmp_path: Path,
-):
-    source = _copy_fixture(tmp_path)
-    lesson_path = source / "lesson.md"
-    lesson_path.write_text(
-        lesson_path.read_text(encoding="utf-8") + "\n{{exercise: speak-exact-norwegian}}\n",
-        encoding="utf-8",
-    )
-    exercises_path = source / "exercises.yaml"
-    exercises_path.write_text(
-        exercises_path.read_text(encoding="utf-8")
-        + """
-- handle: speak-exact-norwegian
-  op: speak
-  objective: obj-question-order
-  bloom: apply
-  prompt_md: Si akkurat denne setningen høyt: Jeg star opp klokka sju.
-  target: Jeg star opp klokka sju.
-""",
-        encoding="utf-8",
-    )
-
-    audit = audit_source_directory(source)
-
-    codes = {finding.code for finding in audit.findings}
-    assert "speak-target-cue-exact-missing" not in codes
-    assert "speak-target-not-visible" not in codes
-
-
 def test_audit_source_directory_given_find_fix_repair_and_explanation_requests_expect_capability_finding(
     tmp_path: Path,
 ):
@@ -623,35 +560,26 @@ def test_audit_source_directory_given_find_fix_repair_and_explanation_requests_e
         assert any(finding.code == "find-fix-attempt-capability" for finding in audit.findings)
 
 
-def test_audit_source_directory_given_hidden_or_non_exact_speak_target_expect_surface_findings(tmp_path: Path):
-    cases = (
-        ("Read this sentence.", "Jeg star opp klokka sju.", "speak-target-cue-exact-missing"),
-        ("Say exactly: Something else.", "Jeg star opp klokka sju.", "speak-target-not-visible"),
+@pytest.mark.parametrize(
+    "payload",
+    [
+        "op: choose\noptions: [{id: a, text: Ja}, {id: b, text: Nei}]",
+        "op: match_pairs\nleft: [{left_id: l, text: Hei}]\n"
+        "right: [{right_id: r, text: Hello}]\npairs: [{left_id: missing, right_id: r}]",
+        "op: recall_fill\naudio_target: Hei.\nsegments: [{blank_id: b, options: [Hei, Hallo], answer_index: 2}]",
+    ],
+    ids=["choose-without-answer", "unknown-match-reference", "recall-index-out-of-range"],
+)
+def test_audit_source_text_given_malformed_exercise_structure_expect_blocking_source_invalid(payload: str):
+    source = "- handle: malformed\n  objective: obj\n  bloom: remember\n  prompt_md: Select the answer.\n"
+    source += "\n".join("  " + line for line in payload.splitlines())
+
+    audit = audit_source_text(source)
+
+    assert audit.status == "invalid"
+    assert any(
+        finding.code == "exercise-source-invalid" and finding.severity == "blocking" for finding in audit.findings
     )
-    for index, (prompt, target, expected_code) in enumerate(cases):
-        case_root = tmp_path / ("speak-" + str(index))
-        case_root.mkdir()
-        source = _copy_fixture(case_root)
-        (source / "lesson.md").write_text(
-            (source / "lesson.md").read_text(encoding="utf-8") + "\n{{exercise: speak-case}}\n",
-            encoding="utf-8",
-        )
-        (source / "exercises.yaml").write_text(
-            (source / "exercises.yaml").read_text(encoding="utf-8")
-            + f"""
-- handle: speak-case
-  op: speak
-  objective: obj-question-order
-  bloom: apply
-  prompt_md: "{prompt}"
-  target: "{target}"
-""",
-            encoding="utf-8",
-        )
-
-        audit = audit_source_directory(source)
-
-        assert expected_code in {finding.code for finding in audit.findings}
 
 
 def _copy_fixture(tmp_path: Path, fixture_root: Path = K_CATALOG_PACKAGE_FIXTURE_ROOT) -> Path:

@@ -10,9 +10,97 @@ import yaml
 
 from lesson_builder.application.operations.check_lesson_data import WorkspaceCheckCounts
 from lesson_builder.application.operations.check_lesson_data import check_workspace
+from lesson_builder.application.operations.validate_distribution import validate_committed_distribution
+from lesson_builder.application.operations.workbench_curriculum import read_curriculum
+from lesson_builder.domain.curriculum.services.plan_policy import hash_catalog_content
 from tests.workspace.builders import K_LESSON_ID
+from tests.workspace.builders import K_PREREQUISITE_LESSON_ID
+from tests.workspace.builders import assemble_prerequisite_order_workspace
 from tests.workspace.builders import assemble_valid_workspace
 from tests.workspace.builders import workspace_snapshot
+from tests.workspace.builders import write_curriculum_plan
+
+
+@pytest.mark.parametrize("valid_draft", [True, False])
+def test_check_workspace_given_draft_only_curriculum_slot_expect_draft_checked_and_canonical_distribution_preserved(
+    tmp_path: Path, valid_draft: bool
+) -> None:
+    draft = _assemble_draft_only_workspace(tmp_path)
+    if not valid_draft:
+        (draft / "exercises.yaml").write_text("invalid: [")
+    before = workspace_snapshot(tmp_path)
+    report = check_workspace(tmp_path)
+    assert report.status == ("valid" if valid_draft else "invalid")
+    source = next(item for item in report.checks if item.check_id == "lesson_source")
+    assert source.status == ("passed" if valid_draft else "failed")
+    assert workspace_snapshot(tmp_path) == before
+    with pytest.raises(ValueError, match="planned lessons without a complete source package"):
+        validate_committed_distribution(tmp_path)
+
+
+@pytest.mark.parametrize("invalid_id", ["new_lesson", "../unsafe"])
+def test_check_workspace_given_duplicate_or_unsafe_draft_slot_expect_invalid_curriculum(
+    tmp_path: Path, invalid_id: str
+) -> None:
+    _assemble_draft_only_workspace(tmp_path)
+    catalog_path = tmp_path / "content/catalog/approved/catalog.yaml"
+    catalog = yaml.safe_load(catalog_path.read_text())
+    if invalid_id != "new_lesson":
+        catalog["entries"][1]["id"] = invalid_id
+        catalog_path.write_text(yaml.safe_dump(catalog))
+    plan = read_curriculum(tmp_path)
+    plan.slots.insert(0, plan.slots[0].model_copy(update={"catalog_id": invalid_id}))
+    for index, slot in enumerate(plan.slots):
+        slot.sequence_index = index
+    plan.source_catalog_hash = hash_catalog_content(catalog)
+    write_curriculum_plan(tmp_path, plan)
+
+    report = check_workspace(tmp_path)
+
+    assert report.status == "invalid"
+    assert next(item for item in report.checks if item.check_id == "curriculum_plan").status == "failed"
+
+
+@pytest.mark.parametrize("invalid_source", ["renamed_symlink", "nested_symlink", "root_symlink", "conflicting_plan"])
+def test_check_workspace_given_draft_identity_or_containment_violation_expect_failed_source(
+    tmp_path: Path, invalid_source: str
+) -> None:
+    draft = _assemble_draft_only_workspace(tmp_path)
+    if invalid_source == "root_symlink":
+        (tmp_path / "drafts").rename(tmp_path / "external")
+        (tmp_path / "drafts").symlink_to(tmp_path / "external", target_is_directory=True)
+    elif invalid_source == "conflicting_plan":
+        plan_path = draft / "plan.md"
+        plan_path.write_text(
+            plan_path.read_text().replace("lesson_id: new_lesson", "catalog_id: new_lesson\nlesson_id: old_id")
+        )
+    else:
+        target = draft.parent / ("nested/other" if invalid_source == "nested_symlink" else "other")
+        target.parent.mkdir(parents=True, exist_ok=True)
+        draft.rename(target)
+        for name in ("plan.md", "lesson.md", "exercises.yaml"):
+            path = target / name
+            path.write_text(path.read_text().replace("new_lesson", "other"))
+        draft.symlink_to(target, target_is_directory=True)
+
+    report = check_workspace(tmp_path)
+
+    assert report.status == "invalid"
+    source = next(item for item in report.checks if item.check_id == "lesson_source")
+    assert source.status == "failed"
+    assert any("identity" in issue.message or "symlink" in issue.message for issue in source.issues)
+
+
+def test_check_workspace_given_readable_symlink_curriculum_plan_expect_structured_valid_report(tmp_path: Path) -> None:
+    assemble_valid_workspace(tmp_path)
+    plan_path = tmp_path / "content/curriculum/plan.yaml"
+    target = tmp_path / "saved-plan.yaml"
+    plan_path.rename(target)
+    plan_path.symlink_to(target)
+
+    report = check_workspace(tmp_path)
+
+    assert report.status == "valid"
 
 
 def test_check_workspace_given_complete_workspace_expect_six_passed_checks_and_no_writes(tmp_path: Path) -> None:
@@ -328,3 +416,56 @@ def test_check_workspace_given_unexpected_runtime_error_expect_incomplete_report
     assert by_id["distribution"].status == "skipped"
     assert "character_registry" in by_id["distribution"].blocked_by
     assert report.counts == WorkspaceCheckCounts(passed=4, failed=0, skipped=1, error=1)
+
+
+def test_check_workspace_given_lesson_precedes_planned_prerequisite_expect_curriculum_plan_failed(
+    tmp_path: Path,
+) -> None:
+    assemble_prerequisite_order_workspace(tmp_path, prerequisite_first=False)
+
+    report = check_workspace(tmp_path)
+
+    assert report.status == "invalid"
+    by_id = {result.check_id: result for result in report.checks}
+    curriculum = by_id["curriculum_plan"]
+    assert curriculum.status == "failed"
+    assert curriculum.summary.startswith("committed curriculum plan orders")
+    issue = curriculum.issues[0]
+    assert issue.code == "curriculum.prerequisite_order"
+    assert issue.message.startswith(f"{K_LESSON_ID}: ")
+    assert K_PREREQUISITE_LESSON_ID in issue.message
+    assert issue.paths == ("content/curriculum/plan.yaml",)
+    assert issue.remedy.action == "edit_authored_data"
+    assert issue.remedy.requires_human_decision is True
+    assert by_id["lesson_source"].status == "passed"
+    assert by_id["distribution"].status == "skipped"
+    assert by_id["distribution"].blocked_by == ("curriculum_plan",)
+
+
+def test_check_workspace_given_prerequisite_precedes_dependent_expect_valid_report(tmp_path: Path) -> None:
+    assemble_prerequisite_order_workspace(tmp_path, prerequisite_first=True)
+
+    report = check_workspace(tmp_path)
+
+    assert report.status == "valid"
+    assert all(result.status == "passed" for result in report.checks)
+
+
+def _assemble_draft_only_workspace(tmp_path: Path) -> Path:
+    assemble_valid_workspace(tmp_path)
+    catalog_path = tmp_path / "content/catalog/approved/catalog.yaml"
+    catalog = yaml.safe_load(catalog_path.read_text())
+    catalog["entries"].append(catalog["entries"][0] | {"id": "new_lesson"})
+    catalog_path.write_text(yaml.safe_dump(catalog))
+    plan = read_curriculum(tmp_path)
+    slot = plan.slots[0].model_copy(update={"catalog_id": "new_lesson", "sequence_index": 0})
+    plan.slots[0].sequence_index = 1
+    plan.slots.insert(0, slot)
+    plan.source_catalog_hash = hash_catalog_content(catalog)
+    write_curriculum_plan(tmp_path, plan)
+    draft = tmp_path / "drafts/new_lesson"
+    shutil.copytree(tmp_path / "content/lessons" / K_LESSON_ID, draft)
+    for name in ("plan.md", "lesson.md", "exercises.yaml"):
+        path = draft / name
+        path.write_text(path.read_text().replace(K_LESSON_ID, "new_lesson"))
+    return draft

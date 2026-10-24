@@ -1,10 +1,10 @@
-"""Entry point: ``review_standalone_exercises`` gates self-contained exercises.
+"""Entry point: ``review_standalone_exercises`` reports and checks standalone exercises.
 
 The standalone-quality boundary receives the exact compiled learner-visible
 exercise projection with no ``derived_from`` section context and no other
 hidden lesson material. A deterministic unresolved-reference scan and a
 configured model reviewer both judge whether each exercise, for every
-operation including open ``write``/``speak`` tasks, is understandable and
+operation including open ``write`` tasks, is understandable and
 performable from its own payload. Deterministic diagnostics supplement the
 semantic review; neither replaces the human artifact boundary.
 """
@@ -21,8 +21,8 @@ from pydantic import Field
 
 from lesson_builder.clients.llm.exceptions import LlmException
 from lesson_builder.clients.llm.exceptions import LlmParseException
-from lesson_builder.domain.lesson.models.reviewer import ReviewerAgent
-from lesson_builder.domain.lesson.validation.review_payloads import extract_attempt_questions
+from lesson_builder.domain.lesson.models.review_contracts import ReviewerAgent
+from lesson_builder.domain.lesson.services.review_projection import extract_attempt_questions
 from lesson_builder.domain.lesson.validation.standalone_references import scan_unresolved_references
 
 K_STANDALONE_REVIEW_PASS = "pass"
@@ -39,6 +39,9 @@ class StandaloneItemReview(BaseModel):
     id: str
     verdict: Literal["standalone", "context_dependent"]
     reason: str = ""
+    evidence: str = ""
+    quote_english: str = ""
+    suggested_change: str = ""
 
 
 class StandaloneExerciseReview(BaseModel):
@@ -69,9 +72,11 @@ def review_standalone_exercises(
 
     The deterministic unresolved-reference scan runs first and its findings
     stand on their own. The model reviewer then receives the same exact
-    payload with no lesson context and returns one verdict per exercise. Any
+    payload without lesson teaching context, plus advisory owner decisions when supplied,
+    and returns one verdict per exercise. Any
     context-dependent verdict or deterministic finding yields
-    ``needs_human``; a reviewer outage is never a pass in strict mode.
+    ``needs_human``. Context-dependent model judgments are advisory, while a
+    deterministic unresolved reference remains blocking.
     """
     payload = project_standalone_review_payload(lesson)
     diagnostics = collect_deterministic_standalone_findings(payload)
@@ -86,7 +91,9 @@ def review_standalone_exercises(
         _raise_if_strict(report, strict)
         return report
     try:
-        review = reviewer_agent.structured(StandaloneExerciseReview).invoke(build_standalone_review_prompt(payload))
+        review = reviewer_agent.structured(StandaloneExerciseReview).invoke(
+            build_standalone_review_prompt(payload) + lesson.get("owner_decisions", "")
+        )
         model_handles = _validate_and_collect_context_dependent_handles(review, [item["id"] for item in payload])
     except LlmParseException as exc:
         invalid = dict(report)
@@ -102,9 +109,7 @@ def review_standalone_exercises(
         return unavailable
     report["context_dependent"] = model_handles
     report["standalone_review"] = [item.model_dump(mode="json") for item in review.results]
-    report["status"] = (
-        K_STANDALONE_REVIEW_NEEDS_HUMAN if model_handles or diagnostic_handles else K_STANDALONE_REVIEW_PASS
-    )
+    report["status"] = K_STANDALONE_REVIEW_NEEDS_HUMAN if diagnostic_handles else K_STANDALONE_REVIEW_PASS
     _raise_if_strict(report, strict)
     return report
 
@@ -113,7 +118,7 @@ def project_standalone_review_payload(lesson: dict[str, Any]) -> list[dict[str, 
     """Project the exact learner-visible payload without any lesson context.
 
     The attempt projection deliberately omits answer assignments, feedback,
-    open-response rubrics, and hidden speak targets. The reviewer sees exactly
+    and open-response rubrics. The reviewer sees exactly
     what a learner sees for the exercise itself and nothing from neighboring
     lesson sections or internal provenance.
     """
@@ -135,7 +140,7 @@ def collect_deterministic_standalone_findings(payload: list[dict[str, Any]]) -> 
 
 
 def build_standalone_review_prompt(payload: list[dict[str, Any]]) -> str:
-    """Ask the reviewer to judge each payload with no lesson context attached."""
+    """Judge each payload without teaching context, appending advisory owner decisions."""
     return (
         "You are the standalone exercise-quality reviewer for a Norwegian lesson "
         "package. Each exercise below is the exact learner-visible payload a "
@@ -147,12 +152,13 @@ def build_standalone_review_prompt(payload: list[dict[str, Any]]) -> str:
         "payload alone. Every fact, item, phrase, or situation the task needs must "
         "be restated in the payload itself; document position or an earlier "
         "section is not runtime context. Return one {id, verdict, reason} object "
-        "per exercise in the results array, preserving ids exactly. Use verdict=standalone when the "
+        "per exercise in the results array, preserving ids exactly. Include exact Norwegian evidence when available, "
+        "quote_english as its English gloss, and a specific suggested_change. Use verdict=standalone when the "
         "payload names the complete task locally; use verdict=context_dependent "
         "when the payload refers to a dialogue, turn, checkpoint, section, or "
         "items that are not restated in the payload. For context_dependent "
-        "items, name the missing reference in the reason. Judge open write and "
-        "speak tasks by the same rule: their learner-visible prompt must carry the "
+        "items, name the missing reference in the reason. Judge open write tasks "
+        "by the same rule: their learner-visible prompt must carry the "
         "complete task. Personal details explicitly left for the learner to choose are not "
         "missing context; open tasks need a clear action, not one predetermined utterance. "
         "Do not judge answer correctness, naturalness, or "

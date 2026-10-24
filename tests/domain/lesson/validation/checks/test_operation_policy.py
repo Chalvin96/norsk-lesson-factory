@@ -17,37 +17,6 @@ def _exercise(operation: str, *, bloom: str = "apply", objective: str = "obj-1")
     }
 
 
-def test_operation_policy_check_given_grammar_speak_only_expect_evidence_blocker():
-    results = operation_policy_check(
-        _lesson(_exercise("speak")),
-        content_kind="grammar",
-    )
-
-    assert {result.check_id for result in results} == {"objective_evidence"}
-    assert all(result.is_blocking for result in results)
-
-
-def test_operation_policy_check_given_pronunciation_speak_at_apply_expect_no_results():
-    assert (
-        operation_policy_check(
-            _lesson(_exercise("speak")),
-            content_kind="pronunciation",
-        )
-        == []
-    )
-
-
-def test_operation_policy_check_given_speak_at_understand_expect_bloom_blocker():
-    results = operation_policy_check(
-        _lesson(_exercise("speak", bloom="understand")),
-        content_kind="pronunciation",
-    )
-
-    match = [result for result in results if result.check_id == "operation_bloom"]
-    assert len(match) == 1
-    assert match[0].is_blocking
-
-
 def test_operation_policy_check_given_grammar_oracle_exercise_expect_objective_evidence_satisfied():
     assert (
         operation_policy_check(
@@ -75,16 +44,6 @@ def test_operation_policy_check_given_grammar_write_exercise_expect_evidence_blo
     )
 
     assert {result.check_id for result in results} == {"objective_evidence"}
-
-
-def test_operation_policy_check_given_grammar_speak_and_oracle_expect_no_kind_blocker():
-    assert (
-        operation_policy_check(
-            _lesson(_exercise("speak"), _exercise("build")),
-            content_kind="grammar",
-        )
-        == []
-    )
 
 
 def test_operation_policy_check_given_named_two_speaker_dialogue_expect_no_dialogue_blocker():

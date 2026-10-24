@@ -14,7 +14,7 @@ from collections import Counter
 from typing import Any
 
 from lesson_builder.domain.lesson.models.checks import CheckResult
-from lesson_builder.domain.lesson.validation.review_payloads import build_expected_answers
+from lesson_builder.domain.lesson.services.review_projection import build_expected_answers
 
 
 def answer_valid_check(

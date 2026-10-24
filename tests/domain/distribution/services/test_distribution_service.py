@@ -9,9 +9,35 @@ import pytest
 
 from lesson_builder.application.operations.export_distribution import create_lesson_packet_from_source
 from lesson_builder.application.operations.export_distribution import export_distribution
-from lesson_builder.cli import main
+from lesson_builder.application.operations.validate_distribution import validate_committed_distribution
 from lesson_builder.domain.lesson.models.export import ExportedLesson
 from tests.paths import K_CATALOG_PACKAGE_FIXTURE_ROOT
+
+
+@pytest.mark.parametrize("kind", ["grammar", "phraseology", "communicative"])
+def test_export_distribution_given_authored_kind_expect_packet_and_schema_preserve_kind(tmp_path: Path, kind: str):
+    package = _copy_fixture(tmp_path)
+    plan_path = package / "plan.md"
+    plan_path.write_text(
+        plan_path.read_text(encoding="utf-8").replace("kind: grammar\n", f"kind: {kind}\n"),
+        encoding="utf-8",
+    )
+    if kind == "communicative":
+        lesson_path = package / "lesson.md"
+        lesson_path.write_text(
+            lesson_path.read_text(encoding="utf-8")
+            + '\n::: {.reading translation="Hi!" dialogue_id=greeting speaker_id=lea speaker_name="Lea"}\nHei!\n:::\n'
+            + '\n::: {.reading translation="Hi!" dialogue_id=greeting speaker_id=jonas speaker_name="Jonas"}\nHei!\n:::\n',
+            encoding="utf-8",
+        )
+
+    export_distribution(tmp_path)
+
+    packet = json.loads((tmp_path / "dist/lessons/question_word_order.json").read_text(encoding="utf-8"))
+    schema = json.loads((tmp_path / "dist/schema/lesson.schema.json").read_text(encoding="utf-8"))
+    assert packet["kind"] == kind
+    assert kind in schema["properties"]["kind"]["enum"]
+    assert "kind" in schema["required"]
 
 
 def test_create_lesson_packet_from_source_given_source_package_expect_lean_packet(tmp_path: Path):
@@ -163,12 +189,12 @@ def test_export_distribution_given_existing_audio_distribution_expect_explicit_e
         export_distribution(tmp_path)
 
 
-def test_validate_distribution_command_given_current_complete_distribution_expect_success(tmp_path: Path, capsys):
+def test_validate_committed_distribution_given_current_complete_distribution_expect_success(tmp_path: Path):
     _copy_fixture(tmp_path)
     export_distribution(tmp_path)
 
-    assert main(["validate-distribution", "--repo-root", str(tmp_path)]) == 0
-    output = json.loads(capsys.readouterr().out)
+    output = validate_committed_distribution(tmp_path)
+
     assert output["lesson_count"] == 1
 
 

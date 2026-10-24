@@ -6,9 +6,8 @@ construct the typed lesson, and run deterministic lesson gates. Strict callers
 raise on any blocking finding; collecting callers retain findings and readable
 source for inspection tools.
 
-`compile_lesson_package` serves filesystem-backed strict callers,
-`collect_lesson_package` serves author inspection, and
-`compile_lesson_source_snapshot` serves `prepare_source_package` after capture.
+`compile_lesson_package` serves filesystem-backed strict callers, and
+`collect_lesson_package` serves author inspection.
 """
 
 from __future__ import annotations
@@ -110,26 +109,6 @@ def collect_lesson_package(
             errors=(*read_errors, *result.errors),
             source_digest=result.source_digest,
         )
-    return result
-
-
-def compile_lesson_source_snapshot(
-    source: AuthoredSourceSnapshot,
-    *,
-    source_dir: Path,
-    terminology_bans: TerminologyBans | None = None,
-) -> LessonPackageCompilation:
-    """Strictly compile an already captured source snapshot.
-
-    ``prepare_source_package`` uses this entry point after capturing source
-    bytes, so generation shares the canonical compiler without rereading them.
-    """
-    result = _collect_source_snapshot(
-        source,
-        terminology_bans=terminology_bans,
-        source_dir=Path(source_dir),
-    )
-    _require_compilation_pass(result)
     return result
 
 
@@ -343,7 +322,6 @@ __all__ = [
     "LessonPackageCompilation",
     "collect_lesson_package",
     "compile_lesson_package",
-    "compile_lesson_source_snapshot",
     "digest_authored_source",
     "load_authored_source_snapshot",
 ]

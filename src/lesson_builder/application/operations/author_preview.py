@@ -1,4 +1,4 @@
-"""Entry point: `build_author_preview` assembles a read-only lesson preview."""
+"""Entry point: `build_package_preview` supplies a checked lesson view to the workbench."""
 
 from __future__ import annotations
 
@@ -9,14 +9,14 @@ from typing import Any
 import yaml
 
 from lesson_builder.application.operations.compile_lesson_package import collect_lesson_package
+from lesson_builder.application.operations.export_distribution import require_plan_kind
 from lesson_builder.application.operations.load_characters import load_optional_character_registry
 from lesson_builder.domain.distribution.services.distribution_service import DistributionService
-from lesson_builder.workspace.paths import WorkspacePaths
 
 
 @dataclass(frozen=True)
 class AuthorPreview:
-    """All provider-free data needed by the local preview renderer."""
+    """Provider-free source and packet data shown in the workbench."""
 
     lesson_id: str
     source_label: str
@@ -29,10 +29,8 @@ class AuthorPreview:
     errors: tuple[str, ...]
 
 
-def build_author_preview(repo_root: Path, lesson_ref: str) -> AuthorPreview:
-    """Load, audit, and project one authored lesson without providers or writes."""
-    root = Path(repo_root).resolve()
-    package = _resolve_package(root, lesson_ref)
+def build_package_preview(package: Path, *, source_label: str) -> AuthorPreview:
+    """Audit and project one workbench lesson package without providers or writes."""
     lesson_source = _read_text(package / "lesson.md")
     exercise_source = _read_text(package / "exercises.yaml")
     plan_source = _read_text(package / "plan.md")
@@ -61,7 +59,7 @@ def build_author_preview(repo_root: Path, lesson_ref: str) -> AuthorPreview:
                 character_registry = load_optional_character_registry(package)
                 packet = DistributionService().create_lesson_packet(
                     compiled.lesson,
-                    kind=plan.get("kind"),
+                    kind=require_plan_kind(plan, plan_label="plan.md"),
                     character_registry=character_registry,
                     allow_unregistered_characters=character_registry is None,
                 )
@@ -73,7 +71,7 @@ def build_author_preview(repo_root: Path, lesson_ref: str) -> AuthorPreview:
         lesson_id = str(lesson.get("key", lesson_id))
     return AuthorPreview(
         lesson_id=lesson_id,
-        source_label=package.relative_to(root).as_posix(),
+        source_label=source_label,
         lesson_source=lesson_source,
         exercise_source=exercise_source,
         plan_source=plan_source,
@@ -84,28 +82,6 @@ def build_author_preview(repo_root: Path, lesson_ref: str) -> AuthorPreview:
     )
 
 
-def _resolve_package(root: Path, lesson_ref: str) -> Path:
-    """Resolve only a lesson id or repository-relative content lesson path."""
-    raw = Path(lesson_ref)
-    if raw.is_absolute() or not lesson_ref.strip():
-        raise ValueError("lesson must be an id or a path under content/lessons")
-    if raw.parts[:2] == ("content", "lessons"):
-        candidate = root.joinpath(*raw.parts)
-    else:
-        candidate = WorkspacePaths(root).lessons_root.joinpath(*raw.parts)
-    lessons_root = WorkspacePaths(root).lessons_root.resolve()
-    resolved = candidate.resolve()
-    if resolved != lessons_root and lessons_root not in resolved.parents:
-        raise ValueError("lesson must resolve under content/lessons")
-    if not resolved.is_dir():
-        raise ValueError(f"lesson package not found: {raw.as_posix()}")
-    for filename in ("lesson.md", "exercises.yaml", "plan.md"):
-        source_path = (resolved / filename).resolve()
-        if lessons_root not in source_path.parents or not source_path.is_file():
-            raise ValueError(f"lesson package is missing {filename}")
-    return resolved
-
-
 def _read_text(path: Path) -> str:
     """Read a source file for the source view with a bounded failure value."""
     try:
@@ -114,4 +90,4 @@ def _read_text(path: Path) -> str:
         return f"[Unable to read {path.name}: {exc}]"
 
 
-__all__ = ["AuthorPreview", "build_author_preview"]
+__all__ = ["AuthorPreview", "build_package_preview"]

@@ -26,8 +26,8 @@ def test_run_audit_given_unreachable_module_and_test_used_symbol_expect_grouped_
 
     report = run_audit(
         tmp_path,
-        production_roots=("app.main",),
-        production_paths=("src",),
+        reachability_roots=("app.main",),
+        scan_paths=("src",),
         test_paths=("tests",),
         reference_globs=("README.md",),
         run_vulture=fake_vulture,
@@ -51,8 +51,8 @@ def test_run_audit_given_documented_unreachable_empty_package_expect_unreachable
 
     report = run_audit(
         tmp_path,
-        production_roots=("app.main",),
-        production_paths=("src",),
+        reachability_roots=("app.main",),
+        scan_paths=("src",),
         test_paths=(),
         reference_globs=("README.md",),
         run_vulture=lambda _paths, _min_confidence: "",
@@ -78,8 +78,8 @@ def test_run_audit_given_same_name_framework_candidate_in_other_file_expect_unus
 
     report = run_audit(
         tmp_path,
-        production_roots=("app.main",),
-        production_paths=("src",),
+        reachability_roots=("app.main",),
+        scan_paths=("src",),
         test_paths=(),
         reference_globs=(),
         run_vulture=lambda _paths, _min_confidence: candidate,
@@ -100,8 +100,8 @@ def test_run_audit_given_ordinary_annotated_class_candidate_expect_unused_symbol
 
     report = run_audit(
         tmp_path,
-        production_roots=("app.main",),
-        production_paths=("src",),
+        reachability_roots=("app.main",),
+        scan_paths=("src",),
         test_paths=(),
         reference_globs=(),
         run_vulture=lambda _paths, _min_confidence: candidate,

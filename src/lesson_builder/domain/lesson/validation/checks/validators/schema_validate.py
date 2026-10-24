@@ -13,6 +13,7 @@ from pydantic import ValidationError
 from lesson_builder.domain.lesson.models import ExportedLesson
 from lesson_builder.domain.lesson.models import Lesson
 from lesson_builder.domain.lesson.models.checks import CheckResult
+from lesson_builder.domain.lesson.settings import K_LESSON_SCHEMA_VERSION
 from lesson_builder.domain.lesson.validation.export_serializer import to_export_dict
 
 
@@ -28,7 +29,7 @@ def schema_validate(data: dict[str, Any]) -> list[CheckResult]:
                 check_id="schema_validate",
                 severity="blocker",
                 message=f"lesson schema/export validation failed: {e}",
-                fix_hint="Repair the internal Lesson shape so it validates and projects through ExportedLesson 4.0.",
+                fix_hint=f"Repair the internal Lesson shape so it validates and projects through ExportedLesson {K_LESSON_SCHEMA_VERSION}.",
             )
         ]
     return []

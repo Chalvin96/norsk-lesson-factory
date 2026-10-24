@@ -7,7 +7,6 @@ from typing import Literal
 from pydantic import BaseModel
 from pydantic import ConfigDict
 from pydantic import Field
-from pydantic import model_validator
 
 QualityAxis = Literal[
     "observable_decision",
@@ -24,8 +23,8 @@ QualityAxis = Literal[
     "collocational_boundary",
     "non_interchangeability",
     "perception_accuracy",
-    "articulation_cue",
-    "contrast_to_utterance",
+    "sound_spelling_link",
+    "contrast_in_context",
     "speech_act_purpose",
     "turn_choice_consequence",
     "repair_and_transfer",
@@ -33,7 +32,7 @@ QualityAxis = Literal[
     "organization_language_choices",
     "revision_guidance",
 ]
-QualitySeverity = Literal["blocking", "major", "minor"]
+QualitySeverity = Literal["major", "minor"]
 QualityFindingCode = Literal[
     "incorrect_claim",
     "unsupported_claim",
@@ -50,21 +49,10 @@ QualityFindingCode = Literal[
     "copy_issue",
 ]
 QualityArtifact = Literal["brief.yaml", "lesson.md", "exercises.yaml"]
-K_QUALITY_REVIEW_BLOCKING_CODES: tuple[str, ...] = (
-    "incorrect_claim",
-    "unsupported_claim",
-    "unnatural_bokmal",
-    "meaning_changing_translation",
-    "accepted_form_marked_wrong",
-    "ambiguous_answer_key",
-    "target_loss",
-    "prerequisite_scope_breach",
-    "compiler_failure",
-)
 
 
 class QualityAxisScore(BaseModel):
-    """One complete 0–2 rubric judgment tied to supplied evidence."""
+    """One complete 0–2 rubric judgment with an explanatory rationale."""
 
     model_config = ConfigDict(extra="forbid")
 
@@ -74,7 +62,7 @@ class QualityAxisScore(BaseModel):
 
 
 class QualityFinding(BaseModel):
-    """One exact defect and bounded source repair instruction."""
+    """One source-grounded, unverified advisory concern for author inspection."""
 
     model_config = ConfigDict(extra="forbid")
 
@@ -83,34 +71,26 @@ class QualityFinding(BaseModel):
     artifact: QualityArtifact
     location: str = Field(min_length=1)
     evidence: str = Field(min_length=1)
-    repair_instruction: str = Field(min_length=1)
-
-    @model_validator(mode="after")
-    def _require_blocking_code_severity(self) -> QualityFinding:
-        if self.code in K_QUALITY_REVIEW_BLOCKING_CODES and self.severity != "blocking":
-            raise ValueError(f"quality finding {self.code!r} must use blocking severity")
-        return self
+    rationale: str = Field(min_length=1)
 
 
 class LessonQualityReview(BaseModel):
-    """Strict independent judgment of the exact brief, lesson, and exercises."""
+    """Advisory judgment of the exact brief, lesson, and exercises."""
 
     model_config = ConfigDict(extra="forbid")
 
-    verdict: Literal["pass", "needs_repair"]
     summary: str = Field(min_length=1)
     scores: list[QualityAxisScore] = Field(min_length=1)
     findings: list[QualityFinding] = Field(default_factory=list)
 
 
 class QualityReviewValidation(BaseModel):
-    """Deterministic rubric completeness and pass-rule result."""
+    """Deterministic rubric completeness result."""
 
     model_config = ConfigDict(extra="forbid")
 
     status: Literal["valid", "invalid"]
     total_score: int = Field(ge=0, le=20)
-    expected_verdict: Literal["pass", "needs_repair"]
     errors: list[str] = Field(default_factory=list)
 
 
@@ -126,13 +106,12 @@ PreservationCategory = Literal[
 
 
 class PreservationFinding(BaseModel):
-    """One reviewed teaching unit lost or semantically changed by normalization."""
+    """One possible teaching-unit loss reported as an unverified suggestion."""
 
     model_config = ConfigDict(extra="forbid")
 
     category: PreservationCategory
-    evidence: str = Field(min_length=1)
-    repair_instruction: str = Field(min_length=1)
+    rationale: str = Field(min_length=1)
 
 
 class NormalizationPreservationReview(BaseModel):
@@ -145,17 +124,8 @@ class NormalizationPreservationReview(BaseModel):
 
     model_config = ConfigDict(extra="forbid")
 
-    verdict: Literal["pass", "needs_repair"]
     summary: str = Field(min_length=1)
     findings: list[PreservationFinding] = Field(default_factory=list)
-
-    @model_validator(mode="after")
-    def _verdict_matches_findings(self) -> NormalizationPreservationReview:
-        if self.verdict == "pass" and self.findings:
-            raise ValueError("a passing preservation review cannot contain findings")
-        if self.verdict == "needs_repair" and not self.findings:
-            raise ValueError("needs_repair preservation review must report a finding")
-        return self
 
 
 __all__ = [
@@ -167,7 +137,6 @@ __all__ = [
     "QualityFinding",
     "QualityReviewValidation",
     # Review vocabulary and model-local policy.
-    "K_QUALITY_REVIEW_BLOCKING_CODES",
     "PreservationCategory",
     "QualityArtifact",
     "QualityAxis",

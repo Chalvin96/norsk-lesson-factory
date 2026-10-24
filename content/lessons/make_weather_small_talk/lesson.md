@@ -73,8 +73,8 @@ A weather opening usually comments on something both people can see or feel. Nor
 - en: The weather is nice today.
 - no: Det er varmt ute.
 - en: It is warm outside.
-- no: Det er kaldt i morges.
-- en: It is cold this morning.
+- no: Det er kaldt nå.
+- en: It is cold now.
 - no: Det er grått i dag.
 - en: It is grey today.
 :::
@@ -92,7 +92,7 @@ You can also open by saying what the weather is doing.
 - en: The sun is finally shining.
 :::
 
-Words such as i dag, i morges, and endelig make the opening feel connected to the immediate situation.
+Words such as i dag, nå, and endelig make the opening feel connected to the immediate situation.
 
 ::: examples
 - no: Det er kjølig i dag.

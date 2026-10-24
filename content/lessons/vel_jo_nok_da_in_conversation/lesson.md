@@ -106,7 +106,7 @@ Now the four words, one stance at a time.
 
 ## jo — Claiming Common Ground {#jo-claiming-common-ground role=model objectives=obj-vel-jo-nok-da-in-conversation-01}
 
-*jo* marks a claim as shared property. The speaker is not giving news; the speaker is reminding the listener of something both of them know, or pointing at evidence sitting right in front of both of them. The English cousins are *you know* and *after all*. When Ingrid says the cabin plan with *jo*, she is not informing Magnus of the plan he made with her — she is invoking it.
+*jo* presents a claim as shared, obvious, or readily acceptable background. The speaker may remind the listener of something they both know, point to visible evidence, or introduce a fact the listener has not heard before while treating it as something they can accept. The English cousins are *you know* and *after all*. When Ingrid says the cabin plan with *jo*, she is not informing Magnus of the plan he made with her — she is invoking it.
 
 ::: examples
 - no: Du har jo vært her før. Du kan vise veien.
@@ -126,9 +126,9 @@ Feel the difference a silent swap makes:
 - en: The shop closes at eight, you know.
 :::
 
-The first line is information, fine for someone who asked. The second line is a reminder — the natural thing to say to a friend who is wandering toward the shops at ten to eight. Same fact, different social move.
+The first line is information, fine for someone who asked. The second line presents the closing time as background the listener can accept. For a friend heading toward the shops at ten to eight, it can be a reminder or an explanation of why they need to hurry, whether or not they knew the closing time. Same fact, different social move.
 
-Two cautions. First, *jo* on genuinely new information misfires: if the listener could not possibly know it, *jo* sounds like you are assuming knowledge they do not have, and they will push back. Save *jo* for shared ground. Second, *jo* is not the reply word *of course!*; it lives inside sentences. Answers and reactions use words like *selvfølgelig* and *gjerne*.
+Two cautions. First, *jo* presents information as taken for granted; it does not establish that the listener already knew it. New information can work with *jo* when it is offered as readily acceptable background. Depending on context and tone, this stance can also sound presumptuous or invite a correction. Second, *jo* is not the reply word *of course!*; it lives inside sentences. Answers and reactions use words like *selvfølgelig* and *gjerne*.
 
 You actually know one *jo* already: the *jo* that answers a negative question. It is a close relative.
 
@@ -139,7 +139,7 @@ You actually know one *jo* already: the *jo* that answers a negative question. I
 - en: Yes, I am coming. I just had to find my jacket.
 :::
 
-Both uses share one core: pushing against an assumption. In answers, the assumption is the negative question; inside statements, it is the pretense that the claim is news.
+Answering *jo* contradicts a negative question or statement. Inside statements, the particle *jo* presents a claim as taken for granted and can also counter an assumption. The listener need not already know the claim.
 
 {{exercise: interpret_jo_shared_ground_in_lines}}
 
@@ -306,7 +306,7 @@ Is the claim presented as likely? — often *nok*. Does the turn respond to or s
 what follows? — conversational *da*. More than one wording may be possible, so use
 the whole exchange and its intonation.
 
-Resist translating tags word for word. English *you know* can be *jo* when the knowledge is shared, but it is only a filler when it is not. English *right?* can be *vel* when you truly wonder, or a pressing *jo* when you expect a nod. And *of course* is *jo* inside a sentence but *selvfølgelig* as a reply. The stance decides, not the English phrase.
+Resist translating tags word for word. English *you know* can be *jo* when the speaker presents the claim as shared or readily acceptable background; as a pure filler it has no *jo* equivalent. English *right?* can be *vel* when you truly wonder, or a pressing *jo* when you expect a nod. And *of course* is *jo* inside a sentence but *selvfølgelig* as a reply. The stance decides, not the English phrase.
 
 You will also hear the particles stacked, and that is not a mistake. In *Vi tar vel toget, da?* the speaker is both unsure (*vel*) and ready to settle (*da*) — agreeing with a sigh. These uses are especially common in conversation and informal writing; genre and voice determine whether they fit more formal prose.
 
@@ -356,7 +356,7 @@ Godt. Det blir nok travelt på veien likevel, så vi bør komme oss av gårde ti
 Bra, da! Da går jeg ut og pakker.
 :::
 
-Read this exchange a second time and you can hear everything from this chapter working. Magnus opens with *jo* on something Ingrid does not actually know, and her *Gjør den? Det visste jeg ikke* is the small friction that follows: *jo* claimed common ground that was not there, and he has to repair it with a plain statement. Ingrid's *Da reiser vi rett etter lunsj, da* holds both *da*s at once — the linker in first position, the settling particle at the end, a completely normal Norwegian construction. Her *Mamma har vel ikke så mye mat der oppe?* floats a worry for Magnus to confirm, which he does with the answering *Jo* — pushing back her negative expectation — before adding the particle *jo* on the shopping they both remember. And *Det blir nok travelt* is her own forecast, offered to no one for confirmation.
+Read this exchange a second time and you can hear everything from this chapter working. Magnus presents the road opening as background with *jo*, although Ingrid does not actually know it. Her *Gjør den? Det visste jeg ikke* can simply register new information or, depending on tone and context, question his assumption that it could be taken for granted. His next turn supplies the source. No repair is required merely because the information is new. Ingrid's *Da reiser vi rett etter lunsj, da* holds both *da*s at once — the linker in first position, the settling particle at the end, a completely normal Norwegian construction. Her *Mamma har vel ikke så mye mat der oppe?* floats a worry for Magnus to confirm, which he does with the answering *Jo* — pushing back her negative expectation — before adding the particle *jo* on the shopping they both remember. And *Det blir nok travelt* is her own forecast, offered to no one for confirmation.
 
 ## Before You Go {#before-you-go role=recap objectives=obj-vel-jo-nok-da-in-conversation-01}
 

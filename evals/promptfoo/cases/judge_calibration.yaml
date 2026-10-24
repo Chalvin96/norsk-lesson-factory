@@ -147,60 +147,6 @@
           job: reviewer
           json_response: true
 
-- description: repair_scope positive - one bounded exact edit
-  metadata:
-    split: dev
-    expected_label: pass
-    dimension: repair_scope
-    source: seeded from content/lessons/ta_med_or_ha_med/lesson.md
-    label_provenance: seed_pending_human_review
-  vars:
-    candidate: |
-      {"edits": [{"finding_ref": "meaning_changing_translation:1", "old_text": "Use ha med when a person causes an object or another person to come along from one place to another.", "new_text": "Use ta med when a person causes an object or another person to come along from one place to another.", "reason": "Restores the taught meaning of ta med in the one glossed sentence the finding names."}]}
-  assert:
-    - type: llm-rubric
-      metric: repair_scope
-      value: |
-        A bounded repair must contain only literal old_text/new_text replacements
-        that address the reported finding while leaving every other part of the
-        source unchanged; it must not regenerate, extend, or restructure the
-        lesson. Return pass=true only when the response is such a bounded
-        exact-edit envelope for the single reported finding; return pass=false
-        when it rewrites content beyond that finding or adds unrequested
-        material.
-      provider:
-        id: file://provider.py:call_api
-        config:
-          job: reviewer
-          json_response: true
-
-- description: repair_scope negative - regenerated section with added content
-  metadata:
-    split: dev
-    expected_label: fail
-    dimension: repair_scope
-    source: seeded from content/lessons/ta_med_or_ha_med/lesson.md (single-fault variant)
-    label_provenance: seed_pending_human_review
-  vars:
-    candidate: |
-      {"edits": [{"finding_ref": "meaning_changing_translation:1", "old_text": "Use ha med when a person causes an object or another person to come along from one place to another. Jeg tar med kaffe til møtet. — I'm bringing coffee to the meeting. Kan du ta med passet? — Can you bring your passport? Use ha med when the sentence describes what someone has with them in the current situation or during a journey. Jeg har med kaffe. — I have coffee with me.", "new_text": "Bringing things along is a central part of Norwegian everyday speech, and learners meet it in many situations. To master ta med and ha med, first consider how Norwegians talk about movement and possession in general. Jeg tar med kaffe til møtet. — I'm bringing coffee to the meeting. Kan du ta med passet? — Can you bring your passport? Jeg har med kaffe. — I have coffee with me. Jeg har med paraplyen. — I have the umbrella with me. Notice also that Norwegian distinguishes between bringing a person and bringing a thing, a useful extra rule for everyday conversation.", "reason": "Rewrote the whole section so the meanings come out right and enriched it with an extra example and rule."}]}
-  assert:
-    - type: not-llm-rubric
-      metric: repair_scope
-      value: |
-        A bounded repair must contain only literal old_text/new_text replacements
-        that address the reported finding while leaving every other part of the
-        source unchanged; it must not regenerate, extend, or restructure the
-        lesson. Return pass=true only when the response is such a bounded
-        exact-edit envelope for the single reported finding; return pass=false
-        when it rewrites content beyond that finding or adds unrequested
-        material.
-      provider:
-        id: file://provider.py:call_api
-        config:
-          job: reviewer
-          json_response: true
-
 - description: decision_correctness positive - grounded rejection of reversed glosses
   metadata:
     split: dev
@@ -210,23 +156,23 @@
     label_provenance: seed_pending_human_review
   vars:
     candidate: |
-      {"verdict": "needs_repair", "findings": [{"code": "meaning_changing_translation", "severity": "blocking", "evidence": "The text glosses 'Jeg tar med kaffe til møtet.' as 'I have coffee with me at the meeting.' and 'Jeg har med kaffe.' as 'I'm bringing coffee.', which reverses the taught meanings of ta med and ha med.", "repair_instruction": "Restore the correct glosses: tar med is bringing along, ha med is having with you."}]}
+      {"findings": [{"code": "meaning_changing_translation", "severity": "advisory", "rationale": "The English glosses appear to swap ta med (bringing along) and ha med (already having with you). This AI suggestion is unverified."}], "summary": "Check whether the meanings were swapped."}
   assert:
     - type: llm-rubric
       metric: decision_correctness
       value: |
         The reviewed text reverses the meanings of ta med (bringing along) and
-        ha med (already having with you). Return pass=true only when the verdict
-        rejects the reviewed text and grounds that rejection in the reversed
-        glosses; return pass=false when the verdict accepts the reviewed text or
-        supports it with claims the text does not make.
+        ha med (already having with you). Return pass=true only when the review
+        reports this as an unverified advisory suggestion grounded in the
+        reversed glosses; return pass=false when the review blocks, repairs, or
+        claims qualified certainty about the reviewed text.
       provider:
         id: file://provider.py:call_api
         config:
           job: reviewer
           json_response: true
 
-- description: decision_correctness negative - unsupported pass verdict
+- description: decision_correctness negative - omitted advisory suggestion
   metadata:
     split: dev
     expected_label: fail
@@ -235,16 +181,16 @@
     label_provenance: seed_pending_human_review
   vars:
     candidate: |
-      {"verdict": "pass", "findings": [], "summary": "The meanings of ta med and ha med are presented correctly and every translation is faithful."}
+      {"findings": [], "summary": "No language suggestions."}
   assert:
     - type: not-llm-rubric
       metric: decision_correctness
       value: |
         The reviewed text reverses the meanings of ta med (bringing along) and
-        ha med (already having with you). Return pass=true only when the verdict
-        rejects the reviewed text and grounds that rejection in the reversed
-        glosses; return pass=false when the verdict accepts the reviewed text or
-        supports it with claims the text does not make.
+        ha med (already having with you). Return pass=true only when the review
+        reports this as an unverified advisory suggestion grounded in the
+        reversed glosses; return pass=false when the review blocks, repairs, or
+        claims qualified certainty about the reviewed text.
       provider:
         id: file://provider.py:call_api
         config:

@@ -12,10 +12,10 @@ from urllib.parse import urlencode
 from lesson_builder.domain.lesson.models.export import ExportedLesson
 from lesson_builder.domain.lesson.models.lesson import Lesson
 from lesson_builder.domain.lesson.services.audio_bindings import audio_binding_key
+from lesson_builder.domain.lesson.services.learner_visibility import is_internal_request_section_title
+from lesson_builder.domain.lesson.services.learner_visibility import visible_block_indexes
 from lesson_builder.domain.lesson.settings import K_EXPORT_SPEAKER_ICON_BASE_URL
 from lesson_builder.domain.lesson.settings import K_LESSON_SCHEMA_VERSION
-from lesson_builder.domain.lesson.validation.learner_visibility import is_internal_request_section_title
-from lesson_builder.domain.lesson.validation.learner_visibility import visible_block_indexes
 
 K_SPAN_WIRE_KINDS = frozenset({"text", "emphasis", "strong", "code", "foreign_term"})
 K_SPAN_INTERNAL_KINDS = frozenset({"annotated", "sentence"})
@@ -65,7 +65,7 @@ def to_export_dict(
     character_voice_profiles: Mapping[str, str | None] | None = None,
 ) -> dict[str, Any]:
     """Project an internal lesson to the public packet and validate the result."""
-    selected_kind = kind or "grammar"
+    selected_kind = "grammar" if kind is None else kind
     if selected_kind not in K_ALLOWED_LESSON_KINDS:
         raise ValueError(f"unknown lesson kind {selected_kind!r}")
     if language != "nb-NO":

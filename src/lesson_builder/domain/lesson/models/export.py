@@ -23,7 +23,6 @@ from lesson_builder.domain.lesson.models.elements import BuildPayload
 from lesson_builder.domain.lesson.models.elements import CategorizePayload
 from lesson_builder.domain.lesson.models.elements import FindFixPayload
 from lesson_builder.domain.lesson.models.elements import MatchPairsPayload
-from lesson_builder.domain.lesson.models.elements import SpeakPayload
 from lesson_builder.domain.lesson.models.elements import WritePayload
 from lesson_builder.domain.lesson.models.inline import CodeSpan
 from lesson_builder.domain.lesson.models.inline import EmphasisSpan
@@ -299,7 +298,6 @@ type ExportedChooseExercise = ExportedExerciseBase[Literal["choose"], ExportedCh
 type ExportedCategorizeExercise = ExportedExerciseBase[Literal["categorize"], CategorizePayload]
 type ExportedBuildExercise = ExportedExerciseBase[Literal["build"], BuildPayload]
 type ExportedFindFixExercise = ExportedExerciseBase[Literal["find_fix"], FindFixPayload]
-type ExportedSpeakExercise = ExportedExerciseBase[Literal["speak"], SpeakPayload]
 type ExportedWriteExercise = ExportedExerciseBase[Literal["write"], WritePayload]
 
 ExportedExercise = Annotated[
@@ -310,7 +308,6 @@ ExportedExercise = Annotated[
     | ExportedCategorizeExercise
     | ExportedBuildExercise
     | ExportedFindFixExercise
-    | ExportedSpeakExercise
     | ExportedWriteExercise,
     Field(discriminator="operation"),
 ]
@@ -393,7 +390,9 @@ class ExportedLesson(ExportBase):
 
     schema_version: Literal["4.1"]
     id: str
-    kind: Literal["grammar", "phraseology", "communicative", "pronunciation", "writing"]
+    kind: Literal["grammar", "phraseology", "communicative", "pronunciation", "writing"] = Field(
+        description="Authored lesson classification for downstream lesson selection."
+    )
     language: Literal["nb-NO"] = "nb-NO"
     title: str
     cefr_level: Literal["A1", "A2", "B1", "B2", "C1", "C2"]

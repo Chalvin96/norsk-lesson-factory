@@ -1,104 +1,67 @@
 ---
 type: Architecture
 title: Codebase Architecture and Module Boundaries
-description: Dependency rationale and remaining boundary debt in the lesson builder.
+description: Dependency rationale and established cross-context edges.
 tags: [architecture, domain, workflows]
-timestamp: 2026-09-06
+timestamp: 2026-10-22
 ---
 
-The repository is an authoring modular monolith. The
-[placement router](codebase.md) owns destination rules; this page explains why the
-boundaries exist. The [authoring boundary](boundaries.md) keeps learner interaction,
-playback, scoring, and session state outside this system.
+This repository is an authoring modular monolith. The
+[placement router](codebase.md) defines code ownership; this page records the
+dependency rules and established exceptions. The
+[authoring boundary](boundaries.md) keeps learner presentation and interaction
+outside the system.
 
-## Dependencies and contexts
+Package-internal paths below are relative to `src/lesson_builder/`.
 
-```text
-cli ───────────────┐
-                   ├─> application/operations ──┬─> domain
-workflow ──────────┘                            └─> clients / formats / workspace
-```
+## Dependency directions
 
-Domain code owns deterministic contracts and decisions and does not import
-application, workflow, CLI, clients, formats, or workspace. Application operations
-and checkpointed workflows compose domain behavior with effects. Infrastructure
-translates external formats and mechanisms without deciding catalog or lesson policy.
-This keeps pure authoring rules usable by generation, auditing, preview, and export.
+CLI and web are inbound adapters. They delegate to application operations;
+inner layers do not import either adapter. Application operations compose
+domain decisions with file, provider, and cross-context effects. Checkpointed
+flows own their sequencing and recovery in `workflow/`. Domain code owns
+deterministic contracts and decisions and does not import application,
+workflow, CLI, clients, formats, or workspace. Domain services also do not
+read or write files, parse external formats, inspect environment state, or
+coordinate other contexts through injected collaborators.
 
-| Context | Domain responsibility |
-| --- | --- |
-| Catalog | Teachable identity, scope, owner references, dependencies, approval policy |
-| Curriculum | Plan contracts and deterministic ordering of approved inventory |
-| Lesson | Authored content, exercises, transcript projection, deterministic quality rules |
-| Distribution | Public lesson-packet and distribution-catalog projections |
+The domain contexts are catalog, curriculum, lesson, and distribution.
+Distribution reads lesson values and character validation. Curriculum ordering
+uses catalog dependency contracts, ordering constants, and topological-order
+policy. This edge does not authorize new dependency directions. Put
+non-checkpointed cross-context use cases in application operations.
 
-Distribution projection has an established read-only dependency on lesson values
-and character validation. Curriculum ordering currently consumes catalog dependency
-contracts and topological-order policy; this existing edge remains migration debt
-until its interface receives an explicit architecture decision. Existing imports
-do not authorize new dependency directions. Non-checkpointed cross-context use
-cases belong in application operations.
+## Markdown parsing
 
-## Boundaries worth preserving
+Markdown parsing uses markdown-it-py and mdit-py-plugins in-process, emitting
+Pandoc-shaped JSON for panflute. Pandoc itself is not a dependency. Syntax
+compatibility belongs to `formats/markdown/`; lesson policy stays in the lesson context.
 
-Authored-source loading combines Markdown/YAML mechanics and lesson contracts in
-application operations. Transport repair stays at that boundary; deterministic
-lesson checks consume parsed values. The small
-`application/operations/compile_lesson_package.py` operation is the canonical
-application boundary for one authored package: its strict entry point is used by
-export, parity validation, generation, and promotion, while its collecting entry
-point serves preview and catalog inspection. It returns the deterministic audit,
-typed lesson, plan metadata, and gate results together so callers cannot load a
-lesson through a path that skipped source policy. Character and terminology file
-loading likewise stays outside their domain contracts and validation.
+One narrow format-to-domain edge is permitted: the Pandoc-shaped AST mappers
+`formats/markdown/pandoc_blocks.py` and
+`formats/markdown/pandoc_inlines.py` map parser AST values into
+`domain/lesson/models/` contracts. Format modules do not call domain services
+or decide lesson policy.
 
-`application/operations/prepare_source_package.py` owns the reusable preparation
-of one authored lesson package after the canonical compiler has accepted a single
-captured source snapshot: distribution projection, diagnostics, transcript
-projection, and content hashes. The lesson-generation workflow keeps checkpoint
-concerns and persists its disposable diagnostics and transcript sidecars after
-preparation succeeds.
+## Stable composition boundaries
 
-The compiler's source digest identifies the exact captured plan, lesson, and
-exercise text. Workspace parity may reuse a compilation only after checking that
-it is strict-valid and its digest still matches a fresh source capture. The
-file-reading `load_lesson` entry point self-audits its captured source; callers
-that already own explicit text use `load_lesson_source`. Norwegian-only recall
-audio policy is shared by the lesson gate and transcript projection through the
-lesson audio-language service.
+`application/operations/compile_lesson_package.py` is the canonical application
+boundary for loading and auditing one authored package. It composes Markdown
+and YAML parsing, Pandoc-shaped AST mapping, lesson values, and deterministic source
+policy. Export, distribution checks, and workbench previews use this boundary
+so a caller cannot bypass the source audit by loading the parts independently.
 
-The checkpointed graph is the single rich-generation orchestrator. Workflow code
-owns recovery, checkpoint intent, handoff transport, scratch evidence, and generation
-logs. Nodes should add checkpoint-owned behavior; pass-through facades obscure who
-actually performs a stage. Rich-authoring prompt builders live in application
-operations; catalog-stage prompt builders remain with their workflow. Evaluations
-call those same production definitions.
-Provider-backed review is an application operation; domain validation interprets
-review values deterministically.
+The [placement router](codebase.md) lists workbench wire contracts, schema and
+TypeScript generation, HTTP transport, feature hooks, and workspace composition.
+Run `npm run workbench:types:check` to check generated contract freshness.
+The lesson toolbar groups navigation, review, draft, actions, and audio inputs.
 
-One configured OpenCode client serves each job. The job runner retries bounded
-transient failures on that same client; quota and parse failures are non-retryable.
-It does not select fallback providers or maintain a second provider registry.
-Retry attempts remain visible in the response evidence.
+Provider adapters in `clients/` own external transport. OpenCode serves
+configured pipeline jobs; Codex app-server serves workbench chat. Their
+credential boundaries and the workbench's review, approval, and promotion
+rules are described in [authoring boundaries](boundaries.md).
 
-Distribution projection stays pure. Source reads, TTS/cache effects, staged-tree
-validation, export-schema writes, packaging, and external publication belong in
-application operations and clients. A cohesive `DistributionService` is the
-existing projection API, not a requirement for every context to grow a service class.
-
-## Remaining placement debt
-
-The lesson context remains broad. Some values currently under its model namespace
-are operation results or generation transport, such as source-repair output and
-rich-authoring handoffs. Existing placement does not establish that these are
-public lesson contracts; classify their audience and lifetime before changing them,
-and request the architecture decision required for moving a public contract.
-
-Model namespaces also still contain standalone registry helpers, such as
-operation-policy lookup. Route such behavior by its semantic responsibility rather
-than preserving a historical location or creating a separate file for every helper.
-Review actual callers before a move.
-
-These are current cleanup targets, not reasons to recreate historical layers.
-Completed migrations are explained by the router and code; they do not need a
-second file-by-file inventory here.
+Distribution projection is deterministic. Source reads, audio synthesis and
+cache access, complete-tree validation, schema writes, packaging, and external
+publication belong to application operations and provider clients. Keep policy,
+orchestration, transport, and file effects in their respective layers.

@@ -17,7 +17,7 @@ from lesson_builder.application.operations.review_exercises import verify_open_r
 from lesson_builder.application.operations.review_exercises import verify_open_semantics
 from lesson_builder.clients.llm.exceptions import BackendDownException
 from lesson_builder.clients.llm.invocation import JobRunner
-from lesson_builder.domain.lesson.validation.review_payloads import project_answer_review
+from lesson_builder.domain.lesson.services.review_projection import project_answer_review
 from tests.clients.llm.fakes import FakeLlmClient
 
 
@@ -34,119 +34,57 @@ def test_verify_exercises_given_matching_blinded_review_expect_pass():
     assert report["lesson_hash"].startswith("sha256:")
 
 
-def test_verify_exercises_given_solved_answer_with_semantic_issue_expect_strict_failure():
+def test_verify_exercises_given_language_review_finding_expect_advisory_even_in_strict_mode():
     opaque_answer = project_answer_review(_lesson()).questions[0]["options"][1]["option_id"]
 
-    with pytest.raises(ExerciseReviewError) as caught:
-        verify_exercises(
-            _lesson(),
-            reviewer_agent=_reviewer(
-                {
-                    "answers": [
-                        {
-                            "id": "choose-one",
-                            "answer": opaque_answer,
-                            "semantic_issues": [
-                                {
-                                    "category": "distractor_parallelism",
-                                    "reason": "The correct option is much more detailed than its distractor.",
-                                    "evidence": "ja / nei",
-                                }
-                            ],
-                        }
-                    ]
-                }
-            ),
-            strict=True,
-        )
+    report = verify_exercises(
+        _lesson(),
+        reviewer_agent=_reviewer(
+            {
+                "answers": [
+                    {
+                        "id": "choose-one",
+                        "answer": opaque_answer,
+                        "semantic_issues": [
+                            {
+                                "category": "distractor_parallelism",
+                                "reason": "The correct option is much more detailed than its distractor.",
+                            }
+                        ],
+                    }
+                ]
+            }
+        ),
+        strict=True,
+    )
 
-    assert caught.value.report["status"] == "needs_human"
-    assert caught.value.report["matches"] == 1
-    assert caught.value.report["semantic_issues"][0]["id"] == "choose-one"
-
-
-def test_verify_exercises_given_composite_decision_load_finding_expect_strict_failure():
-    opaque_answer = project_answer_review(_lesson()).questions[0]["options"][1]["option_id"]
-
-    with pytest.raises(ExerciseReviewError) as caught:
-        verify_exercises(
-            _lesson(),
-            reviewer_agent=_reviewer(
-                {
-                    "answers": [
-                        {
-                            "id": "choose-one",
-                            "answer": opaque_answer,
-                            "semantic_issues": [
-                                {
-                                    "category": "composite_decision_load",
-                                    "reason": "Each option bundles several independent form-to-function mappings.",
-                                    "evidence": "Hei! = greeting; Ha det! = close.",
-                                }
-                            ],
-                        }
-                    ]
-                }
-            ),
-            strict=True,
-        )
-
-    assert caught.value.report["status"] == "needs_human"
-    assert caught.value.report["matches"] == 1
-    assert caught.value.report["semantic_issues"][0]["id"] == "choose-one"
+    assert report["status"] == "pass"
+    assert report["review_status"] == "advisory_findings"
+    assert report["matches"] == 1
+    assert report["semantic_issues"][0]["id"] == "choose-one"
 
 
-def test_verify_exercises_given_key_agrees_but_english_cue_leaks_answer_expect_strict_failure():
-    opaque_answer = project_answer_review(_lesson()).questions[0]["options"][1]["option_id"]
+def test_verify_exercises_given_ambiguous_reviewer_judgment_expect_advisory_report():
+    report = verify_exercises(
+        _lesson(),
+        reviewer_agent=_reviewer(
+            {
+                "answers": [
+                    {
+                        "id": "choose-one",
+                        "answer": None,
+                        "status": "ambiguous",
+                        "reason": "Both choices fit the visible prompt.",
+                    }
+                ]
+            }
+        ),
+        strict=True,
+    )
 
-    with pytest.raises(ExerciseReviewError) as caught:
-        verify_exercises(
-            _lesson(),
-            reviewer_agent=_reviewer(
-                {
-                    "answers": [
-                        {
-                            "id": "choose-one",
-                            "answer": opaque_answer,
-                            "semantic_issues": [
-                                {
-                                    "category": "supplied_answer_retrieval",
-                                    "reason": "The English category explanation identifies the target without reading Norwegian.",
-                                    "evidence": "Experience at any time before now.",
-                                }
-                            ],
-                        }
-                    ]
-                }
-            ),
-            strict=True,
-        )
-
-    assert caught.value.report["status"] == "needs_human"
-    assert caught.value.report["matches"] == 1
-
-
-def test_verify_exercises_given_ambiguous_review_expect_strict_failure():
-    with pytest.raises(ExerciseReviewError) as caught:
-        verify_exercises(
-            _lesson(),
-            reviewer_agent=_reviewer(
-                {
-                    "answers": [
-                        {
-                            "id": "choose-one",
-                            "answer": None,
-                            "status": "ambiguous",
-                            "reason": "Both choices fit the visible prompt.",
-                        }
-                    ]
-                }
-            ),
-            strict=True,
-        )
-
-    assert caught.value.report["status"] == "needs_human"
-    assert caught.value.report["ambiguous"] == ["choose-one"]
+    assert report["status"] == "pass"
+    assert report["review_status"] == "advisory_findings"
+    assert report["ambiguous"] == ["choose-one"]
 
 
 def test_verify_exercises_given_reviewer_outage_expect_explicit_unavailable():
@@ -172,8 +110,8 @@ def test_verify_exercises_given_open_only_package_expect_unverified_open_not_pas
             },
             {
                 "element_kind": "exercise",
-                "id": "say-it",
-                "operation": "speak",
+                "id": "write-note",
+                "operation": "write",
                 "prompt": [],
                 "payload": {},
             },
@@ -184,7 +122,7 @@ def test_verify_exercises_given_open_only_package_expect_unverified_open_not_pas
 
     assert report["status"] == "unverified_open"
     assert report["total"] == 0
-    assert report["open_handles"] == ["say-it", "write-reply"]
+    assert report["open_handles"] == ["write-note", "write-reply"]
 
 
 def test_verify_exercises_given_closed_and_open_package_expect_open_handles_preserved():
@@ -221,25 +159,25 @@ def test_verify_attempt_surface_given_clear_standalone_review_expect_pass():
     assert report["total"] == 1
 
 
-def test_verify_attempt_surface_given_hidden_context_dependency_expect_strict_failure():
-    with pytest.raises(AttemptSurfaceReviewError) as caught:
-        verify_attempt_surface(
-            _lesson(),
-            reviewer_agent=_reviewer(
-                {
-                    "checks": [
-                        {
-                            "id": "choose-one",
-                            "status": "unanswerable",
-                            "reason": "The visible cue omits the needed context.",
-                        }
-                    ]
-                }
-            ),
-            strict=True,
-        )
+def test_verify_attempt_surface_given_context_dependent_judgment_expect_advisory_report():
+    report = verify_attempt_surface(
+        _lesson(),
+        reviewer_agent=_reviewer(
+            {
+                "checks": [
+                    {
+                        "id": "choose-one",
+                        "status": "unanswerable",
+                        "reason": "The visible cue omits the needed context.",
+                    }
+                ]
+            }
+        ),
+        strict=True,
+    )
 
-    assert caught.value.report["unanswerable"] == ["choose-one"]
+    assert report["status"] == "pass"
+    assert report["unanswerable"] == ["choose-one"]
 
 
 def test_verify_attempt_surface_given_duplicate_reviewer_ids_expect_strict_failure():
@@ -277,6 +215,21 @@ def test_verify_exercise_package_given_open_rubric_pass_expect_unverified_open_s
     assert report["open_rubrics"]["status"] == "pass"
 
 
+def test_verify_exercise_package_given_missing_open_review_handles_expect_reviewer_invalid() -> None:
+    with pytest.raises(ExerciseReviewError) as caught:
+        verify_exercise_package(
+            _write_lesson(),
+            reviewer_agent=_reviewer({"checks": []}),
+            strict=True,
+        )
+
+    report = caught.value.report
+    assert report["status"] == "reviewer_invalid"
+    assert report["attempt_surface"]["status"] == "reviewer_invalid"
+    assert report["open_rubrics"]["status"] == "reviewer_invalid"
+    assert report["open_semantics"]["status"] == "reviewer_invalid"
+
+
 def test_verify_open_rubrics_given_bidirectional_pass_expect_clear_report():
     report = verify_open_rubrics(
         _write_lesson(),
@@ -288,26 +241,26 @@ def test_verify_open_rubrics_given_bidirectional_pass_expect_clear_report():
     assert report["open_write_handles"] == ["write-reply"]
 
 
-def test_verify_open_rubrics_given_omitted_obligation_expect_exact_failed_handle():
-    with pytest.raises(OpenRubricReviewError) as caught:
-        verify_open_rubrics(
-            _write_lesson(),
-            reviewer_agent=_reviewer(
-                {
-                    "checks": [
-                        {
-                            "id": "write-reply",
-                            "status": "unanswerable",
-                            "reason": "The prompt obligation has no criterion.",
-                        }
-                    ]
-                }
-            ),
-            strict=True,
-        )
+def test_verify_open_rubrics_given_omitted_obligation_expect_advisory_report():
+    report = verify_open_rubrics(
+        _write_lesson(),
+        reviewer_agent=_reviewer(
+            {
+                "checks": [
+                    {
+                        "id": "write-reply",
+                        "status": "unanswerable",
+                        "reason": "The prompt obligation has no criterion.",
+                    }
+                ]
+            }
+        ),
+        strict=True,
+    )
 
-    assert caught.value.report["unanswerable"] == ["write-reply"]
-    assert caught.value.report["open_write_handles"] == ["write-reply"]
+    assert report["status"] == "pass"
+    assert report["unanswerable"] == ["write-reply"]
+    assert report["open_write_handles"] == ["write-reply"]
 
 
 def test_verify_open_rubrics_given_duplicate_reviewer_ids_expect_strict_failure():
@@ -345,7 +298,7 @@ def test_verify_open_rubrics_given_no_write_tasks_expect_no_reviewer_call():
     assert report == {"status": "not_applicable", "total": 0, "open_write_handles": []}
 
 
-def test_verify_exercise_package_given_open_semantic_finding_expect_strict_failure():
+def test_verify_exercise_package_given_open_semantic_finding_expect_advisory_report():
     lesson = _write_lesson()
 
     def response(prompt: str, _model: str | None) -> str:
@@ -353,7 +306,7 @@ def test_verify_exercise_package_given_open_semantic_finding_expect_strict_failu
             return json.dumps({"answers": []})
         if prompt.startswith("Review the standalone attempt-time surface"):
             return json.dumps({"checks": [{"id": "write-reply", "status": "clear"}]})
-        if prompt.startswith("Review every open write and speak task"):
+        if prompt.startswith("Review every open write task"):
             return json.dumps(
                 {
                     "checks": [
@@ -363,7 +316,6 @@ def test_verify_exercise_package_given_open_semantic_finding_expect_strict_failu
                                 {
                                     "category": "rehearsal_vs_production",
                                     "reason": "The prompt claims independent production but supplies the exact sentence.",
-                                    "evidence": "Say exactly: Jeg kommer i morgen.",
                                 }
                             ],
                         }
@@ -372,15 +324,15 @@ def test_verify_exercise_package_given_open_semantic_finding_expect_strict_failu
             )
         return json.dumps({"checks": [{"id": "write-reply", "status": "clear"}]})
 
-    with pytest.raises(ExerciseReviewError) as caught:
-        verify_exercise_package(
-            lesson,
-            reviewer_agent=JobRunner(name="reviewer", client=FakeLlmClient.from_fn(response)),
-            strict=True,
-        )
+    report = verify_exercise_package(
+        lesson,
+        reviewer_agent=JobRunner(name="reviewer", client=FakeLlmClient.from_fn(response)),
+        strict=True,
+    )
 
-    assert caught.value.report["status"] == "needs_human"
-    assert caught.value.report["open_semantics"]["semantic_issues"][0]["id"] == "write-reply"
+    assert report["status"] == "unverified_open"
+    assert report["open_semantics"]["status"] == "pass"
+    assert report["open_semantics"]["semantic_issues"][0]["id"] == "write-reply"
 
 
 def test_verify_open_semantics_given_clean_open_tasks_expect_pass():
@@ -434,7 +386,7 @@ def test_verify_exercise_package_given_mixed_closed_and_open_pass_expect_unverif
     assert report["answer_review"]["open_handles"] == ["write-reply"]
 
 
-def test_verify_exercise_package_given_multiple_surface_failures_expect_atomic_handles():
+def test_verify_exercise_package_given_language_review_findings_expect_advisory_status():
     lesson = _lesson()
     lesson["elements"].append(_write_lesson()["elements"][0])
 
@@ -456,17 +408,15 @@ def test_verify_exercise_package_given_multiple_surface_failures_expect_atomic_h
         name="reviewer",
         client=FakeLlmClient.from_fn(response),
     )
-    with pytest.raises(ExerciseReviewError) as caught:
-        verify_exercise_package(lesson, reviewer_agent=agent, strict=True)
+    report = verify_exercise_package(lesson, reviewer_agent=agent, strict=True)
 
-    report = caught.value.report
-    assert report["status"] == "needs_human"
+    assert report["status"] == "unverified_open"
     assert report["total"] == 2
     assert report["exercise_count"] == 2
     assert report["ambiguous"] == ["choose-one"]
     assert report["unanswerable"] == ["write-reply"]
-    assert report["attempt_surface"]["status"] == "needs_human"
-    assert report["open_rubrics"]["status"] == "needs_human"
+    assert report["attempt_surface"]["status"] == "pass"
+    assert report["open_rubrics"]["status"] == "pass"
 
 
 def _reviewer(payload: dict[str, Any] | None = None, error: Exception | None = None) -> object:

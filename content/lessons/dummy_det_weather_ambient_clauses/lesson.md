@@ -452,16 +452,18 @@ Use the weather verb directly after *det*.
 - en: It’s windy.
 :::
 
-**Using a named noun when no named thing is meant**
+**Named subject or dummy det**
 
-If you mean the general temperature, use fixed *det*.
+Both constructions below are grammatical. With **været**, you describe a named subject, the weather. With dummy **det**, you describe the general temperature without naming a subject.
 
 ::: examples
-- no: ✗ Været er kaldt.
-- en: Unnatural for the intended meaning: The weather is cold.
+- no: Været er kaldt.
+- en: The weather is cold.
 - no: Det er kaldt.
 - en: It’s cold.
 :::
+
+For general temperature, **Det er kaldt** is the everyday choice.
 
 **Treating *det* as a specific object**
 

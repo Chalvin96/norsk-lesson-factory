@@ -30,6 +30,7 @@ class ObjectiveAlignmentIssue(BaseModel):
     message: str
     evidence: str
     fix: str
+    quote_english: str = ""
 
 
 class ObjectiveAlignmentReview(BaseModel):
@@ -48,6 +49,9 @@ class NaturalnessIssue(BaseModel):
     unit_id: str
     severity: NaturalnessSeverity
     message: str
+    evidence: str = ""
+    quote_english: str = ""
+    suggested_change: str = ""
 
 
 class NaturalnessReview(BaseModel):
@@ -71,6 +75,7 @@ class PedagogyIssue(BaseModel):
     title: str
     evidence: str
     fix: str
+    quote_english: str = ""
 
 
 class PedagogyReview(BaseModel):

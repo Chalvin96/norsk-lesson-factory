@@ -8,6 +8,7 @@ from pathlib import Path
 import pytest
 
 from lesson_builder.cli import main
+from tests.workspace.builders import assemble_prerequisite_order_workspace
 from tests.workspace.builders import assemble_valid_workspace
 from tests.workspace.builders import workspace_snapshot
 
@@ -101,3 +102,22 @@ def test_workspace_check_command_given_text_format_expect_human_readable_report(
     assert "distribution: passed" in captured.out
     with pytest.raises(json.JSONDecodeError):
         json.loads(captured.out)
+
+
+@pytest.mark.parametrize("prerequisite_first,expected_exit", [(False, 1), (True, 0)])
+def test_workspace_check_command_given_prerequisite_order_expect_matching_exit_and_report(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str], prerequisite_first: bool, expected_exit: int
+) -> None:
+    assemble_prerequisite_order_workspace(tmp_path, prerequisite_first=prerequisite_first)
+
+    exit_code = main(["check", "--workspace-root", str(tmp_path)])
+
+    captured = capsys.readouterr()
+    assert exit_code == expected_exit
+    assert captured.err == ""
+    payload = json.loads(captured.out)
+    curriculum = next(check for check in payload["checks"] if check["check_id"] == "curriculum_plan")
+    assert curriculum["status"] == ("passed" if prerequisite_first else "failed")
+    assert [issue["code"] for issue in curriculum["issues"]] == (
+        [] if prerequisite_first else ["curriculum.prerequisite_order"]
+    )

@@ -1,11 +1,10 @@
-"""Entry points: ``verify_exercises``, ``verify_attempt_surface``, ``verify_open_rubrics``, and ``verify_exercise_package`` check exercises before parking.
+"""Entry points: ``verify_exercises``, ``verify_attempt_surface``, ``verify_open_rubrics``, ``verify_open_semantics``, and ``verify_exercise_package`` report exercise review.
 
 The verifier is deliberately exercise-only. It receives the compiled lesson's
 learner-visible payload through the existing keyless answer-review projection,
-compares the reviewer's independently solved answers with the authored key,
-and blocks semantic findings about factual premises, competing answers, distractors,
-retrieval scaffolding, reconstructed output, or rehearsal claims for human review.
-and never has permission to edit lesson prose.
+compares the reviewer's independently solved answers with the authored key, and
+reports model findings as advisory. Only reviewer availability and response
+contract failures block this review operation.
 """
 
 from __future__ import annotations
@@ -15,22 +14,18 @@ import json
 from collections import Counter
 from typing import Any
 
-from lesson_builder.application.operations.review_lesson import answer_review
-from lesson_builder.application.operations.review_lesson import attempt_review
-from lesson_builder.application.operations.review_lesson import open_rubric_review
-from lesson_builder.application.operations.review_lesson import open_semantic_review
-from lesson_builder.domain.lesson.models.reviewer import ReviewerAgent
+from lesson_builder.application.operations.review_judges import answer_review
+from lesson_builder.application.operations.review_judges import attempt_review
+from lesson_builder.application.operations.review_judges import open_rubric_review
+from lesson_builder.application.operations.review_judges import open_semantic_review
+from lesson_builder.domain.lesson.models.review_contracts import ReviewerAgent
+from lesson_builder.domain.lesson.services.review_projection import build_expected_answers
 from lesson_builder.domain.lesson.validation.checks.validators.answer_valid import answer_valid_check
-from lesson_builder.domain.lesson.validation.review_evidence import unsupported_semantic_findings
-from lesson_builder.domain.lesson.validation.review_payloads import build_expected_answers
-from lesson_builder.domain.lesson.validation.review_payloads import extract_answer_questions
-from lesson_builder.domain.lesson.validation.review_payloads import extract_open_semantic_questions
 
 K_EXERCISE_REVIEW_PASS = "pass"
-K_EXERCISE_REVIEW_NEEDS_HUMAN = "needs_human"
 K_EXERCISE_REVIEW_UNAVAILABLE = "reviewer_unavailable"
 K_EXERCISE_REVIEW_UNVERIFIED_OPEN = "unverified_open"
-K_EXERCISE_REVIEW_OPEN_OPERATIONS = frozenset({"speak", "write"})
+K_EXERCISE_REVIEW_OPEN_OPERATIONS = frozenset({"write"})
 
 
 class ExerciseReviewError(ValueError):
@@ -72,7 +67,7 @@ def verify_exercises(
 ) -> dict[str, Any]:
     """Verify every deterministic exercise using a blinded independent solve.
 
-    Open ``speak``/``write`` tasks are not part of the closed answer oracle and
+    Open ``write`` tasks are not part of the closed answer oracle and
     therefore do not make the review unavailable. A package whose exercises are
     all open reports ``unverified_open`` instead of a generic pass: open tasks
     stay at the human review boundary. A reviewer outage is never treated as a
@@ -90,7 +85,7 @@ def verify_exercises(
                 "matches": 0,
                 "open_handles": open_handles,
                 "message": (
-                    "package contains only open write/speak tasks; open tasks stay "
+                    "package contains only open write tasks; open tasks stay "
                     "at the human review boundary and are not machine-verified"
                 ),
             }
@@ -114,12 +109,12 @@ def verify_exercises(
         _raise_if_strict(report, strict)
         return report
 
-    _results, comparison = answer_valid_check(lesson, payload, strict=True)
+    _results, comparison = answer_valid_check(lesson, payload, strict=False)
     semantic_issues = _semantic_issue_report(payload)
-    unsupported_findings = unsupported_semantic_findings(semantic_issues, extract_answer_questions(lesson))
-    status = K_EXERCISE_REVIEW_PASS if comparison["passed"] and not semantic_issues else K_EXERCISE_REVIEW_NEEDS_HUMAN
+    review_status = "advisory_findings" if not comparison["passed"] or semantic_issues else K_EXERCISE_REVIEW_PASS
     report = {
-        "status": status,
+        "status": K_EXERCISE_REVIEW_PASS,
+        "review_status": review_status,
         "lesson_hash": lesson_hash,
         "total": comparison["total"],
         "matches": comparison["matches"],
@@ -130,7 +125,6 @@ def verify_exercises(
         "extra": comparison["extra"],
         "duplicates": comparison["duplicates"],
         "semantic_issues": semantic_issues,
-        "unsupported_findings": unsupported_findings,
         "open_handles": open_handles,
         "open_tasks_unverified": bool(open_handles),
     }
@@ -144,7 +138,7 @@ def verify_attempt_surface(
     reviewer_agent: ReviewerAgent,
     strict: bool = False,
 ) -> dict[str, Any]:
-    """Require every exercise to be clear from its true attempt-time projection."""
+    """Report possible concerns from each exercise's true attempt-time projection."""
     handles = _exercise_handles(lesson)
     if not handles:
         return {
@@ -173,7 +167,7 @@ def verify_open_rubrics(
     reviewer_agent: ReviewerAgent,
     strict: bool = False,
 ) -> dict[str, Any]:
-    """Require every open-write rubric to cover visible obligations both ways."""
+    """Report whether each open-write rubric covers visible obligations both ways."""
     handles = _open_write_handles(lesson)
     if not handles:
         return {"status": "not_applicable", "total": 0, "open_write_handles": []}
@@ -198,7 +192,7 @@ def verify_open_semantics(
     reviewer_agent: ReviewerAgent,
     strict: bool = False,
 ) -> dict[str, Any]:
-    """Block grounded semantic defects in open-task evidence claims."""
+    """Report possible open-task semantic defects as unverified suggestions."""
     handles = _open_exercise_handles(lesson)
     if not handles:
         return {"status": "not_applicable", "total": 0, "semantic_issues": []}
@@ -212,9 +206,8 @@ def verify_open_semantics(
         }
         _raise_if_strict(report, strict)
         return report
-    report = _build_semantic_report(handles, payload, extract_open_semantic_questions(lesson))
-    if strict and report["status"] != K_EXERCISE_REVIEW_PASS:
-        raise ExerciseReviewError(report)
+    report = _build_semantic_report(handles, payload)
+    _raise_if_strict(report, strict)
     return report
 
 
@@ -228,13 +221,32 @@ def verify_exercise_package(
 
     A mixed closed/open package is unverified_open only after closed answers,
     the standalone attempt surface, and open-write rubrics all pass. That status
-    describes the evidence boundary; it never verifies arbitrary learner prose
-    or speech responses.
+    describes the evidence boundary; it never verifies arbitrary learner prose.
     """
     answer_report = verify_exercises(lesson, reviewer_agent=reviewer_agent, strict=False)
     attempt_report = verify_attempt_surface(lesson, reviewer_agent=reviewer_agent, strict=False)
     rubric_report = verify_open_rubrics(lesson, reviewer_agent=reviewer_agent, strict=False)
     semantic_report = verify_open_semantics(lesson, reviewer_agent=reviewer_agent, strict=False)
+    return build_exercise_package_report(
+        lesson,
+        answer_report=answer_report,
+        attempt_report=attempt_report,
+        rubric_report=rubric_report,
+        semantic_report=semantic_report,
+        strict=strict,
+    )
+
+
+def build_exercise_package_report(
+    lesson: dict[str, Any],
+    *,
+    answer_report: dict[str, Any],
+    attempt_report: dict[str, Any],
+    rubric_report: dict[str, Any],
+    semantic_report: dict[str, Any],
+    strict: bool = False,
+) -> dict[str, Any]:
+    """Combine completed exercise checks in the established report order."""
     reports = {
         "answer": answer_report,
         "attempt_surface": attempt_report,
@@ -242,13 +254,16 @@ def verify_exercise_package(
         "open_semantics": semantic_report,
     }
     statuses = [report.get("status") for report in reports.values()]
+    contract_errors = _merge_report_lists(reports, "missing")
+    contract_errors.extend(_merge_report_lists(reports, "extra"))
+    contract_errors.extend(_merge_report_lists(reports, "duplicates"))
     open_handles = answer_report.get("open_handles", [])
     if not isinstance(open_handles, list):
         open_handles = []
     if "reviewer_unavailable" in statuses:
         status = "reviewer_unavailable"
-    elif any(report_status == "needs_human" for report_status in statuses):
-        status = "needs_human"
+    elif "reviewer_invalid" in statuses or contract_errors:
+        status = "reviewer_invalid"
     elif K_EXERCISE_REVIEW_UNVERIFIED_OPEN in statuses or open_handles:
         # Open responses have passed their standalone and rubric surfaces, but
         # remain explicitly outside the closed answer oracle. This applies to
@@ -259,6 +274,7 @@ def verify_exercise_package(
         status = "pass"
     report = {
         "status": status,
+        "advisory": True,
         "lesson_hash": _lesson_hash(lesson),
         "total": len(_exercise_handles(lesson)),
         "exercise_count": len(_exercise_handles(lesson)),
@@ -272,7 +288,6 @@ def verify_exercise_package(
         "missing": _merge_report_lists(reports, "missing"),
         "mismatches": _merge_report_lists(reports, "mismatches"),
         "semantic_issues": _merge_report_lists(reports, "semantic_issues"),
-        "unsupported_findings": _merge_report_lists(reports, "unsupported_findings"),
         "ambiguous": _merge_report_lists(reports, "ambiguous"),
         "unanswerable": _merge_report_lists(reports, "unanswerable"),
         "duplicates": _merge_report_lists(reports, "duplicates"),
@@ -296,7 +311,7 @@ def _build_surface_report(
     unclear = [handle for handle in handles if handle in by_id and by_id[handle].get("status") != "clear"]
     extra = sorted(set(by_id) - set(handles), key=str)
     report: dict[str, Any] = {
-        "status": "pass" if not missing and not unclear and not extra and not duplicates else "needs_human",
+        "status": ("reviewer_invalid" if missing or extra or duplicates else "pass"),
         "total": len(handles),
         count_key: len(handles) - len(missing) - len(unclear),
         "missing": missing,
@@ -312,7 +327,7 @@ def _build_surface_report(
 
 
 def _semantic_issue_report(payload: dict[str, Any]) -> list[dict[str, Any]]:
-    """Return grounded semantic findings emitted for closed exercises."""
+    """Return advisory semantic findings emitted for closed exercises."""
     answers = payload.get("answers", []) if isinstance(payload, dict) else []
     if not isinstance(answers, list):
         return []
@@ -326,10 +341,8 @@ def _semantic_issue_report(payload: dict[str, Any]) -> list[dict[str, Any]]:
     ]
 
 
-def _build_semantic_report(
-    handles: list[str], payload: dict[str, Any], questions: list[dict[str, Any]]
-) -> dict[str, Any]:
-    """Index open-task semantic findings and fail on any grounded issue."""
+def _build_semantic_report(handles: list[str], payload: dict[str, Any]) -> dict[str, Any]:
+    """Index open-task findings without treating model judgments as blockers."""
     duplicates, by_id = _surface_check_index(payload)
     missing = [handle for handle in handles if handle not in by_id]
     extra = sorted(set(by_id) - set(handles), key=str)
@@ -338,12 +351,7 @@ def _build_semantic_report(
         for handle in handles
         if handle in by_id and by_id[handle].get("semantic_issues")
     ]
-    unsupported_findings = unsupported_semantic_findings(findings, questions)
-    status = (
-        K_EXERCISE_REVIEW_PASS
-        if not missing and not extra and not duplicates and not findings
-        else K_EXERCISE_REVIEW_NEEDS_HUMAN
-    )
+    status = "reviewer_invalid" if missing or extra or duplicates else K_EXERCISE_REVIEW_PASS
     return {
         "status": status,
         "total": len(handles),
@@ -352,7 +360,6 @@ def _build_semantic_report(
         "extra": extra,
         "duplicates": duplicates,
         "semantic_issues": findings,
-        "unsupported_findings": unsupported_findings,
         "open_handles": handles,
     }
 
@@ -383,8 +390,8 @@ def _raise_surface_if_strict(
     strict: bool,
     error_type: type[ExerciseReviewError],
 ) -> None:
-    """Raise the surface-specific error when strict mode requires a pass."""
-    if strict and report["status"] != "pass":
+    """Raise when the reviewer cannot provide a usable report."""
+    if strict and report["status"] in {"reviewer_unavailable", "reviewer_invalid"}:
         raise error_type(report)
 
 
@@ -393,10 +400,8 @@ def _raise_if_strict(report: dict[str, Any], strict: bool) -> None:
     if not strict:
         return
     if report["status"] == K_EXERCISE_REVIEW_UNVERIFIED_OPEN:
-        # Open writing/speaking tasks are intentionally handed to the artifact
-        # boundary.  They are not a verifier outage or a closed-answer failure.
         return
-    if report["status"] != K_EXERCISE_REVIEW_PASS:
+    if report["status"] in {K_EXERCISE_REVIEW_UNAVAILABLE, "reviewer_invalid"}:
         raise ExerciseReviewError(report)
 
 
@@ -463,6 +468,7 @@ __all__ = [
     "AttemptSurfaceReviewError",
     "ExerciseReviewError",
     "OpenRubricReviewError",
+    "build_exercise_package_report",
     "verify_exercise_package",
     "K_EXERCISE_REVIEW_UNVERIFIED_OPEN",
     "verify_attempt_surface",

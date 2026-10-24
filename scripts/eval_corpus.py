@@ -19,7 +19,6 @@ K_EXERCISE_QUALITY_SCHEMA_VERSION = 1
 K_EXERCISE_QUALITY_FAMILIES = frozenset(
     {
         "missing_attempt_context",
-        "broad_speak_hidden_exact_target",
         "malformed_keyed_norwegian",
         "feminine_en_alternative",
         "find_fix_attempt_capability",

@@ -38,7 +38,6 @@ def quote_unquoted_yaml_scalars(text: str) -> str:
         "feedback",
         "text",
         "why",
-        "target",
     }
     index = 0
     while index < len(lines):

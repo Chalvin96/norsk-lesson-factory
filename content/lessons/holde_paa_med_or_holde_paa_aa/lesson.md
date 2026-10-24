@@ -123,6 +123,7 @@ With **med**, the listener learns what task, subject, or project occupies the pe
 **Checkpoint: identify the named activity**
 
 Imagine three people during a busy afternoon: one is occupied with a school assignment, one with dinner, and one with repairs to a bicycle. Describe each person using **holde på med** and a suitable noun expression.
+
 ## Showing an unfolding action: holde på å {#showing-an-unfolding-action role=contrast objectives=obj-holde-paa-med-or-holde-paa-aa-01}
 
 Use **holde på å** before an infinitive when you want to show an action unfolding or developing.
@@ -181,6 +182,7 @@ In each pair, **med** introduces the named activity or project. **Å** introduce
 Return to the three people from the previous checkpoint. Replace each broad description with a more precise action: the student is answering the final question, the cook is washing vegetables, and the cyclist is tightening a screw. Use **holde på å** followed by the appropriate infinitive.
 
 Your response should replace the named activity with an infinitive action and use **å**, not **med**, before that infinitive.
+
 ## One situation, two viewpoints {#one-situation-two-viewpoints role=contrast objectives=obj-holde-paa-med-or-holde-paa-aa-01}
 
 The difference is not always a difference in the real-world situation. Often, both constructions can describe the same person at the same time. They simply package the information differently.
@@ -226,6 +228,7 @@ Here, **ryddingen** is a noun: the tidying or the clean-up. **Rydde** is an infi
 Picture a community hall before a party. Some people are occupied with the decorations, food, and music. Describe these broad activities with **holde på med**. Then zoom in: someone is hanging balloons, someone is baking a cake, and someone is testing the speakers. Describe those actions with **holde på å**.
 
 Describe one context from both viewpoints. Keep **med + named activity** and **å + infinitive action** distinct while producing descriptions that could naturally belong to the same scene.
+
 ## Questions in conversation {#questions-in-conversation role=model objectives=obj-holde-paa-med-or-holde-paa-aa-01}
 
 The contrast also helps you ask different kinds of questions.
@@ -412,7 +415,7 @@ Next, turn one pair of descriptions into a brief dialogue. One speaker asks what
 
 ## Retrieval and review {#retrieval-and-review role=recap objectives=obj-holde-paa-med-or-holde-paa-aa-01}
 
-Without looking back, complete this rule aloud: use **holde på med** before a named activity or noun, and use **holde på å** before an infinitive action. Then describe what Jonas is working on and what he is doing now, using one present-tense sentence with each pattern.
+Without looking back, complete the rule: which word follows **holde på** before a noun, and which word follows it before an infinitive? Then write two present-tense sentences about Jonas: he is working on the lamps and changing a light bulb. Use one sentence with each completed pattern.
 
 ## Repetisjon {#repetisjon role=recap objectives=obj-holde-paa-med-or-holde-paa-aa-01}
 

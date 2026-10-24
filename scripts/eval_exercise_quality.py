@@ -29,9 +29,9 @@ else:
     from eval_metrics import render_markdown_report
 
 from lesson_builder.application.operations.audit_source import audit_source_directory
-from lesson_builder.domain.lesson.validation.review_payloads import extract_answer_questions
-from lesson_builder.domain.lesson.validation.review_payloads import extract_attempt_questions
-from lesson_builder.domain.lesson.validation.review_payloads import extract_open_rubric_questions
+from lesson_builder.domain.lesson.services.review_projection import extract_answer_questions
+from lesson_builder.domain.lesson.services.review_projection import extract_attempt_questions
+from lesson_builder.domain.lesson.services.review_projection import extract_open_rubric_questions
 
 K_DEFAULT_OUTPUT = Path("store/evals/exercise-quality/report.json")
 K_DEFAULT_THRESHOLDS = {

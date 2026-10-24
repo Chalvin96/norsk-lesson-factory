@@ -40,17 +40,25 @@ from lesson_builder.application.operations.synthesize_audio import plan_lesson_a
 from lesson_builder.application.operations.validate_distribution import load_planned_lesson_ids
 from lesson_builder.application.operations.validate_distribution import validate_audio_asset
 from lesson_builder.application.operations.validate_distribution import validate_committed_distribution
+from lesson_builder.application.operations.workbench_approval import derive_stage_statuses
+from lesson_builder.application.operations.workbench_audio import record_release_audio_voices
+from lesson_builder.application.operations.workbench_curriculum import read_curriculum
+from lesson_builder.application.operations.workbench_editing import read_workbench_source
+from lesson_builder.application.operations.workbench_records import WorkbenchAudioIndex
+from lesson_builder.application.settings import K_APPLICATION_AUDIO_COST_PER_MILLION_CHARS_USD
 from lesson_builder.clients.github.releases import download_release_asset
 from lesson_builder.clients.github.releases import resolve_release_tag_commit
+from lesson_builder.domain.curriculum.services.curriculum_edits import collect_curriculum_dependency_findings
 from lesson_builder.domain.distribution.services.distribution_service import DistributionService
 from lesson_builder.domain.lesson.services.transcript import derive_transcript_blocks
 from lesson_builder.workspace.paths import WorkspacePaths
+from lesson_builder.workspace.workbench_store import list_workbench_record_identities
+from lesson_builder.workspace.workbench_store import read_workbench_record
 
 K_RELEASE_PLAN_VERSION = 2
 K_RELEASE_PLAN_FILENAME = "release-plan.json"
 K_RELEASE_ARCHIVE_FILENAME = "lessons.tar.gz"
 K_RELEASE_ARCHIVE_DIST_PREFIX = "dist/"
-K_RELEASE_AUDIO_COST_PER_MILLION_CHARS = 30.0
 K_RELEASE_TAG_PATTERN = re.compile(r"v\d{4}\.\d{2}\.\d{2}")
 K_RELEASE_GIT_TIMEOUT_SECONDS = 30
 
@@ -67,10 +75,10 @@ def run_release(
 ) -> dict[str, object]:
     """Plan or execute one source-bound release, with no interactive prompts."""
     root = Path(repo_root)
+    _require_fresh_canonical_approvals(root)
     if approve:
         plan = _read_existing_plan(root)
-        if plan["source_digest"] != _calculate_source_digest(root):
-            raise ValueError("release plan is stale against canonical source; rerun `uv run lesson-data release`")
+        planned_exclusions = _require_current_release_plan(root, plan)
         settings = load_audio_settings(
             repo_root=root,
             service_account_path=service_account_path,
@@ -122,6 +130,7 @@ def run_release(
         audio_cache_root=cache_root,
         synthesis_client=synthesis_client,
         audio_public_base_url=settings.public_base_url,
+        excluded_audio_fingerprints=frozenset(planned_exclusions),
     )
     validation = validate_committed_distribution(root, distribution_root=output_root)
     archive = output_root / K_RELEASE_ARCHIVE_FILENAME
@@ -141,6 +150,7 @@ def run_release(
         github_tag=resolved_tag,
         archive_includes_audio=False,
     )
+    record_release_audio_voices(root, resolved_tag, _release_audio_voices(root, settings))
     return {
         "approved": True,
         "tag": resolved_tag,
@@ -212,6 +222,60 @@ def verify_release(
     }
 
 
+def _require_fresh_canonical_approvals(root: Path) -> None:
+    blockers: list[str] = []
+    plan = read_curriculum(root)
+    if plan.curriculum_approval == "pending_human":
+        raise ValueError(
+            "release blocked by pending curriculum review:\n"
+            "- curriculum plan: review required\n"
+            "Review and save the curriculum in the workbench before retrying."
+        )
+    order_findings = [
+        finding
+        for finding in collect_curriculum_dependency_findings(plan)
+        if finding.code == "curriculum.prerequisite_order"
+    ]
+    if order_findings:
+        details = "\n".join(f"- {finding.lesson_id}: {finding.explanation}" for finding in order_findings)
+        raise ValueError(f"release blocked by curriculum prerequisite order:\n{details}")
+    for lesson_id in load_planned_lesson_ids(root, plan=plan):
+        source = read_workbench_source(root, lesson_id, canonical_only=True)
+        out_of_sync_stages = [
+            stage
+            for stage in derive_stage_statuses(root, lesson_id, source, plan=plan)
+            if stage.status in ("needs_approval", "stale")
+        ]
+        blockers.extend(f"{lesson_id} {stage.stage}: {stage.status}" for stage in out_of_sync_stages)
+    if blockers:
+        details = "\n".join(f"- {blocker}" for blocker in blockers)
+        raise ValueError(
+            "release blocked by pending curriculum review or out-of-sync canonical lesson approvals:\n"
+            f"{details}\nRe-approve the affected stages in the workbench before retrying."
+        )
+
+
+def _release_audio_voices(root: Path, settings: AudioSettings) -> dict[str, dict[str, str]]:
+    """Capture each published lesson's speaker-to-voice mapping for the next workbench warning."""
+    assignments: dict[str, dict[str, str]] = {}
+    for lesson_id in load_planned_lesson_ids(root):
+        lesson, _metadata = load_lesson_package(WorkspacePaths(root).lessons_root / lesson_id)
+        blocks = derive_transcript_blocks(lesson.model_dump(mode="json"))
+        identities = plan_lesson_audio_candidates(transcript_blocks=blocks, settings=settings)
+        voices: dict[str, str] = {}
+        for block, identity in zip(
+            (item for item in blocks if item.get("origin") in {"lesson_reading", "lesson_example", "exercise_target"}),
+            identities,
+            strict=True,
+        ):
+            source = block.get("source")
+            speaker_id = source.get("speaker_id") if isinstance(source, dict) else None
+            if isinstance(speaker_id, str):
+                voices[speaker_id] = identity.voice
+        assignments[lesson_id] = voices
+    return assignments
+
+
 def _load_or_write_plan(
     root: Path, *, settings: AudioSettings, release_tag: str, github_repository: str | None
 ) -> dict[str, object]:
@@ -236,9 +300,7 @@ def _load_or_write_plan(
         if existing is not None and existing["text"] != candidate["text"]:
             raise ValueError(f"audio fingerprint collision for {fingerprint}")
         unique.setdefault(fingerprint, candidate)
-    desired_keys = set(unique)
-    desired_keys.update(Path(str(candidate["filename"])).stem for candidate in unique.values())
-    sources = _discover_audio_sources(root, desired_keys=desired_keys)
+    excluded_fingerprints, sources = _collect_reusable_audio_sources(root, unique)
     reused, missing_chars = _attach_reuse_evidence(unique, sources)
     missing = len(unique) - reused
     plan: dict[str, object] = {
@@ -252,7 +314,8 @@ def _load_or_write_plan(
         "reused_count": reused,
         "missing_count": missing,
         "missing_characters": missing_chars,
-        "estimated_cost_usd": round(missing_chars / 1_000_000 * K_RELEASE_AUDIO_COST_PER_MILLION_CHARS, 2),
+        "excluded_audio_fingerprints": excluded_fingerprints,
+        "estimated_cost_usd": round(missing_chars / 1_000_000 * K_APPLICATION_AUDIO_COST_PER_MILLION_CHARS_USD, 2),
         "cache_sources": [str(path) for path in _collect_audio_source_roots(root)],
         "candidates": sorted(unique.values(), key=lambda item: str(item["fingerprint"])),
     }
@@ -292,6 +355,45 @@ def _build_candidate_record(lesson_id: str, identity: AudioCandidateIdentity) ->
         "text": identity.text,
         "text_chars": len(identity.text),
     }
+
+
+def _audio_check_finding_fingerprints(root: Path) -> set[str]:
+    """Return cache identities with any persisted open workbench audio finding."""
+    fingerprints: set[str] = set()
+    for lesson_id in list_workbench_record_identities(root, "audio_index"):
+        index = read_workbench_record(root, "audio_index", lesson_id, WorkbenchAudioIndex)
+        fingerprints.update(clip.fingerprint for clip in index.clips.values() if clip.findings)
+    return fingerprints
+
+
+def _require_current_release_plan(root: Path, plan: dict[str, object]) -> list[str]:
+    """Reject source or audio-check changes since the release plan was captured."""
+    if plan["source_digest"] != _calculate_source_digest(root):
+        raise ValueError("release plan is stale against canonical source; rerun `uv run lesson-data release`")
+    candidates = cast(list[dict[str, object]], plan.get("candidates", []))
+    planned_fingerprints = {str(candidate["fingerprint"]) for candidate in candidates}
+    planned_exclusions = cast(list[str], plan.get("excluded_audio_fingerprints", []))
+    current_exclusions = sorted(_audio_check_finding_fingerprints(root) & planned_fingerprints)
+    if planned_exclusions != current_exclusions:
+        raise ValueError("audio check findings changed after planning; rerun `uv run lesson-data release`")
+    return planned_exclusions
+
+
+def _collect_reusable_audio_sources(
+    root: Path, candidates: dict[str, dict[str, object]]
+) -> tuple[list[str], dict[str, Path]]:
+    """Find cache sources while excluding fingerprints with open author audio findings."""
+    desired_keys = set(candidates)
+    desired_keys.update(Path(str(candidate["filename"])).stem for candidate in candidates.values())
+    excluded_fingerprints = sorted(_audio_check_finding_fingerprints(root) & set(candidates))
+    excluded_keys = set(excluded_fingerprints)
+    excluded_keys.update(
+        Path(str(candidate["filename"])).stem
+        for candidate in candidates.values()
+        if str(candidate["fingerprint"]) in excluded_fingerprints
+    )
+    sources = _discover_audio_sources(root, desired_keys=desired_keys - excluded_keys)
+    return excluded_fingerprints, sources
 
 
 def _seed_cache(plan: dict[str, object], *, cache_root: Path) -> None:

@@ -135,7 +135,9 @@ In a basic Norwegian statement, the finite verb comes before **ikke**:
 
 ## When another element comes first {#initial-element-statements role=model objectives=obj-negation-ikke-basic-01}
 
-A statement does not always begin with the subject. A time expression such as **i dag** or **nå** can come first. The finite verb still takes the second position. The placement of **ikke** then depends on the subject: with a full noun subject, **ikke** usually comes before the subject; with an unstressed pronoun subject, the pronoun comes before **ikke**.
+A statement does not always begin with the subject. A time expression such as **i dag** or **nå** can come first. The finite verb still takes the second position. With a name or full noun subject, **ikke** can come before or after the subject. A known subject often comes before **ikke**; a new or emphasized subject can come after it. An unstressed pronoun subject normally comes before **ikke**.
+
+**first element + finite verb + full noun subject + ikke + rest**
 
 **first element + finite verb + ikke + full noun subject + rest**
 
@@ -172,10 +174,17 @@ Do not put **ikke** immediately after the opening time expression:
 - en: Intended meaning: Today Elias doesn’t have a packed lunch.
 :::
 
-The finite verb comes before the subject in both patterns. With a full noun subject, **ikke** comes before it:
+The finite verb comes before the subject in both patterns. A full noun subject can come before **ikke**, as here:
 
 ::: examples
 - no: I dag har Elias ikke matpakke.
+- en: Today Elias doesn’t have a packed lunch.
+:::
+
+It can also come after **ikke**:
+
+::: examples
+- no: I dag har ikke Elias matpakke.
 - en: Today Elias doesn’t have a packed lunch.
 :::
 

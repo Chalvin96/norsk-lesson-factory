@@ -71,11 +71,25 @@
   derived_from:
   - section_id: the-shape-of-the-exchange
 - handle: begin_the_meeting
-  op: speak
+  op: build
   objective: obj-greet-and-introduce-yourself-01
   bloom: apply
-  prompt_md: "Say exactly this opening line aloud: «Hei! Jeg heter Nora.»"
-  target: Hei! Jeg heter Nora.
+  prompt_md: "Build Maja's opening line: start with the greeting, then give her name."
+  tokens:
+  - token_id: tok-3
+    text: heter
+  - token_id: tok-4
+    text: Maja.
+  - token_id: tok-1
+    text: Hei!
+  - token_id: tok-2
+    text: Jeg
+  answer_order:
+  - tok-1
+  - tok-2
+  - tok-3
+  - tok-4
+  explanation_md: '«Jeg heter» means "My name is". «Hei, Maja!» greets Maja; «Jeg heter Maja» introduces the speaker.'
   derived_from:
   - section_id: greeting-with-hei
 - handle: answer_aleksander

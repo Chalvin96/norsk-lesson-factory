@@ -89,7 +89,7 @@ The basic, unchanged form of a verb is called the **infinitive (infinitiv)**. No
 
 Here, **å** is the **infinitive marker**. It corresponds roughly to English *to* in expressions such as *to visit* and *to eat*.
 
-When an infinitive follows an ordinary verb or expression such as **liker**, **håper**, **prøver**, or **har lyst til**, use **å**:
+With the verbs and expressions taught here, such as **liker**, **håper**, **prøver**, and **har lyst til**, use **å** before the infinitive:
 
 **First part:** **Jeg liker**
 
@@ -245,7 +245,7 @@ The English translation may contain *to* in both columns. Norwegian grammar make
 The meaning is similar, but **ønsker** is followed by **å reise**, while the modal verb **vil** is followed by **reise** without **å**.
 
 ::: {.rule}
-Use: **ordinary verb or expression + å + infinitive** but: **modal verb + infinitive without å**.
+Use **liker / ønsker / håper / prøver / har lyst til + å + infinitive**. After the modal verbs taught here, use the infinitive without **å**. Other nonmodal verbs can follow different patterns.
 :::
 
 {{exercise: choose_marker_after_first_verb}}

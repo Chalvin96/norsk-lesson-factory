@@ -310,7 +310,7 @@ For these common plural patterns, the definite plural ends in -ene. When the ind
 - en: bags → the bags
 :::
 
-The final -r disappears before -ene.
+For these nouns, replace the indefinite-plural ending -er with the definite-plural ending -ene.
 
 Some nouns have a changed plural stem, but the definite ending still attaches to the plural form:
 

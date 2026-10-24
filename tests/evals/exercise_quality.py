@@ -12,7 +12,6 @@ from scripts.eval_corpus import load_consensus_cases
 from scripts.eval_corpus import project_semantic_case
 
 K_EXPECTED_MECHANICAL_CODES = {
-    "broad_speak_hidden_exact_target": "speak-target-cue-broad",
     "find_fix_attempt_capability": "find-fix-attempt-capability",
     "response_language_english_conflict": "write-response-language-conflict",
     "recall_segments_missing_separator": "recall-rendered-boundary-missing",

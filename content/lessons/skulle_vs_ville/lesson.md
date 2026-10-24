@@ -46,7 +46,7 @@ Hvis det begynte å regne, ville vi flytte bordene inn.
 God idé. Jeg skulle egentlig hente bordene nå, men bilen min starter ikke.
 :::
 
-::: {.reading translation="Were you also going to collect the signs?" dialogue_id="saturday-plan" speaker_id="nora" speaker_name="Nora" character_id="nora"}
+::: {.reading translation="I can drive. Were you also going to collect the signs?" dialogue_id="saturday-plan" speaker_id="nora" speaker_name="Nora" character_id="nora"}
 Jeg kan kjøre. Skulle du også hente skiltene?
 :::
 

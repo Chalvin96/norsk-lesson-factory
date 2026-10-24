@@ -285,7 +285,7 @@ Compare singular, indefinite plural, and definite plural:
 - en: a child
 - no: barn
 - en: children
-- no: barnene
+- no: barna
 - en: the children
 :::
 
@@ -320,7 +320,7 @@ A common mistake is to assume that every plural must end in **-er**. Forms such 
 - en: Incorrect: the common plural for “glasses” here is **glass**.
 :::
 
-Some neuter nouns can have **-a** in the definite plural, especially in informal or regional usage:
+Some neuter nouns can have **-a** in the definite plural in standard Bokmål. **Barna** is the normal everyday form for “the children”:
 
 ::: examples
 - no: barna
@@ -329,7 +329,7 @@ Some neuter nouns can have **-a** in the definite plural, especially in informal
 - en: the houses
 :::
 
-Forms with **-ene**, such as **barnene** and **husene**, are also Bokmål. For consistent production at this stage, **-ene** is a dependable pattern; learners should also recognize common **-a** forms.
+The choice between **-a** and **-ene** depends on the noun and usage. **Barnene** is also allowed but much less usual than **barna**. For “the houses”, both **husene** and **husa** are standard. Learn the common definite plural with each noun; use **barna** for “the children”.
 
 {{exercise: recognize_zero_ending_neuter_plurals}}
 

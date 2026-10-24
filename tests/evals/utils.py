@@ -8,9 +8,9 @@ from typing import Any
 
 from lesson_builder.application.operations.audit_source import audit_source_directory
 from lesson_builder.domain.lesson.models.source_audit import MechanicalAudit
-from lesson_builder.domain.lesson.validation.review_payloads import extract_answer_questions
-from lesson_builder.domain.lesson.validation.review_payloads import extract_attempt_questions
-from lesson_builder.domain.lesson.validation.review_payloads import extract_open_rubric_questions
+from lesson_builder.domain.lesson.services.review_projection import extract_answer_questions
+from lesson_builder.domain.lesson.services.review_projection import extract_attempt_questions
+from lesson_builder.domain.lesson.services.review_projection import extract_open_rubric_questions
 from tests.evals.exercise_quality import review_case_lesson
 
 

@@ -123,14 +123,14 @@ def materialize_curriculum_plan(
     )
 
 
-def validate_committed_curriculum_plan(*, repo_root: Path) -> CurriculumPlan:
+def validate_committed_curriculum_plan(*, repo_root: Path, plan: CurriculumPlan | None = None) -> CurriculumPlan:
     """Validate that the committed plan still matches its approved catalog."""
     root = Path(repo_root)
     paths = WorkspacePaths(root)
     plan_path = paths.curriculum_plan
     if not plan_path.exists():
         raise FileNotFoundError(f"committed curriculum plan not found: {plan_path}")
-    plan = CurriculumPlan.model_validate(_load_yaml_mapping(plan_path))
+    plan = plan if plan is not None else CurriculumPlan.model_validate(_load_yaml_mapping(plan_path))
     catalog_path = root / plan.source_catalog
     current_hash = hash_catalog_content(_load_yaml_mapping(catalog_path))
     sequence_path = root / plan.source_sequence if plan.source_sequence else paths.curriculum_sequence
@@ -144,7 +144,7 @@ def validate_committed_curriculum_plan(*, repo_root: Path) -> CurriculumPlan:
             "committed curriculum plan is stale: "
             f"catalog plan={plan.source_catalog_hash}, current={current_hash}; "
             f"sequence plan={plan.source_sequence_hash}, current={current_sequence_hash}; "
-            "rerun `lesson-data curriculum catalog --auto-approve --commit`"
+            "reconcile content/curriculum/plan.yaml with the approved catalog in the workbench"
         )
     return plan
 
@@ -229,7 +229,7 @@ def _load_yaml_mapping(path: Path) -> dict[str, Any]:
     """Load one YAML mapping with an actionable error."""
     if not path.exists():
         raise FileNotFoundError(f"catalog source not found: {path}")
-    payload = yaml.safe_load(path.read_text(encoding="utf-8"))
+    payload = yaml.load(path.read_text(encoding="utf-8"), Loader=yaml.CSafeLoader)
     if not isinstance(payload, dict):
         raise TypeError(f"catalog source must be a YAML mapping: {path}")
     return payload

@@ -17,7 +17,7 @@ __all__ = ["build_parser", "main"]
 
 
 def build_parser() -> argparse.ArgumentParser:
-    """Assemble the complete lesson-data parser with every command family."""
+    """Assemble the parser for the five supported lesson-data commands."""
     parser = argparse.ArgumentParser(prog="lesson-data")
     subparsers = parser.add_subparsers(dest="command", required=True)
     add_commands(subparsers)

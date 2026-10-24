@@ -14,6 +14,7 @@ class LlmException(RuntimeError):
     # Populated by JobRunner after retry exhaustion so callers can inspect the
     # attempt trace. Empty for exceptions raised directly by a client.
     attempts: tuple[AttemptOutcome, ...] = ()
+    provider_name: str | None = None
 
 
 class LlmQuotaException(LlmException):
@@ -28,14 +29,9 @@ class BackendDownException(LlmException):
     """The backend is transport/auth-unavailable."""
 
 
-class LlmCancelledException(LlmException):
-    """The caller cancelled an active LLM process."""
-
-
 __all__ = [
     "LlmException",
     "LlmQuotaException",
     "LlmParseException",
     "BackendDownException",
-    "LlmCancelledException",
 ]

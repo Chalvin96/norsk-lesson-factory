@@ -38,7 +38,8 @@ def test_matches_quota_given_matching_pattern_expect_true():
         name = "t"
         quota_patterns = ("rate limit",)
 
-        def call(self, prompt, *, model=None, agent=None, variant=None):
+        def call(self, prompt, *, model=None, agent=None, variant=None, cancellation=None):
+            del prompt, agent, variant, cancellation
             return base_mod.LlmResponse(text="", client="t", model=model or "t")
 
     assert _Client().matches_quota("Rate Limit exceeded") is True
@@ -49,7 +50,8 @@ def test_matches_quota_given_no_matching_pattern_expect_false():
         name = "t"
         quota_patterns = ("rate limit",)
 
-        def call(self, prompt, *, model=None, agent=None, variant=None):
+        def call(self, prompt, *, model=None, agent=None, variant=None, cancellation=None):
+            del prompt, agent, variant, cancellation
             return base_mod.LlmResponse(text="", client="t", model=model or "t")
 
     assert _Client().matches_quota("all good") is False

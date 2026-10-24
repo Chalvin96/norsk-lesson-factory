@@ -196,8 +196,8 @@ The same pattern applies to other sentence adverbs:
 For the neutral reported-statement pattern taught here, use subordinate word order after at:
 
 ::: examples
-- no: Jonas sa at Liv ikke jobbet hjemme.
-- en: Jonas said that Liv was not working at home.
+- no: Amir sa at han ikke kom på møtet.
+- en: Amir said that he was not coming to the meeting.
 :::
 
 A compact rule for this lesson’s at-report patterns is: place ikke and similar sentence adverbs before the finite verb.

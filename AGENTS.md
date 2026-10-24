@@ -1,195 +1,165 @@
-# Agent Conventions
+# Agent conventions
 
-Project-specific rules for humans and agents working in this repository.
+This repository is the authoring and generation source for Norwegian lesson
+content. Treat product, implementation, and review questions as authoring
+questions first. The learner application owns presentation, playback, reveal
+timing, session state, and learner scoring; those behaviours do not belong in
+the authoring contract. The workbench is an author tool, not the learner
+runtime. Read [Authoring, Distribution, and Release Boundaries](knowledge/project/boundaries.md)
+when a task crosses that boundary. A scratch browser POC can illustrate a
+downstream rendering only when it is clearly labelled and never defines the
+production authoring schema.
 
-## Repository scope: authoring only
+Authoring may define lesson objectives, explanations, examples, transcripts,
+translations, model audio, evidence kinds, answers, feedback, rationales, and
+the audio artifacts generated from those authored transcripts.
 
-This repository owns the human-editable authoring and generation inputs for
-lesson content. Frame design, implementation, and review questions as
-authoring questions first.
+## Start with the current map
 
-The authoring surface may define lesson objectives, explanations, examples,
-transcripts, translations, model audio,
-evidence kinds, answers, and feedback or rationales. It may also generate and
-export the audio artifacts required by those authored transcripts.
+Read [`knowledge/index.md`](knowledge/index.md) and the concepts it links before
+planning. For package layout, imports, module boundaries, or services, read
+[Codebase Shape and Placement](knowledge/project/codebase.md), then
+[Codebase Architecture and Module Boundaries](knowledge/project/codebase-architecture.md).
+Record `responsibility -> code kind -> owner -> layer -> target module` in an
+ignored `plans/` file when a change needs a detailed plan. `knowledge/` is the
+committed current-state source; keep proposals and task history out of it.
+Remaining `openspec/` files are dated historical context, are not authoritative
+or CI-validated, and do not get copied into `knowledge/`.
+Update affected knowledge concepts when behaviour or architecture changes.
 
-The consuming learner application owns presentation and interaction behavior.
-Do not put transcript visibility, replay controls, reveal timing, player state,
-session state, or learner-facing scoring behavior into the lesson authoring
-contract. The supported local preview is an author inspection tool; see
-[Authoring, Distribution, and Release Boundaries](knowledge/project/boundaries.md).
-A scratch browser POC may demonstrate one possible downstream rendering, but it
-must be clearly labeled as such and must not be treated as the production
-authoring schema.
-
-## Knowledge and planning
-
-Read `knowledge/index.md` and the relevant linked concepts before planning work.
-For any change involving package layout, imports, module boundaries, or
-services, read [Codebase Shape and Placement](knowledge/project/codebase.md)
-immediately after the index, then read
-[Codebase Architecture and Module Boundaries](knowledge/project/codebase-architecture.md)
-for dependency rationale and known migration debt.
-`knowledge/` is the only committed current-state source: durable product, domain,
-data, architecture, platform, operations, and reference facts belong there.
-Use an ignored file under `plans/` for local planning when a task needs a detailed
-work plan. Any `openspec/` files that remain in the repository are dated historical
-context only; they are not authoritative, are not required for new work, and are not
-validated by CI. Never copy proposal, design, or task history into `knowledge/`.
-
-Update the affected knowledge concepts whenever behavior or architecture changes.
-Use `uv` for Python dependencies and commands. Enable the repository hook with
-`git config core.hooksPath .githooks` when you want local checks.
-
-## Release workflow
-
-Follow the [Release Operations Runbook](knowledge/README.md) for standard releases.
-Run `uv run lesson-data release` and review audio reuse, missing recordings, and
-estimated synthesis cost before running its printed `release --approve`
-continuation with authorization for synthesis and publication.
-
-Do not publish committed provider-free `dist/` through low-level `package` or
-`publish` commands as a standard release. Standard releases require complete
-source-derived audio coverage and verified audio uploaded before the lesson
-archive. Tag CI only runs `release-verify` against the locally published release;
-it does not synthesize or publish. Confirm verification passes before reporting
-the release complete.
+Use `uv` for Python commands and dependencies. Enable the repository hook with
+`git config core.hooksPath .githooks` when local staged checks are useful.
 
 ## Authoring preview
 
-Use `uv run lesson-data preview <lesson-id> --no-browser` and open the printed
-preview URL to inspect current source. Reload after edits; preview does not
-regenerate `dist/`, call providers, or establish learner-app behavior.
+Read and follow the [workbench verification skill](.agents/skills/verify/SKILL.md)
+when a change affects workbench rendering, templates, styles, interactions, or
+lesson section/exercise structure, order, or formatting. It is the canonical
+route to browser evidence. Wording, translation, metadata, dependency, and
+curriculum-sequence changes usually need no browser run unless they create a
+rendering question.
 
-- Browser inspection is required for changes to preview rendering, templates,
-  styles, or interactions, and for lesson edits that change section/exercise
-  structure, order, or formatting. Inspect a representative affected lesson;
-  for shared renderer changes, cover the affected block and operation types.
-  Preview is optional for plain wording, translation, metadata, dependency, or
-  curriculum-sequence edits unless the change raises a rendering concern.
-- Check authored content order, exercise context, and author-only answer/source
-  disclosures. For visible UI changes, check desktop and a 320 px viewport for
-  clipping/overflow, keyboard navigation and focus, heading hierarchy, language
-  scoping, and contrast. Exercise affected findings, unavailable-audio, malformed
-  source, and reload/recovery states when those paths change; use temporary
-  fixtures for invalid source rather than altering canonical lessons.
-- Keep the preview read-only and provider-free. Renderer/server changes must
-  retain regression coverage for escaped untrusted content, source path
-  containment, and Host/Origin validation as applicable.
-- For visible UI changes, capture and inspect a screenshot of the actual browser
-  result. Keep screenshots and requested demo recordings in ignored `reports/`
-  or outside the repository, and link them in the handoff with the lesson and
-  tested state. They are review evidence, not lesson/distribution artifacts.
-  A recording must demonstrate the interactions it claims to verify.
-- Preview complements the relevant automated checks in `npm run check`, source
-  validation, and deterministic export regeneration; it does not replace them,
-  semantic review, or human acceptance. If browser access is unavailable, report
-  the unverified visual behavior and complete the checks that can run.
+The loopback workbench reads authoring source; opening it does not regenerate
+`dist/` or call providers. Chat, review, and regeneration can call configured
+providers. Its approval records record owner acceptance and do not claim
+qualified Norwegian review. Curriculum entry chips come from current approval
+records.
+Exercise regeneration is a per-draft graph: one proposal contains one block
+per affected exercise, is checked as a whole, and is decided per item.
 
-## Executable conventions
+The generated app in `src/lesson_builder/web/app/` is ignored output. The
+workbench build creates it when required, and it never belongs in a commit.
+The frontend's Storybook command is the visual catalogue; its tests and type
+checks are the relevant automated evidence for frontend changes.
+Browser inspection complements automated checks, source validation, deterministic
+export regeneration, semantic review, and human acceptance. If browser access
+is unavailable, report the unverified visual behaviour and complete the checks
+that can run.
 
-`npm run conventions:check` checks introduced mechanical violations against the branch
-base. `scripts/test_review_prompt.md` contains the semantic review rubric for test
-qualities that cannot be decided reliably by syntax. Review changes to packages,
-imports, models, or services against `knowledge/project/codebase.md` before reviewing
-implementation details.
+## Release and distribution
 
-## Write-judge calibration seed labels
+Follow the [Release Operations Runbook](knowledge/README.md). Run
+`uv run lesson-data release`, review reuse, missing recordings, and estimated
+cost, then use its printed `release --approve` continuation only when synthesis
+and publication are authorized. Standard releases require complete
+source-derived audio and verified uploaded audio before the lesson archive.
+Tag CI only verifies an already published release. Provider-free committed
+`dist/` is a local authoring artifact, not a standard release.
+Confirm release verification passes before reporting a release complete.
 
-The repository owner does not read Norwegian. Codex (`codex exec`) is the delegated
-seed label reviewer for `evals/promptfoo/cases/write_judge_calibration.yaml`: run it
-for every seed change, fix until it reports full agreement, and only then flip
-`label_provenance` to `human_reviewed` in the same change. Keep case ids stable even
-when a name becomes stale; correct the description and `primary_failed_criterion`
-instead.
+The supported top-level CLI commands are `check`, `regenerate-dist`, `release`,
+`release-verify`, and `workbench`.
 
-The enforced test-name shape is:
+## Code ownership and boundaries
 
-```text
-test_<what_is_being_tested>_given_<condition>_expect_<output>
-```
+The codebase guide is the placement authority. Existing placement, file length,
+similar names, and neighbouring modules are evidence to inspect, not ownership
+reasons. Domain services stay flat and
+deterministic; application operations own non-checkpointed effects and
+coordination; workflows own checkpoints, retries, and recovery; clients own
+provider transport; formats own parsing and conversion; workspace owns local
+paths, records, caches, locks, and atomic writes; web and CLI are inbound
+adapters. Keep public contracts with their owning context and keep operation,
+workflow, transport, and private records with their owning layer.
+Domain services do not read or write files, parse external formats, call
+providers, inspect environment state, own checkpoints, or coordinate contexts,
+including through injected collaborators. Expose one cohesive context service
+only when callers need a stable mutation or projection API.
+Type syntax does not decide ownership. Standalone validators and projections
+belong in validation modules, reusable cross-model policy belongs in flat
+services, and a catch-all `rules.py` or god service exists only when its
+responsibility is actually cohesive.
 
-Use readable, specific snake_case. Avoid abbreviations and vague conditions such as
-`happy_path` or `sad_path`.
+Use verb-first, explicit service methods; name predicates `is_`, `has_`, or
+`can_`, optional lookups `find_`, and raising lookups `require_`. Keep provider
+model routing, timeouts, environment names, quota patterns, URLs, and similar
+configuration in the layer's `settings.py`. A checkpoint stage gets its own
+module when it owns routing, state transformation, checkpoint, or error
+behaviour; pure call-through operations stay on the cohesive injected runner.
+Group package exports by role in `__all__`; put the primary public entry point
+first, then other public helpers, then private helpers.
 
-The checker is authoritative for the mechanical portions of module organization,
-constants, and helper placement below.
+Ask for an architecture decision before creating or changing a domain context,
+moving a public contract across contexts or layers, adding a dependency edge,
+or placing a responsibility the codebase guide does not route. A boundary
+change names the intended interface, narrows caller knowledge, migrates callers
+atomically, and removes the obsolete alias or wrapper.
 
-## Module organization
+The mechanical Python and test conventions are checked by
+`scripts/check_agent_conventions.py`; run `npm run conventions:check` and use
+its diagnostic as the repair instruction. Keep semantic review guidance in
+[`scripts/test_review_prompt.md`](scripts/test_review_prompt.md), including its
+state-sync standard for code that persists shared state.
 
-Existing placement is evidence about the current code, not proof of correct ownership.
-Before adding or moving production code, classify each responsibility and record
-`responsibility -> code kind -> owner -> layer -> target module` in the plan. File
-length, similar names, and an existing neighboring module are not placement reasons.
+The staged pre-commit hook stays fast and checks only staged workbench files.
+Biome owns frontend formatting and lint with its exact pinned dependency. Its
+configuration excludes generated TypeScript and JSON schema plus the copied
+Flyt learner renderer because those sources belong to their upstream owners.
+The disabled array-index rule matches ordered author content with no stable
+wire identity; the disabled noninteractive-tabindex rule is limited to the
+chat transcript and lesson document, where keyboard scrolling and row focus
+are deliberate.
 
-`domain/<context>/services/` is flat and contains deterministic logic only. Do not create
-a directory below `services/` or put file/provider effects there, even through injected
-collaborators. Domain-owned public contracts belong in the context's existing model
-namespace; operation results, workflow state, transport types, and private records stay
-with their owning layer. Type syntax does not decide ownership. Standalone validators
-and projections belong in validation modules; reusable cross-model policy belongs in
-flat services. See the codebase guide for responsibility routing.
+## Tests and evidence
 
-Stop and request an architecture decision before creating or changing a domain context,
-moving a public contract between contexts or layers, adding a dependency direction, or
-placing code whose route is not established by the codebase guide.
+Test observable behaviour, routing, state transitions, edge cases, regressions,
+and data invariants. Keep setup incidental, execute behaviour once, and make
+assertions follow the action. Use `monkeypatch` for external subprocess or HTTP
+calls; gate live providers with an explicit environment flag. Local provider-
+free CLI and loopback HTTP tests need no live-service gate. Use `tmp_path` for
+filesystem work and keep tests independent of ordering and shared mutable state.
+Skip language primitives, type hierarchy by itself, static tuples, private
+structure, and duplicated assertions; an exception-routing behaviour test is
+stronger than an `issubclass` test.
 
-A boundary change is complete only when it names the intended interface, narrows what
-callers must know, updates repository callers atomically, and deletes the obsolete alias,
-wrapper, or facade. A checkpoint stage gets its own node module only when that module owns
-routing, state transformation, checkpoint, or error behavior; register a pure call-through
-operation directly from the cohesive injected runner.
+Use one `factory.Factory` per model for incidental Pydantic or DTO data and
+literals for behaviour-defining shapes. Share typed fakes through the test
+layer's `fakes.py` and factories through `factories.py`; keep `conftest.py` for
+common fixtures. The canonical LLM fake is `FakeLlmClient(BaseLlmClient)` with
+an `fn(prompt, model) -> str` closure and `responding`, `raising`, and
+`from_fn` constructors.
+Use mocks for interaction assertions, and typed `calls` lists for simple fake
+recording. The root test fixture isolates HOME and XDG state per test; preserve
+that isolation for every test-launched subprocess. Shared fakes do not touch
+subprocesses, networks, environments, or repository files; patch agent
+factories explicitly at the call site.
 
-Every module begins with a docstring whose first line names its entry-point function:
-``Entry point: `thing_check`.`` If its public API is a data type, use
-``Not a check itself — ...``. If it has multiple entry points, name each and its caller.
+## Calibration and authoring review
 
-Public functions/classes come first in reader order: primary entry point, then other
-public helpers. Private `_` helpers follow. A package with a clear entry point names it
-and its role in `__init__.py`'s docstring. Group package exports by role with comments
-inside `__all__`.
+The repository owner does not read Norwegian. For every seed change in
+`evals/promptfoo/cases/write_judge_calibration.yaml`, run the delegated `codex exec`
+review, fix until it reports full agreement, and then flip
+`label_provenance` to `human_reviewed` in the same change. Keep case IDs stable;
+repair stale names through the description and `primary_failed_criterion`.
 
-A context may expose one cohesive `<Context>Service` in
-`domain/<context>/services/<context>_service.py` when callers need a stable mutation or
-projection API; it is an option, not a requirement. Keep methods verb-first and explicit;
-use `is_`, `has_`, or `can_` for predicates, `find_` for optional lookups, and `require_`
-for raising lookups. Do not create a generic catch-all `rules.py` or a god service merely
-for naming symmetry. The architecture map documents the boundary and the distinction
-between local distribution artifacts and external releases.
+When lesson content changes, review authored order, exercise context, and
+author-only answer/source disclosures. Preserve regression coverage for escaped
+untrusted content, source containment, and Host/Origin validation when the
+workbench renderer or server changes. Use temporary invalid-source fixtures so
+canonical lessons remain valid.
 
-## Constants and settings
-
-All module-level constants use `K_<COMPONENT>_<NAME>` in upper snake case. Provider
-model-routing settings, timeouts, environment-variable names, quota patterns, URLs,
-and other configuration
-belong in one `settings.py` per layer.
-
-## Testing policy
-
-Test observable runtime behavior, routing, state transitions, edge cases, regressions,
-and data invariants. Do not test language primitives, type hierarchy by itself, static
-pattern tuples, private structure, or duplicated assertions. A behavior test that
-exercises exception routing supersedes an `issubclass` test.
-
-Mock external subprocess/HTTP calls with `monkeypatch`; tests that call live
-providers or external services require an explicit environment gate such as
-`LLM_SMOKE`. Provider-free local CLI and loopback HTTP integration tests do not
-require that gate. Filesystem tests use `tmp_path` and never write into the
-repository. Tests must pass independently.
-
-## Test data and behavior fakes
-
-Use `factory_boy` for incidental Pydantic/DTO setup, with one `factory.Factory` per
-model in `tests/<layer>/factories.py`. Use inline literals when their exact shape or
-values are the behavior under test.
-
-Use shared typed fakes for behavior, not factories or ad-hoc per-file classes. Reusable
-fakes live in `tests/<layer>/fakes.py` and are imported explicitly. The canonical LLM
-fake is `FakeLlmClient(BaseLlmClient)`, driven by an `fn(prompt, model) -> str` closure,
-with `responding`, `raising`, and `from_fn` constructors.
-
-Keep `conftest.py` limited to fixtures that inject common defaults. Prefer fakes for
-return/raise behavior; use `unittest.mock` only for interaction assertions. Simple fakes
-may expose a typed `calls` list. Shared fakes never touch subprocess, network,
-environment, or repository files. Patch agent factories explicitly with
-`monkeypatch.setattr` at the call site.
+The repository check runner is the full local gate and runs every listed check
+even after a failure; use its `--only` and `--skip` filters for focused loops.
+The release and workbench runbooks, package scripts, and checker output are the
+authoritative mechanics; this file carries the reasons, boundaries, and routing
+that those files cannot infer.

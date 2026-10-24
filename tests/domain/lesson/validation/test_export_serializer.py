@@ -17,6 +17,26 @@ K_AUDIO_EXAMPLE_UUID = "22222222-2222-5222-8222-222222222222"
 K_AUDIO_SINGLE_EXAMPLE_UUID = "33333333-3333-5333-8333-333333333333"
 
 
+@pytest.mark.parametrize("kind", ["grammar", "phraseology", "communicative", "pronunciation", "writing"])
+def test_export_given_known_lesson_kind_expect_classification_preserved(kind: str):
+    exported = to_export_dict(_lesson(), kind=kind)
+
+    assert exported["kind"] == kind
+    assert ExportedLesson.model_validate(exported).kind == kind
+
+
+def test_export_given_omitted_lesson_kind_expect_grammar_default():
+    exported = to_export_dict(_lesson())
+
+    assert exported["kind"] == "grammar"
+
+
+@pytest.mark.parametrize("kind", ["", "unknown", " Communicative "])
+def test_export_given_invalid_lesson_kind_expect_explicit_error(kind: str):
+    with pytest.raises(ValueError, match="unknown lesson kind"):
+        to_export_dict(_lesson(), kind=kind)
+
+
 def test_export_given_internal_lesson_expect_pages_and_practice_groups():
     exported = to_export_dict(_lesson(), kind="grammar")
 

@@ -19,11 +19,11 @@ from typing import Any
 
 from lesson_builder.domain.lesson.models.checks import CheckResult
 from lesson_builder.domain.lesson.models.terminology import TerminologyBans
+from lesson_builder.domain.lesson.services.learner_text import extract_learner_text
 from lesson_builder.domain.lesson.validation.checks.validators.terminology import K_TERM_CHECK_BANNED
 from lesson_builder.domain.lesson.validation.checks.validators.terminology import K_TERM_CHECK_PROSE_TELL
 from lesson_builder.domain.lesson.validation.checks.validators.terminology import terminology_audit
 from lesson_builder.domain.lesson.validation.checks.validators.terminology import terminology_check
-from lesson_builder.domain.lesson.validation.terminology import extract_learner_text
 
 # ---------------------------------------------------------------------------
 # Fixture builders

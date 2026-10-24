@@ -164,9 +164,9 @@ A longer time expression can be fronted:
 
 ::: examples
 - no: Elias rydder lokalet etter det siste besøket.
-- en: Elias tidies the room after the last visitor.
+- en: Elias tidies the room after the last visit.
 - no: Etter det siste besøket rydder Elias lokalet.
-- en: After the last visitor, Elias tidies the room.
+- en: After the last visit, Elias tidies the room.
 :::
 
 A common misconception is that fronting requires an extra verb or creates a question. It does neither. The subject follows the finite verb, as it does in many questions, but a fronted statement remains a statement:

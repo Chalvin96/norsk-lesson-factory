@@ -863,54 +863,6 @@ def test_load_exercises_given_find_fix_feedback_required_expect_type_error_when_
         _load_one(exercise)
 
 
-# ── speak ────────────────────────────────────────────────────────────────
-
-
-def test_load_exercises_given_speak_target_expect_exact_target_payload():
-    exercise = {
-        "handle": "ex_speak",
-        "op": "speak",
-        "objective": "obj-conditional",
-        "bloom": "apply",
-        "prompt_md": "Say the sentence that fits the situation.",
-        "target": "Hvis timen ikke passer, kan jeg få en annen time.",
-    }
-
-    ex = _load_one(exercise)
-
-    assert ex.operation == "speak"
-    assert ex.payload.target == "Hvis timen ikke passer, kan jeg få en annen time."
-
-
-def test_load_exercises_given_speak_whitespace_target_expect_value_error():
-    exercise = {
-        "handle": "ex_speak",
-        "op": "speak",
-        "objective": "obj-conditional",
-        "bloom": "remember",
-        "prompt_md": "Say it.",
-        "target": "   ",
-    }
-
-    with pytest.raises(ValueError, match="non-whitespace"):
-        _load_one(exercise)
-
-
-def test_load_exercises_given_speak_runtime_field_expect_value_error():
-    exercise = {
-        "handle": "ex_speak",
-        "op": "speak",
-        "objective": "obj-conditional",
-        "bloom": "apply",
-        "prompt_md": "Say it.",
-        "target": "Hvis timen passer, kommer jeg.",
-        "stt": {"provider": "browser"},
-    }
-
-    with pytest.raises(ValueError, match="speak does not support field.*stt"):
-        _load_one(exercise)
-
-
 # ── write ─────────────────────────────────────────────────────────────────
 
 

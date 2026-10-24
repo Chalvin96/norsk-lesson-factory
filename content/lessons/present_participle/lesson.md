@@ -530,8 +530,8 @@ Hva med folkene som bor i etasjen over?
 De virker hyggelige. Og barnebarnet deres sov rolig da vi var der.
 :::
 
-::: {.reading translation="Shall we make an offer?" dialogue_id=cafe_discussion speaker_id=jonas speaker_name="Jonas" character_id="jonas"}
-Skal vi legge inn et tilbud?
+::: {.reading translation="Shall we put in a bid?" dialogue_id=cafe_discussion speaker_id=jonas speaker_name="Jonas" character_id="jonas"}
+Skal vi legge inn et bud?
 :::
 
 ::: {.reading translation="Yes. But first we need to read the current sales prospectus carefully." dialogue_id=cafe_discussion speaker_id=ingrid speaker_name="Ingrid" character_id="ingrid"}
