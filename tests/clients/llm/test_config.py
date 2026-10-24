@@ -366,6 +366,16 @@ def test_load_llm_job_given_agents_directory_symlink_outside_repository_expect_c
         load_llm_job("author", repo_root=tmp_path)
 
 
+def test_load_llm_jobs_given_repository_config_expect_reviewer_workbench_model_and_variant():
+    jobs = load_llm_jobs(repo_root=Path(__file__).parents[3])
+    workbench = [job for name, job in jobs.items() if name.startswith("workbench_")]
+    assert {job.name for job in workbench} == {"workbench_reviewer", "workbench_author"}
+    assert all(job.tier.model == "openai/gpt-6.1-sol" and job.tier.variant == "medium" for job in workbench)
+    assert jobs["author"].tier.name == "standard"
+    assert jobs["reviewer"].tier.model == "openai/gpt-6.1-sol"
+    assert jobs["reviewer"].tier.variant == "medium"
+
+
 def _write_config(tmp_path: Path, llm_yaml: str) -> Path:
     """Install one root config plus the agent template it references."""
     (tmp_path / "config.yaml").write_text(llm_yaml, encoding="utf-8")

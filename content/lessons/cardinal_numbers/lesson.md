@@ -102,7 +102,7 @@ These are the basic cardinal numbers, the numbers used to say how many things th
 - en: ten
 :::
 
-Say the sequence aloud several times:
+Listen to the sequence several times:
 
 ::: examples
 - no: en, to, tre, fire, fem, seks, sju, åtte, ni, ti

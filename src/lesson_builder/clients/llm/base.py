@@ -18,6 +18,8 @@ from typing import Any
 
 from json_repair import loads as repair_json_loads
 
+from lesson_builder.clients.cancellation import CancellationToken
+from lesson_builder.clients.cancellation import Cancelled
 from lesson_builder.clients.llm.settings import K_LLM_CLI_TERMINATE_GRACE_SECONDS
 
 K_LLM_JSON_FENCE_MIN_LINES = 2
@@ -73,64 +75,75 @@ class BaseLlmClient(ABC):
         model: str | None = None,
         agent: str | None = None,
         variant: str | None = None,
+        cancellation: CancellationToken | None = None,
     ) -> LlmResponse: ...
 
 
 K_ACTIVE_CLI_PROCESSES: dict[int, subprocess.Popen[str]] = {}
-K_CANCELLED_CLI_PROCESS_IDS: set[int] = set()
-K_CLI_CANCELLATION_REQUESTED = False
+K_ACTIVE_CLI_CANCELLATIONS: dict[int, CancellationToken] = {}
+K_LLM_CLI_CANCELLATION_TOKEN = CancellationToken()
 K_ACTIVE_CLI_PROCESSES_GUARD = threading.Lock()
 
 
 def cancel_active_cli_calls() -> None:
     """Terminate and reap every active CLI process owned by this process."""
-    global K_CLI_CANCELLATION_REQUESTED
     with K_ACTIVE_CLI_PROCESSES_GUARD:
-        K_CLI_CANCELLATION_REQUESTED = True
+        cancellations = (K_LLM_CLI_CANCELLATION_TOKEN, *K_ACTIVE_CLI_CANCELLATIONS.values())
         active = tuple(K_ACTIVE_CLI_PROCESSES.values())
-        K_CANCELLED_CLI_PROCESS_IDS.update(process.pid for process in active)
+    for cancellation in cancellations:
+        cancellation.cancel("author", "LLM call cancelled.")
     for process in active:
         terminate_cli_process(process)
 
 
 def reset_cli_cancellation() -> None:
     """Clear the batch cancellation latch after all worker calls have stopped."""
-    global K_CLI_CANCELLATION_REQUESTED
+    global K_LLM_CLI_CANCELLATION_TOKEN
     with K_ACTIVE_CLI_PROCESSES_GUARD:
         if K_ACTIVE_CLI_PROCESSES:
             raise RuntimeError("cannot reset CLI cancellation while processes remain active")
-        K_CLI_CANCELLATION_REQUESTED = False
-        K_CANCELLED_CLI_PROCESS_IDS.clear()
+        K_LLM_CLI_CANCELLATION_TOKEN = CancellationToken()
 
 
-def register_active_cli_process(process: subprocess.Popen[str]) -> None:
+def register_active_cli_process(
+    process: subprocess.Popen[str], cancellation: CancellationToken | None = None
+) -> CancellationToken:
     """Register one child process for cancellation by the batch interrupt path."""
     with K_ACTIVE_CLI_PROCESSES_GUARD:
-        cancellation_requested = K_CLI_CANCELLATION_REQUESTED
-        if cancellation_requested:
-            K_CANCELLED_CLI_PROCESS_IDS.add(process.pid)
+        batch_cancellation = K_LLM_CLI_CANCELLATION_TOKEN
+        active_cancellation = cancellation or batch_cancellation
         K_ACTIVE_CLI_PROCESSES[process.pid] = process
-    if cancellation_requested:
+        K_ACTIVE_CLI_CANCELLATIONS[process.pid] = active_cancellation
+        batch_cancelled = batch_cancellation.is_cancelled
+    if batch_cancelled:
+        active_cancellation.cancel("author", "LLM call cancelled.")
+    if active_cancellation.is_cancelled:
         terminate_cli_process(process)
+    return active_cancellation
 
 
 def unregister_active_cli_process(process: subprocess.Popen[str]) -> None:
     """Remove one child process after its output has been reaped."""
     with K_ACTIVE_CLI_PROCESSES_GUARD:
         K_ACTIVE_CLI_PROCESSES.pop(process.pid, None)
-        K_CANCELLED_CLI_PROCESS_IDS.discard(process.pid)
+        K_ACTIVE_CLI_CANCELLATIONS.pop(process.pid, None)
 
 
-def is_cli_process_cancelled(process: subprocess.Popen[str]) -> bool:
-    """Return whether the batch interrupt path cancelled this process."""
+def cli_cancellation_token() -> CancellationToken:
+    """Return the current process-wide token used by uncoupled CLI calls."""
     with K_ACTIVE_CLI_PROCESSES_GUARD:
-        return process.pid in K_CANCELLED_CLI_PROCESS_IDS
+        return K_LLM_CLI_CANCELLATION_TOKEN
 
 
-def is_cli_cancellation_requested() -> bool:
-    """Return whether the current batch is shutting down its CLI calls."""
-    with K_ACTIVE_CLI_PROCESSES_GUARD:
-        return K_CLI_CANCELLATION_REQUESTED
+def raise_if_cli_call_cancelled(cancellation: CancellationToken | None, *, cause: Exception | None = None) -> None:
+    """Raise the operation's reason, falling back to the process-wide batch token."""
+    active = cancellation or cli_cancellation_token()
+    try:
+        active.raise_if_cancelled()
+    except Cancelled as exc:
+        if cause is not None:
+            raise exc from cause
+        raise
 
 
 def terminate_cli_process(process: subprocess.Popen[str]) -> None:

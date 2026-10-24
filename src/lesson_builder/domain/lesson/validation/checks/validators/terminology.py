@@ -23,7 +23,7 @@ from typing import Any
 from lesson_builder.domain.lesson.models.checks import CheckResult
 from lesson_builder.domain.lesson.models.terminology import LearnerText
 from lesson_builder.domain.lesson.models.terminology import TerminologyBans
-from lesson_builder.domain.lesson.validation.terminology import extract_learner_text
+from lesson_builder.domain.lesson.services.learner_text import extract_learner_text
 
 K_TERM_CHECK_BANNED = "terminology_banned"
 K_TERM_CHECK_PROSE_TELL = "terminology_prose_tell"
@@ -47,7 +47,7 @@ K_PROSE_TELL_PATTERNS: tuple[re.Pattern[str], ...] = (
 # answer-facing slots, per-occurrence (one is already a tell — no density gate).
 K_PLUS_NOTATION_PATTERN: re.Pattern[str] = re.compile(r"\S\s*\+\s*\S")
 K_PLUS_NOTATION_CONTEXTS: frozenset[str] = frozenset(
-    {"option_text", "feedback", "exercise_prompt", "categorize_text", "judge_payload", "speak_target"}
+    {"option_text", "feedback", "exercise_prompt", "categorize_text", "judge_payload"}
 )
 
 
@@ -115,7 +115,7 @@ def _banned_phrase_audit_rows(fragments: list[LearnerText], bans: TerminologyBan
                         phrase=phrase,
                         fragment=fragment,
                         message=f"banned terminology phrase '{phrase}'",
-                        fix_hint=f"Replace '{phrase}' with the house-style term (see knowledge/quality/terminology.md).",
+                        fix_hint=f"Replace '{phrase}' with the house-style term (see content/terminology/glossary.yaml).",
                         severity="blocker",
                     )
                 )

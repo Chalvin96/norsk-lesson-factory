@@ -1,9 +1,9 @@
 """Entry point: ``load_llm_job`` reads the root LLM routing configuration.
 
 ``config.yaml`` is the single source of truth for this routing layer.
-``llm.tiers`` name cheap model/variant pairs by relative cost (cheap through
-deep_alt); ``llm.jobs`` bind stable workflow names to exactly one tier plus
-one OpenCode agent template. Production nodes select jobs, never raw tiers.
+``llm.tiers`` name model/variant pairs; ``llm.role_jobs`` bind stable workflow
+names to exactly one tier plus one OpenCode agent template. Production nodes
+select jobs, never raw tiers.
 OpenCode is the only supported transport, so no adapter field exists. A
 missing tier, job, or ``.opencode/agents/<agent_template>.md`` file fails
 here, before any LLM call starts. Retired field names (``adapter``,

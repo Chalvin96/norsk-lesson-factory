@@ -1,16 +1,9 @@
-"""Entry point: `parse_markdown` behavior at the pinned pandoc boundary.
-
-Runs the real pinned pypandoc reader offline (pandoc is a dev dependency).
-Source parsing, frontmatter, and lesson projection are covered by the source
-suite; these tests own the adapter contract: the pinned reader, the compiler
-fingerprint, and the doc block helper.
-"""
+"""Entry point: `parse_markdown` returns panflute documents and attributed spans."""
 
 from __future__ import annotations
 
 import panflute
 
-from lesson_builder.formats.markdown.pandoc import compiler_fingerprint
 from lesson_builder.formats.markdown.pandoc import parse_markdown
 
 
@@ -29,10 +22,29 @@ def test_parse_markdown_given_bracketed_span_expect_pinned_reader_parsed_it():
     assert any(isinstance(span, panflute.Span) for span in spans)
 
 
-def test_compiler_fingerprint_given_any_input_expect_pandoc_panflute_and_reader_versions():
-    fingerprint = compiler_fingerprint()
+def test_markdown_import_given_uncached_panflute_expect_only_dependency_escape_warning_suppressed(tmp_path) -> None:
+    import subprocess
+    import sys
 
-    assert set(fingerprint) == {"pandoc", "panflute", "reader"}
-    assert fingerprint["pandoc"]
-    assert fingerprint["panflute"]
-    assert fingerprint["reader"] == "markdown+native_spans+bracketed_spans-smart"
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-X",
+            f"pycache_prefix={tmp_path / 'cache'}",
+            "-W",
+            "always::SyntaxWarning",
+            "-c",
+            "from lesson_builder.formats.markdown.pandoc import parse_markdown; "
+            "import warnings; "
+            "warnings.warn_explicit(\"invalid escape sequence '\\\\*'\", SyntaxWarning, 'other.py', 1, module='other'); "
+            "warnings.warn_explicit('unrelated panflute warning', SyntaxWarning, 'panflute/io.py', 1, module='panflute.io'); "
+            "assert parse_markdown('hello').content",
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr
+    assert "site-packages/panflute/io.py" not in result.stderr
+    assert "other.py:1: SyntaxWarning: invalid escape sequence" in result.stderr
+    assert "unrelated panflute warning" in result.stderr

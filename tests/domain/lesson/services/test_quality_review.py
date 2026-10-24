@@ -18,13 +18,11 @@ def test_validate_quality_review_given_complete_passing_rubric_expect_valid_pass
 
     assert validation.status == "valid"
     assert validation.total_score == 20
-    assert validation.expected_verdict == "pass"
 
 
 def test_validate_quality_review_given_omitted_axis_expect_invalid_response_contract() -> None:
     payload = valid_quality_review()
     payload["scores"] = payload["scores"][:-1]
-    payload["verdict"] = "needs_repair"
     review = LessonQualityReview.model_validate(payload)
 
     validation = validate_quality_review(review, quality_axes_for_kind("grammar"))
@@ -33,7 +31,7 @@ def test_validate_quality_review_given_omitted_axis_expect_invalid_response_cont
     assert any("omitted rubric axes" in error for error in validation.errors)
 
 
-def test_validate_quality_review_given_major_finding_with_pass_expect_invalid_verdict() -> None:
+def test_validate_quality_review_given_major_finding_expect_valid_advisory_report() -> None:
     payload = valid_quality_review()
     payload["findings"] = [
         {
@@ -41,16 +39,16 @@ def test_validate_quality_review_given_major_finding_with_pass_expect_invalid_ve
             "severity": "major",
             "artifact": "lesson.md",
             "location": "sec-model",
-            "evidence": "The rule is stated without a meaning contrast.",
-            "repair_instruction": "Add one aligned contrast before practice.",
+            "evidence": "The lesson presents the rule without an aligned contrast.",
+            "rationale": "The rule may need one aligned contrast before practice.",
         }
     ]
     review = LessonQualityReview.model_validate(payload)
 
     validation = validate_quality_review(review, quality_axes_for_kind("grammar"))
 
-    assert validation.status == "invalid"
-    assert validation.expected_verdict == "needs_repair"
+    assert validation.status == "valid"
+    assert validation.total_score == 20
 
 
 def test_quality_axes_for_kind_given_each_category_expect_shared_and_specific_axes() -> None:

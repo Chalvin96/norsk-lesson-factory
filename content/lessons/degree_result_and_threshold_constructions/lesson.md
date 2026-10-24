@@ -490,6 +490,7 @@ This says that their late arrival prevented the purchase. To present a consequen
 ## Transfer: getting ready for a train {#sec-transfer-getting-ready-for-a-train role=contrast objectives=obj-degree-result-and-threshold-constructions-01}
 
 Imagine that Mina and Jonas are leaving the cabin on Sunday. Their bus to the station is due soon. The suitcase may be difficult to carry, Jonas’s phone may or may not have enough power to display the tickets, and their departure time may be presented as producing a consequence.
+
 ## Short retrieval and review {#sec-short-retrieval-and-review role=recap objectives=obj-degree-result-and-threshold-constructions-01}
 
 ## Repetisjon {#repetisjon role=recap objectives=obj-degree-result-and-threshold-constructions-01}

@@ -23,15 +23,21 @@ from pathlib import Path
 
 from lesson_builder.workspace.paths import get_workspace_root
 
-# Roots of the production graph: the package console script, the two gate
-# scripts, and this audit itself (invoked by `npm run dead-code:audit`).
-K_PRODUCTION_ROOT_MODULES = (
+# Roots of supported runtime code: the package console script, scripts invoked
+# from package workflows, Promptfoo prompt definitions, and this audit itself.
+K_REACHABILITY_ROOT_MODULES = (
     "lesson_builder.cli",
+    "evals.promptfoo.prompts",
+    "evals.promptfoo.assertions",
+    "evals.promptfoo.provider",
     "scripts.check_agent_conventions",
+    "scripts.check_authoring_prose_baseline",
+    "scripts.eval_exercise_quality",
+    "scripts.export_write_judge_calibration",
     "scripts.okf_validate",
     "scripts.dead_code_audit",
 )
-K_PRODUCTION_SCAN_PATHS = ("src", "scripts")
+K_REACHABILITY_SCAN_PATHS = ("src", "scripts", "evals")
 K_TEST_SCAN_PATHS = ("tests",)
 # Non-Python surfaces where an exact identifier match means "referenced, keep
 # until verified": configuration, packaging, CI, and durable documentation.
@@ -95,7 +101,7 @@ class SymbolFinding:
 
 @dataclass(frozen=True)
 class ModuleFinding:
-    """Not a check itself — one first-party module not reachable from production roots."""
+    """Not a check itself — one first-party module not reachable from configured roots."""
 
     path: str
     group: str
@@ -123,8 +129,8 @@ class AuditReport:
 def run_audit(
     repo_root: Path,
     *,
-    production_roots: tuple[str, ...] = K_PRODUCTION_ROOT_MODULES,
-    production_paths: tuple[str, ...] = K_PRODUCTION_SCAN_PATHS,
+    reachability_roots: tuple[str, ...] = K_REACHABILITY_ROOT_MODULES,
+    scan_paths: tuple[str, ...] = K_REACHABILITY_SCAN_PATHS,
     test_paths: tuple[str, ...] = K_TEST_SCAN_PATHS,
     reference_globs: tuple[str, ...] = (*K_CONFIG_REFERENCE_GLOBS, *K_DOC_REFERENCE_GLOBS),
     min_confidence: int = K_VULTURE_DEFAULT_CONFIDENCE,
@@ -132,41 +138,41 @@ def run_audit(
 ) -> AuditReport:
     """Group dead-code candidates for one repository without modifying anything."""
     vulture = run_vulture or _default_vulture_runner(repo_root)
-    production_files = _collect_python_files(repo_root, production_paths)
+    scanned_files = _collect_python_files(repo_root, scan_paths)
     test_files = _collect_python_files(repo_root, test_paths)
-    modules, edges = _module_graph(repo_root, {**production_files, **test_files})
+    modules, edges = _module_graph(repo_root, {**scanned_files, **test_files})
 
-    reachable_production = _reachable(edges, production_roots)
+    reachable = _reachable(edges, reachability_roots)
     test_roots = tuple(module for module in test_files.values() if module in modules)
     reachable_tests = _reachable(edges, test_roots)
     config_tokens, doc_tokens, doc_text = _reference_tokens(repo_root, reference_globs)
 
     module_findings_list: list[ModuleFinding] = []
-    for path, module in sorted(production_files.items()):
-        if module in reachable_production or module in production_roots:
+    for path, module in sorted(scanned_files.items()):
+        if module in reachable or module in reachability_roots:
             continue
         annotation = _module_annotation(path, module, config_tokens, doc_tokens, doc_text)
         if module in reachable_tests:
             group = K_GROUP_TEST_ONLY
-            module_reason = "module is not reachable from production roots (tests import it)"
+            module_reason = "module is not reachable from configured roots (tests import it)"
         else:
             group = K_GROUP_UNREACHABLE_MODULE
-            module_reason = "module is not reachable from production roots"
+            module_reason = "module is not reachable from configured roots"
         if annotation is not None:
             module_reason += f"; annotation: {annotation}"
         module_findings_list.append(ModuleFinding(path=path, group=group, reason=module_reason))
     module_findings = tuple(module_findings_list)
     flagged_module_paths = {finding.path for finding in module_findings}
 
-    production_findings = parse_vulture_output(vulture(production_paths, min_confidence))
+    scan_findings = parse_vulture_output(vulture(scan_paths, min_confidence))
     test_aware_findings = {
         (finding.path, finding.kind, finding.name)
-        for finding in parse_vulture_output(vulture((*production_paths, *test_paths), min_confidence))
+        for finding in parse_vulture_output(vulture((*scan_paths, *test_paths), min_confidence))
     }
-    framework_reasons = _framework_name_reasons(repo_root, {**production_files, **test_files})
+    framework_reasons = _framework_name_reasons(repo_root, {**scanned_files, **test_files})
 
     symbol_findings: list[SymbolFinding] = []
-    for finding in production_findings:
+    for finding in scan_findings:
         if finding.path in flagged_module_paths:
             continue  # Subsumed: removing the module removes its symbols.
         framework_reason = _framework_reason(
@@ -194,7 +200,7 @@ def run_audit(
                 )
             )
     return AuditReport(
-        roots=production_roots,
+        roots=reachability_roots,
         modules=module_findings,
         symbols=tuple(symbol_findings),
     )
@@ -225,7 +231,7 @@ def format_report(report: AuditReport) -> str:
     """Render the grouped audit as the human-readable, report-only output."""
     lines = [
         "Dead-code audit (report-only; candidates, never deletions)",
-        f"Production roots: {', '.join(report.roots)}",
+        f"Reachability roots: {', '.join(report.roots)}",
         "",
     ]
     counts = report.counts()

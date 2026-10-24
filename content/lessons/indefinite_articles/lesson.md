@@ -328,6 +328,7 @@ Compare all four possibilities in Amina’s new home:
 :::
 
 The final sentence lacks an article because **kaffe** is a substance here. It is not a fourth noun gender.
+
 ## Back at the flat {#back-at-the-flat role=recap objectives=obj-indefinite-articles-01}
 
 Later that evening, Amina sends a message to a friend:

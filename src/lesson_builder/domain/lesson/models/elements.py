@@ -20,20 +20,6 @@ Spans = list[InlineSpan]
 BloomLevel = Literal["remember", "understand", "apply", "analyze"]
 
 
-class SpeakPayload(BaseModel):
-    """Authored target utterance for optional downstream recording and STT."""
-
-    model_config = ConfigDict(extra="forbid")
-
-    target: str = Field(min_length=1)
-
-    @model_validator(mode="after")
-    def _target_is_not_blank(self) -> SpeakPayload:
-        if not self.target.strip():
-            raise ValueError("speak target must contain non-whitespace text")
-        return self
-
-
 class WriteCriterion(BaseModel):
     """One observable criterion for an app-side LLM writing judgment."""
 
@@ -311,9 +297,7 @@ class DialogueStimulus(_Base):
     turns: list[DialogueTurn] = Field(min_length=1)
 
 
-Operation = Literal[
-    "recall_fill", "match_pairs", "judge", "choose", "categorize", "build", "find_fix", "speak", "write"
-]
+Operation = Literal["recall_fill", "match_pairs", "judge", "choose", "categorize", "build", "find_fix", "write"]
 
 
 class _ExerciseBase[OperationT: str, PayloadT: BaseModel](_Base):
@@ -338,7 +322,6 @@ type ChooseExercise = _ExerciseBase[Literal["choose"], ChoosePayload]
 type CategorizeExercise = _ExerciseBase[Literal["categorize"], CategorizePayload]
 type BuildExercise = _ExerciseBase[Literal["build"], BuildPayload]
 type FindFixExercise = _ExerciseBase[Literal["find_fix"], FindFixPayload]
-type SpeakExercise = _ExerciseBase[Literal["speak"], SpeakPayload]
 type WriteExercise = _ExerciseBase[Literal["write"], WritePayload]
 
 Exercise = Annotated[
@@ -349,7 +332,6 @@ Exercise = Annotated[
     | CategorizeExercise
     | BuildExercise
     | FindFixExercise
-    | SpeakExercise
     | WriteExercise,
     Field(discriminator="operation"),
 ]

@@ -46,11 +46,13 @@ def export_distribution(
     synthesis_client: AudioSynthesisClient | None = None,
     audio_workers: int = 1,
     audio_public_base_url: str | None = None,
+    excluded_audio_fingerprints: frozenset[str] = frozenset(),
+    exclude_draft_only: bool = False,
 ) -> dict[str, object]:
     """Export the complete lesson distribution for ``repo_root``.
 
     The authoritative inventory is the committed ``content/curriculum/plan.yaml`` slot
-    order. Every planned lesson must have a complete ``content/lessons/<id>/`` package,
+    order. Every selected planned lesson must have a complete ``content/lessons/<id>/`` package,
     no complete package may exist outside the plan, and an incomplete package
     directory is an error rather than a skip. All packages are compiled and
     projected before anything is published; the catalog and JSON schema are
@@ -66,6 +68,8 @@ def export_distribution(
     distribution_root.mkdir(parents=True, exist_ok=True)
     _reconcile_dist_recovery(WorkspacePaths(distribution_root).dist_root)
     lesson_ids = load_planned_lesson_ids(repo_root)
+    if exclude_draft_only:
+        lesson_ids = _without_draft_only(layout, lesson_ids)
     if audio_workers < 1:
         raise ValueError("audio_workers must be at least 1")
     if synthesis_client is not None and audio_workers != 1:
@@ -102,6 +106,7 @@ def export_distribution(
                 workers=audio_workers,
                 public_base_url=str(resolved_public_base_url),
                 character_registry=character_registry or audio_settings.character_registry,
+                excluded_audio_fingerprints=excluded_audio_fingerprints,
             )
         created, unchanged, updated = _write_staged_packets(
             exports=exports,
@@ -144,6 +149,14 @@ def load_lesson_package(source_dir: Path) -> tuple[Lesson, dict[str, Any]]:
     return compiled.lesson, compiled.plan
 
 
+def require_plan_kind(plan_metadata: Mapping[str, Any], *, plan_label: str) -> str:
+    """Return the plan's explicit lesson kind, or fail before any packet is built."""
+    kind = plan_metadata.get("kind")
+    if not isinstance(kind, str) or not kind:
+        raise ValueError(f"{plan_label} must contain a non-empty kind")
+    return kind
+
+
 def create_lesson_packet_from_source(
     source_dir: Path,
     *,
@@ -156,12 +169,9 @@ def create_lesson_packet_from_source(
     package_dir = Path(source_dir)
     registry = character_registry or load_optional_character_registry(package_dir)
     lesson, plan_metadata = load_lesson_package(package_dir)
-    kind = plan_metadata.get("kind")
-    if not isinstance(kind, str) or not kind:
-        raise ValueError("lesson package plan.md must contain a non-empty kind")
     packet = DistributionService().create_lesson_packet(
         lesson,
-        kind=kind,
+        kind=require_plan_kind(plan_metadata, plan_label="lesson package plan.md"),
         language=language,
         audio=audio,
         audio_bindings=audio_bindings,
@@ -246,6 +256,14 @@ def _replace_dist_atomically(*, staged_dist: Path, current_dist: Path) -> None:
             shutil.rmtree(backup_dist)
 
 
+def _without_draft_only(layout: WorkspacePaths, lesson_ids: list[str]) -> list[str]:
+    return [
+        lesson_id
+        for lesson_id in lesson_ids
+        if (layout.lessons_root / lesson_id).exists() or not (layout.drafts_root / lesson_id).is_dir()
+    ]
+
+
 def _reconcile_dist_recovery(current_dist: Path) -> None:
     """Recover the one recognized interrupted dist replacement state."""
     backup_dist = current_dist.with_name(f".{current_dist.name}.backup")
@@ -273,6 +291,7 @@ def _exports_with_audio(
     workers: int,
     public_base_url: str,
     character_registry: CharacterRegistry,
+    excluded_audio_fingerprints: frozenset[str],
 ) -> list[tuple[dict[str, Any], dict[str, Any]]]:
     """Materialize cached real audio and project every compiled package."""
     from lesson_builder.domain.lesson.services.transcript import derive_transcript_blocks
@@ -305,14 +324,12 @@ def _exports_with_audio(
             settings=settings,
             synthesis_client=synthesis_client,
             cache_root=cache_root,
+            force_synthesis_fingerprints=excluded_audio_fingerprints,
         )
         _attach_public_audio_urls(audio, public_base_url=public_base_url)
-        kind = metadata.get("kind")
-        if not isinstance(kind, str) or not kind:
-            raise ValueError(f"lessons/{lesson_id}/plan.md must contain a non-empty kind")
         export = DistributionService().create_lesson_packet(
             lesson,
-            kind=kind,
+            kind=require_plan_kind(metadata, plan_label=f"lessons/{lesson_id}/plan.md"),
             audio=audio,
             audio_bindings=bindings,
             character_registry=character_registry,
@@ -396,4 +413,5 @@ __all__ = [
     "export_distribution",
     "load_lesson_package",
     "create_lesson_packet_from_source",
+    "require_plan_kind",
 ]

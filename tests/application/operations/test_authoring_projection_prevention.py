@@ -6,10 +6,10 @@ from typing import Any
 
 from lesson_builder.application.operations.audit_source import audit_source_text
 from lesson_builder.application.operations.load_lesson import load_lesson_source
+from lesson_builder.domain.lesson.services.review_projection import extract_answer_questions
+from lesson_builder.domain.lesson.services.review_projection import extract_attempt_questions
 from lesson_builder.domain.lesson.services.transcript import derive_transcript_blocks
 from lesson_builder.domain.lesson.validation.export_serializer import to_export_dict
-from lesson_builder.domain.lesson.validation.review_payloads import extract_answer_questions
-from lesson_builder.domain.lesson.validation.review_payloads import extract_attempt_questions
 
 
 def test_authoring_projections_given_positive_and_labeled_negative_examples_expect_visible_content_and_safe_audio():

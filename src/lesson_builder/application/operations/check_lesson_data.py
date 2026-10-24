@@ -20,11 +20,14 @@ import yaml
 
 from lesson_builder.application.operations.compile_lesson_package import LessonPackageCompilation
 from lesson_builder.application.operations.compile_lesson_package import compile_lesson_package
+from lesson_builder.application.operations.lesson_package_paths import resolve_contained_lesson_package
 from lesson_builder.application.operations.load_characters import load_character_registry
 from lesson_builder.application.operations.load_terminology import load_terminology_bans
 from lesson_builder.application.operations.load_terminology import load_terminology_registry
 from lesson_builder.application.operations.materialize_curriculum import validate_committed_curriculum_plan
+from lesson_builder.application.operations.validate_distribution import load_planned_lesson_ids
 from lesson_builder.application.operations.validate_distribution import validate_committed_distribution
+from lesson_builder.domain.curriculum.services.curriculum_edits import collect_curriculum_dependency_findings
 from lesson_builder.domain.lesson.models.terminology import TerminologyBans
 from lesson_builder.workspace.paths import WorkspacePaths
 from lesson_builder.workspace.settings import K_WORKSPACE_LEGACY_ROOT_DIRS
@@ -51,6 +54,7 @@ IssueCode = Literal[
     "authoring.character_registry_invalid",
     "authoring.terminology_registry_invalid",
     "curriculum.plan_invalid",
+    "curriculum.prerequisite_order",
     "authoring.lesson_source_invalid",
     "distribution.artifacts_invalid",
     "workspace.check_error",
@@ -117,6 +121,7 @@ class LessonSourceCheck:
 
     result: WorkspaceCheckResult
     compilations: Mapping[str, LessonPackageCompilation]
+    draft_only_ids: tuple[str, ...] = ()
 
 
 def check_workspace(root: Path) -> WorkspaceCheckReport:
@@ -129,9 +134,17 @@ def check_workspace(root: Path) -> WorkspaceCheckReport:
     layout = _check_content_layout(paths)
     character = _check_character_registry(resolved, paths, blocked_by=content_block)
     terminology = _check_terminology_registry(resolved, paths, blocked_by=content_block)
-    curriculum = _check_curriculum_plan(resolved, paths, blocked_by=content_block)
+    curriculum, planned_ids = _check_curriculum_plan(resolved, paths, blocked_by=content_block)
+    draft_only_ids = tuple(
+        identity
+        for identity in planned_ids
+        if not (paths.lessons_root / identity).exists()
+        and not (paths.lessons_root / identity).is_symlink()
+        and (paths.drafts_root / identity).is_dir()
+    )
     lesson_source_check = _check_lesson_sources(
         paths,
+        draft_only_ids=draft_only_ids,
         blocked_by=_lesson_source_blockers(
             content_block=content_block,
             lessons_usable=lessons_usable,
@@ -151,6 +164,7 @@ def check_workspace(root: Path) -> WorkspaceCheckReport:
             lesson_source=lesson_source,
         ),
         compilations=lesson_source_check.compilations,
+        canonical_ids=tuple(identity for identity in planned_ids if identity not in lesson_source_check.draft_only_ids),
     )
     checks = (layout, character, terminology, curriculum, lesson_source, distribution)
     return WorkspaceCheckReport(
@@ -296,16 +310,17 @@ def _check_curriculum_plan(
     paths: WorkspacePaths,
     *,
     blocked_by: tuple[CheckId, ...],
-) -> WorkspaceCheckResult:
+) -> tuple[WorkspaceCheckResult, tuple[str, ...]]:
     """Validate the committed plan against the approved catalog."""
     if blocked_by:
-        return _skipped_result("curriculum_plan", blocked_by)
+        return _skipped_result("curriculum_plan", blocked_by), ()
     plan_paths = (
         _workspace_relative(paths, paths.curriculum_plan),
         _workspace_relative(paths, paths.catalog_file),
     )
     try:
         plan = validate_committed_curriculum_plan(repo_root=root)
+        planned_ids = tuple(load_planned_lesson_ids(root))
     except (FileNotFoundError, TypeError, ValueError, yaml.YAMLError) as exc:
         return _failed_result(
             "curriculum_plan",
@@ -315,18 +330,37 @@ def _check_curriculum_plan(
             paths=plan_paths,
             remedy=_request_human_decision_remedy(
                 "ask a human to review the approved catalog change; after approval, run "
-                "lesson-data curriculum catalog --repo-root <workspace_root> --auto-approve --commit"
+                "reconcile content/curriculum/plan.yaml with the approved catalog in the workbench"
             ),
-        )
+        ), ()
     except Exception as exc:
-        return _error_result("curriculum_plan", paths=plan_paths, exc=exc)
+        return _error_result("curriculum_plan", paths=plan_paths, exc=exc), ()
+    order_issues = tuple(
+        WorkspaceIssue(
+            code="curriculum.prerequisite_order",
+            message=f"{finding.lesson_id}: {finding.explanation}",
+            paths=(_workspace_relative(paths, paths.curriculum_plan),),
+            error_type=None,
+            remedy=_edit_authored_data_remedy("move each required prerequisite before its dependent lesson"),
+        )
+        for finding in collect_curriculum_dependency_findings(plan)
+        if finding.code == "curriculum.prerequisite_order"
+    )
+    if order_issues:
+        return WorkspaceCheckResult(
+            check_id="curriculum_plan",
+            status="failed",
+            summary="committed curriculum plan orders lessons before their prerequisites",
+            issues=order_issues,
+            blocked_by=(),
+        ), planned_ids
     return WorkspaceCheckResult(
         check_id="curriculum_plan",
         status="passed",
         summary=f"committed curriculum plan matches the approved catalog ({len(plan.slots)} slots)",
         issues=(),
         blocked_by=(),
-    )
+    ), planned_ids
 
 
 def _check_distribution(
@@ -335,13 +369,16 @@ def _check_distribution(
     *,
     blocked_by: tuple[CheckId, ...],
     compilations: Mapping[str, LessonPackageCompilation] | None = None,
+    canonical_ids: tuple[str, ...] = (),
 ) -> WorkspaceCheckResult:
     """Validate the committed distribution against canonical lesson source."""
     if blocked_by:
         return _skipped_result("distribution", blocked_by)
     distribution_paths = (_workspace_relative(paths, paths.dist_root),)
     try:
-        summary = validate_committed_distribution(root, compiled_packages=compilations)
+        summary = validate_committed_distribution(
+            root, compiled_packages=compilations, canonical_lesson_ids=list(canonical_ids)
+        )
     except (FileNotFoundError, TypeError, ValueError, yaml.YAMLError) as exc:
         return _failed_result(
             "distribution",
@@ -369,6 +406,7 @@ def _check_lesson_sources(
     paths: WorkspacePaths,
     *,
     blocked_by: tuple[CheckId, ...],
+    draft_only_ids: tuple[str, ...] = (),
 ) -> LessonSourceCheck:
     """Compile every canonical lesson source and report per-package failures."""
     if blocked_by:
@@ -402,7 +440,9 @@ def _check_lesson_sources(
     issues: list[WorkspaceIssue] = []
     compilations: dict[str, LessonPackageCompilation] = {}
     lessons_root = paths.lessons_root
-    for source_dir in sorted(path for path in lessons_root.iterdir() if path.is_dir()):
+    source_dirs = sorted(path for path in lessons_root.iterdir() if path.is_dir())
+    source_dirs.extend(paths.drafts_root / identity for identity in draft_only_ids)
+    for source_dir in source_dirs:
         try:
             compilation, issue = _compile_workspace_lesson(paths, source_dir, terminology_bans)
         except Exception as exc:
@@ -410,7 +450,7 @@ def _check_lesson_sources(
                 _error_result("lesson_source", paths=(_workspace_relative(paths, source_dir),), exc=exc),
                 compilations,
             )
-        if compilation is not None:
+        if compilation is not None and source_dir.name not in draft_only_ids:
             compilations[source_dir.name] = compilation
         if issue is not None:
             issues.append(issue)
@@ -419,7 +459,7 @@ def _check_lesson_sources(
             WorkspaceCheckResult(
                 check_id="lesson_source",
                 status="failed",
-                summary=f"{len(issues)} canonical lesson source package(s) failed compilation",
+                summary=f"{len(issues)} lesson source package(s) failed compilation",
                 issues=tuple(issues),
                 blocked_by=(),
             ),
@@ -429,11 +469,12 @@ def _check_lesson_sources(
         WorkspaceCheckResult(
             check_id="lesson_source",
             status="passed",
-            summary=f"canonical lesson sources compile cleanly ({sum(path.is_dir() for path in lessons_root.iterdir())} lessons)",
+            summary=f"lesson sources compile cleanly ({len(compilations)} canonical lessons, {len(draft_only_ids)} draft-only lessons)",
             issues=(),
             blocked_by=(),
         ),
         compilations,
+        draft_only_ids,
     )
 
 
@@ -443,6 +484,8 @@ def _compile_workspace_lesson(
     terminology_bans: TerminologyBans,
 ) -> tuple[LessonPackageCompilation | None, WorkspaceIssue | None]:
     """Compile one workspace lesson and translate expected failures into an issue."""
+    requested_id = source_dir.name
+    is_draft = source_dir.parent == paths.drafts_root
     filenames = ("plan.md", "lesson.md", "exercises.yaml")
     package_paths = tuple(
         _workspace_relative(paths, source_dir / filename) for filename in filenames if (source_dir / filename).exists()
@@ -457,11 +500,23 @@ def _compile_workspace_lesson(
             remedy=_edit_authored_data_remedy(f"restore the complete authored package for lesson {source_dir.name!r}"),
         )
     try:
-        return compile_lesson_package(source_dir, terminology_bans=terminology_bans), None
+        if is_draft:
+            if paths.drafts_root.resolve() != paths.drafts_root:
+                raise ValueError("drafts root must not be a symlink")
+            source_dir = resolve_contained_lesson_package(paths.drafts_root, source_dir)
+        compiled = compile_lesson_package(source_dir, terminology_bans=terminology_bans)
+        if is_draft and (
+            compiled.lesson is None
+            or compiled.lesson.key != requested_id
+            or not any(key in compiled.plan for key in ("catalog_id", "lesson_id"))
+            or any(compiled.plan[key] != requested_id for key in ("catalog_id", "lesson_id") if key in compiled.plan)
+        ):
+            raise ValueError("draft identity must match its curriculum slot")
+        return compiled, None
     except (FileNotFoundError, TypeError, ValueError, yaml.YAMLError) as exc:
         return None, WorkspaceIssue(
             code="authoring.lesson_source_invalid",
-            message=f"lesson {source_dir.name!r} failed canonical compilation: {exc}",
+            message=f"lesson {source_dir.name!r} failed source compilation: {exc}",
             paths=package_paths,
             error_type=None,
             remedy=_edit_authored_data_remedy(

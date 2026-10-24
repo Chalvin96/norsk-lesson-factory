@@ -1,21 +1,22 @@
 # norsk-lesson-factory
 
-Norwegian Bokmål lesson data, editable lesson sources, and a command-line
-toolchain for authoring, reviewing, and exporting them. Lessons combine learning
-objectives, explanations, examples, and exercises covering grammar, phraseology,
-and everyday communication.
+Norwegian Bokmål lesson data and the authoring tools used to maintain it. Lessons
+combine learning objectives, explanations, examples, and exercises covering
+grammar, phraseology, and everyday communication.
 
-Use the JSON distribution in a learning application, adapt the Markdown and YAML
-sources, or run the authoring pipeline to draft and review content. This
-repository owns lesson content and assessment criteria; consuming applications
-own presentation, playback, learner progress, and scoring behavior.
+Use the JSON distribution in a learning application, or edit the Markdown and
+YAML sources in this repository. This repository owns lesson content and
+assessment criteria; consuming applications own presentation, playback, learner
+progress, and scoring behavior.
+
+![The authoring workbench: a lesson draft rendered as the learner sees it, with its exercises and an agent chat that proposes edits](.github/screenshots/workbench-lesson.webp)
 
 ## Use the lesson data
 
 Download `lessons.tar.gz` from [GitHub
 Releases](https://github.com/Chalvin96/norsk-lesson-factory/releases), or use the
-checked-in [`dist/`](dist/) directory. Neither requires the authoring toolchain.
-Pin a release tag or commit when integrating the data.
+checked-in [`dist/`](dist/) directory. Pin a release tag or commit when
+integrating the data.
 
 | File | Purpose |
 | --- | --- |
@@ -26,7 +27,7 @@ Pin a release tag or commit when integrating the data.
 Each packet includes metadata, objectives, teaching sections, exercises, and a
 `content` list specifying their authored order. Exercises include choices,
 matching, categorization, sentence building, gap filling, error identification,
-and written or spoken responses.
+and written responses.
 
 With `jq` installed, inspect the catalog and a lesson from the repository root:
 
@@ -37,124 +38,83 @@ jq '{id, title, cefr_level, goal}' dist/lessons/modal_verbs_basic.json
 
 ## Set up a development checkout
 
-Install Git, Python 3.12+, and `uv`. You also need Node.js with npm to run the
-repository's check scripts. Model-dependent evaluations require Node.js
-22.22.0+. Python dependencies and development tools are managed by `uv`.
+Install Git, Python 3.12+, `uv`, and Node.js. Python dependencies and development
+tools are managed by `uv`; Node.js is used by repository checks and the
+workbench frontend tooling.
 
 ```bash
 git clone https://github.com/Chalvin96/norsk-lesson-factory.git
 cd norsk-lesson-factory
 uv sync --locked
-uv run lesson-data doctor
+npm --prefix workbench ci
+git config core.hooksPath .githooks
+uv run lesson-data --help
 ```
 
-The default doctor checks local offline prerequisites without calling a
-provider. Editing source, previewing lessons, validating data, and regenerating
-JSON do not require provider credentials. Run `uv run lesson-data --help` to see
-the available commands; each command also supports `--help`.
+The CLI exposes five commands: `check`, `regenerate-dist`, `release`,
+`release-verify`, and `workbench`. `check` validates workspace source and the
+committed distribution. `regenerate-dist` builds the provider-free JSON
+projection. The workbench is the local authoring and inspection surface.
 
-## Edit and validate a lesson
+## Edit and inspect lessons
 
-Edit `lesson.md`, `exercises.yaml`, and the related source files in a lesson's
-directory under [`content/lessons/`](content/lessons/). These files are
-authoritative. Regenerate the derived `dist/` files and include them with source
-changes.
+Run the loopback-only workbench and open the printed URL:
 
 ```bash
-uv run lesson-data exercise lint content/lessons/adjective_agreement
-uv run lesson-data preview content/lessons/adjective_agreement
+uv run lesson-data workbench
 ```
 
-The preview serves a read-only authoring view on loopback. It makes no provider
-calls and writes no source or distribution files. Use `--no-browser` for a
-headless session or `--port 0` to select an available port. Stop the preview with
-Ctrl+C before continuing.
+![The curriculum view: lessons in authored order with their CEFR level and review status, a draft entry, and the agent chat](.github/screenshots/workbench-curriculum.webp)
+
+The workbench supports draft editing, local Save commits, chat proposals, AI
+review, owner approvals, promotion to provider-free `dist/`, and checkpointed
+lesson and exercise regeneration. Inspect at 1280 px and 320 px; lesson and chat
+panes stack on narrow screens. Opening and inspecting source does not call a
+provider. Chat, review, and regeneration actions can use configured providers.
+
+After source changes, regenerate and check the distribution:
 
 ```bash
 uv run lesson-data regenerate-dist --repo-root .
 uv run lesson-data check --workspace-root . --format json
 ```
 
-Review and stage or commit intentional source and distribution changes, then run
-the complete deterministic suite:
-
-```bash
-npm run check
-```
-
-This checks conventions, formatting, lint, types, tests, mechanical exercise
-quality, distribution drift, workspace consistency, and knowledge links. It
-regenerates the distribution and uses `git diff --exit-code` to detect unstaged
-distribution changes. These checks establish structural consistency; linguistic
+Include intentional `dist/` changes with their source changes. The complete
+offline suite is available with `npm run check`; it also regenerates `dist/` and
+checks for drift. These checks establish structural consistency; linguistic
 and pedagogical quality still require review.
 
-## Generate lesson drafts
+The frontend lives in `workbench/` (React, Tailwind, shadcn). Run
+`npm run workbench:storybook` to inspect its pages and components, and
+`npm run workbench:build` after frontend changes to rebuild the app shipped in
+the Python package.
 
-Generation requires the OpenCode CLI on your `PATH`, authenticated provider
-access, and POSIX file locking (Linux, macOS, or WSL). Configure the model routes
-and authoring jobs in [`config.yaml`](config.yaml) for models available to your
-provider account. See the [LLM client documentation](src/lesson_builder/clients/llm/README.md)
-for configuration and authentication details.
+## Create and review drafts
 
-Check local prerequisites, then generate a scratch draft for one approved
-catalog entry:
-
-```bash
-uv run lesson-data doctor --capability generation
-uv run lesson-data generate-lessons \
-  --repo-root . \
-  --plan content/curriculum/plan.yaml \
-  --batch-id first-draft \
-  --catalog-id greet_and_introduce_yourself \
-  --workers 1
-```
-
-The generation command makes provider calls. The doctor checks local setup but
-does not verify live provider access. Use a new batch ID for a new run; omit
-`--catalog-id` only when you intend to generate the whole plan.
-
-Drafts and batch artifacts live under ignored
-`store/scratch/catalog_generation/`; resumable workflow state is stored in
-`store/catalog_generation_checkpoints.db`. Review the draft and its findings
-before accepting it. `promote-lessons` handles explicit approval and promotion
-into canonical source; inspect its `--help` for batch selection and replacement
-options. Generation and distribution export do not themselves approve content
-or change the curriculum.
+Pipeline jobs run on OpenCode, while workbench chat runs on the Codex app-server.
+Generation and AI review require the configured OpenCode CLI and authenticated
+provider access. Configure model routes and authoring jobs in [`config.yaml`](config.yaml).
+Generation results arrive as proposals; source changes only after the owner
+accepts them. When lesson changes leave exercises stale, **Regenerate stale
+exercises** creates one proposal with a block per stale exercise, which the owner
+can accept or reject item by item.
 
 For optional model-dependent prompt evaluations:
 
 ```bash
-uv run lesson-data doctor --capability eval
 npm run eval:promptfoo -- -c evals/promptfoo/reviews.yaml
 ```
 
-## Package a distribution
+## Release
 
-To validate and package the current `dist/` tree locally:
-
-```bash
-uv run lesson-data validate-distribution --repo-root . --distribution-root .
-uv run lesson-data package \
-  --repo-root . --distribution-root . --output /tmp/lessons.tar.gz
-```
-
-Packaging creates a deterministic archive of a complete validated distribution.
-`--distribution-root` names the directory containing `dist/`. Packaging does not
-generate lesson drafts or publish a release.
-
-Audio synthesis is a separate, provider-backed export. It requires Google Cloud
-Text-to-Speech credentials and audio configuration; see [`.env.example`](.env.example)
-and [`config.yaml`](config.yaml). Inspect its prerequisites and options with:
-
-```bash
-uv run lesson-data doctor --capability audio
-uv run lesson-data export --help
-```
-
-`export` writes to `store/scratch/audio-distribution/` by default. Use that
-directory as `--distribution-root` when validating or packaging an audio export.
-The [release workflow](.github/workflows/release.yml) validates, packages, and
-publishes a distribution when a maintainer pushes a `v*` tag.
+Standard releases use the local plan and approval flow because only the operator's
+workspace has the audio cache and publication credentials. Follow the
+[Release Operations Runbook](knowledge/README.md). Start with
+`uv run lesson-data release`, review audio reuse, missing recordings, and
+estimated synthesis cost, then run the printed `release --approve` continuation
+only when synthesis and publication are authorized. Tag CI runs
+`lesson-data release-verify` against that published release; it does not
+synthesize or publish.
 
 ## Repository layout
 

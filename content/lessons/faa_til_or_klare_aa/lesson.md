@@ -109,6 +109,7 @@ The past form **fikk til** naturally presents the result as completed.
 ## Checkpoint: identify the successful result {#successful-result-checkpoint role=recap objectives=obj-faa-til-or-klare-aa-01}
 
 Read short situations about practical problems, such as opening a document, connecting a printer, or preparing a room. Identify which sentence reports that the task eventually worked. Then explain briefly what result was achieved.
+
 ## Focusing on ability or effort with klare å {#focusing-on-ability-or-effort-with-klare-aa role=model objectives=obj-faa-til-or-klare-aa-01}
 
 Use **klare å + infinitive** when the focus is on whether a person can cope with a task or has enough ability, strength, time, concentration, or determination to do it.
@@ -157,6 +158,7 @@ The present form **klarer å** can describe current ability or ask whether a tas
 Work with short descriptions of people under pressure: someone is tired, has little time, carries something heavy, or must concentrate in a noisy room. Complete each description with a natural statement using **klare å**.
 
 Your response should use **klare å** with an infinitive and make the difficulty or effort relevant to the person.
+
 ## The central contrast {#central-contrast role=contrast objectives=obj-faa-til-or-klare-aa-01}
 
 The two expressions overlap. Both can describe success, and both may be translated as manage to. The best choice depends on how the speaker views the situation.
@@ -237,6 +239,7 @@ This draws attention to her accomplishment or ability.
 Take paired situations in which the same action can be viewed in two ways. Write one sentence that highlights the working result with **få til**, then another that highlights a person’s effort or capacity with **klare å**.
 
 Use contexts such as fixing a bicycle, completing a report before a deadline, or cooking with unfamiliar equipment. Your response should keep the event similar while changing the speaker’s perspective.
+
 ## Questions and negative statements {#questions-and-negative-statements role=model objectives=obj-faa-til-or-klare-aa-01}
 
 Questions with **klare å** often ask directly about capacity.
@@ -292,6 +295,7 @@ The assembly did not work out successfully.
 Read brief statements about unsuccessful attempts. Decide whether each problem is mainly about a person’s capacity or about getting a task to work. Reformulate the statement with **klare å** or **få til**, preserving its meaning.
 
 Your response should connect personal limitations to **klare å** and an unsuccessful practical outcome to **få til**.
+
 ## Common mistakes {#common-mistakes role=contrast objectives=obj-faa-til-or-klare-aa-01}
 
 **Using the neutral target with å after klare**
@@ -378,6 +382,7 @@ Our effort and eventual accomplishment are prominent.
 Review sentences containing an omitted **å** after **klare**, a missing **til** after **få**, or a mixture of the two patterns. Treat omitted **å** as an accepted variant, but rewrite it with **å** for this lesson’s neutral target frame. Correct the actual pattern errors. Then state whether each resulting sentence focuses on capacity and effort or on a successful result.
 
 Your response should use the neutral target **klare å + infinitive** or one of the frames **få til + noun**, **få + object pronoun + til**, and **få til å + infinitive** without combining their parts incorrectly.
+
 ## Back at the community centre {#back-at-community-centre role=model objectives=obj-faa-til-or-klare-aa-01}
 
 The meeting has started, but Mina and Jonas face one more problem.
@@ -413,6 +418,7 @@ Jonas uses **klarer** when discussing whether he can speak loudly enough. Mina a
 Continue Mina and Jonas’s meeting with several short exchanges. Include a new practical problem, an attempt to solve it, a question about whether one person can cope with a difficult action, and a final successful result.
 
 Use both target patterns, but keep their perspectives distinct. Your response should use **klare å** for ability or effort and **få til** for something that eventually works or succeeds.
+
 ## Final retrieval and review {#final-retrieval-and-review role=recap objectives=obj-faa-til-or-klare-aa-01}
 
 Without looking back, write two short Norwegian sentences about a new situation. In the first, use **klare å** to emphasize someone’s ability or effort. In the second, use **få til** to emphasize a successful result. Briefly identify the difference in focus in Norwegian.

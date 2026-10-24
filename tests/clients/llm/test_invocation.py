@@ -82,6 +82,20 @@ def test_job_runner_given_persistent_backend_down_expect_four_attempts_then_rais
     assert all(attempt.outcome == "down" for attempt in excinfo.value.attempts)
 
 
+def test_job_runner_given_backend_failure_expect_provider_name_from_configured_model(monkeypatch):
+    monkeypatch.setattr("lesson_builder.clients.llm.invocation.time.sleep", lambda _: None)
+    runner = JobRunner(
+        "reviewer",
+        client=FakeLlmClient.raising(BackendDownException("upstream unavailable")),
+        model="zai-coding-plan/glm-5.3",
+    )
+
+    with pytest.raises(BackendDownException) as excinfo:
+        runner.invoke_response("review this")
+
+    assert excinfo.value.provider_name == "Z.AI"
+
+
 def test_job_runner_given_quota_exhaustion_expect_no_retry(monkeypatch):
     calls = []
 

@@ -20,9 +20,9 @@ def test_workspace_paths_given_workspace_root_expect_canonical_paths_are_central
     assert paths.catalog_registry == tmp_path / "content" / "catalog" / "registry" / "catalog_families.yaml"
     assert paths.curriculum_plan == tmp_path / "content" / "curriculum" / "plan.yaml"
     assert paths.lessons_root == tmp_path / "content" / "lessons"
+    assert paths.drafts_root == tmp_path / "drafts"
     assert paths.lesson_approvals_root == tmp_path / "content" / "approvals" / "lessons"
     assert paths.terminology_registry == tmp_path / "content" / "terminology" / "glossary.yaml"
-    assert paths.dependency_review_scratch_root == tmp_path / "store" / "scratch" / "curriculum-dependencies"
     assert paths.curriculum_scratch_root == tmp_path / "store" / "scratch" / "curriculum"
     assert paths.dist_root == tmp_path / "dist"
 

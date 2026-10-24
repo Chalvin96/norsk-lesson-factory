@@ -35,3 +35,13 @@ def test_gate_lesson_results_given_terminology_ban_expect_blocker():
     terminology_results = [result for result in results if result.check_id == "terminology_banned"]
     assert len(terminology_results) == 1
     assert terminology_results[0].is_blocking is True
+
+
+def test_gate_lesson_results_given_malformed_schema_expect_schema_result_only():
+    lesson = _load_lesson()
+    lesson.pop("elements")
+
+    results = gate_lesson_results(lesson, terminology_bans=TerminologyBans())
+
+    assert [result.check_id for result in results] == ["schema_validate"]
+    assert all(result.is_blocking for result in results)

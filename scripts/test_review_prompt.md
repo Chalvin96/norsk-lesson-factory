@@ -40,5 +40,12 @@ For AI-assisted behavior, apply the stronger evidence standard:
   are stronger test-suite signals than line coverage or the number of tests an
   agent generated.
 
+## State synchronization and persistence
+
+- Persist before advancing in-memory state — `src/lesson_builder/clients/codex/auth_profile.py` writes the sync record before `_record_codex_auth_sync` advances `state.last_synced`.
+- Final-sync a previous writer before handing over ownership — `src/lesson_builder/clients/codex/auth_profile.py` stops and joins the watcher before `prepare_isolated_profile` creates the next generation.
+- Keep another copy of data before deleting the only copy — `src/lesson_builder/clients/codex/app_server.py` removes the profile only after `restore_parent_auth(...)` succeeds (around line 679).
+- Make every failure path clean up or leave recoverable state — `src/lesson_builder/clients/codex/auth_profile.py` removes partial profiles, while watcher sync errors retain the profile for retry.
+
 If no material issue exists, return `No test-quality findings.` Do not request cosmetic
 rewrites or additional tests without naming the unprotected observable behavior.

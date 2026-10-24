@@ -1,7 +1,20 @@
-"""Not a check itself — the external Markdown document adapter.
+"""Entry point: ``pandoc.parse_markdown`` reads lesson Markdown.
 
-``pandoc`` wraps the pinned pypandoc reader used by lesson-source parsing.
-Front-matter splitting and YAML decoding live in ``frontmatter``; Pandoc
-attribute normalization lives in ``attributes``. Application operations convert
-the parsed structure into lesson values and load the final lesson.
+``markdown_rules``, ``markdown_attributes``, and ``markdown_ast`` parse syntax
+and emit Pandoc-shaped JSON. ``pandoc_blocks`` and ``pandoc_inlines`` map it
+into lesson values. ``frontmatter`` decodes front matter and YAML;
+``attributes`` normalizes parsed attributes.
 """
+
+import warnings
+
+with warnings.catch_warnings():
+    warnings.filterwarnings(
+        "ignore",
+        message=r"invalid escape sequence '\\\*'",
+        category=SyntaxWarning,
+        module=r"(?:panflute\.io|.*[/\\]panflute[/\\]io(?:\.py)?)$",
+    )
+    import panflute
+
+__all__ = ["panflute"]

@@ -15,10 +15,10 @@ from collections.abc import Iterable
 from typing import Any
 
 from lesson_builder.domain.lesson.services.audio_language import collect_non_norwegian_audio_words
+from lesson_builder.domain.lesson.services.learner_visibility import is_internal_request_section_title
+from lesson_builder.domain.lesson.services.learner_visibility import visible_block_indexes
 from lesson_builder.domain.lesson.settings import K_TRANSCRIPT_AUDIO_EXERCISE_OPS
 from lesson_builder.domain.lesson.settings import K_TRANSCRIPT_AUDIO_LANGUAGE
-from lesson_builder.domain.lesson.validation.learner_visibility import is_internal_request_section_title
-from lesson_builder.domain.lesson.validation.learner_visibility import visible_block_indexes
 
 # ---------------------------------------------------------------------------
 # Private helpers
@@ -204,8 +204,6 @@ def _exercise_audio_text(exercise: dict[str, Any]) -> str:
         return _build_audio_text(exercise, payload)
     if operation == "recall_fill":
         return _recall_fill_audio_text(exercise, payload)
-    if operation == "speak":
-        return _speak_audio_text(exercise, payload)
     return ""
 
 
@@ -247,14 +245,6 @@ def _recall_fill_audio_text(exercise: dict[str, Any], payload: dict[str, Any]) -
         raise ValueError(f"exercise {exercise.get('id', 'recall_fill')!r} has an empty audio_target")
     if collect_non_norwegian_audio_words(target):
         raise ValueError(f"exercise {exercise.get('id', 'recall_fill')!r} audio_target must contain Norwegian only")
-    return target.strip()
-
-
-def _speak_audio_text(exercise: dict[str, Any], payload: dict[str, Any]) -> str:
-    """Return and validate the authored target for speak."""
-    target = payload.get("target")
-    if not isinstance(target, str) or not target.strip():
-        raise ValueError(f"exercise {exercise.get('id', 'speak')!r} has an empty speak target")
     return target.strip()
 
 

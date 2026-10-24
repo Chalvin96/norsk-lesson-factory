@@ -7,34 +7,37 @@ llm:
     standard:
       model: openai/gpt-5.6-sol
       variant: low
-    deep:
-      model: openai/gpt-5.6-sol
-      variant: medium
     deep_alt:
       model: zai-coding-plan/glm-5.3
       variant: max
+    workbench:
+      model: openai/gpt-6.1-sol
+      variant: medium
   jobs:
     author:
       tier: standard
       agent_template: lesson-author
     reviewer:
-      tier: deep_alt
-      agent_template: catalog-review
-    catalog_explorer:
-      tier: cheap
-      agent_template: catalog-research
-    catalog_reviewer:
-      tier: deep
-      agent_template: catalog-review
-    curriculum_reviewer:
-      tier: deep
+      tier: workbench
       agent_template: catalog-review
     normalizer:
       tier: cheap
       agent_template: lesson-author
+    workbench_author:
+      tier: workbench
+      agent_template: workbench-author
+    workbench_reviewer:
+      tier: workbench
+      agent_template: catalog-review
     exercise_author:
       tier: cheap
       agent_template: exercise-author
+
+codex:
+  workbench_chat:
+    model: gpt-6.1-sol
+    effort: medium
+    timeout_seconds: 1800
 
 audio:
   provider: google-cloud-text-to-speech

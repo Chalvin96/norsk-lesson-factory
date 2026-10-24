@@ -17,9 +17,9 @@ from lesson_builder.domain.lesson.models.operations import render_operation_guid
 from lesson_builder.domain.lesson.models.operations import render_operation_payload_guidance
 
 
-def test_is_oracle_operation_given_text_and_spoken_operations_expect_classification():
+def test_is_oracle_operation_given_closed_and_open_operations_expect_classification():
     assert is_oracle_operation("choose")
-    assert not is_oracle_operation("speak")
+    assert not is_oracle_operation("write")
 
 
 def test_render_operation_guidance_given_registry_expect_all_operations_once():

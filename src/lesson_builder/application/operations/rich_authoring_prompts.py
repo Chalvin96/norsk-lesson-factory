@@ -8,23 +8,13 @@ client layers.
 
 from __future__ import annotations
 
-import json
-from typing import Any
-from typing import cast
-
 import yaml
 
 from lesson_builder.domain.lesson.models.operations import evidence_route_operations
 from lesson_builder.domain.lesson.models.operations import render_evidence_route_guidance
 from lesson_builder.domain.lesson.models.operations import render_operation_guidance
 from lesson_builder.domain.lesson.models.operations import render_operation_payload_guidance
-from lesson_builder.domain.lesson.models.quality_review import LessonQualityReview
-from lesson_builder.domain.lesson.models.quality_review import NormalizationPreservationReview
-from lesson_builder.domain.lesson.models.rich_authoring import LessonDraftEditResponse
-from lesson_builder.domain.lesson.models.rich_authoring import NormalizationEditResponse
-from lesson_builder.domain.lesson.models.rich_authoring import NormalizedPackage
 from lesson_builder.domain.lesson.services.quality_review import quality_axes_for_kind
-from lesson_builder.formats.yaml import load_unique_yaml
 
 K_RICH_GRAMMAR_DRAFT_GUIDANCE = """
 Grammar chapter shape (apply this only when the approved plan kind is grammar):
@@ -48,6 +38,7 @@ def build_rich_draft_prompt(
     *,
     plan_kind: str | None,
     terminology_context: str | None = None,
+    size_guidance: str | None = None,
 ) -> str:
     """Build the flexible prose-author prompt from an approved plan."""
     prompt = (
@@ -105,10 +96,12 @@ def build_rich_draft_prompt(
         "labels already delimit the pair.\n\n"
         "Instructional explanations, exercise instructions, feedback, and headings are "
         "in English. Norwegian target sentences, dialogue turns, and answer choices are "
-        "natural Bokmål and should have English translations. Introduce a necessary term "
+        "natural Bokmål. Translate teaching examples, but never supply an exercise target "
+        "answer through a translation, gloss, or copied form. Introduce a necessary term "
         "in plain English with its established Norwegian label, for example `past tense "
-        "(preteritum)`, then use it consistently. Develop each approved decision "
-        "without a length or section-count target. Each section must add a distinction, "
+        "(preteritum)`, then use it consistently. "
+        + (size_guidance or "Develop each approved decision without a length or section-count target.")
+        + " Each section must add a distinction, "
         "worked example, misconception correction, or new practice demand; combine "
         "passages that merely repeat the teaching. Keep retrieval that strengthens "
         "a taught decision, but do not ask for the same complete transfer task again "
@@ -149,22 +142,20 @@ def build_lesson_review_prompt(
         "draft is textbook-like prose, so judge teaching quality rather than "
         "serialization: later nodes add compiler structure and exercise payloads.\n\n"
         f"Score every rubric axis 0-2: {list(expected_axes)!r}. "
-        "Every score needs draft-grounded rationale. Report one finding per concrete "
-        "defect with its exact location, the evidence, and a bounded draft-only "
-        "repair instruction. Blocking codes are reserved for incorrect or "
-        "unsupported claims, unnatural Bokmål, meaning-changing translations, "
-        "accepted forms marked wrong, ambiguous answer keys, target loss, "
-        "prerequisite or scope breach, and compiler failure. Use major severity for "
-        "a material pedagogy, terminology, or practice gap and minor for copy "
-        "polish that does not prevent learning. This is the only defect-discovery "
-        "pass before one bounded repair: scan the entire draft line by line and "
-        "report every blocking or major defect in the same response. Search for "
+        "Every score needs draft-grounded rationale. Report each possible concern "
+        "with its location, an exact source excerpt as evidence, and rationale. Every finding is "
+        "an unverified AI suggestion. Findings never authorize edits, require the "
+        "author to apply them, or block approval. Use major severity for material "
+        "concerns and minor for copy polish. Scan the entire draft line by line and "
+        "report possible concerns in the same response. Search for "
         "every occurrence of a claim, including repeated rule prose, tables, "
         "dialogue explanations, checkpoint evidence statements, activity purpose/success text, "
         "transfer tasks, and the retrieval recap. Report independent defects in this pass. "
-        "Treat broad plan wording as scope, not proof of a universal rule: when "
-        "the draft demonstrates only named constructions, qualify the rule and "
-        "limit the claim to those taught patterns rather than inventing exceptions. "
+        "Do not present a linguistic judgment as verified fact; lack of an example "
+        "in this lesson is not evidence of a contradiction. Treat plan wording "
+        "as a scope check: flag a genuinely over-broad rule only when evidence shows "
+        "that its stated scope is wrong, not merely because this lesson teaches fewer "
+        "cases. "
         "Report any dedicated explanation or scored learner action outside the approved "
         "objectives as a prerequisite_scope_breach or pedagogy_gap. A brief recognition "
         "example may support the target, but a second outcome must not receive its own "
@@ -175,17 +166,15 @@ def build_lesson_review_prompt(
         "and flag checkpoint wording that leans on earlier material instead of naming "
         "observable evidence. Report a checkpoint evidence statement that bundles "
         "independently attemptable, omittable, judgeable, and remediable outputs as "
-        "a `practice_gap` finding with major severity, exact evidence, and a bounded "
-        "draft-only repair that separates the checkpoints. A cohesive dialogue, "
+        "a `practice_gap` finding with major severity and rationale. "
+        "A cohesive dialogue, "
         "report, or operation-native homogeneous collection is one submission, not "
         "a compound deliverable, so do not report it as a gap merely for containing "
         "several turns, items, or criteria. "
         "For every dialogue, check each adjacent question/answer pair for pragmatic fit "
         "and keep named places, people, and other entities consistent across turns and "
-        "translations. If a repair changes a dialogue turn, require the repair to update "
-        "the paired turn whenever its meaning or answer fit depends on it. "
-        "Completion criterion: score every rubric axis once and report every grounded "
-        "blocking or major defect across the complete draft.\n\n"
+        "translations. Completion criterion: score every rubric axis once and report "
+        "possible material concerns across the complete draft as unverified suggestions.\n\n"
     )
     if terminology_context:
         prompt += "House terminology rules:\n" + terminology_context + "\n\n"
@@ -216,7 +205,7 @@ def build_normalization_prompt(
         "teaching meaning. Do not group examples from separate sequences. Do not "
         "rewrite for style, shorten, summarize, correct terminology, resolve a pedagogical "
         "ambiguity, or invent a better example. If the draft is awkward or ambiguous, "
-        "preserve it and let the later review gate report it. The approved plan remains "
+        "preserve it and let the later advisory review report it. The approved plan remains "
         "the scope authority. Never introduce a terminology label that is absent from the "
         "draft just because it appears in the plan or in your own training data; keep the "
         "draft's learner wording. In particular, use the established term `noun phrase` "
@@ -349,19 +338,17 @@ def build_preservation_review_prompt(
         "verify that the normalized typed item still carries an inline compiler-"
         "recognized negative marker (`Incorrect:`, `Not:`, or `✗`) in its own "
         "English value. A surrounding heading or explanatory sentence is not "
-        "equivalent; losing or failing to encode that status is a semantic "
-        "preservation defect requiring `needs_repair`. Display labels may be "
+        "equivalent; losing or failing to encode that status is a possible "
+        "preservation loss. Display labels may be "
         "learner-readable and "
         "hyphenated; only exercise markers and request handles are identities. "
-        "Report only lost or semantically changed content and restore the protected "
-        "meaning with bounded findings.\n\n"
-        "`pass` requires every important reviewed teaching unit to survive with its "
-        "meaning intact. Any dropped or semantically changed rule, example, "
-        "contrast, dialogue turn, glossary introduction, or practice checkpoint "
-        "requires `needs_repair` with one finding per defect. Each finding's repair "
-        "instruction must restore the missing content. Completion criterion: compare "
-        "every protected teaching unit and exercise intent once; pass exactly when all "
-        "survive with meaning and order intact.\n\n"
+        "Report only lost or semantically changed content. This review is advisory: "
+        "it does not authorize edits or block the normalized package. Describe the "
+        "possible loss for author inspection instead of directing an automatic repair.\n\n"
+        "Report each possible loss for author inspection. Do not propose or apply edits. "
+        "Compare every protected teaching unit and exercise intent once, then report "
+        "any possible loss as an advisory "
+        "suggestion.\n\n"
         "Approved plan (scope authority):\n---BEGIN PLAN---\n" + plan_text + "\n---END PLAN---\n\n"
         "Reviewed draft (protected source):\n---BEGIN DRAFT---\n" + draft_text + "\n---END DRAFT---\n\n"
         "Normalized lesson Markdown:\n---BEGIN LESSON---\n" + lesson_md + "\n---END LESSON---\n\n"
@@ -408,7 +395,14 @@ def build_exercise_author_prompt(
         "directions in prompt_md, stem_md, and per-item cues use concise English; B1 and "
         "higher task directions use natural Bokmål. Preserve Norwegian target text, "
         "dialogue, example utterances, and answer choices when the exercise needs them. "
-        "Keep useful English glosses and translations. Hidden "
+        "Apply the review criterion supplied_answer_retrieval to prompts, stimuli, "
+        "stems, options, and segments: temporarily ignore the Norwegian text. If "
+        "English labels, prefatory explanations, or parenthetical glosses already "
+        "determine the intended bucket, flag supplied-answer retrieval. Ordinary "
+        "context and vocabulary translations are useful support when they do not "
+        "state the very distinction being tested. Never supply a target form in a "
+        "worked sentence beside a recall gap requiring that form. Put answer-revealing "
+        "translations and forms in post-answer explanation_md or feedback instead. Hidden "
         "judge instructions and criteria may use English. Apply answer-policy precedence in this order: first "
         "enforce every explicit requirement in the request and visible prompt, including "
         "the requested meaning, tense, construction, frame, and gender/form; a response "
@@ -492,169 +486,6 @@ def build_exercise_author_prompt(
     return prompt
 
 
-def build_lesson_repair_prompt(
-    draft_prompt: str,
-    draft_text: str,
-    review: LessonQualityReview,
-) -> str:
-    """Build one bounded exact-edit prompt from the exact findings."""
-    del draft_prompt
-    findings_yaml = cast(
-        str,
-        yaml.safe_dump(
-            _lesson_finding_payloads(review),
-            allow_unicode=True,
-            sort_keys=False,
-        ),
-    )
-    return (
-        "Bounded draft repair instructions:\n"
-        "You are an exact-edit lesson editor. The independent "
-        "reviewer rejected the draft below with the exact findings that follow. Do "
-        "not regenerate, rewrite, summarize, or return a replacement chapter. "
-        "Return only JSON matching the schema below with literal old_text/new_text "
-        "replacements. Keep every correct dialogue turn, example, translation, "
-        "explanation, and practice request. Apply every material finding as a set: "
-        "search the complete chapter for all repetitions or semantically equivalent "
-        "statements of each diagnosed claim, including activity success meanings, "
-        "transfer bullets, tables, and recap text, and provide one or more exact "
-        "edits per finding reference. Every old_text must be a unique byte anchor "
-        "that occurs exactly once in the supplied draft; use a longer local anchor "
-        "when a phrase repeats. Anchors must not overlap, and no edit may depend on "
-        "text produced by another edit: all replacements apply to the original draft. "
-        "Do not use a "
-        "whole-draft old_text. Do not introduce a broader rule while repairing a "
-        "narrow one. Whenever an edit adds or increases a learner action, it must "
-        "also add or clarify the required language or skill prerequisite before "
-        "that task. Before returning, privately check the complete edited draft "
-        "so no contradictory sentence remains and every repaired task is teachable. "
-        "Completion criterion: every material finding reference has at least one exact "
-        "edit and every repeated instance of its diagnosed claim is resolved.\n\n"
-        "---BEGIN DRAFT UNDER REPAIR---\n" + draft_text + "\n---END DRAFT UNDER REPAIR---\n\n"
-        "---BEGIN REVIEW FINDINGS---\n" + findings_yaml + "---END REVIEW FINDINGS---\n"
-        "\n---BEGIN RESPONSE SCHEMA---\n"
-        + json.dumps(LessonDraftEditResponse.model_json_schema(), ensure_ascii=False)
-        + "\n---END RESPONSE SCHEMA---\n"
-    )
-
-
-def build_preservation_repair_prompt(
-    normalization_prompt: str,
-    package: NormalizedPackage,
-    review: NormalizationPreservationReview,
-) -> str:
-    """Build one representation-only exact-edit normalization prompt."""
-    del normalization_prompt
-    findings_yaml = cast(
-        str,
-        yaml.safe_dump(
-            _normalization_finding_payloads(review),
-            allow_unicode=True,
-            sort_keys=False,
-        ),
-    )
-    return (
-        "Representation repair instructions:\n"
-        "You are an exact source-structure editor. The "
-        "normalization-preservation reviewer found the exact defects below. Return "
-        "only JSON matching the response schema with literal old_text/new_text "
-        "replacements against the previous fields. Do not regenerate or return a "
-        "complete lesson or request YAML. The original prose draft is protected: "
-        "restore only the dropped or semantically changed units and fix only the "
-        "reported structure defects. Do not rewrite learner-facing prose, merge or "
-        "drop exercise requests, or invent new content. Address each finding "
-        "reference with one or more edits as needed. Every old_text must be a "
-        "unique byte anchor occurring exactly once in its named previous artifact. "
-        "Anchors within an artifact must not overlap or depend on another edit: all "
-        "replacements apply to the supplied previous fields. Completion criterion: every finding "
-        "reference is addressed and protected prose outside those repairs is unchanged.\n\n"
-        "---BEGIN PREVIOUS LESSON---\n" + package.lesson_md + "\n---END PREVIOUS LESSON---\n\n"
-        "---BEGIN PREVIOUS REQUESTS---\n" + package.exercise_requests_yaml + "\n---END PREVIOUS REQUESTS---\n\n"
-        "---BEGIN PRESERVATION FINDINGS---\n" + findings_yaml + "---END PRESERVATION FINDINGS---\n"
-        "\n---BEGIN RESPONSE SCHEMA---\n"
-        + json.dumps(NormalizationEditResponse.model_json_schema(), ensure_ascii=False)
-        + "\n---END RESPONSE SCHEMA---\n"
-    )
-
-
-def build_exercise_repair_prompt(
-    base_prompt: str | None = None,
-    *,
-    plan_text: str | None = None,
-    lesson_md: str | None = None,
-    exercise_requests_yaml: str | None = None,
-    failed_handles: list[str],
-    verification: dict[str, Any],
-    learner_visible_payload: list[dict[str, Any]],
-) -> str:
-    """Ask the exercise author to replace failed handles only."""
-    if plan_text is not None and lesson_md is not None and exercise_requests_yaml is not None:
-        scoped_requests = _filter_exercise_requests_yaml(exercise_requests_yaml, failed_handles)
-        retry_base = build_exercise_author_prompt(
-            plan_text=plan_text,
-            lesson_md=lesson_md,
-            exercise_requests_yaml=scoped_requests,
-        )
-    elif base_prompt is not None:
-        retry_base = base_prompt
-    else:
-        raise ValueError("exercise repair prompt requires a base prompt or scoped lesson inputs")
-    return (
-        f"{retry_base}\n\n"
-        "This is a bounded exercise-only repair. The lesson Markdown is immutable. "
-        f"Return exactly one replacement for each failed handle: {failed_handles!r}. "
-        "Omit unaffected handles. Preserve each handle's identity, objective, Bloom "
-        "level, and evidence goal.\n\n"
-        "Verifier diagnostics (treat these as concrete defects, not a reason to rewrite "
-        "the lesson):\n"
-        f"{json.dumps(verification, ensure_ascii=False, indent=2)}\n\n"
-        "The following is the learner-visible payload for the failed handles. It is deliberately "
-        "keyless: do not ask for or infer authored answer assignments from it. Use the request "
-        "and diagnostics to produce a newly solvable replacement.\n"
-        "---BEGIN FAILED LEARNER PAYLOAD---\n"
-        f"{json.dumps(learner_visible_payload, ensure_ascii=False, indent=2)}\n"
-        "---END FAILED LEARNER PAYLOAD---\n"
-    )
-
-
-def _lesson_finding_payloads(review: LessonQualityReview) -> list[dict[str, Any]]:
-    """Add stable per-occurrence references to lesson findings for an editor."""
-    code_counts: dict[str, int] = {}
-    payloads: list[dict[str, Any]] = []
-    for finding in review.findings:
-        code_counts[finding.code] = code_counts.get(finding.code, 0) + 1
-        payload = finding.model_dump(mode="json")
-        payload["finding_ref"] = f"{finding.code}:{code_counts[finding.code]}"
-        payloads.append(payload)
-    return payloads
-
-
-def _normalization_finding_payloads(
-    review: NormalizationPreservationReview,
-) -> list[dict[str, Any]]:
-    """Add stable per-occurrence references to preservation findings."""
-    category_counts: dict[str, int] = {}
-    payloads: list[dict[str, Any]] = []
-    for finding in review.findings:
-        category_counts[finding.category] = category_counts.get(finding.category, 0) + 1
-        payload = finding.model_dump(mode="json")
-        payload["finding_ref"] = f"{finding.category}:{category_counts[finding.category]}"
-        payloads.append(payload)
-    return payloads
-
-
-def _filter_exercise_requests_yaml(requests_yaml: str, handles: list[str]) -> str:
-    """Serialize only failed exercise intents for a bounded repair prompt."""
-    raw = load_unique_yaml(requests_yaml)
-    if not isinstance(raw, list):
-        raise TypeError("exercise request handoff must be a list for repair scoping")
-    wanted = set(handles)
-    scoped = [item for item in raw if isinstance(item, dict) and item.get("handle") in wanted]
-    if {item.get("handle") for item in scoped} != wanted:
-        raise ValueError("exercise repair request scope does not match failed handles")
-    return cast(str, yaml.safe_dump(scoped, allow_unicode=True, sort_keys=False))
-
-
 def _exercise_prompt_policy_scope(
     exercise_requests_yaml: str,
 ) -> tuple[tuple[str, ...] | None, tuple[str, ...] | None]:
@@ -689,11 +520,8 @@ def _exercise_author_lesson_context(lesson_md: str) -> tuple[str, str]:
 
 __all__ = [
     "build_exercise_author_prompt",
-    "build_exercise_repair_prompt",
-    "build_lesson_repair_prompt",
     "build_lesson_review_prompt",
     "build_normalization_prompt",
-    "build_preservation_repair_prompt",
     "build_preservation_review_prompt",
     "build_rich_draft_prompt",
 ]

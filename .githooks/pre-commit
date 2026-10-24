@@ -7,6 +7,10 @@ uv run pre-commit run --config .pre-commit-config.yaml --hook-stage pre-commit
 
 # Knowledge is the committed current-state source. Keep the hook lightweight;
 # the full Python quality suite runs in CI and at handoff.
-if git diff --cached --name-only --diff-filter=ACMR | rg -q '^knowledge/'; then
-  uv run python scripts/okf_validate.py knowledge --strict --check-links
+if ! git diff --cached --quiet --diff-filter=ACMRD -- knowledge/; then
+  staged_tree=$(mktemp -d)
+  trap 'rm -rf "$staged_tree"' EXIT
+  git checkout-index --all --prefix="$staged_tree/"
+  mkdir -p "$staged_tree/knowledge"
+  uv run python scripts/okf_validate.py "$staged_tree/knowledge" --strict --check-links
 fi

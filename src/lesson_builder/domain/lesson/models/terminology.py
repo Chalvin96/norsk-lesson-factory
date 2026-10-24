@@ -28,7 +28,6 @@ ContextKind = Literal[
     "match_text",
     "categorize_text",
     "build_token",
-    "speak_target",
 ]
 K_TERMINOLOGY_SCHEMA_VERSION = "1"
 

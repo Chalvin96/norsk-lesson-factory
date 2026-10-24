@@ -3,7 +3,7 @@ type: Lesson
 slug: det_er_vs_det_finnes
 title: 'Using det er and det finnes'
 cefr_level: A2
-goal: 'Choose between det er for identifying or describing and det finnes for existence or availability.'
+goal: 'Use det er to identify or describe, and det er or det finnes for existence or availability.'
 default_lang: nb
 grounding_mode: grounded
 requirements_ref: plan.md
@@ -13,7 +13,7 @@ bloom_targets:
   - analyze
 objectives:
   - id: obj-det-er-vs-det-finnes-01
-    statement: 'Choose between det er for identifying or describing and det finnes for existence or availability.'
+    statement: 'Use det er to identify or describe, and det er or det finnes for existence or availability.'
     bloom_targets:
       - understand
       - apply
@@ -25,7 +25,7 @@ objectives:
 Sara and Jonas have arrived in a small town for a weekend trip. Their hotel room is not ready, so they ask the receptionist, Ingrid, about the hotel and the surrounding area.
 
 ::: {.reading translation="Welcome! I’m Ingrid." dialogue_id="hotel-arrival" speaker_id="ingrid" speaker_name="Ingrid" character_id="ingrid"}
-Velkommen! Det er jeg som heter Ingrid.
+Velkommen! Jeg heter Ingrid.
 :::
 
 ::: {.reading translation="Hi. We have booked a double room." dialogue_id="hotel-arrival" speaker_id="sara" speaker_name="Sara" character_id="sara"}
@@ -84,12 +84,12 @@ She uses **det finnes** when she says that something exists or is available:
 - en: There are several restaurants in the town centre.
 :::
 
-The central choice is therefore one of meaning:
+These examples show two useful patterns:
 
 - Use **det er** to identify something or describe it.
-- Use **det finnes** to say that something exists or is available.
+- Use **det finnes** to emphasize that something exists or is available. **Det er** can also introduce something new with this meaning.
 
-English often uses *there is* or *there are* for existence. Norwegian can express that meaning with **det finnes**. The form **finnes** is the present tense of **å finnes**, meaning *to exist* or *to be found*.
+English often uses *there is* or *there are* for existence. Norwegian can express that meaning with both **det er** and **det finnes**. The form **finnes** is the present tense of **å finnes**, meaning *to exist* or *to be found*.
 
 ## First checkpoint: Notice the speaker’s purpose {#first-checkpoint-notice-speakers-purpose role=contrast objectives=obj-det-er-vs-det-finnes-01}
 
@@ -145,11 +145,11 @@ The surrounding context tells us what **det** refers to. For example:
 ::: examples
 - no: Hvordan er rommet? Det er lyst og stille.
 - en: What is the room like? It is bright and quiet.
-- no: Hvor er frokostsalen? Det er i første etasje.
+- no: Hvor er frokostsalen? Den er i første etasje.
 - en: Where is the breakfast room? It is on the first floor.
 :::
 
-The thing is already known: *the room* or *the breakfast room*. The answer supplies a description or location.
+The thing is already known: *the room* or *the breakfast room*. The answer supplies a description or location. Use **det** for the neuter noun **rommet**, but **den** for the masculine noun **frokostsalen**.
 
 {{exercise: known-thing-description}}
 
@@ -278,27 +278,22 @@ First Ingrid confirms existence. Then she identifies the building. The physical 
 Ask what the sentence contributes:
 
 - If it tells the listener **what or which thing it is**, or **what that known thing is like**, use **det er**.
-- If it tells the listener **that something exists or is available**, use **det finnes**.
+- If it tells the listener **that something exists or is available**, both **det er** and **det finnes** are possible. **Finnes** emphasizes existence or availability.
 
 {{exercise: location-meaning-contrast}}
 
 ## A likely misconception {#likely-misconception role=contrast objectives=obj-det-er-vs-det-finnes-01}
 
-It is tempting to translate English word by word:
+Both of these sentences naturally introduce a café as new information:
 
 ::: examples
 - no: Det er en kafé på torget.
 - en: There is a café in the town square.
-:::
-
-Sentences of this kind can be heard in everyday Norwegian. However, **det er** has several uses, and relying on it for every English *there is* can hide the distinction this lesson is teaching.
-
-When your clear purpose is to say that something exists or is available, **det finnes** makes that meaning explicit:
-
-::: examples
 - no: Det finnes en kafé på torget.
 - en: There is a café in the town square.
 :::
+
+**Det er** is standard Bokmål here. **Det finnes** also works and makes existence or availability explicit.
 
 When you identify or describe a known thing, use **det er**:
 
@@ -309,7 +304,7 @@ When you identify or describe a known thing, use **det er**:
 - en: It is very pleasant there.
 :::
 
-The useful learner strategy is not “translate *there* as **det**.” Instead, decide whether you are announcing existence or giving information about something already in the conversation.
+For existence or availability, **det er** and **det finnes** overlap. For identifying or describing, use **er**, not **finnes**. When an exercise asks for **det finnes**, practise that form; this does not mean existential **det er** is incorrect.
 
 ## Common mistakes {#common-mistakes role=contrast objectives=obj-det-er-vs-det-finnes-01}
 
@@ -331,7 +326,7 @@ Here, the sentence describes the room. Use **det er**:
 
 **Finnes** does not work as a substitute for every form of English *is* or *are*.
 
-**Using det er when the task is specifically to express availability**
+**Confusing a general availability question with a question about one room**
 
 If a guest wants to know whether rooms are available, the intended meaning is existence or availability:
 
@@ -349,7 +344,7 @@ A question such as **Er rommet ledig?** has a different context: it asks whether
 - en: Is the room available?
 :::
 
-The first asks whether any suitable rooms exist. The second asks about a specific room.
+The first asks whether any suitable rooms exist. **Er det ledige rom?** is also a natural way to ask this. The second asks about a specific room.
 
 **Changing finnes for a plural noun**
 
@@ -468,11 +463,11 @@ If Jonas asks about transport, he asks whether a service exists:
 - en: Is there a bus to the town centre?
 :::
 
-Emil can confirm its existence and then identify the stop:
+Emil can give the departure frequency and then identify the stop. Use **går** for recurring bus departures:
 
 ::: examples
-- no: Ja, det finnes en buss hvert tiende minutt.
-- en: Yes, there is a bus every ten minutes.
+- no: Ja, det går en buss hvert tiende minutt.
+- en: Yes, a bus leaves every ten minutes.
 - no: Det er holdeplassen på den andre siden av gata.
 - en: It is the stop on the other side of the street.
 :::

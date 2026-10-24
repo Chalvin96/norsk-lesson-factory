@@ -1,0 +1,62 @@
+"""Not a check itself — Codex app-server and workbench-chat configuration constants."""
+
+K_CODEX_APP_SERVER_VERSION = "0.162.1"
+K_CODEX_APP_SERVER_CONFIG_OVERRIDES = ("mcp_servers={}", "apps._default.enabled=false")
+K_CODEX_APP_SERVER_DISABLED_FEATURES = ("apps", "plugins")
+K_CODEX_APP_SERVER_ENVIRONMENT_KEYS = (
+    "PATH",
+    "LANG",
+    "LC_ALL",
+    "LC_CTYPE",
+    "OPENAI_API_KEY",
+    "CODEX_API_KEY",
+    "HTTP_PROXY",
+    "HTTPS_PROXY",
+    "ALL_PROXY",
+    "NO_PROXY",
+    "http_proxy",
+    "https_proxy",
+    "all_proxy",
+    "no_proxy",
+    "SSL_CERT_FILE",
+    "SSL_CERT_DIR",
+    "REQUESTS_CA_BUNDLE",
+    "CURL_CA_BUNDLE",
+)
+K_CODEX_AUTH_FILENAME = "auth.json"
+K_CODEX_AUTH_SYNC_LOCK_FILENAME = ".auth.json.lock"
+K_CODEX_AUTH_SYNC_STATE_FILENAME = "auth-sync-state.json"
+K_CODEX_AUTH_OWNER_FILENAME = ".owner"
+K_CODEX_AUTH_SYNC_POLL_SECONDS = 0.05
+K_CODEX_AUTH_SYNC_STOP_TIMEOUT_SECONDS = 1.0
+K_CODEX_ISOLATED_PROFILE_DIRECTORY = "nld-workbench"
+K_CODEX_CONFIG_FILENAME = "config.yaml"
+K_CODEX_CONFIG_KEY = "codex"
+K_CODEX_CHAT_KEY = "workbench_chat"
+K_CODEX_RPC_TIMEOUT_SECONDS = 30
+K_CODEX_PROCESS_TERMINATION_TIMEOUT_SECONDS = 2.0
+K_CODEX_WORKBENCH_CHAT_MODEL_OPTIONS = (
+    "gpt-6.1-sol",
+    "gpt-6-luna",
+    "gpt-6-astra",
+    "gpt-5.6-luna",
+    "gpt-5.6-sol",
+)
+K_CODEX_WORKBENCH_CHAT_EFFORT_OPTIONS = ("minimal", "low", "medium", "high", "xhigh")
+
+__all__ = [
+    "K_CODEX_APP_SERVER_CONFIG_OVERRIDES",
+    "K_CODEX_APP_SERVER_DISABLED_FEATURES",
+    "K_CODEX_APP_SERVER_ENVIRONMENT_KEYS",
+    "K_CODEX_APP_SERVER_VERSION",
+    "K_CODEX_AUTH_FILENAME",
+    "K_CODEX_AUTH_SYNC_LOCK_FILENAME",
+    "K_CODEX_AUTH_SYNC_STATE_FILENAME",
+    "K_CODEX_AUTH_OWNER_FILENAME",
+    "K_CODEX_AUTH_SYNC_POLL_SECONDS",
+    "K_CODEX_AUTH_SYNC_STOP_TIMEOUT_SECONDS",
+    "K_CODEX_ISOLATED_PROFILE_DIRECTORY",
+    "K_CODEX_RPC_TIMEOUT_SECONDS",
+    "K_CODEX_WORKBENCH_CHAT_EFFORT_OPTIONS",
+    "K_CODEX_WORKBENCH_CHAT_MODEL_OPTIONS",
+]

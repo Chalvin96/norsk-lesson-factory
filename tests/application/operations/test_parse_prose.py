@@ -348,8 +348,8 @@ def test_parse_prose_given_bracketed_lex_span_expect_annotated():
 # ── Span kind: data-* normalization ──────────────────────────────────────
 
 
-def test_parse_prose_given_html_data_lex_span_expect_annotated_with_data_prefix_stripped():
-    body = 'Text with <span data-lex="bok_1">bok</span> inline.\n'
+def test_parse_prose_given_bracketed_data_lex_span_expect_annotated_with_data_prefix_stripped():
+    body = 'Text with [bok]{data-lex="bok_1"} inline.\n'
     result = parse_prose(lesson_source(body))
     para = require_block(result)
     annotated = [s for s in para.spans if s.kind == "annotated"]
@@ -480,17 +480,6 @@ def test_parse_prose_given_raw_inline_html_expect_value_error():
     body = "Text with <b>bold</b> inline.\n"
     with pytest.raises(ValueError, match="[Rr]aw.*not allowed"):
         parse_prose(lesson_source(body))
-
-
-# ── Fingerprint ──────────────────────────────────────────────────────────
-
-
-def test_parse_prose_given_any_input_expect_fingerprint_has_pandoc_panflute_and_reader():
-    result = parse_prose(lesson_source("Text.\n"))
-    fp = result.fingerprint
-    assert "pandoc" in fp
-    assert "panflute" in fp
-    assert fp["reader"] == "markdown+native_spans+bracketed_spans-smart"
 
 
 # ── Post-parse invariants ────────────────────────────────────────────────

@@ -183,8 +183,8 @@ Before repairing, check the actual status. If the plan really is confirmed, a
 "repair" would be wrong in the other direction: it would re-open a settled fact
 and slow the arrangement down.
 
-::: {.reading translation="The meeting room is booked — Jonas sent the confirmation this morning." dialogue_id="confirmed_room" speaker_id="jonas" speaker_name="Jonas" character_id="jonas"}
-Møterommet er booket — Jonas sendte bekreftelsen i morges.
+::: {.reading translation="The meeting room is booked. Reception sent the confirmation this morning." dialogue_id="confirmed_room" speaker_id="jonas" speaker_name="Jonas" character_id="jonas"}
+Møterommet er booket. Resepsjonen sendte bekreftelsen i morges.
 :::
 
 A partner who reports a confirmation states a **settled fact**. Treating it as

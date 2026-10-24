@@ -273,25 +273,23 @@ This three-part sequence is especially useful:
 
 It gives the listener enough context to respond immediately.
 
-**Common mistakes**
+**Tip: add meg**
 
-Do not omit **meg** when you mean help me.
-
-Incorrect:
+Without **meg**, the question is still grammatical. The listener has to work out from context whom you want help for:
 
 ::: examples
-- no: ✗ Kan du hjelpe?
+- no: Kan du hjelpe?
 - en: Can you help?
 :::
 
-This can be understood as Can you help?, but it does not specify whom you want the person to help.
-
-More useful here:
+With **meg**, it is clear that you are asking for help for yourself:
 
 ::: examples
 - no: Kan du hjelpe meg?
 - en: Can you help me?
 :::
+
+**Common mistakes**
 
 Do not use statement order when you intend to ask the direct question.
 
@@ -573,6 +571,7 @@ Your response should correctly interpret the action and answer naturally with **
 **Practice 5: follow the whole exchange**
 
 Create a short exchange at a station information desk. You cannot understand a message about your train. Get the employee’s attention, state the obstacle, and ask for help. Give the employee a brief positive response and one simple next action. End with your acceptance.
+
 ## Common communication problems {#common-communication-problems role=contrast objectives=obj-ask-for-help-01}
 
 **Giving only the problem**

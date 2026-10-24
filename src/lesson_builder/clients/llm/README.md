@@ -6,13 +6,13 @@ single-client OpenCode calls with bounded retry for transient transport errors.
 
 ## Changing the model
 
-`config.yaml` is the single source of truth for this routing layer. Tiers
-name cheap model/variant pairs by relative cost (`cheap`, `standard`, `deep`,
-`deep_alt`); jobs bind stable workflow names (`author`, `reviewer`, and so on)
-to exactly one tier plus one agent template, so workflow code does not change
-when a model moves. Change a tier's `model` to select another model or
-provider routed through OpenCode; there is no adapter field and no
-backward-compatible alias for retired ones.
+`config.yaml` is the single source of truth for this routing layer. Tiers name
+model/variant pairs (`cheap`, `standard`, `deep_alt`, and `workbench`); jobs
+bind stable workflow names (`author`, `reviewer`, and so on) to exactly one
+tier plus one agent template, so workflow code does not change when a model
+moves. Change a tier's `model` to select another model or provider routed
+through OpenCode; there is no adapter field and no backward-compatible alias
+for retired ones.
 
 Provider authentication and model availability belong to OpenCode. The model
 ID is forwarded unchanged, so configured IDs such as `openai/gpt-5.6-sol` and
@@ -26,10 +26,14 @@ Codex, OpenRouter, or Z.AI adapter.
 llm/
 ├── base.py              contracts, JSON extraction, and owned-process cancellation
 ├── exceptions.py        the typed error hierarchy
+├── failure_messages.py  author-facing provider names and failure guidance
+├── settings.py          transport and provider failure matching constants
 ├── config.py            strict root config.yaml tier/job loader
 ├── invocation.py        one-client JobRunner, structured output, bounded retry
-├── jobs.py              role composition boundary: config-selected jobs
-└── opencode.py          OpencodeClient (`opencode run`)
+├── role_jobs.py       role composition boundary: config-selected jobs
+├── opencode_credentials.py scoped provider credentials and refresh writeback
+├── opencode_runtime.py  private runtime paths, liveness, sweeping, and cache leases
+└── opencode.py          OpencodeClient (`opencode run`) process transport
 ```
 
 ## What goes where
@@ -37,8 +41,12 @@ llm/
 **`base.py`** contains the shared `BaseLlmClient` contract, case-insensitive
 quota matching, the process registry used by batch cancellation, and tolerant
 JSON extraction used by structured invocation.
-OpenCode owns its subprocess streaming, temporary state, prompt attachment,
-quota-event parsing, and provider-specific command flags in `opencode.py`.
+`opencode_credentials.py` owns scoped provider credentials and refresh writeback.
+`opencode_runtime.py` owns per-call runtime paths, directory liveness and
+sweeping, and shared cache coordination. Its file-lock API also protects
+credential refresh and writeback.
+`opencode.py` owns subprocess streaming, prompt attachment, quota-event parsing,
+and provider-specific command flags.
 
 **`config.py`** strictly loads `config.yaml`. Each tier contains only `model`
 and `variant`; each job contains only `tier` and `agent_template`. Unknown or
@@ -53,7 +61,7 @@ positive integer default deadline with no upper bound.
 retry loop for one configured client. Production jobs do not select a fallback
 client. Tests inject fake clients to exercise retry and failure handling.
 
-**`jobs.py`** is the composition boundary. `runner_for_job()` and
+**`role_jobs.py`** is the composition boundary. `runner_for_job()` and
 `client_for_job()` load a validated job, build its OpenCode client with the
 configured `llm.timeout_seconds` default (or an explicit finite positive
 override), and expose cancellation for active calls. Production callers use
@@ -69,38 +77,74 @@ so prompt text (including prompts that begin with `-` or equal a flag such as
 call runs with the validated repository root as the subprocess working
 directory. Agent templates under `.opencode/agents/` are reusable policy
 artifacts: stable instructions, tool permissions, and side-effect rules.
-Nodes own task/user prompts (prompt builders live beside their nodes), the
-invocation layer owns schema/repair instructions, and nodes cannot override
-tools. Authoring/review templates disable tools; `catalog-research` allows
-only `websearch`/`webfetch`. A model response never approves or publishes an
-artifact; LangGraph remains the checkpoint and human-gate authority.
+Prompt builders live with their owning application operation; the invocation
+layer owns schema/repair instructions, and callers cannot override tools.
+Authoring/review templates disable tools. A model response never approves or
+publishes an artifact; LangGraph remains the checkpoint and human-gate
+authority.
 
-Each call receives temporary XDG data/state/cache directories and copies only
-`opencode/auth.json`. The shared OpenCode database, history, logs, and tool
-output are not copied. Inherited `OPENCODE_`-prefixed override variables
-(config paths, permissions, routing) are stripped from the child environment
-so they cannot bypass the repository's validated configuration; credential
-variables are preserved, and the only allowlisted OpenCode-owned name is
-`OPENCODE_API_KEY`. Calls run in parallel by default; set
-`OPENCODE_EXECUTION_MODE=serial` only as an emergency rollback when diagnosing
-a runtime-specific concurrency problem. Large prompts use a temporary file
-attachment before the operating-system argument limit is reached. Disposable
-state uses `OPENCODE_TEMP_ROOT` when set, then `XDG_RUNTIME_DIR`, so concurrent
-calls do not depend on a large shared `/tmp`.
+Each call copies only the selected provider's `opencode/auth.json` entry into
+private XDG data. XDG state is per call except for the installation locks described
+below; `TMPDIR` is private. Database, history, logs, and other providers' credentials
+are not copied. Missing credentials fail before spawning OpenCode and point to
+`opencode auth login`. Inherited
+`OPENCODE_` policy overrides are stripped; `OPENCODE_API_KEY` and provider-owned
+credential variables are preserved.
+
+`XDG_CACHE_HOME` is shared at
+`${XDG_CACHE_HOME:-~/.cache}/norsk-lesson-data/opencode`. OpenCode 1.18.x puts
+[model metadata and package assets in cache, credentials in data](https://github.com/anomalyco/opencode/blob/v1.18.0/packages/core/src/global.ts).
+Its [remote skill downloader](https://github.com/anomalyco/opencode/blob/v1.18.0/packages/opencode/src/skill/discovery.ts)
+keys files by skill name and reuses existing files across URLs. The controlled
+`OPENCODE_CONFIG_CONTENT` overlay clears project/user `skills.urls` to prevent
+that cross-call reuse. It preserves agent, model, and permission configuration;
+OpenCode's later system-managed configuration can restore URLs.
+
+Cold calls take a shared-cache exclusive lock through completion. Warm calls
+hold shared locks and run in parallel, including callers queued during initial
+population. Failed calls remain cold because failure does not prove installation
+completed. A writer-intent gate stops new warm readers while a cold call waits
+for existing readers to finish; callers for a now-warm model resume in parallel.
+OpenCode's internal install-lock directory is linked into the shared cache, so
+different model/package mappings coordinate writers too.
+
+Every call retains a pending-record flock because even a warm model can map to
+a new package. The record is published only after locking and recording the
+pre-call package directory inventory, excluding dependency trees inside
+`node_modules`. Every Python return or exception removes it, including quota,
+provider, timeout, and empty-output failures. Success atomically publishes its
+directory inventory before removing the pending record, so recovery recognizes
+a committed installation if the process dies between those steps. Only an abruptly terminated owner and child leave an abandoned
+record. Recovery waits for live calls and removes installation directories added
+after the abandoned call began, preserving its pre-existing directories,
+inventories published by successful overlapping calls, and warm markers.
+Success inventories are conservative: directories observed during a successful
+call are retained because this wrapper cannot attribute individual package
+installations to concurrent OpenCode processes. Legacy records without an inventory
+require full package and marker invalidation. A newly mapped package can still make a concurrent reader fail
+during installation; normal failure handling belongs to OpenCode.
+
+State/prompt directories and cache ownership locks are inherited by the child,
+so they survive Python's death while OpenCode remains alive. Startup and the
+first CLI call sweep unlocked leftovers belonging to the current user. Lockless
+matching directories are removed regardless of age. Creation and sweeping use
+the same temp-root lock; creation holds it until the live lock exists. Calls run
+in parallel. Large prompts use a temporary file attachment before the
+operating-system argument limit is reached. Disposable state uses
+`OPENCODE_TEMP_ROOT` when set, then `XDG_RUNTIME_DIR`, so concurrent calls do
+not depend on a large shared `/tmp`.
 
 Every retry attempt runs with a finite deadline that starts at public call entry and
-covers serial-slot acquisition, environment setup, process startup, and output
-collection: the configured `llm.timeout_seconds` default (1800 recommended)
+covers environment setup, process startup, and output collection: the
+configured `llm.timeout_seconds` default (1800 recommended)
 or an explicit finite positive override supplied by the caller. The shared
 invocation retry policy may retry the same configured client with a fresh deadline
 after a retryable failure, so this is not a job-wide retry budget. Environment
-and prompt setup check that deadline before the execution slot is acquired or
-the subprocess starts, so an expired budget fails the call without launching
-OpenCode. A busy serial execution slot fails the call at that same deadline
-instead of blocking without bound. The default is not a ceiling and no
-maximum-bound policy exists; there is no unlimited-time option. Explicit
-batch cancellation via `cancel_active_clients()` is the additional escape path
-for interrupted runs, not a replacement for the deadline.
+and prompt setup check that deadline before the subprocess starts, so an
+expired budget fails the call without launching OpenCode. The default is not a
+ceiling and no maximum-bound policy exists; there is no unlimited-time option.
+Explicit batch cancellation via `cancel_active_clients()` is the additional
+escape path for interrupted runs, not a replacement for the deadline.
 
 OpenCode quota signals are classified before the shared retry loop. Structured
 quota/error events on stdout are authoritative; a quota-shaped stderr log only
@@ -130,6 +174,8 @@ Other modules should import only from:
 - `exceptions`: the `LlmException` hierarchy;
 - `base`: `BaseLlmClient` for typed test doubles and `extract_json_object` when
   tolerant JSON parsing is needed outside the LLM layer.
+- `opencode_runtime.sweep_stale_opencode_directories`: startup cleanup for
+  abandoned OpenCode state and prompt directories.
 
 Adding another transport would be an intentional contract change. It would
 require a new job/configuration policy, focused adapter tests, and an updated

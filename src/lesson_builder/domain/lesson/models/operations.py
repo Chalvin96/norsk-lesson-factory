@@ -13,7 +13,7 @@ from collections.abc import Iterable
 from dataclasses import dataclass
 from typing import Literal
 
-EvidenceClass = Literal["oracle", "spoken", "llm_judged"]
+EvidenceClass = Literal["oracle", "llm_judged"]
 BuildStage = Literal["notice", "retrieve", "controlled", "transfer"]
 EvidenceRoute = Literal[
     "meaning_selection",
@@ -23,7 +23,6 @@ EvidenceRoute = Literal[
     "sentence_construction",
     "form_repair",
     "contrast_classification",
-    "spoken_production",
     "open_production",
 ]
 
@@ -35,7 +34,6 @@ K_EVIDENCE_ROUTE_DESCRIPTIONS: dict[str, str] = {
     "sentence_construction": "construct a complete sentence from supplied tokens",
     "form_repair": "find and repair one taught form error",
     "contrast_classification": "classify items into explicitly taught contrast groups",
-    "spoken_production": "produce one exact Norwegian utterance for a cue",
     "open_production": "produce open Norwegian text against authored criteria",
 }
 
@@ -71,7 +69,6 @@ right:
 pairs:
   - left_id: left-1
     right_id: right-1""",
-    "speak": '''target: "Jeg snakker tydelig norsk."''',
     "write": """response_language: "no"
 min_words: 20
 max_words: 35
@@ -138,16 +135,6 @@ K_OPERATION_POLICIES: dict[str, OperationPolicy] = {
         payload_fields=("left", "right", "pairs"),
         evidence_class="oracle",
         evidence_routes=("pair_matching",),
-    ),
-    "speak": OperationPolicy(
-        name="speak",
-        bloom_levels=("remember", "apply"),
-        default_bloom="remember",
-        build_stage="transfer",
-        payload_kind="target",
-        payload_fields=("target",),
-        evidence_class="spoken",
-        evidence_routes=("spoken_production",),
     ),
     "write": OperationPolicy(
         name="write",

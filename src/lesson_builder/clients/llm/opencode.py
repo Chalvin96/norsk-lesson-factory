@@ -2,58 +2,44 @@
 
 from __future__ import annotations
 
-import contextlib
 import json
 import os
 import queue
-import shutil
 import subprocess
-import tempfile
 import threading
 import time
-from _thread import LockType
 from collections.abc import Callable
-from collections.abc import Iterator
+from dataclasses import dataclass
+from dataclasses import field
 from pathlib import Path
 from typing import IO
 from typing import cast
 
-try:
-    import fcntl
-except ImportError:  # pragma: no cover - supported POSIX deployments have fcntl
-    fcntl = None  # type: ignore[assignment]
-
+from lesson_builder.clients.cancellation import CancellationToken
+from lesson_builder.clients.cancellation import Cancelled
+from lesson_builder.clients.cancellation import active_cancellation_token
+from lesson_builder.clients.cancellation import provider_call_cancellation
 from lesson_builder.clients.llm.base import BaseLlmClient
 from lesson_builder.clients.llm.base import LlmResponse
-from lesson_builder.clients.llm.base import is_cli_cancellation_requested
-from lesson_builder.clients.llm.base import is_cli_process_cancelled
 from lesson_builder.clients.llm.base import register_active_cli_process
 from lesson_builder.clients.llm.base import terminate_cli_process
 from lesson_builder.clients.llm.base import unregister_active_cli_process
 from lesson_builder.clients.llm.exceptions import BackendDownException
-from lesson_builder.clients.llm.exceptions import LlmCancelledException
 from lesson_builder.clients.llm.exceptions import LlmQuotaException
+from lesson_builder.clients.llm.opencode_credentials import opencode_process_environment
+from lesson_builder.clients.llm.opencode_runtime import collect_opencode_lock_fds
+from lesson_builder.clients.llm.opencode_runtime import create_opencode_temporary_directory
+from lesson_builder.clients.llm.opencode_runtime import fail_if_opencode_call_cancelled
+from lesson_builder.clients.llm.opencode_runtime import hold_opencode_cache
 from lesson_builder.clients.llm.settings import K_OPENCODE_BARE_CLIENT_TIMEOUT
-from lesson_builder.clients.llm.settings import K_OPENCODE_DEFAULT_EXECUTION_MODE
-from lesson_builder.clients.llm.settings import K_OPENCODE_DEFAULT_LOCK_FILENAME
 from lesson_builder.clients.llm.settings import K_OPENCODE_DEFAULT_MODEL
-from lesson_builder.clients.llm.settings import K_OPENCODE_EXECUTION_MODE_ENV
-from lesson_builder.clients.llm.settings import K_OPENCODE_EXECUTION_MODE_PARALLEL
-from lesson_builder.clients.llm.settings import K_OPENCODE_EXECUTION_MODE_SERIAL
 from lesson_builder.clients.llm.settings import K_OPENCODE_INLINE_PROMPT_MAX_BYTES
-from lesson_builder.clients.llm.settings import K_OPENCODE_OVERRIDE_ENV_ALLOWLIST
-from lesson_builder.clients.llm.settings import K_OPENCODE_OVERRIDE_ENV_PREFIX
+from lesson_builder.clients.llm.settings import K_OPENCODE_PROMPT_DIR_PREFIX
 from lesson_builder.clients.llm.settings import K_OPENCODE_QUOTA_PATTERNS
-from lesson_builder.clients.llm.settings import K_OPENCODE_STATE_DIR_PREFIX
 from lesson_builder.clients.llm.settings import K_OPENCODE_STDERR_QUOTA_GRACE_SECONDS
+from lesson_builder.clients.llm.settings import K_OPENCODE_STREAM_CHANNEL_COUNT
 from lesson_builder.clients.llm.settings import K_OPENCODE_STREAM_POLL_SECONDS
-from lesson_builder.clients.llm.settings import K_OPENCODE_TEMP_ROOT_ENV
 from lesson_builder.clients.llm.settings import K_OPENCODE_TERMINATE_GRACE_SECONDS
-from lesson_builder.clients.llm.settings import K_OPENCODE_XDG_CACHE_HOME_ENV
-from lesson_builder.clients.llm.settings import K_OPENCODE_XDG_DATA_HOME_ENV
-from lesson_builder.clients.llm.settings import K_OPENCODE_XDG_STATE_HOME_ENV
-
-K_OPENCODE_STREAM_CHANNEL_COUNT = 2
 
 
 class OpencodeClient(BaseLlmClient):
@@ -75,7 +61,6 @@ class OpencodeClient(BaseLlmClient):
         self.timeout = timeout
         self.quota_patterns = quota_patterns
         self.repo_root = Path(repo_root) if repo_root is not None else None
-        self.execution_mode = _configured_execution_mode()
 
     def call(
         self,
@@ -84,66 +69,34 @@ class OpencodeClient(BaseLlmClient):
         model: str | None = None,
         agent: str | None = None,
         variant: str | None = None,
+        cancellation: CancellationToken | None = None,
     ) -> LlmResponse:
+        active_cancellation = active_cancellation_token()
+        if cancellation is not None and active_cancellation is not cancellation:
+            with provider_call_cancellation(cancellation):
+                return self.call(
+                    prompt_text,
+                    model=model,
+                    agent=agent,
+                    variant=variant,
+                    cancellation=cancellation,
+                )
+        cancellation = cancellation or active_cancellation
+        is_cancelled = (lambda: cancellation.is_cancelled) if cancellation is not None else None
+        fail_if_opencode_call_cancelled(is_cancelled)
         chosen_model = model or self.default_model
-        # The budget starts here so serial-slot acquisition, environment
-        # setup, process startup, and output collection all share one deadline.
         deadline = time.monotonic() + self.timeout
         cwd = str(self.repo_root) if self.repo_root is not None else None
-        cmd = [
-            "opencode",
-            "run",
-            "--pure",
-            "--format",
-            "json",
-            "--print-logs",
-            "--log-level",
-            "ERROR",
-        ]
-        if agent:
-            cmd.extend(["--agent", agent])
-        if variant:
-            cmd.extend(["--variant", variant])
-        cmd.extend(["-m", chosen_model])
-        with _opencode_process_environment() as env:
-            if len(prompt_text.encode("utf-8")) <= K_OPENCODE_INLINE_PROMPT_MAX_BYTES:
-                # "--" ends option parsing so prompt text is always positional
-                # data, never interpreted as an OpenCode command-line option.
-                cmd.extend(["--", prompt_text])
-                _fail_if_deadline_expired(deadline, timeout=self.timeout)
-                with _opencode_execution_slot(self.execution_mode, deadline=deadline, timeout=self.timeout):
-                    proc = _run_opencode(
-                        cmd,
-                        prompt_text,
-                        timeout=self.timeout,
-                        deadline=deadline,
-                        env=env,
-                        quota_fn=self.matches_quota,
-                        cwd=cwd,
-                    )
-            else:
-                with _opencode_temporary_directory(prefix="norsk-opencode-prompt-") as temp_dir:
-                    prompt_path = Path(temp_dir) / "prompt.txt"
-                    prompt_path.write_text(prompt_text, encoding="utf-8")
-                    cmd.extend(
-                        [
-                            "-f",
-                            str(prompt_path),
-                            "--",
-                            "Execute the attached prompt as the complete task and emit its requested output.",
-                        ]
-                    )
-                    _fail_if_deadline_expired(deadline, timeout=self.timeout)
-                    with _opencode_execution_slot(self.execution_mode, deadline=deadline, timeout=self.timeout):
-                        proc = _run_opencode(
-                            cmd,
-                            "",
-                            timeout=self.timeout,
-                            deadline=deadline,
-                            env=env,
-                            quota_fn=self.matches_quota,
-                            cwd=cwd,
-                        )
+        cmd = _build_opencode_command(chosen_model, agent, variant)
+        proc = _run_opencode_prompt(
+            self,
+            prompt_text,
+            cmd,
+            chosen_model,
+            deadline=deadline,
+            cwd=cwd,
+            is_cancelled=is_cancelled,
+        )
         text = _parse_events(proc.stdout or "", quota_fn=self.matches_quota)
         if not text and self.matches_quota(proc.stderr or ""):
             raise LlmQuotaException(proc.stderr or "opencode quota reached")
@@ -162,52 +115,123 @@ class OpencodeClient(BaseLlmClient):
         )
 
 
-K_OPENCODE_PROCESS_LOCKS: dict[str, threading.Lock] = {}
-K_OPENCODE_PROCESS_LOCKS_GUARD = threading.Lock()
+def _build_opencode_command(model: str, agent: str | None, variant: str | None) -> list[str]:
+    command = ["opencode", "run", "--pure", "--format", "json", "--print-logs", "--log-level", "ERROR"]
+    if agent:
+        command.extend(["--agent", agent])
+    if variant:
+        command.extend(["--variant", variant])
+    command.extend(["-m", model])
+    return command
 
 
-@contextlib.contextmanager
-def _opencode_process_environment() -> Iterator[dict[str, str]]:
-    """Yield mandatory child-process XDG paths isolated from shared state."""
-    configured_data_home = os.environ.get(K_OPENCODE_XDG_DATA_HOME_ENV, "").strip()
-    source_data_home = Path(configured_data_home) if configured_data_home else Path.home() / ".local" / "share"
-    source_auth = source_data_home / "opencode" / "auth.json"
+def _run_opencode_prompt(
+    client: OpencodeClient,
+    prompt: str,
+    command: list[str],
+    model: str,
+    *,
+    deadline: float,
+    cwd: str | None,
+    is_cancelled: Callable[[], bool] | None,
+) -> subprocess.CompletedProcess[str]:
+    """Run inline or file-backed prompt with one shared environment deadline."""
+    with (
+        opencode_process_environment(
+            model, deadline=deadline, timeout=client.timeout, is_cancelled=is_cancelled
+        ) as env,
+        hold_opencode_cache(
+            Path(env["XDG_CACHE_HOME"]), model, deadline=deadline, timeout=client.timeout, is_cancelled=is_cancelled
+        ) as mark_cache_warm,
+    ):
+        if len(prompt.encode("utf-8")) <= K_OPENCODE_INLINE_PROMPT_MAX_BYTES:
+            result = _run_inline_opencode_prompt(
+                client, prompt, command, env, deadline=deadline, cwd=cwd, is_cancelled=is_cancelled
+            )
+        else:
+            result = _run_file_opencode_prompt(
+                client, prompt, command, env, deadline=deadline, cwd=cwd, is_cancelled=is_cancelled
+            )
+        if result.returncode == 0 and _parse_events(result.stdout or "", quota_fn=client.matches_quota):
+            mark_cache_warm()
+        return result
 
-    with _opencode_temporary_directory(prefix=K_OPENCODE_STATE_DIR_PREFIX) as temp_dir:
-        root = Path(temp_dir)
-        data_home = root / "data"
-        state_home = root / "state"
-        cache_home = root / "cache"
-        process_tmp = root / "tmp"
-        for directory in (data_home, state_home, cache_home, process_tmp):
-            directory.mkdir(mode=0o700)
 
-        if source_auth.is_file():
-            target_auth = data_home / "opencode" / "auth.json"
-            target_auth.parent.mkdir(mode=0o700)
-            shutil.copyfile(source_auth, target_auth)
-            target_auth.chmod(0o600)
+def _run_inline_opencode_prompt(
+    client: OpencodeClient,
+    prompt: str,
+    command: list[str],
+    env: dict[str, str],
+    *,
+    deadline: float,
+    cwd: str | None,
+    is_cancelled: Callable[[], bool] | None,
+) -> subprocess.CompletedProcess[str]:
+    """Send a short prompt as positional data after the option terminator."""
+    command.extend(["--", prompt])
+    _fail_if_deadline_expired(deadline, timeout=client.timeout)
+    return _run_opencode(
+        command,
+        prompt,
+        timeout=client.timeout,
+        deadline=deadline,
+        env=env,
+        quota_fn=client.matches_quota,
+        cwd=cwd,
+        is_cancelled=is_cancelled,
+    )
 
-        child_env = os.environ.copy()
-        for override in [key for key in child_env if _is_opencode_override_env(key)]:
-            del child_env[override]
-        child_env.update(
-            {
-                K_OPENCODE_XDG_DATA_HOME_ENV: str(data_home),
-                K_OPENCODE_XDG_STATE_HOME_ENV: str(state_home),
-                K_OPENCODE_XDG_CACHE_HOME_ENV: str(cache_home),
-                "TMPDIR": str(process_tmp),
-            }
+
+def _run_file_opencode_prompt(
+    client: OpencodeClient,
+    prompt: str,
+    command: list[str],
+    env: dict[str, str],
+    *,
+    deadline: float,
+    cwd: str | None,
+    is_cancelled: Callable[[], bool] | None,
+) -> subprocess.CompletedProcess[str]:
+    """Send a large prompt through a temporary file."""
+    with create_opencode_temporary_directory(
+        prefix=K_OPENCODE_PROMPT_DIR_PREFIX,
+        deadline=deadline,
+        timeout=client.timeout,
+        is_cancelled=is_cancelled,
+    ) as temp_dir:
+        prompt_path = Path(temp_dir) / "prompt.txt"
+        prompt_path.write_text(prompt, encoding="utf-8")
+        command.extend(
+            [
+                "-f",
+                str(prompt_path),
+                "--",
+                "Execute the attached prompt as the complete task and emit its requested output.",
+            ]
         )
-        yield child_env
+        _fail_if_deadline_expired(deadline, timeout=client.timeout)
+        return _run_opencode(
+            command,
+            "",
+            timeout=client.timeout,
+            deadline=deadline,
+            env=env,
+            quota_fn=client.matches_quota,
+            cwd=cwd,
+            is_cancelled=is_cancelled,
+        )
 
 
-def _opencode_temporary_directory(*, prefix: str) -> tempfile.TemporaryDirectory[str]:
-    """Create disposable adapter state outside a full default temp volume."""
-    configured_root = os.environ.get(K_OPENCODE_TEMP_ROOT_ENV, "").strip()
-    runtime_root = os.environ.get("XDG_RUNTIME_DIR", "").strip()
-    temp_root = configured_root or runtime_root or None
-    return tempfile.TemporaryDirectory(prefix=prefix, dir=temp_root)
+@dataclass
+class _CollectedOpenCodeOutput:
+    """State collected from the paired OpenCode output streams."""
+
+    stdout_parts: list[str] = field(default_factory=list)
+    stderr_parts: list[str] = field(default_factory=list)
+    ended_streams: set[str] = field(default_factory=set)
+    stdout_has_text: bool = False
+    stderr_quota_message: str | None = None
+    stderr_quota_deadline: float | None = None
 
 
 def _fail_if_deadline_expired(deadline: float, *, timeout: int) -> None:
@@ -225,6 +249,7 @@ def _run_opencode(
     env: dict[str, str],
     quota_fn: Callable[[str], bool],
     cwd: str | None = None,
+    is_cancelled: Callable[[], bool] | None = None,
 ) -> subprocess.CompletedProcess[str]:
     """Run OpenCode while surfacing quota diagnostics before its retry loop stalls."""
     del prompt_text  # OpenCode receives the prompt through argv or an attached file.
@@ -239,13 +264,14 @@ def _run_opencode(
             env=env,
             cwd=cwd,
             start_new_session=os.name == "posix",
+            pass_fds=collect_opencode_lock_fds(),
         )
     except FileNotFoundError as exc:
         raise BackendDownException("backend CLI not found: 'opencode'") from exc
     except OSError as exc:
         raise BackendDownException(f"backend CLI could not start: 'opencode': {exc}") from exc
 
-    _register_active_process(process)
+    process_cancellation = _register_active_process(process)
     events: queue.Queue[tuple[str, str | None]] = queue.Queue()
     stdout_stream = cast(IO[str], process.stdout)
     stderr_stream = cast(IO[str], process.stderr)
@@ -273,14 +299,16 @@ def _run_opencode(
             timeout=timeout,
             deadline=deadline,
             quota_fn=quota_fn,
+            is_cancelled=is_cancelled,
         )
-        if is_cli_process_cancelled(process):
-            raise LlmCancelledException("opencode call cancelled")
+        process_cancellation.raise_if_cancelled()
     except BaseException as exc:
-        cancelled = is_cli_process_cancelled(process)
         terminate_cli_process(process)
-        if cancelled and not isinstance(exc, LlmCancelledException):
-            raise LlmCancelledException("opencode call cancelled") from exc
+        if process_cancellation.is_cancelled:
+            try:
+                process_cancellation.raise_if_cancelled()
+            except Cancelled as cancelled:
+                raise cancelled from exc
         raise
     finally:
         for reader in readers:
@@ -302,6 +330,7 @@ def _collect_opencode_output(
     timeout: int,
     deadline: float,
     quota_fn: Callable[[str], bool],
+    is_cancelled: Callable[[], bool] | None = None,
 ) -> tuple[str, str]:
     """Drain both OpenCode streams until completion or a typed failure.
 
@@ -313,54 +342,77 @@ def _collect_opencode_output(
     stdout stays open, which keeps a stalling OpenCode retry loop from
     waiting for the process timeout.
     """
-    stdout_parts: list[str] = []
-    stderr_parts: list[str] = []
-    ended_streams: set[str] = set()
-    stdout_has_text = False
-    stderr_quota_message: str | None = None
-    stderr_quota_deadline: float | None = None
+    collected = _CollectedOpenCodeOutput()
     while True:
+        fail_if_opencode_call_cancelled(is_cancelled)
         now = time.monotonic()
-        if now >= deadline:
-            raise BackendDownException(f"backend timed out after {timeout}s: 'opencode'")
-        if (
-            stderr_quota_message is not None
-            and not stdout_has_text
-            and stderr_quota_deadline is not None
-            and now >= stderr_quota_deadline
-        ):
-            raise LlmQuotaException(stderr_quota_message)
-        if process.poll() is not None and len(ended_streams) == K_OPENCODE_STREAM_CHANNEL_COUNT and events.empty():
+        _require_output_before_deadline(collected, now, timeout=timeout, deadline=deadline)
+        if _opencode_output_complete(process, events, collected):
             break
         wait_seconds = min(K_OPENCODE_STREAM_POLL_SECONDS, max(0.0, deadline - now))
         try:
             channel, line = events.get(timeout=wait_seconds)
         except queue.Empty:
             continue
-        if line is None:
-            ended_streams.add(channel)
-            if channel == "stdout" and _is_stderr_quota_due(stderr_quota_message, stdout_has_text=stdout_has_text):
-                raise LlmQuotaException(stderr_quota_message)
-            continue
-        if channel == "stdout":
-            stdout_parts.append(line)
-            stdout_has_text = _collect_stdout_line(
-                line,
-                stdout_has_text=stdout_has_text,
-                quota_fn=quota_fn,
-            )
-            continue
-        stderr_parts.append(line)
-        quota_message = _record_stderr_quota_line(
-            line,
-            stdout_ended="stdout" in ended_streams,
-            stdout_has_text=stdout_has_text,
-            quota_fn=quota_fn,
+        _collect_opencode_event(collected, channel, line, quota_fn)
+    return "".join(collected.stdout_parts), "".join(collected.stderr_parts)
+
+
+def _require_output_before_deadline(
+    collected: _CollectedOpenCodeOutput, now: float, *, timeout: int, deadline: float
+) -> None:
+    if now >= deadline:
+        raise BackendDownException(f"backend timed out after {timeout}s: 'opencode'")
+    if (
+        collected.stderr_quota_message is not None
+        and not collected.stdout_has_text
+        and collected.stderr_quota_deadline is not None
+        and now >= collected.stderr_quota_deadline
+    ):
+        raise LlmQuotaException(collected.stderr_quota_message)
+
+
+def _opencode_output_complete(
+    process: subprocess.Popen[str],
+    events: queue.Queue[tuple[str, str | None]],
+    collected: _CollectedOpenCodeOutput,
+) -> bool:
+    return (
+        process.poll() is not None
+        and len(collected.ended_streams) == K_OPENCODE_STREAM_CHANNEL_COUNT
+        and events.empty()
+    )
+
+
+def _collect_opencode_event(
+    collected: _CollectedOpenCodeOutput,
+    channel: str,
+    line: str | None,
+    quota_fn: Callable[[str], bool],
+) -> None:
+    if line is None:
+        collected.ended_streams.add(channel)
+        if channel == "stdout" and _is_stderr_quota_due(
+            collected.stderr_quota_message, stdout_has_text=collected.stdout_has_text
+        ):
+            raise LlmQuotaException(collected.stderr_quota_message or "opencode quota reached")
+        return
+    if channel == "stdout":
+        collected.stdout_parts.append(line)
+        collected.stdout_has_text = _collect_stdout_line(
+            line, stdout_has_text=collected.stdout_has_text, quota_fn=quota_fn
         )
-        if quota_message is not None and stderr_quota_message is None:
-            stderr_quota_message = quota_message
-            stderr_quota_deadline = time.monotonic() + K_OPENCODE_STDERR_QUOTA_GRACE_SECONDS
-    return "".join(stdout_parts), "".join(stderr_parts)
+        return
+    collected.stderr_parts.append(line)
+    quota_message = _record_stderr_quota_line(
+        line,
+        stdout_ended="stdout" in collected.ended_streams,
+        stdout_has_text=collected.stdout_has_text,
+        quota_fn=quota_fn,
+    )
+    if quota_message is not None and collected.stderr_quota_message is None:
+        collected.stderr_quota_message = quota_message
+        collected.stderr_quota_deadline = time.monotonic() + K_OPENCODE_STDERR_QUOTA_GRACE_SECONDS
 
 
 def _is_stderr_quota_due(stderr_quota_message: str | None, *, stdout_has_text: bool) -> bool:
@@ -445,131 +497,39 @@ def _is_primary_quota_log(line: str, *, quota_fn: Callable[[str], bool]) -> bool
     return quota_fn(line)
 
 
-def _register_active_process(process: subprocess.Popen[str]) -> None:
-    register_active_cli_process(process)
+def _register_active_process(process: subprocess.Popen[str]) -> CancellationToken:
+    return register_active_cli_process(process, active_cancellation_token())
 
 
 def _unregister_active_process(process: subprocess.Popen[str]) -> None:
     unregister_active_cli_process(process)
 
 
-def _is_opencode_override_env(name: str) -> bool:
-    """Return whether one environment variable is an OpenCode policy override.
-
-    ``OPENCODE_``-prefixed variables configure the OpenCode runtime itself
-    (config paths, permissions, routing). They are stripped from the child
-    environment unless allowlisted as credentials so they cannot silently
-    override the validated repository boundary.
-    """
-    return name.startswith(K_OPENCODE_OVERRIDE_ENV_PREFIX) and name not in K_OPENCODE_OVERRIDE_ENV_ALLOWLIST
-
-
-def _configured_execution_mode() -> str:
-    """Return the validated parallel-by-default OpenCode execution mode."""
-    mode = os.environ.get(K_OPENCODE_EXECUTION_MODE_ENV, K_OPENCODE_DEFAULT_EXECUTION_MODE).strip().lower()
-    if mode not in (K_OPENCODE_EXECUTION_MODE_PARALLEL, K_OPENCODE_EXECUTION_MODE_SERIAL):
-        raise ValueError(
-            f"{K_OPENCODE_EXECUTION_MODE_ENV} must be one of "
-            f"{K_OPENCODE_EXECUTION_MODE_PARALLEL!r} or {K_OPENCODE_EXECUTION_MODE_SERIAL!r}"
-        )
-    return mode
-
-
-def _fail_if_cli_cancellation_requested() -> None:
-    """Stop a serial-slot wait when the owning batch has been cancelled."""
-    if is_cli_cancellation_requested():
-        raise LlmCancelledException("opencode call cancelled")
-
-
-def _acquire_local_execution_slot(local_lock: LockType, *, deadline: float, timeout: int) -> None:
-    """Acquire the in-process serial lease while observing cancellation and deadline."""
-    while True:
-        _fail_if_cli_cancellation_requested()
-        remaining = deadline - time.monotonic()
-        if remaining <= 0:
-            raise BackendDownException(
-                f"backend timed out after {timeout}s waiting for the OpenCode serial execution slot"
-            )
-        if local_lock.acquire(timeout=min(K_OPENCODE_STREAM_POLL_SECONDS, remaining)):
-            return
-
-
-def _acquire_file_execution_slot(handle: IO[str], *, deadline: float, timeout: int) -> None:
-    """Acquire the cross-process serial lease while observing cancellation and deadline."""
-    if fcntl is None:
-        raise RuntimeError("unavailable")
-    while True:
-        _fail_if_cli_cancellation_requested()
-        try:
-            fcntl.flock(handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
-            return
-        except OSError:
-            _fail_if_cli_cancellation_requested()
-            if time.monotonic() >= deadline:
-                raise BackendDownException(
-                    f"backend timed out after {timeout}s waiting for the OpenCode serial execution slot"
-                ) from None
-            time.sleep(min(K_OPENCODE_STREAM_POLL_SECONDS, max(0.0, deadline - time.monotonic())))
-
-
-@contextlib.contextmanager
-def _opencode_execution_slot(mode: str, *, deadline: float, timeout: int) -> Iterator[None]:
-    """Yield immediately in parallel mode or use the emergency serial lease.
-
-    Both the in-process lock and the cross-process file lock are acquired
-    within the remaining call budget; a serial slot that stays busy fails the
-    call at the deadline instead of blocking without bound.
-    """
-    if mode == K_OPENCODE_EXECUTION_MODE_PARALLEL:
-        yield
-        return
-    if mode != K_OPENCODE_EXECUTION_MODE_SERIAL:
-        raise ValueError(f"unsupported OpenCode execution mode: {mode!r}")
-
-    lock_path = str(Path(tempfile.gettempdir()) / K_OPENCODE_DEFAULT_LOCK_FILENAME)
-    with K_OPENCODE_PROCESS_LOCKS_GUARD:
-        local_lock = K_OPENCODE_PROCESS_LOCKS.setdefault(lock_path, threading.Lock())
-    acquired = False
-    try:
-        _acquire_local_execution_slot(local_lock, deadline=deadline, timeout=timeout)
-        acquired = True
-        if fcntl is None:
-            yield
-            return
-        lock_file = Path(lock_path)
-        lock_file.parent.mkdir(parents=True, exist_ok=True)
-        with lock_file.open("a+", encoding="utf-8") as handle:
-            _acquire_file_execution_slot(handle, deadline=deadline, timeout=timeout)
-            try:
-                yield
-            finally:
-                fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
-    finally:
-        if acquired:
-            local_lock.release()
-
-
 def _parse_events(stdout: str, *, quota_fn: Callable[[str], bool]) -> str:
     parts: list[str] = []
     for line in stdout.splitlines():
-        line = line.strip()
-        if not line or not line.startswith("{"):
-            continue
-        event = _json_object(line)
-        if event is None:
-            continue
-        event_type = event.get("type")
-        if event_type == "error":
-            message = _error_event_message(event)
-            if quota_fn(str(message)):
-                raise LlmQuotaException(str(message))
-            raise BackendDownException(str(message))
-        if event_type == "text":
-            part = _object_mapping(event.get("part"))
-            text = part.get("text")
-            if isinstance(text, str):
-                parts.append(text)
+        text = _parse_event_line(line, quota_fn=quota_fn)
+        if text is not None:
+            parts.append(text)
     return "".join(parts)
+
+
+def _parse_event_line(line: str, *, quota_fn: Callable[[str], bool]) -> str | None:
+    line = line.strip()
+    if not line or not line.startswith("{"):
+        return None
+    event = _json_object(line)
+    if event is None:
+        return None
+    if event.get("type") == "error":
+        message = str(_error_event_message(event))
+        if quota_fn(message):
+            raise LlmQuotaException(message)
+        raise BackendDownException(message)
+    if event.get("type") != "text":
+        return None
+    text = _object_mapping(event.get("part")).get("text")
+    return text if isinstance(text, str) else None
 
 
 def _json_object(line: str) -> dict[str, object] | None:

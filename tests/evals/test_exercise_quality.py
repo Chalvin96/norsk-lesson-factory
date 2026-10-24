@@ -9,8 +9,8 @@ import pytest
 import yaml
 
 import scripts.eval_exercise_quality as evaluation_script
-from lesson_builder.domain.lesson.validation.review_payloads import extract_answer_questions
-from lesson_builder.domain.lesson.validation.review_payloads import extract_attempt_questions
+from lesson_builder.domain.lesson.services.review_projection import extract_answer_questions
+from lesson_builder.domain.lesson.services.review_projection import extract_attempt_questions
 from scripts.eval_exercise_quality import main as run_evaluation
 from tests.evals.exercise_quality import K_EXERCISE_QUALITY_FAMILIES
 from tests.evals.exercise_quality import K_EXERCISE_QUALITY_FIXTURE
@@ -24,8 +24,8 @@ from tests.evals.utils import audit_snapshot
 def test_consensus_cases_given_frozen_fixture_expect_exact_family_provenance():
     cases = load_consensus_cases()
     assert {case["family"] for case in cases} == K_EXERCISE_QUALITY_FAMILIES
-    assert len(cases) == 9
-    assert len({(case["lesson"], case["handle"]) for case in cases}) == 9
+    assert len(cases) == 8
+    assert len({(case["lesson"], case["handle"]) for case in cases}) == 8
     for case in cases:
         assert case["evidence"]
         assert case["bad"] != case["good"]
@@ -118,8 +118,8 @@ def test_quality_evaluation_given_mechanical_mode_expect_strict_pass(tmp_path: P
     assert exit_code == 0
     assert report["corpus"]["selected_mode"] == "mechanical"
     assert report["counts"] == {
-        "observations": 10,
-        "evaluated": 10,
+        "observations": 8,
+        "evaluated": 8,
         "not_evaluated": 0,
         "invalid": 0,
         "outage": 0,
@@ -279,11 +279,9 @@ def test_quality_evaluation_given_missing_response_id_expect_incomplete_coverage
 
     report = json.loads(output_path.read_text(encoding="utf-8"))
     assert report["returned_id_coverage"] == {
-        "expected": 10,
+        "expected": 8,
         "returned": 0,
         "missing": [
-            "first_checkpoint_opening__bad",
-            "first_checkpoint_opening__good",
             "form_regular_comparatives__bad",
             "form_regular_comparatives__good",
             "form_regular_definite_plurals__bad",

@@ -43,7 +43,7 @@ Jeg kan hjelpe. Jeg kutter grønnsakene raskt.
 :::
 
 ::: {.reading translation="Thanks. Put the glasses carefully on the table." dialogue_id=party-preparations speaker_id=anna speaker_name="Anna"}
-Takk. Legg glassene forsiktig på bordet.
+Takk. Sett glassene forsiktig på bordet.
 :::
 
 ::: {.reading translation="All right. Am I speaking too loudly?" dialogue_id=party-preparations speaker_id=erik speaker_name="Erik" character_id="erik"}

@@ -1,144 +1,163 @@
 ---
 type: Domain Decision
 title: Authoring and Evaluation Decisions
-description: Durable curriculum, exercise, and review choices that code alone cannot explain.
+description: Curriculum scope, supported source syntax, exercise authoring, drafting, and review.
 tags: [authoring, curriculum, evaluation]
-timestamp: 2026-09-19
+timestamp: 2026-10-22
 ---
 
 ## Curriculum and practice
 
-One catalog owner is one independently teachable learner decision. The catalog owns
-identity, outcomes, scope, exclusions, and prerequisites; the curriculum plan owns
-order. Levels describe learner targets, while topics and examples are inputs rather
-than catalog units. Exact sequence and rationale belong in
-`content/curriculum/sequence.yaml`.
+One catalog entry represents one independently teachable learner decision. The
+catalog defines identity, outcomes, scope, exclusions, and prerequisites; the
+curriculum sequence defines order in `content/curriculum/sequence.yaml`.
+Topics and examples are inputs, not catalog units. Use labels from the shared
+glossary consistently, keep early titles concise, and introduce technical terms
+only when useful; explain them plainly and add a Norwegian label where it helps.
 
-Core modal verbs and conversational particles remain separate owners. Modal verbs
-frame the subject's relationship to an action or event; particles such as *vel*,
-*jo*, *nok*, and conversational *da* frame the speaker's relationship to a claim
-and listener. Within B2 pragmatics, hedging extends familiar particles with open
-possibility, indirect source, opinion, and approximation. Advanced pragmatics owns
-repair of shared understanding, where the outcome is an accurate shared plan rather
-than use of a marker inventory.
+Keep modal verbs and conversational particles as separate teaching owners. Modal
+verbs frame a subject's relationship to an action or event. Particles such as
+*vel*, *jo*, *nok*, and conversational *da* frame the speaker's relationship to a
+claim and listener. B2 hedging builds on these particles to express uncertainty,
+inference, shared assumptions, source doubt, opinion, and approximation.
+Advanced pragmatics focuses on repairing a misunderstanding by clarifying
+intent and establishing an appropriate next step.
 
-Approved curriculum follows one authoring path through independent review and human
-acceptance. Automation assists that path but does not create a competing authority.
-Generated output is review evidence. See
-[source and publication boundaries](../project/boundaries.md).
+Practice should move from focused decisions toward transfer. A final retrieval
+task should apply the same target in a changed situation. Lessons do not train
+or grade speech production: learners listen to model audio, and roleplay is text
+only. Pronunciation outcomes in the approved catalog cover perception and recognition.
 
-Exercise redesign is drafted, not authored in place. Local draft exercises and
-old-to-new evidence mappings may be kept under ignored `plans/` while they are
-reviewed. A draft must pass the deterministic source audit before promotion.
-The exact-speech cue check recognizes both English instructions and Norwegian
-imperatives such as *si*, *les*, or *gjenta* with *akkurat* or *nøyaktig*; the
-target text must still be visible in the learner prompt.
-Promotion stays the human path above: review the draft and its mapping, apply it
-to source, inspect the preview, and regenerate distribution with stable exercise
-ids. Local draft and mapping files are review aids, not published content.
+## Lesson Markdown syntax
 
-Exercises must stand alone: every fact or situation needed to answer belongs in the
-learner-visible payload, not hidden lesson context. Spoken and written modes may be
-used wherever they serve the objective. Interaction, presentation, and learner
-scoring remain application responsibilities.
+Lesson prose supports paragraphs, **bold**, *italic*, inline code, `[BLANK]`,
+bullet lists, and decimal ordered lists (`1.` or `1)`). Letter and Roman
+markers such as `a.` or `IV)` are ordinary text. List items must contain a
+single inline-only block.
 
-Practice moves from focused decisions toward the approved transfer outcome. The
-final retrieval checkpoint uses the same target in a changed situation rather than
-repeating the opening anchor. Pronunciation and spaced-review tracks stay outside
-the default curriculum until their outcomes can be represented and assessed
-honestly; text exercises cannot establish pronunciation competence or schedule
-learner review.
+Lesson sections use level-2 headings with explicit attributes on the same
+line, such as `## Greetings {#sec-greetings objectives=obj_greet}`.
+Identifiers are required; the reader never generates heading ids. Fenced divs
+use `::: rule` or `::: {.callout variant=note}` with the attribute set on the
+opening line, a body, and a closing `:::`. Attribute sets support `#id`,
+`.class`, and `key=value` with bare, single-quoted, or double-quoted values.
+Bracketed spans such as `[hei]{lang=nb}` carry attributes. Pipe tables must be
+wrapped in a div with `col_langs`, such as `::: {col_langs="nb,en"}`.
 
-An exercise normally has one primary scored evidence goal and one cohesive learner
-submission. Split a request only when its outputs can be attempted, omitted, judged,
-and remediated independently. Repeated homogeneous items and one cohesive multi-turn
-or multi-constraint product remain one exercise; word, item, and criterion counts
-are not the rule. A closed choice therefore represents one decision among competing
-answers, while a genuine correspondence set may use `match_pairs`.
+The lesson mappers reject links, images, raw HTML (including `<span>` and
+`<div>`), hard line breaks, strikethrough, footnotes, definition lists, block
+quotes, code blocks, horizontal rules, and unwrapped tables. Unknown div kinds
+and unsupported heading levels also fail validation. Math and citation syntax
+remain literal text; they have no dedicated authoring support.
 
-Visible instructions, structured bounds, answers, criteria, and judge instructions
-must agree. Word-length limits belong in `min_words` and `max_words`, which the
-consumer can display and enforce separately; learner prompts state the language
-task without repeating a numeric word budget. Semantic criteria assess the
-response's meaning and form rather than asking a model to recount words.
-Explicitly requested forms are binding, but examples are not exhaustive answer lists
-and valid alternatives within the stated constraints must pass. Feedback should
-explain a useful contrast or likely error instead of repeating the key.
+The reader deliberately follows CommonMark where Pandoc differs: headings
+and bullet lists can start without a preceding blank line, a decimal list can
+interrupt prose only when it starts at 1, and intraword `___` blanks remain
+literal underscores. Explicit heading ids remain mandatory.
 
-Learner-visible prompt and stem wording uses concise textbook language: a short
-imperative naming the task, one or two sentences, context given once, and no
-restated rule tables, scoring weights, or assessor logic. Rubric reasoning lives in
-criteria, judge prompts, and feedback instead.
+## Exercise authoring
 
-For A1 and A2 lessons, learner-facing task directions in prompts, stems, and
-per-item cues are in concise English. B1 and higher lessons use natural Bokmål
-directions. This rule concerns the instruction language: Norwegian target text,
-dialogue, example utterances, and answer options stay in the language needed for
-the exercise. Keep helpful English glosses and translations. Hidden criteria and
-judge instructions may use English. Semantic exercise review flags material
-instruction-language breaches for the lesson level or prose addressed to an
-author, assessor, or AI. It quotes the evidence and ignores minor stylistic
-preferences.
+Exercises stand alone: include every fact and situation needed to answer in the
+learner-visible prompt or stimulus. The consuming application owns presentation,
+interaction, and learner scoring.
 
-Dialogue context belongs in the common typed `stimulus` field, as ordered dialogue
-blocks containing speaker-labelled turns. Speaker identity and utterance text are
-authored data; prose such as “Lea says” and “Jonas replies” is not a rendering
-contract. This lets consumers render accessible dialogue without parsing punctuation
-or inventing narration. Prompts retain task instructions, while consuming applications
-own visual treatment. Packet schema 4.1 introduced this optional structure; exercises
-without stimulus retain their prior public shape.
+An exercise normally has one primary evidence goal and one cohesive submission.
+Split it only when its outputs can be attempted, omitted, judged, and remediated
+independently. Repeated homogeneous items and cohesive multi-turn products remain
+one exercise.
 
-Normalization adds compiler structure while preserving reviewed wording, order,
-examples, translations, and checkpoint intent. It does not repair pedagogy. Exercise
-markers remain at their authored positions; request metadata stays in the compact
-handoff or exercise source and never becomes learner-facing prose. Exact syntax and
-forbidden forms are owned by schemas, validators, and generated operation guidance.
+Instructions, structured bounds, answers, criteria, and judge instructions must
+agree. Put word limits in `min_words` and `max_words`; learner prompts state the
+task without repeating a numeric budget. Examples do not limit valid answers, and
+feedback should explain a useful contrast or likely error rather than repeat the
+key.
 
-## Trustworthy review and evaluation
+Learner prompts and stems use concise textbook wording: name the task, give
+context once, and leave rubric reasoning to criteria, judge instructions, and
+feedback. A1 and A2 directions use concise English; B1 and higher directions use
+natural Bokmål. Norwegian targets, dialogue, examples, and answer options remain
+in the language needed for the task. Keep helpful English glosses and
+translations when they do not state the distinction being tested. Exercise
+prompts, stimuli, stems, options, and recall segments must not disclose a target
+answer through a translation or a copied worked form. Answer-revealing
+translations belong in post-answer explanations or feedback. This follows the
+reviewer's `supplied_answer_retrieval` criterion.
 
-Deterministic checks own knowable correctness: parsing, schemas, identifiers, source
-audits, routing, state transitions, and handoff invariants. Model review advises on
-naturalness, pedagogy, factual premises, valid alternatives, task/rubric alignment,
-and whether a claimed skill is actually demonstrated. Humans retain final authority.
+Dialogue context belongs in the typed `stimulus` data as ordered dialogue blocks
+with speaker-labelled turns. Consumers can render the authored speaker and text
+accessibly without inferring dialogue structure from prose or punctuation.
 
-Provider-free evidence scans are triage, not semantic approval. A clean scan records
-semantics as unevaluated. A focused practice step may support a broader outcome
-without proving it alone; report a mismatch only when the authored claim exceeds
-what the learner actually does. Grounded semantic defects block strict verification
-for human review even when the mechanical answer key is solvable.
+Learners produce Norwegian only in writing. Check a productive objective with
+`write` (type a response) or `build` (arrange supplied words). The loader
+rejects any operation outside the registry.
 
-Semantic exercise findings must quote a contiguous passage from the exercise reviewed
-and explain the affected learner decision. The verifier checks that the quote is
-present; this grounding check does not decide whether the criticism is correct.
-Unsupported findings stay visible for human review and never trigger automatic
-content repair. Grounded exercise findings may enter the existing bounded,
-handle-scoped repair path; unaffected exercises remain intact. Whole-lesson
-progression is judged across the sequence, so a useful early drill is not treated
-as a failed transfer task in isolation.
+## New lesson drafting
 
-For closed options, compare each distractor with the misconception its rationale
-claims to test. A Bokmål lexicon can surface suspicious spellings for review, but
-absence is not a failure by itself: deliberate learner errors may be nonwords.
-Reconstruct filled text and read dialogue turns in order. Check that audio targets,
-visible answers, speaker turns, and explanations describe the same situation.
-Metalinguistic explanation is useful support; an exercise claiming evidence of
-using a form must make the learner use that form in context.
+Workbench New lesson uses a complete same-level package as a format exemplar.
+Its family starts as Unassigned, with a plan note and provisional slot flag.
+The author may approve Unassigned or choose a family by learner outcome from
+`content/catalog/registry/catalog_families.yaml`. The exemplar establishes format,
+not family fit.
 
-Evaluation must distinguish invalid responses, provider outages, missing identities,
-and unevaluated cases from passes. A model judge is never its own sole oracle; pair it
-with deterministic checks and human-audited samples. Calibration requires labeled
-minimal pairs, provenance, held-out cases, and repeated baselines before numerical
-quality claims are trustworthy. The authoring side exports its write-judge bank as a
-deterministic, schema-versioned JSON projection with dev-only anchors and held-out
-evaluation cases; export fails closed while labels remain seed-pending, and an explicit
-override still records a non-approvable label state.
-Every negative write-judge case names one primary failed gating criterion; positive
-cases name none, and export rejects missing, non-gating, or polarity-inconsistent
-failure metadata. The 2026-09 calibration approval is a regression-bank result: the
-same adaptive holdouts tuned the evidence and instructions, so it demonstrates
-agreement on this bank, not error-rate generalization to unseen learner writing;
-fresh frozen-case batches are required before production quality claims.
+The provider supplies teaching points, terminology, objectives, coverage, success
+criteria, exclusions, and the plan body. The application writes identity, kind,
+title, CEFR, outcome, family, and prerequisites from the curriculum slot into
+`plan.md`, and `type`, `slug`, `title`, `cefr_level`, and `goal` into `lesson.md`
+frontmatter, keeping the provider's other header fields. Echoed slot identity and
+server-owned metadata are discarded, including plan objective `bloom_targets` and
+the document `type` marker. Other authored fields remain strictly validated;
+lesson objectives and exercise Bloom levels retain their own validation.
 
-Live evaluation is opt-in and is not an ordinary deterministic pull-request gate.
-Exact commands, suites, cases, budgets, and adapter mechanics are owned by
-`package.json`, `evals/promptfoo/`, and evaluator code rather than this decision note.
+Drafts require 2–5 concrete teaching points, each naming a teachable form,
+contrast, or decision derived from the outcome. Invalid counts enter the complete
+package repair loop. An outcome-copy fallback in a repair prompt must be expanded.
+The checked points must match in the catalog, slot, and plan, including after a
+concurrent insertion changes the slot position.
+
+The combined `workbench_author` prompt uses CEFR size guidance from
+`K_APPLICATION_NEW_LESSON_SIZE_TARGETS` in `application/settings.py`, overriding
+the separate prose stage's omission of size targets. Each range is the middle
+half of canonical lessons at that level. Source words count
+whitespace-separated tokens in the Markdown body, including markup and bilingual
+examples. These are guidance, not compiler limits or quotas. Every section and
+exercise must serve the outcome; narrow outcomes may justify shorter drafts.
+Do not pad or split cohesive exercises to reach a count.
+
+## Review and evaluation
+
+Deterministic checks own knowable correctness such as parsing, schemas,
+identifiers, source audits, routing, and state transitions. Model review can
+advise on naturalness, pedagogy, factual premises, valid alternatives, and
+task-to-rubric alignment. Its findings are advisory; humans retain final
+authority. See [authoring and publication boundaries](../project/boundaries.md)
+for approval requirements.
+
+Exercise review findings combine nested issues for one exercise/check in report
+order. Each reason has an English category label; evidence quotes, English
+glosses, and suggested changes stay separate from the raw report in Details.
+Cards, Fix, and Ask chat show the reason and evidence.
+Owner decisions carry over only for the same normalized issue set,
+using category and normalized evidence together with the original cited excerpt;
+added issues or changes to category, evidence, or citation reopen the card.
+Rewording reasons, suggested changes, or English glosses preserves the decision.
+Issue order and whitespace do not change that set. Resolution matching retains
+the original cited excerpt separately from the display excerpt, and uses finding
+identity when there is no citation. Without evidence, it uses a short source quote
+from the reason when available and otherwise omits the excerpt; it never uses
+the serialized exercise as an excerpt.
+
+Workbench review runs its independent lesson and exercise checks concurrently
+within a bounded worker pool. Results keep a stable finding and summary order
+regardless of completion order. Each call owns a runner and
+inherits the review cancellation context; a failed call cancels its siblings.
+
+Evaluation must distinguish invalid responses, provider outages, missing
+identities, and unevaluated cases from passes. A model judge is never its own
+sole oracle; pair it with deterministic checks and human-audited samples.
+Numerical quality claims require labeled cases, held-out examples, and repeated
+baselines.
+
+For reviewer model, reasoning, or prompt changes, run
+`npm run eval:promptfoo -- -c evals/promptfoo/reviews.yaml`. This provider-backed
+suite checks controlled regressions; it has no expert labels and cannot approve
+content.

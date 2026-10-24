@@ -3,17 +3,17 @@
 This is the published per-op YAML schema. One YAML document is a list of
 exercise mappings. Each exercise has common wrapper fields plus op-specific
 payload fields. Fields suffixed ``_md`` are parsed as pandoc-markdown inline
-(spans allowed, via :func:`convert_inlines`); ``write`` and ``speak`` prompts
-also preserve paragraph breaks. All other strings are plain scalars.
+(spans allowed, via :func:`convert_inlines`); ``write`` prompts also
+preserve paragraph breaks. All other strings are plain scalars.
 
 Common wrapper fields (every op)::
 
     handle:         stable exercise key (required; also the default Exercise.id)
     id:             curated Exercise.id (optional; defaults to handle)
-    op:             choose | recall_fill | match_pairs | judge | categorize | build | find_fix | speak | write
+    op:             choose | recall_fill | match_pairs | judge | categorize | build | find_fix | write
     objective:      objective id string
     bloom:          remember | understand | apply | analyze
-    prompt_md:      prompt text (inline markdown → spans; write/speak preserve breaks)
+    prompt_md:      prompt text (inline markdown → spans; write preserves breaks)
     stimulus:       optional list of dialogue blocks with ordered speaker turns
     explanation_md: optional explanation (inline markdown → spans; omit or null → none)
     derived_from:   optional list of {section_id, block_index?, note?}; default []
@@ -82,10 +82,6 @@ find_fix::
     error_token_id: str (must match a token_id)
     feedback:       str (required)
 
-speak::
-
-    target:         exact Norwegian target utterance for any lesson kind
-
 write::
 
     response_language: no (the learner response is Norwegian)
@@ -106,9 +102,6 @@ Hard cases handled:
   - ``recall_fill`` keeps an explicit Norwegian ``audio_target`` as the
     model-audio/transcript source; context labels in ``segments`` are learner
     instructions and are never guessed into audio.
-  - ``speak`` keeps the exact authored target as the model-audio/transcript
-    source and may support any lesson kind; learner recording and speech-to-text
-    output are outside this contract.
 """
 
 from __future__ import annotations
@@ -117,17 +110,17 @@ from dataclasses import dataclass
 from typing import Any
 from typing import cast
 
-import panflute
 from pydantic import TypeAdapter
 
-from lesson_builder.application.operations.convert_lesson_spans import K_SPANS_BLANK_MARKER
-from lesson_builder.application.operations.convert_lesson_spans import convert_inlines
 from lesson_builder.domain.lesson.models.elements import Exercise
 from lesson_builder.domain.lesson.models.inline import InlineSpan
 from lesson_builder.domain.lesson.models.inline import TextSpan
 from lesson_builder.domain.lesson.models.operations import operation_names
 from lesson_builder.domain.lesson.settings import K_EXERCISES_DEFAULT_LANG
+from lesson_builder.formats.markdown import panflute
 from lesson_builder.formats.markdown.pandoc import parse_markdown
+from lesson_builder.formats.markdown.pandoc_inlines import K_SPANS_BLANK_MARKER
+from lesson_builder.formats.markdown.pandoc_inlines import convert_inlines
 from lesson_builder.formats.yaml import load_unique_yaml
 
 K_EXERCISES_SNIPPET_LIMIT = 80
@@ -258,8 +251,8 @@ def _build_exercise(
             f"exercise {handle!r}: unknown op {op!r} (expected one of {', '.join(sorted(K_EXERCISES_OPS))})."
         )
     _reject_internal_fields(raw, handle)
-    if op in {"speak", "write"}:
-        _reject_runtime_fields(raw, handle, op)
+    if op == "write":
+        _reject_runtime_fields(raw, handle)
 
     exercise_id = raw.get("id", handle)
     if not isinstance(exercise_id, str) or not exercise_id.strip():
@@ -270,7 +263,7 @@ def _build_exercise(
         _require_str(raw, "prompt_md", handle=handle),
         default_lang,
         warnings,
-        preserve_breaks=op in {"speak", "write"},
+        preserve_breaks=op == "write",
     )
     explanation = _parse_optional_md(
         raw.get("explanation_md"),
@@ -374,8 +367,6 @@ def _build_payload(
         return _build_build(raw, handle)
     if op == "find_fix":
         return _build_find_fix(raw, handle)
-    if op == "speak":
-        return _build_speak(raw, handle)
     if op == "write":
         return _build_write(raw, handle)
     # Unreachable: op is validated in _build_exercise.
@@ -670,14 +661,6 @@ def _build_find_fix(raw: dict[str, Any], handle: str) -> dict[str, Any]:
     }
 
 
-def _build_speak(raw: dict[str, Any], handle: str) -> dict[str, Any]:
-    """Build a target-bearing speak payload without runtime audio controls."""
-    target = _require_str(raw, "target", handle=handle).strip()
-    if not target:
-        raise ValueError(f"exercise {handle!r}: field 'target' must contain non-whitespace text")
-    return {"target": target}
-
-
 def _build_write(raw: dict[str, Any], handle: str) -> dict[str, Any]:
     """Build the app-facing writing task and its immutable judge rubric."""
     response_language = raw.get("response_language", "no")
@@ -849,20 +832,6 @@ def _build_derived_from(raw: object, handle: str) -> list[dict[str, Any]]:
 
 K_EXERCISES_OPS: frozenset[str] = frozenset(operation_names())
 K_EXERCISES_INTERNAL_FIELDS: frozenset[str] = frozenset({"stage", "build_stage"})
-K_SPEAK_ALLOWED_FIELDS: frozenset[str] = frozenset(
-    {
-        "handle",
-        "id",
-        "op",
-        "objective",
-        "bloom",
-        "prompt_md",
-        "stimulus",
-        "explanation_md",
-        "derived_from",
-        "target",
-    }
-)
 K_WRITE_ALLOWED_FIELDS: frozenset[str] = frozenset(
     {
         "handle",
@@ -883,12 +852,11 @@ K_WRITE_ALLOWED_FIELDS: frozenset[str] = frozenset(
 )
 
 
-def _reject_runtime_fields(raw: dict[str, Any], handle: str, operation: str) -> None:
-    """Reject runtime-oriented fields from authored speak/write envelopes."""
-    allowed = K_SPEAK_ALLOWED_FIELDS if operation == "speak" else K_WRITE_ALLOWED_FIELDS
-    unknown = sorted(set(raw) - allowed)
+def _reject_runtime_fields(raw: dict[str, Any], handle: str) -> None:
+    """Reject runtime-oriented fields from authored write envelopes."""
+    unknown = sorted(set(raw) - K_WRITE_ALLOWED_FIELDS)
     if unknown:
-        raise ValueError(f"exercise {handle!r}: {operation} does not support field(s): {', '.join(unknown)}")
+        raise ValueError(f"exercise {handle!r}: write does not support field(s): {', '.join(unknown)}")
 
 
 def _reject_internal_fields(raw: dict[str, Any], handle: str) -> None:

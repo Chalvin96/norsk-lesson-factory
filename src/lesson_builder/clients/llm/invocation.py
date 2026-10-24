@@ -1,4 +1,4 @@
-"""Entry points: `JobRunner.invoke_response` and `build_structured_json_prompt`.
+"""Entry points: `JobRunner.invoke_response` (job callers), `provider_call_cancellation` (operation scopes), and `build_structured_json_prompt` (Promptfoo adapters).
 
 Each job runner owns one configured OpenCode client and one model/agent/variant
 route. A transient backend failure receives the bounded shared retry policy;
@@ -20,16 +20,19 @@ from dataclasses import replace
 from pydantic import BaseModel
 from pydantic import ValidationError
 
+from lesson_builder.clients.cancellation import CancellationToken
+from lesson_builder.clients.cancellation import active_cancellation_token
+from lesson_builder.clients.cancellation import provider_call_cancellation
 from lesson_builder.clients.llm.base import AttemptOutcome
 from lesson_builder.clients.llm.base import BaseLlmClient
 from lesson_builder.clients.llm.base import LlmResponse
 from lesson_builder.clients.llm.base import extract_json_object
-from lesson_builder.clients.llm.base import is_cli_cancellation_requested
+from lesson_builder.clients.llm.base import raise_if_cli_call_cancelled
 from lesson_builder.clients.llm.exceptions import BackendDownException
-from lesson_builder.clients.llm.exceptions import LlmCancelledException
 from lesson_builder.clients.llm.exceptions import LlmException
 from lesson_builder.clients.llm.exceptions import LlmParseException
 from lesson_builder.clients.llm.exceptions import LlmQuotaException
+from lesson_builder.clients.llm.failure_messages import provider_name_for_model
 from lesson_builder.clients.llm.settings import K_LLM_BACKEND_RETRIES
 from lesson_builder.clients.llm.settings import K_LLM_BACKEND_RETRY_BACKOFF_SECONDS
 
@@ -41,31 +44,46 @@ class JobRunner:
     model: str | None = None
     agent: str | None = None
     variant: str | None = None
+    max_reasks: int = 1
     last_response: LlmResponse | None = field(default=None, init=False, repr=False)
     last_exception: LlmException | None = field(default=None, init=False, repr=False)
 
-    def invoke(self, prompt: str) -> str:
-        return self.invoke_response(prompt).text
+    def invoke(self, prompt: str, *, cancellation: CancellationToken | None = None) -> str:
+        return self.invoke_response(prompt, cancellation=cancellation).text
 
-    def invoke_response(self, prompt: str) -> LlmResponse:
+    def invoke_response(self, prompt: str, *, cancellation: CancellationToken | None = None) -> LlmResponse:
         self.last_response = None
         self.last_exception = None
+        resolved_cancellation = _resolve_cancellation(cancellation)
         try:
-            response = _invoke_client(
-                self.client,
-                prompt,
-                model=self.model,
-                agent=self.agent,
-                variant=self.variant,
-            )
+            if resolved_cancellation is None:
+                response = _invoke_client(
+                    self.client,
+                    prompt,
+                    model=self.model,
+                    agent=self.agent,
+                    variant=self.variant,
+                    cancellation=None,
+                )
+            else:
+                with provider_call_cancellation(resolved_cancellation):
+                    response = _invoke_client(
+                        self.client,
+                        prompt,
+                        model=self.model,
+                        agent=self.agent,
+                        variant=self.variant,
+                        cancellation=resolved_cancellation,
+                    )
         except LlmException as exc:
+            exc.provider_name = provider_name_for_model(self.model or self.client.name)
             self.last_exception = exc
             raise
         self.last_response = response
         return response
 
     def structured[T: BaseModel](self, schema: type[T]) -> StructuredJobRunner[T]:
-        return StructuredJobRunner(self, schema)
+        return StructuredJobRunner(self, schema, max_reasks=self.max_reasks)
 
 
 def build_structured_json_prompt(prompt: str, schema: type[BaseModel]) -> str:
@@ -89,13 +107,13 @@ class StructuredJobRunner[T: BaseModel]:
     _schema: type[T]
     max_reasks: int = 1
 
-    def invoke(self, prompt: str) -> T:
+    def invoke(self, prompt: str, *, cancellation: CancellationToken | None = None) -> T:
         schema = self._schema
         instruction = build_structured_json_prompt(prompt, schema)
         last_err: LlmParseException | None = None
         attempt = instruction
         for _ in range(self.max_reasks + 1):
-            text = self._runner.invoke(attempt)
+            text = self._runner.invoke(attempt, cancellation=cancellation)
             try:
                 obj = extract_json_object(text)
             except (TypeError, ValueError) as e:
@@ -130,17 +148,23 @@ def _invoke_client(
     model: str | None,
     agent: str | None,
     variant: str | None,
+    cancellation: CancellationToken | None,
 ) -> LlmResponse:
     """Call one configured client with bounded transient-failure retries."""
     attempts: list[AttemptOutcome] = []
     last_err: LlmException | None = None
     attempt_model: str = model or getattr(client, "default_model", "") or ""
     for backend_attempt in range(K_LLM_BACKEND_RETRIES + 1):
-        if is_cli_cancellation_requested():
-            raise LlmCancelledException("LLM call cancelled")
+        _raise_if_call_cancelled(cancellation)
         started = time.monotonic()
         try:
-            response = client.call(prompt, model=model, agent=agent, variant=variant)
+            response = client.call(
+                prompt,
+                model=model,
+                agent=agent,
+                variant=variant,
+                cancellation=cancellation,
+            )
         except LlmQuotaException as exc:
             attempts.append(AttemptOutcome(client.name, attempt_model, "quota", str(exc), agent, variant))
             last_err = exc
@@ -148,10 +172,12 @@ def _invoke_client(
         except BackendDownException as exc:
             attempts.append(AttemptOutcome(client.name, attempt_model, "down", str(exc), agent, variant))
             last_err = exc
+            _raise_if_call_cancelled(cancellation, cause=exc)
             if backend_attempt < K_LLM_BACKEND_RETRIES:
                 time.sleep(K_LLM_BACKEND_RETRY_BACKOFF_SECONDS)
                 continue
             break
+        _raise_if_call_cancelled(cancellation)
         elapsed_ms = int((time.monotonic() - started) * 1000)
         response = replace(
             response,
@@ -168,9 +194,29 @@ def _invoke_client(
             )
         )
         return replace(response, latency_ms=elapsed_ms, attempts=tuple(attempts))
-    if is_cli_cancellation_requested():
-        raise LlmCancelledException("LLM call cancelled")
+    _raise_if_call_cancelled(cancellation)
     if last_err is None:
         raise RuntimeError("LLM invocation ended without a response or error")
     last_err.attempts = tuple(attempts)
     raise last_err
+
+
+def _resolve_cancellation(cancellation: CancellationToken | None) -> CancellationToken | None:
+    """Use the explicit token or inherit the current operation token."""
+    return cancellation or active_cancellation_token()
+
+
+def _raise_if_call_cancelled(cancellation: CancellationToken | None, *, cause: Exception | None = None) -> None:
+    """Raise the operation's reason or the uncoupled CLI batch reason."""
+    raise_if_cli_call_cancelled(cancellation, cause=cause)
+
+
+__all__ = [
+    # Job invocation API.
+    "JobRunner",
+    "StructuredJobRunner",
+    # Shared prompt rendering.
+    "build_structured_json_prompt",
+    # Workflow cancellation scope.
+    "provider_call_cancellation",
+]

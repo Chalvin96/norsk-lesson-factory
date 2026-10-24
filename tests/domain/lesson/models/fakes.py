@@ -73,8 +73,8 @@ def valid_quality_review(kind: str = "grammar") -> dict[str, Any]:
         ),
         "pronunciation": (
             "perception_accuracy",
-            "articulation_cue",
-            "contrast_to_utterance",
+            "sound_spelling_link",
+            "contrast_in_context",
         ),
         "communicative": (
             "speech_act_purpose",
@@ -89,26 +89,24 @@ def valid_quality_review(kind: str = "grammar") -> dict[str, Any]:
     }
     axes = (*common_axes, *category_axes[kind])
     return {
-        "verdict": "pass",
         "summary": "The exact package is correct, focused, and teachable.",
         "scores": [{"axis": axis, "score": 2, "rationale": f"The package satisfies {axis}."} for axis in axes],
         "findings": [],
     }
 
 
-def needs_repair_quality_review() -> dict[str, Any]:
-    """Return a complete contract-valid review that demands one bounded repair."""
+def advisory_quality_review() -> dict[str, Any]:
+    """Return a complete review with one unverified advisory finding."""
     review = valid_quality_review("grammar")
-    review["verdict"] = "needs_repair"
     review["summary"] = "The draft changes the meaning of one translation."
     review["findings"] = [
         {
             "code": "meaning_changing_translation",
-            "severity": "blocking",
+            "severity": "major",
             "artifact": "lesson.md",
             "location": "first examples block",
-            "evidence": "The draft translates 'Snakker du norsk?' as a statement.",
-            "repair_instruction": "Restore the faithful English question translation.",
+            "evidence": "The Norwegian question uses a different meaning from its translation.",
+            "rationale": "Check the translation against the intended question meaning.",
         }
     ]
     return review
@@ -116,7 +114,7 @@ def needs_repair_quality_review() -> dict[str, Any]:
 
 __all__ = [
     "lesson_with_exercises",
-    "needs_repair_quality_review",
+    "advisory_quality_review",
     "valid_exercise",
     "valid_quality_review",
 ]

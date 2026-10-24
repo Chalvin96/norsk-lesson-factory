@@ -360,8 +360,8 @@ Compare statements and questions:
 - en: The film starts at seven.
 - no: Når begynner filmen?
 - en: When does the film start?
-- no: Dere går til kinoen med buss.
-- en: You go to the cinema by bus.
+- no: Dere kommer til kinoen med buss.
+- en: You get to the cinema by bus.
 - no: Hvordan kommer dere til kinoen?
 - en: How do you get to the cinema?
 - no: Jonas venter fordi Emil er sen.

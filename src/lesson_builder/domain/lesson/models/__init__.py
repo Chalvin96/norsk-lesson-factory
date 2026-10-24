@@ -6,7 +6,6 @@ from lesson_builder.domain.lesson.models.elements import Element
 from lesson_builder.domain.lesson.models.elements import Exercise
 from lesson_builder.domain.lesson.models.elements import Operation
 from lesson_builder.domain.lesson.models.elements import Section
-from lesson_builder.domain.lesson.models.exercise_diagnostics import ExerciseDiagnostics
 from lesson_builder.domain.lesson.models.export import ExportedContentItem
 from lesson_builder.domain.lesson.models.export import ExportedLesson
 from lesson_builder.domain.lesson.models.lesson import CefrLevel
@@ -51,7 +50,6 @@ __all__ = [
     "Element",
     "Section",
     "Exercise",
-    "ExerciseDiagnostics",
     "Operation",
     "CheckResult",
     "Severity",

@@ -21,16 +21,16 @@ from tests.clients.llm.fakes import FakeLlmClient
 def test_project_standalone_review_payload_given_derived_from_exercise_expect_no_lesson_context():
     payload = project_standalone_review_payload(_build_lesson())
 
-    assert [question["id"] for question in payload] == ["context-dependent-write", "standalone-speak"]
+    assert [question["id"] for question in payload] == ["context-dependent-write", "standalone-build"]
     assert all("lesson_context" not in question for question in payload)
     assert all("derived_from" not in question for question in payload)
     write_question = payload[0]
     assert write_question["operation"] == "write"
     assert "criteria" not in write_question
     assert "judge_prompt" not in write_question
-    speak_question = payload[1]
-    assert speak_question["operation"] == "speak"
-    assert "target" not in speak_question
+    build_question = payload[1]
+    assert build_question["operation"] == "build"
+    assert "answer_order" not in build_question
 
 
 def test_build_standalone_review_prompt_given_payload_expect_no_section_projection():
@@ -56,7 +56,7 @@ def test_review_standalone_exercises_given_context_dependent_payload_expect_stri
                             "verdict": "context_dependent",
                             "reason": "The payload refers to a dialogue that is not restated.",
                         },
-                        {"id": "standalone-speak", "verdict": "standalone"},
+                        {"id": "standalone-build", "verdict": "standalone"},
                     ]
                 }
             ),
@@ -80,7 +80,7 @@ def test_review_standalone_exercises_given_locally_complete_payload_expect_pass(
             {
                 "results": [
                     {"id": "context-dependent-write", "verdict": "standalone"},
-                    {"id": "standalone-speak", "verdict": "standalone"},
+                    {"id": "standalone-build", "verdict": "standalone"},
                 ]
             }
         ),
@@ -100,7 +100,7 @@ def test_review_standalone_exercises_given_deterministic_finding_expect_failure_
                 {
                     "results": [
                         {"id": "context-dependent-write", "verdict": "standalone"},
-                        {"id": "standalone-speak", "verdict": "standalone"},
+                        {"id": "standalone-build", "verdict": "standalone"},
                     ]
                 }
             ),
@@ -124,7 +124,7 @@ def test_review_standalone_exercises_given_reviewer_outage_expect_strict_failure
 def test_review_standalone_exercises_given_incomplete_reviewer_coverage_expect_structured_invalid_report():
     report = review_standalone_exercises(
         _build_lesson(),
-        reviewer_agent=_build_reviewer({"results": [{"id": "standalone-speak", "verdict": "standalone"}]}),
+        reviewer_agent=_build_reviewer({"results": [{"id": "standalone-build", "verdict": "standalone"}]}),
     )
 
     assert report["status"] == "reviewer_invalid"
@@ -132,7 +132,7 @@ def test_review_standalone_exercises_given_incomplete_reviewer_coverage_expect_s
     with pytest.raises(StandaloneReviewError):
         review_standalone_exercises(
             _build_lesson(),
-            reviewer_agent=_build_reviewer({"results": [{"id": "standalone-speak", "verdict": "standalone"}]}),
+            reviewer_agent=_build_reviewer({"results": [{"id": "standalone-build", "verdict": "standalone"}]}),
             strict=True,
         )
 
@@ -240,10 +240,17 @@ def _build_lesson() -> dict[str, Any]:
             },
             {
                 "element_kind": "exercise",
-                "id": "standalone-speak",
-                "operation": "speak",
-                "prompt": [{"kind": "text", "value": "Say «Jeg vil gjerne ha en kopp te.» out loud."}],
-                "payload": {"target": "Jeg vil gjerne ha en kopp te."},
+                "id": "standalone-build",
+                "operation": "build",
+                "prompt": [{"kind": "text", "value": "Build a polite request for a cup of tea."}],
+                "payload": {
+                    "tokens": [
+                        {"token_id": "t1", "text": "Jeg"},
+                        {"token_id": "t2", "text": "vil gjerne ha"},
+                        {"token_id": "t3", "text": "en kopp te."},
+                    ],
+                    "answer_order": ["t1", "t2", "t3"],
+                },
             },
         ]
     }

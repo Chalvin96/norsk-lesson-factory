@@ -1,92 +1,87 @@
 ---
 type: Architecture
 title: Codebase Shape and Placement
-description: Authoritative responsibility routing for repository code.
+description: Route repository responsibilities to their current owner and layer.
 tags: [architecture, modules, ownership]
-timestamp: 2026-09-06
+timestamp: 2026-10-22
 ---
 
 Read this router before adding or moving production code, then read the
-[dependency rationale](codebase-architecture.md). Existing placement is evidence,
-not authority: file size and similar names do not establish ownership.
-
-For each new or moved responsibility, record in the local plan:
-
-```text
-responsibility -> code kind -> owner -> layer -> target module
-```
-
-Choose by semantic owner, contract audience and lifetime, side effects, and layer.
-A Pydantic model, dataclass, or enum does not automatically belong in the domain.
+[dependency rationale](codebase-architecture.md). Existing placement and file
+size do not establish ownership. For each new or moved responsibility, record
+`responsibility -> code kind -> owner -> layer -> target module` in the ignored
+local plan.
 
 ## Repository ownership
 
 | Path | Responsibility |
 | --- | --- |
-| `content/` | Human-editable catalog, curriculum, terminology, and lesson source |
+| `content/` | Human-edited catalog, curriculum, terminology, and lesson source |
 | `dist/` | Derived learner distribution and export schemas |
-| `src/lesson_builder/` | Production Python code |
-| `tests/` | Behavior evidence mirroring production ownership |
+| `src/lesson_builder/` | Production Python package |
+| `tests/` | Runtime behavior evidence, organized by production owner |
 | `evals/` | Opt-in prompt evaluations and labeled cases |
 | `scripts/` | Repository development and validation entry points |
-| `knowledge/` | Current durable decisions and rationale |
-| `plans/`, `store/` | Ignored task plans and scratch runs, caches, checkpoints, archives |
-| `.github/` | CI and contribution configuration |
-| `AGENTS.md` | Mandatory contributor rules; detailed architecture stays here |
+| `knowledge/` | Durable current-state decisions and rationale |
+| `plans/` | Ignored local task plans |
 
-Dependencies and development commands belong in `pyproject.toml`, `uv.lock`, and
-`package.json`; exact schemas, paths, and settings remain implementation-owned.
+Dependency and development commands belong in `pyproject.toml`, `uv.lock`, and
+`package.json`; exact schemas, paths, and settings are implementation-owned.
 
 ## Production responsibility router
 
-All paths below are relative to `src/lesson_builder/`.
+Python package paths are relative to `src/lesson_builder/`. Paths beginning
+with `workbench/` or `scripts/` are relative to the repository root.
 
-| Responsibility | Owner and target |
+| Responsibility | Owner and placement |
 | --- | --- |
-| Public contract owned by an existing domain context | That context's existing `domain/<context>/models` namespace |
-| Invariant depending only on a model or its nested contract values | The model |
-| Serializer-like boundary check or projection | `domain/<context>/validation/` |
-| Reusable deterministic policy or transformation spanning domain values | Flat `domain/<context>/services/<responsibility>.py` |
-| Stable context mutation or projection API, when needed | Optional cohesive `domain/<context>/services/<context>_service.py` |
-| Non-checkpointed use case, file/provider effects, or cross-context coordination | `application/operations/`; operation results stay with this layer |
-| Checkpointed sequencing, retry, human gates, recovery, or workflow transport | `workflow/<flow>/`; state and results stay with this flow |
-| External provider adaptation | `clients/`; transport types stay with the client |
-| Markdown, YAML, or Pandoc mechanics | `formats/`; source-format types stay here |
-| Repository paths, scratch, cache, locks, or atomic writes | `workspace/`; workspace values stay here |
-| Command registration and operator interaction | `cli/`; handlers delegate and parser construction does not initialize providers |
-| Private implementation record | The module or layer owning its lifetime |
+| Catalog, curriculum, lesson, and distribution contracts | Existing context models; public contracts stay with their owning context |
+| Model invariants | The model whose values they constrain |
+| Boundary validation or serialization | The owning context's `validation/` package |
+| Reusable deterministic policy over domain values | Flat `services/` package in the owning context |
+| Non-checkpointed use cases, file/provider effects, or cross-context coordination | `application/operations/`; operation results stay there |
+| Checkpointed sequencing, retries, owner gates, and recovery | `workflow/`; workflow state and results stay with the flow |
+| External provider transport and transport types | `clients/` |
+| Markdown/YAML parsing and format conversion | `formats/`; direct Pandoc-shaped AST mapping into lesson model contracts is the narrow exception described in [architecture](codebase-architecture.md) |
+| Workspace paths, local records, caches, locks, and atomic writes | `workspace/` |
+| Command registration and operator interaction | `cli/`; supported commands are `check`, `regenerate-dist`, `release`, `release-verify`, and `workbench` |
+| Workbench HTTP transport, request guards, and JSON projection | `web/` |
+| Workbench browser UI and design tokens | `workbench/`; the built app is ignored output served by `web/` |
 
-The existing domain contexts are `catalog`, `curriculum`, `lesson`, and
-`distribution`. A capability name does not create another context.
+Markdown parsing and its format-to-domain exception are described in
+[architecture boundaries](codebase-architecture.md#markdown-parsing).
 
-Domain services are flat and contain deterministic logic only: no directories
-below `services/`, file reads or writes, format parsing, providers, environment
-inspection, checkpoints, or coordination of other contexts, even through injected
-collaborators. Standalone validators, serializers, registries, and policy helpers
-do not become models because they return typed data. A cohesive service is useful
-only when callers need its API; do not add a catch-all facade for naming symmetry.
+Specific routing anchors:
 
-Examples: authored lesson loading composes formats and lesson values in the
-application layer; graph stages own checkpoint recovery; audio synthesis owns
-provider calls and assets in application operations; export-schema writing is an
-application effect even though the schema derives from a domain contract.
-`workspace.paths.WorkspacePaths` owns canonical source, distribution, approval,
-and scratch locations; layer settings hold configuration, not a competing path map.
+- `application/operations/compile_lesson_package.py` is the canonical
+  application boundary for compiling and auditing one authored package.
+- `application/operations/workbench_review.py` owns source-bound review
+  coverage and evidence; `application/operations/workbench_lesson_gate.py`
+  owns approval and promotion blockers.
+- `application/operations/workbench_exercise_alignment.py` owns exercise
+  section pins and staleness; checkpointed regeneration lives in
+  `workflow/workbench_regeneration/`.
+- Codex chat transport and profile credentials live in `clients/codex/`;
+  OpenCode transport and scoped provider credentials live in
+  `clients/llm/`.
+- Workbench wire contracts are in `web/workbench_wire.py`.
+  `scripts/export_workbench_schema.py` exports
+  `workbench/schema/workbench-api.schema.json`, which generates
+  `workbench/src/api/types.generated.ts`; `workbench/src/api/contracts.ts`
+  provides transport aliases derived from that projection.
 
-Mirror test ownership under `tests/`. Shared model factories live in
-`tests/<layer>/factories.py`, typed behavior fakes in `tests/<layer>/fakes.py`, and
-`conftest.py` only injects common fixture defaults. Naming, import, settings, and
-reader-order conventions are defined in `AGENTS.md` and checked mechanically by
-`npm run conventions:check`.
+Workbench frontend responsibilities follow feature ownership:
 
-## Architecture decisions
+| Responsibility | Owner and placement |
+| --- | --- |
+| HTTP transport and generated contract aliases | `workbench/src/api/http.ts`, `api/contracts.ts`, and `api/types.generated.ts` |
+| Lesson, curriculum, and settings queries and writes | `lesson/api.ts`, `curriculum/api.ts`, and `settings/api.ts` |
+| Shared asynchronous job state and regeneration polling | `jobs/` |
+| Chat transcript and composer types | `chat/types.ts` |
+| Curriculum draft and save input types | `curriculum/types.ts` |
+| Lesson route loading and workspace composition | `lesson/lesson-page.tsx` and `lesson/lesson-workspace.tsx` |
+| Lesson chat, review, audio, and lifecycle workflows | Their owning `chat/`, `lesson/review/`, `lesson/audio/`, and `lesson/lifecycle/` feature modules |
 
-Stop and review the router and rationale read-only when ownership or dependency
-routing is unresolved. Request an architecture decision before creating or changing
-a domain context, moving a public contract between contexts or layers, adding a
-dependency direction, or placing code whose route is not established here. Nested
-service packages are not an escape hatch.
-
-Review the routing line before implementation details. Passing tests does not make
-a wrong owner correct. Consolidate files when they share responsibility and
-lifetime; preserve boundaries that separate policy, orchestration, and effects.
+Domain services are deterministic. Their restrictions and the permitted
+dependency edges are in [architecture boundaries](codebase-architecture.md).
+Expose a cohesive service API only when callers need one.

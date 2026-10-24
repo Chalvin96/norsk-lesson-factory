@@ -389,6 +389,7 @@ These questions could all arise in one conversation, but they request different 
 **Checkpoint: compare matched situations**
 
 For each of several shared topics—a colleague, a town, a computer program, and a musical instrument—form or complete questions that ask separately about a fact, familiarity, and a learned ability. Keep each topic constant while changing the kind of knowing.
+
 ## Common mistakes {#common-mistakes role=contrast objectives=obj-knowing-verbs-vite-kjenne-kunne-01}
 
 **Using vite for a person you know**

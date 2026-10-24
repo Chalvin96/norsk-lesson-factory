@@ -5,12 +5,11 @@ from __future__ import annotations
 from pathlib import Path
 from types import SimpleNamespace
 
-from lesson_builder.application.operations.convert_lesson_blocks import convert_blocks
 from lesson_builder.application.operations.load_lesson import load_lesson_source
 from lesson_builder.domain.lesson.models.lesson import Lesson
 from lesson_builder.formats.markdown.frontmatter import parse_frontmatter
-from lesson_builder.formats.markdown.pandoc import compiler_fingerprint
 from lesson_builder.formats.markdown.pandoc import parse_markdown
+from lesson_builder.formats.markdown.pandoc_blocks import convert_blocks
 
 K_TEST_FM = """\
 ---
@@ -96,7 +95,6 @@ def parse_prose(md_text: str) -> SimpleNamespace:
     return SimpleNamespace(
         frontmatter=frontmatter,
         blocks=convert_blocks(doc.content, warnings, frontmatter.default_lang),
-        fingerprint=compiler_fingerprint(),
         warnings=warnings,
     )
 

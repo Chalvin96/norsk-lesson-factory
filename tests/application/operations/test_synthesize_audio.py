@@ -20,7 +20,7 @@ from lesson_builder.application.operations.synthesize_audio import synthesize_le
 from lesson_builder.domain.lesson.models.characters import CharacterDefinition
 from lesson_builder.domain.lesson.models.characters import CharacterRegistry
 from lesson_builder.domain.lesson.services.audio_bindings import audio_binding_key
-from tests.application.fakes import FakeSynthesisClient
+from tests.application.fakes import FakeTtsClient
 
 
 def test_audio_binding_key_given_example_source_expect_stable_locator():
@@ -1133,11 +1133,11 @@ def _wav_bytes(frames: int = 240) -> bytes:
     return buffer.getvalue()
 
 
-def _synthesis_client() -> FakeSynthesisClient:
-    return FakeSynthesisClient(_wav_bytes())
+def _synthesis_client() -> FakeTtsClient:
+    return FakeTtsClient(_wav_bytes())
 
 
-def _dialogue_voice_names(client: FakeSynthesisClient) -> list[str]:
+def _dialogue_voice_names(client: FakeTtsClient) -> list[str]:
     return [voice for _text, voice in client.calls]
 
 

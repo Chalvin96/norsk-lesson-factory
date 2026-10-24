@@ -117,6 +117,7 @@ def synthesize_lesson_audio(
     settings: AudioSettings,
     synthesis_client: AudioSynthesisClient | None = None,
     cache_root: Path | None = None,
+    force_synthesis_fingerprints: frozenset[str] = frozenset(),
 ) -> tuple[list[dict[str, Any]], dict[str, str]]:
     """Synthesize reading/example candidates and return public entries plus bindings.
 
@@ -156,6 +157,7 @@ def synthesize_lesson_audio(
                 speaker_allocator=speaker_allocator,
                 client=client,
                 cache_root=cache_root,
+                force_synthesis_fingerprints=force_synthesis_fingerprints,
             )
             if entry is not None and entry["id"] not in entry_ids:
                 entries.append(entry)
@@ -247,6 +249,23 @@ def plan_lesson_audio_candidates(
         for block in transcript_blocks
         if block.get("origin") in {"lesson_reading", "lesson_example", "exercise_target"}
     ]
+
+
+def write_audio_cache_asset(*, cache_root: Path, fingerprint: str, audio_bytes: bytes) -> Path:
+    """Atomically store one validated WAV at its shared synthesis fingerprint."""
+    if len(fingerprint) != K_AUDIO_FINGERPRINT_LENGTH or any(
+        character not in "0123456789abcdef" for character in fingerprint
+    ):
+        raise ValueError("audio fingerprint must be a lowercase SHA-256 value")
+    root = Path(cache_root)
+    if root.is_symlink():
+        raise ValueError("audio cache root must not be a symlink")
+    root.mkdir(parents=True, exist_ok=True)
+    destination = root / f"{fingerprint}.wav"
+    if destination.is_symlink() or not destination.resolve().is_relative_to(root.resolve()):
+        raise ValueError("audio cache asset escapes the shared cache")
+    _write_validated_wav(destination, audio_bytes)
+    return destination
 
 
 @dataclass(frozen=True)
@@ -370,6 +389,7 @@ def _synthesize_audio_candidate(
     speaker_allocator: _SpeakerVoiceAllocator,
     client: AudioSynthesisClient,
     cache_root: Path | None,
+    force_synthesis_fingerprints: frozenset[str],
 ) -> tuple[str, str, dict[str, Any] | None]:
     """Synthesize one candidate and return its binding, ID, and new entry."""
     identity = identify_audio_candidate(block=block, settings=settings, speaker_allocator=speaker_allocator)
@@ -386,6 +406,7 @@ def _synthesize_audio_candidate(
         voice=voice,
         client=client,
         cache_root=cache_root,
+        force_synthesis=identity.fingerprint in force_synthesis_fingerprints,
     )
     duration_ms = validate_audio_asset(destination)
     digest = hashlib.sha256(destination.read_bytes()).hexdigest()
@@ -410,14 +431,15 @@ def _ensure_synthesized_audio(
     voice: str,
     client: AudioSynthesisClient,
     cache_root: Path | None,
+    force_synthesis: bool,
 ) -> None:
     """Reuse a valid destination/cache file or synthesize the candidate."""
     _discard_invalid_audio(destination)
     cache_file = Path(cache_root) / f"{fingerprint}.wav" if cache_root is not None else None
     _discard_invalid_audio(cache_file)
-    if not destination.exists() and cache_file is not None and cache_file.exists():
+    if cache_file is not None and _can_copy_cached_audio(destination, cache_file, force_synthesis):
         shutil.copy2(cache_file, destination)
-    if destination.exists():
+    if _can_reuse_destination(destination, force_synthesis):
         return
     audio_bytes = client.synthesize(text=text, voice=voice)
     provider_destination = cache_file or destination
@@ -425,6 +447,16 @@ def _ensure_synthesized_audio(
     _write_validated_wav(provider_destination, audio_bytes)
     if cache_file is not None:
         shutil.copy2(cache_file, destination)
+
+
+def _can_copy_cached_audio(destination: Path, cache_file: Path, force_synthesis: bool) -> bool:
+    """Return whether the valid shared cache may populate the staged destination."""
+    return not force_synthesis and not destination.exists() and cache_file.exists()
+
+
+def _can_reuse_destination(destination: Path, force_synthesis: bool) -> bool:
+    """Return whether an already staged asset may bypass provider synthesis."""
+    return destination.exists() and not force_synthesis
 
 
 def _discard_invalid_audio(path: Path | None) -> None:
@@ -821,4 +853,5 @@ __all__ = [
     "plan_lesson_audio_candidates",
     "synthesize_lesson_audio",
     "validate_audio_configuration",
+    "write_audio_cache_asset",
 ]

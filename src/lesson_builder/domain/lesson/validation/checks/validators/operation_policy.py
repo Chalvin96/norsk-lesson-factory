@@ -46,7 +46,7 @@ def _operation_bloom_findings(
     return [
         CheckResult(
             check_id="operation_bloom",
-            severity="blocker" if operation == "speak" else "warning",
+            severity="warning",
             unit_id=str(exercise.get("id", "")),
             message=(
                 f"operation '{operation}' is not eligible at Bloom '{bloom_level}'; "

@@ -63,6 +63,7 @@ Det passer. Vi sees snart.
 :::
 
 The prepositions **på**, **om**, **til**, **hos**, **for**, and **i** tell us how places and times relate to an action. The fixed frame **for … siden** uses **for** with an amount of time and **siden** to locate an event before now. Choosing the right preposition or time frame lets you distinguish being somewhere from going somewhere, future time from past time, and duration from other time relationships.
+
 ## Being in a place: i and på {#being-in-a-place role=model objectives=obj-basic-prepositions-place-time-01}
 
 Norwegian commonly uses both **i** and **på** for location. English often translates both as *in* or *at*, so direct translation is not enough.
@@ -208,6 +209,7 @@ Do not use **hos** as a general translation of English *at*. It is associated wi
 :::
 
 Not a **hos** phrase: Oslo is a city, not someone Nora is visiting.
+
 ## Looking forward from now: om {#looking-forward-from-now role=model objectives=obj-basic-prepositions-place-time-01}
 
 Use **om** plus an amount of time to say how long it is from now until a future event.
@@ -231,6 +233,7 @@ English uses *in* here, but Norwegian does not normally use **i** for this futur
 :::
 
 This does not say that closing lasts one hour. It says that one hour will pass before the café closes.
+
 ## Looking back from now: for … siden {#looking-back-from-now role=contrast objectives=obj-basic-prepositions-place-time-01}
 
 Use **for … siden** to locate an event a stated amount of time before now. The amount goes between **for** and **siden**.
@@ -263,6 +266,7 @@ A useful mental timeline is:
 :::
 
 Do not use **om** simply because a time quantity follows it. First decide whether the event lies in the future or the past.
+
 ## Saying how long something lasts: i {#saying-how-long-something-lasts role=contrast objectives=obj-basic-prepositions-place-time-01}
 
 Use **i** with an amount of time when the expression tells how long a state or activity lasts.
@@ -318,6 +322,7 @@ Use **i** before an amount of time to measure how long an activity lasts.
 :::
 
 In each sentence, the time expression gives the duration of the activity.
+
 ## Back at the café {#back-at-the-cafe role=model objectives=obj-basic-prepositions-place-time-01}
 
 Jonas has now arrived. Maja sends Nora a message.
@@ -395,6 +400,7 @@ Finally, learn common place expressions as complete units:
 ## Transfer to a new situation {#transfer-to-a-new-situation role=recap objectives=obj-basic-prepositions-place-time-01}
 
 Imagine that Emil is planning a Saturday visit to his sister Lea in Bergen. He is currently at work. He will leave in half an hour, travel to Bergen, and stay with Lea for two days. They also discuss a visit Lea made to Oslo one week ago.
+
 ## Final retrieval {#final-retrieval role=recap objectives=obj-basic-prepositions-place-time-01}
 
 {{exercise: retrieve-preposition-meanings}}

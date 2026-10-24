@@ -88,7 +88,6 @@ def test_projection_given_bank_file_expect_hash_and_exact_structured_fields():
         "room-arrangement",
         "projector-arrangement",
         "email-purpose",
-        "workshop-word-bounds",
         "skulle-ha-forms",
     ]
     assert all(criterion["gating"] is True for criterion in anchor["criteria"])
@@ -119,7 +118,7 @@ def test_projection_given_positive_prompt_injection_stress_expect_no_failure_met
 def test_projection_given_negative_without_primary_failed_criterion_expect_refusal(tmp_path):
     bank_path = _bank_with_metadata_change(
         tmp_path,
-        "wjc-workshop-email-skulle-repetition-gaming",
+        "wjc-workshop-email-skulle-one-sentence-only",
         lambda metadata: metadata.pop("primary_failed_criterion"),
     )
 

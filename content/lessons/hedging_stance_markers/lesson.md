@@ -254,7 +254,7 @@ Do not pile up opinion markers without a reason:
 
 Less natural:
 
-::: callout {variant=warning}
+::: {.callout variant=warning}
 Not: Etter min mening synes jeg at planen er god. (In my opinion, I think that the plan is good.)
 :::
 
@@ -339,7 +339,7 @@ Avoid unnecessary stacking in neutral prose:
 
 Overloaded:
 
-::: callout {variant=warning}
+::: {.callout variant=warning}
 Not: Det kommer kanskje sånn cirka rundt to hundre mennesker. (Perhaps something like around two hundred people are coming, in this situation.)
 :::
 

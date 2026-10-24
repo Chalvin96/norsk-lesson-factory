@@ -84,6 +84,8 @@ The article agrees with the noun in the usual way:
 - en: What beautiful flowers!
 :::
 
+In the plural, **noen** is optional: **For fine blomster!** is also natural.
+
 The adjective is useful but not always necessary:
 
 ::: examples

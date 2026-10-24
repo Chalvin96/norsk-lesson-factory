@@ -1,4 +1,4 @@
-"""Entry points: `validate_distribution`, `validate_committed_distribution`, `load_planned_lesson_ids`, `validate_lesson_inventory`, and `validate_audio_asset`.
+"""Entry points: `validate_distribution`, `validate_committed_distribution`, `load_planned_lesson_ids`, `validate_lesson_inventory`, `validate_audio_asset`, and `inspect_workbench_audio_asset`.
 
 This operation owns artifact-level checks: the curriculum inventory, packet and
 catalog shape, public schema, audio references, and parity with canonical lesson
@@ -9,13 +9,19 @@ before performing their own side effects.
 from __future__ import annotations
 
 import hashlib
+import io
 import json
+import math
+import sys
 import wave
+from array import array
 from collections.abc import Mapping
+from dataclasses import dataclass
 from pathlib import Path
 from pathlib import PurePosixPath
 from pathlib import PureWindowsPath
 from typing import Any
+from typing import Literal
 from typing import cast
 
 import yaml
@@ -25,6 +31,7 @@ from lesson_builder.application.operations.compile_lesson_package import compile
 from lesson_builder.application.operations.compile_lesson_package import digest_authored_source
 from lesson_builder.application.operations.compile_lesson_package import load_authored_source_snapshot
 from lesson_builder.application.operations.load_characters import load_optional_character_registry
+from lesson_builder.domain.curriculum.models import CurriculumPlan
 from lesson_builder.domain.distribution.services.distribution_service import DistributionService
 from lesson_builder.domain.distribution.settings import K_AUDIO_PATH_PREFIX
 from lesson_builder.domain.distribution.settings import K_CATALOG_FILENAME
@@ -37,6 +44,27 @@ from lesson_builder.domain.lesson.settings import K_LESSON_SCHEMA_VERSION
 from lesson_builder.domain.lesson.validation.lesson_ids import validate_slug
 from lesson_builder.workspace.paths import WorkspacePaths
 
+K_AUDIO_PCM_SAMPLE_WIDTH_BYTES = 2
+K_AUDIO_SILENCE_PEAK_THRESHOLD = 64
+K_AUDIO_CUTOFF_TAIL_RMS_THRESHOLD = 3000
+K_AUDIO_CUTOFF_FINAL_SAMPLE_THRESHOLD = 2500
+
+
+@dataclass(frozen=True)
+class AudioAssetFinding:
+    """A deterministic WAV check result for the workbench author."""
+
+    code: Literal["silent", "length", "cut_off", "invalid_wav"]
+    message: str
+
+
+@dataclass(frozen=True)
+class AudioAssetInspection:
+    """Duration and findings from inspecting one generated WAV asset."""
+
+    duration_ms: int | None
+    findings: tuple[AudioAssetFinding, ...]
+
 
 def validate_audio_asset(path: Path) -> int:
     """Validate a distribution/cache WAV asset and return its rounded duration."""
@@ -44,11 +72,84 @@ def validate_audio_asset(path: Path) -> int:
         with wave.open(str(path), "rb") as handle:
             frame_rate = handle.getframerate()
             frame_count = handle.getnframes()
-    except (OSError, wave.Error) as exc:
+    except (EOFError, OSError, wave.Error) as exc:
         raise ValueError(f"audio asset is not a readable WAV file: {path}") from exc
     if frame_rate <= 0 or frame_count <= 0:
         raise ValueError(f"audio asset is empty: {path}")
     return int(round(frame_count * 1000 / frame_rate))
+
+
+def inspect_workbench_audio_asset(path: Path, *, text: str) -> AudioAssetInspection:
+    """Check one workbench recording for invalid, silent, implausible, or cut-off audio."""
+    try:
+        return inspect_workbench_audio_bytes(path.read_bytes(), text=text)
+    except OSError as exc:
+        return AudioAssetInspection(
+            duration_ms=None,
+            findings=(AudioAssetFinding("invalid_wav", f"Recording is not readable: {exc}"),),
+        )
+
+
+def inspect_workbench_audio_bytes(audio_bytes: bytes, *, text: str) -> AudioAssetInspection:
+    """Check WAV bytes without publishing them to the shared cache."""
+    try:
+        with wave.open(io.BytesIO(audio_bytes), "rb") as handle:
+            frame_rate = handle.getframerate()
+            frame_count = handle.getnframes()
+            channel_count = handle.getnchannels()
+            sample_width = handle.getsampwidth()
+            compression = handle.getcomptype()
+            frames = handle.readframes(frame_count)
+    except (EOFError, OSError, wave.Error) as exc:
+        return AudioAssetInspection(
+            duration_ms=None,
+            findings=(AudioAssetFinding("invalid_wav", f"Recording is not a readable WAV file: {exc}"),),
+        )
+    expected_frame_bytes = frame_count * channel_count * sample_width
+    if (
+        frame_rate <= 0
+        or frame_count <= 0
+        or channel_count <= 0
+        or compression != "NONE"
+        or sample_width != K_AUDIO_PCM_SAMPLE_WIDTH_BYTES
+        or len(frames) != expected_frame_bytes
+    ):
+        return AudioAssetInspection(
+            duration_ms=None,
+            findings=(AudioAssetFinding("invalid_wav", "Recording must be non-empty, uncompressed 16-bit PCM WAV."),),
+        )
+    samples = array("h")
+    samples.frombytes(frames)
+    if sys.byteorder == "big":
+        samples.byteswap()
+    if not samples:
+        return AudioAssetInspection(
+            duration_ms=None,
+            findings=(AudioAssetFinding("invalid_wav", "Recording contains no PCM samples."),),
+        )
+
+    duration_seconds = frame_count / frame_rate
+    duration_ms = int(round(duration_seconds * 1000))
+    findings: list[AudioAssetFinding] = []
+    peak = max(abs(sample) for sample in samples)
+    if peak < K_AUDIO_SILENCE_PEAK_THRESHOLD:
+        findings.append(AudioAssetFinding("silent", "Recording is silent or nearly silent."))
+    minimum_seconds = max(0.25, len(text) / 45)
+    maximum_seconds = max(2.0, len(text) / 2.5)
+    if not minimum_seconds <= duration_seconds <= maximum_seconds:
+        findings.append(
+            AudioAssetFinding(
+                "length",
+                f"Recording length {duration_seconds:.1f}s is outside the expected range "
+                f"{minimum_seconds:.1f}–{maximum_seconds:.1f}s for {len(text)} characters.",
+            )
+        )
+    tail_count = min(len(samples), max(1, int(math.ceil(frame_rate * 0.03))))
+    tail = samples[-tail_count:]
+    tail_rms = math.sqrt(sum(sample * sample for sample in tail) / len(tail))
+    if tail_rms > K_AUDIO_CUTOFF_TAIL_RMS_THRESHOLD and abs(samples[-1]) > K_AUDIO_CUTOFF_FINAL_SAMPLE_THRESHOLD:
+        findings.append(AudioAssetFinding("cut_off", "Recording ends while the speech waveform is still loud."))
+    return AudioAssetInspection(duration_ms=duration_ms, findings=tuple(findings))
 
 
 def validate_distribution(
@@ -117,11 +218,15 @@ def validate_committed_distribution(
     distribution_root: Path | None = None,
     compiled_packages: Mapping[str, LessonPackageCompilation] | None = None,
     require_local_audio: bool = True,
+    canonical_lesson_ids: list[str] | None = None,
 ) -> dict[str, object]:
-    """Validate a distribution and require its non-audio content to match source."""
+    """Validate source parity; workspace checks may supply the strictly validated canonical inventory.
+
+    Export and release callers default to requiring every planned canonical lesson.
+    """
     root = Path(repo_root)
     published_root = Path(distribution_root) if distribution_root is not None else root
-    lesson_ids = load_planned_lesson_ids(root)
+    lesson_ids = canonical_lesson_ids if canonical_lesson_ids is not None else load_planned_lesson_ids(root)
     validate_lesson_inventory(root, lesson_ids)
     summary = validate_distribution(
         published_root,
@@ -142,24 +247,15 @@ def validate_committed_distribution(
     return summary
 
 
-def load_planned_lesson_ids(repo_root: Path) -> list[str]:
-    """Read the committed curriculum lesson order from ``content/curriculum/plan.yaml``."""
-    plan_path = WorkspacePaths(repo_root).curriculum_plan
-    if not plan_path.is_file():
-        raise ValueError(f"curriculum plan not found at {plan_path}")
-    try:
-        plan = yaml.safe_load(plan_path.read_text(encoding="utf-8"))
-    except (OSError, yaml.YAMLError) as exc:
-        raise ValueError(f"cannot read curriculum plan {plan_path}: {exc}") from exc
-    if not isinstance(plan, dict):
-        raise TypeError("content/curriculum/plan.yaml must be a mapping")
-    slots = plan.get("slots")
+def load_planned_lesson_ids(repo_root: Path, *, plan: CurriculumPlan | None = None) -> list[str]:
+    """Return lesson IDs from the supplied plan or committed curriculum file."""
+    slots = _read_planned_slots(repo_root, plan)
     if not isinstance(slots, list) or not slots:
         raise ValueError("content/curriculum/plan.yaml must declare a non-empty slots list")
     lesson_ids: list[str] = []
     seen_ids: set[str] = set()
     for slot in slots:
-        lesson_id = slot.get("catalog_id") if isinstance(slot, dict) else None
+        lesson_id = _planned_lesson_id(slot)
         if not isinstance(lesson_id, str) or not lesson_id:
             raise ValueError("every content/curriculum/plan.yaml slot must declare a catalog_id")
         try:
@@ -467,6 +563,29 @@ def _build_inventory_problems(missing_packages: list[str], extra_packages: list[
             "complete source packages absent from content/curriculum/plan.yaml: " + ", ".join(extra_packages)
         )
     return problems
+
+
+def _read_planned_slots(repo_root: Path, plan: CurriculumPlan | None) -> object:
+    """Return slots from one parsed plan or load them from the curriculum file."""
+    if plan is not None:
+        return [slot.catalog_id for slot in plan.slots]
+    plan_path = WorkspacePaths(repo_root).curriculum_plan
+    if not plan_path.is_file():
+        raise ValueError(f"curriculum plan not found at {plan_path}")
+    try:
+        plan_data = yaml.safe_load(plan_path.read_text(encoding="utf-8"))
+    except (OSError, yaml.YAMLError) as exc:
+        raise ValueError(f"cannot read curriculum plan {plan_path}: {exc}") from exc
+    if not isinstance(plan_data, dict):
+        raise TypeError("content/curriculum/plan.yaml must be a mapping")
+    return plan_data.get("slots")
+
+
+def _planned_lesson_id(slot: object) -> object:
+    """Extract a lesson ID from raw YAML slot data or a prevalidated plan slot."""
+    if isinstance(slot, dict):
+        return slot.get("catalog_id")
+    return slot if isinstance(slot, str) else None
 
 
 __all__ = [

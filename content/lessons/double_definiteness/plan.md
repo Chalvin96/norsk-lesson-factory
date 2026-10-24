@@ -7,14 +7,14 @@ cefr_level: A2
 cefr_target_basis: earliest_approved_tag
 approved: true
 catalog_id: double_definiteness
-learner_outcome: Use den, det, or de with a definite noun and an -e adjective.
+learner_outcome: Use den, det, or de with a definite noun and an adjective in its definite form, usually ending in -e.
 family_id: noun_phrase_definiteness
 cefr_tags:
 - A2
 teaching_points:
 - id: existing:legacy__double_definiteness:learner_outcome
   source_owner: double_definiteness
-  statement: Use den, det, or de with a definite noun and an -e adjective.
+  statement: Use den, det, or de with a definite noun and an adjective in its definite form, usually ending in -e.
 terminology_ids: []
 prerequisites:
 - definite_articles
@@ -22,11 +22,11 @@ prerequisites:
 helpful_prerequisites: []
 objectives:
 - id: obj-double-definiteness-01
-  statement: Use den, det, or de with a definite noun and an -e adjective.
+  statement: Use den, det, or de with a definite noun and an adjective in its definite form, usually ending in -e.
 coverage:
 - id: cov-double-definiteness-01
   objective: obj-double-definiteness-01
-  claim: Use den, det, or de with a definite noun and an -e adjective.
+  claim: Use den, det, or de with a definite noun and an adjective in its definite form, usually ending in -e.
   scope: required
   evidence:
   - explanation
@@ -39,7 +39,7 @@ coverage:
   evidence:
   - whole_lesson
 success_criteria:
-- Use den, det, or de with a definite noun and an -e adjective.
+- Use den, det, or de with a definite noun and an adjective in its definite form, usually ending in -e.
 exclusions:
 - open speaking assessment
 - learner-specific scoring
@@ -50,6 +50,6 @@ approved_source_hash: b8efd10b57f587c82062ce414ab8853ea64c7ee599ed54af15a21a753b
 
 ## Pedagogical job
 
-Teach this approved catalog outcome: Use den, det, or de with a definite noun and an -e adjective.
+Teach this approved catalog outcome: Use den, det, or de with a definite noun and an adjective in its definite form, usually ending in -e.
 
 An independent instructional brief precedes the author stage. Do not replace it with free-form prose or add a second learner outcome.

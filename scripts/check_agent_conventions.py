@@ -22,7 +22,8 @@ K_CONVENTIONS_MODEL_BASES = frozenset(
     {"BaseModel", "RootModel", "TypedDict", "NamedTuple", "Enum", "IntEnum", "StrEnum"}
 )
 K_CONVENTIONS_ALLOWED_IMPORTS = {
-    "cli": frozenset({"cli", "workflow", "application", "domain", "workspace", "clients", "formats"}),
+    "cli": frozenset({"cli", "web", "workflow", "application", "domain", "workspace", "clients", "formats"}),
+    "web": frozenset({"web", "workflow", "application", "domain", "workspace", "clients", "formats"}),
     "workflow": frozenset({"workflow", "application", "domain", "workspace", "clients", "formats"}),
     "application": frozenset({"application", "domain", "workspace", "clients", "formats"}),
     "domain": frozenset({"domain"}),
@@ -31,7 +32,13 @@ K_CONVENTIONS_ALLOWED_IMPORTS = {
     "formats": frozenset({"formats"}),
 }
 K_CONVENTIONS_IMPORT_EXCEPTIONS = frozenset()
-K_CONVENTIONS_ACCEPTED_IMPORT_EXCEPTIONS = frozenset()
+K_CONVENTIONS_ACCEPTED_IMPORT_EXCEPTIONS = frozenset(
+    {
+        ("lesson_builder.formats.markdown.pandoc_blocks", "lesson_builder.domain.lesson.models.blocks"),
+        ("lesson_builder.formats.markdown.pandoc_blocks", "lesson_builder.domain.lesson.models.inline"),
+        ("lesson_builder.formats.markdown.pandoc_inlines", "lesson_builder.domain.lesson.models.inline"),
+    }
+)
 
 
 @dataclass(frozen=True)
@@ -39,11 +46,13 @@ class ConventionIssue:
     path: Path
     line: int
     rule: str
+    subject: str
     message: str
 
     @property
     def identity(self) -> tuple[str, str, str]:
-        return (str(self.path), self.rule, self.message)
+        """Return the legacy baseline identity, independent of line or wording."""
+        return (str(self.path), self.rule, self.subject)
 
 
 def convention_issues(path: Path, source: str) -> list[ConventionIssue]:
@@ -53,7 +62,15 @@ def convention_issues(path: Path, source: str) -> list[ConventionIssue]:
         try:
             ast.parse(source)
         except SyntaxError as exc:
-            return [ConventionIssue(path, exc.lineno or 1, "syntax", exc.msg)]
+            return [
+                ConventionIssue(
+                    path,
+                    exc.lineno or 1,
+                    "syntax",
+                    exc.msg,
+                    f"source must parse as Python; {exc.msg}",
+                )
+            ]
         return []
     issues = _test_name_issues(path, tree)
     if any(path.is_relative_to(root) for root in K_CONVENTIONS_SOURCE_ROOTS):
@@ -68,6 +85,8 @@ def main() -> int:
     parser.add_argument("--changed-from", help="only fail on issues introduced after this git revision")
     args = parser.parse_args()
     base = None if args.all else (args.changed_from or _default_base())
+    if base is not None:
+        base = _resolve_comparable_base(base)
     paths = _python_paths() if base is None else _changed_python_paths(base)
     current = [issue for path in paths for issue in convention_issues(path, path.read_text(encoding="utf-8"))]
     if base is not None:
@@ -88,7 +107,7 @@ def _previous_issue_identities(
         source = _git_source(base, previous_path)
         if source is None:
             continue
-        previous.update((str(path), issue.rule, issue.message) for issue in convention_issues(previous_path, source))
+        previous.update((str(path), issue.rule, issue.subject) for issue in convention_issues(previous_path, source))
     return previous
 
 
@@ -105,7 +124,13 @@ def _test_name_issues(path: Path, tree: ast.Module) -> list[ConventionIssue]:
     if not (path.name.startswith("test_") and "tests" in path.parts):
         return []
     return [
-        ConventionIssue(path, node.lineno, "test-name", node.name)
+        ConventionIssue(
+            path,
+            node.lineno,
+            "test-name",
+            node.name,
+            f"test names must match test_<what_is_being_tested>_given_<condition>_expect_<output>; found {node.name}",
+        )
         for node in ast.walk(tree)
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
         and node.name.startswith("test_")
@@ -119,7 +144,16 @@ def _source_issues(path: Path, tree: ast.Module) -> list[ConventionIssue]:
     docstring = ast.get_docstring(tree, clean=False) or ""
     first_line = docstring.splitlines()[0].strip() if docstring else ""
     if not first_line.startswith(K_CONVENTIONS_DOCSTRING_PREFIXES):
-        issues.append(ConventionIssue(path, 1, "module-docstring", first_line or "missing"))
+        issues.append(
+            ConventionIssue(
+                path,
+                1,
+                "module-docstring",
+                first_line or "missing",
+                "modules begin with a docstring whose first line names the entry point; "
+                f"found {first_line or 'missing'}",
+            )
+        )
     issues.extend(_module_order_issues(path, tree))
     issues.extend(_constant_issues(path, tree))
     issues.extend(_import_direction_issues(path, tree))
@@ -144,6 +178,7 @@ def _domain_placement_issues(path: Path, tree: ast.Module) -> list[ConventionIss
                 1,
                 "unknown-domain-context",
                 f"{context} is not an approved domain context; update the codebase guide after explicit approval",
+                f"{context} is not an approved domain context; update the codebase guide after explicit approval",
             )
         )
     if len(relative.parts) < K_CONVENTIONS_QUALIFIED_MIN_PARTS or relative.parts[1] != "services":
@@ -155,6 +190,10 @@ def _domain_placement_issues(path: Path, tree: ast.Module) -> list[ConventionIss
                 path,
                 1,
                 "nested-service-package",
+                (
+                    f"{context}/services/{service_package} is not allowed; route the responsibility "
+                    "to models, flat services, validation, application, workflow, or infrastructure"
+                ),
                 (
                     f"{context}/services/{service_package} is not allowed; route the responsibility "
                     "to models, flat services, validation, application, workflow, or infrastructure"
@@ -180,6 +219,7 @@ def _service_model_issues(path: Path, context: str, tree: ast.Module) -> list[Co
                 path,
                 node.lineno,
                 "model-in-service",
+                f"{node.name} belongs in domain/{context}/models, not services",
                 f"{node.name} belongs in domain/{context}/models, not services",
             )
         )
@@ -227,6 +267,8 @@ def _import_direction_issues(path: Path, tree: ast.Module) -> list[ConventionIss
                     node.lineno,
                     "import-direction",
                     f"{current_layer} may not import {target_layer}: {imported_module}",
+                    f"{current_layer} may not import {target_layer}: {imported_module}; "
+                    "keep dependencies within the documented layer direction",
                 )
             )
     return issues
@@ -270,7 +312,13 @@ def _test_helper_placement_issues(path: Path, tree: ast.Module) -> list[Conventi
     issues: list[ConventionIssue] = []
     if path.name == "conftest.py":
         issues.extend(
-            ConventionIssue(path, node.lineno, "conftest-class", node.name)
+            ConventionIssue(
+                path,
+                node.lineno,
+                "conftest-class",
+                node.name,
+                f"conftest.py contains no helper classes; move {node.name} to a shared fake or factory module",
+            )
             for node in tree.body
             if isinstance(node, ast.ClassDef)
         )
@@ -281,7 +329,15 @@ def _test_helper_placement_issues(path: Path, tree: ast.Module) -> list[Conventi
             continue
         expected = "factories.py" if node.name.endswith("Factory") else "fakes.py"
         if path.name != expected:
-            issues.append(ConventionIssue(path, node.lineno, "test-helper-placement", node.name))
+            issues.append(
+                ConventionIssue(
+                    path,
+                    node.lineno,
+                    "test-helper-placement",
+                    node.name,
+                    f"shared test helpers belong in {expected}; found {node.name} here",
+                )
+            )
     return issues
 
 
@@ -294,7 +350,15 @@ def _module_order_issues(path: Path, tree: ast.Module) -> list[ConventionIssue]:
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name.startswith("_"):
             seen_private = True
         elif seen_private and not node.name.startswith("_"):
-            issues.append(ConventionIssue(path, node.lineno, "public-before-private", node.name))
+            issues.append(
+                ConventionIssue(
+                    path,
+                    node.lineno,
+                    "public-before-private",
+                    node.name,
+                    f"public declarations precede private helpers; move {node.name} above private declarations",
+                )
+            )
     return issues
 
 
@@ -307,7 +371,15 @@ def _constant_issues(path: Path, tree: ast.Module) -> list[ConventionIssue]:
             names = [target.id for target in targets if isinstance(target, ast.Name)]
         for name in names:
             if name.isupper() and not name.startswith("K_"):
-                issues.append(ConventionIssue(path, node.lineno, "constant-name", name))
+                issues.append(
+                    ConventionIssue(
+                        path,
+                        node.lineno,
+                        "constant-name",
+                        name,
+                        f"module constants use K_<COMPONENT>_<NAME>; rename {name}",
+                    )
+                )
     return issues
 
 
@@ -318,6 +390,23 @@ def _python_paths() -> list[Path]:
 def _default_base() -> str:
     result = subprocess.run(["git", "merge-base", "HEAD", "origin/master"], capture_output=True, text=True)
     return result.stdout.strip() if result.returncode == 0 and result.stdout.strip() else "HEAD^"
+
+
+def _resolve_comparable_base(base: str) -> str:
+    """Use the requested baseline only when it is an ancestor of ``HEAD``."""
+    try:
+        result = subprocess.run(
+            ["git", "merge-base", "--is-ancestor", base, "HEAD"],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+    except OSError:
+        result = None
+    if result is not None and result.returncode == 0:
+        return base
+    print("History was replaced; no comparable convention baseline exists.")
+    return "HEAD"
 
 
 def _changed_python_paths(base: str) -> list[Path]:

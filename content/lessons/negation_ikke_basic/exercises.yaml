@@ -60,8 +60,8 @@
     - jobber ikke Maja hjemme.
     answer_index: 2
   explanation_md: Etter et innledende tidsuttrykk kommer det finitte verbet på
-    andre plass. Med et fullt substantivsubjekt står **ikke** vanligvis før
-    subjektet. Med et trykksvakt pronomen står pronomenet før **ikke**.
+    andre plass. Med et fullt substantivsubjekt kan ordet **ikke** stå før eller etter
+    subjektet; her står det før. Med et trykksvakt pronomen står pronomenet før **ikke**.
   derived_from:
   - section_id: initial-element-statements
 - handle: distinguish_finite_verb_position
@@ -350,27 +350,21 @@
   derived_from:
   - section_id: retrieval-review
 - handle: review_fronted_statement
-  op: recall_fill
+  op: write
   objective: obj-negation-ikke-basic-01
   bloom: apply
-  prompt_md: 'Complete the negative sentence with neutral Norwegian word order.'
-  audio_target: I morgen tar ikke Sara toget.
-  stimulus:
-  - kind: dialogue
-    turns:
-    - speaker: Context
-      text_md: 'Situasjon: Sara reiser med buss til Bergen i morgen.'
-  segments:
-  - text_md: 'I morgen '
-  - blank_id: review-fronted
-    options:
-    - tar Sara ikke toget.
-    - Sara tar ikke toget.
-    - tar ikke Sara toget.
-    answer_index: 2
-  explanation_md: Etter **I morgen** står det finitte verbet først. Med et fullt
-    substantivsubjekt står **ikke** vanligvis før subjektet; et trykksvakt
-    pronomen ville stått før **ikke**.
+  prompt_md: 'Sara travels by bus to Bergen tomorrow. Write a negative sentence saying that she does not take the train. Begin with «I morgen» and use «Sara», «tar», «ikke», and «toget».'
+  min_words: 6
+  max_words: 6
+  response_language: 'no'
+  judge_prompt: Evaluate fronted-negative-statement. Accept both «I morgen tar Sara ikke toget» and «I morgen tar ikke Sara toget», with optional final punctuation.
+  criteria:
+  - id: fronted-negative-statement
+    instruction: Begins with «I morgen», places the finite verb «tar» next, and states that Sara does not take the train. Accept both «Sara ikke» and «ikke Sara» after the verb.
+  explanation_md: Etter **I morgen** står det finitte verbet på andre plass. Både
+    «I morgen tar Sara ikke toget» og «I morgen tar ikke Sara toget» er riktige.
+    Et kjent subjekt står ofte før **ikke**; et nytt eller framhevet subjekt kan
+    stå etter **ikke**. Sammenhengen og trykket påvirker valget.
   derived_from:
   - section_id: retrieval-review
 - handle: review_two_verb_statement

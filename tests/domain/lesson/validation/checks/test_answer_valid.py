@@ -1,6 +1,6 @@
+from lesson_builder.domain.lesson.services.review_projection import build_expected_answers
 from lesson_builder.domain.lesson.validation.checks.validators.answer_valid import answer_valid_check
 from lesson_builder.domain.lesson.validation.checks.validators.answer_valid import compare_answers
-from lesson_builder.domain.lesson.validation.review_payloads import build_expected_answers
 
 
 def _lesson() -> dict:

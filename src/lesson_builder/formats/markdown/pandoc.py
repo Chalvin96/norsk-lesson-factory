@@ -1,10 +1,8 @@
-"""Entry point: `parse_markdown` converts markdown text into a panflute Doc (called by the lesson compile service).
+"""Entry point: `parse_markdown` reads Markdown into the panflute AST used by lesson compilation.
 
-Invokes pypandoc with the pinned reader string
-``markdown+native_spans+bracketed_spans-smart`` and loads the resulting JSON
-into a panflute ``Doc`` via :func:`panflute.load`. The parser, fingerprint, and
-doc helper interface are consumed by the source package and the catalog
-authoring runtime.
+markdown-it-py and the local compatibility rules emit Pandoc-shaped JSON.
+The existing block and inline mappers consume the loaded document unchanged;
+no Pandoc executable or automatic heading identifiers are involved.
 """
 
 from __future__ import annotations
@@ -13,30 +11,13 @@ import io
 import json
 from typing import Any
 
-import panflute
-import pypandoc
-
-K_PANDOC_READER = "markdown+native_spans+bracketed_spans-smart"
-K_PANDOC_WRITER = "json"
+from lesson_builder.formats.markdown import panflute
+from lesson_builder.formats.markdown.markdown_ast import convert_markdown
 
 
 def parse_markdown(md_text: str) -> panflute.Doc:
-    """Parse markdown text into a panflute ``Doc`` using the pinned reader."""
-    doc_json = pypandoc.convert_text(
-        md_text,
-        format=K_PANDOC_READER,
-        to=K_PANDOC_WRITER,
-    )
-    return panflute.load(io.StringIO(doc_json))
-
-
-def compiler_fingerprint() -> dict[str, str]:
-    """Return the compiler fingerprint (pandoc/panflute versions + reader)."""
-    return {
-        "pandoc": pypandoc.get_pandoc_version(),
-        "panflute": panflute.__version__,
-        "reader": K_PANDOC_READER,
-    }
+    """Parse one Markdown field into a panflute document in-process."""
+    return panflute.load(io.StringIO(json.dumps(convert_markdown(md_text))))
 
 
 def doc_meta(doc: panflute.Doc) -> dict[str, Any]:
@@ -49,6 +30,5 @@ def doc_meta(doc: panflute.Doc) -> dict[str, Any]:
 __all__ = [
     # Adapter entry points
     "parse_markdown",
-    "compiler_fingerprint",
     "doc_meta",
 ]

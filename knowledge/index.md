@@ -1,12 +1,13 @@
 # Knowledge bundle
 
-Keep durable boundaries and decisions here; code, configuration, tests, and authored
-content own their exact mechanics. Task plans and investigations belong in ignored
-`plans/` files. Update the smallest affected concept when its intent changes.
+Code, configuration, tests, and authored content own exact mechanics. This bundle
+describes the current authoring system; local plans belong in ignored
+`plans/` files.
 
-- [Codebase shape and placement](project/codebase.md) — route a responsibility to its owner and layer before adding or moving code.
-- [Architecture rationale](project/codebase-architecture.md) — dependency boundaries and remaining placement debt.
-- [Authoring and export boundaries](project/boundaries.md) — source, approval, distribution, release, and learner-runtime ownership.
-- [Release operations runbook](README.md) — the local plan/approve flow and the provider-free tag CI verification.
-- [Authoring and evaluation decisions](pipeline/authoring.md) — curriculum scope, exercise evidence, and trustworthy review.
-- [Terminology rationale](quality/terminology.md) — why a small shared vocabulary reduces learner load.
+- [Codebase shape and placement](project/codebase.md): choose an owner and layer.
+- [Architecture boundaries](project/codebase-architecture.md): dependency directions and established exceptions.
+- [Authoring and release boundaries](project/boundaries.md): workbench, approval, promotion, distribution, and learner runtime.
+- [Workbench design system](project/workbench-design-system.md): frontend stack, tokens, and contrast adjustments.
+- [Workbench scenarios](project/workbench-scenarios.md): implemented states and routes for browser verification.
+- [Release operations runbook](README.md): local planning, publication, and tag verification.
+- [Authoring decisions](pipeline/authoring.md): curriculum scope, exercise evidence, and review.

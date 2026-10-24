@@ -45,15 +45,6 @@ def test_exercise_structural_checks_given_audio_prompt_expect_blocker():
     assert result.is_blocking
 
 
-def test_exercise_structural_checks_given_speak_listen_prompt_expect_no_media_blocker():
-    lesson = deepcopy(_lesson())
-    ex = _first_exercise(lesson)
-    ex["operation"] = "speak"
-    ex["prompt"] = [{"kind": "text", "value": "Listen and repeat the target."}]
-    results = exercise_structural_checks(lesson)
-    assert [result for result in results if result.check_id == "media_request"] == []
-
-
 def test_exercise_structural_checks_given_listeners_word_expect_no_media_blocker():
     lesson = deepcopy(_lesson())
     ex = _first_exercise(lesson)

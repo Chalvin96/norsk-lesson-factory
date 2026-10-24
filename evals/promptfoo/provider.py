@@ -5,7 +5,7 @@ from __future__ import annotations
 import hashlib
 from typing import Any
 
-from lesson_builder.clients.llm.jobs import runner_for_job
+from lesson_builder.clients.llm.role_jobs import runner_for_job
 from lesson_builder.workspace.paths import K_WORKSPACE_ROOT
 
 

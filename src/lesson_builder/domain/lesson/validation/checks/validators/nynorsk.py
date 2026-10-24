@@ -163,7 +163,6 @@ def _learner_facing_bokmal_targets(el: dict[str, Any]) -> list[str]:
         "match_pairs": _collect_match_pairs_targets,
         "categorize": _collect_categorize_targets,
         "build": _collect_build_targets,
-        "speak": _get_speak_targets,
         "write": _get_empty_targets,
     }
     handler = handlers.get(op) if isinstance(op, str) else None
@@ -205,12 +204,6 @@ def _collect_categorize_targets(payload: dict[str, Any]) -> list[str]:
 def _collect_build_targets(payload: dict[str, Any]) -> list[str]:
     """Collect learner-visible build token text."""
     return _extract_text_fields(payload.get("tokens", []))
-
-
-def _get_speak_targets(payload: dict[str, Any]) -> list[str]:
-    """Collect the target utterance of a speak exercise."""
-    target = payload.get("target")
-    return [target] if isinstance(target, str) else []
 
 
 def _judge_targets(payload: dict[str, Any]) -> list[str]:

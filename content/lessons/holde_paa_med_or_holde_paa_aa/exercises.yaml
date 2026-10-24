@@ -63,8 +63,8 @@
     text: Hun holder på med oppgavene i norskboka.
     correct: true
     why: Svaret beskriver oppgaven med med etterfulgt av et substantiv.
-  explanation_md: Spørsmålet gjelder oppgaven, så «med» + substantivet
-    «norskleksene» passer.
+  explanation_md: Spørsmålet gjelder oppgaven, så «med» + substantivfrasen
+    «oppgavene i norskboka» passer.
   derived_from:
   - section_id: naming-an-activity
 - handle: select_unfolding_action_reply
@@ -211,23 +211,17 @@
   op: write
   objective: obj-holde-paa-med-or-holde-paa-aa-01
   bloom: apply
-  prompt_md: 'Continue the chat. Maja replies to the question «Hva holder du på med?». Erik then asks what she is doing right now, using «holde på å» + infinitive in the question.'
-  min_words: 25
+  prompt_md: 'Continue the chat. Maja is preparing the presentation and is testing the projector right now. Write Maja''s broad reply to Erik''s question. Erik then asks whether she is testing the projector right now, using «holde på å» + infinitive in the question.'
+  min_words: 10
   max_words: 40
   stimulus:
   - kind: dialogue
     turns:
     - speaker: Erik
-      text_md: Maja, vi skal møtes klokka 13. Hvordan går det med
-        presentasjonen?
-    - speaker: Maja
-      text_md: Jeg tester prosjektoren akkurat nå.
+      text_md: Maja, vi skal møtes klokka 13. Hva holder du på med?
   response_language: "no"
-  judge_prompt: "Evaluate opening-question, meeting-facts, broad-reply-form, specific-follow-up-form as gating. Record specific-follow-up-form-observation diagnostically."
+  judge_prompt: "Evaluate meeting-facts, broad-reply-form, specific-follow-up-form as gating. Record specific-follow-up-form-observation diagnostically."
   criteria:
-  - id: opening-question
-    instruction: The exchange opens with the visible question «Hva holder du på
-      med?».
   - id: meeting-facts
     instruction: The connected exchange concerns the presentation and testing
       the projector before the meeting.
@@ -235,8 +229,8 @@
     instruction: Maja's broad reply uses holde på med followed by a noun naming
       the presentation task.
   - id: specific-follow-up-form
-    instruction: Erik follows up by asking what Maja is doing right now with
-      holde på å followed by an infinitive.
+    instruction: Erik follows up by asking whether Maja is testing the projector
+      right now with holde på å followed by an infinitive.
   - id: specific-follow-up-form-observation
     instruction: 'Observation only: note whether the follow-up also uses a natural
       alternative such as Hva gjør du nå?; do not use this observation for gating.'

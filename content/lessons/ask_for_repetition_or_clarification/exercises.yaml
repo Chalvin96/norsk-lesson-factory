@@ -194,30 +194,30 @@
   op: write
   objective: obj-ask-for-repetition-or-clarification-01
   bloom: apply
-  prompt_md: 'A colleague calls from the library, but the connection breaks while the colleague is giving two instructions. Write a short three-line dialogue in Norwegian: Mina asks for the unclear part to be repeated, the colleague repeats it, and Mina confirms the instructions and says what she will do next.'
-  min_words: 18
-  max_words: 32
+  prompt_md: 'At the café, Mina misses where to put the cup. Write three short lines in Norwegian: Mina asks for repetition, Jonas repeats where the cup should go, and Mina confirms the place and says what she will do. You can use «Kan du si det en gang til?» and «På bordet». Write Mina’s confirmation and next step in your own words.'
+  min_words: 12
+  max_words: 35
   stimulus:
   - kind: dialogue
     turns:
-    - speaker: Kollega
-      text_md: «Lesesalen må låses klokka atten tretti. Legg nøkkelen i den blå boksen ved personalinngangen.»
+    - speaker: Jonas
+      text_md: «Sett koppen på bordet.»
     - speaker: Situasjon
-      text_md: Forbindelsen brytes idet kollegaen forteller hvor nøkkelen skal legges.
+      text_md: Mina hører ikke hvor koppen skal stå.
   response_language: 'no'
-  judge_prompt: Evaluate gating criteria message-repeated, instructions-confirmed, and next-step-stated. Also check that the colleague's repeated detail matches the message. Record request-form-observation diagnostically; its verdict must never cause failure. Accept natural Bokmål variants and minor form errors when the communicative outcome is clear.
+  judge_prompt: Evaluate message-repeated, detail-repeated, instructions-confirmed, and next-step-stated. Record request-form-observation diagnostically; its verdict must never cause failure. Accept the supplied phrases, natural Bokmål variants, and minor form errors when the communicative outcome is clear.
   criteria:
   - id: message-repeated
-    instruction: Requests that the colleague repeat the unclear instructions or the details that were missed.
+    instruction: Mina asks Jonas to repeat the message or the missed location.
   - id: detail-repeated
-    instruction: Repeats that the key should be left in the blue box by the staff entrance.
+    instruction: Jonas repeats that the cup goes on the table. Accept a short phrase such as «På bordet».
   - id: instructions-confirmed
-    instruction: Confirms that the reading room must be locked at 18:30 and the key belongs in the blue box by the staff entrance.
+    instruction: Mina confirms that the cup goes on the table. Accept a short phrase such as «Greit, på bordet» or a statement of the action that clearly confirms the location.
   - id: next-step-stated
-    instruction: States a relevant next action, such as locking the reading room and leaving the key in the specified box.
+    instruction: Mina says she will put the cup there now. Accept any natural Bokmål wording of this next step.
   - id: request-form-observation
-    instruction: 'Observation only: note whether the reply uses a conventional repetition or slower-speech request naturally; never gate on this.'
-  explanation_md: 'Samtalen brytes før én opplysning blir tydelig. Dialogen bør rette opp misforståelsen, bekrefte beskjedene og fortsette oppgaven.'
+    instruction: 'Observation only: note whether the reply uses a conventional repetition request naturally; never gate on this.'
+  explanation_md: 'Mina ber om gjentakelse, bekrefter stedet og sier hva hun gjør videre.'
   derived_from:
   - section_id: integrated-practice-repairing-complete-exchange
 - handle: short-retrieval-review
@@ -250,7 +250,7 @@
   bloom: apply
   prompt_md: 'A colleague gives you an instruction, but you hear nothing because a train passes by. Ask them to repeat the whole instruction.'
   min_words: 1
-  max_words: 4
+  max_words: 12
   stimulus:
   - kind: dialogue
     turns:

@@ -188,10 +188,6 @@ def test_unknown_operation_rejected():
             },
         ),
         (
-            "speak",
-            {"target": "Hvis timen ikke passer, kan jeg få en annen time."},
-        ),
-        (
             "write",
             {
                 "response_language": "no",
