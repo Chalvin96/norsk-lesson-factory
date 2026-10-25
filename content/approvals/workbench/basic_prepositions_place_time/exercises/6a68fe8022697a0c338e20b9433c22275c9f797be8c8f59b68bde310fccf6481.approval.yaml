@@ -1,0 +1,608 @@
+schema_version: 2
+lesson_id: basic_prepositions_place_time
+stage: exercises
+reviewer: human
+file_sha256: 6a68fe8022697a0c338e20b9433c22275c9f797be8c8f59b68bde310fccf6481
+upstream_approved_sha256: ac196d811f317c0d52bab09d8273f467be11228e84c990213fef27abbce91265
+curriculum_slot_sha256: null
+approved_at: '2026-10-25T14:35:29.320138+00:00'
+code_commit: c9c5cfd519da0278cfa6e80685c65aaa68bc2555
+review:
+  job: workbench_reviewer
+  model: openai/gpt-6.1-sol
+  prompt_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+  criteria_version: workbench-review-v1
+  evidence_sha256: aa7b0d4cd29baf728b3fc371ac879b25888b54136b99ffce88d397e4e3add618
+  findings:
+  - finding_id: ai-1e6280f81b924993ae1e8561
+    key: contrast-location-and-destination
+    criterion: answerable
+    excerpt: 'contrast-location-and-destination: prompt_md: Complete the travel descriptions
+      with «til», «i», or «på». Stems include «Jeg kjører ___ Tromsø. Senere er jeg
+      ___ Tromsø.» and «Jeg reiser ___ Spania. Etterpå er jeg ___ Spania.» Both first
+      blanks offer i but key only til. The third stem is «Jeg går ___ garasjen. Når
+      jeg kommer fram, er jeg ___ garasjen og henter sykkelen.» Its first blank also
+      offers i but keys only til.'
+    explanation: 'contrast-location-and-destination rejects valid location readings:
+      Explicitly require destination expressions in the first sentence of each pair
+      and location expressions after arrival. Alternatively, add unambiguous starting-point
+      and destination cues. As written, driving within Tromsø, travelling within Spain,
+      and going into the garage are valid readings with i; later location statements
+      do not exclude them.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: b84050ffa1da15538d5f339da42b4735de158aa1e3565a21255e2ab118ffb9fb
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: 'contrast-location-and-destination: prompt_md: Complete the travel
+      descriptions with «til», «i», or «på». Stems include «Jeg kjører ___ Tromsø.
+      Senere er jeg ___ Tromsø.» and «Jeg reiser ___ Spania. Etterpå er jeg ___ Spania.»
+      Both first blanks offer i but key only til. The third stem is «Jeg går ___ garasjen.
+      Når jeg kommer fram, er jeg ___ garasjen og henter sykkelen.» Its first blank
+      also offers i but keys only til.'
+    citation_exact: true
+    advisory: true
+    reviewer: primary
+    block_hash: 76c01723dc21ab201f360790df89b17921b6b9aee61c924a273a52aa807580dd
+    quote_english: I drive ___ Tromsø. Later I am ___ Tromsø. / I travel ___ Spain.
+      Afterwards I am ___ Spain. / I walk ___ the garage. When I arrive, I am ___
+      the garage and fetch the bicycle.
+    suggested_change: Explicitly require destination expressions in the first sentence
+      of each pair and location expressions after arrival. Alternatively, add unambiguous
+      starting-point and destination cues. As written, driving within Tromsø, travelling
+      within Spain, and going into the garage are valid readings with i; later location
+      statements do not exclude them.
+    details: '{"category": "answerable", "evidence": "contrast-location-and-destination:
+      prompt_md: Complete the travel descriptions with «til», «i», or «på». Stems
+      include «Jeg kjører ___ Tromsø. Senere er jeg ___ Tromsø.» and «Jeg reiser ___
+      Spania. Etterpå er jeg ___ Spania.» Both first blanks offer i but key only til.
+      The third stem is «Jeg går ___ garasjen. Når jeg kommer fram, er jeg ___ garasjen
+      og henter sykkelen.» Its first blank also offers i but keys only til.", "fix":
+      "Explicitly require destination expressions in the first sentence of each pair
+      and location expressions after arrival. Alternatively, add unambiguous starting-point
+      and destination cues. As written, driving within Tromsø, travelling within Spain,
+      and going into the garage are valid readings with i; later location statements
+      do not exclude them.", "quote_english": "I drive ___ Tromsø. Later I am ___
+      Tromsø. / I travel ___ Spain. Afterwards I am ___ Spain. / I walk ___ the garage.
+      When I arrive, I am ___ the garage and fetch the bicycle.", "severity": "P1",
+      "title": "contrast-location-and-destination rejects valid location readings"}'
+    message: contrast-location-and-destination rejects valid location readings
+  - finding_id: ai-cf91e2f4faf1b4cc894fee1f
+    key: where-is-everyone-going
+    criterion: other
+    excerpt: 'choose-current-place sets audio_target: Kari og Per snakker om hvor
+      de bor, arbeider og møtes. Its response segments instead begin text_md: ''«Jeg
+      bor '' and continue through text_md: '' Bergen.»''. contrast-location-and-destination
+      sets audio_target: Ali, Eva og Per forteller om reiser og steder de skal besøke.
+      Its response segments instead begin text_md: ''«Jeg kjører '' and end text_md:
+      '' garasjen og henter sykkelen.»''.'
+    explanation: 'Audio targets do not match either completed recall dialogue: For
+      each affected exercise, replace audio_target with the complete, correctly filled
+      dialogue, preserving turn order. Keep descriptive summaries separate from model-response
+      audio.'
+    severity: minor
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: b84050ffa1da15538d5f339da42b4735de158aa1e3565a21255e2ab118ffb9fb
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: 'choose-current-place sets audio_target: Kari og Per snakker om
+      hvor de bor, arbeider og møtes. Its response segments instead begin text_md:
+      ''«Jeg bor '' and continue through text_md: '' Bergen.»''. contrast-location-and-destination
+      sets audio_target: Ali, Eva og Per forteller om reiser og steder de skal besøke.
+      Its response segments instead begin text_md: ''«Jeg kjører '' and end text_md:
+      '' garasjen og henter sykkelen.»''.'
+    citation_exact: true
+    advisory: true
+    reviewer: primary
+    block_hash: 28a6e0b0fae8da45541e789a5e24c6e1087620c05bd8e3bcee4c532eee1193ca
+    quote_english: Kari and Per talk about where they live, work, and meet. / Ali,
+      Eva, and Per describe journeys and places they will visit. The completed responses
+      instead contain their direct statements, beginning “I live in Oslo” and “I drive
+      to Tromsø,” respectively.
+    suggested_change: For each affected exercise, replace audio_target with the complete,
+      correctly filled dialogue, preserving turn order. Keep descriptive summaries
+      separate from model-response audio.
+    details: '{"category": "other", "evidence": "choose-current-place sets audio_target:
+      Kari og Per snakker om hvor de bor, arbeider og møtes. Its response segments
+      instead begin text_md: ''«Jeg bor '' and continue through text_md: '' Bergen.»''.
+      contrast-location-and-destination sets audio_target: Ali, Eva og Per forteller
+      om reiser og steder de skal besøke. Its response segments instead begin text_md:
+      ''«Jeg kjører '' and end text_md: '' garasjen og henter sykkelen.»''.", "fix":
+      "For each affected exercise, replace audio_target with the complete, correctly
+      filled dialogue, preserving turn order. Keep descriptive summaries separate
+      from model-response audio.", "quote_english": "Kari and Per talk about where
+      they live, work, and meet. / Ali, Eva, and Per describe journeys and places
+      they will visit. The completed responses instead contain their direct statements,
+      beginning “I live in Oslo” and “I drive to Tromsø,” respectively.", "severity":
+      "P2", "title": "Audio targets do not match either completed recall dialogue"}'
+    message: Audio targets do not match either completed recall dialogue
+  - finding_id: ai-b10e4ed43cb52eace01a347d
+    key: contrast-location-and-destination
+    criterion: answer_review.ambiguous
+    excerpt: ''
+    explanation: 'ambiguous: contrast-location-and-destination'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: b84050ffa1da15538d5f339da42b4735de158aa1e3565a21255e2ab118ffb9fb
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: 76c01723dc21ab201f360790df89b17921b6b9aee61c924a273a52aa807580dd
+    quote_english: ''
+    suggested_change: ''
+    details: '{"category": "ambiguous", "id": "contrast-location-and-destination",
+      "report": {"ambiguous": ["contrast-location-and-destination"], "duplicates":
+      [], "extra": [], "lesson_hash": "sha256:90bc78e83d12cbd4b40fd4c4e8fc83577771d6003401a220ed56cd29ef4b9fe5",
+      "matches": 1, "mismatches": [], "missing": [], "open_handles": ["first_day_exchange",
+      "retrieve-preposition-meanings", "review_complete_meeting"], "open_tasks_unverified":
+      true, "review_status": "advisory_findings", "semantic_issues": [{"id": "contrast-location-and-destination",
+      "issues": [{"category": "competing_valid_answers", "evidence": "«Jeg kjører
+      ___ Tromsø. Senere er jeg ___ Tromsø.»; «Jeg reiser ___ Spania. Etterpå er jeg
+      ___ Spania.»", "quote_english": "", "reason": "The Tromsø and Spain travel blanks
+      permit both destination and location readings. «Senere» and «Etterpå» do not
+      rule out already travelling within those places, so learners cannot uniquely
+      choose «til» over «i».", "suggested_change": "Explicitly request destinations
+      for the first travel clauses, or supply departure locations and state that Tromsø
+      and Spain are the destinations."}]}], "status": "pass", "total": 2, "unanswerable":
+      []}}'
+    message: 'ambiguous: contrast-location-and-destination'
+  - finding_id: ai-fe65875887813b71fd984136
+    key: contrast-location-and-destination
+    criterion: answer_review.semantic_issues
+    excerpt: «Jeg kjører ___ Tromsø. Senere er jeg ___ Tromsø.»; «Jeg reiser ___ Spania.
+      Etterpå er jeg ___ Spania.»
+    explanation: 'Competing valid answers: The Tromsø and Spain travel blanks permit
+      both destination and location readings. «Senere» and «Etterpå» do not rule out
+      already travelling within those places, so learners cannot uniquely choose «til»
+      over «i».'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: b84050ffa1da15538d5f339da42b4735de158aa1e3565a21255e2ab118ffb9fb
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: 76c01723dc21ab201f360790df89b17921b6b9aee61c924a273a52aa807580dd
+    quote_english: ''
+    suggested_change: Explicitly request destinations for the first travel clauses,
+      or supply departure locations and state that Tromsø and Spain are the destinations.
+    details: '{"id": "contrast-location-and-destination", "issues": [{"category":
+      "competing_valid_answers", "evidence": "«Jeg kjører ___ Tromsø. Senere er jeg
+      ___ Tromsø.»; «Jeg reiser ___ Spania. Etterpå er jeg ___ Spania.»", "quote_english":
+      "", "reason": "The Tromsø and Spain travel blanks permit both destination and
+      location readings. «Senere» and «Etterpå» do not rule out already travelling
+      within those places, so learners cannot uniquely choose «til» over «i».", "suggested_change":
+      "Explicitly request destinations for the first travel clauses, or supply departure
+      locations and state that Tromsø and Spain are the destinations."}]}'
+    message: 'Competing valid answers: The Tromsø and Spain travel blanks permit both
+      destination and location readings. «Senere» and «Etterpå» do not rule out already
+      travelling within those places, so learners cannot uniquely choose «til» over
+      «i».'
+  - finding_id: ai-75a220bbb60d1d29cca37d12
+    key: contrast-location-and-destination
+    criterion: attempt_surface.ambiguous
+    excerpt: ''
+    explanation: 'The first and third blanks permit competing meanings: «Jeg kjører
+      til Tromsø» versus «Jeg kjører i Tromsø», and «Jeg reiser til Spania» versus
+      «Jeg reiser i Spania». Later being in the same place fits both travelling there
+      and travelling within it. No visible instruction requires those blanks to express
+      destinations.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: b84050ffa1da15538d5f339da42b4735de158aa1e3565a21255e2ab118ffb9fb
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: 76c01723dc21ab201f360790df89b17921b6b9aee61c924a273a52aa807580dd
+    quote_english: ''
+    suggested_change: ''
+    details: '{"category": "ambiguous", "id": "contrast-location-and-destination",
+      "report": {"ambiguous": ["contrast-location-and-destination"], "clear": 4, "duplicates":
+      [], "extra": [], "missing": [], "reasons": {"contrast-location-and-destination":
+      "The first and third blanks permit competing meanings: «Jeg kjører til Tromsø»
+      versus «Jeg kjører i Tromsø», and «Jeg reiser til Spania» versus «Jeg reiser
+      i Spania». Later being in the same place fits both travelling there and travelling
+      within it. No visible instruction requires those blanks to express destinations."},
+      "status": "pass", "total": 5, "unanswerable": []}}'
+    message: 'The first and third blanks permit competing meanings: «Jeg kjører til
+      Tromsø» versus «Jeg kjører i Tromsø», and «Jeg reiser til Spania» versus «Jeg
+      reiser i Spania». Later being in the same place fits both travelling there and
+      travelling within it. No visible instruction requires those blanks to express
+      destinations.'
+  - finding_id: ai-297130438bd9431716ac6065
+    key: retrieve-preposition-meanings
+    criterion: open_rubrics.unanswerable
+    excerpt: ''
+    explanation: Judge adds a construction requirement absent from the visible prompt.
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: b84050ffa1da15538d5f339da42b4735de158aa1e3565a21255e2ab118ffb9fb
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: 6edcc87fcfe7d588de638d9c84adb70c092f0f3c290c26dfe3e926ab36796f11
+    quote_english: ''
+    suggested_change: ''
+    details: '{"category": "unanswerable", "id": "retrieve-preposition-meanings",
+      "report": {"ambiguous": [], "duplicates": [], "extra": [], "missing": [], "open_write_handles":
+      ["retrieve-preposition-meanings", "first_day_exchange", "review_complete_meeting"],
+      "passed": 0, "reasons": {"first_day_exchange": "Requested recipient lacks observable
+      rubric coverage.", "retrieve-preposition-meanings": "Judge adds a construction
+      requirement absent from the visible prompt.", "review_complete_meeting": "Explicit
+      first-person requirement lacks coverage; judge also narrows staying with the
+      brother to staying at his place."}, "status": "pass", "total": 3, "unanswerable":
+      ["retrieve-preposition-meanings", "first_day_exchange", "review_complete_meeting"]}}'
+    message: Judge adds a construction requirement absent from the visible prompt.
+  - finding_id: ai-ca290ed5083b9c9d66f71924
+    key: first_day_exchange
+    criterion: open_rubrics.unanswerable
+    excerpt: ''
+    explanation: Requested recipient lacks observable rubric coverage.
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: b84050ffa1da15538d5f339da42b4735de158aa1e3565a21255e2ab118ffb9fb
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: 81dcd49cda63ab205ee394b212eb729d77160c862e882501524dea822c38d426
+    quote_english: ''
+    suggested_change: ''
+    details: '{"category": "unanswerable", "id": "first_day_exchange", "report": {"ambiguous":
+      [], "duplicates": [], "extra": [], "missing": [], "open_write_handles": ["retrieve-preposition-meanings",
+      "first_day_exchange", "review_complete_meeting"], "passed": 0, "reasons": {"first_day_exchange":
+      "Requested recipient lacks observable rubric coverage.", "retrieve-preposition-meanings":
+      "Judge adds a construction requirement absent from the visible prompt.", "review_complete_meeting":
+      "Explicit first-person requirement lacks coverage; judge also narrows staying
+      with the brother to staying at his place."}, "status": "pass", "total": 3, "unanswerable":
+      ["retrieve-preposition-meanings", "first_day_exchange", "review_complete_meeting"]}}'
+    message: Requested recipient lacks observable rubric coverage.
+  - finding_id: ai-d51cf6af94cd7d595e1c855f
+    key: review_complete_meeting
+    criterion: open_rubrics.unanswerable
+    excerpt: ''
+    explanation: Explicit first-person requirement lacks coverage; judge also narrows
+      staying with the brother to staying at his place.
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: b84050ffa1da15538d5f339da42b4735de158aa1e3565a21255e2ab118ffb9fb
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: b9ac1f7e451168b0a97789ce498b37cb468d192dd1139029158a4bf4bac917f8
+    quote_english: ''
+    suggested_change: ''
+    details: '{"category": "unanswerable", "id": "review_complete_meeting", "report":
+      {"ambiguous": [], "duplicates": [], "extra": [], "missing": [], "open_write_handles":
+      ["retrieve-preposition-meanings", "first_day_exchange", "review_complete_meeting"],
+      "passed": 0, "reasons": {"first_day_exchange": "Requested recipient lacks observable
+      rubric coverage.", "retrieve-preposition-meanings": "Judge adds a construction
+      requirement absent from the visible prompt.", "review_complete_meeting": "Explicit
+      first-person requirement lacks coverage; judge also narrows staying with the
+      brother to staying at his place."}, "status": "pass", "total": 3, "unanswerable":
+      ["retrieve-preposition-meanings", "first_day_exchange", "review_complete_meeting"]}}'
+    message: Explicit first-person requirement lacks coverage; judge also narrows
+      staying with the brother to staying at his place.
+proposals_accepted: 0
+proposals_rejected: 0
+exercise_alignments:
+  choose-current-place:
+    exercise_key: choose-current-place
+    checked_against:
+      being-in-a-place: 6ae37302f1f964cc1a4a7f58617d311acb8edb5dcc6cb87f75473029dab25031
+    section_sources:
+      being-in-a-place: '## Being in a place: i and på {#being-in-a-place role=model
+        objectives=obj-basic-prepositions-place-time-01}
+
+
+        Norwegian commonly uses both **i** and **på** for location. English often
+        translates both as *in* or *at*, so direct translation is not enough.
+
+
+        Use **i** with many enclosed places and with towns, cities, and countries:
+
+
+        ::: examples
+
+        - no: Jeg er i butikken.
+
+        - en: I am in the shop.
+
+        - no: Hun bor i Oslo.
+
+        - en: She lives in Oslo.
+
+        - no: De er i Norge.
+
+        - en: They are in Norway.
+
+        - no: Barna leker i parken.
+
+        - en: The children are playing in the park.
+
+        :::
+
+
+        Use **på** in many familiar expressions connected with workplaces, schools,
+        offices, cafés, and activities:
+
+
+        ::: examples
+
+        - no: Jonas er på jobb.
+
+        - en: Jonas is at work.
+
+        - no: Maja er på kafeen.
+
+        - en: Maja is at the café.
+
+        - no: Læreren er på skolen.
+
+        - en: The teacher is at the school.
+
+        - no: Vi er på kontoret.
+
+        - en: We are at the office.
+
+        :::
+
+
+        These are useful phrase patterns, not a perfect geometric system. A person
+        can physically be inside both a shop and a café, but ordinary Norwegian commonly
+        says **i butikken** and **på kafeen**. Learn the preposition together with
+        the place expression.
+
+
+        Compare:
+
+
+        ::: examples
+
+        - no: Hun jobber i Oslo.
+
+        - en: She works in Oslo.
+
+        - no: Hun jobber på kontoret.
+
+        - en: She works at the office.
+
+        - no: Vi møtes i parken.
+
+        - en: We are meeting in the park.
+
+        - no: Vi møtes på kafeen.
+
+        - en: We are meeting at the café.
+
+        :::
+
+
+        A common mistake is to assume that every building takes **i** because someone
+        is physically inside it. Norwegian often chooses the preposition according
+        to the conventional expression and the activity associated with the place.
+
+
+        {{exercise: choose-current-place}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:29.320138+00:00'
+    decision_id: null
+  contrast-location-and-destination:
+    exercise_key: contrast-location-and-destination
+    checked_against:
+      location-or-destination: ca79ad136e68aad66c6205a359c83a37f2031f982eaaba8a0882cd640e0493a7
+    section_sources:
+      location-or-destination: '## Location or destination? {#location-or-destination
+        role=contrast objectives=obj-basic-prepositions-place-time-01}
+
+
+        The next decision is whether someone is already in a place or moving toward
+        it.
+
+
+        For a simple destination, **til** often means *to*:
+
+
+        ::: examples
+
+        - no: Jeg går til kafeen.
+
+        - en: I am walking to the café.
+
+        - no: Hun reiser til Oslo.
+
+        - en: She is travelling to Oslo.
+
+        - no: Vi kjører til butikken.
+
+        - en: We are driving to the shop.
+
+        :::
+
+
+        Compare the destination with the resulting location:
+
+
+        ::: examples
+
+        - no: Jonas går til kafeen.
+
+        - en: Jonas is going to the café.
+
+        - no: Jonas er på kafeen.
+
+        - en: Jonas is at the café.
+
+        - no: Maja reiser til Oslo.
+
+        - en: Maja is travelling to Oslo.
+
+        - no: Maja er i Oslo.
+
+        - en: Maja is in Oslo.
+
+        :::
+
+
+        The compact rule is:
+
+
+        - Use **i** or **på** to say where someone is.
+
+        - Use **til** for a simple destination: where someone is going.
+
+
+        Do not replace every location preposition with **til** merely because the
+        verb describes an action. What matters is whether the place is the destination.
+
+
+        ::: examples
+
+        - no: Hun jobber i Bergen.
+
+        - en: She works in Bergen.
+
+        :::
+
+
+        Here, Bergen is her work location, not a destination.
+
+
+        ::: examples
+
+        - no: Hun reiser til Bergen.
+
+        - en: She travels to Bergen.
+
+        :::
+
+
+        Here, Bergen is the destination.
+
+
+        Some fixed expressions with activities can also use **på** after a movement
+        verb, particularly **dra på jobb**, “go to work.” The basic **til** contrast
+        remains most useful with clear destinations such as a named city, a shop,
+        a café, or another person.
+
+
+        {{exercise: contrast-location-and-destination}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:29.320138+00:00'
+    decision_id: null
+  retrieve-preposition-meanings:
+    exercise_key: retrieve-preposition-meanings
+    checked_against:
+      final-retrieval: 371bc2fd2f8523bbc240561d7e9c7399cd131ce1f3fcc709dff3387904cdc961
+    section_sources:
+      final-retrieval: '## Final retrieval {#final-retrieval role=recap objectives=obj-basic-prepositions-place-time-01}
+
+
+        {{exercise: retrieve-preposition-meanings}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:29.320138+00:00'
+    decision_id: null
+  first_day_exchange:
+    exercise_key: first_day_exchange
+    checked_against:
+      transfer-to-a-new-situation: fdea621639d658dc2fe20f81cd75f24458bb034dc682ae9c077ca6faafe4d92f
+    section_sources:
+      transfer-to-a-new-situation: '## Transfer to a new situation {#transfer-to-a-new-situation
+        role=recap objectives=obj-basic-prepositions-place-time-01}
+
+
+        Imagine that Emil is planning a Saturday visit to his sister Lea in Bergen.
+        He is currently at work. He will leave in half an hour, travel to Bergen,
+        and stay with Lea for two days. They also discuss a visit Lea made to Oslo
+        one week ago.
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:29.320138+00:00'
+    decision_id: null
+  review_complete_meeting:
+    exercise_key: review_complete_meeting
+    checked_against:
+      transfer-to-a-new-situation: fdea621639d658dc2fe20f81cd75f24458bb034dc682ae9c077ca6faafe4d92f
+    section_sources:
+      transfer-to-a-new-situation: '## Transfer to a new situation {#transfer-to-a-new-situation
+        role=recap objectives=obj-basic-prepositions-place-time-01}
+
+
+        Imagine that Emil is planning a Saturday visit to his sister Lea in Bergen.
+        He is currently at work. He will leave in half an hour, travel to Bergen,
+        and stay with Lea for two days. They also discuss a visit Lea made to Oslo
+        one week ago.
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:29.320138+00:00'
+    decision_id: null
+prior_approvals: []
+acceptance_statement: Owner acceptance is not qualified Norwegian review.
