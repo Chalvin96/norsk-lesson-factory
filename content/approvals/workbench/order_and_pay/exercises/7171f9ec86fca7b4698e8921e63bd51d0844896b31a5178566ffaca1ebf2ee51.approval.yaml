@@ -1,0 +1,2554 @@
+schema_version: 2
+lesson_id: order_and_pay
+stage: exercises
+reviewer: human
+file_sha256: 7171f9ec86fca7b4698e8921e63bd51d0844896b31a5178566ffaca1ebf2ee51
+upstream_approved_sha256: 7afec769d894eb6eb8b7b8ff53a62ff828c6f327b36138b24b06c5d0c9ca2a5b
+curriculum_slot_sha256: null
+approved_at: '2026-10-25T14:35:25.479194+00:00'
+code_commit: 83d7ade64642066cded9b1ed1854d2620d2bd190
+review:
+  job: workbench_reviewer
+  model: openai/gpt-6.1-sol
+  prompt_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+  criteria_version: workbench-review-v1
+  evidence_sha256: 8baeba36399ead8ae6142036c9705ea5f40347390da063d9deea266ca71da5ed
+  findings:
+  - finding_id: ai-1b00e50dd4f544f1af2d8479
+    key: at-the-cafe
+    criterion: presentable
+    excerpt: 'checking-the-price#12: "For an A1 transaction, you do not need a long
+      sentence. A clear price question is enough."'
+    explanation: 'Learner-facing price explanation leaks CEFR terminology: Replace
+      with: "You do not need a long sentence to check the price. A clear question
+      is enough."'
+    severity: minor
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 933a309118b1b342aa365bc6f57f55f8275d4db30c1fb7722ebb5d156ff845a2
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: 'checking-the-price#12: "For an A1 transaction, you do not need
+      a long sentence. A clear price question is enough."'
+    citation_exact: true
+    advisory: true
+    reviewer: primary
+    block_hash: 689f9b5d3a629d158eb8acd367d5dd2fe9a45f47c50b1b9d7be77b23363d79f3
+    quote_english: ''
+    suggested_change: 'Replace with: "You do not need a long sentence to check the
+      price. A clear question is enough."'
+    details: '{"category": "presentable", "evidence": "checking-the-price#12: \"For
+      an A1 transaction, you do not need a long sentence. A clear price question is
+      enough.\"", "fix": "Replace with: \"You do not need a long sentence to check
+      the price. A clear question is enough.\"", "quote_english": "", "severity":
+      "P2", "title": "Learner-facing price explanation leaks CEFR terminology"}'
+    message: Learner-facing price explanation leaks CEFR terminology
+  - finding_id: ai-18f6cc49482db76787d048d2
+    key: at-the-cafe
+    criterion: answerable
+    excerpt: 'review_making_first_request specifies "min_words: 3" and "max_words:
+      4", with context "Du vil bestille en kopp te." Choosing-an-item#13 models "Kan
+      jeg få en kopp te?"'
+    explanation: 'Review word limit excludes every taught complete ordering frame:
+      Raise max_words to at least 8, allowing "Kan jeg få en kopp te?", "Jeg tar en
+      kopp te.", and "Jeg vil gjerne ha en kopp te." Keep natural short orders acceptable.'
+    severity: minor
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 933a309118b1b342aa365bc6f57f55f8275d4db30c1fb7722ebb5d156ff845a2
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: 'review_making_first_request specifies "min_words: 3" and "max_words:
+      4", with context "Du vil bestille en kopp te." Choosing-an-item#13 models "Kan
+      jeg få en kopp te?"'
+    citation_exact: true
+    advisory: true
+    reviewer: primary
+    block_hash: 689f9b5d3a629d158eb8acd367d5dd2fe9a45f47c50b1b9d7be77b23363d79f3
+    quote_english: '"Du vil bestille en kopp te." means "You want to order a cup of
+      tea." "Kan jeg få en kopp te?" means "Can I have a cup of tea?"'
+    suggested_change: Raise max_words to at least 8, allowing "Kan jeg få en kopp
+      te?", "Jeg tar en kopp te.", and "Jeg vil gjerne ha en kopp te." Keep natural
+      short orders acceptable.
+    details: '{"category": "answerable", "evidence": "review_making_first_request
+      specifies \"min_words: 3\" and \"max_words: 4\", with context \"Du vil bestille
+      en kopp te.\" Choosing-an-item#13 models \"Kan jeg få en kopp te?\"", "fix":
+      "Raise max_words to at least 8, allowing \"Kan jeg få en kopp te?\", \"Jeg tar
+      en kopp te.\", and \"Jeg vil gjerne ha en kopp te.\" Keep natural short orders
+      acceptable.", "quote_english": "\"Du vil bestille en kopp te.\" means \"You
+      want to order a cup of tea.\" \"Kan jeg få en kopp te?\" means \"Can I have
+      a cup of tea?\"", "severity": "P2", "title": "Review word limit excludes every
+      taught complete ordering frame"}'
+    message: Review word limit excludes every taught complete ordering frame
+  - finding_id: ai-6ead5a866584993cc383afa6
+    key: integrated_transaction
+    criterion: sequencing
+    excerpt: 'integrated_transaction: "Have the worker ask whether the customer wants
+      to eat in or take it away, say the total, and ask how the customer will pay."
+      Context specifies "Kunden bestiller en kopp te og tre kanelboller til å ta med,
+      spør om totalprisen og betaler 154 kroner kontant."'
+    explanation: 'Integrated task requires an unmodeled eat-in/takeaway exchange:
+      Before integrated_transaction, model the new choice with a translated exchange
+      such as "Vil du spise her eller ta med?" / "Ta med, takk." Explain that this
+      asks where the order will be consumed. Alternatively, use an already taught
+      size, type, or addition choice.'
+    severity: minor
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 933a309118b1b342aa365bc6f57f55f8275d4db30c1fb7722ebb5d156ff845a2
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: 'integrated_transaction: "Have the worker ask whether the customer
+      wants to eat in or take it away, say the total, and ask how the customer will
+      pay." Context specifies "Kunden bestiller en kopp te og tre kanelboller til
+      å ta med, spør om totalprisen og betaler 154 kroner kontant."'
+    citation_exact: true
+    advisory: true
+    reviewer: primary
+    block_hash: f6004b9cf115eeba78f2a23ac2d964bbba993ad3b4c2be30d50676df069c3a28
+    quote_english: '"The customer orders a cup of tea and three cinnamon buns to take
+      away, asks about the total price, and pays 154 kroner in cash."'
+    suggested_change: Before integrated_transaction, model the new choice with a translated
+      exchange such as "Vil du spise her eller ta med?" / "Ta med, takk." Explain
+      that this asks where the order will be consumed. Alternatively, use an already
+      taught size, type, or addition choice.
+    details: '{"category": "sequencing", "evidence": "integrated_transaction: \"Have
+      the worker ask whether the customer wants to eat in or take it away, say the
+      total, and ask how the customer will pay.\" Context specifies \"Kunden bestiller
+      en kopp te og tre kanelboller til å ta med, spør om totalprisen og betaler 154
+      kroner kontant.\"", "fix": "Before integrated_transaction, model the new choice
+      with a translated exchange such as \"Vil du spise her eller ta med?\" / \"Ta
+      med, takk.\" Explain that this asks where the order will be consumed. Alternatively,
+      use an already taught size, type, or addition choice.", "quote_english": "\"The
+      customer orders a cup of tea and three cinnamon buns to take away, asks about
+      the total price, and pays 154 kroner in cash.\"", "severity": "P2", "title":
+      "Integrated task requires an unmodeled eat-in/takeaway exchange"}'
+    message: Integrated task requires an unmodeled eat-in/takeaway exchange
+  - finding_id: ai-19a7af5175fedde99ab8d60a
+    key: item_price_or_total
+    criterion: naturalness
+    excerpt: Sara står ved disken med en kanelbolle og en bestilling. Først vil hun
+      vite hva kanelbollen koster, og deretter hva hele bestillingen koster.
+    explanation: “Med en kanelbolle og en bestilling” awkwardly coordinates a physical
+      item with an order. State Sara’s situation separately from what she wants to
+      know.
+    severity: minor
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 933a309118b1b342aa365bc6f57f55f8275d4db30c1fb7722ebb5d156ff845a2
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: Sara står ved disken med en kanelbolle og en bestilling. Først
+      vil hun vite hva kanelbollen koster, og deretter hva hele bestillingen koster.
+    citation_exact: true
+    advisory: true
+    reviewer: primary
+    block_hash: b467b6e0aa785586ed44dca76efdc86772aeb6830f0d4c85d303c89eb64fe048
+    quote_english: Sara is standing at the counter with a cinnamon bun and an order.
+      First she wants to know what the cinnamon bun costs, and then what the whole
+      order costs.
+    suggested_change: Sara står ved disken. Først vil hun vite hva kanelbollen koster,
+      og deretter hva hele bestillingen koster.
+    details: '{"evidence": "Sara står ved disken med en kanelbolle og en bestilling.
+      Først vil hun vite hva kanelbollen koster, og deretter hva hele bestillingen
+      koster.", "message": "“Med en kanelbolle og en bestilling” awkwardly coordinates
+      a physical item with an order. State Sara’s situation separately from what she
+      wants to know.", "quote_english": "Sara is standing at the counter with a cinnamon
+      bun and an order. First she wants to know what the cinnamon bun costs, and then
+      what the whole order costs.", "severity": "P2", "suggested_change": "Sara står
+      ved disken. Først vil hun vite hva kanelbollen koster, og deretter hva hele
+      bestillingen koster.", "unit_id": "item_price_or_total"}'
+    message: “Med en kanelbolle og en bestilling” awkwardly coordinates a physical
+      item with an order. State Sara’s situation separately from what she wants to
+      know.
+  - finding_id: ai-8c5d85b18a9c4851da092362
+    key: making_first_request
+    criterion: open_rubrics.unanswerable
+    excerpt: ''
+    explanation: Rubric checks two matching items and different ordering phrases,
+      but does not require selecting items from the supplied menu.
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 933a309118b1b342aa365bc6f57f55f8275d4db30c1fb7722ebb5d156ff845a2
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: 1764d9d26f89ac69b6a5720b535fc036a83b017cc8e0f277ba336c158ad05d86
+    quote_english: ''
+    suggested_change: ''
+    details: '{"category": "unanswerable", "id": "making_first_request", "report":
+      {"ambiguous": [], "duplicates": [], "extra": [], "missing": [], "open_write_handles":
+      ["making_first_request", "responding_to_choice", "changing_quantities", "item_price_or_total",
+      "confirming_payment", "guided_transaction", "integrated_transaction", "quick_retrieval_review",
+      "review_making_first_request", "review_responding_to_choice", "review_changing_quantities",
+      "review_item_price_or_total", "review_confirming_payment", "review_closing_transaction"],
+      "passed": 7, "reasons": {"changing_quantities": "Rubric checks one complete
+      order, but not the explicitly requested single-sentence form.", "confirming_payment":
+      "Rubric covers the three communicative acts but does not enforce three separate
+      lines in the requested order.", "guided_transaction": "Rubric adds a complete
+      ordering frame not requested visibly and does not fully check exactly five customer
+      replies in the specified order.", "making_first_request": "Rubric checks two
+      matching items and different ordering phrases, but does not require selecting
+      items from the supplied menu.", "quick_retrieval_review": "Rubric permits merely
+      asking about card payment instead of stating the requested intention to pay
+      by card.", "responding_to_choice": "Requested brief answers lack observable
+      rubric coverage. One A1 task direction also appears in Norwegian rather than
+      English.", "review_closing_transaction": "Criterion and judge_prompt require
+      politeness that the visible task does not request."}, "status": "pass", "total":
+      14, "unanswerable": ["making_first_request", "responding_to_choice", "changing_quantities",
+      "confirming_payment", "guided_transaction", "quick_retrieval_review", "review_closing_transaction"]}}'
+    message: Rubric checks two matching items and different ordering phrases, but
+      does not require selecting items from the supplied menu.
+  - finding_id: ai-37b035e0ebe004b7378cb5d9
+    key: responding_to_choice
+    criterion: open_rubrics.unanswerable
+    excerpt: ''
+    explanation: Requested brief answers lack observable rubric coverage. One A1 task
+      direction also appears in Norwegian rather than English.
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 933a309118b1b342aa365bc6f57f55f8275d4db30c1fb7722ebb5d156ff845a2
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: b6f1f1e273c731bcd22b4ab023be993633119ffe28937f8360e3d4adb229cc18
+    quote_english: ''
+    suggested_change: ''
+    details: '{"category": "unanswerable", "id": "responding_to_choice", "report":
+      {"ambiguous": [], "duplicates": [], "extra": [], "missing": [], "open_write_handles":
+      ["making_first_request", "responding_to_choice", "changing_quantities", "item_price_or_total",
+      "confirming_payment", "guided_transaction", "integrated_transaction", "quick_retrieval_review",
+      "review_making_first_request", "review_responding_to_choice", "review_changing_quantities",
+      "review_item_price_or_total", "review_confirming_payment", "review_closing_transaction"],
+      "passed": 7, "reasons": {"changing_quantities": "Rubric checks one complete
+      order, but not the explicitly requested single-sentence form.", "confirming_payment":
+      "Rubric covers the three communicative acts but does not enforce three separate
+      lines in the requested order.", "guided_transaction": "Rubric adds a complete
+      ordering frame not requested visibly and does not fully check exactly five customer
+      replies in the specified order.", "making_first_request": "Rubric checks two
+      matching items and different ordering phrases, but does not require selecting
+      items from the supplied menu.", "quick_retrieval_review": "Rubric permits merely
+      asking about card payment instead of stating the requested intention to pay
+      by card.", "responding_to_choice": "Requested brief answers lack observable
+      rubric coverage. One A1 task direction also appears in Norwegian rather than
+      English.", "review_closing_transaction": "Criterion and judge_prompt require
+      politeness that the visible task does not request."}, "status": "pass", "total":
+      14, "unanswerable": ["making_first_request", "responding_to_choice", "changing_quantities",
+      "confirming_payment", "guided_transaction", "quick_retrieval_review", "review_closing_transaction"]}}'
+    message: Requested brief answers lack observable rubric coverage. One A1 task
+      direction also appears in Norwegian rather than English.
+  - finding_id: ai-06966635f108325c936fe27e
+    key: changing_quantities
+    criterion: open_rubrics.unanswerable
+    excerpt: ''
+    explanation: Rubric checks one complete order, but not the explicitly requested
+      single-sentence form.
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 933a309118b1b342aa365bc6f57f55f8275d4db30c1fb7722ebb5d156ff845a2
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: fe18f4446d1c61e0fed4f30d356a971870f8a0e059576e10524c909d9c26636f
+    quote_english: ''
+    suggested_change: ''
+    details: '{"category": "unanswerable", "id": "changing_quantities", "report":
+      {"ambiguous": [], "duplicates": [], "extra": [], "missing": [], "open_write_handles":
+      ["making_first_request", "responding_to_choice", "changing_quantities", "item_price_or_total",
+      "confirming_payment", "guided_transaction", "integrated_transaction", "quick_retrieval_review",
+      "review_making_first_request", "review_responding_to_choice", "review_changing_quantities",
+      "review_item_price_or_total", "review_confirming_payment", "review_closing_transaction"],
+      "passed": 7, "reasons": {"changing_quantities": "Rubric checks one complete
+      order, but not the explicitly requested single-sentence form.", "confirming_payment":
+      "Rubric covers the three communicative acts but does not enforce three separate
+      lines in the requested order.", "guided_transaction": "Rubric adds a complete
+      ordering frame not requested visibly and does not fully check exactly five customer
+      replies in the specified order.", "making_first_request": "Rubric checks two
+      matching items and different ordering phrases, but does not require selecting
+      items from the supplied menu.", "quick_retrieval_review": "Rubric permits merely
+      asking about card payment instead of stating the requested intention to pay
+      by card.", "responding_to_choice": "Requested brief answers lack observable
+      rubric coverage. One A1 task direction also appears in Norwegian rather than
+      English.", "review_closing_transaction": "Criterion and judge_prompt require
+      politeness that the visible task does not request."}, "status": "pass", "total":
+      14, "unanswerable": ["making_first_request", "responding_to_choice", "changing_quantities",
+      "confirming_payment", "guided_transaction", "quick_retrieval_review", "review_closing_transaction"]}}'
+    message: Rubric checks one complete order, but not the explicitly requested single-sentence
+      form.
+  - finding_id: ai-3a837ec5d6e0d667b52b9945
+    key: confirming_payment
+    criterion: open_rubrics.unanswerable
+    excerpt: ''
+    explanation: Rubric covers the three communicative acts but does not enforce three
+      separate lines in the requested order.
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 933a309118b1b342aa365bc6f57f55f8275d4db30c1fb7722ebb5d156ff845a2
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: bed840c086531700e95903d785ead5f845665239c8fc39df8a4bf805b8ef5da0
+    quote_english: ''
+    suggested_change: ''
+    details: '{"category": "unanswerable", "id": "confirming_payment", "report": {"ambiguous":
+      [], "duplicates": [], "extra": [], "missing": [], "open_write_handles": ["making_first_request",
+      "responding_to_choice", "changing_quantities", "item_price_or_total", "confirming_payment",
+      "guided_transaction", "integrated_transaction", "quick_retrieval_review", "review_making_first_request",
+      "review_responding_to_choice", "review_changing_quantities", "review_item_price_or_total",
+      "review_confirming_payment", "review_closing_transaction"], "passed": 7, "reasons":
+      {"changing_quantities": "Rubric checks one complete order, but not the explicitly
+      requested single-sentence form.", "confirming_payment": "Rubric covers the three
+      communicative acts but does not enforce three separate lines in the requested
+      order.", "guided_transaction": "Rubric adds a complete ordering frame not requested
+      visibly and does not fully check exactly five customer replies in the specified
+      order.", "making_first_request": "Rubric checks two matching items and different
+      ordering phrases, but does not require selecting items from the supplied menu.",
+      "quick_retrieval_review": "Rubric permits merely asking about card payment instead
+      of stating the requested intention to pay by card.", "responding_to_choice":
+      "Requested brief answers lack observable rubric coverage. One A1 task direction
+      also appears in Norwegian rather than English.", "review_closing_transaction":
+      "Criterion and judge_prompt require politeness that the visible task does not
+      request."}, "status": "pass", "total": 14, "unanswerable": ["making_first_request",
+      "responding_to_choice", "changing_quantities", "confirming_payment", "guided_transaction",
+      "quick_retrieval_review", "review_closing_transaction"]}}'
+    message: Rubric covers the three communicative acts but does not enforce three
+      separate lines in the requested order.
+  - finding_id: ai-d09f48709b57dac682e49fbf
+    key: guided_transaction
+    criterion: open_rubrics.unanswerable
+    excerpt: ''
+    explanation: Rubric adds a complete ordering frame not requested visibly and does
+      not fully check exactly five customer replies in the specified order.
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 933a309118b1b342aa365bc6f57f55f8275d4db30c1fb7722ebb5d156ff845a2
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: 966916af53af700c149b6d182c967b26fea222d37be5af8b449cc78a8f1094e5
+    quote_english: ''
+    suggested_change: ''
+    details: '{"category": "unanswerable", "id": "guided_transaction", "report": {"ambiguous":
+      [], "duplicates": [], "extra": [], "missing": [], "open_write_handles": ["making_first_request",
+      "responding_to_choice", "changing_quantities", "item_price_or_total", "confirming_payment",
+      "guided_transaction", "integrated_transaction", "quick_retrieval_review", "review_making_first_request",
+      "review_responding_to_choice", "review_changing_quantities", "review_item_price_or_total",
+      "review_confirming_payment", "review_closing_transaction"], "passed": 7, "reasons":
+      {"changing_quantities": "Rubric checks one complete order, but not the explicitly
+      requested single-sentence form.", "confirming_payment": "Rubric covers the three
+      communicative acts but does not enforce three separate lines in the requested
+      order.", "guided_transaction": "Rubric adds a complete ordering frame not requested
+      visibly and does not fully check exactly five customer replies in the specified
+      order.", "making_first_request": "Rubric checks two matching items and different
+      ordering phrases, but does not require selecting items from the supplied menu.",
+      "quick_retrieval_review": "Rubric permits merely asking about card payment instead
+      of stating the requested intention to pay by card.", "responding_to_choice":
+      "Requested brief answers lack observable rubric coverage. One A1 task direction
+      also appears in Norwegian rather than English.", "review_closing_transaction":
+      "Criterion and judge_prompt require politeness that the visible task does not
+      request."}, "status": "pass", "total": 14, "unanswerable": ["making_first_request",
+      "responding_to_choice", "changing_quantities", "confirming_payment", "guided_transaction",
+      "quick_retrieval_review", "review_closing_transaction"]}}'
+    message: Rubric adds a complete ordering frame not requested visibly and does
+      not fully check exactly five customer replies in the specified order.
+  - finding_id: ai-37d0d0d28d4ee2d7a3d8d91e
+    key: quick_retrieval_review
+    criterion: open_rubrics.unanswerable
+    excerpt: ''
+    explanation: Rubric permits merely asking about card payment instead of stating
+      the requested intention to pay by card.
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 933a309118b1b342aa365bc6f57f55f8275d4db30c1fb7722ebb5d156ff845a2
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: e3615dca4e1cad042c4294b7a54ee9393571212a669f55e4f410e9966a09c308
+    quote_english: ''
+    suggested_change: ''
+    details: '{"category": "unanswerable", "id": "quick_retrieval_review", "report":
+      {"ambiguous": [], "duplicates": [], "extra": [], "missing": [], "open_write_handles":
+      ["making_first_request", "responding_to_choice", "changing_quantities", "item_price_or_total",
+      "confirming_payment", "guided_transaction", "integrated_transaction", "quick_retrieval_review",
+      "review_making_first_request", "review_responding_to_choice", "review_changing_quantities",
+      "review_item_price_or_total", "review_confirming_payment", "review_closing_transaction"],
+      "passed": 7, "reasons": {"changing_quantities": "Rubric checks one complete
+      order, but not the explicitly requested single-sentence form.", "confirming_payment":
+      "Rubric covers the three communicative acts but does not enforce three separate
+      lines in the requested order.", "guided_transaction": "Rubric adds a complete
+      ordering frame not requested visibly and does not fully check exactly five customer
+      replies in the specified order.", "making_first_request": "Rubric checks two
+      matching items and different ordering phrases, but does not require selecting
+      items from the supplied menu.", "quick_retrieval_review": "Rubric permits merely
+      asking about card payment instead of stating the requested intention to pay
+      by card.", "responding_to_choice": "Requested brief answers lack observable
+      rubric coverage. One A1 task direction also appears in Norwegian rather than
+      English.", "review_closing_transaction": "Criterion and judge_prompt require
+      politeness that the visible task does not request."}, "status": "pass", "total":
+      14, "unanswerable": ["making_first_request", "responding_to_choice", "changing_quantities",
+      "confirming_payment", "guided_transaction", "quick_retrieval_review", "review_closing_transaction"]}}'
+    message: Rubric permits merely asking about card payment instead of stating the
+      requested intention to pay by card.
+  - finding_id: ai-13ee57ab18a31d10b76b7545
+    key: review_closing_transaction
+    criterion: open_rubrics.unanswerable
+    excerpt: ''
+    explanation: Criterion and judge_prompt require politeness that the visible task
+      does not request.
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 933a309118b1b342aa365bc6f57f55f8275d4db30c1fb7722ebb5d156ff845a2
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: 8c02b73fd16cab731ac2842a826a2ddf6dec40e8f36f030874c8705061b2e2e6
+    quote_english: ''
+    suggested_change: ''
+    details: '{"category": "unanswerable", "id": "review_closing_transaction", "report":
+      {"ambiguous": [], "duplicates": [], "extra": [], "missing": [], "open_write_handles":
+      ["making_first_request", "responding_to_choice", "changing_quantities", "item_price_or_total",
+      "confirming_payment", "guided_transaction", "integrated_transaction", "quick_retrieval_review",
+      "review_making_first_request", "review_responding_to_choice", "review_changing_quantities",
+      "review_item_price_or_total", "review_confirming_payment", "review_closing_transaction"],
+      "passed": 7, "reasons": {"changing_quantities": "Rubric checks one complete
+      order, but not the explicitly requested single-sentence form.", "confirming_payment":
+      "Rubric covers the three communicative acts but does not enforce three separate
+      lines in the requested order.", "guided_transaction": "Rubric adds a complete
+      ordering frame not requested visibly and does not fully check exactly five customer
+      replies in the specified order.", "making_first_request": "Rubric checks two
+      matching items and different ordering phrases, but does not require selecting
+      items from the supplied menu.", "quick_retrieval_review": "Rubric permits merely
+      asking about card payment instead of stating the requested intention to pay
+      by card.", "responding_to_choice": "Requested brief answers lack observable
+      rubric coverage. One A1 task direction also appears in Norwegian rather than
+      English.", "review_closing_transaction": "Criterion and judge_prompt require
+      politeness that the visible task does not request."}, "status": "pass", "total":
+      14, "unanswerable": ["making_first_request", "responding_to_choice", "changing_quantities",
+      "confirming_payment", "guided_transaction", "quick_retrieval_review", "review_closing_transaction"]}}'
+    message: Criterion and judge_prompt require politeness that the visible task does
+      not request.
+  - finding_id: ai-965fbbd4f99c5da62ad8504a
+    key: changing_quantities
+    criterion: open_semantics.semantic_issues
+    excerpt: 'Først bestilte du én kaffe og to flasker vann. Du vil endre bestillingen:
+      Du trenger dobbelt så mye kaffe, men bare én flaske vann.'
+    explanation: 'Learner voice: Essential original quantities and requested changes
+      appear only in Norwegian task-setting narration.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 933a309118b1b342aa365bc6f57f55f8275d4db30c1fb7722ebb5d156ff845a2
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: fe18f4446d1c61e0fed4f30d356a971870f8a0e059576e10524c909d9c26636f
+    quote_english: 'First you ordered one coffee and two bottles of water. You want
+      to change the order: you need twice as much coffee, but only one bottle of water.'
+    suggested_change: Present quantity-change scenario in English so A1 task directions
+      do not depend on Norwegian reading comprehension.
+    details: '{"id": "changing_quantities", "issues": [{"category": "learner_voice",
+      "evidence": "Først bestilte du én kaffe og to flasker vann. Du vil endre bestillingen:
+      Du trenger dobbelt så mye kaffe, men bare én flaske vann.", "quote_english":
+      "First you ordered one coffee and two bottles of water. You want to change the
+      order: you need twice as much coffee, but only one bottle of water.", "reason":
+      "Essential original quantities and requested changes appear only in Norwegian
+      task-setting narration.", "suggested_change": "Present quantity-change scenario
+      in English so A1 task directions do not depend on Norwegian reading comprehension."}]}'
+    message: 'Learner voice: Essential original quantities and requested changes appear
+      only in Norwegian task-setting narration.'
+  - finding_id: ai-80364bf7a1434e3580979351
+    key: confirming_payment
+    criterion: open_semantics.semantic_issues
+    excerpt: Sara og Emil vil betale sammen med samme betalingsmåte.
+    explanation: 'Learner voice: Norwegian Context narration adds material shared-payment
+      instructions to this A1 task.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 933a309118b1b342aa365bc6f57f55f8275d4db30c1fb7722ebb5d156ff845a2
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: bed840c086531700e95903d785ead5f845665239c8fc39df8a4bf805b8ef5da0
+    quote_english: Sara and Emil want to pay together using the same payment method.
+    suggested_change: Translate Context turn into English; retain cashier's question
+      in Norwegian.
+    details: '{"id": "confirming_payment", "issues": [{"category": "learner_voice",
+      "evidence": "Sara og Emil vil betale sammen med samme betalingsmåte.", "quote_english":
+      "Sara and Emil want to pay together using the same payment method.", "reason":
+      "Norwegian Context narration adds material shared-payment instructions to this
+      A1 task.", "suggested_change": "Translate Context turn into English; retain
+      cashier''s question in Norwegian."}]}'
+    message: 'Learner voice: Norwegian Context narration adds material shared-payment
+      instructions to this A1 task.'
+  - finding_id: ai-38310f08ef99fa2d9308c0d8
+    key: guided_transaction
+    criterion: open_semantics.semantic_issues
+    excerpt: Du vil bestille to kaffer og én kanelbolle. / Du vil ikke ha melk. /
+      Du vil svare at det er alt og spørre om totalprisen. / Du vil betale med kort.
+      / Du vil ha kvitteringen.
+    explanation: 'Learner voice: Norwegian Context turns specify required order, choices,
+      and reply content; these are material A1 directions rather than partner dialogue.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 933a309118b1b342aa365bc6f57f55f8275d4db30c1fb7722ebb5d156ff845a2
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: 966916af53af700c149b6d182c967b26fea222d37be5af8b449cc78a8f1094e5
+    quote_english: You want to order two coffees and one cinnamon bun. / You do not
+      want milk. / You want to say that is everything and ask about the total price.
+      / You want to pay by card. / You want the receipt.
+    suggested_change: Translate all Context turns into English; retain employee's
+      Norwegian dialogue.
+    details: '{"id": "guided_transaction", "issues": [{"category": "learner_voice",
+      "evidence": "Du vil bestille to kaffer og én kanelbolle. / Du vil ikke ha melk.
+      / Du vil svare at det er alt og spørre om totalprisen. / Du vil betale med kort.
+      / Du vil ha kvitteringen.", "quote_english": "You want to order two coffees
+      and one cinnamon bun. / You do not want milk. / You want to say that is everything
+      and ask about the total price. / You want to pay by card. / You want the receipt.",
+      "reason": "Norwegian Context turns specify required order, choices, and reply
+      content; these are material A1 directions rather than partner dialogue.", "suggested_change":
+      "Translate all Context turns into English; retain employee''s Norwegian dialogue."}]}'
+    message: 'Learner voice: Norwegian Context turns specify required order, choices,
+      and reply content; these are material A1 directions rather than partner dialogue.'
+  - finding_id: ai-e7d5916bd4af554014a59116
+    key: integrated_transaction
+    criterion: open_semantics.semantic_issues
+    excerpt: Kunden bestiller en kopp te og tre kanelboller til å ta med, spør om
+      totalprisen og betaler 154 kroner kontant. Kunden trenger ikke kvittering og
+      avslutter høflig.
+    explanation: 'Learner voice: Norwegian Context narration supplies essential composition
+      requirements, including quantities, payment amount, and receipt choice.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 933a309118b1b342aa365bc6f57f55f8275d4db30c1fb7722ebb5d156ff845a2
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: f6004b9cf115eeba78f2a23ac2d964bbba993ad3b4c2be30d50676df069c3a28
+    quote_english: The customer orders a cup of tea and three cinnamon buns to take
+      away, asks about the total price, and pays 154 kroner in cash. The customer
+      does not need a receipt and closes politely.
+    suggested_change: Provide these composition requirements in English; keep employee's
+      opening line in Norwegian.
+    details: '{"id": "integrated_transaction", "issues": [{"category": "learner_voice",
+      "evidence": "Kunden bestiller en kopp te og tre kanelboller til å ta med, spør
+      om totalprisen og betaler 154 kroner kontant. Kunden trenger ikke kvittering
+      og avslutter høflig.", "quote_english": "The customer orders a cup of tea and
+      three cinnamon buns to take away, asks about the total price, and pays 154 kroner
+      in cash. The customer does not need a receipt and closes politely.", "reason":
+      "Norwegian Context narration supplies essential composition requirements, including
+      quantities, payment amount, and receipt choice.", "suggested_change": "Provide
+      these composition requirements in English; keep employee''s opening line in
+      Norwegian."}]}'
+    message: 'Learner voice: Norwegian Context narration supplies essential composition
+      requirements, including quantities, payment amount, and receipt choice.'
+  - finding_id: ai-6784c67da28cd11577d3ad4e
+    key: item_price_or_total
+    criterion: open_semantics.semantic_issues
+    excerpt: Sara står ved disken med en kanelbolle og en bestilling. Først vil hun
+      vite hva kanelbollen koster, og deretter hva hele bestillingen koster.
+    explanation: 'Learner voice: Norwegian scenario narration supplies essential item
+      and question sequence for this A1 writing task.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 933a309118b1b342aa365bc6f57f55f8275d4db30c1fb7722ebb5d156ff845a2
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: b467b6e0aa785586ed44dca76efdc86772aeb6830f0d4c85d303c89eb64fe048
+    quote_english: Sara is at the counter with a cinnamon bun and an order. First
+      she wants to know what the cinnamon bun costs, and then what the whole order
+      costs.
+    suggested_change: Translate scenario into English; optionally retain kanelbolle
+      with an English gloss as vocabulary support.
+    details: '{"id": "item_price_or_total", "issues": [{"category": "learner_voice",
+      "evidence": "Sara står ved disken med en kanelbolle og en bestilling. Først
+      vil hun vite hva kanelbollen koster, og deretter hva hele bestillingen koster.",
+      "quote_english": "Sara is at the counter with a cinnamon bun and an order. First
+      she wants to know what the cinnamon bun costs, and then what the whole order
+      costs.", "reason": "Norwegian scenario narration supplies essential item and
+      question sequence for this A1 writing task.", "suggested_change": "Translate
+      scenario into English; optionally retain kanelbolle with an English gloss as
+      vocabulary support."}]}'
+    message: 'Learner voice: Norwegian scenario narration supplies essential item
+      and question sequence for this A1 writing task.'
+  - finding_id: ai-78451244bd7dc924c8b8744b
+    key: making_first_request
+    criterion: open_semantics.semantic_issues
+    excerpt: Ved kafédisken vil du bestille to varer fra menyen på to ulike måter.
+    explanation: 'Learner voice: Norwegian Context turn gives material task directions
+      in this A1 exercise rather than dialogue source text.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 933a309118b1b342aa365bc6f57f55f8275d4db30c1fb7722ebb5d156ff845a2
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: 1764d9d26f89ac69b6a5720b535fc036a83b017cc8e0f277ba336c158ad05d86
+    quote_english: At the café counter, you want to order two items from the menu
+      in two different ways.
+    suggested_change: Translate Context turn into English; retain Norwegian for actual
+      café dialogue.
+    details: '{"id": "making_first_request", "issues": [{"category": "learner_voice",
+      "evidence": "Ved kafédisken vil du bestille to varer fra menyen på to ulike
+      måter.", "quote_english": "At the café counter, you want to order two items
+      from the menu in two different ways.", "reason": "Norwegian Context turn gives
+      material task directions in this A1 exercise rather than dialogue source text.",
+      "suggested_change": "Translate Context turn into English; retain Norwegian for
+      actual café dialogue."}]}'
+    message: 'Learner voice: Norwegian Context turn gives material task directions
+      in this A1 exercise rather than dialogue source text.'
+  - finding_id: ai-f51d42d3d02716295e116abc
+    key: quick_retrieval_review
+    criterion: open_semantics.semantic_issues
+    excerpt: Kunden vil ha tre kanelboller, spørre om totalprisen, betale med kort
+      og avslutte høflig.
+    explanation: 'Learner voice: Norwegian Context narration supplies essential item
+      and quantity missing from English directions.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 933a309118b1b342aa365bc6f57f55f8275d4db30c1fb7722ebb5d156ff845a2
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: e3615dca4e1cad042c4294b7a54ee9393571212a669f55e4f410e9966a09c308
+    quote_english: The customer wants three cinnamon buns, to ask about the total
+      price, to pay by card, and to close politely.
+    suggested_change: Translate Context turn into English, including item and quantity.
+    details: '{"id": "quick_retrieval_review", "issues": [{"category": "learner_voice",
+      "evidence": "Kunden vil ha tre kanelboller, spørre om totalprisen, betale med
+      kort og avslutte høflig.", "quote_english": "The customer wants three cinnamon
+      buns, to ask about the total price, to pay by card, and to close politely.",
+      "reason": "Norwegian Context narration supplies essential item and quantity
+      missing from English directions.", "suggested_change": "Translate Context turn
+      into English, including item and quantity."}]}'
+    message: 'Learner voice: Norwegian Context narration supplies essential item and
+      quantity missing from English directions.'
+  - finding_id: ai-6ee39891754bfac4d27be4db
+    key: responding_to_choice
+    criterion: open_semantics.semantic_issues
+    excerpt: Du svarer kort. / Svar kort, og bestill deretter alt i én fullstendig
+      replikk.
+    explanation: 'Learner voice: Norwegian Context turns instruct learner how to respond;
+      these are material A1 task directions, not partner dialogue.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 933a309118b1b342aa365bc6f57f55f8275d4db30c1fb7722ebb5d156ff845a2
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: b6f1f1e273c731bcd22b4ab023be993633119ffe28937f8360e3d4adb229cc18
+    quote_english: You answer briefly. / Answer briefly, then order everything in
+      one complete utterance.
+    suggested_change: Translate both Context turns into English; keep Nora's questions
+      in Norwegian.
+    details: '{"id": "responding_to_choice", "issues": [{"category": "learner_voice",
+      "evidence": "Du svarer kort. / Svar kort, og bestill deretter alt i én fullstendig
+      replikk.", "quote_english": "You answer briefly. / Answer briefly, then order
+      everything in one complete utterance.", "reason": "Norwegian Context turns instruct
+      learner how to respond; these are material A1 task directions, not partner dialogue.",
+      "suggested_change": "Translate both Context turns into English; keep Nora''s
+      questions in Norwegian."}]}'
+    message: 'Learner voice: Norwegian Context turns instruct learner how to respond;
+      these are material A1 task directions, not partner dialogue.'
+  - finding_id: ai-b538299c62530aa84eb54ef6
+    key: review_changing_quantities
+    criterion: open_semantics.semantic_issues
+    excerpt: Du har allerede bestilt én flaske vann, men vil nå ha to.
+    explanation: 'Learner voice: Norwegian Context turn supplies entire quantity-change
+      instruction for this A1 task.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 933a309118b1b342aa365bc6f57f55f8275d4db30c1fb7722ebb5d156ff845a2
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: 20fc8b4018062359dc4d941e18eed5c7d8dad2c9b151415f35419bb75b8c7fb1
+    quote_english: You have already ordered one bottle of water, but now want two.
+    suggested_change: Translate quantity-change scenario into English.
+    details: '{"id": "review_changing_quantities", "issues": [{"category": "learner_voice",
+      "evidence": "Du har allerede bestilt én flaske vann, men vil nå ha to.", "quote_english":
+      "You have already ordered one bottle of water, but now want two.", "reason":
+      "Norwegian Context turn supplies entire quantity-change instruction for this
+      A1 task.", "suggested_change": "Translate quantity-change scenario into English."}]}'
+    message: 'Learner voice: Norwegian Context turn supplies entire quantity-change
+      instruction for this A1 task.'
+  - finding_id: ai-ba9579ba24c0792a40a9fcbc
+    key: review_closing_transaction
+    criterion: open_semantics.semantic_issues
+    excerpt: Du er ferdig med bestillingen.
+    explanation: 'Learner voice: Norwegian Context narration supplies essential instruction
+      that customer wants nothing more.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 933a309118b1b342aa365bc6f57f55f8275d4db30c1fb7722ebb5d156ff845a2
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: 8c02b73fd16cab731ac2842a826a2ddf6dec40e8f36f030874c8705061b2e2e6
+    quote_english: You have finished ordering.
+    suggested_change: Translate Context turn into English; retain worker's question
+      in Norwegian.
+    details: '{"id": "review_closing_transaction", "issues": [{"category": "learner_voice",
+      "evidence": "Du er ferdig med bestillingen.", "quote_english": "You have finished
+      ordering.", "reason": "Norwegian Context narration supplies essential instruction
+      that customer wants nothing more.", "suggested_change": "Translate Context turn
+      into English; retain worker''s question in Norwegian."}]}'
+    message: 'Learner voice: Norwegian Context narration supplies essential instruction
+      that customer wants nothing more.'
+  - finding_id: ai-d15dc86396c38554f2506826
+    key: review_confirming_payment
+    criterion: open_semantics.semantic_issues
+    excerpt: Du vil betale med kort.
+    explanation: 'Learner voice: Required payment choice appears only in Norwegian
+      task-setting narration.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 933a309118b1b342aa365bc6f57f55f8275d4db30c1fb7722ebb5d156ff845a2
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: 87f3906d13dbf35b5912092dd2e0ea0fe2f9cae7a0a58f5a3389a0fde231cf4e
+    quote_english: You want to pay by card.
+    suggested_change: Translate Context turn into English; retain cashier's Norwegian
+      question.
+    details: '{"id": "review_confirming_payment", "issues": [{"category": "learner_voice",
+      "evidence": "Du vil betale med kort.", "quote_english": "You want to pay by
+      card.", "reason": "Required payment choice appears only in Norwegian task-setting
+      narration.", "suggested_change": "Translate Context turn into English; retain
+      cashier''s Norwegian question."}]}'
+    message: 'Learner voice: Required payment choice appears only in Norwegian task-setting
+      narration.'
+  - finding_id: ai-9fec3d85b92d18df089079c3
+    key: review_item_price_or_total
+    criterion: open_semantics.semantic_issues
+    excerpt: Kunden svarer ja og vil vite hva hele bestillingen koster.
+    explanation: 'Learner voice: Norwegian Context narration specifies required communicative
+      intent rather than supplying dialogue source text.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 933a309118b1b342aa365bc6f57f55f8275d4db30c1fb7722ebb5d156ff845a2
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: 1c22c0fadf27aa2041665ecfb51b55235a5a4e24469f8312bfd1e36f6862cb99
+    quote_english: The customer answers yes and wants to know what the whole order
+      costs.
+    suggested_change: Translate Context turn into English; retain customer and employee
+      dialogue in Norwegian.
+    details: '{"id": "review_item_price_or_total", "issues": [{"category": "learner_voice",
+      "evidence": "Kunden svarer ja og vil vite hva hele bestillingen koster.", "quote_english":
+      "The customer answers yes and wants to know what the whole order costs.", "reason":
+      "Norwegian Context narration specifies required communicative intent rather
+      than supplying dialogue source text.", "suggested_change": "Translate Context
+      turn into English; retain customer and employee dialogue in Norwegian."}]}'
+    message: 'Learner voice: Norwegian Context narration specifies required communicative
+      intent rather than supplying dialogue source text.'
+  - finding_id: ai-8978e39db66c2992f2283e41
+    key: review_making_first_request
+    criterion: open_semantics.semantic_issues
+    excerpt: Du vil bestille en kopp te.
+    explanation: 'Learner voice: Required item appears only in Norwegian task-setting
+      narration.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 933a309118b1b342aa365bc6f57f55f8275d4db30c1fb7722ebb5d156ff845a2
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: 2b0ca18af07b0bdd64342803844a8ed6d58668987b89227922ab714387a978d8
+    quote_english: You want to order a cup of tea.
+    suggested_change: Translate Context turn into English; keep worker's question
+      in Norwegian.
+    details: '{"id": "review_making_first_request", "issues": [{"category": "learner_voice",
+      "evidence": "Du vil bestille en kopp te.", "quote_english": "You want to order
+      a cup of tea.", "reason": "Required item appears only in Norwegian task-setting
+      narration.", "suggested_change": "Translate Context turn into English; keep
+      worker''s question in Norwegian."}]}'
+    message: 'Learner voice: Required item appears only in Norwegian task-setting
+      narration.'
+  - finding_id: ai-2fa772b5672036c17d565d0b
+    key: review_responding_to_choice
+    criterion: open_semantics.semantic_issues
+    excerpt: Du vil ikke ha vann med kullsyre.
+    explanation: 'Learner voice: Required water preference appears only in Norwegian
+      task-setting narration.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 933a309118b1b342aa365bc6f57f55f8275d4db30c1fb7722ebb5d156ff845a2
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: d425aca63574f198aa563cd743062c1c489961e3a829c4c34f2e7b0c083c7394
+    quote_english: You do not want carbonated water.
+    suggested_change: State intended preference in English; retain worker's Norwegian
+      question.
+    details: '{"id": "review_responding_to_choice", "issues": [{"category": "learner_voice",
+      "evidence": "Du vil ikke ha vann med kullsyre.", "quote_english": "You do not
+      want carbonated water.", "reason": "Required water preference appears only in
+      Norwegian task-setting narration.", "suggested_change": "State intended preference
+      in English; retain worker''s Norwegian question."}]}'
+    message: 'Learner voice: Required water preference appears only in Norwegian task-setting
+      narration.'
+proposals_accepted: 0
+proposals_rejected: 0
+exercise_alignments:
+  making_first_request:
+    exercise_key: making_first_request
+    checked_against:
+      choosing-an-item: b72408592519bc5dbd7a0b5e1b901fe8db936079595913581ed6a3a497aab71c
+    section_sources:
+      choosing-an-item: '## Choosing an item {#choosing-an-item role=model objectives=obj-order-and-pay-01}
+
+
+        Three useful ways to order are:
+
+
+        ::: examples
+
+        - no: Jeg vil gjerne ha en kaffe.
+
+        - en: I’d like a coffee.
+
+        :::
+
+
+        ::: examples
+
+        - no: Kan jeg få en kaffe?
+
+        - en: Can I have a coffee?
+
+        :::
+
+
+        ::: examples
+
+        - no: Jeg tar en kaffe.
+
+        - en: I’ll have a coffee.
+
+        :::
+
+
+        Jeg vil gjerne ha is polite and useful in almost any café or shop. Gjerne
+        helps make the request sound friendly.
+
+
+        Kan jeg få literally means can I get. It is a natural way to ask for something
+        in Norwegian.
+
+
+        Jeg tar is common when you are choosing from a menu or from several visible
+        items. Here, tar means will have rather than physically take.
+
+
+        Compare:
+
+
+        ::: examples
+
+        - no: Jeg vil ha en kaffe.
+
+        - en: I want a coffee.
+
+        :::
+
+
+        ::: examples
+
+        - no: Jeg vil gjerne ha en kaffe.
+
+        - en: I’d like a coffee.
+
+        :::
+
+
+        Both are grammatical, but the second version normally sounds more courteous
+        in a transaction.
+
+
+        You can use the same patterns with many items:
+
+
+        ::: examples
+
+        - no: Jeg vil gjerne ha et rundstykke med ost.
+
+        - en: I’d like a bread roll with cheese.
+
+        :::
+
+
+        ::: examples
+
+        - no: Kan jeg få en kopp te?
+
+        - en: Can I have a cup of tea?
+
+        :::
+
+
+        ::: examples
+
+        - no: Jeg tar en flaske vann.
+
+        - en: I’ll have a bottle of water.
+
+        :::
+
+
+        {{exercise: making_first_request}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:25.479194+00:00'
+    decision_id: null
+  responding_to_choice:
+    exercise_key: responding_to_choice
+    checked_against:
+      choosing-between-options: fa7f31a414f950e4422f8ff4a42af5b245bddf08788291ad274f10936042bc91
+    section_sources:
+      choosing-between-options: '## Choosing between options {#choosing-between-options
+        role=contrast objectives=obj-order-and-pay-01}
+
+
+        The server may ask you to choose a size, type, or addition.
+
+
+        ::: examples
+
+        - no: Vil du ha liten eller stor kaffe?
+
+        - en: Would you like a small or large coffee?
+
+        :::
+
+
+        ::: examples
+
+        - no: Liten, takk.
+
+        - en: Small, please.
+
+        :::
+
+
+        ::: examples
+
+        - no: Vil du ha kaffe eller te?
+
+        - en: Would you like coffee or tea?
+
+        :::
+
+
+        ::: examples
+
+        - no: Te, takk.
+
+        - en: Tea, please.
+
+        :::
+
+
+        ::: examples
+
+        - no: Vil du ha melk i kaffen?
+
+        - en: Would you like milk in the coffee?
+
+        :::
+
+
+        ::: examples
+
+        - no: Ja takk.
+
+        - en: Yes, please.
+
+        :::
+
+
+        ::: examples
+
+        - no: Nei takk.
+
+        - en: No, thank you.
+
+        :::
+
+
+        ::: examples
+
+        - no: Med eller uten kullsyre?
+
+        - en: With or without carbonation?
+
+        :::
+
+
+        ::: examples
+
+        - no: Uten kullsyre, takk.
+
+        - en: Still, please.
+
+        :::
+
+
+        A short answer is natural when the choice is already clear from the question.
+        Adding takk keeps it polite.
+
+
+        You can also include the option in your original order:
+
+
+        ::: examples
+
+        - no: Jeg vil gjerne ha en stor kaffe med melk.
+
+        - en: I’d like a large coffee with milk.
+
+        :::
+
+
+        ::: examples
+
+        - no: Kan jeg få en flaske vann uten kullsyre?
+
+        - en: Can I have a bottle of still water?
+
+        :::
+
+
+        ::: examples
+
+        - no: Jeg tar et rundstykke med ost.
+
+        - en: I’ll have a bread roll with cheese.
+
+        :::
+
+
+        Notice the useful contrast:
+
+
+        ::: examples
+
+        - no: med melk
+
+        - en: with milk
+
+        :::
+
+
+        ::: examples
+
+        - no: uten melk
+
+        - en: without milk
+
+        :::
+
+
+        {{exercise: responding_to_choice}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:25.479194+00:00'
+    decision_id: null
+  changing_quantities:
+    exercise_key: changing_quantities
+    checked_against:
+      saying-how-many: 9a7485615768304d804bb50321292a7e97e1561615d8ca48e2a10df913e12c42
+    section_sources:
+      saying-how-many: '## Saying how many {#saying-how-many role=model objectives=obj-order-and-pay-01}
+
+
+        Use a number before the item when you need more than one. The one-item form
+        is singular (entall); forms used for several items are plural (flertall).
+
+
+        ::: examples
+
+        - no: en kanelbolle
+
+        - en: one cinnamon bun
+
+        :::
+
+
+        ::: examples
+
+        - no: to kanelboller
+
+        - en: two cinnamon buns
+
+        :::
+
+
+        ::: examples
+
+        - no: et rundstykke
+
+        - en: one bread roll
+
+        :::
+
+
+        ::: examples
+
+        - no: tre rundstykker
+
+        - en: three bread rolls
+
+        :::
+
+
+        ::: examples
+
+        - no: en flaske vann
+
+        - en: one bottle of water
+
+        :::
+
+
+        ::: examples
+
+        - no: to flasker vann
+
+        - en: two bottles of water
+
+        :::
+
+
+        The plural ending varies, so it is useful to learn common menu items in practical
+        pairs: en bolle–to boller, et rundstykke–to rundstykker, en flaske–to flasker.
+
+
+        In a complete order:
+
+
+        ::: examples
+
+        - no: Jeg vil gjerne ha to kanelboller.
+
+        - en: I’d like two cinnamon buns.
+
+        :::
+
+
+        ::: examples
+
+        - no: Kan jeg få tre rundstykker med ost?
+
+        - en: Can I have three bread rolls with cheese?
+
+        :::
+
+
+        ::: examples
+
+        - no: Jeg tar en kaffe og to flasker vann.
+
+        - en: I’ll have one coffee and two bottles of water.
+
+        :::
+
+
+        When speaking quickly, café staff and customers may sometimes use shortened
+        menu language. As a learner, a complete form such as to kopper kaffe or to
+        kaffer makes the quantity clear.
+
+
+        ::: examples
+
+        - no: Kan jeg få to kopper kaffe?
+
+        - en: Can I have two cups of coffee?
+
+        :::
+
+
+        ::: examples
+
+        - no: Vi tar to kaffer.
+
+        - en: We’ll have two coffees.
+
+        :::
+
+
+        Common quantity mistake
+
+
+        Do not leave a singular item unchanged after a number when its normal plural
+        form is required.
+
+
+        Instead of:
+
+
+        ::: examples
+
+        - no: ✗ to kanelbolle
+
+        - en: two cinnamon bun
+
+        :::
+
+
+        Use:
+
+
+        ::: examples
+
+        - no: to kanelboller
+
+        - en: two cinnamon buns
+
+        :::
+
+
+        {{exercise: changing_quantities}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:25.479194+00:00'
+    decision_id: null
+  item_price_or_total:
+    exercise_key: item_price_or_total
+    checked_against:
+      checking-the-price: 6c279c074eff687fd1d51af0fc476988781c585e7cdd1f90947e01253c8f265c
+    section_sources:
+      checking-the-price: '## Checking the price {#checking-the-price role=contrast
+        objectives=obj-order-and-pay-01}
+
+
+        To ask about one named item, use Hva koster …?
+
+
+        ::: examples
+
+        - no: Hva koster kaffen?
+
+        - en: How much does the coffee cost?
+
+        :::
+
+
+        ::: examples
+
+        - no: Hva koster et rundstykke med ost?
+
+        - en: How much does a bread roll with cheese cost?
+
+        :::
+
+
+        ::: examples
+
+        - no: Hva koster denne?
+
+        - en: How much does this one cost?
+
+        :::
+
+
+        To ask about the whole order, use:
+
+
+        ::: examples
+
+        - no: Hvor mye koster det?
+
+        - en: How much does it cost?
+
+        :::
+
+
+        ::: examples
+
+        - no: Hvor mye koster det til sammen?
+
+        - en: How much does it cost altogether?
+
+        :::
+
+
+        The server often gives the total with Det blir …, meaning that comes to …
+
+
+        ::: examples
+
+        - no: Det blir 85 kroner.
+
+        - en: That comes to 85 kroner.
+
+        :::
+
+
+        ::: examples
+
+        - no: Det blir 124 kroner til sammen.
+
+        - en: That comes to 124 kroner altogether.
+
+        :::
+
+
+        Hva blir det? can also be used by a customer asking for the total.
+
+
+        ::: examples
+
+        - no: Hva blir det til sammen?
+
+        - en: What does that come to altogether?
+
+        :::
+
+
+        For an A1 transaction, you do not need a long sentence. A clear price question
+        is enough.
+
+
+        {{exercise: item_price_or_total}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:25.479194+00:00'
+    decision_id: null
+  confirming_payment:
+    exercise_key: confirming_payment
+    checked_against:
+      checking-how-to-pay: 45266975ea95e47f73b6da2a6522dbba7783be0b9a759358093f06488f2af030
+    section_sources:
+      checking-how-to-pay: '## Checking how to pay {#checking-how-to-pay role=model
+        objectives=obj-order-and-pay-01}
+
+
+        The most useful payment question is:
+
+
+        ::: examples
+
+        - no: Kan jeg betale med kort?
+
+        - en: Can I pay by card?
+
+        :::
+
+
+        For cash, use kontant:
+
+
+        ::: examples
+
+        - no: Kan jeg betale kontant?
+
+        - en: Can I pay in cash?
+
+        :::
+
+
+        The server may ask:
+
+
+        ::: examples
+
+        - no: Vil du betale kontant eller med kort?
+
+        - en: Would you like to pay in cash or by card?
+
+        :::
+
+
+        A short response is enough:
+
+
+        ::: examples
+
+        - no: Med kort, takk.
+
+        - en: By card, please.
+
+        :::
+
+
+        ::: examples
+
+        - no: Kontant, takk.
+
+        - en: In cash, please.
+
+        :::
+
+
+        If several people are together, they may ask whether they can pay together
+        or separately:
+
+
+        ::: examples
+
+        - no: Kan vi betale sammen?
+
+        - en: Can we pay together?
+
+        :::
+
+
+        ::: examples
+
+        - no: Vi betaler sammen.
+
+        - en: We’re paying together.
+
+        :::
+
+
+        ::: examples
+
+        - no: Kan vi betale hver for oss?
+
+        - en: Can we pay separately?
+
+        :::
+
+
+        These questions still serve the same immediate goal: completing payment for
+        the order.
+
+
+        Common payment mistake
+
+
+        English uses by card, but Norwegian uses med kort, literally with card.
+
+
+        Use:
+
+
+        ::: examples
+
+        - no: Jeg betaler med kort.
+
+        - en: I’m paying by card.
+
+        :::
+
+
+        Not:
+
+
+        ::: examples
+
+        - no: ✗ Jeg betaler av kort.
+
+        - en: Incorrect: I’m paying of card.
+
+        :::
+
+
+        Also avoid copying English can I have with ha:
+
+
+        ::: examples
+
+        - no: Kan jeg få en kaffe?
+
+        - en: Can I have a coffee?
+
+        :::
+
+
+        Kan jeg få is the natural request. Kan jeg ha usually asks whether you are
+        allowed or able to keep or possess something, not whether a server can give
+        it to you.
+
+
+        {{exercise: confirming_payment}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:25.479194+00:00'
+    decision_id: null
+  guided_transaction:
+    exercise_key: guided_transaction
+    checked_against:
+      guided-transaction: 725c4a78aa773ca18a76f0a2267bb229c11d50275444116cb9e7ef46e595e184
+    section_sources:
+      guided-transaction: '## Guided transaction: connect the stages {#guided-transaction
+        role=recap objectives=obj-order-and-pay-01}
+
+
+        Before creating a whole exchange from scratch, practise the customer’s lines
+        in a new café situation. The server’s lines give you the next turn, so you
+        can focus on keeping the order, choice, total, payment, and closing in the
+        right sequence.
+
+
+        {{exercise: guided_transaction}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:25.479194+00:00'
+    decision_id: null
+  integrated_transaction:
+    exercise_key: integrated_transaction
+    checked_against:
+      integrated-practice: b3a8c1957d85e0e89aef757593099feb2d30b00d5b9563877f92500d970bce76
+    section_sources:
+      integrated-practice: '## Integrated practice: a complete transaction {#integrated-practice
+        role=recap objectives=obj-order-and-pay-01}
+
+
+        Create a short café exchange between a customer and a server. Keep it tightly
+        guided by the sequence from Sara and Emil’s visit:
+
+
+        - The customer orders a drink and a food item.
+
+        - The customer makes one choice about size, type, or an addition.
+
+        - The order includes a clear quantity.
+
+        - The customer asks for the total.
+
+        - The customer checks or states the payment method.
+
+        - The speakers close the transaction politely.
+
+
+        Make sure the server understands exactly what the customer wants, how many
+        items are needed, and how payment will be made. End the exchange clearly rather
+        than stopping after the price.
+
+
+        {{exercise: integrated_transaction}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:25.479194+00:00'
+    decision_id: null
+  quick_retrieval_review:
+    exercise_key: quick_retrieval_review
+    checked_against:
+      quick-retrieval-review: 20412c10e73503db153fb986b886b090ac9e877c3a0942118a7c68e80cfbb8d4
+    section_sources:
+      quick-retrieval-review: '## Quick retrieval review {#quick-retrieval-review
+        role=recap objectives=obj-order-and-pay-01}
+
+
+        Without looking back, write one Norwegian expression for each stage: ordering
+        an item, specifying more than one, asking for the total, asking to pay by
+        card, and saying that the order is complete. Then use those expressions in
+        one short transaction.
+
+
+        {{exercise: quick_retrieval_review}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:25.479194+00:00'
+    decision_id: null
+  review_making_first_request:
+    exercise_key: review_making_first_request
+    checked_against:
+      choosing-an-item: b72408592519bc5dbd7a0b5e1b901fe8db936079595913581ed6a3a497aab71c
+    section_sources:
+      choosing-an-item: '## Choosing an item {#choosing-an-item role=model objectives=obj-order-and-pay-01}
+
+
+        Three useful ways to order are:
+
+
+        ::: examples
+
+        - no: Jeg vil gjerne ha en kaffe.
+
+        - en: I’d like a coffee.
+
+        :::
+
+
+        ::: examples
+
+        - no: Kan jeg få en kaffe?
+
+        - en: Can I have a coffee?
+
+        :::
+
+
+        ::: examples
+
+        - no: Jeg tar en kaffe.
+
+        - en: I’ll have a coffee.
+
+        :::
+
+
+        Jeg vil gjerne ha is polite and useful in almost any café or shop. Gjerne
+        helps make the request sound friendly.
+
+
+        Kan jeg få literally means can I get. It is a natural way to ask for something
+        in Norwegian.
+
+
+        Jeg tar is common when you are choosing from a menu or from several visible
+        items. Here, tar means will have rather than physically take.
+
+
+        Compare:
+
+
+        ::: examples
+
+        - no: Jeg vil ha en kaffe.
+
+        - en: I want a coffee.
+
+        :::
+
+
+        ::: examples
+
+        - no: Jeg vil gjerne ha en kaffe.
+
+        - en: I’d like a coffee.
+
+        :::
+
+
+        Both are grammatical, but the second version normally sounds more courteous
+        in a transaction.
+
+
+        You can use the same patterns with many items:
+
+
+        ::: examples
+
+        - no: Jeg vil gjerne ha et rundstykke med ost.
+
+        - en: I’d like a bread roll with cheese.
+
+        :::
+
+
+        ::: examples
+
+        - no: Kan jeg få en kopp te?
+
+        - en: Can I have a cup of tea?
+
+        :::
+
+
+        ::: examples
+
+        - no: Jeg tar en flaske vann.
+
+        - en: I’ll have a bottle of water.
+
+        :::
+
+
+        {{exercise: making_first_request}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:25.479194+00:00'
+    decision_id: null
+  review_responding_to_choice:
+    exercise_key: review_responding_to_choice
+    checked_against:
+      choosing-between-options: fa7f31a414f950e4422f8ff4a42af5b245bddf08788291ad274f10936042bc91
+    section_sources:
+      choosing-between-options: '## Choosing between options {#choosing-between-options
+        role=contrast objectives=obj-order-and-pay-01}
+
+
+        The server may ask you to choose a size, type, or addition.
+
+
+        ::: examples
+
+        - no: Vil du ha liten eller stor kaffe?
+
+        - en: Would you like a small or large coffee?
+
+        :::
+
+
+        ::: examples
+
+        - no: Liten, takk.
+
+        - en: Small, please.
+
+        :::
+
+
+        ::: examples
+
+        - no: Vil du ha kaffe eller te?
+
+        - en: Would you like coffee or tea?
+
+        :::
+
+
+        ::: examples
+
+        - no: Te, takk.
+
+        - en: Tea, please.
+
+        :::
+
+
+        ::: examples
+
+        - no: Vil du ha melk i kaffen?
+
+        - en: Would you like milk in the coffee?
+
+        :::
+
+
+        ::: examples
+
+        - no: Ja takk.
+
+        - en: Yes, please.
+
+        :::
+
+
+        ::: examples
+
+        - no: Nei takk.
+
+        - en: No, thank you.
+
+        :::
+
+
+        ::: examples
+
+        - no: Med eller uten kullsyre?
+
+        - en: With or without carbonation?
+
+        :::
+
+
+        ::: examples
+
+        - no: Uten kullsyre, takk.
+
+        - en: Still, please.
+
+        :::
+
+
+        A short answer is natural when the choice is already clear from the question.
+        Adding takk keeps it polite.
+
+
+        You can also include the option in your original order:
+
+
+        ::: examples
+
+        - no: Jeg vil gjerne ha en stor kaffe med melk.
+
+        - en: I’d like a large coffee with milk.
+
+        :::
+
+
+        ::: examples
+
+        - no: Kan jeg få en flaske vann uten kullsyre?
+
+        - en: Can I have a bottle of still water?
+
+        :::
+
+
+        ::: examples
+
+        - no: Jeg tar et rundstykke med ost.
+
+        - en: I’ll have a bread roll with cheese.
+
+        :::
+
+
+        Notice the useful contrast:
+
+
+        ::: examples
+
+        - no: med melk
+
+        - en: with milk
+
+        :::
+
+
+        ::: examples
+
+        - no: uten melk
+
+        - en: without milk
+
+        :::
+
+
+        {{exercise: responding_to_choice}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:25.479194+00:00'
+    decision_id: null
+  review_changing_quantities:
+    exercise_key: review_changing_quantities
+    checked_against:
+      saying-how-many: 9a7485615768304d804bb50321292a7e97e1561615d8ca48e2a10df913e12c42
+    section_sources:
+      saying-how-many: '## Saying how many {#saying-how-many role=model objectives=obj-order-and-pay-01}
+
+
+        Use a number before the item when you need more than one. The one-item form
+        is singular (entall); forms used for several items are plural (flertall).
+
+
+        ::: examples
+
+        - no: en kanelbolle
+
+        - en: one cinnamon bun
+
+        :::
+
+
+        ::: examples
+
+        - no: to kanelboller
+
+        - en: two cinnamon buns
+
+        :::
+
+
+        ::: examples
+
+        - no: et rundstykke
+
+        - en: one bread roll
+
+        :::
+
+
+        ::: examples
+
+        - no: tre rundstykker
+
+        - en: three bread rolls
+
+        :::
+
+
+        ::: examples
+
+        - no: en flaske vann
+
+        - en: one bottle of water
+
+        :::
+
+
+        ::: examples
+
+        - no: to flasker vann
+
+        - en: two bottles of water
+
+        :::
+
+
+        The plural ending varies, so it is useful to learn common menu items in practical
+        pairs: en bolle–to boller, et rundstykke–to rundstykker, en flaske–to flasker.
+
+
+        In a complete order:
+
+
+        ::: examples
+
+        - no: Jeg vil gjerne ha to kanelboller.
+
+        - en: I’d like two cinnamon buns.
+
+        :::
+
+
+        ::: examples
+
+        - no: Kan jeg få tre rundstykker med ost?
+
+        - en: Can I have three bread rolls with cheese?
+
+        :::
+
+
+        ::: examples
+
+        - no: Jeg tar en kaffe og to flasker vann.
+
+        - en: I’ll have one coffee and two bottles of water.
+
+        :::
+
+
+        When speaking quickly, café staff and customers may sometimes use shortened
+        menu language. As a learner, a complete form such as to kopper kaffe or to
+        kaffer makes the quantity clear.
+
+
+        ::: examples
+
+        - no: Kan jeg få to kopper kaffe?
+
+        - en: Can I have two cups of coffee?
+
+        :::
+
+
+        ::: examples
+
+        - no: Vi tar to kaffer.
+
+        - en: We’ll have two coffees.
+
+        :::
+
+
+        Common quantity mistake
+
+
+        Do not leave a singular item unchanged after a number when its normal plural
+        form is required.
+
+
+        Instead of:
+
+
+        ::: examples
+
+        - no: ✗ to kanelbolle
+
+        - en: two cinnamon bun
+
+        :::
+
+
+        Use:
+
+
+        ::: examples
+
+        - no: to kanelboller
+
+        - en: two cinnamon buns
+
+        :::
+
+
+        {{exercise: changing_quantities}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:25.479194+00:00'
+    decision_id: null
+  review_item_price_or_total:
+    exercise_key: review_item_price_or_total
+    checked_against:
+      checking-the-price: 6c279c074eff687fd1d51af0fc476988781c585e7cdd1f90947e01253c8f265c
+    section_sources:
+      checking-the-price: '## Checking the price {#checking-the-price role=contrast
+        objectives=obj-order-and-pay-01}
+
+
+        To ask about one named item, use Hva koster …?
+
+
+        ::: examples
+
+        - no: Hva koster kaffen?
+
+        - en: How much does the coffee cost?
+
+        :::
+
+
+        ::: examples
+
+        - no: Hva koster et rundstykke med ost?
+
+        - en: How much does a bread roll with cheese cost?
+
+        :::
+
+
+        ::: examples
+
+        - no: Hva koster denne?
+
+        - en: How much does this one cost?
+
+        :::
+
+
+        To ask about the whole order, use:
+
+
+        ::: examples
+
+        - no: Hvor mye koster det?
+
+        - en: How much does it cost?
+
+        :::
+
+
+        ::: examples
+
+        - no: Hvor mye koster det til sammen?
+
+        - en: How much does it cost altogether?
+
+        :::
+
+
+        The server often gives the total with Det blir …, meaning that comes to …
+
+
+        ::: examples
+
+        - no: Det blir 85 kroner.
+
+        - en: That comes to 85 kroner.
+
+        :::
+
+
+        ::: examples
+
+        - no: Det blir 124 kroner til sammen.
+
+        - en: That comes to 124 kroner altogether.
+
+        :::
+
+
+        Hva blir det? can also be used by a customer asking for the total.
+
+
+        ::: examples
+
+        - no: Hva blir det til sammen?
+
+        - en: What does that come to altogether?
+
+        :::
+
+
+        For an A1 transaction, you do not need a long sentence. A clear price question
+        is enough.
+
+
+        {{exercise: item_price_or_total}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:25.479194+00:00'
+    decision_id: null
+  review_confirming_payment:
+    exercise_key: review_confirming_payment
+    checked_against:
+      checking-how-to-pay: 45266975ea95e47f73b6da2a6522dbba7783be0b9a759358093f06488f2af030
+    section_sources:
+      checking-how-to-pay: '## Checking how to pay {#checking-how-to-pay role=model
+        objectives=obj-order-and-pay-01}
+
+
+        The most useful payment question is:
+
+
+        ::: examples
+
+        - no: Kan jeg betale med kort?
+
+        - en: Can I pay by card?
+
+        :::
+
+
+        For cash, use kontant:
+
+
+        ::: examples
+
+        - no: Kan jeg betale kontant?
+
+        - en: Can I pay in cash?
+
+        :::
+
+
+        The server may ask:
+
+
+        ::: examples
+
+        - no: Vil du betale kontant eller med kort?
+
+        - en: Would you like to pay in cash or by card?
+
+        :::
+
+
+        A short response is enough:
+
+
+        ::: examples
+
+        - no: Med kort, takk.
+
+        - en: By card, please.
+
+        :::
+
+
+        ::: examples
+
+        - no: Kontant, takk.
+
+        - en: In cash, please.
+
+        :::
+
+
+        If several people are together, they may ask whether they can pay together
+        or separately:
+
+
+        ::: examples
+
+        - no: Kan vi betale sammen?
+
+        - en: Can we pay together?
+
+        :::
+
+
+        ::: examples
+
+        - no: Vi betaler sammen.
+
+        - en: We’re paying together.
+
+        :::
+
+
+        ::: examples
+
+        - no: Kan vi betale hver for oss?
+
+        - en: Can we pay separately?
+
+        :::
+
+
+        These questions still serve the same immediate goal: completing payment for
+        the order.
+
+
+        Common payment mistake
+
+
+        English uses by card, but Norwegian uses med kort, literally with card.
+
+
+        Use:
+
+
+        ::: examples
+
+        - no: Jeg betaler med kort.
+
+        - en: I’m paying by card.
+
+        :::
+
+
+        Not:
+
+
+        ::: examples
+
+        - no: ✗ Jeg betaler av kort.
+
+        - en: Incorrect: I’m paying of card.
+
+        :::
+
+
+        Also avoid copying English can I have with ha:
+
+
+        ::: examples
+
+        - no: Kan jeg få en kaffe?
+
+        - en: Can I have a coffee?
+
+        :::
+
+
+        Kan jeg få is the natural request. Kan jeg ha usually asks whether you are
+        allowed or able to keep or possess something, not whether a server can give
+        it to you.
+
+
+        {{exercise: confirming_payment}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:25.479194+00:00'
+    decision_id: null
+  review_closing_transaction:
+    exercise_key: review_closing_transaction
+    checked_against:
+      closing-the-transaction: 8c77c11ff9b3c333bae3a18d3436ed87480fecc25a42fd28a05e9d55c071b087
+    section_sources:
+      closing-the-transaction: '## Closing the transaction {#closing-the-transaction
+        role=model objectives=obj-order-and-pay-01}
+
+
+        A transaction needs a clear ending. When the server asks whether you want
+        anything else, you can say:
+
+
+        ::: examples
+
+        - no: Nei takk, det var alt.
+
+        - en: No, thank you, that was everything.
+
+        :::
+
+
+        ::: examples
+
+        - no: Ikke noe mer, takk.
+
+        - en: Nothing else, thank you.
+
+        :::
+
+
+        The server may offer a receipt:
+
+
+        ::: examples
+
+        - no: Vil du ha kvitteringen?
+
+        - en: Would you like the receipt?
+
+        :::
+
+
+        ::: examples
+
+        - no: Ja takk.
+
+        - en: Yes, please.
+
+        :::
+
+
+        ::: examples
+
+        - no: Nei takk.
+
+        - en: No, thank you.
+
+        :::
+
+
+        Then close with a brief thanks and farewell:
+
+
+        ::: examples
+
+        - no: Takk skal du ha.
+
+        - en: Thank you very much.
+
+        :::
+
+
+        ::: examples
+
+        - no: Takk, ha det!
+
+        - en: Thanks, bye!
+
+        :::
+
+
+        ::: examples
+
+        - no: Ha en fin dag!
+
+        - en: Have a nice day!
+
+        :::
+
+
+        Vær så god often accompanies the item, card terminal, change, or receipt.
+
+
+        ::: examples
+
+        - no: Vær så god. Her er kaffen.
+
+        - en: Here you are. Here is the coffee.
+
+        :::
+
+
+        ::: examples
+
+        - no: Takk.
+
+        - en: Thank you.
+
+        :::
+
+
+        ::: examples
+
+        - no: Bare hyggelig.
+
+        - en: You’re welcome.
+
+        :::
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:25.479194+00:00'
+    decision_id: null
+prior_approvals: []
+acceptance_statement: Owner acceptance is not qualified Norwegian review.
