@@ -1,0 +1,2104 @@
+schema_version: 2
+lesson_id: dummy_det_weather_ambient_clauses
+stage: exercises
+reviewer: human
+file_sha256: cafa4b0dc0dfab8f1eb37bdd6196de9c6629e1cae27d242b659c46733e37a35b
+upstream_approved_sha256: 63c845a1e30dcec9410e2f02ac4a42d8a41baa3839c30fd26e4f9e173363c81d
+curriculum_slot_sha256: null
+approved_at: '2026-10-25T14:35:44.228149+00:00'
+code_commit: df812841c78a8c31435eaa707b0dd363c77a452a
+review:
+  job: workbench_reviewer
+  model: openai/gpt-6.1-sol
+  prompt_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+  criteria_version: workbench-review-v1
+  evidence_sha256: 276cf17f0f52130d50c4d874590343a5319d94b1735ea4f3f94e7265482ee1ce
+  findings:
+  - finding_id: ai-ec9db460e481a6262fc27f0c
+    key: review_ambient_det_or_named_subject
+    criterion: answerable
+    excerpt: 'review_ambient_det_or_named_subject: stem_md: "A asks why you are putting
+      on your jacket: «Hvorfor tar du på deg jakken?»"; option: "Været er kaldt ute.";
+      correct: false; why: "This is grammatical but stiff here. The natural way to
+      report the outdoor temperature is «Det er kaldt ute» or «Det er kjølig ute»."'
+    explanation: 'review_ambient_det_or_named_subject rejects a valid contextual reply:
+      Replace the grammatical weather-noun distractor with an objectively incorrect
+      ambient construction, or explicitly ask which reply uses dummy det rather than
+      asking for the most natural reply. Stiffness alone should not determine correctness.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 6b38af14e17f5b2dfd0421543dd3ae7deb39169d3bb01315dfafc9b3414ad839
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: 'review_ambient_det_or_named_subject: stem_md: "A asks why you
+      are putting on your jacket: «Hvorfor tar du på deg jakken?»"; option: "Været
+      er kaldt ute."; correct: false; why: "This is grammatical but stiff here. The
+      natural way to report the outdoor temperature is «Det er kaldt ute» or «Det
+      er kjølig ute»."'
+    citation_exact: true
+    advisory: true
+    reviewer: primary
+    block_hash: c3b456d05488487bc57a3388848ba003c9de3ac1596641588c5dab0961e66c7b
+    quote_english: Why are you putting on your jacket? The weather is cold outside.
+      It is cold outside. It is chilly outside.
+    suggested_change: Replace the grammatical weather-noun distractor with an objectively
+      incorrect ambient construction, or explicitly ask which reply uses dummy det
+      rather than asking for the most natural reply. Stiffness alone should not determine
+      correctness.
+    details: '{"category": "answerable", "evidence": "review_ambient_det_or_named_subject:
+      stem_md: \"A asks why you are putting on your jacket: «Hvorfor tar du på deg
+      jakken?»\"; option: \"Været er kaldt ute.\"; correct: false; why: \"This is
+      grammatical but stiff here. The natural way to report the outdoor temperature
+      is «Det er kaldt ute» or «Det er kjølig ute».\"", "fix": "Replace the grammatical
+      weather-noun distractor with an objectively incorrect ambient construction,
+      or explicitly ask which reply uses dummy det rather than asking for the most
+      natural reply. Stiffness alone should not determine correctness.", "quote_english":
+      "Why are you putting on your jacket? The weather is cold outside. It is cold
+      outside. It is chilly outside.", "severity": "P1", "title": "review_ambient_det_or_named_subject
+      rejects a valid contextual reply"}'
+    message: review_ambient_det_or_named_subject rejects a valid contextual reply
+  - finding_id: ai-991a7b3db348a66e847910a4
+    key: restore_det_in_minas_updates
+    criterion: answerable
+    excerpt: 'restore_det_in_minas_updates: prompt_md: "Choose the word that needs
+      a word before it."; stem_md: ''Jonas: «Regner det fortsatt? Blåser det også?»
+      Mina: «Ja, regner fortsatt, og det blåser mer enn før.»''; error_token_id: tok-2;
+      token text: regner.'
+    explanation: 'restore_det_in_minas_updates targets an omission in a conversational
+      fragment: Use a completion task explicitly requesting a complete statement:
+      «Ja, ___ regner fortsatt, og det blåser mer enn før.» Supply det as the answer.
+      The verb regner is not itself an incorrect replaceable token, and conversational
+      subject omission should not be diagnosed as an intrinsically wrong form.'
+    severity: minor
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 6b38af14e17f5b2dfd0421543dd3ae7deb39169d3bb01315dfafc9b3414ad839
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: 'restore_det_in_minas_updates: prompt_md: "Choose the word that
+      needs a word before it."; stem_md: ''Jonas: «Regner det fortsatt? Blåser det
+      også?» Mina: «Ja, regner fortsatt, og det blåser mer enn før.»''; error_token_id:
+      tok-2; token text: regner.'
+    citation_exact: true
+    advisory: true
+    reviewer: primary
+    block_hash: 40fa5930eecbaa8ea222f8da5f0998ea8766ea9c36362703d9e63e311216dbde
+    quote_english: 'Jonas: Is it still raining? Is it windy too? Mina: Yes, still
+      raining, and it is windier than before.'
+    suggested_change: 'Use a completion task explicitly requesting a complete statement:
+      «Ja, ___ regner fortsatt, og det blåser mer enn før.» Supply det as the answer.
+      The verb regner is not itself an incorrect replaceable token, and conversational
+      subject omission should not be diagnosed as an intrinsically wrong form.'
+    details: '{"category": "answerable", "evidence": "restore_det_in_minas_updates:
+      prompt_md: \"Choose the word that needs a word before it.\"; stem_md: ''Jonas:
+      «Regner det fortsatt? Blåser det også?» Mina: «Ja, regner fortsatt, og det blåser
+      mer enn før.»''; error_token_id: tok-2; token text: regner.", "fix": "Use a
+      completion task explicitly requesting a complete statement: «Ja, ___ regner
+      fortsatt, og det blåser mer enn før.» Supply det as the answer. The verb regner
+      is not itself an incorrect replaceable token, and conversational subject omission
+      should not be diagnosed as an intrinsically wrong form.", "quote_english": "Jonas:
+      Is it still raining? Is it windy too? Mina: Yes, still raining, and it is windier
+      than before.", "severity": "P2", "title": "restore_det_in_minas_updates targets
+      an omission in a conversational fragment"}'
+    message: restore_det_in_minas_updates targets an omission in a conversational
+      fragment
+  - finding_id: ai-23f182965f067a3fed21dd4f
+    key: repair_incomplete_weather_messages
+    criterion: answerable
+    excerpt: 'repair_incomplete_weather_messages: prompt_md: "Choose the word that
+      needs a word before it."; stem_md: "The hiking group asks about the weather
+      on the mountain. Reply: «Snør på fjellet.»"; error_token_id: tok-1; token text:
+      Snør.'
+    explanation: 'repair_incomplete_weather_messages has no wrong replaceable token:
+      Convert to completion with the instruction “Complete the reply as a full statement”
+      and carrier «___ snør på fjellet.» This tests required det in a complete statement
+      without treating a usable short weather-message fragment as an objectively incorrect
+      token.'
+    severity: minor
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 6b38af14e17f5b2dfd0421543dd3ae7deb39169d3bb01315dfafc9b3414ad839
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: 'repair_incomplete_weather_messages: prompt_md: "Choose the word
+      that needs a word before it."; stem_md: "The hiking group asks about the weather
+      on the mountain. Reply: «Snør på fjellet.»"; error_token_id: tok-1; token text:
+      Snør.'
+    citation_exact: true
+    advisory: true
+    reviewer: primary
+    block_hash: 5adae3202599f4b637ba8d65ae4af60b4a1fd0d101f751dcbc1c34dae02ad0fc
+    quote_english: Snowing in the mountains.
+    suggested_change: Convert to completion with the instruction “Complete the reply
+      as a full statement” and carrier «___ snør på fjellet.» This tests required
+      det in a complete statement without treating a usable short weather-message
+      fragment as an objectively incorrect token.
+    details: '{"category": "answerable", "evidence": "repair_incomplete_weather_messages:
+      prompt_md: \"Choose the word that needs a word before it.\"; stem_md: \"The
+      hiking group asks about the weather on the mountain. Reply: «Snør på fjellet.»\";
+      error_token_id: tok-1; token text: Snør.", "fix": "Convert to completion with
+      the instruction “Complete the reply as a full statement” and carrier «___ snør
+      på fjellet.» This tests required det in a complete statement without treating
+      a usable short weather-message fragment as an objectively incorrect token.",
+      "quote_english": "Snowing in the mountains.", "severity": "P2", "title": "repair_incomplete_weather_messages
+      has no wrong replaceable token"}'
+    message: repair_incomplete_weather_messages has no wrong replaceable token
+  - finding_id: ai-121ae7d6bc59c07837482a98
+    key: named-subject-and-ambient-det#1
+    criterion: presentable
+    excerpt: 'named-subject-and-ambient-det#12: "At this level, it is most useful
+      to learn these as stable expressions. A common mistake is to copy the form used
+      with a specific noun:"'
+    explanation: 'named-subject-and-ambient-det#12 leaks level framing: Remove level
+      framing: “Learn these as stable expressions. With fixed det, use kaldt and varmt
+      rather than copying kald or varm from the named-subject examples.”'
+    severity: minor
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 6b38af14e17f5b2dfd0421543dd3ae7deb39169d3bb01315dfafc9b3414ad839
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: 'named-subject-and-ambient-det#12: "At this level, it is most useful
+      to learn these as stable expressions. A common mistake is to copy the form used
+      with a specific noun:"'
+    citation_exact: true
+    advisory: true
+    reviewer: primary
+    block_hash: ee43f4bfbc6e554dcb546e46b1d02dc0ffecf8a9df08165cdad8b6e30e944667
+    quote_english: ''
+    suggested_change: 'Remove level framing: “Learn these as stable expressions. With
+      fixed det, use kaldt and varmt rather than copying kald or varm from the named-subject
+      examples.”'
+    details: '{"category": "presentable", "evidence": "named-subject-and-ambient-det#12:
+      \"At this level, it is most useful to learn these as stable expressions. A common
+      mistake is to copy the form used with a specific noun:\"", "fix": "Remove level
+      framing: “Learn these as stable expressions. With fixed det, use kaldt and varmt
+      rather than copying kald or varm from the named-subject examples.”", "quote_english":
+      "", "severity": "P2", "title": "named-subject-and-ambient-det#12 leaks level
+      framing"}'
+    message: named-subject-and-ambient-det#12 leaks level framing
+  - finding_id: ai-7f97cceff83a53daad4df857
+    key: weather-verbs-with-det#8
+    criterion: presentable
+    excerpt: 'weather-verbs-with-det#8: "A likely mistake is to omit *det* because
+      the learner thinks the weather verb already gives enough information:"; returning-to-mina-and-jonas#10:
+      "This chapter’s main goal remains recognizing and using *det* when there is
+      no real weather or ambient subject."'
+    explanation: 'Two passages address teaching design rather than the learner directly:
+      In weather-verbs-with-det#8, write “Keep det even when the weather verb seems
+      to give enough information.” In returning-to-mina-and-jonas#10, replace chapter-goal
+      commentary with “Keep det in both statements and questions when describing weather
+      or general surroundings without a particular person or thing as subject.”'
+    severity: minor
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 6b38af14e17f5b2dfd0421543dd3ae7deb39169d3bb01315dfafc9b3414ad839
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: 'weather-verbs-with-det#8: "A likely mistake is to omit *det* because
+      the learner thinks the weather verb already gives enough information:"; returning-to-mina-and-jonas#10:
+      "This chapter’s main goal remains recognizing and using *det* when there is
+      no real weather or ambient subject."'
+    citation_exact: true
+    advisory: true
+    reviewer: primary
+    block_hash: 35c9a72e11b20e614f6ceed5462a835c2724e4e298c0cbc380fdc7ca7ed4d954
+    quote_english: 'det: it.'
+    suggested_change: In weather-verbs-with-det#8, write “Keep det even when the weather
+      verb seems to give enough information.” In returning-to-mina-and-jonas#10, replace
+      chapter-goal commentary with “Keep det in both statements and questions when
+      describing weather or general surroundings without a particular person or thing
+      as subject.”
+    details: '{"category": "presentable", "evidence": "weather-verbs-with-det#8: \"A
+      likely mistake is to omit *det* because the learner thinks the weather verb
+      already gives enough information:\"; returning-to-mina-and-jonas#10: \"This
+      chapter’s main goal remains recognizing and using *det* when there is no real
+      weather or ambient subject.\"", "fix": "In weather-verbs-with-det#8, write “Keep
+      det even when the weather verb seems to give enough information.” In returning-to-mina-and-jonas#10,
+      replace chapter-goal commentary with “Keep det in both statements and questions
+      when describing weather or general surroundings without a particular person
+      or thing as subject.”", "quote_english": "det: it.", "severity": "P3", "title":
+      "Two passages address teaching design rather than the learner directly"}'
+    message: Two passages address teaching design rather than the learner directly
+  - finding_id: ai-c39334a9f0ef2c59cbffd06e
+    key: a-change-of-plans#1
+    criterion: naturalness
+    excerpt: 'when weather or an ambient condition has no real person or thing performing
+      the action or possessing the quality.
+
+      You are using the same subject because the changing condition still has no particular
+      person or thing as its semantic subject.
+
+      Norwegian uses fixed «det» in weather and ambient clauses that have no semantic
+      subject.'
+    explanation: 'Selected explanations introduce unnecessary abstract terminology
+      for A1: “ambient condition” in a-change-of-plans#10 and “semantic subject” in
+      reporting-a-change-with-blir#9 and notice_fixed_det_in_the_cafe_call. Earlier
+      examples scaffold the idea, but these additional labels remain unexplained.
+      Reuse the established plain explanation about weather and surroundings without
+      naming a person or thing.'
+    severity: minor
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 6b38af14e17f5b2dfd0421543dd3ae7deb39169d3bb01315dfafc9b3414ad839
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: 'when weather or an ambient condition has no real person or thing
+      performing the action or possessing the quality.
+
+      You are using the same subject because the changing condition still has no particular
+      person or thing as its semantic subject.
+
+      Norwegian uses fixed «det» in weather and ambient clauses that have no semantic
+      subject.'
+    citation_exact: true
+    advisory: true
+    reviewer: primary
+    block_hash: 931253fdc8391d09878df731aaf7ecd6eb711197b6c80f0990bee90bb3672c26
+    quote_english: English source text; no Norwegian wording for these explanations.
+    suggested_change: 'In a-change-of-plans#10: “Norwegian uses det as the subject
+      when you describe the weather or surroundings without naming a particular person
+      or thing.” In reporting-a-change-with-blir#9: “Keep det when you describe a
+      change in the weather or surroundings.” In notice_fixed_det_in_the_cafe_call:
+      “Here, det fills the subject position without naming a particular person or
+      thing.”'
+    details: '{"evidence": "when weather or an ambient condition has no real person
+      or thing performing the action or possessing the quality.\nYou are using the
+      same subject because the changing condition still has no particular person or
+      thing as its semantic subject.\nNorwegian uses fixed «det» in weather and ambient
+      clauses that have no semantic subject.", "message": "Selected explanations introduce
+      unnecessary abstract terminology for A1: “ambient condition” in a-change-of-plans#10
+      and “semantic subject” in reporting-a-change-with-blir#9 and notice_fixed_det_in_the_cafe_call.
+      Earlier examples scaffold the idea, but these additional labels remain unexplained.
+      Reuse the established plain explanation about weather and surroundings without
+      naming a person or thing.", "quote_english": "English source text; no Norwegian
+      wording for these explanations.", "severity": "P2", "suggested_change": "In
+      a-change-of-plans#10: “Norwegian uses det as the subject when you describe the
+      weather or surroundings without naming a particular person or thing.” In reporting-a-change-with-blir#9:
+      “Keep det when you describe a change in the weather or surroundings.” In notice_fixed_det_in_the_cafe_call:
+      “Here, det fills the subject position without naming a particular person or
+      thing.”", "unit_id": ""}'
+    message: 'Selected explanations introduce unnecessary abstract terminology for
+      A1: “ambient condition” in a-change-of-plans#10 and “semantic subject” in reporting-a-change-with-blir#9
+      and notice_fixed_det_in_the_cafe_call. Earlier examples scaffold the idea, but
+      these additional labels remain unexplained. Reuse the established plain explanation
+      about weather and surroundings without naming a person or thing.'
+  - finding_id: ai-a394417230379d3de783c406
+    key: review_ambient_adjective_form
+    criterion: naturalness
+    excerpt: Med fast «det» bruker vi intetkjønnsformen «varmt».
+    explanation: “intetkjønnsformen” introduces an unscaffolded Norwegian grammar
+      label in feedback for English-speaking A1 learners. The preceding instruction
+      explicitly teaches these as fixed expressions rather than explaining neuter
+      forms. Give the concrete learner action in English, or introduce and explain
+      the term.
+    severity: minor
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 6b38af14e17f5b2dfd0421543dd3ae7deb39169d3bb01315dfafc9b3414ad839
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: Med fast «det» bruker vi intetkjønnsformen «varmt».
+    citation_exact: true
+    advisory: true
+    reviewer: primary
+    block_hash: 2e3e0986501d0c54b8605f0a2fe1f2dfc524617c8f9998e9e27008ff0d7cb16a
+    quote_english: With fixed det, we use the neuter form varmt.
+    suggested_change: '“Use varmt, with -t, in this expression: Det er varmt her (‘It’s
+      warm here’).”'
+    details: '{"evidence": "Med fast «det» bruker vi intetkjønnsformen «varmt».",
+      "message": "“intetkjønnsformen” introduces an unscaffolded Norwegian grammar
+      label in feedback for English-speaking A1 learners. The preceding instruction
+      explicitly teaches these as fixed expressions rather than explaining neuter
+      forms. Give the concrete learner action in English, or introduce and explain
+      the term.", "quote_english": "With fixed det, we use the neuter form varmt.",
+      "severity": "P2", "suggested_change": "“Use varmt, with -t, in this expression:
+      Det er varmt her (‘It’s warm here’).”", "unit_id": "review_ambient_adjective_form"}'
+    message: “intetkjønnsformen” introduces an unscaffolded Norwegian grammar label
+      in feedback for English-speaking A1 learners. The preceding instruction explicitly
+      teaches these as fixed expressions rather than explaining neuter forms. Give
+      the concrete learner action in English, or introduce and explain the term.
+  - finding_id: ai-6178dd7ead2ee5245f612475
+    key: choose_current_or_changing_condition
+    criterion: objective_alignment
+    excerpt: «Er» beskriver en tilstand nå, mens «blir» beskriver en forandring.
+    explanation: Exercise choose_current_or_changing_condition tests the distinction
+      between er and blir, not fixed det in subjectless weather or ambient predication.
+      Every option already uses fixed det correctly; choosing the answer requires
+      only matching states and changes to observations. Reassign to an objective about
+      expressing states versus changes, or revise the choices so learners must distinguish
+      correct fixed-det ambient clauses from clauses with missing det or an inappropriate
+      semantic subject.
+    severity: minor
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 6b38af14e17f5b2dfd0421543dd3ae7deb39169d3bb01315dfafc9b3414ad839
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: «Er» beskriver en tilstand nå, mens «blir» beskriver en forandring.
+    citation_exact: true
+    advisory: true
+    reviewer: primary
+    block_hash: 8179530e902b52d0cc75fbfc5638551bf19bf8d4f0248443c334b80bab55bb80
+    quote_english: “Er” describes a current state, while “blir” describes a change.
+    suggested_change: Reassign to an objective about expressing states versus changes,
+      or revise the choices so learners must distinguish correct fixed-det ambient
+      clauses from clauses with missing det or an inappropriate semantic subject.
+    details: '{"evidence": "«Er» beskriver en tilstand nå, mens «blir» beskriver en
+      forandring.", "fix": "Reassign to an objective about expressing states versus
+      changes, or revise the choices so learners must distinguish correct fixed-det
+      ambient clauses from clauses with missing det or an inappropriate semantic subject.",
+      "message": "Exercise choose_current_or_changing_condition tests the distinction
+      between er and blir, not fixed det in subjectless weather or ambient predication.
+      Every option already uses fixed det correctly; choosing the answer requires
+      only matching states and changes to observations.", "objective_id": "obj-dummy-det-weather-ambient-clauses-01",
+      "quote_english": "“Er” describes a current state, while “blir” describes a change.",
+      "severity": "P2"}'
+    message: Exercise choose_current_or_changing_condition tests the distinction between
+      er and blir, not fixed det in subjectless weather or ambient predication. Every
+      option already uses fixed det correctly; choosing the answer requires only matching
+      states and changes to observations.
+  - finding_id: ai-669fd366464d507daf3e64c7
+    key: review_current_or_changing
+    criterion: objective_alignment
+    excerpt: 'Options: «Det er kaldt.» / «Det blir varmt.» / «Det blir kaldt.»'
+    explanation: Exercise review_current_or_changing tests interpretation of a developing
+      temperature change. All options contain correct fixed det, so success does not
+      depend on recognizing when ambient predication needs a nonreferential subject.
+      Reassign to a state-versus-change objective, or hold the intended temperature
+      change constant and make the choices test whether fixed det supplies the required
+      grammatical subject.
+    severity: minor
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 6b38af14e17f5b2dfd0421543dd3ae7deb39169d3bb01315dfafc9b3414ad839
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: 'Options: «Det er kaldt.» / «Det blir varmt.» / «Det blir kaldt.»'
+    citation_exact: true
+    advisory: true
+    reviewer: primary
+    block_hash: 79041696b093d853b174601ac66a618b8261691a768ae10fbbf4d532d13e8f7a
+    quote_english: 'Options: “It is cold.” / “It is getting warm.” / “It is getting
+      cold.”'
+    suggested_change: Reassign to a state-versus-change objective, or hold the intended
+      temperature change constant and make the choices test whether fixed det supplies
+      the required grammatical subject.
+    details: '{"evidence": "Options: «Det er kaldt.» / «Det blir varmt.» / «Det blir
+      kaldt.»", "fix": "Reassign to a state-versus-change objective, or hold the intended
+      temperature change constant and make the choices test whether fixed det supplies
+      the required grammatical subject.", "message": "Exercise review_current_or_changing
+      tests interpretation of a developing temperature change. All options contain
+      correct fixed det, so success does not depend on recognizing when ambient predication
+      needs a nonreferential subject.", "objective_id": "obj-dummy-det-weather-ambient-clauses-01",
+      "quote_english": "Options: “It is cold.” / “It is getting warm.” / “It is getting
+      cold.”", "severity": "P2"}'
+    message: Exercise review_current_or_changing tests interpretation of a developing
+      temperature change. All options contain correct fixed det, so success does not
+      depend on recognizing when ambient predication needs a nonreferential subject.
+  - finding_id: ai-83f48885f80898709e772e1e
+    key: build_ambient_condition_statements
+    criterion: answer_review.ambiguous
+    excerpt: ''
+    explanation: 'ambiguous: build_ambient_condition_statements'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 6b38af14e17f5b2dfd0421543dd3ae7deb39169d3bb01315dfafc9b3414ad839
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: 34000f85741387697fc8e44bd2e6925e563af5e237cd8924fd47bab63ba7ab57
+    quote_english: ''
+    suggested_change: ''
+    details: '{"category": "ambiguous", "id": "build_ambient_condition_statements",
+      "report": {"ambiguous": ["build_ambient_condition_statements"], "duplicates":
+      [], "extra": [], "lesson_hash": "sha256:a25ad4e061358559bfe37d0842eafc47bdee1b0b6c4fbdcc3450d93a2c81cc20",
+      "matches": 12, "mismatches": [], "missing": [], "open_handles": ["report_conditions_from_the_cabin",
+      "respond_to_local_weather_questions", "retrieve_fixed_det_weather_rule"], "open_tasks_unverified":
+      true, "review_status": "advisory_findings", "semantic_issues": [{"id": "complete_weather_verb_reports",
+      "issues": [{"category": "supplied_answer_retrieval", "evidence": "Det regner.
+      / Det snør. / Det blåser.", "quote_english": "", "reason": "Context supplies
+      all three exact target forms, allowing copying rather than retrieval of the
+      weather-verb construction.", "suggested_change": ""}]}, {"id": "distinguish_named_subject_from_ambient_det",
+      "issues": [{"category": "supplied_answer_retrieval", "evidence": "“Rommet er
+      mørkt describes a specific room. Det er mørkt describes the ambient condition
+      without naming a specific subject.” The coffee contrast is likewise explicitly
+      classified.", "quote_english": "", "reason": "English explanations explicitly
+      classify repeated test sentences as describing named things or ambient conditions.
+      Those classifications can be retrieved without independently interpreting the
+      Norwegian.", "suggested_change": ""}]}, {"id": "build_ambient_condition_statements",
+      "issues": [{"category": "competing_valid_answers", "evidence": "Det er varmt
+      og hyggelig der inne. / Det er hyggelig og varmt der inne.", "quote_english":
+      "", "reason": "Prompt specifies both meanings but not adjective order; varmt
+      og hyggelig and hyggelig og varmt both satisfy it.", "suggested_change": ""}]},
+      {"id": "choose_current_or_changing_condition", "issues": [{"category": "composite_decision_load",
+      "evidence": "Each option combines a statement about klokka 15 with another about
+      klokka 17.", "quote_english": "", "reason": "One selection bundles two independently
+      judged time-to-condition mappings, obscuring which distinction caused an error.",
+      "suggested_change": ""}]}, {"id": "restore_det_in_minas_updates", "issues":
+      [{"category": "supplied_answer_retrieval", "evidence": "Ja, det regner fortsatt,
+      og det blåser mer enn før.", "quote_english": "", "reason": "The preceding dialogue
+      supplies the exact corrected sentence, so the missing subject can be located
+      by comparison rather than independently applying the rule.", "suggested_change":
+      ""}]}, {"id": "repair_incomplete_weather_messages", "issues": [{"category":
+      "supplied_answer_retrieval", "evidence": "Snør på fjellet. / Det snør på fjellet.",
+      "quote_english": "", "reason": "Context displays both the exact incomplete sentence
+      and its complete correction, directly supplying the repair.", "suggested_change":
+      ""}]}, {"id": "review_current_or_changing", "issues": [{"category": "factual_premise",
+      "evidence": "“Varmen forsvinner nå som ovnen er av” supports Det blir kaldere
+      more precisely than Det blir kaldt.", "quote_english": "", "reason": "Losing
+      heat establishes cooling, not necessarily becoming cold. The intended answer
+      adds an endpoint that Jonas''s observation does not establish.", "suggested_change":
+      ""}]}], "status": "pass", "total": 13, "unanswerable": []}}'
+    message: 'ambiguous: build_ambient_condition_statements'
+  - finding_id: ai-61edeb1e0c734f47ea882617
+    key: complete_weather_verb_reports
+    criterion: answer_review.semantic_issues
+    excerpt: Det regner. / Det snør. / Det blåser.
+    explanation: 'Supplied answer retrieval: Context supplies all three exact target
+      forms, allowing copying rather than retrieval of the weather-verb construction.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 6b38af14e17f5b2dfd0421543dd3ae7deb39169d3bb01315dfafc9b3414ad839
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: 974271ad19200f18be7319554d6e404b30d9ee5e8f7dc214c8bc76edf3b64a7d
+    quote_english: ''
+    suggested_change: ''
+    details: '{"id": "complete_weather_verb_reports", "issues": [{"category": "supplied_answer_retrieval",
+      "evidence": "Det regner. / Det snør. / Det blåser.", "quote_english": "", "reason":
+      "Context supplies all three exact target forms, allowing copying rather than
+      retrieval of the weather-verb construction.", "suggested_change": ""}]}'
+    message: 'Supplied answer retrieval: Context supplies all three exact target forms,
+      allowing copying rather than retrieval of the weather-verb construction.'
+  - finding_id: ai-f62cce9a370e8a7069c51b19
+    key: distinguish_named_subject_from_ambient_det
+    criterion: answer_review.semantic_issues
+    excerpt: “Rommet er mørkt describes a specific room. Det er mørkt describes the
+      ambient condition without naming a specific subject.” The coffee contrast is
+      likewise explicitly classified.
+    explanation: 'Supplied answer retrieval: English explanations explicitly classify
+      repeated test sentences as describing named things or ambient conditions. Those
+      classifications can be retrieved without independently interpreting the Norwegian.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 6b38af14e17f5b2dfd0421543dd3ae7deb39169d3bb01315dfafc9b3414ad839
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: dc5b1decf74155a3e97e06c4913c15617244a47d7431116eb365e6f9c07c3ed1
+    quote_english: ''
+    suggested_change: ''
+    details: '{"id": "distinguish_named_subject_from_ambient_det", "issues": [{"category":
+      "supplied_answer_retrieval", "evidence": "“Rommet er mørkt describes a specific
+      room. Det er mørkt describes the ambient condition without naming a specific
+      subject.” The coffee contrast is likewise explicitly classified.", "quote_english":
+      "", "reason": "English explanations explicitly classify repeated test sentences
+      as describing named things or ambient conditions. Those classifications can
+      be retrieved without independently interpreting the Norwegian.", "suggested_change":
+      ""}]}'
+    message: 'Supplied answer retrieval: English explanations explicitly classify
+      repeated test sentences as describing named things or ambient conditions. Those
+      classifications can be retrieved without independently interpreting the Norwegian.'
+  - finding_id: ai-0de6d6cb1d78676f04c92104
+    key: build_ambient_condition_statements
+    criterion: answer_review.semantic_issues
+    excerpt: Det er varmt og hyggelig der inne. / Det er hyggelig og varmt der inne.
+    explanation: 'Competing valid answers: Prompt specifies both meanings but not
+      adjective order; varmt og hyggelig and hyggelig og varmt both satisfy it.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 6b38af14e17f5b2dfd0421543dd3ae7deb39169d3bb01315dfafc9b3414ad839
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: 34000f85741387697fc8e44bd2e6925e563af5e237cd8924fd47bab63ba7ab57
+    quote_english: ''
+    suggested_change: ''
+    details: '{"id": "build_ambient_condition_statements", "issues": [{"category":
+      "competing_valid_answers", "evidence": "Det er varmt og hyggelig der inne. /
+      Det er hyggelig og varmt der inne.", "quote_english": "", "reason": "Prompt
+      specifies both meanings but not adjective order; varmt og hyggelig and hyggelig
+      og varmt both satisfy it.", "suggested_change": ""}]}'
+    message: 'Competing valid answers: Prompt specifies both meanings but not adjective
+      order; varmt og hyggelig and hyggelig og varmt both satisfy it.'
+  - finding_id: ai-a71d0940dc8d2fdcc4907426
+    key: choose_current_or_changing_condition
+    criterion: answer_review.semantic_issues
+    excerpt: Each option combines a statement about klokka 15 with another about klokka
+      17.
+    explanation: 'Composite decision load: One selection bundles two independently
+      judged time-to-condition mappings, obscuring which distinction caused an error.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 6b38af14e17f5b2dfd0421543dd3ae7deb39169d3bb01315dfafc9b3414ad839
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: 8179530e902b52d0cc75fbfc5638551bf19bf8d4f0248443c334b80bab55bb80
+    quote_english: ''
+    suggested_change: ''
+    details: '{"id": "choose_current_or_changing_condition", "issues": [{"category":
+      "composite_decision_load", "evidence": "Each option combines a statement about
+      klokka 15 with another about klokka 17.", "quote_english": "", "reason": "One
+      selection bundles two independently judged time-to-condition mappings, obscuring
+      which distinction caused an error.", "suggested_change": ""}]}'
+    message: 'Composite decision load: One selection bundles two independently judged
+      time-to-condition mappings, obscuring which distinction caused an error.'
+  - finding_id: ai-a639a45df56e01b645920f4e
+    key: restore_det_in_minas_updates
+    criterion: answer_review.semantic_issues
+    excerpt: Ja, det regner fortsatt, og det blåser mer enn før.
+    explanation: 'Supplied answer retrieval: The preceding dialogue supplies the exact
+      corrected sentence, so the missing subject can be located by comparison rather
+      than independently applying the rule.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 6b38af14e17f5b2dfd0421543dd3ae7deb39169d3bb01315dfafc9b3414ad839
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: 40fa5930eecbaa8ea222f8da5f0998ea8766ea9c36362703d9e63e311216dbde
+    quote_english: ''
+    suggested_change: ''
+    details: '{"id": "restore_det_in_minas_updates", "issues": [{"category": "supplied_answer_retrieval",
+      "evidence": "Ja, det regner fortsatt, og det blåser mer enn før.", "quote_english":
+      "", "reason": "The preceding dialogue supplies the exact corrected sentence,
+      so the missing subject can be located by comparison rather than independently
+      applying the rule.", "suggested_change": ""}]}'
+    message: 'Supplied answer retrieval: The preceding dialogue supplies the exact
+      corrected sentence, so the missing subject can be located by comparison rather
+      than independently applying the rule.'
+  - finding_id: ai-ca12db7977362dd98aeaaee5
+    key: repair_incomplete_weather_messages
+    criterion: answer_review.semantic_issues
+    excerpt: Snør på fjellet. / Det snør på fjellet.
+    explanation: 'Supplied answer retrieval: Context displays both the exact incomplete
+      sentence and its complete correction, directly supplying the repair.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 6b38af14e17f5b2dfd0421543dd3ae7deb39169d3bb01315dfafc9b3414ad839
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: 5adae3202599f4b637ba8d65ae4af60b4a1fd0d101f751dcbc1c34dae02ad0fc
+    quote_english: ''
+    suggested_change: ''
+    details: '{"id": "repair_incomplete_weather_messages", "issues": [{"category":
+      "supplied_answer_retrieval", "evidence": "Snør på fjellet. / Det snør på fjellet.",
+      "quote_english": "", "reason": "Context displays both the exact incomplete sentence
+      and its complete correction, directly supplying the repair.", "suggested_change":
+      ""}]}'
+    message: 'Supplied answer retrieval: Context displays both the exact incomplete
+      sentence and its complete correction, directly supplying the repair.'
+  - finding_id: ai-6a0a27fc5eb671cc6fca65df
+    key: review_current_or_changing
+    criterion: answer_review.semantic_issues
+    excerpt: “Varmen forsvinner nå som ovnen er av” supports Det blir kaldere more
+      precisely than Det blir kaldt.
+    explanation: 'Factual premise: Losing heat establishes cooling, not necessarily
+      becoming cold. The intended answer adds an endpoint that Jonas''s observation
+      does not establish.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 6b38af14e17f5b2dfd0421543dd3ae7deb39169d3bb01315dfafc9b3414ad839
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: 79041696b093d853b174601ac66a618b8261691a768ae10fbbf4d532d13e8f7a
+    quote_english: ''
+    suggested_change: ''
+    details: '{"id": "review_current_or_changing", "issues": [{"category": "factual_premise",
+      "evidence": "“Varmen forsvinner nå som ovnen er av” supports Det blir kaldere
+      more precisely than Det blir kaldt.", "quote_english": "", "reason": "Losing
+      heat establishes cooling, not necessarily becoming cold. The intended answer
+      adds an endpoint that Jonas''s observation does not establish.", "suggested_change":
+      ""}]}'
+    message: 'Factual premise: Losing heat establishes cooling, not necessarily becoming
+      cold. The intended answer adds an endpoint that Jonas''s observation does not
+      establish.'
+  - finding_id: ai-f77143827af6b5bd65f52b72
+    key: build_ambient_condition_statements
+    criterion: attempt_surface.ambiguous
+    excerpt: ''
+    explanation: 'Two token arrangements satisfy the requested temperature and mood
+      meanings: «Det er varmt og hyggelig der inne.» and «Det er hyggelig og varmt
+      der inne.» No visible constraint selects their adjective order.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 6b38af14e17f5b2dfd0421543dd3ae7deb39169d3bb01315dfafc9b3414ad839
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: 34000f85741387697fc8e44bd2e6925e563af5e237cd8924fd47bab63ba7ab57
+    quote_english: ''
+    suggested_change: ''
+    details: '{"category": "ambiguous", "id": "build_ambient_condition_statements",
+      "report": {"ambiguous": ["build_ambient_condition_statements"], "clear": 15,
+      "duplicates": [], "extra": [], "missing": [], "reasons": {"build_ambient_condition_statements":
+      "Two token arrangements satisfy the requested temperature and mood meanings:
+      «Det er varmt og hyggelig der inne.» and «Det er hyggelig og varmt der inne.»
+      No visible constraint selects their adjective order."}, "status": "pass", "total":
+      16, "unanswerable": []}}'
+    message: 'Two token arrangements satisfy the requested temperature and mood meanings:
+      «Det er varmt og hyggelig der inne.» and «Det er hyggelig og varmt der inne.»
+      No visible constraint selects their adjective order.'
+  - finding_id: ai-746551892db64eab12c515e1
+    key: respond_to_local_weather_questions
+    criterion: open_rubrics.unanswerable
+    excerpt: outdoor seating
+    explanation: Rubric adds an unrequested fixed-«det» construction and narrows 'outdoor
+      seating' to a café terrace. Natural Norwegian conveying the supplied facts need
+      not use that construction or identify a café.
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 6b38af14e17f5b2dfd0421543dd3ae7deb39169d3bb01315dfafc9b3414ad839
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: outdoor seating
+    citation_exact: true
+    advisory: true
+    reviewer: primary
+    block_hash: 2d8adbbbfdca4c5041de8e3e29ef6c4aefcf5e49760ccb2980f18097370f3496
+    quote_english: ''
+    suggested_change: ''
+    details: '{"category": "unanswerable", "id": "respond_to_local_weather_questions",
+      "report": {"ambiguous": [], "duplicates": [], "extra": [], "missing": [], "open_write_handles":
+      ["respond_to_local_weather_questions", "report_conditions_from_the_cabin", "retrieve_fixed_det_weather_rule"],
+      "passed": 0, "reasons": {"report_conditions_from_the_cabin": "Rubric adds mandatory
+      «det» and «blir» forms not specified by the visible task. Describing a change
+      does not uniquely require «blir»: «Det mørkner snart» satisfies that request.
+      Coverage also changes snow being present into active snowfall and does not require
+      the supplied ''soon'' timing.", "respond_to_local_weather_questions": "Rubric
+      adds an unrequested fixed-«det» construction and narrows ''outdoor seating''
+      to a café terrace. Natural Norwegian conveying the supplied facts need not use
+      that construction or identify a café.", "retrieve_fixed_det_weather_rule": "The
+      requested two separate sentences lack rubric coverage and are explicitly waived
+      by the judge''s must-pass example, which is one coordinated sentence. Rubric
+      also adds unrequested fixed-«det» and neuter-«kaldt» constructions rather than
+      assessing any natural message conveying rain and low temperature."}, "status":
+      "pass", "total": 3, "unanswerable": ["respond_to_local_weather_questions", "report_conditions_from_the_cabin",
+      "retrieve_fixed_det_weather_rule"]}}'
+    message: Rubric adds an unrequested fixed-«det» construction and narrows 'outdoor
+      seating' to a café terrace. Natural Norwegian conveying the supplied facts need
+      not use that construction or identify a café.
+  - finding_id: ai-3777914ffcd7e04e254965da
+    key: report_conditions_from_the_cabin
+    criterion: open_rubrics.unanswerable
+    excerpt: soon
+    explanation: 'Rubric adds mandatory «det» and «blir» forms not specified by the
+      visible task. Describing a change does not uniquely require «blir»: «Det mørkner
+      snart» satisfies that request. Coverage also changes snow being present into
+      active snowfall and does not require the supplied ''soon'' timing.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 6b38af14e17f5b2dfd0421543dd3ae7deb39169d3bb01315dfafc9b3414ad839
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: soon
+    citation_exact: true
+    advisory: true
+    reviewer: primary
+    block_hash: 054fa205ca1f5d73d74ba9c5be8a2cb9ea034bc53d239e8d72a668b63dd5b248
+    quote_english: ''
+    suggested_change: ''
+    details: '{"category": "unanswerable", "id": "report_conditions_from_the_cabin",
+      "report": {"ambiguous": [], "duplicates": [], "extra": [], "missing": [], "open_write_handles":
+      ["respond_to_local_weather_questions", "report_conditions_from_the_cabin", "retrieve_fixed_det_weather_rule"],
+      "passed": 0, "reasons": {"report_conditions_from_the_cabin": "Rubric adds mandatory
+      «det» and «blir» forms not specified by the visible task. Describing a change
+      does not uniquely require «blir»: «Det mørkner snart» satisfies that request.
+      Coverage also changes snow being present into active snowfall and does not require
+      the supplied ''soon'' timing.", "respond_to_local_weather_questions": "Rubric
+      adds an unrequested fixed-«det» construction and narrows ''outdoor seating''
+      to a café terrace. Natural Norwegian conveying the supplied facts need not use
+      that construction or identify a café.", "retrieve_fixed_det_weather_rule": "The
+      requested two separate sentences lack rubric coverage and are explicitly waived
+      by the judge''s must-pass example, which is one coordinated sentence. Rubric
+      also adds unrequested fixed-«det» and neuter-«kaldt» constructions rather than
+      assessing any natural message conveying rain and low temperature."}, "status":
+      "pass", "total": 3, "unanswerable": ["respond_to_local_weather_questions", "report_conditions_from_the_cabin",
+      "retrieve_fixed_det_weather_rule"]}}'
+    message: 'Rubric adds mandatory «det» and «blir» forms not specified by the visible
+      task. Describing a change does not uniquely require «blir»: «Det mørkner snart»
+      satisfies that request. Coverage also changes snow being present into active
+      snowfall and does not require the supplied ''soon'' timing.'
+  - finding_id: ai-989350e1be5751520989170e
+    key: retrieve_fixed_det_weather_rule
+    criterion: open_rubrics.unanswerable
+    excerpt: ''
+    explanation: The requested two separate sentences lack rubric coverage and are
+      explicitly waived by the judge's must-pass example, which is one coordinated
+      sentence. Rubric also adds unrequested fixed-«det» and neuter-«kaldt» constructions
+      rather than assessing any natural message conveying rain and low temperature.
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 6b38af14e17f5b2dfd0421543dd3ae7deb39169d3bb01315dfafc9b3414ad839
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: 48fbc4bf4f39f54e1135ea02a1161e2cbbc9417044c284cc3f86a6db575682dc
+    quote_english: ''
+    suggested_change: ''
+    details: '{"category": "unanswerable", "id": "retrieve_fixed_det_weather_rule",
+      "report": {"ambiguous": [], "duplicates": [], "extra": [], "missing": [], "open_write_handles":
+      ["respond_to_local_weather_questions", "report_conditions_from_the_cabin", "retrieve_fixed_det_weather_rule"],
+      "passed": 0, "reasons": {"report_conditions_from_the_cabin": "Rubric adds mandatory
+      «det» and «blir» forms not specified by the visible task. Describing a change
+      does not uniquely require «blir»: «Det mørkner snart» satisfies that request.
+      Coverage also changes snow being present into active snowfall and does not require
+      the supplied ''soon'' timing.", "respond_to_local_weather_questions": "Rubric
+      adds an unrequested fixed-«det» construction and narrows ''outdoor seating''
+      to a café terrace. Natural Norwegian conveying the supplied facts need not use
+      that construction or identify a café.", "retrieve_fixed_det_weather_rule": "The
+      requested two separate sentences lack rubric coverage and are explicitly waived
+      by the judge''s must-pass example, which is one coordinated sentence. Rubric
+      also adds unrequested fixed-«det» and neuter-«kaldt» constructions rather than
+      assessing any natural message conveying rain and low temperature."}, "status":
+      "pass", "total": 3, "unanswerable": ["respond_to_local_weather_questions", "report_conditions_from_the_cabin",
+      "retrieve_fixed_det_weather_rule"]}}'
+    message: The requested two separate sentences lack rubric coverage and are explicitly
+      waived by the judge's must-pass example, which is one coordinated sentence.
+      Rubric also adds unrequested fixed-«det» and neuter-«kaldt» constructions rather
+      than assessing any natural message conveying rain and low temperature.
+  - finding_id: ai-c951a0aef3ed2fe61586252a
+    key: report_conditions_from_the_cabin
+    criterion: open_semantics.semantic_issues
+    excerpt: 'Prompt: “snow and low temperature outside; warm inside; it will be dark
+      soon.” Criterion: “it is snowing outside” and “the daylight is fading or it
+      is getting dark.”
+
+      Prompt: “describe it getting dark as a change.” Criterion: “The fading daylight
+      is expressed as a changing condition with «blir».”'
+    explanation: 'Factual premise: Hidden criteria require current snowfall and current
+      fading daylight, but supplied notes establish only snow outside and darkness
+      coming soon. Snow may already be on the ground; impending darkness need not
+      mean daylight is already fading.
+
+      Competing valid answers: Visible directions require describing darkness as a
+      change, but hidden criteria additionally require the particular verb «blir».
+      Other natural change expressions can meet the visible instruction while failing
+      that requirement.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 6b38af14e17f5b2dfd0421543dd3ae7deb39169d3bb01315dfafc9b3414ad839
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: 054fa205ca1f5d73d74ba9c5be8a2cb9ea034bc53d239e8d72a668b63dd5b248
+    quote_english: 'Supplied notes describe snow outside and future darkness; criteria
+      require ongoing snowfall and an ongoing change in daylight.
+
+      Describe it getting dark as a change; the hidden criterion specifically requires
+      “becomes/is getting.”'
+    suggested_change: 'Specify “it is snowing outside” in the visible note if ongoing
+      snowfall is required. Align the daylight criterion with the note by accepting
+      a change that will happen soon.
+
+      Either explicitly request «blir» as supported practice or accept other natural
+      expressions of changing light conditions while evaluating fixed «det» separately.'
+    details: '{"id": "report_conditions_from_the_cabin", "issues": [{"category": "factual_premise",
+      "evidence": "Prompt: “snow and low temperature outside; warm inside; it will
+      be dark soon.” Criterion: “it is snowing outside” and “the daylight is fading
+      or it is getting dark.”", "quote_english": "Supplied notes describe snow outside
+      and future darkness; criteria require ongoing snowfall and an ongoing change
+      in daylight.", "reason": "Hidden criteria require current snowfall and current
+      fading daylight, but supplied notes establish only snow outside and darkness
+      coming soon. Snow may already be on the ground; impending darkness need not
+      mean daylight is already fading.", "suggested_change": "Specify “it is snowing
+      outside” in the visible note if ongoing snowfall is required. Align the daylight
+      criterion with the note by accepting a change that will happen soon."}, {"category":
+      "competing_valid_answers", "evidence": "Prompt: “describe it getting dark as
+      a change.” Criterion: “The fading daylight is expressed as a changing condition
+      with «blir».”", "quote_english": "Describe it getting dark as a change; the
+      hidden criterion specifically requires “becomes/is getting.”", "reason": "Visible
+      directions require describing darkness as a change, but hidden criteria additionally
+      require the particular verb «blir». Other natural change expressions can meet
+      the visible instruction while failing that requirement.", "suggested_change":
+      "Either explicitly request «blir» as supported practice or accept other natural
+      expressions of changing light conditions while evaluating fixed «det» separately."}]}'
+    message: 'Factual premise: Hidden criteria require current snowfall and current
+      fading daylight, but supplied notes establish only snow outside and darkness
+      coming soon. Snow may already be on the ground; impending darkness need not
+      mean daylight is already fading.
+
+      Competing valid answers: Visible directions require describing darkness as a
+      change, but hidden criteria additionally require the particular verb «blir».
+      Other natural change expressions can meet the visible instruction while failing
+      that requirement.'
+  - finding_id: ai-1b45c2863821a64e58cef8a9
+    key: retrieve_fixed_det_weather_rule
+    criterion: open_semantics.semantic_issues
+    excerpt: 'Prompt: “Use one sentence about the weather and one sentence about the
+      conditions.” Judge: “A valid variant that must pass is «Det regner i Bergen,
+      og det er kaldt ute.»”'
+    explanation: 'Competing valid answers: Visible prompt requires two sentences,
+      but the judge explicitly mandates acceptance of a single sentence containing
+      two coordinated clauses. This contradicts the response constraint.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 6b38af14e17f5b2dfd0421543dd3ae7deb39169d3bb01315dfafc9b3414ad839
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: 48fbc4bf4f39f54e1135ea02a1161e2cbbc9417044c284cc3f86a6db575682dc
+    quote_english: Prompt requests separate weather and condition sentences; the judge's
+      mandatory accepted variant means “It is raining in Bergen, and it is cold outside,”
+      written as one sentence.
+    suggested_change: 'Choose one consistent constraint: request two clauses and permit
+      coordination, or retain the two-sentence instruction and align the judge''s
+      acceptance guidance with it.'
+    details: '{"id": "retrieve_fixed_det_weather_rule", "issues": [{"category": "competing_valid_answers",
+      "evidence": "Prompt: “Use one sentence about the weather and one sentence about
+      the conditions.” Judge: “A valid variant that must pass is «Det regner i Bergen,
+      og det er kaldt ute.»”", "quote_english": "Prompt requests separate weather
+      and condition sentences; the judge''s mandatory accepted variant means “It is
+      raining in Bergen, and it is cold outside,” written as one sentence.", "reason":
+      "Visible prompt requires two sentences, but the judge explicitly mandates acceptance
+      of a single sentence containing two coordinated clauses. This contradicts the
+      response constraint.", "suggested_change": "Choose one consistent constraint:
+      request two clauses and permit coordination, or retain the two-sentence instruction
+      and align the judge''s acceptance guidance with it."}]}'
+    message: 'Competing valid answers: Visible prompt requires two sentences, but
+      the judge explicitly mandates acceptance of a single sentence containing two
+      coordinated clauses. This contradicts the response constraint.'
+proposals_accepted: 0
+proposals_rejected: 0
+exercise_alignments:
+  notice_fixed_det_in_the_cafe_call:
+    exercise_key: notice_fixed_det_in_the_cafe_call
+    checked_against:
+      a-change-of-plans: 21b6f2f4ded20599db44accd02345cf2456ca8c71c43a9938b323bd9aacd4a42
+    section_sources:
+      a-change-of-plans: '## A change of plans {#a-change-of-plans role=orient objectives=obj-dummy-det-weather-ambient-clauses-01}
+
+
+        Mina and Jonas are preparing to meet outside a café in Bergen. Mina is already
+        on her way, but the weather is getting worse.
+
+
+        ::: {.reading translation="Hi, Jonas. Are you on your way?" dialogue_id=cafe-call
+        speaker_id=mina speaker_name="Mina" character_id="mina"}
+
+        Hei, Jonas. Er du på vei?
+
+        :::
+
+
+        ::: {.reading translation="Not yet. What is the weather like there?" dialogue_id=cafe-call
+        speaker_id=jonas speaker_name="Jonas" character_id="jonas"}
+
+        Ikke ennå. Hvordan er været der?
+
+        :::
+
+
+        ::: {.reading translation="It’s raining, and it’s quite windy." dialogue_id=cafe-call
+        speaker_id=mina speaker_name="Mina" character_id="mina"}
+
+        Det regner, og det blåser ganske mye.
+
+        :::
+
+
+        ::: {.reading translation="Oh no. Is it cold too?" dialogue_id=cafe-call speaker_id=jonas
+        speaker_name="Jonas" character_id="jonas"}
+
+        Å nei. Er det kaldt også?
+
+        :::
+
+
+        ::: {.reading translation="Yes, it’s cold, and it’s starting to get dark."
+        dialogue_id=cafe-call speaker_id=mina speaker_name="Mina" character_id="mina"}
+
+        Ja, det er kaldt, og det begynner å bli mørkt.
+
+        :::
+
+
+        ::: {.reading translation="Then we’ll meet inside the café." dialogue_id=cafe-call
+        speaker_id=jonas speaker_name="Jonas" character_id="jonas"}
+
+        Da møtes vi inne på kafeen.
+
+        :::
+
+
+        ::: {.reading translation="Good idea. It’s warm and pleasant inside." dialogue_id=cafe-call
+        speaker_id=mina speaker_name="Mina" character_id="mina"}
+
+        God idé. Det er varmt og hyggelig der inne.
+
+        :::
+
+
+        Mina uses *det* several times because she is describing weather and general
+        conditions around her:
+
+
+        ::: examples
+
+        - no: Det regner.
+
+        - en: It’s raining.
+
+        - no: Det blåser.
+
+        - en: It’s windy. / The wind is blowing.
+
+        - no: Det er kaldt.
+
+        - en: It’s cold.
+
+        - no: Det blir mørkt.
+
+        - en: It’s getting dark.
+
+        - no: Det er varmt der inne.
+
+        - en: It’s warm inside.
+
+        :::
+
+
+        In these sentences, *det* does not identify a particular object. Mina is not
+        saying that some object called “it” is raining, cold, or dark. Norwegian requires
+        a grammatical subject in these statements, so it uses fixed *det* when weather
+        or an ambient condition has no real person or thing performing the action
+        or possessing the quality.
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:44.228149+00:00'
+    decision_id: null
+  complete_weather_verb_reports:
+    exercise_key: complete_weather_verb_reports
+    checked_against:
+      weather-verbs-with-det: 58e7aaf8a118ceb824c3482668039258a99e445ea05a39b7b448aef13e228ee7
+    section_sources:
+      weather-verbs-with-det: '## Weather verbs with det {#weather-verbs-with-det
+        role=model objectives=obj-dummy-det-weather-ambient-clauses-01}
+
+
+        Some common Norwegian weather descriptions use a verb directly after *det*.
+
+
+        ::: examples
+
+        - no: Det regner.
+
+        - en: It’s raining.
+
+        - no: Det snør.
+
+        - en: It’s snowing.
+
+        - no: Det blåser.
+
+        - en: It’s windy. / The wind is blowing.
+
+        :::
+
+
+        These are complete sentences. Do not add *er* before the weather verb.
+
+
+        Compare:
+
+
+        ::: examples
+
+        - no: Det regner.
+
+        - en: It’s raining.
+
+        - no: Det er regn.
+
+        - en: There is rain.
+
+        :::
+
+
+        The first is the ordinary way to report what the weather is doing. The second
+        is possible in limited contexts, but it does not replace the everyday weather
+        expression **Det regner**.
+
+
+        The same applies to snow:
+
+
+        ::: examples
+
+        - no: Det snør i Oslo.
+
+        - en: It’s snowing in Oslo.
+
+        - no: Det snør mye i dag.
+
+        - en: It’s snowing a lot today.
+
+        - no: Det blåser ved sjøen.
+
+        - en: It’s windy by the sea.
+
+        :::
+
+
+        A likely mistake is to omit *det* because the learner thinks the weather verb
+        already gives enough information:
+
+
+        ::: examples
+
+        - no: ✗ Regner i dag.
+
+        - en: Incorrect: Raining today.
+
+        - no: Det regner i dag.
+
+        - en: It’s raining today.
+
+        :::
+
+
+        Norwegian normally requires the grammatical subject *det* here.
+
+
+        Another likely mistake is to translate English “It is raining” word for word
+        by inserting *er*:
+
+
+        ::: examples
+
+        - no: ✗ Det er regner.
+
+        - en: Incorrect: It is raining.
+
+        - no: Det regner.
+
+        - en: It’s raining.
+
+        :::
+
+
+        The compact rule is:
+
+
+        ::: {.rule}
+
+        Use **det + regner/snør/blåser**. These weather verbs do not need *er*.
+
+        :::
+
+
+        **Complete weather-verb reports**
+
+
+        {{exercise: complete_weather_verb_reports}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:44.228149+00:00'
+    decision_id: null
+  distinguish_named_subject_from_ambient_det:
+    exercise_key: distinguish_named_subject_from_ambient_det
+    checked_against:
+      named-subject-and-ambient-det: a815c9e4020617830fd0150d5b2974b0b530e75d5860b4afadd3b81e14ae4229
+    section_sources:
+      named-subject-and-ambient-det: '## Named subjects and ambient det {#named-subject-and-ambient-det
+        role=contrast objectives=obj-dummy-det-weather-ambient-clauses-01}
+
+
+        Compare the following two uses:
+
+
+        ::: examples
+
+        - no: Kaffen er kald.
+
+        - en: The coffee is cold.
+
+        - no: Det er kaldt.
+
+        - en: It’s cold.
+
+        :::
+
+
+        In the first sentence, **kaffen** is the actual subject. The sentence describes
+        the coffee. In the second, there is no named thing being described. The sentence
+        reports the general temperature, so Norwegian uses fixed *det*.
+
+
+        The same contrast appears here:
+
+
+        ::: examples
+
+        - no: Rommet er mørkt.
+
+        - en: The room is dark.
+
+        - no: Det er mørkt.
+
+        - en: It’s dark.
+
+        :::
+
+
+        **Rommet er mørkt** describes a specific room. **Det er mørkt** describes
+        the ambient condition without naming a specific subject.
+
+
+        And here:
+
+
+        ::: examples
+
+        - no: Ovnen er varm.
+
+        - en: The oven is hot.
+
+        - no: Det er varmt.
+
+        - en: It’s warm.
+
+        :::
+
+
+        The descriptive form differs because a named noun may have its own grammatical
+        form:
+
+
+        ::: examples
+
+        - no: Kaffen er kald.
+
+        - en: The coffee is cold.
+
+        - no: Ovnen er varm.
+
+        - en: The oven is hot.
+
+        - no: Rommet er mørkt.
+
+        - en: The room is dark.
+
+        :::
+
+
+        With fixed *det* in these ambient expressions, use:
+
+
+        ::: examples
+
+        - no: Det er kaldt.
+
+        - en: It’s cold.
+
+        - no: Det er varmt.
+
+        - en: It’s warm.
+
+        - no: Det er mørkt.
+
+        - en: It’s dark.
+
+        :::
+
+
+        At this level, it is most useful to learn these as stable expressions. A common
+        mistake is to copy the form used with a specific noun:
+
+
+        ::: examples
+
+        - no: ✗ Det er kald.
+
+        - en: Incorrect for general temperature: It is cold.
+
+        - no: Det er kaldt.
+
+        - en: It’s cold.
+
+        - no: ✗ Det er varm.
+
+        - en: Incorrect for general warmth: It is warm.
+
+        - no: Det er varmt.
+
+        - en: It’s warm.
+
+        :::
+
+
+        The compact rule is:
+
+
+        ::: {.rule}
+
+        Use **det er + kaldt/varmt/lyst/mørkt** for a general condition with no named
+        subject.
+
+        :::
+
+
+        **Distinguish named subject from ambient det**
+
+
+        {{exercise: distinguish_named_subject_from_ambient_det}}
+
+
+        **Build ambient-condition statements**
+
+
+        {{exercise: build_ambient_condition_statements}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:44.228149+00:00'
+    decision_id: null
+  build_ambient_condition_statements:
+    exercise_key: build_ambient_condition_statements
+    checked_against:
+      named-subject-and-ambient-det: a815c9e4020617830fd0150d5b2974b0b530e75d5860b4afadd3b81e14ae4229
+    section_sources:
+      named-subject-and-ambient-det: '## Named subjects and ambient det {#named-subject-and-ambient-det
+        role=contrast objectives=obj-dummy-det-weather-ambient-clauses-01}
+
+
+        Compare the following two uses:
+
+
+        ::: examples
+
+        - no: Kaffen er kald.
+
+        - en: The coffee is cold.
+
+        - no: Det er kaldt.
+
+        - en: It’s cold.
+
+        :::
+
+
+        In the first sentence, **kaffen** is the actual subject. The sentence describes
+        the coffee. In the second, there is no named thing being described. The sentence
+        reports the general temperature, so Norwegian uses fixed *det*.
+
+
+        The same contrast appears here:
+
+
+        ::: examples
+
+        - no: Rommet er mørkt.
+
+        - en: The room is dark.
+
+        - no: Det er mørkt.
+
+        - en: It’s dark.
+
+        :::
+
+
+        **Rommet er mørkt** describes a specific room. **Det er mørkt** describes
+        the ambient condition without naming a specific subject.
+
+
+        And here:
+
+
+        ::: examples
+
+        - no: Ovnen er varm.
+
+        - en: The oven is hot.
+
+        - no: Det er varmt.
+
+        - en: It’s warm.
+
+        :::
+
+
+        The descriptive form differs because a named noun may have its own grammatical
+        form:
+
+
+        ::: examples
+
+        - no: Kaffen er kald.
+
+        - en: The coffee is cold.
+
+        - no: Ovnen er varm.
+
+        - en: The oven is hot.
+
+        - no: Rommet er mørkt.
+
+        - en: The room is dark.
+
+        :::
+
+
+        With fixed *det* in these ambient expressions, use:
+
+
+        ::: examples
+
+        - no: Det er kaldt.
+
+        - en: It’s cold.
+
+        - no: Det er varmt.
+
+        - en: It’s warm.
+
+        - no: Det er mørkt.
+
+        - en: It’s dark.
+
+        :::
+
+
+        At this level, it is most useful to learn these as stable expressions. A common
+        mistake is to copy the form used with a specific noun:
+
+
+        ::: examples
+
+        - no: ✗ Det er kald.
+
+        - en: Incorrect for general temperature: It is cold.
+
+        - no: Det er kaldt.
+
+        - en: It’s cold.
+
+        - no: ✗ Det er varm.
+
+        - en: Incorrect for general warmth: It is warm.
+
+        - no: Det er varmt.
+
+        - en: It’s warm.
+
+        :::
+
+
+        The compact rule is:
+
+
+        ::: {.rule}
+
+        Use **det er + kaldt/varmt/lyst/mørkt** for a general condition with no named
+        subject.
+
+        :::
+
+
+        **Distinguish named subject from ambient det**
+
+
+        {{exercise: distinguish_named_subject_from_ambient_det}}
+
+
+        **Build ambient-condition statements**
+
+
+        {{exercise: build_ambient_condition_statements}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:44.228149+00:00'
+    decision_id: null
+  choose_current_or_changing_condition:
+    exercise_key: choose_current_or_changing_condition
+    checked_against:
+      reporting-a-change-with-blir: 71b475a035a88078bdad5166cafb3edf2b23f30333de08c111aa314f23cbcdbc
+    section_sources:
+      reporting-a-change-with-blir: '## Reporting a change with blir {#reporting-a-change-with-blir
+        role=contrast objectives=obj-dummy-det-weather-ambient-clauses-01}
+
+
+        Mina says:
+
+
+        ::: examples
+
+        - no: Det begynner å bli mørkt.
+
+        - en: It’s starting to get dark.
+
+        :::
+
+
+        A simpler way to report the same developing condition is:
+
+
+        ::: examples
+
+        - no: Det blir mørkt.
+
+        - en: It’s getting dark.
+
+        :::
+
+
+        Here, **blir** reports a change. Compare:
+
+
+        ::: examples
+
+        - no: Det er mørkt.
+
+        - en: It’s dark.
+
+        - no: Det blir mørkt.
+
+        - en: It’s getting dark.
+
+        :::
+
+
+        Both sentences use fixed *det*. The difference is that **er** reports the
+        current condition, while **blir** reports that the condition is changing.
+
+
+        More examples:
+
+
+        ::: examples
+
+        - no: Det er kaldt nå.
+
+        - en: It’s cold now.
+
+        - no: Det blir kaldt i kveld.
+
+        - en: It’s getting cold this evening. / It will get cold this evening.
+
+        - no: Det er lyst ute.
+
+        - en: It’s light outside.
+
+        - no: Det blir mørkt snart.
+
+        - en: It’s getting dark soon.
+
+        :::
+
+
+        The target remains fixed *det*. You are using the same subject because the
+        changing condition still has no particular person or thing as its semantic
+        subject.
+
+
+        Do not replace *det* with a weather noun unless you actually want to make
+        that noun the subject. For example:
+
+
+        - **Været blir kaldt** is not the ordinary way to say *It’s getting cold*.
+
+        - **Det blir kaldt** is the natural ambient expression.
+
+
+        **Choose current or changing condition**
+
+
+        {{exercise: choose_current_or_changing_condition}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:44.228149+00:00'
+    decision_id: null
+  respond_to_local_weather_questions:
+    exercise_key: respond_to_local_weather_questions
+    checked_against:
+      adding-place-and-time: 513b6e908ce1a6d0a6a53e63d76eff5a6abfdc2c406c1a85330c6ce26a178ab7
+    section_sources:
+      adding-place-and-time: '## Adding place and time {#adding-place-and-time role=model
+        objectives=obj-dummy-det-weather-ambient-clauses-01}
+
+
+        Fixed *det* remains in the sentence when you add information about where or
+        when the condition applies.
+
+
+        ::: examples
+
+        - no: Det regner i Bergen.
+
+        - en: It’s raining in Bergen.
+
+        - no: Det snør på fjellet.
+
+        - en: It’s snowing in the mountains.
+
+        - no: Det blåser mye ved sjøen.
+
+        - en: It’s very windy by the sea.
+
+        - no: Det er kaldt om morgenen.
+
+        - en: It’s cold in the morning.
+
+        - no: Det er varmt inne.
+
+        - en: It’s warm inside.
+
+        - no: Det blir mørkt tidlig om vinteren.
+
+        - en: It gets dark early in winter.
+
+        :::
+
+
+        The place or time expression does not become the subject. In **Det regner
+        i Bergen**, Bergen is the location of the rain, not the grammatical subject
+        of **regner**.
+
+
+        This allows short, useful exchanges:
+
+
+        ::: {.reading translation="What is the weather like in Trondheim?" dialogue_id=local-weather
+        speaker_id=a speaker_name=A}
+
+        Hvordan er været i Trondheim?
+
+        :::
+
+
+        ::: {.reading translation="It’s raining, and it’s cold." dialogue_id=local-weather
+        speaker_id=b speaker_name=B}
+
+        Det regner, og det er kaldt.
+
+        :::
+
+
+        ::: {.reading translation="What is it like at the cabin?" dialogue_id=cabin-weather
+        speaker_id=a speaker_name=A}
+
+        Hvordan er det på hytta?
+
+        :::
+
+
+        ::: {.reading translation="It’s snowing, and it gets dark early." dialogue_id=cabin-weather
+        speaker_id=b speaker_name=B}
+
+        Det snør, og det blir mørkt tidlig.
+
+        :::
+
+
+        The questions provide a setting, but the answers still need *det*. Do not
+        answer with bare forms such as **er kaldt** or **snør** when giving a normal
+        complete statement.
+
+
+        **Respond to local weather questions**
+
+
+        {{exercise: respond_to_local_weather_questions}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:44.228149+00:00'
+    decision_id: null
+  restore_det_in_minas_updates:
+    exercise_key: restore_det_in_minas_updates
+    checked_against:
+      returning-to-mina-and-jonas: d41acd25c7b6e429d669cf489dcbe5e79cc7b0213513dd781aa10e67c1e3dfd0
+    section_sources:
+      returning-to-mina-and-jonas: '## Returning to Mina and Jonas {#returning-to-mina-and-jonas
+        role=model objectives=obj-dummy-det-weather-ambient-clauses-01}
+
+
+        Mina reaches the café first. Jonas calls again.
+
+
+        ::: {.reading translation="Have you arrived?" dialogue_id=second-cafe-call
+        speaker_id=jonas speaker_name="Jonas" character_id="jonas"}
+
+        Er du framme?
+
+        :::
+
+
+        ::: {.reading translation="Yes. I’m sitting inside now." dialogue_id=second-cafe-call
+        speaker_id=mina speaker_name="Mina" character_id="mina"}
+
+        Ja. Jeg sitter inne nå.
+
+        :::
+
+
+        ::: {.reading translation="Is it still raining?" dialogue_id=second-cafe-call
+        speaker_id=jonas speaker_name="Jonas" character_id="jonas"}
+
+        Regner det fortsatt?
+
+        :::
+
+
+        ::: {.reading translation="Yes, it’s still raining, and it’s windier than
+        before." dialogue_id=second-cafe-call speaker_id=mina speaker_name="Mina"
+        character_id="mina"}
+
+        Ja, det regner fortsatt, og det blåser mer enn før.
+
+        :::
+
+
+        ::: {.reading translation="What is it like inside?" dialogue_id=second-cafe-call
+        speaker_id=jonas speaker_name="Jonas" character_id="jonas"}
+
+        Hvordan er det inne?
+
+        :::
+
+
+        ::: {.reading translation="It’s warm here. Come inside when you arrive." dialogue_id=second-cafe-call
+        speaker_id=mina speaker_name="Mina" character_id="mina"}
+
+        Det er varmt her. Kom inn når du kommer.
+
+        :::
+
+
+        The second conversation reuses the same fixed *det* in a natural development
+        of the situation. Outside, **det regner** and **det blåser**. Inside, **det
+        er varmt**.
+
+
+        Notice that *det* can also appear in a question:
+
+
+        ::: examples
+
+        - no: Regner det?
+
+        - en: Is it raining?
+
+        - no: Er det kaldt?
+
+        - en: Is it cold?
+
+        :::
+
+
+        The same fixed subject is present, even though its position changes in the
+        question. This chapter’s main goal remains recognizing and using *det* when
+        there is no real weather or ambient subject.
+
+
+        **Restore det in Mina’s updates**
+
+
+        {{exercise: restore_det_in_minas_updates}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:44.228149+00:00'
+    decision_id: null
+  repair_incomplete_weather_messages:
+    exercise_key: repair_incomplete_weather_messages
+    checked_against:
+      common-mistakes-to-avoid: d323ebd20536d9a3a58e9172450c6b221542b3b6a53b4baf9229c9ba45508841
+    section_sources:
+      common-mistakes-to-avoid: '## Common mistakes to avoid {#common-mistakes-to-avoid
+        role=contrast objectives=obj-dummy-det-weather-ambient-clauses-01}
+
+
+        **Leaving the subject out**
+
+
+        Norwegian does not normally use a bare weather verb as a complete statement.
+
+
+        ::: examples
+
+        - no: ✗ Snør på fjellet.
+
+        - en: Incorrect: Snowing in the mountains.
+
+        - no: Det snør på fjellet.
+
+        - en: It’s snowing in the mountains.
+
+        :::
+
+
+        **Adding *er* before a weather verb**
+
+
+        Use the weather verb directly after *det*.
+
+
+        ::: examples
+
+        - no: ✗ Det er blåser.
+
+        - en: Incorrect: It is windy.
+
+        - no: Det blåser.
+
+        - en: It’s windy.
+
+        :::
+
+
+        **Named subject or dummy det**
+
+
+        Both constructions below are grammatical. With **været**, you describe a named
+        subject, the weather. With dummy **det**, you describe the general temperature
+        without naming a subject.
+
+
+        ::: examples
+
+        - no: Været er kaldt.
+
+        - en: The weather is cold.
+
+        - no: Det er kaldt.
+
+        - en: It’s cold.
+
+        :::
+
+
+        For general temperature, **Det er kaldt** is the everyday choice.
+
+
+        **Treating *det* as a specific object**
+
+
+        In **Det regner**, *det* does not stand for the sky, the weather, the town,
+        or the rain. It fills the subject position because Norwegian requires one.
+
+
+        **Repair incomplete weather messages**
+
+
+        {{exercise: repair_incomplete_weather_messages}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:44.228149+00:00'
+    decision_id: null
+  report_conditions_from_the_cabin:
+    exercise_key: report_conditions_from_the_cabin
+    checked_against:
+      transfer-a-morning-at-the-cabin: 3c9727b1ea39f7c6271015161cd91a13292a0b5109cdf0a66bfa0f7de0aef12f
+    section_sources:
+      transfer-a-morning-at-the-cabin: '## Transfer: a morning at the cabin {#transfer-a-morning-at-the-cabin
+        role=recap objectives=obj-dummy-det-weather-ambient-clauses-01}
+
+
+        The next weekend, Jonas is staying at a cabin. Mina asks whether they can
+        go for a walk. Conditions are different from the café scene: it is snowing,
+        the cabin is warm, and daylight is beginning to fade.
+
+
+        **Report conditions from the cabin**
+
+
+        {{exercise: report_conditions_from_the_cabin}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:44.228149+00:00'
+    decision_id: null
+  retrieve_fixed_det_weather_rule:
+    exercise_key: retrieve_fixed_det_weather_rule
+    checked_against:
+      final-retrieval: b5f6798e472381a393d584a089a5829bc240e46b06c54c1b8b4bb58d347e5ad9
+    section_sources:
+      final-retrieval: '## Final retrieval {#final-retrieval role=recap objectives=obj-dummy-det-weather-ambient-clauses-01}
+
+
+        **Retrieve fixed-det weather rule**
+
+
+        {{exercise: retrieve_fixed_det_weather_rule}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:44.228149+00:00'
+    decision_id: null
+  review_weather_verb_det:
+    exercise_key: review_weather_verb_det
+    checked_against:
+      final-retrieval: b5f6798e472381a393d584a089a5829bc240e46b06c54c1b8b4bb58d347e5ad9
+    section_sources:
+      final-retrieval: '## Final retrieval {#final-retrieval role=recap objectives=obj-dummy-det-weather-ambient-clauses-01}
+
+
+        **Retrieve fixed-det weather rule**
+
+
+        {{exercise: retrieve_fixed_det_weather_rule}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:44.228149+00:00'
+    decision_id: null
+  review_ambient_det_or_named_subject:
+    exercise_key: review_ambient_det_or_named_subject
+    checked_against:
+      final-retrieval: b5f6798e472381a393d584a089a5829bc240e46b06c54c1b8b4bb58d347e5ad9
+    section_sources:
+      final-retrieval: '## Final retrieval {#final-retrieval role=recap objectives=obj-dummy-det-weather-ambient-clauses-01}
+
+
+        **Retrieve fixed-det weather rule**
+
+
+        {{exercise: retrieve_fixed_det_weather_rule}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:44.228149+00:00'
+    decision_id: null
+  review_ambient_adjective_form:
+    exercise_key: review_ambient_adjective_form
+    checked_against:
+      final-retrieval: b5f6798e472381a393d584a089a5829bc240e46b06c54c1b8b4bb58d347e5ad9
+    section_sources:
+      final-retrieval: '## Final retrieval {#final-retrieval role=recap objectives=obj-dummy-det-weather-ambient-clauses-01}
+
+
+        **Retrieve fixed-det weather rule**
+
+
+        {{exercise: retrieve_fixed_det_weather_rule}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:44.228149+00:00'
+    decision_id: null
+  review_current_or_changing:
+    exercise_key: review_current_or_changing
+    checked_against:
+      final-retrieval: b5f6798e472381a393d584a089a5829bc240e46b06c54c1b8b4bb58d347e5ad9
+    section_sources:
+      final-retrieval: '## Final retrieval {#final-retrieval role=recap objectives=obj-dummy-det-weather-ambient-clauses-01}
+
+
+        **Retrieve fixed-det weather rule**
+
+
+        {{exercise: retrieve_fixed_det_weather_rule}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:44.228149+00:00'
+    decision_id: null
+  review_det_with_place:
+    exercise_key: review_det_with_place
+    checked_against:
+      final-retrieval: b5f6798e472381a393d584a089a5829bc240e46b06c54c1b8b4bb58d347e5ad9
+    section_sources:
+      final-retrieval: '## Final retrieval {#final-retrieval role=recap objectives=obj-dummy-det-weather-ambient-clauses-01}
+
+
+        **Retrieve fixed-det weather rule**
+
+
+        {{exercise: retrieve_fixed_det_weather_rule}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:44.228149+00:00'
+    decision_id: null
+  review_det_in_each_clause:
+    exercise_key: review_det_in_each_clause
+    checked_against:
+      final-retrieval: b5f6798e472381a393d584a089a5829bc240e46b06c54c1b8b4bb58d347e5ad9
+    section_sources:
+      final-retrieval: '## Final retrieval {#final-retrieval role=recap objectives=obj-dummy-det-weather-ambient-clauses-01}
+
+
+        **Retrieve fixed-det weather rule**
+
+
+        {{exercise: retrieve_fixed_det_weather_rule}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:35:44.228149+00:00'
+    decision_id: null
+prior_approvals: []
+acceptance_statement: Owner acceptance is not qualified Norwegian review.
