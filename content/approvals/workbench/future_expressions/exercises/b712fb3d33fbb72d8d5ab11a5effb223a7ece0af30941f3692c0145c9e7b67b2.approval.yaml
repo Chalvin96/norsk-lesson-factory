@@ -1,0 +1,1587 @@
+schema_version: 2
+lesson_id: future_expressions
+stage: exercises
+reviewer: human
+file_sha256: b712fb3d33fbb72d8d5ab11a5effb223a7ece0af30941f3692c0145c9e7b67b2
+upstream_approved_sha256: 47aed6e44b531793beb9e91c810995ec37e40c54e83ddff1e92896e8041f2f01
+curriculum_slot_sha256: null
+approved_at: '2026-10-25T14:38:54.598924+00:00'
+code_commit: f6e22f5c8ce506b7ba93800610c072941fe77d85
+review:
+  job: workbench_reviewer
+  model: openai/gpt-6.1-sol
+  prompt_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+  criteria_version: workbench-review-v1
+  evidence_sha256: 606fe64e2b480d47c0ce23ea9c524e4a1038b49f7299e05ac46f366a457d2378
+  findings:
+  - finding_id: ai-7b15bbe9f0d6703139108d4c
+    key: prediction_basis_choice
+    criterion: answerable
+    excerpt: "prompt_md: \"Complete the predictions.\"\n- text_md: 'Emil: Jeg tror\
+      \ gjestene '\n- blank_id: prediction-opinion-1\n  options:\n  - vil\n  - skal\n\
+      \  answer_index: 0\n- text_md: ' komme før middagen. Sara: Se på de mørke skyene!\
+      \ Det '\nexplanation_md: \"«Jeg tror» passer med «vil». Synlige tegn peker mot\
+      \ «kommer til å».\""
+    explanation: 'prediction_basis_choice: guest-arrival blank permits a planned-arrival
+      reading: Explicitly request vil for an opinion-based prediction, or replace
+      skal with an objectively incorrect form such as vil å. Jeg tror does not itself
+      exclude skal: the speaker can be uncertain about the guests'' planned arrival.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 23c3c5a8bc3cd094e486dfe69ca2c6e3a6808ea5ec32a4307e84359f8c5a45e5
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: "prompt_md: \"Complete the predictions.\"\n- text_md: 'Emil: Jeg\
+      \ tror gjestene '\n- blank_id: prediction-opinion-1\n  options:\n  - vil\n \
+      \ - skal\n  answer_index: 0\n- text_md: ' komme før middagen. Sara: Se på de\
+      \ mørke skyene! Det '\nexplanation_md: \"«Jeg tror» passer med «vil». Synlige\
+      \ tegn peker mot «kommer til å».\""
+    citation_exact: true
+    advisory: true
+    reviewer: primary
+    block_hash: ba1d51c8ef0351caeaee92d5d15e0a6409b2c4508c252baca9a12edf51c77e6f
+    quote_english: 'Emil: I think the guests … arrive before dinner. “Jeg tror” fits
+      with “vil.” Visible signs point toward “kommer til å.” With skal, the sentence
+      can mean: I think the guests are supposed/planning to arrive before dinner.'
+    suggested_change: 'Explicitly request vil for an opinion-based prediction, or
+      replace skal with an objectively incorrect form such as vil å. Jeg tror does
+      not itself exclude skal: the speaker can be uncertain about the guests'' planned
+      arrival.'
+    details: '{"category": "answerable", "evidence": "prompt_md: \"Complete the predictions.\"\n-
+      text_md: ''Emil: Jeg tror gjestene ''\n- blank_id: prediction-opinion-1\n  options:\n  -
+      vil\n  - skal\n  answer_index: 0\n- text_md: '' komme før middagen. Sara: Se
+      på de mørke skyene! Det ''\nexplanation_md: \"«Jeg tror» passer med «vil». Synlige
+      tegn peker mot «kommer til å».\"", "fix": "Explicitly request vil for an opinion-based
+      prediction, or replace skal with an objectively incorrect form such as vil å.
+      Jeg tror does not itself exclude skal: the speaker can be uncertain about the
+      guests'' planned arrival.", "quote_english": "Emil: I think the guests … arrive
+      before dinner. “Jeg tror” fits with “vil.” Visible signs point toward “kommer
+      til å.” With skal, the sentence can mean: I think the guests are supposed/planning
+      to arrive before dinner.", "severity": "P1", "title": "prediction_basis_choice:
+      guest-arrival blank permits a planned-arrival reading"}'
+    message: 'prediction_basis_choice: guest-arrival blank permits a planned-arrival
+      reading'
+  - finding_id: ai-8d3834db92bd3126d64a25c7
+    key: review_vil_assessment
+    criterion: answerable
+    excerpt: "prompt_md: \"Complete Emil's opinion about the film.\"\nexplanation_md:\
+      \ \"Etter «jeg tror» passer «vil» om en framtidig vurdering.\"\n- text_md: 'Emil:\
+      \ Jeg tror filmen '\n- blank_id: review-vil-1\n  options:\n  - vil være\n  -\
+      \ skal være\n  answer_index: 0\n- text_md: ' bra.'"
+    explanation: 'review_vil_assessment: valid reported-expectation reading rejected:
+      Request vil explicitly, or replace skal være with a genuinely incorrect construction.
+      Alternatively, teach the contrast between a personal prediction and reported
+      reputation, allowing skal være when that reading fits.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 23c3c5a8bc3cd094e486dfe69ca2c6e3a6808ea5ec32a4307e84359f8c5a45e5
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: "prompt_md: \"Complete Emil's opinion about the film.\"\nexplanation_md:\
+      \ \"Etter «jeg tror» passer «vil» om en framtidig vurdering.\"\n- text_md: 'Emil:\
+      \ Jeg tror filmen '\n- blank_id: review-vil-1\n  options:\n  - vil være\n  -\
+      \ skal være\n  answer_index: 0\n- text_md: ' bra.'"
+    citation_exact: true
+    advisory: true
+    reviewer: primary
+    block_hash: a3e93ac9d383278b028617955fa0c0b25e90b42640dc0fc972856d23f1b29211
+    quote_english: 'Emil: I think the film … be good. After “I think,” vil fits a
+      future assessment. Jeg tror filmen skal være bra can mean “I think the film
+      is supposed to be good,” a valid assessment based on what the speaker has heard.'
+    suggested_change: Request vil explicitly, or replace skal være with a genuinely
+      incorrect construction. Alternatively, teach the contrast between a personal
+      prediction and reported reputation, allowing skal være when that reading fits.
+    details: '{"category": "answerable", "evidence": "prompt_md: \"Complete Emil''s
+      opinion about the film.\"\nexplanation_md: \"Etter «jeg tror» passer «vil» om
+      en framtidig vurdering.\"\n- text_md: ''Emil: Jeg tror filmen ''\n- blank_id:
+      review-vil-1\n  options:\n  - vil være\n  - skal være\n  answer_index: 0\n-
+      text_md: '' bra.''", "fix": "Request vil explicitly, or replace skal være with
+      a genuinely incorrect construction. Alternatively, teach the contrast between
+      a personal prediction and reported reputation, allowing skal være when that
+      reading fits.", "quote_english": "Emil: I think the film … be good. After “I
+      think,” vil fits a future assessment. Jeg tror filmen skal være bra can mean
+      “I think the film is supposed to be good,” a valid assessment based on what
+      the speaker has heard.", "severity": "P1", "title": "review_vil_assessment:
+      valid reported-expectation reading rejected"}'
+    message: 'review_vil_assessment: valid reported-expectation reading rejected'
+  - finding_id: ai-280ab83f8afe8ff365503756
+    key: vil-or-kommer-til-a#0
+    criterion: presentable
+    excerpt: 'Both forms can make predictions. A useful A2-level distinction is:'
+    explanation: 'vil-or-kommer-til-a#0: learner-facing CEFR leakage: Replace with:
+      “Both forms can make predictions. A useful distinction is:”'
+    severity: minor
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 23c3c5a8bc3cd094e486dfe69ca2c6e3a6808ea5ec32a4307e84359f8c5a45e5
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: 'Both forms can make predictions. A useful A2-level distinction
+      is:'
+    citation_exact: true
+    advisory: true
+    reviewer: primary
+    block_hash: 7e99e3955236844b0aaba595fbc68b7cec6bd8b8b702f2cc2de87b56c7ac8ce0
+    quote_english: ''
+    suggested_change: 'Replace with: “Both forms can make predictions. A useful distinction
+      is:”'
+    details: '{"category": "presentable", "evidence": "Both forms can make predictions.
+      A useful A2-level distinction is:", "fix": "Replace with: “Both forms can make
+      predictions. A useful distinction is:”", "quote_english": "", "severity": "P2",
+      "title": "vil-or-kommer-til-a#0: learner-facing CEFR leakage"}'
+    message: 'vil-or-kommer-til-a#0: learner-facing CEFR leakage'
+  - finding_id: ai-34d344b34685eda1e2f4e78e
+    key: plans-and-commitments-with-skal#0
+    criterion: sequencing
+    excerpt: Use **skal + infinitive (infinitiv)** when the subject has a plan, intention,
+      agreement, or commitment.
+    explanation: 'plans-and-commitments-with-skal#0: infinitive named but not glossed:
+      Gloss infinitive at first use: “Use skal + the infinitive—the verb’s basic form,
+      such as kjøpe (‘buy’)—for a plan, intention, agreement, or commitment. After
+      skal, omit å.” The Norwegian label infinitiv alone does not explain the term
+      to an English-speaking learner.'
+    severity: minor
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 23c3c5a8bc3cd094e486dfe69ca2c6e3a6808ea5ec32a4307e84359f8c5a45e5
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: Use **skal + infinitive (infinitiv)** when the subject has a plan,
+      intention, agreement, or commitment.
+    citation_exact: true
+    advisory: true
+    reviewer: primary
+    block_hash: e1d2705f094c1f02050cfe7bdd8a9c3cf52fc4bdf83afccaefaee3de9366f860
+    quote_english: 'skal: going to / shall; infinitiv: infinitive.'
+    suggested_change: 'Gloss infinitive at first use: “Use skal + the infinitive—the
+      verb’s basic form, such as kjøpe (‘buy’)—for a plan, intention, agreement, or
+      commitment. After skal, omit å.” The Norwegian label infinitiv alone does not
+      explain the term to an English-speaking learner.'
+    details: '{"category": "sequencing", "evidence": "Use **skal + infinitive (infinitiv)**
+      when the subject has a plan, intention, agreement, or commitment.", "fix": "Gloss
+      infinitive at first use: “Use skal + the infinitive—the verb’s basic form, such
+      as kjøpe (‘buy’)—for a plan, intention, agreement, or commitment. After skal,
+      omit å.” The Norwegian label infinitiv alone does not explain the term to an
+      English-speaking learner.", "quote_english": "skal: going to / shall; infinitiv:
+      infinitive.", "severity": "P2", "title": "plans-and-commitments-with-skal#0:
+      infinitive named but not glossed"}'
+    message: 'plans-and-commitments-with-skal#0: infinitive named but not glossed'
+  - finding_id: ai-919208ba8166ee776ba62f98
+    key: plans-and-commitments-with-skal#0
+    criterion: naturalness
+    excerpt: Use **skal + infinitive (infinitiv)** when the subject has a plan, intention,
+      agreement, or commitment.
+    explanation: 'Terminology advisory: “skal + infinitive (infinitiv)” uses the general
+      label where the å/no-å contrast matters. Introduce “infinitive without å” with
+      a concrete learner action.'
+    severity: minor
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 23c3c5a8bc3cd094e486dfe69ca2c6e3a6808ea5ec32a4307e84359f8c5a45e5
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: Use **skal + infinitive (infinitiv)** when the subject has a plan,
+      intention, agreement, or commitment.
+    citation_exact: true
+    advisory: true
+    reviewer: primary
+    block_hash: e1d2705f094c1f02050cfe7bdd8a9c3cf52fc4bdf83afccaefaee3de9366f860
+    quote_english: ''
+    suggested_change: Use **skal + infinitive without å** when the subject has a plan,
+      intention, agreement, or commitment. For example, use **kjøpe**, not **å kjøpe**,
+      after **skal**.
+    details: '{"evidence": "Use **skal + infinitive (infinitiv)** when the subject
+      has a plan, intention, agreement, or commitment.", "message": "Terminology advisory:
+      “skal + infinitive (infinitiv)” uses the general label where the å/no-å contrast
+      matters. Introduce “infinitive without å” with a concrete learner action.",
+      "quote_english": "", "severity": "P2", "suggested_change": "Use **skal + infinitive
+      without å** when the subject has a plan, intention, agreement, or commitment.
+      For example, use **kjøpe**, not **å kjøpe**, after **skal**.", "unit_id": "plans-and-commitments-with-skal"}'
+    message: 'Terminology advisory: “skal + infinitive (infinitiv)” uses the general
+      label where the å/no-å contrast matters. Introduce “infinitive without å” with
+      a concrete learner action.'
+  - finding_id: ai-e03c25abde372c3fab740148
+    key: compact-rule-skal#0
+    criterion: naturalness
+    excerpt: Use **skal + infinitive** when you want to present a future action as
+      someone’s plan, intention, or commitment.
+    explanation: 'Terminology advisory: “skal + infinitive” drops the required distinction
+      between infinitive with å and infinitive without å. Keep the no-å label in the
+      compact rule.'
+    severity: minor
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 23c3c5a8bc3cd094e486dfe69ca2c6e3a6808ea5ec32a4307e84359f8c5a45e5
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: Use **skal + infinitive** when you want to present a future action
+      as someone’s plan, intention, or commitment.
+    citation_exact: true
+    advisory: true
+    reviewer: primary
+    block_hash: d5a260f0053e21f710b3aee8ddb3716593258f2b8a0cd403f9b047114fc4e107
+    quote_english: ''
+    suggested_change: Use **skal + infinitive without å** when you want to present
+      a future action as someone’s plan, intention, or commitment.
+    details: '{"evidence": "Use **skal + infinitive** when you want to present a future
+      action as someone’s plan, intention, or commitment.", "message": "Terminology
+      advisory: “skal + infinitive” drops the required distinction between infinitive
+      with å and infinitive without å. Keep the no-å label in the compact rule.",
+      "quote_english": "", "severity": "P2", "suggested_change": "Use **skal + infinitive
+      without å** when you want to present a future action as someone’s plan, intention,
+      or commitment.", "unit_id": "compact-rule-skal"}'
+    message: 'Terminology advisory: “skal + infinitive” drops the required distinction
+      between infinitive with å and infinitive without å. Keep the no-å label in the
+      compact rule.'
+  - finding_id: ai-4cbca5e29ffb177d8d8d92e2
+    key: predictions-with-vil#0
+    criterion: naturalness
+    excerpt: Use **vil + infinitive** for a prediction or assessment about the future,
+      especially when it reflects an opinion, calculation, or general expectation.
+    explanation: 'Terminology advisory: “vil + infinitive” omits the no-å distinction
+      from the introductory formula. The later explanation uses the approved label;
+      use it consistently in the formula too.'
+    severity: minor
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 23c3c5a8bc3cd094e486dfe69ca2c6e3a6808ea5ec32a4307e84359f8c5a45e5
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: Use **vil + infinitive** for a prediction or assessment about the
+      future, especially when it reflects an opinion, calculation, or general expectation.
+    citation_exact: true
+    advisory: true
+    reviewer: primary
+    block_hash: 00f897b279aaeb8cea2c5d7122246ab5a0ec32788e65601870fcd1acf4ec409e
+    quote_english: ''
+    suggested_change: Use **vil + infinitive without å** for a prediction or assessment
+      about the future, especially when it reflects an opinion, calculation, or general
+      expectation.
+    details: '{"evidence": "Use **vil + infinitive** for a prediction or assessment
+      about the future, especially when it reflects an opinion, calculation, or general
+      expectation.", "message": "Terminology advisory: “vil + infinitive” omits the
+      no-å distinction from the introductory formula. The later explanation uses the
+      approved label; use it consistently in the formula too.", "quote_english": "",
+      "severity": "P2", "suggested_change": "Use **vil + infinitive without å** for
+      a prediction or assessment about the future, especially when it reflects an
+      opinion, calculation, or general expectation.", "unit_id": "predictions-with-vil"}'
+    message: 'Terminology advisory: “vil + infinitive” omits the no-å distinction
+      from the introductory formula. The later explanation uses the approved label;
+      use it consistently in the formula too.'
+  - finding_id: ai-e503493bb2ae55c6981c585e
+    key: review_vil_assessment
+    criterion: naturalness
+    excerpt: Etter «jeg tror» passer «vil» om en framtidig vurdering.
+    explanation: “Om en framtidig vurdering” awkwardly describes the assessment itself
+      as future, rather than describing an assessment about the future. Use “en vurdering
+      av noe som vil skje” or a plain explanation.
+    severity: minor
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 23c3c5a8bc3cd094e486dfe69ca2c6e3a6808ea5ec32a4307e84359f8c5a45e5
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: Etter «jeg tror» passer «vil» om en framtidig vurdering.
+    citation_exact: true
+    advisory: true
+    reviewer: primary
+    block_hash: a3e93ac9d383278b028617955fa0c0b25e90b42640dc0fc972856d23f1b29211
+    quote_english: After “I think”, “vil” fits for a future assessment.
+    suggested_change: Etter «jeg tror» kan du bruke «vil» for å si hva du tror vil
+      skje.
+    details: '{"evidence": "Etter «jeg tror» passer «vil» om en framtidig vurdering.",
+      "message": "“Om en framtidig vurdering” awkwardly describes the assessment itself
+      as future, rather than describing an assessment about the future. Use “en vurdering
+      av noe som vil skje” or a plain explanation.", "quote_english": "After “I think”,
+      “vil” fits for a future assessment.", "severity": "P2", "suggested_change":
+      "Etter «jeg tror» kan du bruke «vil» for å si hva du tror vil skje.", "unit_id":
+      "review_vil_assessment"}'
+    message: “Om en framtidig vurdering” awkwardly describes the assessment itself
+      as future, rather than describing an assessment about the future. Use “en vurdering
+      av noe som vil skje” or a plain explanation.
+  - finding_id: ai-e63c203611980b743b80ef06
+    key: review_skal_bare_infinitive
+    criterion: naturalness
+    excerpt: Perfektum forteller at handlingen allerede er fullført, ikke at hun lover
+      å gjøre den senere.
+    explanation: 'Terminology advisory: “Perfektum” is not the pinned Norwegian term
+      for present perfect and introduces an otherwise unestablished tense label in
+      A2 feedback. Use “presens perfektum” paired with the example and its plain explanation.'
+    severity: minor
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 23c3c5a8bc3cd094e486dfe69ca2c6e3a6808ea5ec32a4307e84359f8c5a45e5
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: Perfektum forteller at handlingen allerede er fullført, ikke at
+      hun lover å gjøre den senere.
+    citation_exact: true
+    advisory: true
+    reviewer: primary
+    block_hash: 2041a5615d8b21616f543611b8fd39801f5bc976e2bf7fb39d183f01ff7470b0
+    quote_english: The perfect indicates that the action is already completed, not
+      that she promises to do it later.
+    suggested_change: «Jeg har kjøpt dem» står i presens perfektum og betyr her at
+      billettene allerede er kjøpt. Det er ikke et løfte om å kjøpe dem senere.
+    details: '{"evidence": "Perfektum forteller at handlingen allerede er fullført,
+      ikke at hun lover å gjøre den senere.", "message": "Terminology advisory: “Perfektum”
+      is not the pinned Norwegian term for present perfect and introduces an otherwise
+      unestablished tense label in A2 feedback. Use “presens perfektum” paired with
+      the example and its plain explanation.", "quote_english": "The perfect indicates
+      that the action is already completed, not that she promises to do it later.",
+      "severity": "P2", "suggested_change": "«Jeg har kjøpt dem» står i presens perfektum
+      og betyr her at billettene allerede er kjøpt. Det er ikke et løfte om å kjøpe
+      dem senere.", "unit_id": "review_skal_bare_infinitive"}'
+    message: 'Terminology advisory: “Perfektum” is not the pinned Norwegian term for
+      present perfect and introduces an otherwise unestablished tense label in A2
+      feedback. Use “presens perfektum” paired with the example and its plain explanation.'
+  - finding_id: ai-0f4c1723906922fdffc2869b
+    key: review_skal_commitment
+    criterion: answer_review.ambiguous
+    excerpt: ''
+    explanation: 'ambiguous: review_skal_commitment'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 23c3c5a8bc3cd094e486dfe69ca2c6e3a6808ea5ec32a4307e84359f8c5a45e5
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: d65663af63b40946355db3417e33a0339a75232ad747cb16a1cf6a61e656698d
+    quote_english: ''
+    suggested_change: ''
+    details: '{"category": "ambiguous", "id": "review_skal_commitment", "report":
+      {"ambiguous": ["review_skal_commitment", "review_vil_assessment"], "duplicates":
+      [], "extra": [], "lesson_hash": "sha256:c124c0399622ac93e82406067baddb18c0595a02db87697a3d7b16bdcae61c01",
+      "matches": 12, "mismatches": [], "missing": [], "open_handles": ["birthday_future_transfer",
+      "trip_message_completion"], "open_tasks_unverified": true, "review_status":
+      "advisory_findings", "semantic_issues": [{"id": "future_anchor_noticing", "issues":
+      [{"category": "composite_decision_load", "evidence": "Each option contains mappings
+      for sentences 1–4.", "quote_english": "", "reason": "One selection bundles four
+      independent sentence-to-meaning judgments, preventing separate responses to
+      each distinction.", "suggested_change": ""}]}, {"id": "vil_prediction_interpretation",
+      "issues": [{"category": "composite_decision_load", "evidence": "Each option
+      bundles mappings for sentences 1–3.", "quote_english": "", "reason": "One selection
+      requires three independent meaning judgments rather than separately represented
+      responses.", "suggested_change": ""}, {"category": "supplied_answer_retrieval",
+      "evidence": "For a prediction, make the predictive context clear: Jeg tror Maja
+      vil like Lillehammer.", "quote_english": "", "reason": "Context repeats sentence
+      2 verbatim and explicitly labels its use as prediction, supplying the assessment-versus-willingness
+      distinction tested for that sentence.", "suggested_change": ""}]}, {"id": "future_expression_review",
+      "issues": [{"category": "composite_decision_load", "evidence": "Each option
+      contains mappings for updates A–D.", "quote_english": "", "reason": "One selection
+      bundles four independent interpretations, so responses cannot identify which
+      individual distinction the learner understands.", "suggested_change": ""}]},
+      {"id": "review_skal_commitment", "issues": [{"category": "competing_valid_answers",
+      "evidence": "Jonas: Kan du gi meg beskjed i morgen? Maja: Ja, jeg ___ deg i
+      morgen.", "quote_english": "", "reason": "The request-and-acceptance context
+      permits both skal ringe and kan ringe as a commitment to call. The prompt does
+      not explicitly require the modal skal.", "suggested_change": ""}]}, {"id": "review_vil_assessment",
+      "issues": [{"category": "competing_valid_answers", "evidence": "Emil: Jeg tror
+      filmen ___ bra.", "quote_english": "", "reason": "An opinion about a film can
+      use either vil være or reportative skal være. No future-time or firsthand-assessment
+      constraint excludes the latter.", "suggested_change": ""}]}, {"id": "review_kommer_til_a_form",
+      "issues": [{"category": "supplied_answer_retrieval", "evidence": "Context example:
+      Det kommer til å regne. Completion: Det kommer til å regne i kveld.", "quote_english":
+      "", "reason": "Context supplies Det kommer til å regne verbatim, allowing the
+      learner to copy the complete tested construction rather than reconstruct it.",
+      "suggested_change": ""}]}], "status": "pass", "total": 14, "unanswerable": []}}'
+    message: 'ambiguous: review_skal_commitment'
+  - finding_id: ai-b3f8654f6c7bf5932019a62a
+    key: review_vil_assessment
+    criterion: answer_review.ambiguous
+    excerpt: ''
+    explanation: 'ambiguous: review_vil_assessment'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 23c3c5a8bc3cd094e486dfe69ca2c6e3a6808ea5ec32a4307e84359f8c5a45e5
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: a3e93ac9d383278b028617955fa0c0b25e90b42640dc0fc972856d23f1b29211
+    quote_english: ''
+    suggested_change: ''
+    details: '{"category": "ambiguous", "id": "review_vil_assessment", "report": {"ambiguous":
+      ["review_skal_commitment", "review_vil_assessment"], "duplicates": [], "extra":
+      [], "lesson_hash": "sha256:c124c0399622ac93e82406067baddb18c0595a02db87697a3d7b16bdcae61c01",
+      "matches": 12, "mismatches": [], "missing": [], "open_handles": ["birthday_future_transfer",
+      "trip_message_completion"], "open_tasks_unverified": true, "review_status":
+      "advisory_findings", "semantic_issues": [{"id": "future_anchor_noticing", "issues":
+      [{"category": "composite_decision_load", "evidence": "Each option contains mappings
+      for sentences 1–4.", "quote_english": "", "reason": "One selection bundles four
+      independent sentence-to-meaning judgments, preventing separate responses to
+      each distinction.", "suggested_change": ""}]}, {"id": "vil_prediction_interpretation",
+      "issues": [{"category": "composite_decision_load", "evidence": "Each option
+      bundles mappings for sentences 1–3.", "quote_english": "", "reason": "One selection
+      requires three independent meaning judgments rather than separately represented
+      responses.", "suggested_change": ""}, {"category": "supplied_answer_retrieval",
+      "evidence": "For a prediction, make the predictive context clear: Jeg tror Maja
+      vil like Lillehammer.", "quote_english": "", "reason": "Context repeats sentence
+      2 verbatim and explicitly labels its use as prediction, supplying the assessment-versus-willingness
+      distinction tested for that sentence.", "suggested_change": ""}]}, {"id": "future_expression_review",
+      "issues": [{"category": "composite_decision_load", "evidence": "Each option
+      contains mappings for updates A–D.", "quote_english": "", "reason": "One selection
+      bundles four independent interpretations, so responses cannot identify which
+      individual distinction the learner understands.", "suggested_change": ""}]},
+      {"id": "review_skal_commitment", "issues": [{"category": "competing_valid_answers",
+      "evidence": "Jonas: Kan du gi meg beskjed i morgen? Maja: Ja, jeg ___ deg i
+      morgen.", "quote_english": "", "reason": "The request-and-acceptance context
+      permits both skal ringe and kan ringe as a commitment to call. The prompt does
+      not explicitly require the modal skal.", "suggested_change": ""}]}, {"id": "review_vil_assessment",
+      "issues": [{"category": "competing_valid_answers", "evidence": "Emil: Jeg tror
+      filmen ___ bra.", "quote_english": "", "reason": "An opinion about a film can
+      use either vil være or reportative skal være. No future-time or firsthand-assessment
+      constraint excludes the latter.", "suggested_change": ""}]}, {"id": "review_kommer_til_a_form",
+      "issues": [{"category": "supplied_answer_retrieval", "evidence": "Context example:
+      Det kommer til å regne. Completion: Det kommer til å regne i kveld.", "quote_english":
+      "", "reason": "Context supplies Det kommer til å regne verbatim, allowing the
+      learner to copy the complete tested construction rather than reconstruct it.",
+      "suggested_change": ""}]}], "status": "pass", "total": 14, "unanswerable": []}}'
+    message: 'ambiguous: review_vil_assessment'
+  - finding_id: ai-0a12032ebc9f801cf4f91a01
+    key: future_anchor_noticing
+    criterion: answer_review.semantic_issues
+    excerpt: Each option contains mappings for sentences 1–4.
+    explanation: 'Composite decision load: One selection bundles four independent
+      sentence-to-meaning judgments, preventing separate responses to each distinction.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 23c3c5a8bc3cd094e486dfe69ca2c6e3a6808ea5ec32a4307e84359f8c5a45e5
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: 41342e1fef7015caa48fa8f46083728e271be9e46efef7d639a8a7418cd589c4
+    quote_english: ''
+    suggested_change: ''
+    details: '{"id": "future_anchor_noticing", "issues": [{"category": "composite_decision_load",
+      "evidence": "Each option contains mappings for sentences 1–4.", "quote_english":
+      "", "reason": "One selection bundles four independent sentence-to-meaning judgments,
+      preventing separate responses to each distinction.", "suggested_change": ""}]}'
+    message: 'Composite decision load: One selection bundles four independent sentence-to-meaning
+      judgments, preventing separate responses to each distinction.'
+  - finding_id: ai-59ddd34514210164af582c08
+    key: vil_prediction_interpretation
+    criterion: answer_review.semantic_issues
+    excerpt: 'Each option bundles mappings for sentences 1–3.
+
+      For a prediction, make the predictive context clear: Jeg tror Maja vil like
+      Lillehammer.'
+    explanation: 'Composite decision load: One selection requires three independent
+      meaning judgments rather than separately represented responses.
+
+      Supplied answer retrieval: Context repeats sentence 2 verbatim and explicitly
+      labels its use as prediction, supplying the assessment-versus-willingness distinction
+      tested for that sentence.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 23c3c5a8bc3cd094e486dfe69ca2c6e3a6808ea5ec32a4307e84359f8c5a45e5
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: bcdf924fc7fbeb8e105f48332dde4e4224c5be4789a52b298d9b4c433efc7ecf
+    quote_english: ''
+    suggested_change: ''
+    details: '{"id": "vil_prediction_interpretation", "issues": [{"category": "composite_decision_load",
+      "evidence": "Each option bundles mappings for sentences 1–3.", "quote_english":
+      "", "reason": "One selection requires three independent meaning judgments rather
+      than separately represented responses.", "suggested_change": ""}, {"category":
+      "supplied_answer_retrieval", "evidence": "For a prediction, make the predictive
+      context clear: Jeg tror Maja vil like Lillehammer.", "quote_english": "", "reason":
+      "Context repeats sentence 2 verbatim and explicitly labels its use as prediction,
+      supplying the assessment-versus-willingness distinction tested for that sentence.",
+      "suggested_change": ""}]}'
+    message: 'Composite decision load: One selection requires three independent meaning
+      judgments rather than separately represented responses.
+
+      Supplied answer retrieval: Context repeats sentence 2 verbatim and explicitly
+      labels its use as prediction, supplying the assessment-versus-willingness distinction
+      tested for that sentence.'
+  - finding_id: ai-6a5e844d56571ba6cb094aaa
+    key: future_expression_review
+    criterion: answer_review.semantic_issues
+    excerpt: Each option contains mappings for updates A–D.
+    explanation: 'Composite decision load: One selection bundles four independent
+      interpretations, so responses cannot identify which individual distinction the
+      learner understands.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 23c3c5a8bc3cd094e486dfe69ca2c6e3a6808ea5ec32a4307e84359f8c5a45e5
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: ccf5d142697fd36c4ad5d8ac0a2b12013ceadae0703a52950398b67541c20eac
+    quote_english: ''
+    suggested_change: ''
+    details: '{"id": "future_expression_review", "issues": [{"category": "composite_decision_load",
+      "evidence": "Each option contains mappings for updates A–D.", "quote_english":
+      "", "reason": "One selection bundles four independent interpretations, so responses
+      cannot identify which individual distinction the learner understands.", "suggested_change":
+      ""}]}'
+    message: 'Composite decision load: One selection bundles four independent interpretations,
+      so responses cannot identify which individual distinction the learner understands.'
+  - finding_id: ai-6b6bc855b6db1ca67a754464
+    key: review_skal_commitment
+    criterion: answer_review.semantic_issues
+    excerpt: 'Jonas: Kan du gi meg beskjed i morgen? Maja: Ja, jeg ___ deg i morgen.'
+    explanation: 'Competing valid answers: The request-and-acceptance context permits
+      both skal ringe and kan ringe as a commitment to call. The prompt does not explicitly
+      require the modal skal.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 23c3c5a8bc3cd094e486dfe69ca2c6e3a6808ea5ec32a4307e84359f8c5a45e5
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: d65663af63b40946355db3417e33a0339a75232ad747cb16a1cf6a61e656698d
+    quote_english: ''
+    suggested_change: ''
+    details: '{"id": "review_skal_commitment", "issues": [{"category": "competing_valid_answers",
+      "evidence": "Jonas: Kan du gi meg beskjed i morgen? Maja: Ja, jeg ___ deg i
+      morgen.", "quote_english": "", "reason": "The request-and-acceptance context
+      permits both skal ringe and kan ringe as a commitment to call. The prompt does
+      not explicitly require the modal skal.", "suggested_change": ""}]}'
+    message: 'Competing valid answers: The request-and-acceptance context permits
+      both skal ringe and kan ringe as a commitment to call. The prompt does not explicitly
+      require the modal skal.'
+  - finding_id: ai-adb63c86ab22fc8352987a55
+    key: review_vil_assessment
+    criterion: answer_review.semantic_issues
+    excerpt: 'Emil: Jeg tror filmen ___ bra.'
+    explanation: 'Competing valid answers: An opinion about a film can use either
+      vil være or reportative skal være. No future-time or firsthand-assessment constraint
+      excludes the latter.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 23c3c5a8bc3cd094e486dfe69ca2c6e3a6808ea5ec32a4307e84359f8c5a45e5
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: a3e93ac9d383278b028617955fa0c0b25e90b42640dc0fc972856d23f1b29211
+    quote_english: ''
+    suggested_change: ''
+    details: '{"id": "review_vil_assessment", "issues": [{"category": "competing_valid_answers",
+      "evidence": "Emil: Jeg tror filmen ___ bra.", "quote_english": "", "reason":
+      "An opinion about a film can use either vil være or reportative skal være. No
+      future-time or firsthand-assessment constraint excludes the latter.", "suggested_change":
+      ""}]}'
+    message: 'Competing valid answers: An opinion about a film can use either vil
+      være or reportative skal være. No future-time or firsthand-assessment constraint
+      excludes the latter.'
+  - finding_id: ai-9eff9795fb241a15623a4f40
+    key: review_kommer_til_a_form
+    criterion: answer_review.semantic_issues
+    excerpt: 'Context example: Det kommer til å regne. Completion: Det kommer til
+      å regne i kveld.'
+    explanation: 'Supplied answer retrieval: Context supplies Det kommer til å regne
+      verbatim, allowing the learner to copy the complete tested construction rather
+      than reconstruct it.'
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 23c3c5a8bc3cd094e486dfe69ca2c6e3a6808ea5ec32a4307e84359f8c5a45e5
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: 71923e81a1276548d80b1ef0cbb8ada597e9b0c21e60db82e372f2da2b468525
+    quote_english: ''
+    suggested_change: ''
+    details: '{"id": "review_kommer_til_a_form", "issues": [{"category": "supplied_answer_retrieval",
+      "evidence": "Context example: Det kommer til å regne. Completion: Det kommer
+      til å regne i kveld.", "quote_english": "", "reason": "Context supplies Det
+      kommer til å regne verbatim, allowing the learner to copy the complete tested
+      construction rather than reconstruct it.", "suggested_change": ""}]}'
+    message: 'Supplied answer retrieval: Context supplies Det kommer til å regne verbatim,
+      allowing the learner to copy the complete tested construction rather than reconstruct
+      it.'
+  - finding_id: ai-0f127c4d54c5fcd06b0c1f00
+    key: prediction_basis_choice
+    criterion: attempt_surface.ambiguous
+    excerpt: ''
+    explanation: Both «vil» and «skal» can complete the guests' arrival statement.
+      «Jeg tror gjestene vil komme før middagen» predicts arrival; «Jeg tror gjestene
+      skal komme før middagen» expresses belief about their planned arrival. Both
+      fit the unrestricted instruction to complete predictions. The cloud-based blank
+      does not resolve this competition.
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 23c3c5a8bc3cd094e486dfe69ca2c6e3a6808ea5ec32a4307e84359f8c5a45e5
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: ba1d51c8ef0351caeaee92d5d15e0a6409b2c4508c252baca9a12edf51c77e6f
+    quote_english: ''
+    suggested_change: ''
+    details: '{"category": "ambiguous", "id": "prediction_basis_choice", "report":
+      {"ambiguous": ["prediction_basis_choice", "review_skal_commitment", "review_vil_assessment"],
+      "clear": 13, "duplicates": [], "extra": [], "missing": [], "reasons": {"prediction_basis_choice":
+      "Both «vil» and «skal» can complete the guests'' arrival statement. «Jeg tror
+      gjestene vil komme før middagen» predicts arrival; «Jeg tror gjestene skal komme
+      før middagen» expresses belief about their planned arrival. Both fit the unrestricted
+      instruction to complete predictions. The cloud-based blank does not resolve
+      this competition.", "review_skal_commitment": "Both «Ja, jeg skal ringe deg
+      i morgen» and «Ja, jeg kan ringe deg i morgen» can accept Jonas''s request and
+      commit Maja to calling. The latter can function as an agreement, not merely
+      an abstract statement of ability; the visible dialogue does not exclude it.",
+      "review_vil_assessment": "Both «Jeg tror filmen vil være bra» and «Jeg tror
+      filmen skal være bra» are natural completions. The first predicts quality; the
+      second can convey a tentative belief based on what Emil has heard. The broad
+      instruction to complete his opinion excludes neither reading."}, "status": "pass",
+      "total": 16, "unanswerable": []}}'
+    message: Both «vil» and «skal» can complete the guests' arrival statement. «Jeg
+      tror gjestene vil komme før middagen» predicts arrival; «Jeg tror gjestene skal
+      komme før middagen» expresses belief about their planned arrival. Both fit the
+      unrestricted instruction to complete predictions. The cloud-based blank does
+      not resolve this competition.
+  - finding_id: ai-f69c783bb72926b5c281d694
+    key: review_skal_commitment
+    criterion: attempt_surface.ambiguous
+    excerpt: ''
+    explanation: Both «Ja, jeg skal ringe deg i morgen» and «Ja, jeg kan ringe deg
+      i morgen» can accept Jonas's request and commit Maja to calling. The latter
+      can function as an agreement, not merely an abstract statement of ability; the
+      visible dialogue does not exclude it.
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 23c3c5a8bc3cd094e486dfe69ca2c6e3a6808ea5ec32a4307e84359f8c5a45e5
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: d65663af63b40946355db3417e33a0339a75232ad747cb16a1cf6a61e656698d
+    quote_english: ''
+    suggested_change: ''
+    details: '{"category": "ambiguous", "id": "review_skal_commitment", "report":
+      {"ambiguous": ["prediction_basis_choice", "review_skal_commitment", "review_vil_assessment"],
+      "clear": 13, "duplicates": [], "extra": [], "missing": [], "reasons": {"prediction_basis_choice":
+      "Both «vil» and «skal» can complete the guests'' arrival statement. «Jeg tror
+      gjestene vil komme før middagen» predicts arrival; «Jeg tror gjestene skal komme
+      før middagen» expresses belief about their planned arrival. Both fit the unrestricted
+      instruction to complete predictions. The cloud-based blank does not resolve
+      this competition.", "review_skal_commitment": "Both «Ja, jeg skal ringe deg
+      i morgen» and «Ja, jeg kan ringe deg i morgen» can accept Jonas''s request and
+      commit Maja to calling. The latter can function as an agreement, not merely
+      an abstract statement of ability; the visible dialogue does not exclude it.",
+      "review_vil_assessment": "Both «Jeg tror filmen vil være bra» and «Jeg tror
+      filmen skal være bra» are natural completions. The first predicts quality; the
+      second can convey a tentative belief based on what Emil has heard. The broad
+      instruction to complete his opinion excludes neither reading."}, "status": "pass",
+      "total": 16, "unanswerable": []}}'
+    message: Both «Ja, jeg skal ringe deg i morgen» and «Ja, jeg kan ringe deg i morgen»
+      can accept Jonas's request and commit Maja to calling. The latter can function
+      as an agreement, not merely an abstract statement of ability; the visible dialogue
+      does not exclude it.
+  - finding_id: ai-ac14b07d4801f1025371c0f0
+    key: review_vil_assessment
+    criterion: attempt_surface.ambiguous
+    excerpt: ''
+    explanation: Both «Jeg tror filmen vil være bra» and «Jeg tror filmen skal være
+      bra» are natural completions. The first predicts quality; the second can convey
+      a tentative belief based on what Emil has heard. The broad instruction to complete
+      his opinion excludes neither reading.
+    severity: major
+    status: open
+    resolution_note: ''
+    resolution_reason: null
+    resolution_comment: null
+    previously_resolved: false
+    created_against_sha256: 23c3c5a8bc3cd094e486dfe69ca2c6e3a6808ea5ec32a4307e84359f8c5a45e5
+    reviewer_version: f57665eb7eed1b186fda8840e352ea7c64d5550c715e468a3ace2cc948306fd0
+    cited_excerpt: ''
+    citation_exact: false
+    advisory: true
+    reviewer: primary
+    block_hash: a3e93ac9d383278b028617955fa0c0b25e90b42640dc0fc972856d23f1b29211
+    quote_english: ''
+    suggested_change: ''
+    details: '{"category": "ambiguous", "id": "review_vil_assessment", "report": {"ambiguous":
+      ["prediction_basis_choice", "review_skal_commitment", "review_vil_assessment"],
+      "clear": 13, "duplicates": [], "extra": [], "missing": [], "reasons": {"prediction_basis_choice":
+      "Both «vil» and «skal» can complete the guests'' arrival statement. «Jeg tror
+      gjestene vil komme før middagen» predicts arrival; «Jeg tror gjestene skal komme
+      før middagen» expresses belief about their planned arrival. Both fit the unrestricted
+      instruction to complete predictions. The cloud-based blank does not resolve
+      this competition.", "review_skal_commitment": "Both «Ja, jeg skal ringe deg
+      i morgen» and «Ja, jeg kan ringe deg i morgen» can accept Jonas''s request and
+      commit Maja to calling. The latter can function as an agreement, not merely
+      an abstract statement of ability; the visible dialogue does not exclude it.",
+      "review_vil_assessment": "Both «Jeg tror filmen vil være bra» and «Jeg tror
+      filmen skal være bra» are natural completions. The first predicts quality; the
+      second can convey a tentative belief based on what Emil has heard. The broad
+      instruction to complete his opinion excludes neither reading."}, "status": "pass",
+      "total": 16, "unanswerable": []}}'
+    message: Both «Jeg tror filmen vil være bra» and «Jeg tror filmen skal være bra»
+      are natural completions. The first predicts quality; the second can convey a
+      tentative belief based on what Emil has heard. The broad instruction to complete
+      his opinion excludes neither reading.
+proposals_accepted: 0
+proposals_rejected: 0
+exercise_alignments:
+  future_anchor_noticing:
+    exercise_key: future_anchor_noticing
+    checked_against:
+      first-checkpoint-speaker-perspective: 6e4a21c9498ef70ce1427e393d47ae8c3639217e93cd4ac01221d0e887f8478c
+    section_sources:
+      first-checkpoint-speaker-perspective: '## First checkpoint: notice the speaker’s
+        perspective {#first-checkpoint-speaker-perspective role=contrast objectives=obj-future-expressions-01}
+
+
+        {{exercise: future_anchor_noticing}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:38:54.598924+00:00'
+    decision_id: null
+  skal_plan_formation:
+    exercise_key: skal_plan_formation
+    checked_against:
+      likely-misconception-skal: c415918701558df8faf4319b7d6a578681176519ea4cbb9308ef95adebc6916f
+    section_sources:
+      likely-misconception-skal: '## Likely misconception {#likely-misconception-skal
+        role=contrast objectives=obj-future-expressions-01}
+
+
+        English **will** does not always correspond to Norwegian **vil**. For a decided
+        first-person plan, Norwegian commonly uses **skal**.
+
+
+        ::: examples
+
+        - no: Jeg skal hente deg klokka seks.
+
+        - en: I’ll pick you up at six.
+
+        - no: Jeg vil hente deg klokka seks.
+
+        - en: I want to pick you up at six.
+
+        :::
+
+
+        The second sentence can express desire or willingness rather than a neutral
+        future plan.
+
+
+        {{exercise: skal_plan_formation}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:38:54.598924+00:00'
+    decision_id: null
+  plan_or_arrangement_choice:
+    exercise_key: plan_or_arrangement_choice
+    checked_against:
+      common-mistake-present-context: eb3951777d0a9f9f9fd0654a4900b670f60d2d38893ca87a11f4928baf7c7282
+    section_sources:
+      common-mistake-present-context: '## Common mistake: present tense without future
+        context {#common-mistake-present-context role=contrast objectives=obj-future-expressions-01}
+
+
+        A present-tense form does not automatically mean future time.
+
+
+        ::: examples
+
+        - no: Jeg jobber.
+
+        - en: I’m working.
+
+        :::
+
+
+        Without a future expression or a clear shared arrangement, this normally refers
+        to the present.
+
+
+        Compare:
+
+
+        ::: examples
+
+        - no: Jeg jobber i morgen.
+
+        - en: I’m working tomorrow.
+
+        :::
+
+
+        Here, **i morgen** supplies the future context.
+
+
+        {{exercise: plan_or_arrangement_choice}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:38:54.598924+00:00'
+    decision_id: null
+  vil_prediction_interpretation:
+    exercise_key: vil_prediction_interpretation
+    checked_against:
+      two-meanings-of-vil: e74ace08127e24262bbd47b74d48599251848d51b573609285b49b9a9efc65fe
+    section_sources:
+      two-meanings-of-vil: '## The two meanings of vil {#two-meanings-of-vil role=contrast
+        objectives=obj-future-expressions-01}
+
+
+        With a person as subject, **vil** can mean **want to** or **be willing to**,
+        not simply future **will**.
+
+
+        ::: examples
+
+        - no: Jeg vil reise til Lillehammer.
+
+        - en: I want to travel to Lillehammer.
+
+        - no: Jeg vil hjelpe deg.
+
+        - en: I want to help you. / I’m willing to help you.
+
+        :::
+
+
+        For a decided plan, use **skal**:
+
+
+        ::: examples
+
+        - no: Jeg skal reise til Lillehammer på lørdag.
+
+        - en: I’m going to travel to Lillehammer on Saturday.
+
+        :::
+
+
+        For a prediction, make the predictive context clear:
+
+
+        ::: examples
+
+        - no: Jeg tror Maja vil like Lillehammer.
+
+        - en: I think Maja will like Lillehammer.
+
+        :::
+
+
+        The point is not that **vil** can never refer to a person’s future action.
+        The important issue is possible ambiguity. If you mean a plan, **skal** is
+        usually clearer.
+
+
+        {{exercise: vil_prediction_interpretation}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:38:54.598924+00:00'
+    decision_id: null
+  prediction_basis_choice:
+    exercise_key: prediction_basis_choice
+    checked_against:
+      vil-or-kommer-til-a: c266a2192f946d4fec0ac424e3bf34b1e0f2f7f17f87bfa040a4383aed035e00
+    section_sources:
+      vil-or-kommer-til-a: '## Vil or kommer til å? {#vil-or-kommer-til-a role=contrast
+        objectives=obj-future-expressions-01}
+
+
+        Both forms can make predictions. A useful A2-level distinction is:
+
+
+        - **vil** often presents a prediction as an opinion, assessment, or neutral
+        forecast.
+
+        - **kommer til å** often presents an expected result, particularly when circumstances
+        or signs point toward it.
+
+
+        Compare:
+
+
+        ::: examples
+
+        - no: Jeg tror toget vil være fullt.
+
+        - en: I think the train will be full.
+
+        :::
+
+
+        The speaker offers an assessment.
+
+
+        ::: examples
+
+        - no: Se på køen! Toget kommer til å bli fullt.
+
+        - en: Look at the queue! The train is going to be full.
+
+        :::
+
+
+        The visible queue supports the prediction.
+
+
+        Another contrast:
+
+
+        ::: examples
+
+        - no: Ekspertene tror prisene vil stige.
+
+        - en: The experts think prices will rise.
+
+        - no: Med disse nye kostnadene kommer prisene til å stige.
+
+        - en: With these new costs, prices are going to rise.
+
+        :::
+
+
+        This is a useful tendency, not an absolute boundary. In everyday Norwegian,
+        both expressions can sometimes fit. The speaker chooses how to frame the prediction.
+
+
+        {{exercise: prediction_basis_choice}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:38:54.598924+00:00'
+    decision_id: null
+  future_form_repair:
+    exercise_key: future_form_repair
+    checked_against:
+      common-form-errors: 4d00473707d29ce60ccdac58227948e852b01833fe917bdf0c39b74e32a909a9
+    section_sources:
+      common-form-errors: '## Common form errors {#common-form-errors role=contrast
+        objectives=obj-future-expressions-01}
+
+
+        **Adding å after skal or vil**
+
+
+        ::: examples
+
+        - no: Vi skal ta toget.
+
+        - en: We’re going to take the train.
+
+        - no: Reisen vil ta to timer.
+
+        - en: The journey will take two hours.
+
+        :::
+
+
+        Use no **å** after **skal** or **vil**.
+
+
+        **Removing å from kommer til å**
+
+
+        ::: examples
+
+        - no: Det kommer til å regne.
+
+        - en: It’s going to rain.
+
+        :::
+
+
+        Keep the whole expression **kommer til å**.
+
+
+        **Using vil for every translation of English will**
+
+
+        ::: examples
+
+        - no: Jeg skal sende deg en melding i kveld.
+
+        - en: I’ll send you a message this evening.
+
+        :::
+
+
+        This is a commitment, so **skal** is clearer than **vil**.
+
+
+        **Using present tense without a future marker**
+
+
+        ::: examples
+
+        - no: Bussen går.
+
+        - en: The bus is leaving. / The bus goes.
+
+        - no: Bussen går klokka ni i morgen.
+
+        - en: The bus leaves at nine tomorrow.
+
+        :::
+
+
+        The second sentence has an unmistakable future setting.
+
+
+        {{exercise: future_form_repair}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:38:54.598924+00:00'
+    decision_id: null
+  trip_message_completion:
+    exercise_key: trip_message_completion
+    checked_against:
+      back-to-maja-and-jonas: 5f451caf641db2abeef943dc298e0804eca30c087054ab55a53fe56cc65d30ec
+    section_sources:
+      back-to-maja-and-jonas: '## Back to Maja and Jonas {#back-to-maja-and-jonas
+        role=model objectives=obj-future-expressions-01}
+
+
+        On Friday evening, Jonas sends Maja an update.
+
+
+        ::: {.reading translation="My sister is going to meet us at the station in
+        Lillehammer." dialogue_id="friday-evening-update" speaker_id="jonas" speaker_name="Jonas"
+        character_id="jonas"}
+
+        Søsteren min skal møte oss på stasjonen i Lillehammer.
+
+        :::
+
+
+        ::: {.reading translation="Great. The train arrives at 10:26, right?" dialogue_id="friday-evening-update"
+        speaker_id="maja" speaker_name="Maja" character_id="maja"}
+
+        Fint. Toget kommer fram klokka 10.26, ikke sant?
+
+        :::
+
+
+        ::: {.reading translation="Yes. I think she’ll wait by the main entrance."
+        dialogue_id="friday-evening-update" speaker_id="jonas" speaker_name="Jonas"
+        character_id="jonas"}
+
+        Ja. Jeg tror hun vil vente ved hovedinngangen.
+
+        :::
+
+
+        ::: {.reading translation="Good. I’ll send her a message when we leave Oslo."
+        dialogue_id="friday-evening-update" speaker_id="maja" speaker_name="Maja"
+        character_id="maja"}
+
+        Bra. Jeg skal sende henne en melding når vi drar fra Oslo.
+
+        :::
+
+
+        ::: {.reading translation="Bring warm clothes too. It’s going to be cold in
+        the evening." dialogue_id="friday-evening-update" speaker_id="jonas" speaker_name="Jonas"
+        character_id="jonas"}
+
+        Ta med varme klær også. Det kommer til å bli kaldt om kvelden.
+
+        :::
+
+
+        The four choices still serve different purposes:
+
+
+        - Jonas’s sister has a plan: **skal møte**.
+
+        - The arrival belongs to the timetable: **kommer fram**.
+
+        - Jonas gives his assessment: **vil vente**.
+
+        - The expected cold is presented as a likely result: **kommer til å bli**.
+
+
+        {{exercise: trip_message_completion}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:38:54.598924+00:00'
+    decision_id: null
+  birthday_future_transfer:
+    exercise_key: birthday_future_transfer
+    checked_against:
+      cumulative-transfer-birthday-dinner: edd31f2b7f7edd5899ab26a6e1954299b2d042abd26e6221f9ca8399b6809978
+    section_sources:
+      cumulative-transfer-birthday-dinner: '## Cumulative transfer: preparing for
+        a birthday dinner {#cumulative-transfer-birthday-dinner role=recap objectives=obj-future-expressions-01}
+
+
+        Now change the situation. Emil and Sara are preparing a birthday dinner for
+        a friend. The restaurant reservation is fixed, each person has agreed to complete
+        certain tasks, and they are making predictions about attendance and weather.
+
+
+        {{exercise: birthday_future_transfer}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:38:54.598924+00:00'
+    decision_id: null
+  future_expression_review:
+    exercise_key: future_expression_review
+    checked_against:
+      final-retrieval: ccccafdd7a48f2a2a5f4600f1875d07c6156d33c10e3e5cb20b3decf618b5bcd
+    section_sources:
+      final-retrieval: '## Final retrieval {#final-retrieval role=recap objectives=obj-future-expressions-01}
+
+
+        {{exercise: future_expression_review}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:38:54.598924+00:00'
+    decision_id: null
+  review_skal_commitment:
+    exercise_key: review_skal_commitment
+    checked_against:
+      final-retrieval: ccccafdd7a48f2a2a5f4600f1875d07c6156d33c10e3e5cb20b3decf618b5bcd
+    section_sources:
+      final-retrieval: '## Final retrieval {#final-retrieval role=recap objectives=obj-future-expressions-01}
+
+
+        {{exercise: future_expression_review}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:38:54.598924+00:00'
+    decision_id: null
+  review_present_arrangement:
+    exercise_key: review_present_arrangement
+    checked_against:
+      final-retrieval: ccccafdd7a48f2a2a5f4600f1875d07c6156d33c10e3e5cb20b3decf618b5bcd
+    section_sources:
+      final-retrieval: '## Final retrieval {#final-retrieval role=recap objectives=obj-future-expressions-01}
+
+
+        {{exercise: future_expression_review}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:38:54.598924+00:00'
+    decision_id: null
+  review_vil_assessment:
+    exercise_key: review_vil_assessment
+    checked_against:
+      final-retrieval: ccccafdd7a48f2a2a5f4600f1875d07c6156d33c10e3e5cb20b3decf618b5bcd
+    section_sources:
+      final-retrieval: '## Final retrieval {#final-retrieval role=recap objectives=obj-future-expressions-01}
+
+
+        {{exercise: future_expression_review}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:38:54.598924+00:00'
+    decision_id: null
+  review_kommer_evidence:
+    exercise_key: review_kommer_evidence
+    checked_against:
+      final-retrieval: ccccafdd7a48f2a2a5f4600f1875d07c6156d33c10e3e5cb20b3decf618b5bcd
+    section_sources:
+      final-retrieval: '## Final retrieval {#final-retrieval role=recap objectives=obj-future-expressions-01}
+
+
+        {{exercise: future_expression_review}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:38:54.598924+00:00'
+    decision_id: null
+  review_skal_bare_infinitive:
+    exercise_key: review_skal_bare_infinitive
+    checked_against:
+      common-form-errors: 4d00473707d29ce60ccdac58227948e852b01833fe917bdf0c39b74e32a909a9
+    section_sources:
+      common-form-errors: '## Common form errors {#common-form-errors role=contrast
+        objectives=obj-future-expressions-01}
+
+
+        **Adding å after skal or vil**
+
+
+        ::: examples
+
+        - no: Vi skal ta toget.
+
+        - en: We’re going to take the train.
+
+        - no: Reisen vil ta to timer.
+
+        - en: The journey will take two hours.
+
+        :::
+
+
+        Use no **å** after **skal** or **vil**.
+
+
+        **Removing å from kommer til å**
+
+
+        ::: examples
+
+        - no: Det kommer til å regne.
+
+        - en: It’s going to rain.
+
+        :::
+
+
+        Keep the whole expression **kommer til å**.
+
+
+        **Using vil for every translation of English will**
+
+
+        ::: examples
+
+        - no: Jeg skal sende deg en melding i kveld.
+
+        - en: I’ll send you a message this evening.
+
+        :::
+
+
+        This is a commitment, so **skal** is clearer than **vil**.
+
+
+        **Using present tense without a future marker**
+
+
+        ::: examples
+
+        - no: Bussen går.
+
+        - en: The bus is leaving. / The bus goes.
+
+        - no: Bussen går klokka ni i morgen.
+
+        - en: The bus leaves at nine tomorrow.
+
+        :::
+
+
+        The second sentence has an unmistakable future setting.
+
+
+        {{exercise: future_form_repair}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:38:54.598924+00:00'
+    decision_id: null
+  review_vil_bare_infinitive:
+    exercise_key: review_vil_bare_infinitive
+    checked_against:
+      common-form-errors: 4d00473707d29ce60ccdac58227948e852b01833fe917bdf0c39b74e32a909a9
+    section_sources:
+      common-form-errors: '## Common form errors {#common-form-errors role=contrast
+        objectives=obj-future-expressions-01}
+
+
+        **Adding å after skal or vil**
+
+
+        ::: examples
+
+        - no: Vi skal ta toget.
+
+        - en: We’re going to take the train.
+
+        - no: Reisen vil ta to timer.
+
+        - en: The journey will take two hours.
+
+        :::
+
+
+        Use no **å** after **skal** or **vil**.
+
+
+        **Removing å from kommer til å**
+
+
+        ::: examples
+
+        - no: Det kommer til å regne.
+
+        - en: It’s going to rain.
+
+        :::
+
+
+        Keep the whole expression **kommer til å**.
+
+
+        **Using vil for every translation of English will**
+
+
+        ::: examples
+
+        - no: Jeg skal sende deg en melding i kveld.
+
+        - en: I’ll send you a message this evening.
+
+        :::
+
+
+        This is a commitment, so **skal** is clearer than **vil**.
+
+
+        **Using present tense without a future marker**
+
+
+        ::: examples
+
+        - no: Bussen går.
+
+        - en: The bus is leaving. / The bus goes.
+
+        - no: Bussen går klokka ni i morgen.
+
+        - en: The bus leaves at nine tomorrow.
+
+        :::
+
+
+        The second sentence has an unmistakable future setting.
+
+
+        {{exercise: future_form_repair}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:38:54.598924+00:00'
+    decision_id: null
+  review_kommer_til_a_form:
+    exercise_key: review_kommer_til_a_form
+    checked_against:
+      common-form-errors: 4d00473707d29ce60ccdac58227948e852b01833fe917bdf0c39b74e32a909a9
+    section_sources:
+      common-form-errors: '## Common form errors {#common-form-errors role=contrast
+        objectives=obj-future-expressions-01}
+
+
+        **Adding å after skal or vil**
+
+
+        ::: examples
+
+        - no: Vi skal ta toget.
+
+        - en: We’re going to take the train.
+
+        - no: Reisen vil ta to timer.
+
+        - en: The journey will take two hours.
+
+        :::
+
+
+        Use no **å** after **skal** or **vil**.
+
+
+        **Removing å from kommer til å**
+
+
+        ::: examples
+
+        - no: Det kommer til å regne.
+
+        - en: It’s going to rain.
+
+        :::
+
+
+        Keep the whole expression **kommer til å**.
+
+
+        **Using vil for every translation of English will**
+
+
+        ::: examples
+
+        - no: Jeg skal sende deg en melding i kveld.
+
+        - en: I’ll send you a message this evening.
+
+        :::
+
+
+        This is a commitment, so **skal** is clearer than **vil**.
+
+
+        **Using present tense without a future marker**
+
+
+        ::: examples
+
+        - no: Bussen går.
+
+        - en: The bus is leaving. / The bus goes.
+
+        - no: Bussen går klokka ni i morgen.
+
+        - en: The bus leaves at nine tomorrow.
+
+        :::
+
+
+        The second sentence has an unmistakable future setting.
+
+
+        {{exercise: future_form_repair}}
+
+
+        '
+    outcome: approved
+    note: null
+    reason: null
+    comment: null
+    at: '2026-10-25T14:38:54.598924+00:00'
+    decision_id: null
+prior_approvals: []
+acceptance_statement: Owner acceptance is not qualified Norwegian review.
