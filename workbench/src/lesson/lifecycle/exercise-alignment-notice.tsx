@@ -48,42 +48,52 @@ export function ExerciseAlignmentNotice({
             onKeep={(note) => onKeep(exerciseKey, note)}
           />
         </div>
+        {alignment.history.length ? (
+          <p className="mt-2 text-xs">
+            Past decisions do not clear the current section changes. Keep or regenerate this exercise if needed.
+          </p>
+        ) : null}
+        <ExerciseAlignmentHistory history={alignment.history} />
       </div>
     );
   }
   if (alignment?.status === 'untracked') {
     return (
-      <p
-        role="status"
-        className="mt-3 inline-flex rounded-full border border-secondary-30 bg-secondary-10 px-2.5 py-1 text-xs font-semibold text-secondary-90"
-      >
-        Alignment not tracked
-      </p>
+      <>
+        <p
+          role="status"
+          className="mt-3 inline-flex rounded-full border border-border bg-muted px-2.5 py-1 text-xs font-semibold text-foreground"
+        >
+          Alignment not tracked
+        </p>
+        <ExerciseAlignmentHistory history={alignment.history} />
+      </>
     );
   }
-  if (alignment?.status === 'aligned') {
-    const history = [...alignment.history].sort((left, right) => right.at.localeCompare(left.at));
-    return history.length ? (
-      <section
-        lang="en"
-        aria-label="Exercise alignment history"
-        className="mt-3 rounded-lg bg-secondary-0 px-3 py-2 text-xs text-secondary-80"
-      >
-        <h3 className="m-0 font-semibold">Decision history</h3>
-        <ol className="m-0 mt-1 list-none space-y-1 p-0">
-          {history.map((record) => (
-            <li key={record.decisionId ?? `${record.at}-${record.outcome}`}>
-              {record.at.slice(0, 10)} ·{' '}
-              {record.outcome === 'kept' ? 'Kept' : record.outcome === 'approved' ? 'Approved' : 'Regenerated'}
-              {record.outcome === 'kept'
-                ? ` · ${keepReasons.find((reason) => reason.value === record.reason)?.label ?? 'Legacy decision'}`
-                : ''}
-              {record.comment || record.note ? ` · ${record.comment || record.note}` : ''}
-            </li>
-          ))}
-        </ol>
-      </section>
-    ) : null;
-  }
-  return null;
+  return alignment ? <ExerciseAlignmentHistory history={alignment.history} /> : null;
+}
+
+function ExerciseAlignmentHistory({ history }: { history: ExerciseAlignmentState['history'] }) {
+  const ordered = [...history].sort((left, right) => right.at.localeCompare(left.at));
+  return ordered.length ? (
+    <section
+      lang="en"
+      aria-label="Exercise alignment history"
+      className="mt-3 rounded-lg bg-muted px-3 py-2 text-xs text-muted-foreground"
+    >
+      <h3 className="m-0 font-semibold">Decision history</h3>
+      <ol className="m-0 mt-1 list-none space-y-1 p-0">
+        {ordered.map((record) => (
+          <li key={record.decisionId ?? `${record.at}-${record.outcome}`}>
+            {record.at.slice(0, 10)} ·{' '}
+            {record.outcome === 'kept' ? 'Kept' : record.outcome === 'canonical' ? 'Canonical' : 'Regenerated'}
+            {record.outcome === 'kept'
+              ? ` · ${keepReasons.find((reason) => reason.value === record.reason)?.label ?? 'Legacy decision'}`
+              : ''}
+            {record.comment || record.note ? ` · ${record.comment || record.note}` : ''}
+          </li>
+        ))}
+      </ol>
+    </section>
+  ) : null;
 }

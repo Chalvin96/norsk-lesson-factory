@@ -132,7 +132,7 @@ export const LessonDraftReadyToApprove: Story = {
         ...lessonPayload().state,
         findings: [],
         proposals: [],
-        approveBlockers: [],
+        promotionBlockers: [],
         statusChips: [{ label: 'edited since approval', tone: 'draft' }],
       },
     }),
@@ -140,7 +140,7 @@ export const LessonDraftReadyToApprove: Story = {
 };
 export const LessonClientEditBlocksApproval: Story = {
   args: {
-    lesson: lessonPayload({ state: { ...lessonPayload().state, findings: [], proposals: [], approveBlockers: [] } }),
+    lesson: lessonPayload({ state: { ...lessonPayload().state, findings: [], proposals: [], promotionBlockers: [] } }),
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -520,7 +520,7 @@ export const CurriculumReorderReview: Story = {
     third.focus();
     await userEvent.keyboard('{Alt>}{ArrowUp}{/Alt}');
     await userEvent.click(canvas.getByRole('button', { name: 'Save curriculum' }));
-    await canvas.findByRole('heading', { name: 'Review curriculum changes' });
+    await canvas.findByRole('heading', { name: 'Save curriculum changes' });
   },
 };
 export const Settings: Story = {

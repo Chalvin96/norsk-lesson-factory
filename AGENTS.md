@@ -41,9 +41,9 @@ rendering question.
 
 The loopback workbench reads authoring source; opening it does not regenerate
 `dist/` or call providers. Chat, review, and regeneration can call configured
-providers. Its approval records record owner acceptance and do not claim
-qualified Norwegian review. Curriculum entry chips come from current approval
-records.
+providers. Git commits and PR review record acceptance. AI reviews are optional and
+advisory; promotion checks valid source, settled proposals, complete audio, and
+canonical conflicts. Curriculum chips show source, findings, and proposals.
 Exercise regeneration is a per-draft graph: one proposal contains one block
 per affected exercise, is checked as a whole, and is decided per item.
 

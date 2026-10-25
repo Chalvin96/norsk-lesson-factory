@@ -35,9 +35,6 @@ describe('Lesson document', () => {
     expect(rowElement('ex1')).toHaveAttribute('data-flag', 'error');
     expect(within(rowElement('intro-b0')).getByText('After text')).toBeInTheDocument();
     expect(within(screen.getByRole('group', { name: 'Open findings' })).getByText(/^2/)).toBeInTheDocument();
-    expect(screen.getByText('Lesson: Open proposal')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Approve' })).toBeDisabled();
-    expect(screen.getByRole('button', { name: 'Approve' })).toHaveAccessibleDescription(/Lesson: Open proposal/);
   });
 
   it('test_reading_row_given_edit_control_expect_control_anchored_inside_block_body', () => {

@@ -3,7 +3,7 @@ import type { CurriculumEditPreview } from '@/api/contracts';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { usePreviewCurriculumEdits } from '@/curriculum/api';
-import type { CurriculumEdit, CurriculumFindingDecisionInput } from '@/curriculum/types';
+import type { CurriculumEdit } from '@/curriculum/types';
 
 interface CurriculumReviewDialogProps {
   open: boolean;
@@ -11,11 +11,7 @@ interface CurriculumReviewDialogProps {
   saving: boolean;
   saveError?: string;
   onOpenChange: (open: boolean) => void;
-  onSave: (input: {
-    reviewDigest: string | null;
-    findingDecisions: CurriculumFindingDecisionInput[];
-    force: boolean;
-  }) => void;
+  onSave: (input: { reviewDigest: string | null }) => void;
 }
 
 export function CurriculumReviewDialog({
@@ -27,8 +23,6 @@ export function CurriculumReviewDialog({
   onSave,
 }: CurriculumReviewDialogProps) {
   const [preview, setPreview] = React.useState<CurriculumEditPreview | null>(null);
-  const [decisions, setDecisions] = React.useState<Record<string, 'accept' | 'revise'>>({});
-  const [confirmed, setConfirmed] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
   const [loading, setLoading] = React.useState(false);
   const { mutateAsync } = usePreviewCurriculumEdits();
@@ -38,8 +32,6 @@ export function CurriculumReviewDialog({
     if (!open || edits.length === 0) return;
     const id = ++requestId.current;
     setPreview(null);
-    setDecisions({});
-    setConfirmed(false);
     setError(null);
     setLoading(true);
     void mutateAsync(edits)
@@ -58,18 +50,6 @@ export function CurriculumReviewDialog({
     };
   }, [edits, mutateAsync, open]);
 
-  const reviewed =
-    Boolean(preview) &&
-    confirmed &&
-    preview?.dependencyFindings.every((finding) => decisions[finding.findingId] === 'accept');
-  const findingDecisions =
-    preview?.dependencyFindings
-      .filter((finding) => decisions[finding.findingId])
-      .map((finding) => ({
-        findingId: finding.findingId,
-        decision: decisions[finding.findingId] as 'accept' | 'revise',
-      })) ?? [];
-
   return (
     <Dialog
       open={open}
@@ -78,12 +58,10 @@ export function CurriculumReviewDialog({
         onOpenChange(nextOpen);
       }}
     >
-      <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto">
+      <DialogContent className="max-h-[90vh] max-w-2xl grid-cols-1 break-words overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Review curriculum changes</DialogTitle>
-          <DialogDescription>
-            Review the complete resulting order and decide each dependency finding before saving.
-          </DialogDescription>
+          <DialogTitle>Save curriculum changes</DialogTitle>
+          <DialogDescription>Check the resulting order and affected lessons before saving.</DialogDescription>
         </DialogHeader>
         {loading ? (
           <p role="status" className="text-sm text-muted-foreground">
@@ -101,7 +79,7 @@ export function CurriculumReviewDialog({
           </p>
         ) : null}
         {preview ? (
-          <div className="grid gap-4">
+          <div className="grid min-w-0 grid-cols-1 gap-4">
             <section aria-label="Resulting authored order">
               <h3 className="font-semibold">Resulting authored order · {preview.entries.length} entries</h3>
               <ol className="mt-2 max-h-44 list-inside list-decimal overflow-y-auto text-sm">
@@ -150,72 +128,34 @@ export function CurriculumReviewDialog({
                     className="grid gap-2 rounded-lg border border-orange-40 bg-orange-10 p-3"
                   >
                     <p className="m-0 text-sm">{finding.explanation}</p>
-                    <label className="grid gap-1 text-sm font-medium">
-                      Decision
-                      <select
-                        aria-label={`Decision for ${finding.lessonId} prerequisite ${finding.prerequisiteId}`}
-                        className="h-9 rounded-md border border-input bg-background px-2"
-                        disabled={saving}
-                        value={decisions[finding.findingId] ?? ''}
-                        onChange={(event) =>
-                          setDecisions((current) => ({
-                            ...current,
-                            [finding.findingId]: event.target.value as 'accept' | 'revise',
-                          }))
-                        }
-                      >
-                        <option value="">Choose a decision</option>
-                        <option value="accept" disabled={finding.code === 'curriculum.prerequisite_missing'}>
-                          Keep this finding and accept the dependency risk
-                        </option>
-                        <option value="revise">Revise the curriculum before saving</option>
-                      </select>
-                    </label>
                   </div>
                 ))
               ) : (
                 <p className="m-0 text-sm text-muted-foreground">No dependency findings.</p>
               )}
             </section>
-            <label className="flex items-start gap-2 rounded-md border p-3 text-sm">
-              <input
-                type="checkbox"
-                className="mt-0.5 accent-primary"
-                disabled={saving}
-                checked={confirmed}
-                onChange={(event) => setConfirmed(event.target.checked)}
-              />
-              <span>
-                I reviewed the current curriculum content, affected lessons, moved content, and each finding above.
-              </span>
-            </label>
           </div>
         ) : null}
         <div className="flex flex-wrap justify-end gap-2 border-t pt-3">
           <Button
             type="button"
-            disabled={!reviewed || loading || saving}
+            disabled={
+              !preview ||
+              loading ||
+              saving ||
+              preview.dependencyFindings.some((finding) => finding.code === 'curriculum.prerequisite_missing')
+            }
             onClick={() => {
-              if (preview && reviewed) onSave({ reviewDigest: preview.reviewDigest, findingDecisions, force: false });
+              if (preview) onSave({ reviewDigest: preview.reviewDigest });
             }}
           >
-            {saving ? 'Saving…' : 'Save reviewed curriculum'}
+            {saving ? 'Saving…' : 'Save curriculum'}
           </Button>
-          <Button
-            type="button"
-            variant="destructive"
-            disabled={!preview || loading || saving}
-            onClick={() => onSave({ reviewDigest: null, findingDecisions: [], force: true })}
-          >
-            Force save unreviewed
-          </Button>
+
           <Button type="button" variant="dialogSecondary" disabled={saving} onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
         </div>
-        <p className="m-0 text-xs text-muted-foreground">
-          A force save leaves curriculum review pending and blocks release until reviewed.
-        </p>
       </DialogContent>
     </Dialog>
   );

@@ -42,8 +42,6 @@ def workspace(tmp_path: Path) -> Path:
     lesson_id = "greet_and_introduce_yourself"
     for relative in (
         f"content/lessons/{lesson_id}",
-        f"content/approvals/lessons/{lesson_id}",
-        "content/approvals/workbench",
         "content/authoring",
         "content/terminology",
         "content/catalog",
@@ -64,9 +62,10 @@ def workspace(tmp_path: Path) -> Path:
     return tmp_path
 
 
-def test_owner_routes_given_reviewed_edit_expect_approval_commit_and_promoted_dist(workspace: Path) -> None:
+def test_owner_routes_given_edit_without_review_expect_promoted_dist(workspace: Path) -> None:
     lesson_id = "greet_and_introduce_yourself"
-    _reviewed_edit(workspace, lesson_id)
+    source = read_workbench_source(workspace, lesson_id)
+    write_workbench_file(workspace, lesson_id, "lesson.md", source.files["lesson.md"] + "\nOwner note.\n")
     audio_plan = plan_workbench_audio(workspace, lesson_id, "missing_and_stale")
     synthesize_workbench_audio(
         workspace,
@@ -74,46 +73,20 @@ def test_owner_routes_given_reviewed_edit_expect_approval_commit_and_promoted_di
         synthesis_client=FakeTtsClient.from_fn(fake_audio_for_text),
     )
     with serving(create_workbench_server(workspace, "127.0.0.1", 0)) as server:
-        approved = _post(server, f"/api/lessons/{lesson_id}/approve", {})
-        assert approved.status == 200
-        approval = json.loads(approved.body)
-        assert approval["stages"] == ["lesson", "exercises"]
-        assert approval["lesson"]["state"]["promotable"] is True
         promoted = _post(server, f"/api/lessons/{lesson_id}/promote", {})
         assert promoted.status == 200
         payload = json.loads(promoted.body)
         assert payload["lesson"]["source"] == "canonical"
         assert f"dist/lessons/{lesson_id}.json" in payload["dist_files"]
-        assert payload["commit"] != approval["commit"]
+        assert payload["commit"]
+        assert "approvalStages" not in payload["lesson"]["state"]
     assert not (workspace / "drafts" / lesson_id).exists()
-
-
-def test_approve_route_given_stage_subset_request_expect_only_requested_stage_approved(workspace: Path) -> None:
-    lesson_id = "greet_and_introduce_yourself"
-    source = read_workbench_source(workspace, lesson_id)
-    write_workbench_file(workspace, lesson_id, "plan.md", source.files["plan.md"] + "\nOwner design note.\n")
-    with serving(create_workbench_server(workspace, "127.0.0.1", 0)) as server:
-        approved = _post(server, f"/api/lessons/{lesson_id}/approve", {"stages": ["plan"]})
-
-        assert approved.status == 200
-        payload = json.loads(approved.body)
-        assert payload["stages"] == ["plan"]
-        assert payload["lesson"]["state"]["approvalStages"][0]["status"] == "approved"
-        assert [stage["status"] for stage in payload["lesson"]["state"]["approvalStages"]] == [
-            "approved",
-            "stale",
-            "stale",
-        ]
-        refused = _post(server, f"/api/lessons/{lesson_id}/approve", {"stages": ["lesson"]})
-        assert refused.status == 409
-        assert json.loads(refused.body)["error"] == "Approval blocked by current lesson gate"
 
 
 def test_owner_routes_given_canonical_conflict_expect_409_diff_pull_and_confirmed_discard(workspace: Path) -> None:
     lesson_id = "greet_and_introduce_yourself"
     _reviewed_edit(workspace, lesson_id)
     with serving(create_workbench_server(workspace, "127.0.0.1", 0)) as server:
-        assert _post(server, f"/api/lessons/{lesson_id}/approve", {}).status == 200
         canonical = workspace / "content/lessons" / lesson_id / "lesson.md"
         canonical.write_text(canonical.read_text().replace('translation="', 'translation="Canonical: ', 1))
         reply = _post(server, f"/api/lessons/{lesson_id}/promote", {})
@@ -483,18 +456,15 @@ def _git(root: Path, *args: str) -> str:
     return subprocess.run(["git", "-C", str(root), *args], check=True, capture_output=True, text=True).stdout
 
 
-@pytest.mark.parametrize("action", ["save", "approve", "promote"])
+@pytest.mark.parametrize("action", ["save", "promote"])
 def test_owner_route_given_detached_head_expect_shared_branch_precondition_without_commit(
     workspace: Path, action: str
 ) -> None:
     lesson_id = "greet_and_introduce_yourself"
     _reviewed_edit(workspace, lesson_id)
     if action == "promote":
-        from lesson_builder.application.operations.workbench_approval import approve_workbench_lesson
-
         audio = plan_workbench_audio(workspace, lesson_id, "missing_and_stale")
         synthesize_workbench_audio(workspace, audio.token, synthesis_client=FakeTtsClient.from_fn(fake_audio_for_text))
-        approve_workbench_lesson(workspace, lesson_id)
     _git(workspace, "checkout", "--detach")
     head = _git(workspace, "rev-parse", "HEAD")
     with serving(create_workbench_server(workspace, "127.0.0.1", 0)) as server:

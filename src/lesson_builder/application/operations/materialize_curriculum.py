@@ -38,7 +38,6 @@ def materialize_curriculum_plan(
     run_id: str | None = None,
     catalog_path: Path | None = None,
     included_kinds: Sequence[str] | None = None,
-    auto_approve: bool = False,
     commit: bool = False,
 ) -> CurriculumPlanResult:
     """Write a deterministic course plan from approved YAML.
@@ -49,11 +48,9 @@ def materialize_curriculum_plan(
     MVP scope plans grammar, phraseology, and communicative owners; pronunciation
     and writing remain approved catalog inventory but are explicitly deferred
     until their category contracts are ready. ``commit`` materializes the
-    explicitly auto-approved plan while retaining the scratch run.
+    plan while retaining the scratch run.
     """
     root = Path(repo_root)
-    if commit and not auto_approve:
-        raise ValueError("--commit requires --auto-approve")
     chosen_run_id = _validated_run_id(run_id)
     selected_kinds = normalize_catalog_kinds(included_kinds)
     paths = WorkspacePaths(root)
@@ -91,7 +88,6 @@ def materialize_curriculum_plan(
         slots=slots,
         dependency_edge_counts=dependency_edge_counts,
         chosen_run_id=chosen_run_id,
-        auto_approve=auto_approve,
     )
     output_dir = paths.curriculum_scratch_root / chosen_run_id
     output_dir.mkdir(parents=True, exist_ok=False)
@@ -101,8 +97,8 @@ def materialize_curriculum_plan(
     (output_dir / "README.md").write_text(
         "# Scratch catalog curriculum plan\n\n"
         "This plan is derived from the approved Markdown/YAML catalog. It is "
-        f"{('auto-approved for generation' if auto_approve else 'parked for curriculum review')}; "
-        "it does not modify canonical JSON or accept lesson human gates.\n\n"
+        "ready for authoring; "
+        "it does not modify canonical JSON.\n\n"
         f"Included kinds: {', '.join(selected_kinds)}\n"
         f"Deferred kinds: {', '.join(excluded_kinds) or 'none'}\n"
         "Deferred prerequisites remain references only; they are not generated "
@@ -115,7 +111,7 @@ def materialize_curriculum_plan(
         write_text_atomically(canonical_path, serialized_plan, create_parent=True, suffix=".tmp")
         committed_plan_path = str(canonical_path.relative_to(root))
     return CurriculumPlanResult(
-        status="ready_for_generation" if auto_approve else "parked_for_review",
+        status="ready_for_generation",
         run_id=chosen_run_id,
         plan_path=str(plan_path.relative_to(root)),
         plan=plan,
@@ -162,7 +158,6 @@ def _build_curriculum_plan(
     slots: list[Any],
     dependency_edge_counts: dict[str, int],
     chosen_run_id: str,
-    auto_approve: bool,
 ) -> tuple[CurriculumPlan, tuple[CatalogKind, ...]]:
     """Build one reviewable plan and its deferred catalog kinds."""
     catalog_hash = hash_catalog_content(payload)
@@ -195,7 +190,6 @@ def _build_curriculum_plan(
             source_snapshot=str(payload.get("snapshot", "")),
             dependency_graph_status="complete",
             dependency_edge_counts=dependency_edge_counts,
-            curriculum_approval="auto_approved" if auto_approve else "pending_human",
             included_catalog_kinds=list(selected_kinds),
             excluded_catalog_kinds=list(excluded_kinds),
             summary=summary,

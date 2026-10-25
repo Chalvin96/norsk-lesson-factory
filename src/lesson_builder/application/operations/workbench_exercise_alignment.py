@@ -1,4 +1,4 @@
-"""Entry point: `ExerciseAlignment.states`, `capture`, `pin`, `pin_all_approved` and `restore_pin`."""
+"""Entry point: `ExerciseAlignment.states`, `capture`, `pin`, `restore_pin`."""
 
 from __future__ import annotations
 
@@ -15,9 +15,9 @@ import yaml
 from pydantic import TypeAdapter
 
 from lesson_builder.application.operations.load_exercises import parse_exercise_source
-from lesson_builder.application.operations.workbench_approval_readers import approved_snapshot
-from lesson_builder.application.operations.workbench_approval_readers import latest_approval_record
 from lesson_builder.application.operations.workbench_editing import WorkbenchSource
+from lesson_builder.application.operations.workbench_editing import WorkbenchSourceNotFound
+from lesson_builder.application.operations.workbench_editing import read_workbench_source
 from lesson_builder.application.operations.workbench_records import ExerciseAlignmentLog
 from lesson_builder.application.operations.workbench_records import ExerciseAlignmentPin
 from lesson_builder.application.operations.workbench_records import ExerciseAlignmentPinChange
@@ -29,7 +29,6 @@ from lesson_builder.domain.lesson.models.elements import Exercise
 from lesson_builder.formats.workbench_source import SourceBlock
 from lesson_builder.formats.workbench_source import split_lesson_source
 from lesson_builder.formats.workbench_source import summary_source_text
-from lesson_builder.formats.yaml import load_unique_yaml
 from lesson_builder.workspace.paths import WorkspacePaths
 from lesson_builder.workspace.workbench_store import read_workbench_record
 from lesson_builder.workspace.workbench_store import write_workbench_record
@@ -51,7 +50,7 @@ class ExerciseAlignment:
 
         current_sections = _section_sources_by_id(split_lesson_source(source.files["lesson.md"]).blocks)
         local_log = read_workbench_record(self.root, "exercise_alignments", self.lesson_id, ExerciseAlignmentLog)
-        approved = self._approved_exercise_alignments()
+        canonical = self._load_canonical_exercise_alignments()
         histories: dict[str, list[ExerciseAlignmentRecord]] = {}
         for record in local_log.records:
             histories.setdefault(record.exercise_key, []).append(record)
@@ -59,8 +58,9 @@ class ExerciseAlignment:
             _exercise_alignment_state(
                 exercise,
                 tuple(sorted(histories.get(exercise.id, ()), key=lambda item: item.at, reverse=True)),
-                approved.get(exercise.id),
+                canonical.get(exercise.id),
                 current_sections,
+                source=source,
             )
             for exercise in exercises
         )
@@ -115,11 +115,14 @@ class ExerciseAlignment:
             raise ValueError(
                 f"Decision comment must be at most {K_APPLICATION_WORKBENCH_DECISION_COMMENT_MAX_CHARS} characters."
             )
+        source = read_workbench_source(self.root, self.lesson_id)
         record = ExerciseAlignmentRecord(
             exercise_key=pin["exercise_key"],
             checked_against=pin["checked_against"],
             section_sources=pin["section_sources"],
             outcome=outcome,
+            canonical_sha256=source.started_from,
+            draft_created_at=source.created_at,
             note=note,
             reason=reason,
             comment=comment,
@@ -132,28 +135,6 @@ class ExerciseAlignment:
         log.records.append(record)
         write_workbench_record(self.root, "exercise_alignments", self.lesson_id, log)
         return record
-
-    def pin_all_approved(self, source: WorkbenchSource, *, at: str | None = None) -> dict[str, ExerciseAlignmentRecord]:
-        """Build the approved-stage section pins for every parsed exercise."""
-        exercises = parse_exercise_source(source.files["exercises.yaml"]).exercises
-        sections = _section_sources_by_id(split_lesson_source(source.files["lesson.md"]).blocks)
-        approved_at = at or datetime.now(UTC).isoformat()
-        current = {state.exercise_key: state for state in self.states(source)}
-        records = {}
-        for exercise in exercises:
-            state = current.get(exercise.id)
-            carried = state.alignment if isinstance(state, (ExerciseAligned, ExerciseUntracked)) else None
-            records[exercise.id] = _alignment_record(
-                exercise.id,
-                {reference.section_id for reference in exercise.derived_from},
-                sections,
-                "approved",
-                at=approved_at,
-                reason=carried.reason if carried else None,
-                comment=carried.comment if carried else None,
-                note=carried.note if carried else None,
-            )
-        return records
 
     def keep_current(
         self,
@@ -193,26 +174,22 @@ class ExerciseAlignment:
         """Return every persisted path this alignment operation may update."""
         return (WorkspacePaths(self.root).workbench_root / "exercise_alignments" / f"{self.lesson_id}.json",)
 
-    def _approved_exercise_alignments(self) -> dict[str, ExerciseAlignmentRecord]:
-        record = latest_approval_record(self.root, self.lesson_id, "exercises")
-        if record and record.exercise_alignments:
-            return record.exercise_alignments
-        lesson_snapshot = approved_snapshot(self.root, self.lesson_id, "lesson")
-        exercises_snapshot = approved_snapshot(self.root, self.lesson_id, "exercises")
-        if lesson_snapshot.unavailable or exercises_snapshot.unavailable:
-            return {}
-        if lesson_snapshot.content is None or exercises_snapshot.content is None:
-            return {}
+    def _load_canonical_exercise_alignments(self) -> dict[str, ExerciseAlignmentRecord]:
         try:
-            lesson_text = lesson_snapshot.content.decode("utf-8")
-            references = _read_snapshot_exercise_references(exercises_snapshot.content.decode("utf-8"))
-        except (TypeError, ValueError, yaml.YAMLError):
+            canonical = read_workbench_source(self.root, self.lesson_id, canonical_only=True)
+            exercises = parse_exercise_source(canonical.files["exercises.yaml"]).exercises
+        except (WorkbenchSourceNotFound, OSError, TypeError, ValueError, yaml.YAMLError):
             return {}
-        sections = _section_sources_by_id(split_lesson_source(lesson_text).blocks)
-        approved_at = record.approved_at if record else "1970-01-01T00:00:00+00:00"
+        sections = _section_sources_by_id(split_lesson_source(canonical.files["lesson.md"]).blocks)
         return {
-            exercise_id: _alignment_record(exercise_id, section_ids, sections, "approved", at=approved_at)
-            for exercise_id, section_ids in references.items()
+            exercise.id: _alignment_record(
+                exercise.id,
+                {reference.section_id for reference in exercise.derived_from},
+                sections,
+                "canonical",
+                at="1970-01-01T00:00:00+00:00",
+            )
+            for exercise in exercises
         }
 
 
@@ -289,7 +266,7 @@ def _alignment_record(
     exercise_key: str,
     section_ids: set[str],
     sections: dict[str, str],
-    outcome: Literal["approved", "regenerated", "kept"],
+    outcome: Literal["canonical", "regenerated", "kept"],
     *,
     note: str | None = None,
     at: str | None = None,
@@ -332,17 +309,29 @@ def _changed_exercise_sections(
 def _exercise_alignment_state(
     exercise: Exercise,
     history: tuple[ExerciseAlignmentRecord, ...],
-    approved: ExerciseAlignmentRecord | None,
+    canonical: ExerciseAlignmentRecord | None,
     current_sections: dict[str, str],
+    *,
+    source: WorkbenchSource,
 ) -> ExerciseAlignmentState:
     references = {reference.section_id for reference in exercise.derived_from}
-    alignment = max((*history, *((approved,) if approved else ())), key=lambda item: item.at, default=None)
+    eligible = tuple(
+        record
+        for record in history
+        if source.exists
+        and record.canonical_sha256 == source.started_from
+        and (
+            source.started_from is not None
+            or (source.created_at is not None and record.draft_created_at == source.created_at)
+        )
+    )
+    alignment = max((*eligible, *((canonical,) if canonical else ())), key=lambda item: item.at, default=None)
     if not references and (alignment is None or not alignment.checked_against):
         return ExerciseUntracked(exercise_key=exercise.id, history=history, alignment=alignment)
     if alignment is None:
         return ExerciseUnknown(
             exercise_key=exercise.id,
-            reason="An approved lesson and exercise snapshot is unavailable.",
+            reason="No canonical version or local section comparison is available for this exercise.",
             history=history,
         )
     changed = _changed_exercise_sections(alignment, references, current_sections)
@@ -395,23 +384,3 @@ def _word_change_summary(section_id: str, removed: list[str], added: list[str]) 
     old_excerpt = " ".join(removed[:5])
     new_excerpt = " ".join(added[:5])
     return f"Section {section_id} wording changed: “{old_excerpt}” → “{new_excerpt}”."
-
-
-def _read_snapshot_exercise_references(exercises_text: str) -> dict[str, set[str]]:
-    """Read exercise ids and section references from an approved snapshot of any vintage."""
-    items = load_unique_yaml(exercises_text)
-    if not isinstance(items, list):
-        raise TypeError("approved exercises snapshot must be a YAML list")
-    references: dict[str, set[str]] = {}
-    for item in items:
-        if not isinstance(item, dict):
-            raise TypeError("approved exercise entry must be a mapping")
-        exercise_id = item.get("id", item.get("handle"))
-        if not isinstance(exercise_id, str) or not exercise_id:
-            raise ValueError("approved exercise entry has no id or handle")
-        references[exercise_id] = {
-            str(reference["section_id"])
-            for reference in item.get("derived_from") or []
-            if isinstance(reference, dict) and "section_id" in reference
-        }
-    return references

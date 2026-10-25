@@ -41,7 +41,6 @@ def assemble_valid_workspace(workspace: Path) -> None:
     materialize_curriculum_plan(
         repo_root=workspace,
         run_id="workspace-check",
-        auto_approve=True,
         commit=True,
     )
     export_distribution(workspace)

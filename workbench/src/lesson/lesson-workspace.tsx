@@ -404,9 +404,6 @@ export function LessonWorkspace({
                 `proposals/${encodeURIComponent(first.proposalId)}/${verdict === 'accepted' ? 'accept' : 'reject'}`,
               );
           },
-          onApprove: () => {
-            if (!openRowDirty && !sourceBusy) setLifecycleDialog('approve');
-          },
           onPromote: () => setLifecycleDialog('promote'),
           onDiscard: () => setLifecycleDialog('discard'),
           hasDraft: lesson.draft.exists,
@@ -436,7 +433,6 @@ export function LessonWorkspace({
         sectionKey={regenerationSelection.section}
         itemKey={regenerationSelection.item}
         exerciseKeys={staleExerciseKeys}
-        onReviewUncovered={runReviewUncovered}
         busy={action.isPending || save.isPending || sourceBusy || Boolean(ui.openRowId)}
       />
       <LessonAudioPlanDialog
@@ -532,8 +528,7 @@ export function LessonWorkspace({
                 {resolvingFindings?.length === 1 ? 'Resolve finding' : 'Resolve similar findings'}
               </DialogTitle>
               <DialogDescription>
-                Leave this as it is? Your reason is saved with the approval evidence, and the next AI review is told
-                about your decision.
+                Leave this as it is? Your reason is saved locally, and the next AI review is told about your decision.
               </DialogDescription>
             </DialogHeader>
             {resolvingFindings?.map((finding) => (

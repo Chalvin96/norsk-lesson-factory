@@ -57,7 +57,7 @@ export function KeepExerciseDialog({
           <DialogTitle>Keep exercise as is</DialogTitle>
           <DialogDescription>
             A section this exercise is built from has changed. The exercise stays unchanged and is no longer marked
-            stale; your reason is kept with its approval.
+            stale; your reason is saved with this local decision.
           </DialogDescription>
         </DialogHeader>
         <div className="min-w-0 rounded-xl bg-secondary-10 p-3.5 text-sm break-words">

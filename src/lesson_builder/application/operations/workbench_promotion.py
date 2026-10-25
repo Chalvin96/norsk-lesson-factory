@@ -14,12 +14,11 @@ import yaml
 from lesson_builder.application.operations.compile_lesson_package import digest_authored_source
 from lesson_builder.application.operations.compile_lesson_package import load_authored_source_snapshot
 from lesson_builder.application.operations.export_distribution import export_distribution
-from lesson_builder.application.operations.workbench_approval import derive_stage_statuses
 from lesson_builder.application.operations.workbench_audio import project_workbench_audio
 from lesson_builder.application.operations.workbench_editing import read_workbench_source
 from lesson_builder.application.operations.workbench_lesson_gate import CanonicalChangedBlocker
 from lesson_builder.application.operations.workbench_lesson_gate import LessonGateSource
-from lesson_builder.application.operations.workbench_lesson_gate import promotion
+from lesson_builder.application.operations.workbench_lesson_gate import check_promotion
 from lesson_builder.application.operations.workbench_lessons import build_workbench_preview
 from lesson_builder.application.operations.workbench_lessons import resolve_lesson_package
 from lesson_builder.application.operations.workbench_proposals import check_preview
@@ -29,14 +28,11 @@ from lesson_builder.application.operations.workbench_proposals import read_open_
 from lesson_builder.application.operations.workbench_proposals import store_proposal
 from lesson_builder.application.operations.workbench_records import Proposal
 from lesson_builder.application.operations.workbench_records import ProposalBlock
-from lesson_builder.application.operations.workbench_records import ReviewLog
-from lesson_builder.application.operations.workbench_review import ReviewLedger
 from lesson_builder.workspace.atomic import write_text_atomically
 from lesson_builder.workspace.paths import WorkspacePaths
 from lesson_builder.workspace.workbench_git import commit_draft
 from lesson_builder.workspace.workbench_git import read_draft_git_state
 from lesson_builder.workspace.workbench_git import require_workbench_commit
-from lesson_builder.workspace.workbench_store import read_workbench_record
 from lesson_builder.workspace.workbench_transaction import contained_workbench_path
 from lesson_builder.workspace.workbench_transaction import workbench_transaction
 from lesson_builder.workspace.workbench_transaction import workbench_tree_files
@@ -64,13 +60,10 @@ def promote_workbench_lesson(root: Path, lesson_id: str) -> WorkbenchPromotionRe
     paths = WorkspacePaths(root)
     canonical = contained_workbench_path(root, paths.lessons_root / lesson_id)
     check = check_preview(build_workbench_preview(package))
-    reviews = read_workbench_record(root, "reviews", lesson_id, ReviewLog)
     audio = project_workbench_audio(root, lesson_id)
-    gate = promotion(
+    gate = check_promotion(
         LessonGateSource(
             workbench_source=source,
-            stages=derive_stage_statuses(root, lesson_id, source),
-            review_ledger=ReviewLedger(source, reviews),
             proposal=read_open_proposal(root, lesson_id, source),
             blocking_errors=check.status == "failed",
             audio_blocked=bool(audio["blockers"]),

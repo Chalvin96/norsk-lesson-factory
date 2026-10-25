@@ -76,7 +76,7 @@ describe('Curriculum edits', () => {
     const fetch = vi.fn(async (path: string) =>
       path === '/api/curriculum/preview'
         ? json(preview)
-        : json({ commit: 'abc123', findings: [], curriculum: { ...updated, curriculumApproval: 'human_approved' } }),
+        : json({ commit: 'abc123', findings: [], curriculum: { ...updated } }),
     );
     vi.stubGlobal('fetch', fetch);
     renderAt('/');
@@ -94,8 +94,8 @@ describe('Curriculum edits', () => {
     await waitFor(() => expect(screen.getByRole('button', { name: 'Accept edit' })).toBeEnabled());
     await userEvent.click(screen.getByRole('button', { name: 'Accept edit' }));
     await userEvent.click(screen.getByRole('button', { name: 'Save curriculum' }));
-    await userEvent.click(await screen.findByLabelText(/I reviewed the current curriculum content/));
-    await userEvent.click(screen.getByRole('button', { name: 'Save reviewed curriculum' }));
+    await screen.findByRole('heading', { name: 'Save curriculum changes' });
+    await userEvent.click(await screen.findByRole('button', { name: 'Save curriculum' }));
     expect(await screen.findByRole('heading', { name: 'Updated title' })).toBeInTheDocument();
     expect(fetch).toHaveBeenCalledWith(
       '/api/curriculum/save',
@@ -114,8 +114,6 @@ describe('Curriculum edits', () => {
             },
           ],
           review_digest: 'review-digest',
-          finding_decisions: [],
-          force: false,
         }),
       }),
     );

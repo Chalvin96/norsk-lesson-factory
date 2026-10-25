@@ -2,21 +2,8 @@ import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import type { StageApproval } from '@/api/contracts';
 import { curriculumPayload, lessonPayload, renderAt } from '@/test/fixtures';
 import { proposalFixture } from '@/test/wire-fixtures';
-
-function stage(overrides: Partial<StageApproval> = {}): StageApproval {
-  return {
-    stage: 'lesson',
-    status: 'needs_approval',
-    fileSha256: 'current',
-    approvedSha256: 'old',
-    reviewer: 'human',
-    upstreamDiff: '',
-    ...overrides,
-  };
-}
 
 function json(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } });
@@ -29,177 +16,6 @@ afterEach(() => {
 });
 
 describe('Owner lifecycle', () => {
-  it('test_approve_dialog_given_stage_blockers_expect_listed_blockers_and_disabled_confirmation', async () => {
-    const lesson = lessonPayload();
-    lesson.draft.exists = true;
-    lesson.state.approvalStages = [
-      stage(),
-      stage({ stage: 'exercises', status: 'stale', upstreamDiff: '- old lesson\n+ new lesson' }),
-    ];
-    lesson.state.approveBlockers = [
-      { kind: 'open_proposal', stage: 'lesson', target: 'proposal' },
-      {
-        kind: 'review_coverage',
-        stage: 'exercises',
-        count: 2,
-        uncovered: ['exercise-a', 'exercise-b'],
-        target: 'review',
-      },
-    ];
-    lesson.state.approvable = false;
-    renderAt('/lessons/demo', { lesson });
-    await userEvent.click(screen.getByRole('button', { name: 'Lesson: Open proposal' }));
-    const dialog = await screen.findByRole('dialog', { name: 'Approve stages' });
-    expect(within(dialog).getByRole('region', { name: 'lesson approval' })).toHaveTextContent('Lesson: Open proposal');
-    expect(within(dialog).getByRole('region', { name: 'exercises approval' })).toHaveTextContent(
-      'Exercises: 2 blocks not reviewed',
-    );
-    expect(within(dialog).getByText(/old lesson/)).toHaveTextContent('+ new lesson');
-    expect(within(dialog).getByRole('button', { name: 'Approve' })).toBeDisabled();
-    expect(within(dialog).getByText('Owner acceptance is not qualified Norwegian review.')).toBeInTheDocument();
-  });
-
-  it('test_approve_dialog_given_ready_stages_expect_commit_toast_and_updated_chips', async () => {
-    const lesson = lessonPayload();
-    lesson.draft.exists = true;
-    lesson.state.approvalStages = [stage()];
-    lesson.state.approveBlockers = [];
-    lesson.state.approvable = true;
-    const accepted = {
-      ...lesson,
-      state: {
-        ...lesson.state,
-        approvalStages: [stage({ status: 'approved' })],
-        statusChips: [{ label: 'owner accepted', tone: 'ok' }],
-      },
-    };
-    const fetch = vi.fn(async (path: string, options?: RequestInit) =>
-      json(
-        path === '/api/curriculum'
-          ? curriculumPayload()
-          : options?.method === 'POST'
-            ? { commit: 'abc123456', lesson: accepted }
-            : accepted,
-      ),
-    );
-    vi.stubGlobal('fetch', fetch);
-    renderAt('/lessons/demo', { lesson });
-    await userEvent.click(screen.getByRole('button', { name: 'Approve' }));
-    const dialog = await screen.findByRole('dialog');
-    expect(within(dialog).getByText('Owner acceptance is not qualified Norwegian review.')).toBeInTheDocument();
-    expect(within(dialog).getByText('Ready')).toBeInTheDocument();
-    await userEvent.click(within(dialog).getByRole('button', { name: 'Approve' }));
-    expect(await screen.findByText('Owner accepted abc1234')).toBeInTheDocument();
-    expect(await screen.findByText('owner accepted')).toBeInTheDocument();
-    expect(fetch).toHaveBeenCalledWith('/api/lessons/demo/approve', expect.objectContaining({ method: 'POST' }));
-  });
-
-  it('test_approve_dialog_given_ready_plan_and_blocked_content_stages_expect_plan_only_request', async () => {
-    const lesson = lessonPayload();
-    lesson.draft.exists = true;
-    lesson.state.approvalStages = [
-      stage({ stage: 'plan' }),
-      stage({ stage: 'lesson', status: 'stale' }),
-      stage({ stage: 'exercises', status: 'stale' }),
-    ];
-    lesson.state.approveBlockers = [
-      { kind: 'review_coverage', stage: 'lesson', count: 151, uncovered: ['reading-a'], target: 'review' },
-      { kind: 'review_coverage', stage: 'exercises', count: 17, uncovered: ['exercise-a'], target: 'review' },
-    ];
-    lesson.state.approvable = false;
-    const accepted = {
-      ...lesson,
-      state: {
-        ...lesson.state,
-        approvalStages: [
-          stage({ stage: 'plan', status: 'approved' }),
-          stage({ stage: 'lesson', status: 'stale' }),
-          stage({ stage: 'exercises', status: 'stale' }),
-        ],
-        approveBlockers: [
-          { kind: 'review_coverage', stage: 'exercises', count: 17, uncovered: ['exercise-a'], target: 'review' },
-        ],
-      },
-    };
-    const fetch = vi.fn(async (path: string, options?: RequestInit) =>
-      json(
-        path === '/api/curriculum'
-          ? curriculumPayload()
-          : options?.method === 'POST'
-            ? { commit: 'abc123456', stages: ['plan'], lesson: accepted }
-            : accepted,
-      ),
-    );
-    vi.stubGlobal('fetch', fetch);
-    renderAt('/lessons/demo', { lesson });
-
-    await userEvent.click(screen.getByRole('button', { name: 'Approve' }));
-    const dialog = await screen.findByRole('dialog', { name: 'Approve stages' });
-    const planApproval = within(dialog).getByRole('region', { name: 'plan approval' });
-    expect(within(planApproval).getByRole('checkbox', { name: 'Approve plan' })).toBeChecked();
-    expect(within(dialog).getByRole('region', { name: 'lesson approval' })).toHaveTextContent(
-      'Lesson: 151 blocks not reviewed',
-    );
-    expect(within(dialog).getByRole('region', { name: 'exercises approval' })).toHaveTextContent(
-      'Exercises: 17 blocks not reviewed',
-    );
-    await userEvent.click(within(dialog).getByRole('button', { name: 'Approve' }));
-
-    expect(await screen.findAllByText('Owner accepted abc1234')).not.toHaveLength(0);
-    expect(fetch).toHaveBeenCalledWith(
-      '/api/lessons/demo/approve',
-      expect.objectContaining({ method: 'POST', body: JSON.stringify({ stages: ['plan'] }) }),
-    );
-  });
-
-  it('test_approve_dialog_given_unchecked_ready_stage_expect_request_omits_that_stage', async () => {
-    const lesson = lessonPayload();
-    lesson.draft.exists = true;
-    lesson.state.approvalStages = [stage({ stage: 'plan' }), stage()];
-    lesson.state.approveBlockers = [];
-    lesson.state.approvable = true;
-    const accepted = lessonPayload();
-    accepted.state.approvalStages = [stage({ stage: 'plan', status: 'approved' })];
-    const fetch = vi.fn(async (path: string, options?: RequestInit) =>
-      json(
-        path === '/api/curriculum'
-          ? curriculumPayload()
-          : options?.method === 'POST'
-            ? { commit: 'abc123456', stages: ['plan'], lesson: accepted }
-            : accepted,
-      ),
-    );
-    vi.stubGlobal('fetch', fetch);
-    renderAt('/lessons/demo', { lesson });
-
-    await userEvent.click(screen.getByRole('button', { name: 'Approve' }));
-    const dialog = await screen.findByRole('dialog', { name: 'Approve stages' });
-    await userEvent.click(within(dialog).getByRole('checkbox', { name: 'Approve lesson' }));
-    await userEvent.click(within(dialog).getByRole('button', { name: 'Approve' }));
-
-    expect(fetch).toHaveBeenCalledWith(
-      '/api/lessons/demo/approve',
-      expect.objectContaining({ method: 'POST', body: JSON.stringify({ stages: ['plan'] }) }),
-    );
-  });
-
-  it('test_approve_dialog_given_global_check_error_kind_expect_findings_route_and_disabled_confirmation', async () => {
-    const lesson = lessonPayload();
-    lesson.draft.exists = true;
-    lesson.state.approvalStages = [stage()];
-    lesson.state.approvable = false;
-    lesson.state.approveBlockers = [{ kind: 'check_errors', stage: null, target: 'findings' }];
-    renderAt('/lessons/demo', { lesson });
-
-    await userEvent.click(screen.getByRole('button', { name: 'Blocking check errors' }));
-    const dialog = await screen.findByRole('dialog', { name: 'Approve stages' });
-    expect(within(dialog).getByRole('list', { name: 'General approval blockers' })).toHaveTextContent(
-      'Blocking check errors',
-    );
-    expect(within(dialog).getByRole('button', { name: 'Go to check findings' })).toBeInTheDocument();
-    expect(within(dialog).getByRole('button', { name: 'Approve' })).toBeDisabled();
-  });
-
   it('test_promote_dialog_given_canonical_conflict_expect_diff_pull_and_confirmed_discard_choices', async () => {
     const lesson = lessonPayload();
     lesson.draft.exists = true;
@@ -252,8 +68,9 @@ describe('Owner lifecycle', () => {
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
-  it('test_promote_dialog_given_unapproved_stage_expect_disabled_confirmation', async () => {
+  it('test_promote_dialog_given_blockers_expect_disabled_confirmation', async () => {
     const lesson = lessonPayload();
+    lesson.draft.exists = true;
     lesson.state.promotable = false;
     renderAt('/lessons/demo', { lesson });
     await userEvent.click(screen.getByRole('button', { name: 'More lesson actions' }));

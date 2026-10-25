@@ -58,7 +58,7 @@ The lesson toolbar groups navigation, review, draft, actions, and audio inputs.
 
 Provider adapters in `clients/` own external transport. OpenCode serves
 configured pipeline jobs; Codex app-server serves workbench chat. Their
-credential boundaries and the workbench's review, approval, and promotion
+credential boundaries and the workbench's review and promotion
 rules are described in [authoring boundaries](boundaries.md).
 
 Distribution projection is deterministic. Source reads, audio synthesis and

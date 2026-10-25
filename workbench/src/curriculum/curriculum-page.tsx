@@ -156,7 +156,6 @@ function CurriculumWorkspace({ data }: { data: CurriculumPayload }) {
   const buttonRefs = React.useRef(new Map<string, HTMLButtonElement>());
   const unsaved = orderChanged || stagedEdits.length > 0;
   useUnsavedNavigationWork(unsaved);
-  const reviewRequired = data.curriculumApproval === 'pending_human';
   const pendingEdits = React.useMemo(() => {
     const orderedLessonIds = nonEmptyLessonIds(orderIds);
     return orderChanged && orderedLessonIds
@@ -297,11 +296,7 @@ function CurriculumWorkspace({ data }: { data: CurriculumPayload }) {
     setReviewOpen(true);
   };
 
-  const saveReviewed = (input: {
-    reviewDigest: string | null;
-    findingDecisions: { findingId: string; decision: 'accept' | 'revise' }[];
-    force: boolean;
-  }) => {
+  const savePreviewedEdits = (input: { reviewDigest: string | null }) => {
     save.mutate(
       { edits: reviewEdits, ...input },
       {
@@ -311,11 +306,7 @@ function CurriculumWorkspace({ data }: { data: CurriculumPayload }) {
           setStagedPreview(null);
           setSelectedIds([]);
           setReviewOpen(false);
-          toast(
-            input.force
-              ? `Curriculum force-saved · review required · ${result.commit.slice(0, 7)}`
-              : `Curriculum reviewed and saved · ${result.commit.slice(0, 7)}`,
-          );
+          toast(`Curriculum saved · ${result.commit.slice(0, 7)}`);
         },
       },
     );
@@ -386,12 +377,9 @@ function CurriculumWorkspace({ data }: { data: CurriculumPayload }) {
             Drag or press Alt+↑ / Alt+↓ to reorder.
           </span>
           <span className="flex-1" />
-          {data.curriculumApproval === 'pending_human' && !unsaved ? (
-            <StatusChip tone="warning">Curriculum review required</StatusChip>
-          ) : null}
           <StatusChip tone={unsaved ? 'warning' : 'ok'}>{unsaved ? 'Unsaved edits' : 'Order saved'}</StatusChip>
-          <Button size="sm" disabled={(!unsaved && !reviewRequired) || save.isPending} onClick={beginReview}>
-            {save.isPending ? 'Saving…' : reviewRequired && !unsaved ? 'Review curriculum' : 'Save curriculum'}
+          <Button size="sm" disabled={!unsaved || save.isPending} onClick={beginReview}>
+            {save.isPending ? 'Saving…' : 'Save curriculum'}
           </Button>
         </div>
         {save.isError ? (
@@ -639,7 +627,7 @@ function CurriculumWorkspace({ data }: { data: CurriculumPayload }) {
             saving={save.isPending}
             saveError={save.error?.message}
             onOpenChange={setReviewOpen}
-            onSave={saveReviewed}
+            onSave={savePreviewedEdits}
           />
         </React.Suspense>
       ) : null}

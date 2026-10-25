@@ -989,9 +989,9 @@ def test_workbench_review_given_linguistic_finding_without_source_evidence_expec
     finding = next(item for item in log.runs[-1].findings if item.criterion == "naturalness")
     state = build_workbench_lesson_state(workspace, lesson_id, source, (), False)
 
+    assert state.findings
     assert finding.advisory is True
     assert finding.status == "open"
-    assert state.approve_blockers == ()
 
 
 def test_review_mapping_given_two_phrases_in_one_section_expect_distinct_block_findings(workspace: Path) -> None:
@@ -1046,7 +1046,6 @@ def test_scoped_review_given_bokmal_advisory_expect_no_approval_blocker(
     review_workbench_lesson(workspace, lesson_id, "item", selected.key, RLock())
 
     state = build_workbench_lesson_state(workspace, lesson_id, source, (), False)
-    assert state.approve_blockers == ()
     assert state.findings[-1].advisory is True
 
 
@@ -1114,7 +1113,6 @@ def test_scoped_review_given_bokmal_and_naturalness_advisories_expect_no_approva
     coverage = ReviewLedger(source, log).coverage()
     assert coverage.covered == coverage.total
     state = build_workbench_lesson_state(workspace, lesson_id, source, (), False)
-    assert state.approve_blockers == ()
     assert all(finding.advisory for finding in state.findings)
     for finding in log.runs[-1].findings:
         resolve_workbench_findings(workspace, lesson_id, [finding.finding_id], reason="intended")
@@ -1129,19 +1127,13 @@ def test_scoped_review_given_bokmal_and_naturalness_advisories_expect_no_approva
         excerpt="",
         explanation="Advisory warning",
     )
-    assert not build_workbench_lesson_state(workspace, lesson_id, source, (advisory,), False).approve_blockers
+    warning_state = build_workbench_lesson_state(workspace, lesson_id, source, (advisory,), False)
+    assert warning_state.check_finding_count == 1
     write_workbench_block(workspace, lesson_id, selected.key, fields={"translation": "Updated translation"})
     updated = read_workbench_source(workspace, lesson_id)
     coverage = ReviewLedger(updated, log).coverage()
     assert coverage.covered == coverage.total - 1
     assert coverage.uncovered == [selected.key]
-    assert any(
-        blocker.kind == "review_coverage"
-        and blocker.stage == "lesson"
-        and blocker.count == 1
-        and blocker.uncovered == (selected.key,)
-        for blocker in build_workbench_lesson_state(workspace, lesson_id, updated, (), False).approve_blockers
-    )
 
 
 def test_scoped_review_given_naturalness_evidence_quotes_same_section_sibling_expect_issue_excluded(
@@ -1532,7 +1524,6 @@ def test_current_review_findings_given_naturalness_advisories_expect_pane_entrie
     current_findings = [finding for finding in state.findings if finding.origin == "ai"]
     assert {finding.finding_id for finding in current_findings} == {finding.finding_id for finding in findings[1:]}
     assert all(finding.advisory for finding in current_findings)
-    assert state.approve_blockers == ()
 
 
 def test_review_findings_given_clean_scoped_rerun_expect_reviewed_findings_superseded_outside_findings_kept(

@@ -217,10 +217,9 @@ def test_workbench_api_lesson_given_canonical_lesson_expect_ordered_elements_and
     assert "isMock" not in payload["state"]
     assert payload["state"]["proposals"] == []
     assert payload["state"]["chat"] == []
-    assert all(item["status"] == "unknown" for item in payload["state"]["exerciseStaleness"])
-    assert all("snapshot is unavailable" in item["reason"] for item in payload["state"]["exerciseStaleness"])
-    assert any(blocker["kind"] == "review_coverage" for blocker in payload["state"]["approveBlockers"])
-    assert payload["state"]["approvable"] is False
+    assert all(item["status"] == "aligned" for item in payload["state"]["exerciseStaleness"])
+    assert payload["state"]["reviewCoverage"]["uncovered"]
+    assert "approveBlockers" not in payload["state"]
 
 
 def test_workbench_api_lesson_given_draft_directory_expect_draft_source_wins(workspace: Path) -> None:
@@ -620,25 +619,20 @@ def test_curriculum_checks_given_source_findings_and_errors_expect_lesson_page_c
     assert lesson_chip.startswith("3 checks")
 
 
-def test_curriculum_payload_given_multiple_packages_expect_one_plan_read_and_one_digest_per_lesson(
+def test_curriculum_payload_given_multiple_packages_expect_one_plan_read(
     workspace: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     from unittest.mock import Mock
 
-    from lesson_builder.application.operations import workbench_approval
     from lesson_builder.application.operations import workbench_curriculum
     from lesson_builder.web import workbench_api
 
     shutil.copytree(K_REAL_LESSON_PACKAGE, workspace / "content" / "lessons" / K_SECOND_LESSON_ID)
     read = Mock(wraps=workbench_curriculum.read_curriculum)
-    digest = Mock(wraps=workbench_approval.curriculum_slot_digest)
     monkeypatch.setattr(workbench_api, "read_curriculum", read)
-    monkeypatch.setattr(workbench_approval, "read_curriculum", read)
-    monkeypatch.setattr(workbench_approval, "curriculum_slot_digest", digest)
     payload = workbench_api.build_curriculum_payload(workspace)
     assert len(payload["entries"]) == 2
     assert read.call_count == 1
-    assert digest.call_count == 2
 
 
 def test_curriculum_projection_given_review_record_invalidation_expect_status_chip_updates_without_lesson_changes(
@@ -669,27 +663,6 @@ def test_curriculum_projection_given_review_record_invalidation_expect_status_ch
 
     assert repeated["lessons"] == first["lessons"]
     assert {chip["label"] for chip in repeated["entries"][K_LESSON_ID]["statusChips"]} >= {"1 AI"}
-
-
-def test_lesson_payload_given_legacy_baseline_expect_one_plan_read_and_one_slot_digest(
-    workspace: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
-    from unittest.mock import Mock
-
-    from lesson_builder.application.operations import workbench_approval
-    from lesson_builder.application.operations.workbench_lessons import resolve_lesson_package
-    from lesson_builder.web.workbench_api import build_lesson_payload
-
-    baseline = workspace / "content" / "approvals" / "lessons" / K_LESSON_ID / "seed"
-    shutil.copytree(K_REAL_LESSON_PACKAGE, baseline / "source")
-    (baseline / "approval.yaml").write_text(f"lesson_id: {K_LESSON_ID}\napproved_at: seed\n")
-    read = Mock(wraps=workbench_approval.read_curriculum)
-    digest = Mock(wraps=workbench_approval.curriculum_slot_digest)
-    monkeypatch.setattr(workbench_approval, "read_curriculum", read)
-    monkeypatch.setattr(workbench_approval, "curriculum_slot_digest", digest)
-    build_lesson_payload(workspace, resolve_lesson_package(workspace, K_LESSON_ID))
-    assert read.call_count == 1
-    assert digest.call_count == 1
 
 
 def test_lesson_payload_given_regeneration_proposal_expect_keep_only_for_current_exercise(

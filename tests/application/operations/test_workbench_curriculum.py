@@ -10,7 +10,6 @@ from pathlib import Path
 import pytest
 from pydantic import ValidationError
 
-from lesson_builder.application.operations.release import run_release
 from lesson_builder.application.operations.workbench_chat import begin_workbench_chat_turn
 from lesson_builder.application.operations.workbench_chat import run_workbench_chat_turn
 from lesson_builder.application.operations.workbench_curriculum import find_stale_curriculum_entries
@@ -21,7 +20,6 @@ from lesson_builder.application.operations.workbench_records import ChatTranscri
 from lesson_builder.application.operations.workbench_records import CurriculumBaseline
 from lesson_builder.domain.curriculum.models import CurriculumAddEdit
 from lesson_builder.domain.curriculum.models import CurriculumEdit
-from lesson_builder.domain.curriculum.models import CurriculumFindingDecision
 from lesson_builder.domain.curriculum.models import CurriculumMergeEdit
 from lesson_builder.domain.curriculum.models import CurriculumRemoveEdit
 from lesson_builder.domain.curriculum.models import CurriculumReorderEdit
@@ -39,6 +37,42 @@ from tests.workspace.builders import build_workbench_curriculum_repository
 @pytest.fixture
 def workspace(tmp_path: Path) -> Path:
     return build_workbench_curriculum_repository(tmp_path)
+
+
+def test_curriculum_baseline_given_legacy_human_gate_expect_preserved_staleness(workspace: Path) -> None:
+    plan = read_curriculum(workspace)
+    slot = plan.slots[0]
+    legacy_slot = slot.model_dump(mode="json") | {"human_gate": "pending"}
+    write_workbench_record(
+        workspace, "curriculum", "baseline", CurriculumBaseline(slots={slot.catalog_id: json.dumps(legacy_slot)})
+    )
+    changed = slot.model_copy(update={"title": "Changed title"})
+    changed_plan = plan.model_copy(update={"slots": [changed, *plan.slots[1:]]})
+
+    stale = find_stale_curriculum_entries(workspace, changed_plan)
+
+    assert stale == {slot.catalog_id}
+
+
+@pytest.mark.parametrize("preview_changed", [False, True], ids=["missing-preview", "stale-preview"])
+def test_curriculum_save_given_missing_or_stale_preview_expect_no_write_or_commit(
+    workspace: Path, preview_changed: bool
+) -> None:
+    edits = [CurriculumReorderEdit(kind="reorder", lesson_ids=["second", "greet_and_introduce_yourself"])]
+    preview = preview_workbench_curriculum_edits(workspace, edits)
+    plan_path = workspace / "content/curriculum/plan.yaml"
+    if preview_changed:
+        plan_path.write_text(plan_path.read_text().replace("title:", "title: Changed", 1))
+    before = plan_path.read_bytes()
+    head = _git(workspace, "rev-parse", "HEAD")
+
+    with pytest.raises(ValueError, match="curriculum changed since preview"):
+        save_workbench_curriculum_edits(
+            workspace, edits, review_digest=preview.review_digest if preview_changed else None
+        )
+
+    assert plan_path.read_bytes() == before
+    assert _git(workspace, "rev-parse", "HEAD") == head
 
 
 def test_curriculum_reorder_preview_given_full_permutation_expect_authored_order(workspace: Path) -> None:
@@ -248,7 +282,6 @@ def test_curriculum_save_given_repaired_remove_edit_expect_one_plan_commit_and_b
     preview = preview_workbench_curriculum_edits(workspace, edits)
     commit, findings = save_workbench_curriculum_edits(workspace, edits, review_digest=preview.review_digest)
     assert [slot.catalog_id for slot in read_curriculum(workspace).slots] == ["second"]
-    assert read_curriculum(workspace).curriculum_approval == "human_approved"
     assert not [finding for finding in findings if finding.code == "curriculum.prerequisite_missing"]
     assert _git(workspace, "show", "--format=", "--name-only", commit).strip() == "content/curriculum/plan.yaml"
     assert _git(workspace, "log", "-1", "--format=%s").strip() == "workbench: edit curriculum"
@@ -267,9 +300,6 @@ def test_curriculum_save_given_missing_required_dependency_expect_no_write_or_co
             workspace,
             edits,
             review_digest=preview.review_digest,
-            finding_decisions=[
-                CurriculumFindingDecision(finding_id=preview.dependency_findings[0].finding_id, decision="revise")
-            ],
         )
     assert (workspace / "content" / "curriculum" / "plan.yaml").read_bytes() == before
     assert _git(workspace, "status", "--porcelain") == ""
@@ -284,10 +314,6 @@ def test_curriculum_save_given_protected_branch_expect_original_plan_restored(wo
             workspace,
             edits,
             review_digest=preview.review_digest,
-            finding_decisions=[
-                CurriculumFindingDecision(finding_id=item.finding_id, decision="accept")
-                for item in preview.dependency_findings
-            ],
         )
     assert _git(workspace, "status", "--porcelain") == ""
 
@@ -334,70 +360,10 @@ def test_curriculum_save_given_protected_branch_expect_original_plan_restored(wo
 )
 def test_curriculum_edit_apply_given_reviewed_edit_expect_committed_plan(workspace: Path, edit: CurriculumEdit) -> None:
     preview = preview_workbench_curriculum_edits(workspace, [edit])
-    decisions = [
-        CurriculumFindingDecision(finding_id=item.finding_id, decision="accept")
-        for item in preview.dependency_findings
-        if item.code == "curriculum.prerequisite_order"
-    ]
-    commit, _findings = save_workbench_curriculum_edits(
-        workspace, [edit], review_digest=preview.review_digest, finding_decisions=decisions
-    )
+    commit, _findings = save_workbench_curriculum_edits(workspace, [edit], review_digest=preview.review_digest)
     plan = read_curriculum(workspace)
     assert len(commit) == 40
-    assert plan.curriculum_approval == "human_approved"
     assert [slot.catalog_id for slot in plan.slots] == [entry.catalog_id for entry in preview.entries]
-
-
-def test_curriculum_save_given_unreviewed_force_edit_expect_pending_plan_and_release_block(workspace: Path) -> None:
-    edit = CurriculumRemoveEdit(kind="remove", lesson_ids=["greet_and_introduce_yourself"])
-    commit, _findings = save_workbench_curriculum_edits(workspace, [edit], force=True)
-    assert len(commit) == 40
-    assert read_curriculum(workspace).curriculum_approval == "pending_human"
-    with pytest.raises(ValueError, match="curriculum plan: review required"):
-        run_release(repo_root=workspace)
-
-
-def test_curriculum_save_given_pending_plan_reviewed_without_edits_expect_release_approval(workspace: Path) -> None:
-    force_edit = CurriculumUpdateEdit(
-        kind="update",
-        lesson_id="greet_and_introduce_yourself",
-        title="Updated greetings",
-        learner_outcome="Greet someone.",
-        cefr_level="A1",
-        prerequisites=[],
-        helpful_prerequisites=[],
-    )
-    save_workbench_curriculum_edits(workspace, [force_edit], force=True)
-    order = [slot.catalog_id for slot in read_curriculum(workspace).slots]
-    edits = [CurriculumReorderEdit(kind="reorder", lesson_ids=order)]
-    preview = preview_workbench_curriculum_edits(workspace, edits)
-    decisions = [
-        CurriculumFindingDecision(finding_id=item.finding_id, decision="accept") for item in preview.dependency_findings
-    ]
-
-    save_workbench_curriculum_edits(
-        workspace,
-        edits,
-        review_digest=preview.review_digest,
-        finding_decisions=decisions,
-    )
-
-    assert read_curriculum(workspace).curriculum_approval == "human_approved"
-    with pytest.raises(ValueError) as error:
-        run_release(repo_root=workspace)
-    assert "curriculum plan: review required" not in str(error.value)
-
-
-def test_curriculum_save_given_missing_review_decision_expect_no_write(workspace: Path) -> None:
-    edits: list[CurriculumEdit] = [
-        CurriculumReorderEdit(kind="reorder", lesson_ids=["second", "greet_and_introduce_yourself"])
-    ]
-    before = (workspace / "content" / "curriculum" / "plan.yaml").read_bytes()
-    preview = preview_workbench_curriculum_edits(workspace, edits)
-    with pytest.raises(ValueError, match="review every current curriculum finding"):
-        save_workbench_curriculum_edits(workspace, edits, review_digest=preview.review_digest)
-    assert (workspace / "content" / "curriculum" / "plan.yaml").read_bytes() == before
-    assert _git(workspace, "status", "--porcelain") == ""
 
 
 def test_curriculum_remove_given_all_entries_expect_empty_plan_saved_in_source_order(workspace: Path) -> None:

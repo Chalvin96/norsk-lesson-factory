@@ -43,7 +43,7 @@ invalid source. Inspection does not call providers; actions marked _provider_ do
 
 | Dialog | Trigger |
 | --- | --- |
-| Approve, promote | approve a reviewed lesson, then promote it |
+| Save, promote | save a draft, then promote it after source and audio checks |
 | Canonical changed | the canonical source changes under an open draft |
 | Discard draft | "Discard draft" in the toolbar while a draft exists |
 | Leave with unsaved edits | leave the page or close a block editor with changed fields |

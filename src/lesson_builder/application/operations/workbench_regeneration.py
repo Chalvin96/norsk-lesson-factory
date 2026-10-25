@@ -161,7 +161,7 @@ def generate_regeneration_item(root: Path, captured: dict[str, Any], key: str, *
         + "options, answers, distractors and explanations unless the change requires editing them. "
         + "If the exercise's purpose and answers are unaffected, return its current YAML unchanged."
         + f"\nEXERCISE ITEM KEY: {key}\nCURRENT EXERCISE YAML:\n{block.source}"
-        + "\nEXACT APPROVED VS CURRENT SECTION DIFF (do not infer a broader change):\n"
+        + "\nEXACT BASELINE VS CURRENT SECTION DIFF (do not infer a broader change):\n"
         + json.dumps(exercise_context["changed_sections"], ensure_ascii=False, indent=2)
         + "\nSIBLING EXERCISE LEDGER:\n"
         + json.dumps(siblings, ensure_ascii=False)

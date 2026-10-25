@@ -384,8 +384,6 @@ def _send_curriculum_mutation(handler: BaseHTTPRequestHandler, root: Path, path:
                 root,
                 request["edits"],
                 review_digest=request["review_digest"],
-                finding_decisions=request["finding_decisions"],
-                force=request["force"],
             )
         else:
             _send_error_json(handler, 404, {"error": "not_found"})

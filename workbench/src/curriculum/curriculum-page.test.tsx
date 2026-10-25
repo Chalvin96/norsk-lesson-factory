@@ -246,7 +246,7 @@ describe('Curriculum tab', () => {
     ).toEqual(['demo', 'third']);
 
     await userEvent.click(screen.getByRole('button', { name: 'Save curriculum' }));
-    await screen.findByRole('heading', { name: 'Review curriculum changes' });
+    await screen.findByRole('heading', { name: 'Save curriculum changes' });
     await waitFor(() =>
       expect(fetch).toHaveBeenCalledWith(
         '/api/curriculum/preview',

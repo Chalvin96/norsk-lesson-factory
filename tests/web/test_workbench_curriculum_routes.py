@@ -6,7 +6,10 @@ from pathlib import Path
 
 import pytest
 
+from lesson_builder.application.operations.workbench_curriculum import read_curriculum
+from lesson_builder.application.operations.workbench_records import CurriculumBaseline
 from lesson_builder.web.server import create_workbench_server
+from lesson_builder.workspace.workbench_store import write_workbench_record
 from tests.application.fakes import FakeLlmClient
 from tests.settings import K_TEST_HANG_GUARD_SECONDS
 from tests.web.serving import send_request
@@ -20,6 +23,20 @@ K_TEST_NEW_LESSON_JOB_TIMEOUT_SECONDS = 300
 @pytest.fixture
 def workspace(tmp_path: Path) -> Path:
     return build_workbench_curriculum_repository(tmp_path)
+
+
+def test_curriculum_route_given_legacy_baseline_expect_successful_payload(workspace: Path) -> None:
+    slot = read_curriculum(workspace).slots[0]
+    legacy_slot = slot.model_dump(mode="json") | {"human_gate": "pending"}
+    write_workbench_record(
+        workspace, "curriculum", "baseline", CurriculumBaseline(slots={slot.catalog_id: json.dumps(legacy_slot)})
+    )
+
+    with serving(create_workbench_server(workspace, "127.0.0.1", 0)) as server:
+        reply = send_request(server, "/api/curriculum")
+
+    assert reply.status == 200
+    assert slot.catalog_id in json.loads(reply.body)["entries"]
 
 
 @pytest.mark.parametrize(
@@ -61,12 +78,6 @@ def test_curriculum_write_route_given_valid_payload_expect_commit_and_fresh_stat
         preview = json.loads(preview_reply.body)
         body.update(
             review_digest=preview["reviewDigest"],
-            finding_decisions=[
-                {"finding_id": item["findingId"], "decision": "accept"}
-                for item in preview["dependencyFindings"]
-                if item["code"] == "curriculum.prerequisite_order"
-            ],
-            force=False,
         )
         reply = send_request(
             server,

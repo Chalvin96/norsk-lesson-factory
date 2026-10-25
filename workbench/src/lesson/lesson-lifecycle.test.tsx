@@ -64,7 +64,9 @@ describe('Lesson lifecycle', () => {
             exerciseKey,
             checkedAgainst: { intro: 'old' },
             sectionSources: { intro: 'Old text' },
-            outcome: 'approved',
+            canonicalSha256: null,
+            draftCreatedAt: null,
+            outcome: 'canonical',
             reason: null,
             comment: null,
             note: null,
@@ -74,16 +76,6 @@ describe('Lesson lifecycle', () => {
           history: [],
         }),
       ),
-      approvalStages: [
-        {
-          stage: 'exercises',
-          status: 'stale',
-          fileSha256: 'current',
-          approvedSha256: 'old',
-          reviewer: 'human',
-          upstreamDiff: '',
-        },
-      ],
     };
     const run = {
       run_id: 'run-1',

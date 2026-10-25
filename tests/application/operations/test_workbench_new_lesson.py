@@ -420,7 +420,6 @@ def test_new_lesson_given_server_owned_plan_keys_expect_valid_draft_without_repa
         cefr_source="wrong",
         provisional_flags=["wrong"],
         owner_scope={},
-        human_gate="wrong",
         bloom_targets=["wrong"],
         type="Plan",
     )
@@ -438,7 +437,6 @@ def test_new_lesson_given_server_owned_plan_keys_expect_valid_draft_without_repa
         "cefr_source",
         "provisional_flags",
         "owner_scope",
-        "human_gate",
         "bloom_targets",
         "type",
     }.intersection(yaml.safe_load(plan.split("---")[1]))
@@ -556,6 +554,7 @@ def test_new_lesson_given_intervening_insertion_and_conflict_expect_current_sour
 def test_new_lesson_given_intervening_manual_insertion_expect_entry_and_generated_draft_saved(
     workspace: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
+    from lesson_builder.application.operations.workbench_curriculum import preview_workbench_curriculum_edits
     from lesson_builder.application.operations.workbench_curriculum import save_workbench_curriculum_edits
     from lesson_builder.domain.curriculum.models import CurriculumAddEdit
 
@@ -573,7 +572,9 @@ def test_new_lesson_given_intervening_manual_insertion_expect_entry_and_generate
                 "after_lesson_id": "greet_and_introduce_yourself",
             }
         )
-        save_workbench_curriculum_edits(workspace, [edit], force=True)
+        save_workbench_curriculum_edits(
+            workspace, [edit], review_digest=preview_workbench_curriculum_edits(workspace, [edit]).review_digest
+        )
         return response
 
     client = FakeLlmClient.from_fn(respond)

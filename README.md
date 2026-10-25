@@ -67,7 +67,7 @@ uv run lesson-data workbench
 ![The curriculum view: lessons in authored order with their CEFR level and review status, a draft entry, and the agent chat](.github/screenshots/workbench-curriculum.webp)
 
 The workbench supports draft editing, local Save commits, chat proposals, AI
-review, owner approvals, promotion to provider-free `dist/`, and checkpointed
+review, promotion to provider-free `dist/`, and checkpointed
 lesson and exercise regeneration. Inspect at 1280 px and 320 px; lesson and chat
 panes stack on narrow screens. Opening and inspecting source does not call a
 provider. Chat, review, and regeneration actions can use configured providers.

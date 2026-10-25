@@ -130,7 +130,7 @@ identifiers, source audits, routing, and state transitions. Model review can
 advise on naturalness, pedagogy, factual premises, valid alternatives, and
 task-to-rubric alignment. Its findings are advisory; humans retain final
 authority. See [authoring and publication boundaries](../project/boundaries.md)
-for approval requirements.
+for save and promotion requirements.
 
 Exercise review findings combine nested issues for one exercise/check in report
 order. Each reason has an English category label; evidence quotes, English

@@ -11,15 +11,14 @@ workspace. Tag CI verifies the published release without synthesizing audio.
 [Workbench audio and promotion](project/boundaries.md#audio-and-distribution)
 prepare local artifacts separately from release.
 
-## Plan and approve
+## Plan and publish
 
 1. Create the release tag for the source to publish. Approval requires the tag
    to identify the checked-out source commit locally and on GitHub.
 2. Run `uv run lesson-data release`. This provider-free step validates the
-   canonical curriculum and lesson approval chain, records a source-bound plan,
+   canonical source and prerequisite ordering, records a source-bound plan,
    and reports reused audio, missing recordings, estimated cost, and the exact
-   approval command. Resolve any stale or unapproved stage in the workbench,
-   then plan again.
+   execution command. No lesson approval files or separate review gate are required.
 3. Review the audio reuse and cost summary. Continue only with the printed
    `release --approve` command. Approval resumes an unchanged plan, reuses
    unchanged recordings, synthesizes only missing audio, validates complete

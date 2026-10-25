@@ -44,7 +44,7 @@ describe('Curriculum order', () => {
         : json({
             commit: 'abcdef012345',
             findings: [],
-            curriculum: { ...updated, curriculumApproval: 'human_approved' },
+            curriculum: { ...updated },
           }),
     );
     vi.stubGlobal('fetch', fetch);
@@ -52,12 +52,8 @@ describe('Curriculum order', () => {
     screen.getByRole('button', { name: 'Open Third lesson details' }).focus();
     await userEvent.keyboard('{Alt>}{ArrowUp}{/Alt}');
     await userEvent.click(screen.getByRole('button', { name: 'Save curriculum' }));
-    await userEvent.selectOptions(
-      await screen.findByRole('combobox', { name: 'Decision for third prerequisite second' }),
-      'accept',
-    );
-    await userEvent.click(screen.getByLabelText(/I reviewed the current curriculum content/));
-    await userEvent.click(screen.getByRole('button', { name: 'Save reviewed curriculum' }));
+    await screen.findByText('Third lesson appears before Second lesson.');
+    await userEvent.click(screen.getByRole('button', { name: 'Save curriculum' }));
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
     expect(fetch).toHaveBeenCalledWith(
       '/api/curriculum/save',
@@ -66,8 +62,6 @@ describe('Curriculum order', () => {
         body: JSON.stringify({
           edits: [{ kind: 'reorder', lesson_ids: ['demo', 'third', 'second'] }],
           review_digest: 'review-digest',
-          finding_decisions: [{ finding_id: 'third-second', decision: 'accept' }],
-          force: false,
         }),
       }),
     );
@@ -94,8 +88,8 @@ describe('Curriculum order', () => {
     screen.getByRole('button', { name: 'Open Third lesson details' }).focus();
     await userEvent.keyboard('{Alt>}{ArrowUp}{/Alt}');
     await userEvent.click(screen.getByRole('button', { name: 'Save curriculum' }));
-    await userEvent.click(await screen.findByLabelText(/I reviewed the current curriculum content/));
-    await userEvent.click(screen.getByRole('button', { name: 'Save reviewed curriculum' }));
+    await screen.findByRole('heading', { name: 'Save curriculum changes' });
+    await userEvent.click(await screen.findByRole('button', { name: 'Save curriculum' }));
     expect(await screen.findByRole('alert')).toHaveTextContent('Save requires a working branch');
     expect(screen.getByText('Unsaved edits')).toBeInTheDocument();
   });

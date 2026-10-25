@@ -248,7 +248,7 @@ export function SettingsPage() {
             </section>
 
             <p className="text-sm text-secondary-80">
-              AI review findings are always advisory. Only deterministic checks block approval.
+              AI review findings are always advisory. Promotion requires valid source and complete audio.
             </p>
 
             <section aria-labelledby="audio-title" className="rounded-2xl border border-primary-20 bg-white p-5">

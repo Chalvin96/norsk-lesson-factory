@@ -10,7 +10,6 @@ from urllib.parse import unquote
 
 from pydantic import TypeAdapter
 
-from lesson_builder.application.operations.workbench_approval import approve_workbench_lesson
 from lesson_builder.application.operations.workbench_audio import plan_workbench_audio
 from lesson_builder.application.operations.workbench_audio import synthesize_workbench_audio
 from lesson_builder.application.operations.workbench_chat import begin_workbench_chat_turn
@@ -40,7 +39,6 @@ from lesson_builder.web.settings import K_WEB_WORKBENCH_CHAT_LIFECYCLE_ROUTE_PAR
 from lesson_builder.web.workbench_api import build_lesson_payload
 from lesson_builder.web.workbench_jobs import ChatJobControl
 from lesson_builder.web.workbench_jobs import WorkbenchJobs
-from lesson_builder.web.workbench_wire import ApproveRequest
 from lesson_builder.web.workbench_wire import AudioPlanRequest
 from lesson_builder.web.workbench_wire import AudioSynthesizeRequest
 from lesson_builder.web.workbench_wire import CurriculumChatRequest
@@ -135,7 +133,7 @@ def _dispatch_lesson_action(
         block_id = _require_text(explain_request["block_id"], "block_id")
         turn_id = begin_workbench_explanation_turn(root, lesson_id, block_id, lock)
         return _submit_chat_turn(root, lesson_id, turn_id, jobs, lock)
-    if route[:1] in (["approve"], ["promote"], ["pull"], ["discard"], ["regenerate"]):
+    if route[:1] in (["promote"], ["pull"], ["discard"], ["regenerate"]):
         return _lifecycle_action(root, lesson_id, route, body, jobs, lock)
     if len(route) == K_WEB_WORKBENCH_ACTION_PARTS and route[0] == "exercises" and route[2] == "keep":
         keep_request: KeepRequest = TypeAdapter(KeepRequest).validate_python(body)
@@ -357,12 +355,6 @@ def _chat_lifecycle_action(
 def _lifecycle_action(
     root: Path, lesson_id: str, route: list[str], body: dict[str, Any], jobs: WorkbenchJobs, lock: RLock
 ) -> WorkbenchActionResponse:
-    if route == ["approve"]:
-        approve_request: ApproveRequest = TypeAdapter(ApproveRequest).validate_python(body)
-        return {
-            **approve_workbench_lesson(root, lesson_id, stages=approve_request.get("stages")),
-            **_lesson_result(root, lesson_id),
-        }
     if route == ["promote"]:
         _parse_empty_request(body)
         return {**promote_workbench_lesson(root, lesson_id), **_lesson_result(root, lesson_id)}
