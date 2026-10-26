@@ -21,7 +21,9 @@ const staleAlignment: ExerciseAlignmentState = {
     exerciseKey: 'notice_name_question',
     checkedAgainst: { 'a-first-meeting': 'old-hash' },
     sectionSources: { 'a-first-meeting': 'Hei! Jeg heter Mina. Hva heter du?' },
-    outcome: 'approved',
+    canonicalSha256: null,
+    draftCreatedAt: null,
+    outcome: 'canonical',
     reason: null,
     comment: null,
     note: null,
@@ -32,6 +34,26 @@ const staleAlignment: ExerciseAlignmentState = {
 };
 
 describe('ExerciseAlignmentNotice', () => {
+  it('test_stale_exercise_given_legacy_decision_expect_visible_history_and_current_keep_action', () => {
+    render(
+      <ExerciseAlignmentNotice
+        alignment={{
+          ...staleAlignment,
+          history: [{ ...staleAlignment.alignment, outcome: 'kept', comment: 'The same question applies.' }],
+        }}
+        exerciseKey="notice_name_question"
+        exerciseLabel="Name question"
+        onKeep={vi.fn()}
+      />,
+    );
+
+    expect(screen.getByRole('region', { name: 'Exercise alignment history' })).toHaveTextContent(
+      'The same question applies.',
+    );
+    expect(screen.getByText(/past decisions do not clear the current section changes/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Keep as is' })).toBeEnabled();
+  });
+
   it('test_stale_exercise_alignment_given_changed_section_expect_reason_and_keep_dialog', async () => {
     const onKeep = vi.fn();
     render(
@@ -75,6 +97,8 @@ describe('ExerciseAlignmentNotice', () => {
             ...staleAlignment.alignment,
             checkedAgainst: { 'a-first-meeting': 'new-hash' },
             sectionSources: { 'a-first-meeting': 'New text' },
+            canonicalSha256: null,
+            draftCreatedAt: null,
             outcome: 'kept',
             reason: null,
             comment: null,
@@ -86,6 +110,8 @@ describe('ExerciseAlignmentNotice', () => {
               ...staleAlignment.alignment,
               checkedAgainst: { 'a-first-meeting': 'new-hash' },
               sectionSources: { 'a-first-meeting': 'New text' },
+              canonicalSha256: null,
+              draftCreatedAt: null,
               outcome: 'kept',
               reason: null,
               comment: null,
@@ -108,7 +134,9 @@ describe('ExerciseAlignmentNotice', () => {
   it('test_exercise_alignment_history_given_multiple_decisions_expect_newest_first_with_decisions_and_notes', () => {
     const olderApproval = {
       ...staleAlignment.alignment,
-      outcome: 'approved' as const,
+      canonicalSha256: null,
+      draftCreatedAt: null,
+      outcome: 'canonical' as const,
       reason: null,
       comment: null,
       note: 'Reviewed against the original wording.',
@@ -116,6 +144,8 @@ describe('ExerciseAlignmentNotice', () => {
     };
     const newerKeep = {
       ...staleAlignment.alignment,
+      canonicalSha256: null,
+      draftCreatedAt: null,
       outcome: 'kept' as const,
       reason: null,
       comment: null,
@@ -143,6 +173,6 @@ describe('ExerciseAlignmentNotice', () => {
     expect(entries[0]).toHaveTextContent(
       '2026-10-13 · Kept · Legacy decision · The question still asks for the same fact.',
     );
-    expect(entries[1]).toHaveTextContent('2026-10-11 · Approved · Reviewed against the original wording.');
+    expect(entries[1]).toHaveTextContent('2026-10-11 · Canonical · Reviewed against the original wording.');
   });
 });

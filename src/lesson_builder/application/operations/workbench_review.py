@@ -115,7 +115,7 @@ def load_workbench_reviewer_version(root: Path) -> str:
 
 
 class ReviewLedger:
-    """One source-bound view of current review coverage, findings, and approval evidence."""
+    """One source-bound view of current review coverage and findings."""
 
     def __init__(self, source: WorkbenchSource, log: ReviewLog) -> None:
         self._source = source

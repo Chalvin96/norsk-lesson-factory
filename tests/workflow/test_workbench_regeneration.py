@@ -60,10 +60,11 @@ def workspace(tmp_path: Path) -> Path:
     root = Path(__file__).parents[2]
     lesson_id = "greet_and_introduce_yourself"
     shutil.copytree(root / "content/lessons" / lesson_id, tmp_path / "content/lessons" / lesson_id)
-    shutil.copytree(root / "content/approvals/lessons" / lesson_id, tmp_path / "content/approvals/lessons" / lesson_id)
     shutil.copy(root / "config.yaml", tmp_path / "config.yaml")
     shutil.copytree(root / ".opencode/agents", tmp_path / ".opencode/agents")
-    lesson_path = tmp_path / "content/lessons" / lesson_id / "lesson.md"
+    source = read_workbench_source(tmp_path, lesson_id)
+    write_workbench_file(tmp_path, lesson_id, "lesson.md", source.files["lesson.md"])
+    lesson_path = tmp_path / "drafts" / lesson_id / "lesson.md"
     lesson_source = lesson_path.read_text(encoding="utf-8")
     for heading in (block for block in split_lesson_source(lesson_source).blocks if block.kind == "heading"):
         lesson_source = lesson_source.replace(heading.source, heading.source.replace(" {#", " local {#", 1), 1)
@@ -122,7 +123,7 @@ def test_regeneration_given_scoped_generation_expect_checked_proposal_interrupt_
     assert result["status"] == "waiting"
     assert result["steps"] == ["generate", "check", "review", "waiting for you"]
     assert "deferred" not in result
-    assert not (workspace / "drafts").exists()
+    assert read_workbench_source(workspace, lesson_id).files == source.files
     proposal = read_open_proposal(workspace, lesson_id, source)
     assert proposal is not None
     assert proposal.source == "regenerate"
@@ -133,7 +134,9 @@ def test_regeneration_given_scoped_generation_expect_checked_proposal_interrupt_
     assert restarted["status"] == "done"
     assert restarted["decision"] == decision
     assert len(author.calls) == 1
-    assert (workspace / "drafts" / lesson_id).exists() == (decision == "accept")
+    assert (workspace / "drafts" / lesson_id).exists()
+    if decision == "reject":
+        assert read_workbench_source(workspace, lesson_id).files == source.files
 
 
 def test_regeneration_given_process_exit_after_review_checkpoint_before_interrupt_expect_recovery_and_decision(
@@ -213,7 +216,7 @@ def test_regeneration_given_two_failed_checks_expect_one_fix_failed_proposal_and
     assert len(client.calls) == 2
     with pytest.raises(ValueError, match="passed"):
         decide_proposal(workspace, lesson_id, proposal.proposal_id, "accept")
-    assert not (workspace / "drafts").exists()
+    assert read_workbench_source(workspace, lesson_id).files == source.files
 
 
 def test_regeneration_given_repair_provider_failure_expect_first_candidate_proposal(
@@ -921,7 +924,7 @@ def test_exercise_regeneration_given_unchanged_item_expect_successful_kept_outco
     assert "Make the smallest necessary change" in prompt
     assert "Keep every field that is not affected by the section change" in prompt
     assert "If the exercise's purpose and answers are unaffected, return its current YAML unchanged" in prompt
-    assert "EXACT APPROVED VS CURRENT SECTION DIFF" in prompt
+    assert "EXACT BASELINE VS CURRENT SECTION DIFF" in prompt
     assert "CURRENT EXERCISE YAML" in prompt
     assert read_workbench_record(workspace, "proposals", lesson_id, ProposalLog).proposals == []
 
@@ -1129,7 +1132,7 @@ def test_exercise_regeneration_given_unchanged_repair_item_expect_item_dropped_a
 def _exercise_author_reply(prompt: str, _model: str | None) -> str:
     key = prompt.split("EXERCISE ITEM KEY: ", 1)[1].splitlines()[0]
     current_source = prompt.split("CURRENT EXERCISE YAML:\n", 1)[1].split(
-        "\nEXACT APPROVED VS CURRENT SECTION DIFF", 1
+        "\nEXACT BASELINE VS CURRENT SECTION DIFF", 1
     )[0]
     item = yaml.safe_load(current_source)[0]
     item["prompt_md"] = f"Regenerated: {key.replace('_', ' ')}"
@@ -1154,7 +1157,7 @@ def _exercise_author_reply(prompt: str, _model: str | None) -> str:
 def _unchanged_exercise_author_reply(prompt: str, _model: str | None) -> str:
     key = prompt.split("EXERCISE ITEM KEY: ", 1)[1].splitlines()[0]
     current_source = prompt.split("CURRENT EXERCISE YAML:\n", 1)[1].split(
-        "\nEXACT APPROVED VS CURRENT SECTION DIFF", 1
+        "\nEXACT BASELINE VS CURRENT SECTION DIFF", 1
     )[0]
     return json.dumps(
         {
@@ -1246,7 +1249,8 @@ def _assert_selected_exercise_generation(run: _SelectedExerciseRun, workspace: P
     assert run.checked_keys == [run.selected_keys]
     assert run.checked_candidate_sets == [list(run.original_by_key)]
     assert len(run.author.calls) == len(run.selected_keys)
-    assert not (workspace / "drafts").exists()
+    current = read_workbench_source(workspace, "greet_and_introduce_yourself")
+    assert {block.key: block.source for block in current.blocks if block.kind == "exercise"} == run.original_by_key
 
 
 def _assert_selected_exercise_replay(run: _SelectedExerciseRun, workspace: Path) -> None:

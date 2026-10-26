@@ -10,7 +10,6 @@ from pydantic import ConfigDict
 from pydantic import Field
 
 CatalogKind = Literal["grammar", "phraseology", "pronunciation", "communicative", "writing"]
-CurriculumPlanApproval = Literal["pending_human", "auto_approved", "human_approved"]
 CurriculumSequencePlacementStatus = Literal["placed", "moved"]
 
 
@@ -94,7 +93,6 @@ class CurriculumPlanSlot(BaseModel):
     helpful_prerequisites: list[str] = Field(default_factory=list)
     provisional_flags: list[str] = Field(default_factory=list)
     owner_scope: CatalogOwnerScope | None = None
-    human_gate: Literal["pending"] = "pending"
 
 
 class CurriculumPlan(BaseModel):
@@ -111,8 +109,6 @@ class CurriculumPlan(BaseModel):
     source_sequence_hash: str = ""
     dependency_graph_status: Literal["complete", "legacy"] = "legacy"
     dependency_edge_counts: dict[str, int] = Field(default_factory=dict)
-    catalog_approval: Literal["human"] = "human"
-    curriculum_approval: CurriculumPlanApproval = "pending_human"
     included_catalog_kinds: list[CatalogKind] = Field(default_factory=list)
     excluded_catalog_kinds: list[CatalogKind] = Field(default_factory=list)
     summary: dict[str, int]
@@ -247,15 +243,6 @@ class CurriculumDependencyFinding(BaseModel):
     explanation: str
 
 
-class CurriculumFindingDecision(BaseModel):
-    """The author's explicit decision for one located curriculum finding."""
-
-    model_config = ConfigDict(extra="forbid")
-
-    finding_id: str
-    decision: Literal["accept", "revise"]
-
-
 class CurriculumEditPreview(BaseModel):
     """The complete staged curriculum and the authoring impact of its edits."""
 
@@ -272,7 +259,7 @@ class CurriculumPlanResult(BaseModel):
 
     model_config = ConfigDict(extra="forbid")
 
-    status: Literal["parked_for_review", "ready_for_generation"] = "parked_for_review"
+    status: Literal["ready_for_generation"] = "ready_for_generation"
     run_id: str
     plan_path: str
     plan: CurriculumPlan
@@ -282,7 +269,6 @@ class CurriculumPlanResult(BaseModel):
 __all__ = [
     # Shared catalog values.
     "CatalogKind",
-    "CurriculumPlanApproval",
     "CurriculumSequence",
     "CurriculumSequenceEntry",
     "CurriculumSequencePlacement",
@@ -303,7 +289,6 @@ __all__ = [
     "CurriculumManualEntry",
     "CurriculumSplitPart",
     "CurriculumEditPreview",
-    "CurriculumFindingDecision",
     "CurriculumAffectedLesson",
     "CurriculumMovedOutcome",
     "CurriculumMovedPrerequisite",

@@ -43,8 +43,6 @@ def workspace(tmp_path: Path) -> Path:
     """Build the source and configuration needed by the workbench API in a temporary workspace."""
     for relative in (
         f"content/lessons/{K_TEST_LESSON_ID}",
-        f"content/approvals/lessons/{K_TEST_LESSON_ID}",
-        "content/approvals/workbench",
         "content/authoring",
         "content/terminology",
         "content/catalog",
@@ -239,8 +237,6 @@ def _check_curriculum_save(contract: WorkbenchHttpContract) -> None:
         {
             "edits": [edit],
             "review_digest": preview["reviewDigest"],
-            "finding_decisions": [],
-            "force": False,
         },
     )
 
@@ -276,9 +272,7 @@ def _check_proposal_routes(contract: WorkbenchHttpContract, workspace: Path) -> 
         "lesson.proposal.reject",
         "lessonAction",
     )
-    for action in ("approve", "promote"):
-        route = f"/api/lessons/{K_TEST_LESSON_ID}/{action}"
-        contract.post(route, f"lesson.{action}", "error", expected_status=409)
+    contract.post(f"/api/lessons/{K_TEST_LESSON_ID}/promote", "lesson.promote", "error", expected_status=409)
 
 
 def _check_write_routes(contract: WorkbenchHttpContract, workspace: Path, block_key: str) -> None:

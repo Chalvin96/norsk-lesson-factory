@@ -88,7 +88,7 @@ class WorkspacePaths:
 
     @property
     def workbench_root(self) -> Path:
-        """Resolve ignored, unapproved workbench records."""
+        """Resolve ignored workbench records."""
         return self.root / "store" / "workbench"
 
     @property
@@ -97,24 +97,8 @@ class WorkspacePaths:
         return self.root / K_WORKSPACE_WORKBENCH_SETTINGS_DIR / K_WORKSPACE_WORKBENCH_SETTINGS_FILENAME
 
     @property
-    def workbench_approvals_root(self) -> Path:
-        return self.content_root / "approvals" / "workbench"
-
-    @property
-    def workbench_baselines(self) -> Path:
-        return self.workbench_approvals_root / "baseline.yaml"
-
-    @property
-    def approval_evidence_root(self) -> Path:
-        return self.content_root / "approvals" / "evidence"
-
-    @property
     def workbench_runs_root(self) -> Path:
         return self.workbench_root / "runs"
-
-    @property
-    def lesson_approvals_root(self) -> Path:
-        return self.content_root / "approvals" / K_WORKSPACE_LESSONS_DIR
 
     @property
     def curriculum_scratch_root(self) -> Path:

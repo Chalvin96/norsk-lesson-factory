@@ -111,25 +111,16 @@ describe('Lesson editing', () => {
     );
   });
 
-  it('test_client_dirty_block_editor_given_draft_differs_from_canonical_expect_approval_blocked_until_write_finishes', async () => {
-    const approvalStages = [
-      {
-        stage: 'lesson' as const,
-        status: 'needs_approval' as const,
-        fileSha256: 'current',
-        approvedSha256: 'old',
-        reviewer: 'human' as const,
-        upstreamDiff: '',
-      },
-    ];
+  it('test_client_dirty_block_editor_given_draft_differs_from_canonical_expect_promotion_blocked_until_write_finishes', async () => {
     const source = lessonPayload({
-      state: { ...lessonPayload().state, approveBlockers: [], approvalStages },
+      state: { ...lessonPayload().state },
     });
+    source.draft.exists = true;
     const updated = lessonPayload({
       source: 'draft',
       sourceLabel: 'drafts/demo',
       draft: { exists: true, startedFrom: 'canonical-digest', dirty: true, lastCommit: null },
-      state: { ...lessonPayload().state, approveBlockers: [], approvalStages },
+      state: { ...lessonPayload().state },
     });
     updated.elements = [
       {
@@ -170,16 +161,16 @@ describe('Lesson editing', () => {
     await userEvent.click(within(rowElement('intro-b0')).getByRole('button', { name: 'Edit block' }));
     await userEvent.clear(screen.getByLabelText('Translation'));
     await userEvent.type(screen.getByLabelText('Translation'), 'I make coffee.');
-    await waitFor(() => expect(screen.getByText('Save changes first')).toBeInTheDocument());
-    const approve = screen.getByRole('button', { name: 'Approve' });
-    expect(approve).toBeDisabled();
-    expect(approve).toHaveAttribute('title', 'Approval blocked: Save changes first');
-    expect(screen.getByText('Blocked:')).toBeInTheDocument();
+    await waitFor(() => expect(screen.getByRole('button', { name: 'Promote' })).toBeDisabled());
+    const promote = screen.getByRole('button', { name: 'Promote' });
+    expect(promote).toBeDisabled();
+    await userEvent.click(screen.getByRole('button', { name: 'More lesson actions' }));
+    expect(screen.getByRole('menuitem', { name: 'Promote…' })).toHaveAttribute('aria-disabled', 'true');
+    await userEvent.keyboard('{Escape}');
 
     await userEvent.click(screen.getByRole('button', { name: 'Done' }));
     await waitFor(() => expect(screen.getByText('Uncommitted draft')).toBeInTheDocument());
-    expect(screen.getByText('Ready to approve')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Approve' })).toBeEnabled();
+    expect(screen.getByRole('button', { name: 'Promote' })).toBeEnabled();
   });
 
   it('test_edit_card_given_unchanged_fields_and_cancel_expect_lesson_still_committed', async () => {

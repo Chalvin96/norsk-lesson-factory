@@ -37,8 +37,7 @@ export type ExerciseSectionChange = NonNullable<ProposalData['changedSections']>
 export type ExerciseAlignmentState = LessonStateWire['exerciseStaleness'][number];
 export type BlockExplanation = LessonStateWire['explanations'][string];
 export type BlockTarget = WorkbenchFinding['target'];
-export type StageApproval = LessonStateWire['approvalStages'][number];
-export type LessonGateBlocker = LessonStateWire['approveBlockers'][number];
+export type LessonGateBlocker = LessonStateWire['promotionBlockers'][number];
 export type LessonGateStage = NonNullable<ApiCatalog['components']['LessonGateStage']>;
 
 export type CurriculumEditPreview = NonNullable<ApiCatalog['responses']['curriculumPreview']>;
@@ -71,7 +70,6 @@ export type ContextChipKind = NonNullable<ApiCatalog['components']['ContextChipK
 
 export type NewLessonRequest = NonNullable<ApiCatalog['requests']['curriculum.lesson.create']>;
 export type BlockWrite = NonNullable<ApiCatalog['requests']['lesson.block.put']>;
-export type ApproveRequest = NonNullable<ApiCatalog['requests']['lesson.approve']>;
 
 /** Lesson packet elements retain their authored snake_case keys for rendering. */
 export type PacketElement = Record<string, unknown> & {

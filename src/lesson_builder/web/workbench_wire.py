@@ -9,7 +9,6 @@ from typing import TypedDict
 
 from lesson_builder.application.operations.workbench_audio import WorkbenchAudioPlan
 from lesson_builder.application.operations.workbench_curriculum import CurriculumFinding
-from lesson_builder.application.operations.workbench_lesson_gate import LessonGateStage
 from lesson_builder.application.operations.workbench_lessons import WorkbenchLesson
 from lesson_builder.application.operations.workbench_new_lesson import NewLessonRequest
 from lesson_builder.application.operations.workbench_records import ContextReference
@@ -24,8 +23,6 @@ from lesson_builder.application.operations.workbench_state import WorkbenchFindi
 from lesson_builder.application.operations.workbench_state import WorkbenchLessonState
 from lesson_builder.domain.curriculum.models import CurriculumEdit
 from lesson_builder.domain.curriculum.models import CurriculumEditPreview
-from lesson_builder.domain.curriculum.models import CurriculumFindingDecision
-from lesson_builder.domain.curriculum.models import CurriculumPlanApproval
 from lesson_builder.workflow.workbench_regeneration.state import RegenerationResponse
 
 
@@ -96,7 +93,6 @@ class WorkbenchCurriculumEntry(TypedDict):
 class WorkbenchCurriculumPayload(TypedDict):
     """Curriculum response consumed by the workbench SPA."""
 
-    curriculumApproval: CurriculumPlanApproval
     lessons: list[WorkbenchLesson]
     entries: dict[str, WorkbenchCurriculumEntry]
     chat: list[StoredChatTurn]
@@ -354,12 +350,10 @@ class CurriculumPreviewRequest(TypedDict):
 
 
 class CurriculumSaveRequest(TypedDict):
-    """Reviewed or forced curriculum save request."""
+    """Save edits against their exact preview."""
 
     edits: list[CurriculumEdit]
     review_digest: str | None
-    finding_decisions: list[CurriculumFindingDecision]
-    force: bool
 
 
 class CurriculumChatRequest(TypedDict):
@@ -386,12 +380,6 @@ class ReviewRequest(TypedDict):
 
     scope: Literal["lesson", "section", "item"]
     key: NotRequired[str]
-
-
-class ApproveRequest(TypedDict, total=False):
-    """Owner approval stage selection; omitted means every ready stage."""
-
-    stages: list[LessonGateStage]
 
 
 class FindingResolveRequest(TypedDict, total=False):

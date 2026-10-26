@@ -26,7 +26,7 @@ def test_materialize_curriculum_plan_given_approved_entries_expect_stable_slots_
         included_kinds=("grammar", "communicative", "writing"),
     )
 
-    assert result.status == "parked_for_review"
+    assert result.status == "ready_for_generation"
     assert [slot.catalog_id for slot in result.plan.slots] == [
         "grammar_first",
         "communicative_later",
@@ -74,26 +74,10 @@ def test_materialize_curriculum_plan_given_default_mvp_scope_expect_deferred_kin
     assert result.plan.included_catalog_kinds == ["grammar", "phraseology", "communicative"]
     assert result.plan.excluded_catalog_kinds == ["pronunciation", "writing"]
     assert result.plan.summary["excluded_entries"] == 2
-    assert result.status == "parked_for_review"
-
-
-def test_materialize_curriculum_plan_given_auto_approval_expect_ready_generation_status(tmp_path: Path) -> None:
-    _write_catalog(
-        tmp_path,
-        [{"id": "grammar_one", "catalog_kind": "grammar", "title": "Grammar", "cefr_tags": ["A1"]}],
-    )
-
-    result = materialize_curriculum_plan(
-        repo_root=tmp_path,
-        run_id="plan-auto",
-        auto_approve=True,
-    )
-
     assert result.status == "ready_for_generation"
-    assert result.plan.curriculum_approval == "auto_approved"
 
 
-def test_materialize_curriculum_plan_given_auto_approved_commit_expect_canonical_plan_and_scratch_receipt(
+def test_materialize_curriculum_plan_given_commit_expect_canonical_plan_and_scratch_receipt(
     tmp_path: Path,
 ) -> None:
     _write_catalog(
@@ -104,7 +88,6 @@ def test_materialize_curriculum_plan_given_auto_approved_commit_expect_canonical
     result = materialize_curriculum_plan(
         repo_root=tmp_path,
         run_id="plan-commit",
-        auto_approve=True,
         commit=True,
     )
 
@@ -113,21 +96,6 @@ def test_materialize_curriculum_plan_given_auto_approved_commit_expect_canonical
     scratch = yaml.safe_load((tmp_path / result.plan_path).read_text(encoding="utf-8"))
     assert committed == scratch
     assert (tmp_path / result.plan_path).is_file()
-    assert all(slot["human_gate"] == "pending" for slot in committed["slots"])
-
-
-def test_materialize_curriculum_plan_given_commit_without_auto_approval_expect_rejection_before_write(
-    tmp_path: Path,
-) -> None:
-    _write_catalog(
-        tmp_path,
-        [{"id": "grammar_one", "catalog_kind": "grammar", "title": "Grammar", "cefr_tags": ["A1"]}],
-    )
-
-    with pytest.raises(ValueError, match="--commit requires --auto-approve"):
-        materialize_curriculum_plan(repo_root=tmp_path, run_id="plan-unapproved", commit=True)
-
-    assert not (tmp_path / "content" / "curriculum" / "plan.yaml").exists()
 
 
 def test_materialize_curriculum_plan_given_invalid_catalog_expect_existing_committed_plan_preserved(
@@ -137,7 +105,7 @@ def test_materialize_curriculum_plan_given_invalid_catalog_expect_existing_commi
         tmp_path,
         [{"id": "grammar_one", "catalog_kind": "grammar", "title": "Grammar", "cefr_tags": ["A1"]}],
     )
-    materialize_curriculum_plan(repo_root=tmp_path, run_id="plan-preserved", auto_approve=True, commit=True)
+    materialize_curriculum_plan(repo_root=tmp_path, run_id="plan-preserved", commit=True)
     committed_path = tmp_path / "content" / "curriculum" / "plan.yaml"
     original = committed_path.read_bytes()
 
@@ -147,7 +115,7 @@ def test_materialize_curriculum_plan_given_invalid_catalog_expect_existing_commi
     catalog.write_text(yaml.safe_dump(payload, sort_keys=False), encoding="utf-8")
 
     with pytest.raises(ValueError, match="approved catalog is not schedulable"):
-        materialize_curriculum_plan(repo_root=tmp_path, run_id="plan-invalid", auto_approve=True, commit=True)
+        materialize_curriculum_plan(repo_root=tmp_path, run_id="plan-invalid", commit=True)
 
     assert committed_path.read_bytes() == original
 
@@ -157,7 +125,7 @@ def test_validate_committed_curriculum_plan_given_catalog_change_expect_stale_er
         tmp_path,
         [{"id": "grammar_one", "catalog_kind": "grammar", "title": "Grammar", "cefr_tags": ["A1"]}],
     )
-    materialize_curriculum_plan(repo_root=tmp_path, run_id="plan-current", auto_approve=True, commit=True)
+    materialize_curriculum_plan(repo_root=tmp_path, run_id="plan-current", commit=True)
 
     catalog = tmp_path / "content" / "catalog" / "approved" / "catalog.yaml"
     payload = yaml.safe_load(catalog.read_text(encoding="utf-8"))
@@ -191,7 +159,7 @@ def test_materialize_curriculum_plan_given_added_owner_expect_regenerated_plan_c
         tmp_path,
         [{"id": "grammar_one", "catalog_kind": "grammar", "title": "Grammar", "cefr_tags": ["A1"]}],
     )
-    materialize_curriculum_plan(repo_root=tmp_path, run_id="plan-before", auto_approve=True, commit=True)
+    materialize_curriculum_plan(repo_root=tmp_path, run_id="plan-before", commit=True)
 
     catalog = tmp_path / "content" / "catalog" / "approved" / "catalog.yaml"
     payload = yaml.safe_load(catalog.read_text(encoding="utf-8"))
@@ -214,7 +182,7 @@ def test_materialize_curriculum_plan_given_added_owner_expect_regenerated_plan_c
     )
     catalog.write_text(yaml.safe_dump(payload, sort_keys=False), encoding="utf-8")
 
-    result = materialize_curriculum_plan(repo_root=tmp_path, run_id="plan-after", auto_approve=True, commit=True)
+    result = materialize_curriculum_plan(repo_root=tmp_path, run_id="plan-after", commit=True)
     ids = [slot.catalog_id for slot in result.plan.slots]
     assert ids == ["grammar_one", "grammar_two"]
     assert len(ids) == len(set(ids))
@@ -556,7 +524,7 @@ def test_validate_committed_curriculum_plan_given_sequence_change_expect_stale_e
         "schema_version: 1\nentries:\n  - lesson_id: grammar_one\n    rationale: Start here.\n",
         encoding="utf-8",
     )
-    materialize_curriculum_plan(repo_root=tmp_path, run_id="plan-sequence", auto_approve=True, commit=True)
+    materialize_curriculum_plan(repo_root=tmp_path, run_id="plan-sequence", commit=True)
     sequence_path.write_text(
         "schema_version: 1\nentries:\n  - lesson_id: grammar_one\n    rationale: Start here for a different reason.\n",
         encoding="utf-8",
@@ -573,7 +541,7 @@ def test_validate_committed_curriculum_plan_given_legacy_plan_without_sequence_e
         tmp_path,
         [{"id": "grammar_one", "catalog_kind": "grammar", "title": "Grammar", "cefr_tags": ["A1"]}],
     )
-    materialize_curriculum_plan(repo_root=tmp_path, run_id="plan-legacy-sequence", auto_approve=True, commit=True)
+    materialize_curriculum_plan(repo_root=tmp_path, run_id="plan-legacy-sequence", commit=True)
     plan_path = tmp_path / "content" / "curriculum" / "plan.yaml"
     payload = yaml.safe_load(plan_path.read_text(encoding="utf-8"))
     payload.pop("source_sequence", None)

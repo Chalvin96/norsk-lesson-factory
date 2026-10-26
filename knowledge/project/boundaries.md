@@ -16,7 +16,7 @@ The workbench is a React app served by a loopback JSON API. It opens a working
 draft when present, otherwise canonical source. The first edit creates a complete
 draft copy. Edits affect `plan.md`, `lesson.md`, or `exercises.yaml`; Save commits
 draft files without changing canonical source, publishing, or calling providers.
-Save, Approve, Promote, curriculum save, and new-lesson creation require a working
+Save, Promote, curriculum save, and new-lesson creation require a working
 branch. Detached HEAD errors use the same English precondition message;
 new-lesson requests fail before starting a provider job. A busy startup port exits
 with status 1 and explains the `--port` and `--port 0` choices.
@@ -87,11 +87,11 @@ AI review operates on lesson blocks; the plan stage explains that scope.
 
 The curriculum editor supports reorder, manual add, remove, merge, split, and
 entry update. Each edit is previewed against the staged plan before acceptance.
-Manual add creates a slot without a package. Save reviews the plan and requires
-an explicit decision for every current dependency finding. Missing prerequisites
-must be fixed before a reviewed save. Reviewed save records owner acceptance;
-Force save records pending human review, which blocks release. A new lesson
-creates a draft package and slot; it must be promoted before standard export or
+Manual add creates a slot without a package. Save checks that the preview still
+matches current source and requires missing prerequisites to be repaired. It
+shows dependency-order findings without requiring per-finding attestations.
+Check and release reject prerequisites placed after their dependents. A new
+lesson creates a draft package and slot; promote it before standard export or
 release can use it.
 
 Concurrent new-lesson jobs preserve both drafts when intervening edits only
@@ -132,68 +132,47 @@ never-promoted draft for deletion. Merge keeps the earliest selected ID and
 relinks dependents to it. Split keeps the original ID for its first part, chains
 later parts, and relinks dependents to the last part.
 
-## Approval and promotion
+## Save and promotion
 
-Approval follows plan, lesson, and exercises stages. Each stage binds exact
-source bytes and its upstream approval. Plan approval also binds current slot
-content, excluding only `sequence_index`. Stage or upstream changes stale the
-affected stage. Owner approval commits records, exact lesson/exercise snapshots,
-and relied-on review evidence. It records owner acceptance, not qualified
-Norwegian review.
+Git commits and PR review record acceptance. The workbench has no separate
+approval step, stage receipts, committed source snapshots, or approval evidence.
+AI review is optional and its findings are advisory. Current block hashes still
+identify which source a review covered; editing source invalidates that coverage
+without blocking promotion or release.
 
-Position-only changes keep approvals fresh. Other slot fields remain bound,
-including prerequisites and review metadata. Workbench saves check dependencies
-separately; `lesson-data check` and release also reject a required prerequisite
-placed at or after its dependent. Stage status, curriculum chips, promotion, and
-release use the same approval projection.
+Promotion requires a draft, passing deterministic checks, settled proposals,
+complete current audio, no open audio findings, and canonical source unchanged
+since drafting. It copies the package to canonical source, refreshes
+provider-free `dist/`, and commits source and changed distribution together.
+Standard export and release validate the complete planned canonical inventory.
+Direct canonical edits use the same validation and Git review without receipts.
 
-Slot hashes bind content without position. Matching position-bearing approval
-hashes tests current content at indices 0–9,999 without substituting old content.
-A position-bearing hash outside that range requires re-approval; content hashes
-have no position ceiling. Baseline snapshots and the curriculum's "plan stale"
-chip also compare slot content without position. Positional baseline plan
-metadata does not stale approval.
-
-Approve accepts a subset of stages, each subject to its own blockers; omitting
-the subset requests all stages. Plan approval requires deterministic checks.
-Lesson and exercise approval also require current-hash review coverage for
-blocks and non-prose lesson structure. An unsettled proposal blocks re-approval
-of the stage it touches. Findings are advisory: they do not block approval or
-release and never edit source themselves.
-
-After accepting a proposal, the author can review all uncovered blocks.
-Metadata or exercise placement/order changes require whole-lesson review. Labels
-and tooltips show the scope and actual block count, excluding synthetic targets
-beginning with `@`. After all proposal decisions settle, its bar remains while
-accepted changes need review.
-
-Owner resolutions and stale-exercise keep decisions require a typed reason and
-allow a comment of up to 500 characters. Bulk resolution shares the same reason
-and comment. Review history and committed approval evidence retain decisions;
-exercise approval includes the alignment decision in its section pin. Stored
-decisions without typed reasons display as "Legacy decision" and retain their
-comments. Automated unchanged regeneration outcomes carry no owner reason.
-Review prompts include prior decisions for selected blocks with issue identity,
-evidence, reason, and comment, truncated to 500 characters. This is advisory
-context: reviewers may flag new issues or changed evidence. The
-[review rules](../pipeline/authoring.md#review-and-evaluation) define when a changed
-finding reopens a decision. Decisions remain outside learner content and scoring.
-
-Promotion requires a draft with fresh approvals, passing checks, complete current
-audio, no open audio findings, and canonical source unchanged since drafting.
-It copies the package to canonical source, refreshes provider-free `dist/`, and
-commits source and changed distribution together. Standard export and release
-validate the complete planned canonical inventory. Canonical edits without
-matching approvals block release.
+After accepting a proposal, the author can review uncovered blocks. Review
+history retains local finding decisions. Owner resolutions and stale-exercise
+keep decisions require a typed reason and allow a comment of up to 500
+characters. Review prompts include prior decisions as advisory context; changed
+evidence may reopen a finding. Decisions stay outside learner content and scoring.
 
 ## Exercise alignment
 
-Exercise `derived_from` references bind exercises to exact lesson-section
-versions. Approval establishes initial pins. Editing, adding, or removing a
-referenced section stales affected exercises; editing YAML alone does not clear
-that state. Regenerate or keep with an owner reason to record current versions.
-Exercises without references are untracked; unavailable approval evidence is
-unknown.
+Exercise `derived_from` references compare a draft's exercises with canonical
+lesson sections. Editing, adding, or removing a referenced section marks the
+exercise stale. Editing exercise YAML alone does not clear that comparison.
+Regenerate or keep with an owner reason to capture the current section versions
+in ignored local records. Local decisions apply only to drafts started from the
+same canonical package; a new canonical version cannot reuse an old decision.
+Earlier decisions remain visible in history. Records whose canonical digest
+does not match the draft, including legacy records without that digest, cannot
+clear staleness until the author confirms a current decision.
+For a never-promoted lesson, the draft's creation timestamp identifies eligible
+decisions, so recreating the same lesson ID cannot reuse a previous draft's pins.
+Section text in local captures supports exact before/after comparisons during
+regeneration. No comparison snapshots are committed.
+
+A fresh clone compares against canonical source without needing local records.
+Exercises without references are untracked; a new exercise without a canonical
+version or local capture has unknown alignment. Alignment is authoring guidance,
+not a release gate.
 
 ## Audio and distribution
 
@@ -214,13 +193,12 @@ with distribution metadata such as position. Dialogue remains structured
 stimulus data; consumers own its visual treatment.
 
 The [release runbook](../README.md) owns planning, synthesis, upload, publication,
-and verification. Standard releases require fresh canonical approvals and
-complete validated audio, separate from promotion and workbench synthesis.
+and verification. Standard releases require valid canonical source and complete validated audio, separate from promotion and workbench synthesis.
 
 ## Request and path safety
 
 Each lesson has at most one open proposal. Proposals are checked against captured
-source; conflicts can only be rejected. Source changes require owner acceptance.
+source; conflicts can only be rejected. Applying source changes requires an explicit proposal decision.
 
 The server validates Host and any Origin against its bound authority. Writes
 require JSON and the workbench request marker. Lesson IDs and source paths stay

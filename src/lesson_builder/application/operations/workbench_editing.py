@@ -40,6 +40,7 @@ class WorkbenchSource:
     started_from: str | None
     dirty: bool
     last_commit: str | None
+    created_at: str | None = None
 
 
 class WorkbenchSourceNotFound(ValueError):
@@ -58,13 +59,21 @@ def read_workbench_source(repo_root: Path, lesson_id: str, *, canonical_only: bo
     exists = package.source == "draft"
     metadata = _contained_file(package, "draft.yaml")
     started_from = None
+    created_at = None
     if exists and metadata.is_file():
         raw = yaml.safe_load(metadata.read_text(encoding="utf-8"))
         if isinstance(raw, dict):
             started_from = raw.get("started_from_sha256")
+            created_at = raw.get("created_at")
     status = read_draft_git_state(repo_root, _draft_paths(repo_root, package)) if exists else None
     return WorkbenchSource(
-        files, blocks, exists, started_from, status.dirty if status else False, status.last_commit if status else None
+        files,
+        blocks,
+        exists,
+        started_from,
+        status.dirty if status else False,
+        status.last_commit if status else None,
+        created_at,
     )
 
 

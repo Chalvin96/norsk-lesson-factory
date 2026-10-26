@@ -29,7 +29,6 @@ from lesson_builder.application.operations.workbench_records import ExerciseAlig
 from lesson_builder.application.operations.workbench_records import ExerciseSectionChange
 from lesson_builder.application.operations.workbench_records import ExerciseTranslation
 from lesson_builder.application.operations.workbench_records import ProposalCheck
-from lesson_builder.application.operations.workbench_records import StageApprovalStatus
 from lesson_builder.application.operations.workbench_records import StoredChatTurn
 from lesson_builder.application.operations.workbench_records import WorkbenchAudioClip as WorkbenchAudioPlanClip
 from lesson_builder.application.operations.workbench_settings_operations import ReviewScope
@@ -49,8 +48,6 @@ from lesson_builder.application.operations.workbench_state import WorkbenchLesso
 from lesson_builder.application.operations.workbench_state import WorkbenchProposal
 from lesson_builder.domain.curriculum.models import CurriculumEdit
 from lesson_builder.domain.curriculum.models import CurriculumEditPreview
-from lesson_builder.domain.curriculum.models import CurriculumFindingDecision
-from lesson_builder.domain.curriculum.models import CurriculumPlanApproval
 from lesson_builder.formats.workbench_proposal import ProposalText
 from lesson_builder.web import workbench_wire
 
@@ -86,7 +83,6 @@ K_SCRIPT_REQUESTS: dict[str, PayloadSchema] = {
     "lesson.finding.resolve": (workbench_wire.FindingResolveRequest, "input"),
     "lesson.audio.plan": (workbench_wire.AudioPlanRequest, "input"),
     "lesson.audio.synthesize": (workbench_wire.AudioSynthesizeRequest, "input"),
-    "lesson.approve": (workbench_wire.ApproveRequest, "input"),
     "lesson.promote": (workbench_wire.EmptyRequest, "input"),
     "lesson.pull": (workbench_wire.EmptyRequest, "input"),
     "lesson.discard": (workbench_wire.DiscardRequest, "input"),
@@ -129,7 +125,6 @@ K_SCRIPT_COMPONENTS: dict[str, PayloadSchema] = {
     "StatusChip": (StatusChip, "serialize"),
     "WorkbenchStatusChip": (workbench_wire.WorkbenchStatusChip, "raw"),
     "ActiveTurnMetadata": (ActiveTurnMetadata, "serialize"),
-    "StageApprovalStatus": (StageApprovalStatus, "serialize"),
     "LessonGateBlocker": (LessonGateBlocker, "serialize"),
     "LessonGateStage": (LessonGateStage, "serialize"),
     "ProposalDecision": (ProposalDecision, "serialize"),
@@ -145,7 +140,6 @@ K_SCRIPT_COMPONENTS: dict[str, PayloadSchema] = {
     "ExerciseTranslation": (ExerciseTranslation, "serialize"),
     "ProposalText": (ProposalText, "serialize"),
     "CurriculumFinding": (CurriculumFinding, "serialize"),
-    "CurriculumPlanApproval": (CurriculumPlanApproval, "raw"),
     "FindingOrigin": (FindingOrigin, "raw"),
     "FindingSeverity": (FindingSeverity, "raw"),
     "FindingStatus": (FindingStatus, "raw"),
@@ -175,7 +169,6 @@ K_SCRIPT_COMPONENTS: dict[str, PayloadSchema] = {
     "WorkbenchAudioFinding": (workbench_wire.WorkbenchAudioFinding, "raw"),
     "NewLessonRequest": (NewLessonRequest, "input"),
     "CurriculumEditRequest": (list[CurriculumEdit], "input"),
-    "CurriculumFindingDecision": (CurriculumFindingDecision, "input"),
     "WorkbenchAudioPlan": (WorkbenchAudioPlan, "serialize"),
     "WorkbenchAudioPlanClip": (WorkbenchAudioPlanClip, "serialize"),
     "WorkbenchAudioClipStatus": (workbench_wire.WorkbenchAudioClipStatus, "raw"),

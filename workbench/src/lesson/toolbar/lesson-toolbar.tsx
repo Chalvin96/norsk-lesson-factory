@@ -3,7 +3,7 @@
 import { ChevronDownIcon, ChevronUpIcon, EllipsisIcon } from 'lucide-react';
 import * as React from 'react';
 
-import type { LessonGateBlocker, LessonState, ReviewScope } from '@/api/contracts';
+import type { LessonState, ReviewScope } from '@/api/contracts';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -59,7 +59,6 @@ export interface LessonToolbarProps {
     busy?: boolean;
     proposalAcceptDisabled?: boolean;
     onSettleAll: (verdict: 'accepted' | 'rejected') => void;
-    onApprove: () => void;
     onPromote: () => void;
     onRegenerate: (scope: ReviewScope) => void;
     staleExerciseCount: number;
@@ -106,18 +105,6 @@ export function LessonToolbar(props: LessonToolbarProps) {
     const timer = window.setInterval(update, 1000);
     return () => window.clearInterval(timer);
   }, [review.startedAt]);
-  const localBlockers: LessonGateBlocker[] = [];
-  if (draft.clientDirty) localBlockers.push({ kind: 'unsaved_changes', stage: null, target: 'editor' });
-  if (!actions.hasDraft && !draft.clientDirty) localBlockers.push({ kind: 'no_draft', stage: null, target: 'draft' });
-  const gateBlockers = [...state.approveBlockers, ...localBlockers];
-  const gatedStages = state.approvalStages.filter(
-    (stage) => stage.status === 'needs_approval' || stage.status === 'stale',
-  );
-  const nothingToApprove = gatedStages.length === 0;
-  const clientBlocked = localBlockers.length > 0;
-  const alreadyApproved = actions.hasDraft && nothingToApprove && gateBlockers.length === 0;
-  const approveDisabled = clientBlocked || nothingToApprove || Boolean(actions.busy);
-  const displayBlockers = gateBlockers.map((blocker) => ({ blocker, label: formatLessonGateBlocker(blocker) }));
   const chips = uniqueChips(state.statusChips, draft.dirty);
   const uncoveredCount = state.reviewCoverage?.uncovered.length ?? 0;
   const hasUnreviewedAcceptance =
@@ -238,25 +225,9 @@ export function LessonToolbar(props: LessonToolbarProps) {
       </div>
     </>
   );
-  const approveTitle = alreadyApproved
-    ? 'All stages already have owner acceptance and are fresh'
-    : clientBlocked || nothingToApprove
-      ? `Approval blocked: ${displayBlockers.map(({ label }) => label).join('; ') || 'nothing to approve'}`
-      : gateBlockers.length
-        ? `Approval needs attention: ${displayBlockers.map(({ label }) => label).join('; ')}`
-        : 'Ready to approve';
-  const approveButton = (
-    <Button
-      size="sm"
-      title={approveTitle}
-      aria-disabled={approveDisabled}
-      disabled={approveDisabled}
-      onClick={() => {
-        if (!approveDisabled) actions.onApprove();
-      }}
-      className={`${approveDisabled ? 'opacity-55 ' : ''}shrink-0 px-1.5 min-[1440px]:px-3`}
-    >
-      Approve
+  const promoteButton = (
+    <Button size="sm" disabled={!actions.hasDraft || draft.clientDirty || actions.busy} onClick={actions.onPromote}>
+      Promote
     </Button>
   );
   const overflowItems = () => (
@@ -274,7 +245,7 @@ export function LessonToolbar(props: LessonToolbarProps) {
         </DropdownMenuItem>
       ) : null}
       {audio.missingCount > 0 || audio.staleCount > 0 ? <DropdownMenuSeparator /> : null}
-      <DropdownMenuItem onSelect={actions.onPromote} disabled={actions.busy}>
+      <DropdownMenuItem onSelect={actions.onPromote} disabled={!actions.hasDraft || draft.clientDirty || actions.busy}>
         Promote…
       </DropdownMenuItem>
       {actions.hasDraft ? (
@@ -345,7 +316,7 @@ export function LessonToolbar(props: LessonToolbarProps) {
           >
             Save
           </Button>
-          {approveButton}
+          {promoteButton}
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -390,14 +361,6 @@ export function LessonToolbar(props: LessonToolbarProps) {
             <DropdownMenuItem disabled={!draft.dirty || draft.saveDisabled} onSelect={draft.onSave}>
               Save
             </DropdownMenuItem>
-            <DropdownMenuItem
-              disabled={approveDisabled}
-              onSelect={() => {
-                if (!approveDisabled) actions.onApprove();
-              }}
-            >
-              Approve
-            </DropdownMenuItem>
             {overflowItems()}
           </DropdownMenuContent>
         </DropdownMenu>
@@ -426,45 +389,6 @@ export function LessonToolbar(props: LessonToolbarProps) {
             {chip.label}
           </StatusChip>
         ))}
-        <p id="approve-gate" className="m-0 ml-auto min-w-0 text-xs text-muted-foreground">
-          {alreadyApproved ? (
-            <span className="font-semibold text-muted-foreground">
-              All stages already have owner acceptance and are fresh
-            </span>
-          ) : gateBlockers.length ? (
-            <>
-              <span className="font-semibold text-destructive-70">Blocked:</span>{' '}
-              {displayBlockers.map(({ blocker, label }, index) => (
-                <React.Fragment key={`${blocker.kind}-${blocker.stage ?? 'none'}-${index}`}>
-                  {blocker.kind === 'unsaved_changes' ? (
-                    <span
-                      title="Finish the current edit or wait for the source write to complete"
-                      className="font-semibold text-destructive-70"
-                    >
-                      {label}
-                    </span>
-                  ) : blocker.kind === 'no_draft' ? (
-                    <span className="font-semibold text-destructive-70">{label}</span>
-                  ) : (
-                    <button
-                      type="button"
-                      className="cursor-pointer text-left font-semibold text-destructive-70 underline underline-offset-2"
-                      title="Open approval details"
-                      onClick={() => {
-                        if (!draft.clientDirty) actions.onApprove();
-                      }}
-                    >
-                      {label}
-                    </button>
-                  )}
-                  {index < displayBlockers.length - 1 ? ' · ' : ''}
-                </React.Fragment>
-              ))}
-            </>
-          ) : (
-            <span className="font-semibold text-accent-90">Ready to approve</span>
-          )}
-        </p>
         <button
           type="button"
           className="shrink-0 text-xs font-semibold text-primary-80 underline underline-offset-2"

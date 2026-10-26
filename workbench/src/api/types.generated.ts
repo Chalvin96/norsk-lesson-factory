@@ -65,10 +65,6 @@ export type Edits = (
   | CurriculumUpdateEdit
 )[];
 export type ReviewDigest = string | null;
-export type FindingId = string;
-export type Decision = "accept" | "revise";
-export type FindingDecisions = CurriculumFindingDecision[];
-export type Force = boolean;
 export type Kind6 = "reorder";
 /**
  * @minItems 1
@@ -146,7 +142,6 @@ export type Scope1 = "block" | "missing_and_stale";
 export type Selection = "missing" | "stale" | "missing_and_stale";
 export type BlockKey = string;
 export type PlanToken = string;
-export type Stages = ("plan" | "lesson" | "exercises")[];
 export type Confirmed = boolean;
 export type LessonRegenerate = ScopeRegenerationRequest | ExercisesRegenerationRequest;
 export type Mode = "scope";
@@ -159,7 +154,6 @@ export type Note1 = string;
  */
 export type KeepReason = "still_matches" | "unaffected" | "revise_later";
 export type Comment1 = string;
-export type Curriculumapproval = "pending_human" | "auto_approved" | "human_approved";
 export type LessonId4 = string;
 export type Title9 = string;
 export type CefrLevel5 = string;
@@ -282,7 +276,7 @@ export type Startedfrom = string | null;
 export type Dirty = boolean;
 export type Lastcommit = string | null;
 export type Errors = string[];
-export type FindingId1 = string;
+export type FindingId = string;
 export type ElementId = string;
 export type BlockIndex = number | null;
 export type Origin1 = "ai" | "check";
@@ -412,53 +406,13 @@ export type Partial2 = string;
 export type Label5 = string;
 export type Tone1 = "neutral" | "draft" | "warning" | "error" | "ok";
 export type StatusChips = StatusChip[];
-export type Kind31 = "check_errors";
-export type Stage = ("plan" | "lesson" | "exercises") | null;
-export type Target = "findings";
-export type Stage1 = "plan" | "lesson" | "exercises";
-export type Kind32 = "open_proposal";
-export type Target1 = "proposal";
-export type Stage2 = "lesson" | "exercises";
-export type Count = number;
-export type Uncovered = string[];
-export type Kind33 = "review_coverage";
-export type Target2 = "review";
-export type Missing = number;
-export type Stale = number;
-export type Kind34 = "audio";
-export type Stage3 = "lesson";
-export type Target3 = "audio";
-export type Kind35 = "canonical_changed";
-export type Stage4 = "lesson";
-export type Target4 = "canonical";
-export type Kind36 = "no_draft";
-export type Stage5 = null;
-export type Target5 = "draft";
-export type Kind37 = "unsaved_changes";
-export type Stage6 = null;
-export type Target6 = "editor";
-export type ApproveBlockers = (
-  | CheckErrorsBlocker
-  | OpenProposalBlocker
-  | ReviewCoverageBlocker
-  | AudioBlocker
-  | CanonicalChangedBlocker
-  | NoDraftBlocker
-  | UnsavedChangesBlocker
-)[];
-export type Stage7 = "plan" | "lesson" | "exercises";
-export type Status6 = "needs_approval" | "stale" | "baseline" | "approved";
-export type FileSha256 = string;
-export type ApprovedSha256 = string | null;
-export type Reviewer1 = ("human" | "baseline") | null;
-export type UpstreamDiff = string;
-export type ApprovalStages = StageApprovalStatus[];
-export type Approvable = boolean;
 export type WorkbenchLessonPayload__ExerciseAlignmentState =
   ExerciseAligned | ExerciseStale | ExerciseUntracked | ExerciseUnknown;
 export type ExerciseKey = string;
 export type ExerciseKey1 = string;
-export type Outcome = "approved" | "regenerated" | "kept";
+export type Outcome = "canonical" | "regenerated" | "kept";
+export type CanonicalSha256 = string | null;
+export type DraftCreatedAt = string | null;
 export type Note3 = string | null;
 /**
  * Owner's reason for retaining an exercise after a section change.
@@ -468,24 +422,43 @@ export type Comment2 = string | null;
 export type At = string;
 export type DecisionId = string | null;
 export type History = ExerciseAlignmentRecord[];
-export type Status7 = "aligned";
+export type Status6 = "aligned";
 export type ExerciseKey2 = string;
 export type ChangedSections1 = ExerciseSectionChange[];
 export type History1 = ExerciseAlignmentRecord[];
-export type Status8 = "stale";
+export type Status7 = "stale";
 export type ExerciseKey3 = string;
 export type History2 = ExerciseAlignmentRecord[];
-export type Status9 = "untracked";
+export type Status8 = "untracked";
 export type ExerciseKey4 = string | null;
 export type Reason = string;
 export type History3 = ExerciseAlignmentRecord[];
-export type Status10 = "unknown";
+export type Status9 = "unknown";
 export type ExerciseStaleness = WorkbenchLessonPayload__ExerciseAlignmentState[];
 export type Promotable = boolean;
+export type Kind31 = "check_errors";
+export type Stage = ("plan" | "lesson" | "exercises") | null;
+export type Target = "findings";
+export type Stage1 = ("plan" | "lesson" | "exercises") | null;
+export type Kind32 = "open_proposal";
+export type Target1 = "proposal";
+export type Missing = number;
+export type Stale = number;
+export type Kind33 = "audio";
+export type Stage2 = "lesson";
+export type Target2 = "audio";
+export type Kind34 = "canonical_changed";
+export type Stage3 = "lesson";
+export type Target3 = "canonical";
+export type Kind35 = "no_draft";
+export type Stage4 = null;
+export type Target4 = "draft";
+export type Kind36 = "unsaved_changes";
+export type Stage5 = null;
+export type Target5 = "editor";
 export type PromotionBlockers = (
   | CheckErrorsBlocker
   | OpenProposalBlocker
-  | ReviewCoverageBlocker
   | AudioBlocker
   | CanonicalChangedBlocker
   | NoDraftBlocker
@@ -496,7 +469,7 @@ export type ReviewCreatedAt = string | null;
 export type ReviewDigest1 = string | null;
 export type Covered = number;
 export type Total = number;
-export type Uncovered1 = string[];
+export type Uncovered = string[];
 export type CheckFindingCount = number;
 export type AiFindingCount = number;
 export type BlockId3 = string;
@@ -518,7 +491,7 @@ export type Speakerid = string | null;
 export type Speakername = string | null;
 export type Origin4 = "lesson_reading" | "lesson_example" | "exercise_target";
 export type Characters = number;
-export type Status11 = "ready" | "missing" | "stale";
+export type Status10 = "ready" | "missing" | "stale";
 export type Durationms = number | null;
 export type Playurl = string;
 export type Code3 = "silent" | "length" | "cut_off" | "invalid_wav";
@@ -536,7 +509,7 @@ export type Stalecount = number;
 export type Readycount = number;
 export type Blockers = string[];
 export type Key7 = string;
-export type Kind38 = string;
+export type Kind37 = string;
 export type Source5 = string;
 export type Blocks1 = WorkbenchSourceBlock1[];
 export type Exists1 = boolean;
@@ -551,23 +524,23 @@ export type ReviewScope1 = "lesson" | "section" | "item";
 export type MonthlyCapUsd1 = number;
 export type Reviewscopeoptions = ("lesson" | "section" | "item")[];
 export type Job = WorkbenchJobQueued | WorkbenchJobDone | WorkbenchJobFailed | WorkbenchJobCancelled;
-export type Status12 = "queued" | "running";
+export type Status11 = "queued" | "running";
 export type CanCancel = boolean;
 export type Steps = string[];
 export type RunId = string;
 export type TurnId3 = string;
 export type Partial3 = string;
-export type Status13 = "done";
+export type Status12 = "done";
 export type CanCancel1 = false;
 export type Steps1 = string[];
 export type RunId1 = string;
-export type Status14 = "failed";
+export type Status13 = "failed";
 export type Error2 = string;
 export type ErrorDetail = string;
 export type CanCancel2 = false;
 export type Steps2 = string[];
 export type RunId2 = string;
-export type Status15 = "cancelled";
+export type Status14 = "cancelled";
 export type CanCancel3 = false;
 export type Steps3 = string[];
 export type RunId3 = string;
@@ -575,15 +548,15 @@ export type RunId4 = string;
 export type LessonId10 = string;
 export type Key8 = string | null;
 export type Mode4 = "scope" | "exercises";
-export type Status16 = "running" | "waiting" | "done" | "failed" | "cancelled" | "shutdown_interrupted";
+export type Status15 = "running" | "waiting" | "done" | "failed" | "cancelled" | "shutdown_interrupted";
 export type Steps4 = string[];
 export type Next = string[];
 export type Errors2 = string[];
 export type ErrorKinds = string[];
 export type ProposalId3 = string | null;
-export type Status17 = "passed" | "failed";
+export type Status16 = "passed" | "failed";
 export type Errors3 = string[];
-export type Decision1 = string | null;
+export type Decision = string | null;
 export type KeptExercises = string[];
 export type JobId = string;
 export type Error3 = string;
@@ -598,7 +571,7 @@ export type Body1 = string;
 export type Parseerror1 = string | null;
 export type Title19 = string | null;
 export type Cefrlevel2 = string | null;
-export type Kind39 = string | null;
+export type Kind38 = string | null;
 export type Goal1 = string | null;
 export type Elements1 = {
   [k: string]: unknown;
@@ -611,7 +584,7 @@ export type Explanation3 = string;
 export type Evidence1 = string;
 export type Sourcefindings1 = WorkbenchSourceFinding1[];
 export type Key9 = string;
-export type Kind40 = string;
+export type Kind39 = string;
 export type Source7 = string;
 export type Blocks2 = WorkbenchSourceBlock2[];
 export type Exists2 = boolean;
@@ -619,12 +592,12 @@ export type Startedfrom2 = string | null;
 export type Dirty2 = boolean;
 export type Lastcommit2 = string | null;
 export type Errors4 = string[];
-export type FindingId2 = string;
+export type FindingId1 = string;
 export type ElementId1 = string;
 export type BlockIndex1 = number | null;
 export type Origin5 = "ai" | "check";
 export type Severity3 = "warning" | "error";
-export type Status18 = "open" | "resolved";
+export type Status17 = "open" | "resolved";
 export type Code5 = string;
 export type Excerpt1 = string;
 export type Explanation4 = string;
@@ -637,7 +610,7 @@ export type ResolutionComment1 = string | null;
 export type PreviouslyResolved1 = boolean;
 export type Level1 = string;
 export type Advisory1 = boolean;
-export type Reviewer2 = "primary" | "second_opinion";
+export type Reviewer1 = "primary" | "second_opinion";
 export type Label6 = string;
 export type Message4 = string;
 export type QuoteEnglish1 = string;
@@ -654,8 +627,8 @@ export type Text5 = string;
 export type Lang1 = string;
 export type BeforeRendered1 = ProposalText1[];
 export type AfterRendered1 = ProposalText1[];
-export type Status19 = "pending" | "accepted" | "rejected" | "conflicted";
-export type Status20 = "passed" | "failed";
+export type Status18 = "pending" | "accepted" | "rejected" | "conflicted";
+export type Status19 = "passed" | "failed";
 export type Errors5 = string[];
 export type ChangeSummary1 = string;
 export type Norwegian1 = string;
@@ -672,7 +645,7 @@ export type AllowedDecisions1 = ("accept" | "reject" | "keep")[];
 export type Proposals1 = WorkbenchProposal1[];
 export type Role2 = "author" | "assistant";
 export type Text6 = string;
-export type Kind41 = "selection" | "finding" | "file";
+export type Kind40 = "selection" | "finding" | "file";
 export type Label7 = string;
 export type Detail3 = string;
 export type Key11 = string | null;
@@ -689,12 +662,12 @@ export type ProposedEdit2 =
       | CurriculumUpdateEdit4
     )
   | null;
-export type Kind42 = "reorder";
+export type Kind41 = "reorder";
 /**
  * @minItems 1
  */
 export type LessonIds12 = [string, ...string[]];
-export type Kind43 = "add";
+export type Kind42 = "add";
 export type CatalogId8 = string;
 export type Title20 = string;
 export type LearnerOutcome17 = string;
@@ -702,20 +675,20 @@ export type CefrLevel10 = "A1" | "A2" | "B1" | "B2";
 export type Prerequisites8 = string[];
 export type HelpfulPrerequisites8 = string[];
 export type AfterLessonId5 = string | null;
-export type Kind44 = "remove";
+export type Kind43 = "remove";
 /**
  * @minItems 1
  */
 export type LessonIds13 = [string, ...string[]];
 export type DeleteNeverPromotedDrafts4 = boolean;
-export type Kind45 = "merge";
+export type Kind44 = "merge";
 /**
  * @minItems 2
  */
 export type LessonIds14 = [string, string, ...string[]];
 export type Title21 = string;
 export type LearnerOutcome18 = string;
-export type Kind46 = "split";
+export type Kind45 = "split";
 export type LessonId11 = string;
 /**
  * @minItems 2
@@ -724,7 +697,7 @@ export type Parts4 = [CurriculumSplitPart4, CurriculumSplitPart4, ...CurriculumS
 export type CatalogId9 = string;
 export type Title22 = string;
 export type LearnerOutcome19 = string;
-export type Kind47 = "update";
+export type Kind46 = "update";
 export type LessonId12 = string;
 export type Title23 = string;
 export type LearnerOutcome20 = string;
@@ -734,68 +707,28 @@ export type HelpfulPrerequisites9 = string[];
 export type ProposalId5 = string | null;
 export type TurnId4 = string | null;
 export type CodexTurnId2 = string | null;
-export type Status21 = ("pending" | "running" | "completed" | "failed" | "cancelled") | null;
+export type Status20 = ("pending" | "running" | "completed" | "failed" | "cancelled") | null;
 export type Partial4 = string;
 export type Error4 = string | null;
-export type Kind48 = "lesson" | "curriculum";
+export type Kind47 = "lesson" | "curriculum";
 export type Origin7 = "chat" | "review_fix";
 export type Mode5 = "chat" | "explain_only";
 export type BlockId4 = string | null;
 export type BlockHash3 = string | null;
 export type Chat2 = StoredChatTurn2[];
 export type TurnId5 = string;
-export type Status22 = "pending" | "running";
+export type Status21 = "pending" | "running";
 export type Partial5 = string;
 export type Label8 = string;
 export type Tone2 = "neutral" | "draft" | "warning" | "error" | "ok";
 export type StatusChips1 = StatusChip1[];
-export type Kind49 = "check_errors";
-export type Stage8 = ("plan" | "lesson" | "exercises") | null;
-export type Target7 = "findings";
-export type Stage9 = "plan" | "lesson" | "exercises";
-export type Kind50 = "open_proposal";
-export type Target8 = "proposal";
-export type Stage10 = "lesson" | "exercises";
-export type Count1 = number;
-export type Uncovered2 = string[];
-export type Kind51 = "review_coverage";
-export type Target9 = "review";
-export type Missing1 = number;
-export type Stale1 = number;
-export type Kind52 = "audio";
-export type Stage11 = "lesson";
-export type Target10 = "audio";
-export type Kind53 = "canonical_changed";
-export type Stage12 = "lesson";
-export type Target11 = "canonical";
-export type Kind54 = "no_draft";
-export type Stage13 = null;
-export type Target12 = "draft";
-export type Kind55 = "unsaved_changes";
-export type Stage14 = null;
-export type Target13 = "editor";
-export type ApproveBlockers1 = (
-  | CheckErrorsBlocker1
-  | OpenProposalBlocker1
-  | ReviewCoverageBlocker1
-  | AudioBlocker1
-  | CanonicalChangedBlocker1
-  | NoDraftBlocker1
-  | UnsavedChangesBlocker1
-)[];
-export type Stage15 = "plan" | "lesson" | "exercises";
-export type Status23 = "needs_approval" | "stale" | "baseline" | "approved";
-export type FileSha2561 = string;
-export type ApprovedSha2561 = string | null;
-export type Reviewer3 = ("human" | "baseline") | null;
-export type UpstreamDiff1 = string;
-export type ApprovalStages1 = StageApprovalStatus1[];
-export type Approvable1 = boolean;
 export type WorkbenchWriteResult__ExerciseAlignmentState =
   ExerciseAligned1 | ExerciseStale1 | ExerciseUntracked1 | ExerciseUnknown1;
 export type ExerciseKey5 = string;
 export type ExerciseKey6 = string;
-export type Outcome1 = "approved" | "regenerated" | "kept";
+export type Outcome1 = "canonical" | "regenerated" | "kept";
+export type CanonicalSha2561 = string | null;
+export type DraftCreatedAt1 = string | null;
 export type Note5 = string | null;
 /**
  * Owner's reason for retaining an exercise after a section change.
@@ -805,24 +738,43 @@ export type Comment3 = string | null;
 export type At1 = string;
 export type DecisionId1 = string | null;
 export type History4 = ExerciseAlignmentRecord1[];
-export type Status24 = "aligned";
+export type Status22 = "aligned";
 export type ExerciseKey7 = string;
 export type ChangedSections3 = ExerciseSectionChange1[];
 export type History5 = ExerciseAlignmentRecord1[];
-export type Status25 = "stale";
+export type Status23 = "stale";
 export type ExerciseKey8 = string;
 export type History6 = ExerciseAlignmentRecord1[];
-export type Status26 = "untracked";
+export type Status24 = "untracked";
 export type ExerciseKey9 = string | null;
 export type Reason1 = string;
 export type History7 = ExerciseAlignmentRecord1[];
-export type Status27 = "unknown";
+export type Status25 = "unknown";
 export type ExerciseStaleness1 = WorkbenchWriteResult__ExerciseAlignmentState[];
 export type Promotable1 = boolean;
+export type Kind48 = "check_errors";
+export type Stage6 = ("plan" | "lesson" | "exercises") | null;
+export type Target6 = "findings";
+export type Stage7 = ("plan" | "lesson" | "exercises") | null;
+export type Kind49 = "open_proposal";
+export type Target7 = "proposal";
+export type Missing1 = number;
+export type Stale1 = number;
+export type Kind50 = "audio";
+export type Stage8 = "lesson";
+export type Target8 = "audio";
+export type Kind51 = "canonical_changed";
+export type Stage9 = "lesson";
+export type Target9 = "canonical";
+export type Kind52 = "no_draft";
+export type Stage10 = null;
+export type Target10 = "draft";
+export type Kind53 = "unsaved_changes";
+export type Stage11 = null;
+export type Target11 = "editor";
 export type PromotionBlockers1 = (
   | CheckErrorsBlocker1
   | OpenProposalBlocker1
-  | ReviewCoverageBlocker1
   | AudioBlocker1
   | CanonicalChangedBlocker1
   | NoDraftBlocker1
@@ -833,7 +785,7 @@ export type ReviewCreatedAt1 = string | null;
 export type ReviewDigest2 = string | null;
 export type Covered1 = number;
 export type Total1 = number;
-export type Uncovered3 = string[];
+export type Uncovered1 = string[];
 export type CheckFindingCount1 = number;
 export type AiFindingCount1 = number;
 export type BlockId5 = string;
@@ -855,7 +807,7 @@ export type Speakerid2 = string | null;
 export type Speakername2 = string | null;
 export type Origin8 = "lesson_reading" | "lesson_example" | "exercise_target";
 export type Characters1 = number;
-export type Status28 = "ready" | "missing" | "stale";
+export type Status26 = "ready" | "missing" | "stale";
 export type Durationms1 = number | null;
 export type Playurl1 = string;
 export type Code6 = "silent" | "length" | "cut_off" | "invalid_wav";
@@ -884,12 +836,12 @@ export type Explanation5 = string;
 export type Evidence2 = string;
 export type Findings7 = WorkbenchSourceFinding2[];
 export type Errors7 = string[];
-export type FindingId3 = string;
+export type FindingId2 = string;
 export type ElementId2 = string;
 export type BlockIndex2 = number | null;
 export type Origin9 = "ai" | "check";
 export type Severity5 = "warning" | "error";
-export type Status29 = "open" | "resolved";
+export type Status27 = "open" | "resolved";
 export type Code8 = string;
 export type Excerpt2 = string;
 export type Explanation6 = string;
@@ -902,7 +854,7 @@ export type ResolutionComment2 = string | null;
 export type PreviouslyResolved2 = boolean;
 export type Level2 = string;
 export type Advisory2 = boolean;
-export type Reviewer4 = "primary" | "second_opinion";
+export type Reviewer2 = "primary" | "second_opinion";
 export type Label9 = string;
 export type Message6 = string;
 export type QuoteEnglish2 = string;
@@ -915,7 +867,6 @@ export type Code9 = string;
 export type Explanation7 = string;
 export type Artifact4 = string;
 export type Findings8 = CurriculumFinding1[];
-export type Curriculumapproval1 = "pending_human" | "auto_approved" | "human_approved";
 export type LessonId14 = string;
 export type Title24 = string;
 export type CefrLevel12 = string;
@@ -932,7 +883,7 @@ export type Dependson1 = string[];
 export type Helpfulprerequisites1 = string[];
 export type Role3 = "author" | "assistant";
 export type Text8 = string;
-export type Kind56 = "selection" | "finding" | "file";
+export type Kind54 = "selection" | "finding" | "file";
 export type Label11 = string;
 export type Detail4 = string;
 export type Key12 = string | null;
@@ -949,12 +900,12 @@ export type ProposedEdit3 =
       | CurriculumUpdateEdit5
     )
   | null;
-export type Kind57 = "reorder";
+export type Kind55 = "reorder";
 /**
  * @minItems 1
  */
 export type LessonIds15 = [string, ...string[]];
-export type Kind58 = "add";
+export type Kind56 = "add";
 export type CatalogId10 = string;
 export type Title25 = string;
 export type LearnerOutcome21 = string;
@@ -962,20 +913,20 @@ export type CefrLevel13 = "A1" | "A2" | "B1" | "B2";
 export type Prerequisites10 = string[];
 export type HelpfulPrerequisites10 = string[];
 export type AfterLessonId6 = string | null;
-export type Kind59 = "remove";
+export type Kind57 = "remove";
 /**
  * @minItems 1
  */
 export type LessonIds16 = [string, ...string[]];
 export type DeleteNeverPromotedDrafts5 = boolean;
-export type Kind60 = "merge";
+export type Kind58 = "merge";
 /**
  * @minItems 2
  */
 export type LessonIds17 = [string, string, ...string[]];
 export type Title26 = string;
 export type LearnerOutcome22 = string;
-export type Kind61 = "split";
+export type Kind59 = "split";
 export type LessonId15 = string;
 /**
  * @minItems 2
@@ -984,7 +935,7 @@ export type Parts5 = [CurriculumSplitPart5, CurriculumSplitPart5, ...CurriculumS
 export type CatalogId11 = string;
 export type Title27 = string;
 export type LearnerOutcome23 = string;
-export type Kind62 = "update";
+export type Kind60 = "update";
 export type LessonId16 = string;
 export type Title28 = string;
 export type LearnerOutcome24 = string;
@@ -994,10 +945,10 @@ export type HelpfulPrerequisites11 = string[];
 export type ProposalId6 = string | null;
 export type TurnId6 = string | null;
 export type CodexTurnId3 = string | null;
-export type Status30 = ("pending" | "running" | "completed" | "failed" | "cancelled") | null;
+export type Status28 = ("pending" | "running" | "completed" | "failed" | "cancelled") | null;
 export type Partial6 = string;
 export type Error5 = string | null;
-export type Kind63 = "lesson" | "curriculum";
+export type Kind61 = "lesson" | "curriculum";
 export type Origin10 = "chat" | "review_fix";
 export type Mode6 = "chat" | "explain_only";
 export type BlockId6 = string | null;
@@ -1022,12 +973,11 @@ export type TerminologyIds = string[];
 export type Prerequisites12 = string[];
 export type HelpfulPrerequisites12 = string[];
 export type ProvisionalFlags = string[];
-export type Status31 = "atomic";
+export type Status29 = "atomic";
 export type LearnerDecision = string;
 export type AssessmentOperation = string;
 export type ReviewStatus = "approved";
 export type ReviewedBy = string;
-export type HumanGate = "pending";
 export type Entries2 = CurriculumPlanSlot[];
 export type LessonId17 = string;
 export type Title30 = string;
@@ -1041,9 +991,9 @@ export type MovedOutcomes = CurriculumMovedOutcome[];
 export type LessonId18 = string;
 export type FromLessonId1 = string;
 export type ToLessonId1 = string;
-export type Kind64 = "required" | "helpful";
+export type Kind62 = "required" | "helpful";
 export type MovedPrerequisites = CurriculumMovedPrerequisite[];
-export type FindingId4 = string;
+export type FindingId3 = string;
 export type LessonId19 = string;
 export type PrerequisiteId = string;
 export type Code10 = "curriculum.prerequisite_order" | "curriculum.prerequisite_missing";
@@ -1059,7 +1009,7 @@ export type Body2 = string;
 export type Parseerror2 = string | null;
 export type Title31 = string | null;
 export type Cefrlevel4 = string | null;
-export type Kind65 = string | null;
+export type Kind63 = string | null;
 export type Goal2 = string | null;
 export type Elements2 = {
   [k: string]: unknown;
@@ -1072,7 +1022,7 @@ export type Explanation9 = string;
 export type Evidence3 = string;
 export type Sourcefindings2 = WorkbenchSourceFinding3[];
 export type Key13 = string;
-export type Kind66 = string;
+export type Kind64 = string;
 export type Source11 = string;
 export type Blocks3 = WorkbenchSourceBlock3[];
 export type Exists3 = boolean;
@@ -1080,12 +1030,12 @@ export type Startedfrom3 = string | null;
 export type Dirty3 = boolean;
 export type Lastcommit3 = string | null;
 export type Errors8 = string[];
-export type FindingId5 = string;
+export type FindingId4 = string;
 export type ElementId3 = string;
 export type BlockIndex3 = number | null;
 export type Origin11 = "ai" | "check";
 export type Severity7 = "warning" | "error";
-export type Status32 = "open" | "resolved";
+export type Status30 = "open" | "resolved";
 export type Code12 = string;
 export type Excerpt3 = string;
 export type Explanation10 = string;
@@ -1098,7 +1048,7 @@ export type ResolutionComment3 = string | null;
 export type PreviouslyResolved3 = boolean;
 export type Level3 = string;
 export type Advisory3 = boolean;
-export type Reviewer5 = "primary" | "second_opinion";
+export type Reviewer3 = "primary" | "second_opinion";
 export type Label12 = string;
 export type Message8 = string;
 export type QuoteEnglish3 = string;
@@ -1115,8 +1065,8 @@ export type Text9 = string;
 export type Lang2 = string;
 export type BeforeRendered2 = ProposalText2[];
 export type AfterRendered2 = ProposalText2[];
-export type Status33 = "pending" | "accepted" | "rejected" | "conflicted";
-export type Status34 = "passed" | "failed";
+export type Status31 = "pending" | "accepted" | "rejected" | "conflicted";
+export type Status32 = "passed" | "failed";
 export type Errors9 = string[];
 export type ChangeSummary2 = string;
 export type Norwegian2 = string;
@@ -1133,7 +1083,7 @@ export type AllowedDecisions2 = ("accept" | "reject" | "keep")[];
 export type Proposals2 = WorkbenchProposal2[];
 export type Role4 = "author" | "assistant";
 export type Text10 = string;
-export type Kind67 = "selection" | "finding" | "file";
+export type Kind65 = "selection" | "finding" | "file";
 export type Label13 = string;
 export type Detail6 = string;
 export type Key15 = string | null;
@@ -1150,12 +1100,12 @@ export type ProposedEdit4 =
       | CurriculumUpdateEdit6
     )
   | null;
-export type Kind68 = "reorder";
+export type Kind66 = "reorder";
 /**
  * @minItems 1
  */
 export type LessonIds18 = [string, ...string[]];
-export type Kind69 = "add";
+export type Kind67 = "add";
 export type CatalogId13 = string;
 export type Title32 = string;
 export type LearnerOutcome26 = string;
@@ -1163,20 +1113,20 @@ export type CefrLevel16 = "A1" | "A2" | "B1" | "B2";
 export type Prerequisites13 = string[];
 export type HelpfulPrerequisites13 = string[];
 export type AfterLessonId7 = string | null;
-export type Kind70 = "remove";
+export type Kind68 = "remove";
 /**
  * @minItems 1
  */
 export type LessonIds19 = [string, ...string[]];
 export type DeleteNeverPromotedDrafts6 = boolean;
-export type Kind71 = "merge";
+export type Kind69 = "merge";
 /**
  * @minItems 2
  */
 export type LessonIds20 = [string, string, ...string[]];
 export type Title33 = string;
 export type LearnerOutcome27 = string;
-export type Kind72 = "split";
+export type Kind70 = "split";
 export type LessonId20 = string;
 /**
  * @minItems 2
@@ -1185,7 +1135,7 @@ export type Parts6 = [CurriculumSplitPart6, CurriculumSplitPart6, ...CurriculumS
 export type CatalogId14 = string;
 export type Title34 = string;
 export type LearnerOutcome28 = string;
-export type Kind73 = "update";
+export type Kind71 = "update";
 export type LessonId21 = string;
 export type Title35 = string;
 export type LearnerOutcome29 = string;
@@ -1195,68 +1145,28 @@ export type HelpfulPrerequisites14 = string[];
 export type ProposalId8 = string | null;
 export type TurnId7 = string | null;
 export type CodexTurnId4 = string | null;
-export type Status35 = ("pending" | "running" | "completed" | "failed" | "cancelled") | null;
+export type Status33 = ("pending" | "running" | "completed" | "failed" | "cancelled") | null;
 export type Partial7 = string;
 export type Error6 = string | null;
-export type Kind74 = "lesson" | "curriculum";
+export type Kind72 = "lesson" | "curriculum";
 export type Origin13 = "chat" | "review_fix";
 export type Mode7 = "chat" | "explain_only";
 export type BlockId7 = string | null;
 export type BlockHash6 = string | null;
 export type Chat4 = StoredChatTurn4[];
 export type TurnId8 = string;
-export type Status36 = "pending" | "running";
+export type Status34 = "pending" | "running";
 export type Partial8 = string;
 export type Label14 = string;
 export type Tone4 = "neutral" | "draft" | "warning" | "error" | "ok";
 export type StatusChips2 = StatusChip2[];
-export type Kind75 = "check_errors";
-export type Stage16 = ("plan" | "lesson" | "exercises") | null;
-export type Target14 = "findings";
-export type Stage17 = "plan" | "lesson" | "exercises";
-export type Kind76 = "open_proposal";
-export type Target15 = "proposal";
-export type Stage18 = "lesson" | "exercises";
-export type Count2 = number;
-export type Uncovered4 = string[];
-export type Kind77 = "review_coverage";
-export type Target16 = "review";
-export type Missing2 = number;
-export type Stale2 = number;
-export type Kind78 = "audio";
-export type Stage19 = "lesson";
-export type Target17 = "audio";
-export type Kind79 = "canonical_changed";
-export type Stage20 = "lesson";
-export type Target18 = "canonical";
-export type Kind80 = "no_draft";
-export type Stage21 = null;
-export type Target19 = "draft";
-export type Kind81 = "unsaved_changes";
-export type Stage22 = null;
-export type Target20 = "editor";
-export type ApproveBlockers2 = (
-  | CheckErrorsBlocker2
-  | OpenProposalBlocker2
-  | ReviewCoverageBlocker2
-  | AudioBlocker2
-  | CanonicalChangedBlocker2
-  | NoDraftBlocker2
-  | UnsavedChangesBlocker2
-)[];
-export type Stage23 = "plan" | "lesson" | "exercises";
-export type Status37 = "needs_approval" | "stale" | "baseline" | "approved";
-export type FileSha2562 = string;
-export type ApprovedSha2562 = string | null;
-export type Reviewer6 = ("human" | "baseline") | null;
-export type UpstreamDiff2 = string;
-export type ApprovalStages2 = StageApprovalStatus2[];
-export type Approvable2 = boolean;
 export type WorkbenchLessonActionResult__ExerciseAlignmentState =
   ExerciseAligned2 | ExerciseStale2 | ExerciseUntracked2 | ExerciseUnknown2;
 export type ExerciseKey10 = string;
 export type ExerciseKey11 = string;
-export type Outcome3 = "approved" | "regenerated" | "kept";
+export type Outcome3 = "canonical" | "regenerated" | "kept";
+export type CanonicalSha2562 = string | null;
+export type DraftCreatedAt2 = string | null;
 export type Note7 = string | null;
 /**
  * Owner's reason for retaining an exercise after a section change.
@@ -1266,24 +1176,43 @@ export type Comment4 = string | null;
 export type At2 = string;
 export type DecisionId2 = string | null;
 export type History8 = ExerciseAlignmentRecord2[];
-export type Status38 = "aligned";
+export type Status35 = "aligned";
 export type ExerciseKey12 = string;
 export type ChangedSections5 = ExerciseSectionChange2[];
 export type History9 = ExerciseAlignmentRecord2[];
-export type Status39 = "stale";
+export type Status36 = "stale";
 export type ExerciseKey13 = string;
 export type History10 = ExerciseAlignmentRecord2[];
-export type Status40 = "untracked";
+export type Status37 = "untracked";
 export type ExerciseKey14 = string | null;
 export type Reason2 = string;
 export type History11 = ExerciseAlignmentRecord2[];
-export type Status41 = "unknown";
+export type Status38 = "unknown";
 export type ExerciseStaleness2 = WorkbenchLessonActionResult__ExerciseAlignmentState[];
 export type Promotable2 = boolean;
+export type Kind73 = "check_errors";
+export type Stage12 = ("plan" | "lesson" | "exercises") | null;
+export type Target12 = "findings";
+export type Stage13 = ("plan" | "lesson" | "exercises") | null;
+export type Kind74 = "open_proposal";
+export type Target13 = "proposal";
+export type Missing2 = number;
+export type Stale2 = number;
+export type Kind75 = "audio";
+export type Stage14 = "lesson";
+export type Target14 = "audio";
+export type Kind76 = "canonical_changed";
+export type Stage15 = "lesson";
+export type Target15 = "canonical";
+export type Kind77 = "no_draft";
+export type Stage16 = null;
+export type Target16 = "draft";
+export type Kind78 = "unsaved_changes";
+export type Stage17 = null;
+export type Target17 = "editor";
 export type PromotionBlockers2 = (
   | CheckErrorsBlocker2
   | OpenProposalBlocker2
-  | ReviewCoverageBlocker2
   | AudioBlocker2
   | CanonicalChangedBlocker2
   | NoDraftBlocker2
@@ -1294,7 +1223,7 @@ export type ReviewCreatedAt2 = string | null;
 export type ReviewDigest4 = string | null;
 export type Covered2 = number;
 export type Total2 = number;
-export type Uncovered5 = string[];
+export type Uncovered2 = string[];
 export type CheckFindingCount2 = number;
 export type AiFindingCount2 = number;
 export type BlockId8 = string;
@@ -1316,7 +1245,7 @@ export type Speakerid4 = string | null;
 export type Speakername4 = string | null;
 export type Origin14 = "lesson_reading" | "lesson_example" | "exercise_target";
 export type Characters2 = number;
-export type Status42 = "ready" | "missing" | "stale";
+export type Status39 = "ready" | "missing" | "stale";
 export type Durationms2 = number | null;
 export type Playurl2 = string;
 export type Code13 = "silent" | "length" | "cut_off" | "invalid_wav";
@@ -1382,9 +1311,9 @@ export type AfterText3 = string | null;
 export type Summary3 = string;
 export type ChangedSections6 = ExerciseAlignmentPinChange[];
 export type CurrentExerciseSource = string;
-export type Status43 = "pending" | "accepted" | "rejected" | "conflicted";
+export type Status40 = "pending" | "accepted" | "rejected" | "conflicted";
 export type Blocks4 = ProposalBlock[];
-export type Status44 = "open" | "superseded" | "settled";
+export type Status41 = "open" | "superseded" | "settled";
 export type RunId5 = string | null;
 export type Digest = string;
 export type PlanSha256 = string;
@@ -1392,13 +1321,13 @@ export type ReviewerVersion = string;
 export type Scope3 = "lesson" | "section" | "item";
 export type Key17 = string | null;
 export type CreatedAt4 = string;
-export type FindingId6 = string;
+export type FindingId5 = string;
 export type Key18 = string;
 export type Criterion = string;
 export type Excerpt4 = string;
 export type Explanation11 = string;
 export type Severity8 = "blocking" | "major" | "minor";
-export type Status45 = "open" | "resolved";
+export type Status42 = "open" | "resolved";
 export type ResolutionNote4 = string;
 export type ResolutionComment4 = string | null;
 export type PreviouslyResolved4 = boolean;
@@ -1407,7 +1336,7 @@ export type ReviewerVersion1 = string;
 export type CitedExcerpt = string | null;
 export type CitationExact = boolean;
 export type Advisory4 = boolean;
-export type Reviewer7 = "primary" | "second_opinion";
+export type Reviewer4 = "primary" | "second_opinion";
 export type BlockHash8 = string;
 export type QuoteEnglish4 = string;
 export type SuggestedChange4 = string;
@@ -1422,9 +1351,9 @@ export type PromptVersion = string | null;
 export type CriteriaVersion = string | null;
 export type SecondOpinionModel = string | null;
 export type RunId6 = string;
-export type CanonicalSha256 = string | null;
+export type CanonicalSha2563 = string | null;
 export type Retries = ProposalCheck3[];
-export type Stages1 = string[];
+export type Stages = string[];
 export type RunId7 = string;
 export type JobId1 = string;
 export type TurnId9 = string;
@@ -1468,12 +1397,12 @@ export type Title36 = string;
 export type CefrLevel18 = string;
 export type SequenceIndex3 = number;
 export type Source16 = "draft" | "canonical" | "missing";
-export type FindingId7 = string;
+export type FindingId6 = string;
 export type ElementId4 = string;
 export type BlockIndex4 = number | null;
 export type Origin17 = "ai" | "check";
 export type Severity9 = "warning" | "error";
-export type Status46 = "open" | "resolved";
+export type Status43 = "open" | "resolved";
 export type Code14 = string;
 export type Excerpt5 = string;
 export type Explanation12 = string;
@@ -1486,7 +1415,7 @@ export type ResolutionComment5 = string | null;
 export type PreviouslyResolved5 = boolean;
 export type Level4 = string;
 export type Advisory5 = boolean;
-export type Reviewer8 = "primary" | "second_opinion";
+export type Reviewer5 = "primary" | "second_opinion";
 export type Label15 = string;
 export type Message11 = string;
 export type QuoteEnglish5 = string;
@@ -1503,8 +1432,8 @@ export type Text14 = string;
 export type Lang3 = string;
 export type BeforeRendered3 = ProposalText3[];
 export type AfterRendered3 = ProposalText3[];
-export type Status47 = "pending" | "accepted" | "rejected" | "conflicted";
-export type Status48 = "passed" | "failed";
+export type Status44 = "pending" | "accepted" | "rejected" | "conflicted";
+export type Status45 = "passed" | "failed";
 export type Errors10 = string[];
 export type ChangeSummary4 = string;
 export type Norwegian3 = string;
@@ -1521,7 +1450,7 @@ export type AllowedDecisions3 = ("accept" | "reject" | "keep")[];
 export type Proposals3 = WorkbenchProposal3[];
 export type Role5 = "author" | "assistant";
 export type Text15 = string;
-export type Kind82 = "selection" | "finding" | "file";
+export type Kind79 = "selection" | "finding" | "file";
 export type Label16 = string;
 export type Detail7 = string;
 export type Key20 = string | null;
@@ -1538,12 +1467,12 @@ export type ProposedEdit5 =
       | CurriculumUpdateEdit7
     )
   | null;
-export type Kind83 = "reorder";
+export type Kind80 = "reorder";
 /**
  * @minItems 1
  */
 export type LessonIds21 = [string, ...string[]];
-export type Kind84 = "add";
+export type Kind81 = "add";
 export type CatalogId15 = string;
 export type Title37 = string;
 export type LearnerOutcome30 = string;
@@ -1551,20 +1480,20 @@ export type CefrLevel19 = "A1" | "A2" | "B1" | "B2";
 export type Prerequisites15 = string[];
 export type HelpfulPrerequisites15 = string[];
 export type AfterLessonId8 = string | null;
-export type Kind85 = "remove";
+export type Kind82 = "remove";
 /**
  * @minItems 1
  */
 export type LessonIds22 = [string, ...string[]];
 export type DeleteNeverPromotedDrafts7 = boolean;
-export type Kind86 = "merge";
+export type Kind83 = "merge";
 /**
  * @minItems 2
  */
 export type LessonIds23 = [string, string, ...string[]];
 export type Title38 = string;
 export type LearnerOutcome31 = string;
-export type Kind87 = "split";
+export type Kind84 = "split";
 export type LessonId26 = string;
 /**
  * @minItems 2
@@ -1573,7 +1502,7 @@ export type Parts7 = [CurriculumSplitPart7, CurriculumSplitPart7, ...CurriculumS
 export type CatalogId16 = string;
 export type Title39 = string;
 export type LearnerOutcome32 = string;
-export type Kind88 = "update";
+export type Kind85 = "update";
 export type LessonId27 = string;
 export type Title40 = string;
 export type LearnerOutcome33 = string;
@@ -1583,68 +1512,28 @@ export type HelpfulPrerequisites16 = string[];
 export type ProposalId11 = string | null;
 export type TurnId11 = string | null;
 export type CodexTurnId5 = string | null;
-export type Status49 = ("pending" | "running" | "completed" | "failed" | "cancelled") | null;
+export type Status46 = ("pending" | "running" | "completed" | "failed" | "cancelled") | null;
 export type Partial9 = string;
 export type Error7 = string | null;
-export type Kind89 = "lesson" | "curriculum";
+export type Kind86 = "lesson" | "curriculum";
 export type Origin19 = "chat" | "review_fix";
 export type Mode8 = "chat" | "explain_only";
 export type BlockId9 = string | null;
 export type BlockHash9 = string | null;
 export type Chat5 = StoredChatTurn5[];
 export type TurnId12 = string;
-export type Status50 = "pending" | "running";
+export type Status47 = "pending" | "running";
 export type Partial10 = string;
 export type Label17 = string;
 export type Tone5 = "neutral" | "draft" | "warning" | "error" | "ok";
 export type StatusChips3 = StatusChip3[];
-export type Kind90 = "check_errors";
-export type Stage24 = ("plan" | "lesson" | "exercises") | null;
-export type Target21 = "findings";
-export type Stage25 = "plan" | "lesson" | "exercises";
-export type Kind91 = "open_proposal";
-export type Target22 = "proposal";
-export type Stage26 = "lesson" | "exercises";
-export type Count3 = number;
-export type Uncovered6 = string[];
-export type Kind92 = "review_coverage";
-export type Target23 = "review";
-export type Missing3 = number;
-export type Stale3 = number;
-export type Kind93 = "audio";
-export type Stage27 = "lesson";
-export type Target24 = "audio";
-export type Kind94 = "canonical_changed";
-export type Stage28 = "lesson";
-export type Target25 = "canonical";
-export type Kind95 = "no_draft";
-export type Stage29 = null;
-export type Target26 = "draft";
-export type Kind96 = "unsaved_changes";
-export type Stage30 = null;
-export type Target27 = "editor";
-export type ApproveBlockers3 = (
-  | CheckErrorsBlocker3
-  | OpenProposalBlocker3
-  | ReviewCoverageBlocker3
-  | AudioBlocker3
-  | CanonicalChangedBlocker3
-  | NoDraftBlocker3
-  | UnsavedChangesBlocker3
-)[];
-export type Stage31 = "plan" | "lesson" | "exercises";
-export type Status51 = "needs_approval" | "stale" | "baseline" | "approved";
-export type FileSha2563 = string;
-export type ApprovedSha2563 = string | null;
-export type Reviewer9 = ("human" | "baseline") | null;
-export type UpstreamDiff3 = string;
-export type ApprovalStages3 = StageApprovalStatus3[];
-export type Approvable3 = boolean;
 export type WorkbenchLessonState__ExerciseAlignmentState =
   ExerciseAligned3 | ExerciseStale3 | ExerciseUntracked3 | ExerciseUnknown3;
 export type ExerciseKey16 = string;
 export type ExerciseKey17 = string;
-export type Outcome4 = "approved" | "regenerated" | "kept";
+export type Outcome4 = "canonical" | "regenerated" | "kept";
+export type CanonicalSha2564 = string | null;
+export type DraftCreatedAt3 = string | null;
 export type Note11 = string | null;
 /**
  * Owner's reason for retaining an exercise after a section change.
@@ -1654,24 +1543,43 @@ export type Comment5 = string | null;
 export type At3 = string;
 export type DecisionId3 = string | null;
 export type History12 = ExerciseAlignmentRecord3[];
-export type Status52 = "aligned";
+export type Status48 = "aligned";
 export type ExerciseKey18 = string;
 export type ChangedSections8 = ExerciseSectionChange3[];
 export type History13 = ExerciseAlignmentRecord3[];
-export type Status53 = "stale";
+export type Status49 = "stale";
 export type ExerciseKey19 = string;
 export type History14 = ExerciseAlignmentRecord3[];
-export type Status54 = "untracked";
+export type Status50 = "untracked";
 export type ExerciseKey20 = string | null;
 export type Reason3 = string;
 export type History15 = ExerciseAlignmentRecord3[];
-export type Status55 = "unknown";
+export type Status51 = "unknown";
 export type ExerciseStaleness3 = WorkbenchLessonState__ExerciseAlignmentState[];
 export type Promotable3 = boolean;
+export type Kind87 = "check_errors";
+export type Stage18 = ("plan" | "lesson" | "exercises") | null;
+export type Target18 = "findings";
+export type Stage19 = ("plan" | "lesson" | "exercises") | null;
+export type Kind88 = "open_proposal";
+export type Target19 = "proposal";
+export type Missing3 = number;
+export type Stale3 = number;
+export type Kind89 = "audio";
+export type Stage20 = "lesson";
+export type Target20 = "audio";
+export type Kind90 = "canonical_changed";
+export type Stage21 = "lesson";
+export type Target21 = "canonical";
+export type Kind91 = "no_draft";
+export type Stage22 = null;
+export type Target22 = "draft";
+export type Kind92 = "unsaved_changes";
+export type Stage23 = null;
+export type Target23 = "editor";
 export type PromotionBlockers3 = (
   | CheckErrorsBlocker3
   | OpenProposalBlocker3
-  | ReviewCoverageBlocker3
   | AudioBlocker3
   | CanonicalChangedBlocker3
   | NoDraftBlocker3
@@ -1682,7 +1590,7 @@ export type ReviewCreatedAt3 = string | null;
 export type ReviewDigest5 = string | null;
 export type Covered3 = number;
 export type Total3 = number;
-export type Uncovered7 = string[];
+export type Uncovered3 = string[];
 export type CheckFindingCount3 = number;
 export type AiFindingCount3 = number;
 export type BlockId10 = string;
@@ -1692,12 +1600,12 @@ export type English7 = string;
 export type Translations8 = NorwegianStringExplanation3[];
 export type ItemTested3 = string;
 export type CreatedAt5 = string;
-export type FindingId8 = string;
+export type FindingId7 = string;
 export type ElementId5 = string;
 export type BlockIndex5 = number | null;
 export type Origin20 = "ai" | "check";
 export type Severity10 = "warning" | "error";
-export type Status56 = "open" | "resolved";
+export type Status52 = "open" | "resolved";
 export type Code15 = string;
 export type Excerpt6 = string;
 export type Explanation13 = string;
@@ -1710,7 +1618,7 @@ export type ResolutionComment6 = string | null;
 export type PreviouslyResolved6 = boolean;
 export type Level5 = string;
 export type Advisory6 = boolean;
-export type Reviewer10 = "primary" | "second_opinion";
+export type Reviewer6 = "primary" | "second_opinion";
 export type Label18 = string;
 export type Message12 = string;
 export type QuoteEnglish6 = string;
@@ -1728,8 +1636,8 @@ export type Text16 = string;
 export type Lang4 = string;
 export type BeforeRendered4 = ProposalText4[];
 export type AfterRendered4 = ProposalText4[];
-export type Status57 = "pending" | "accepted" | "rejected" | "conflicted";
-export type Status58 = "passed" | "failed";
+export type Status53 = "pending" | "accepted" | "rejected" | "conflicted";
+export type Status54 = "passed" | "failed";
 export type Errors11 = string[];
 export type ChangeSummary5 = string;
 export type Norwegian4 = string;
@@ -1750,55 +1658,43 @@ export type Tone6 = "neutral" | "draft" | "warning" | "error" | "ok";
 export type Label20 = string;
 export type Tone7 = "neutral" | "draft" | "warning" | "error" | "ok";
 export type TurnId13 = string;
-export type Status59 = "pending" | "running";
+export type Status55 = "pending" | "running";
 export type Partial11 = string;
-export type Stage32 = "plan" | "lesson" | "exercises";
-export type Status60 = "needs_approval" | "stale" | "baseline" | "approved";
-export type FileSha2564 = string;
-export type ApprovedSha2564 = string | null;
-export type Reviewer11 = ("human" | "baseline") | null;
-export type UpstreamDiff4 = string;
 export type LessonGateBlocker =
   | CheckErrorsBlocker4
   | OpenProposalBlocker4
-  | ReviewCoverageBlocker4
   | AudioBlocker4
   | CanonicalChangedBlocker4
   | NoDraftBlocker4
   | UnsavedChangesBlocker4;
-export type Kind97 = "check_errors";
-export type Stage33 = ("plan" | "lesson" | "exercises") | null;
-export type Target28 = "findings";
-export type Stage34 = "plan" | "lesson" | "exercises";
-export type Kind98 = "open_proposal";
-export type Target29 = "proposal";
-export type Stage35 = "lesson" | "exercises";
-export type Count4 = number;
-export type Uncovered8 = string[];
-export type Kind99 = "review_coverage";
-export type Target30 = "review";
+export type Kind93 = "check_errors";
+export type Stage24 = ("plan" | "lesson" | "exercises") | null;
+export type Target24 = "findings";
+export type Stage25 = ("plan" | "lesson" | "exercises") | null;
+export type Kind94 = "open_proposal";
+export type Target25 = "proposal";
 export type Missing4 = number;
 export type Stale4 = number;
-export type Kind100 = "audio";
-export type Stage36 = "lesson";
-export type Target31 = "audio";
-export type Kind101 = "canonical_changed";
-export type Stage37 = "lesson";
-export type Target32 = "canonical";
-export type Kind102 = "no_draft";
-export type Stage38 = null;
-export type Target33 = "draft";
-export type Kind103 = "unsaved_changes";
-export type Stage39 = null;
-export type Target34 = "editor";
+export type Kind95 = "audio";
+export type Stage26 = "lesson";
+export type Target26 = "audio";
+export type Kind96 = "canonical_changed";
+export type Stage27 = "lesson";
+export type Target27 = "canonical";
+export type Kind97 = "no_draft";
+export type Stage28 = null;
+export type Target28 = "draft";
+export type Kind98 = "unsaved_changes";
+export type Stage29 = null;
+export type Target29 = "editor";
 export type LessonGateStage = "plan" | "lesson" | "exercises";
 export type ProposalDecision = "accept" | "reject" | "keep";
 export type ProposalOrigin = "chat" | "review_fix" | "regenerate" | "canonical";
-export type Status61 = "passed" | "failed";
+export type Status56 = "passed" | "failed";
 export type Errors12 = string[];
 export type Role6 = "author" | "assistant";
 export type Text17 = string;
-export type Kind104 = "selection" | "finding" | "file";
+export type Kind99 = "selection" | "finding" | "file";
 export type Label21 = string;
 export type Detail8 = string;
 export type Key22 = string | null;
@@ -1815,12 +1711,12 @@ export type ProposedEdit6 =
       | CurriculumUpdateEdit8
     )
   | null;
-export type Kind105 = "reorder";
+export type Kind100 = "reorder";
 /**
  * @minItems 1
  */
 export type LessonIds24 = [string, ...string[]];
-export type Kind106 = "add";
+export type Kind101 = "add";
 export type CatalogId17 = string;
 export type Title41 = string;
 export type LearnerOutcome34 = string;
@@ -1828,20 +1724,20 @@ export type CefrLevel21 = "A1" | "A2" | "B1" | "B2";
 export type Prerequisites17 = string[];
 export type HelpfulPrerequisites17 = string[];
 export type AfterLessonId9 = string | null;
-export type Kind107 = "remove";
+export type Kind102 = "remove";
 /**
  * @minItems 1
  */
 export type LessonIds25 = [string, ...string[]];
 export type DeleteNeverPromotedDrafts8 = boolean;
-export type Kind108 = "merge";
+export type Kind103 = "merge";
 /**
  * @minItems 2
  */
 export type LessonIds26 = [string, string, ...string[]];
 export type Title42 = string;
 export type LearnerOutcome35 = string;
-export type Kind109 = "split";
+export type Kind104 = "split";
 export type LessonId28 = string;
 /**
  * @minItems 2
@@ -1850,7 +1746,7 @@ export type Parts8 = [CurriculumSplitPart8, CurriculumSplitPart8, ...CurriculumS
 export type CatalogId18 = string;
 export type Title43 = string;
 export type LearnerOutcome36 = string;
-export type Kind110 = "update";
+export type Kind105 = "update";
 export type LessonId29 = string;
 export type Title44 = string;
 export type LearnerOutcome37 = string;
@@ -1860,15 +1756,15 @@ export type HelpfulPrerequisites18 = string[];
 export type ProposalId13 = string | null;
 export type TurnId14 = string | null;
 export type CodexTurnId6 = string | null;
-export type Status62 = ("pending" | "running" | "completed" | "failed" | "cancelled") | null;
+export type Status57 = ("pending" | "running" | "completed" | "failed" | "cancelled") | null;
 export type Partial12 = string;
 export type Error8 = string | null;
-export type Kind111 = "lesson" | "curriculum";
+export type Kind106 = "lesson" | "curriculum";
 export type Origin22 = "chat" | "review_fix";
 export type Mode9 = "chat" | "explain_only";
 export type BlockId11 = string | null;
 export type BlockHash11 = string | null;
-export type Kind112 = "selection" | "finding" | "file";
+export type Kind107 = "selection" | "finding" | "file";
 export type Label22 = string;
 export type Detail9 = string;
 export type Key23 = string | null;
@@ -1884,7 +1780,9 @@ export type CreatedAt6 = string;
 export type ExerciseAlignmentState = ExerciseAligned4 | ExerciseStale4 | ExerciseUntracked4 | ExerciseUnknown4;
 export type ExerciseKey21 = string;
 export type ExerciseKey22 = string;
-export type Outcome5 = "approved" | "regenerated" | "kept";
+export type Outcome5 = "canonical" | "regenerated" | "kept";
+export type CanonicalSha2565 = string | null;
+export type DraftCreatedAt4 = string | null;
 export type Note13 = string | null;
 /**
  * Owner's reason for retaining an exercise after a section change.
@@ -1894,7 +1792,7 @@ export type Comment6 = string | null;
 export type At4 = string;
 export type DecisionId4 = string | null;
 export type History16 = ExerciseAlignmentRecord4[];
-export type Status63 = "aligned";
+export type Status58 = "aligned";
 export type ExerciseKey23 = string;
 export type SectionId6 = string;
 export type BeforeText6 = string | null;
@@ -1902,16 +1800,18 @@ export type AfterText6 = string | null;
 export type Summary7 = string;
 export type ChangedSections10 = ExerciseSectionChange5[];
 export type History17 = ExerciseAlignmentRecord4[];
-export type Status64 = "stale";
+export type Status59 = "stale";
 export type ExerciseKey24 = string;
 export type History18 = ExerciseAlignmentRecord4[];
-export type Status65 = "untracked";
+export type Status60 = "untracked";
 export type ExerciseKey25 = string | null;
 export type Reason4 = string;
 export type History19 = ExerciseAlignmentRecord4[];
-export type Status66 = "unknown";
+export type Status61 = "unknown";
 export type ExerciseKey26 = string;
-export type Outcome6 = "approved" | "regenerated" | "kept";
+export type Outcome6 = "canonical" | "regenerated" | "kept";
+export type CanonicalSha2566 = string | null;
+export type DraftCreatedAt5 = string | null;
 export type Note14 = string | null;
 /**
  * Owner's reason for retaining an exercise after a section change.
@@ -1932,7 +1832,6 @@ export type LessonId30 = string | null;
 export type Code16 = string;
 export type Explanation14 = string;
 export type Artifact6 = string;
-export type CurriculumPlanApproval = "pending_human" | "auto_approved" | "human_approved";
 export type FindingOrigin = "ai" | "check";
 export type FindingSeverity = "warning" | "error";
 export type FindingStatus = "open" | "resolved";
@@ -1957,7 +1856,7 @@ export type Body3 = string;
 export type Parseerror3 = string | null;
 export type Title45 = string | null;
 export type Cefrlevel6 = string | null;
-export type Kind113 = string | null;
+export type Kind108 = string | null;
 export type Goal3 = string | null;
 export type Code18 = string;
 export type Severity11 = string;
@@ -1966,7 +1865,7 @@ export type Location4 = string;
 export type Explanation16 = string;
 export type Evidence4 = string;
 export type Key24 = string;
-export type Kind114 = string;
+export type Kind109 = string;
 export type Source19 = string;
 export type Exists4 = boolean;
 export type Startedfrom4 = string | null;
@@ -1980,12 +1879,12 @@ export type Explanation17 = string;
 export type Evidence5 = string;
 export type Findings16 = WorkbenchSourceFinding5[];
 export type Errors13 = string[];
-export type FindingId9 = string;
+export type FindingId8 = string;
 export type ElementId8 = string;
 export type BlockIndex8 = number | null;
 export type Origin23 = "ai" | "check";
 export type Severity13 = "warning" | "error";
-export type Status67 = "open" | "resolved";
+export type Status62 = "open" | "resolved";
 export type Code20 = string;
 export type Excerpt7 = string;
 export type Explanation18 = string;
@@ -1998,7 +1897,7 @@ export type ResolutionComment7 = string | null;
 export type PreviouslyResolved7 = boolean;
 export type Level6 = string;
 export type Advisory7 = boolean;
-export type Reviewer12 = "primary" | "second_opinion";
+export type Reviewer7 = "primary" | "second_opinion";
 export type Label24 = string;
 export type Message13 = string;
 export type QuoteEnglish7 = string;
@@ -2014,12 +1913,12 @@ export type Mode11 = "exercises";
 export type ExerciseKeys1 = string[];
 export type Code21 = "silent" | "length" | "cut_off" | "invalid_wav";
 export type Message14 = string;
-export type Kind115 = "reorder";
+export type Kind110 = "reorder";
 /**
  * @minItems 1
  */
 export type LessonIds27 = [string, ...string[]];
-export type Kind116 = "add";
+export type Kind111 = "add";
 export type CatalogId19 = string;
 export type Title46 = string;
 export type LearnerOutcome38 = string;
@@ -2027,20 +1926,20 @@ export type CefrLevel23 = "A1" | "A2" | "B1" | "B2";
 export type Prerequisites19 = string[];
 export type HelpfulPrerequisites19 = string[];
 export type AfterLessonId10 = string | null;
-export type Kind117 = "remove";
+export type Kind112 = "remove";
 /**
  * @minItems 1
  */
 export type LessonIds28 = [string, ...string[]];
 export type DeleteNeverPromotedDrafts9 = boolean;
-export type Kind118 = "merge";
+export type Kind113 = "merge";
 /**
  * @minItems 2
  */
 export type LessonIds29 = [string, string, ...string[]];
 export type Title47 = string;
 export type LearnerOutcome39 = string;
-export type Kind119 = "split";
+export type Kind114 = "split";
 export type LessonId32 = string;
 /**
  * @minItems 2
@@ -2049,7 +1948,7 @@ export type Parts9 = [CurriculumSplitPart9, CurriculumSplitPart9, ...CurriculumS
 export type CatalogId20 = string;
 export type Title48 = string;
 export type LearnerOutcome40 = string;
-export type Kind120 = "update";
+export type Kind115 = "update";
 export type LessonId33 = string;
 export type Title49 = string;
 export type LearnerOutcome41 = string;
@@ -2064,8 +1963,6 @@ export type CurriculumEditRequest = (
   | CurriculumSplitEdit9
   | CurriculumUpdateEdit9
 )[];
-export type FindingId10 = string;
-export type Decision2 = "accept" | "revise";
 export type Token2 = string;
 export type LessonId34 = string;
 export type Scope5 = "block" | "missing_and_stale";
@@ -2117,7 +2014,7 @@ export type Speakerid6 = string | null;
 export type Speakername6 = string | null;
 export type Origin26 = "lesson_reading" | "lesson_example" | "exercise_target";
 export type Characters7 = number;
-export type Status68 = "ready" | "missing" | "stale";
+export type Status63 = "ready" | "missing" | "stale";
 export type Durationms3 = number | null;
 export type Playurl3 = string;
 export type Code22 = "silent" | "length" | "cut_off" | "invalid_wav";
@@ -2140,7 +2037,7 @@ export type Speakerid8 = string | null;
 export type Speakername8 = string | null;
 export type Origin27 = "lesson_reading" | "lesson_example" | "exercise_target";
 export type Characters8 = number;
-export type Status69 = "ready" | "missing" | "stale";
+export type Status64 = "ready" | "missing" | "stale";
 export type Durationms4 = number | null;
 export type Playurl4 = string;
 export type Code23 = "silent" | "length" | "cut_off" | "invalid_wav";
@@ -2181,7 +2078,6 @@ export interface WorkbenchApiSchemaCatalog {
     "lesson.finding.resolve"?: FindingResolveRequest;
     "lesson.audio.plan"?: AudioPlanRequest;
     "lesson.audio.synthesize"?: AudioSynthesizeRequest;
-    "lesson.approve"?: ApproveRequest;
     "lesson.promote"?: EmptyRequest;
     "lesson.pull"?: EmptyRequest;
     "lesson.discard"?: DiscardRequest;
@@ -2222,7 +2118,6 @@ export interface WorkbenchApiSchemaCatalog {
     StatusChip?: StatusChip4;
     WorkbenchStatusChip?: WorkbenchStatusChip2;
     ActiveTurnMetadata?: ActiveTurnMetadata4;
-    StageApprovalStatus?: StageApprovalStatus4;
     LessonGateBlocker?: LessonGateBlocker;
     LessonGateStage?: LessonGateStage;
     ProposalDecision?: ProposalDecision;
@@ -2238,7 +2133,6 @@ export interface WorkbenchApiSchemaCatalog {
     ExerciseTranslation?: ExerciseTranslation5;
     ProposalText?: ProposalText5;
     CurriculumFinding?: CurriculumFinding2;
-    CurriculumPlanApproval?: CurriculumPlanApproval;
     FindingOrigin?: FindingOrigin;
     FindingSeverity?: FindingSeverity;
     FindingStatus?: FindingStatus;
@@ -2268,7 +2162,6 @@ export interface WorkbenchApiSchemaCatalog {
     WorkbenchAudioFinding?: WorkbenchAudioFinding3;
     NewLessonRequest?: NewLessonRequest;
     CurriculumEditRequest?: CurriculumEditRequest;
-    CurriculumFindingDecision?: CurriculumFindingDecision1;
     WorkbenchAudioPlan?: WorkbenchAudioPlan2;
     WorkbenchAudioPlanClip?: WorkbenchAudioPlanClip;
     WorkbenchAudioClipStatus?: WorkbenchAudioClipStatus3;
@@ -2352,13 +2245,11 @@ export interface FileWriteRequest {
   [k: string]: unknown;
 }
 /**
- * Reviewed or forced curriculum save request.
+ * Save edits against their exact preview.
  */
 export interface CurriculumSaveRequest {
   edits: Edits;
   review_digest: ReviewDigest;
-  finding_decisions: FindingDecisions;
-  force: Force;
   [k: string]: unknown;
 }
 /**
@@ -2431,13 +2322,6 @@ export interface CurriculumUpdateEdit {
   cefr_level: CefrLevel1;
   prerequisites: Prerequisites1;
   helpful_prerequisites: HelpfulPrerequisites1;
-}
-/**
- * The author's explicit decision for one located curriculum finding.
- */
-export interface CurriculumFindingDecision {
-  finding_id: FindingId;
-  decision: Decision;
 }
 /**
  * Staged curriculum edit preview request.
@@ -2594,13 +2478,6 @@ export interface AudioSynthesizeRequest {
   [k: string]: unknown;
 }
 /**
- * Owner approval stage selection; omitted means every ready stage.
- */
-export interface ApproveRequest {
-  stages?: Stages;
-  [k: string]: unknown;
-}
-/**
  * Explicit draft discard confirmation.
  */
 export interface DiscardRequest {
@@ -2636,7 +2513,6 @@ export interface KeepRequest {
  * Curriculum response consumed by the workbench SPA.
  */
 export interface WorkbenchCurriculumPayload {
-  curriculumApproval: Curriculumapproval;
   lessons: Lessons;
   entries: Entries;
   chat: Chat;
@@ -2878,7 +2754,7 @@ export interface WorkbenchDraftStatus {
   [k: string]: unknown;
 }
 /**
- * Review, proposal, chat, approval and stale exercise state for one open lesson.
+ * Review, proposal, chat and stale exercise state for one open lesson.
  */
 export interface WorkbenchLessonState {
   findings: Findings2;
@@ -2886,9 +2762,6 @@ export interface WorkbenchLessonState {
   chat: Chat1;
   activeTurn: ActiveTurnMetadata | null;
   statusChips: StatusChips;
-  approveBlockers: ApproveBlockers;
-  approvalStages: ApprovalStages;
-  approvable: Approvable;
   exerciseStaleness: ExerciseStaleness;
   promotable: Promotable;
   promotionBlockers: PromotionBlockers;
@@ -2900,14 +2773,13 @@ export interface WorkbenchLessonState {
   checkFindingCount: CheckFindingCount;
   aiFindingCount: AiFindingCount;
   explanations: Explanations;
-  approvalChanges: ApprovalChanges;
   [k: string]: unknown;
 }
 /**
  * One review or check finding shown as a margin note beside its block.
  */
 export interface WorkbenchFinding {
-  findingId: FindingId1;
+  findingId: FindingId;
   target: BlockTarget;
   origin: Origin1;
   severity: Severity1;
@@ -3113,102 +2985,25 @@ export interface StatusChip {
   [k: string]: unknown;
 }
 /**
- * The deterministic source check has blocking errors.
- */
-export interface CheckErrorsBlocker {
-  kind: Kind31;
-  stage: Stage;
-  target: Target;
-  [k: string]: unknown;
-}
-/**
- * An unsettled proposal changes a source stage awaiting approval.
- */
-export interface OpenProposalBlocker {
-  stage: Stage1;
-  kind: Kind32;
-  target: Target1;
-  [k: string]: unknown;
-}
-/**
- * Current source blocks still need review coverage for one stage.
- */
-export interface ReviewCoverageBlocker {
-  stage: Stage2;
-  count: Count;
-  uncovered: Uncovered;
-  kind: Kind33;
-  target: Target2;
-  [k: string]: unknown;
-}
-/**
- * Promotion needs complete current audio with no open audio checks.
- */
-export interface AudioBlocker {
-  missing: Missing;
-  stale: Stale;
-  kind: Kind34;
-  stage: Stage3;
-  target: Target3;
-  [k: string]: unknown;
-}
-/**
- * Canonical source no longer matches the starting package for this draft.
- */
-export interface CanonicalChangedBlocker {
-  kind: Kind35;
-  stage: Stage4;
-  target: Target4;
-  [k: string]: unknown;
-}
-/**
- * Promotion requires an editable draft package.
- */
-export interface NoDraftBlocker {
-  kind: Kind36;
-  stage: Stage5;
-  target: Target5;
-  [k: string]: unknown;
-}
-/**
- * Client-side text still needs to be saved before approval.
- */
-export interface UnsavedChangesBlocker {
-  kind: Kind37;
-  stage: Stage6;
-  target: Target6;
-  [k: string]: unknown;
-}
-/**
- * Live hash-chain state and upstream changes for the approval dialog.
- */
-export interface StageApprovalStatus {
-  stage: Stage7;
-  status: Status6;
-  fileSha256: FileSha256;
-  approvedSha256: ApprovedSha256;
-  reviewer: Reviewer1;
-  upstreamDiff: UpstreamDiff;
-  [k: string]: unknown;
-}
-/**
  * A linked exercise matches every section version it was checked against.
  */
 export interface ExerciseAligned {
   exerciseKey: ExerciseKey;
   alignment: ExerciseAlignmentRecord;
   history: History;
-  status: Status7;
+  status: Status6;
   [k: string]: unknown;
 }
 /**
- * One owner or approval decision pinning an exercise to section versions.
+ * A local exercise decision or canonical comparison against section versions.
  */
 export interface ExerciseAlignmentRecord {
   exerciseKey: ExerciseKey1;
   checkedAgainst: CheckedAgainst;
   sectionSources: SectionSources;
   outcome: Outcome;
+  canonicalSha256: CanonicalSha256;
+  draftCreatedAt: DraftCreatedAt;
   note: Note3;
   reason: KeepReason1 | null;
   comment: Comment2;
@@ -3229,7 +3024,7 @@ export interface ExerciseStale {
   changedSections: ChangedSections1;
   alignment: ExerciseAlignmentRecord;
   history: History1;
-  status: Status8;
+  status: Status7;
   [k: string]: unknown;
 }
 /**
@@ -3239,7 +3034,7 @@ export interface ExerciseUntracked {
   exerciseKey: ExerciseKey3;
   history: History2;
   alignment: ExerciseAlignmentRecord | null;
-  status: Status9;
+  status: Status8;
   [k: string]: unknown;
 }
 /**
@@ -3249,7 +3044,63 @@ export interface ExerciseUnknown {
   exerciseKey: ExerciseKey4;
   reason: Reason;
   history: History3;
-  status: Status10;
+  status: Status9;
+  [k: string]: unknown;
+}
+/**
+ * The deterministic source check has blocking errors.
+ */
+export interface CheckErrorsBlocker {
+  kind: Kind31;
+  stage: Stage;
+  target: Target;
+  [k: string]: unknown;
+}
+/**
+ * An unsettled proposal changes a source being promoted.
+ */
+export interface OpenProposalBlocker {
+  stage: Stage1;
+  kind: Kind32;
+  target: Target1;
+  [k: string]: unknown;
+}
+/**
+ * Promotion needs complete current audio with no open audio checks.
+ */
+export interface AudioBlocker {
+  missing: Missing;
+  stale: Stale;
+  kind: Kind33;
+  stage: Stage2;
+  target: Target2;
+  [k: string]: unknown;
+}
+/**
+ * Canonical source no longer matches the starting package for this draft.
+ */
+export interface CanonicalChangedBlocker {
+  kind: Kind34;
+  stage: Stage3;
+  target: Target3;
+  [k: string]: unknown;
+}
+/**
+ * Promotion requires an editable draft package.
+ */
+export interface NoDraftBlocker {
+  kind: Kind35;
+  stage: Stage4;
+  target: Target4;
+  [k: string]: unknown;
+}
+/**
+ * Client-side text still needs to be saved before promotion.
+ */
+export interface UnsavedChangesBlocker {
+  kind: Kind36;
+  stage: Stage5;
+  target: Target5;
   [k: string]: unknown;
 }
 /**
@@ -3258,7 +3109,7 @@ export interface ExerciseUnknown {
 export interface ReviewCoverageStatus {
   covered: Covered;
   total: Total;
-  uncovered: Uncovered1;
+  uncovered: Uncovered;
   [k: string]: unknown;
 }
 export interface Explanations {
@@ -3282,9 +3133,6 @@ export interface NorwegianStringExplanation {
   source: Source4;
   english: English1;
   [k: string]: unknown;
-}
-export interface ApprovalChanges {
-  [k: string]: WorkbenchProposal;
 }
 /**
  * Current clip readiness and author-only audio blockers.
@@ -3314,7 +3162,7 @@ export interface WorkbenchAudioClipStatus {
   speakerName: Speakername;
   origin: Origin4;
   characters: Characters;
-  status: Status11;
+  status: Status10;
   durationMs: Durationms;
   playUrl: Playurl;
   findings: Findings3;
@@ -3356,7 +3204,7 @@ export interface Files {
  */
 export interface WorkbenchSourceBlock1 {
   key: Key7;
-  kind: Kind38;
+  kind: Kind37;
   source: Source5;
   fields: Fields2;
   [k: string]: unknown;
@@ -3438,7 +3286,7 @@ export interface Effortoptions {
  * Queued or running job poll response.
  */
 export interface WorkbenchJobQueued {
-  status: Status12;
+  status: Status11;
   can_cancel: CanCancel;
   steps?: Steps;
   run_id?: RunId;
@@ -3450,7 +3298,7 @@ export interface WorkbenchJobQueued {
  * Completed job poll response.
  */
 export interface WorkbenchJobDone {
-  status: Status13;
+  status: Status12;
   result: Result;
   can_cancel: CanCancel1;
   steps?: Steps1;
@@ -3464,7 +3312,7 @@ export interface Result {
  * Failed job poll response.
  */
 export interface WorkbenchJobFailed {
-  status: Status14;
+  status: Status13;
   error: Error2;
   error_detail: ErrorDetail;
   can_cancel: CanCancel2;
@@ -3480,7 +3328,7 @@ export interface Check {
  * Cancelled job poll response.
  */
 export interface WorkbenchJobCancelled {
-  status: Status15;
+  status: Status14;
   can_cancel: CanCancel3;
   steps?: Steps3;
   run_id?: RunId3;
@@ -3494,7 +3342,7 @@ export interface WorkbenchRegenerationResponse {
   lesson_id: LessonId10;
   key: Key8;
   mode: Mode4;
-  status: Status16;
+  status: Status15;
   steps: Steps4;
   next: Next;
   errors: Errors2;
@@ -3502,7 +3350,7 @@ export interface WorkbenchRegenerationResponse {
   proposal_id: ProposalId3;
   check: ProposalCheck1 | null;
   review: unknown;
-  decision: Decision1;
+  decision: Decision;
   kept_exercises: KeptExercises;
   job_id?: JobId;
   [k: string]: unknown;
@@ -3511,7 +3359,7 @@ export interface WorkbenchRegenerationResponse {
  * Deterministic check of a temporary candidate or accepted draft.
  */
 export interface ProposalCheck1 {
-  status?: Status17;
+  status?: Status16;
   errors?: Errors3;
   [k: string]: unknown;
 }
@@ -3570,7 +3418,7 @@ export interface Frontmatter1 {
 export interface WorkbenchLessonHeader1 {
   title: Title19;
   cefrLevel: Cefrlevel2;
-  kind: Kind39;
+  kind: Kind38;
   goal: Goal1;
   [k: string]: unknown;
 }
@@ -3591,7 +3439,7 @@ export interface WorkbenchSourceFinding1 {
  */
 export interface WorkbenchSourceBlock2 {
   key: Key9;
-  kind: Kind40;
+  kind: Kind39;
   source: Source7;
   fields: Fields3;
   [k: string]: unknown;
@@ -3610,7 +3458,7 @@ export interface WorkbenchDraftStatus2 {
   [k: string]: unknown;
 }
 /**
- * Review, proposal, chat, approval and stale exercise state for one open lesson.
+ * Review, proposal, chat and stale exercise state for one open lesson.
  */
 export interface WorkbenchLessonState1 {
   findings: Findings4;
@@ -3618,9 +3466,6 @@ export interface WorkbenchLessonState1 {
   chat: Chat2;
   activeTurn: ActiveTurnMetadata1 | null;
   statusChips: StatusChips1;
-  approveBlockers: ApproveBlockers1;
-  approvalStages: ApprovalStages1;
-  approvable: Approvable1;
   exerciseStaleness: ExerciseStaleness1;
   promotable: Promotable1;
   promotionBlockers: PromotionBlockers1;
@@ -3632,18 +3477,17 @@ export interface WorkbenchLessonState1 {
   checkFindingCount: CheckFindingCount1;
   aiFindingCount: AiFindingCount1;
   explanations: Explanations1;
-  approvalChanges: ApprovalChanges1;
   [k: string]: unknown;
 }
 /**
  * One review or check finding shown as a margin note beside its block.
  */
 export interface WorkbenchFinding1 {
-  findingId: FindingId2;
+  findingId: FindingId1;
   target: BlockTarget1;
   origin: Origin5;
   severity: Severity3;
-  status: Status18;
+  status: Status17;
   code: Code5;
   excerpt: Excerpt1;
   explanation: Explanation4;
@@ -3653,7 +3497,7 @@ export interface WorkbenchFinding1 {
   previouslyResolved: PreviouslyResolved1;
   level: Level1;
   advisory: Advisory1;
-  reviewer: Reviewer2;
+  reviewer: Reviewer1;
   label: Label6;
   message: Message4;
   quoteEnglish: QuoteEnglish1;
@@ -3682,7 +3526,7 @@ export interface WorkbenchProposal1 {
   key: Key10;
   beforeRendered: BeforeRendered1;
   afterRendered: AfterRendered1;
-  status: Status19;
+  status: Status18;
   check: ProposalCheck2;
   changeSummary: ChangeSummary1;
   translations: Translations2;
@@ -3704,7 +3548,7 @@ export interface ProposalText1 {
  * Deterministic check of a temporary candidate or accepted draft.
  */
 export interface ProposalCheck2 {
-  status: Status20;
+  status: Status19;
   errors: Errors5;
   [k: string]: unknown;
 }
@@ -3736,10 +3580,10 @@ export interface StoredChatTurn2 {
   proposalId: ProposalId5;
   turnId: TurnId4;
   codexTurnId: CodexTurnId2;
-  status: Status21;
+  status: Status20;
   partial: Partial4;
   error: Error4;
-  kind: Kind48;
+  kind: Kind47;
   origin: Origin7;
   mode: Mode5;
   blockId: BlockId4;
@@ -3750,7 +3594,7 @@ export interface StoredChatTurn2 {
  * Prompt-contained reference, including the exact row key for a selection.
  */
 export interface ContextReference3 {
-  kind: Kind41;
+  kind: Kind40;
   label: Label7;
   detail: Detail3;
   key: Key11;
@@ -3760,14 +3604,14 @@ export interface ContextReference3 {
  * A complete authored-order proposal.
  */
 export interface CurriculumReorderEdit4 {
-  kind: Kind42;
+  kind: Kind41;
   lessonIds: LessonIds12;
 }
 /**
  * A manual entry insertion with an explicit place in the authored order.
  */
 export interface CurriculumAddEdit4 {
-  kind: Kind43;
+  kind: Kind42;
   entry: CurriculumManualEntry4;
   afterLessonId: AfterLessonId5;
 }
@@ -3786,7 +3630,7 @@ export interface CurriculumManualEntry4 {
  * Remove curriculum entries while keeping lesson packages by default.
  */
 export interface CurriculumRemoveEdit4 {
-  kind: Kind44;
+  kind: Kind43;
   lessonIds: LessonIds13;
   deleteNeverPromotedDrafts: DeleteNeverPromotedDrafts4;
 }
@@ -3794,7 +3638,7 @@ export interface CurriculumRemoveEdit4 {
  * Replace two or more entries with one author-reviewed entry.
  */
 export interface CurriculumMergeEdit4 {
-  kind: Kind45;
+  kind: Kind44;
   lessonIds: LessonIds14;
   title: Title21;
   learnerOutcome: LearnerOutcome18;
@@ -3803,7 +3647,7 @@ export interface CurriculumMergeEdit4 {
  * Replace one entry with two or more separately authored outcomes.
  */
 export interface CurriculumSplitEdit4 {
-  kind: Kind46;
+  kind: Kind45;
   lessonId: LessonId11;
   parts: Parts4;
 }
@@ -3819,7 +3663,7 @@ export interface CurriculumSplitPart4 {
  * Edit an entry's outcome, level, and required or helpful prerequisites.
  */
 export interface CurriculumUpdateEdit4 {
-  kind: Kind47;
+  kind: Kind46;
   lessonId: LessonId12;
   title: Title23;
   learnerOutcome: LearnerOutcome20;
@@ -3832,7 +3676,7 @@ export interface CurriculumUpdateEdit4 {
  */
 export interface ActiveTurnMetadata1 {
   turnId: TurnId5;
-  status: Status22;
+  status: Status21;
   partial: Partial5;
   [k: string]: unknown;
 }
@@ -3845,102 +3689,25 @@ export interface StatusChip1 {
   [k: string]: unknown;
 }
 /**
- * The deterministic source check has blocking errors.
- */
-export interface CheckErrorsBlocker1 {
-  kind: Kind49;
-  stage: Stage8;
-  target: Target7;
-  [k: string]: unknown;
-}
-/**
- * An unsettled proposal changes a source stage awaiting approval.
- */
-export interface OpenProposalBlocker1 {
-  stage: Stage9;
-  kind: Kind50;
-  target: Target8;
-  [k: string]: unknown;
-}
-/**
- * Current source blocks still need review coverage for one stage.
- */
-export interface ReviewCoverageBlocker1 {
-  stage: Stage10;
-  count: Count1;
-  uncovered: Uncovered2;
-  kind: Kind51;
-  target: Target9;
-  [k: string]: unknown;
-}
-/**
- * Promotion needs complete current audio with no open audio checks.
- */
-export interface AudioBlocker1 {
-  missing: Missing1;
-  stale: Stale1;
-  kind: Kind52;
-  stage: Stage11;
-  target: Target10;
-  [k: string]: unknown;
-}
-/**
- * Canonical source no longer matches the starting package for this draft.
- */
-export interface CanonicalChangedBlocker1 {
-  kind: Kind53;
-  stage: Stage12;
-  target: Target11;
-  [k: string]: unknown;
-}
-/**
- * Promotion requires an editable draft package.
- */
-export interface NoDraftBlocker1 {
-  kind: Kind54;
-  stage: Stage13;
-  target: Target12;
-  [k: string]: unknown;
-}
-/**
- * Client-side text still needs to be saved before approval.
- */
-export interface UnsavedChangesBlocker1 {
-  kind: Kind55;
-  stage: Stage14;
-  target: Target13;
-  [k: string]: unknown;
-}
-/**
- * Live hash-chain state and upstream changes for the approval dialog.
- */
-export interface StageApprovalStatus1 {
-  stage: Stage15;
-  status: Status23;
-  fileSha256: FileSha2561;
-  approvedSha256: ApprovedSha2561;
-  reviewer: Reviewer3;
-  upstreamDiff: UpstreamDiff1;
-  [k: string]: unknown;
-}
-/**
  * A linked exercise matches every section version it was checked against.
  */
 export interface ExerciseAligned1 {
   exerciseKey: ExerciseKey5;
   alignment: ExerciseAlignmentRecord1;
   history: History4;
-  status: Status24;
+  status: Status22;
   [k: string]: unknown;
 }
 /**
- * One owner or approval decision pinning an exercise to section versions.
+ * A local exercise decision or canonical comparison against section versions.
  */
 export interface ExerciseAlignmentRecord1 {
   exerciseKey: ExerciseKey6;
   checkedAgainst: CheckedAgainst1;
   sectionSources: SectionSources1;
   outcome: Outcome1;
+  canonicalSha256: CanonicalSha2561;
+  draftCreatedAt: DraftCreatedAt1;
   note: Note5;
   reason: KeepReason2 | null;
   comment: Comment3;
@@ -3961,7 +3728,7 @@ export interface ExerciseStale1 {
   changedSections: ChangedSections3;
   alignment: ExerciseAlignmentRecord1;
   history: History5;
-  status: Status25;
+  status: Status23;
   [k: string]: unknown;
 }
 /**
@@ -3971,7 +3738,7 @@ export interface ExerciseUntracked1 {
   exerciseKey: ExerciseKey8;
   history: History6;
   alignment: ExerciseAlignmentRecord1 | null;
-  status: Status26;
+  status: Status24;
   [k: string]: unknown;
 }
 /**
@@ -3981,7 +3748,63 @@ export interface ExerciseUnknown1 {
   exerciseKey: ExerciseKey9;
   reason: Reason1;
   history: History7;
-  status: Status27;
+  status: Status25;
+  [k: string]: unknown;
+}
+/**
+ * The deterministic source check has blocking errors.
+ */
+export interface CheckErrorsBlocker1 {
+  kind: Kind48;
+  stage: Stage6;
+  target: Target6;
+  [k: string]: unknown;
+}
+/**
+ * An unsettled proposal changes a source being promoted.
+ */
+export interface OpenProposalBlocker1 {
+  stage: Stage7;
+  kind: Kind49;
+  target: Target7;
+  [k: string]: unknown;
+}
+/**
+ * Promotion needs complete current audio with no open audio checks.
+ */
+export interface AudioBlocker1 {
+  missing: Missing1;
+  stale: Stale1;
+  kind: Kind50;
+  stage: Stage8;
+  target: Target8;
+  [k: string]: unknown;
+}
+/**
+ * Canonical source no longer matches the starting package for this draft.
+ */
+export interface CanonicalChangedBlocker1 {
+  kind: Kind51;
+  stage: Stage9;
+  target: Target9;
+  [k: string]: unknown;
+}
+/**
+ * Promotion requires an editable draft package.
+ */
+export interface NoDraftBlocker1 {
+  kind: Kind52;
+  stage: Stage10;
+  target: Target10;
+  [k: string]: unknown;
+}
+/**
+ * Client-side text still needs to be saved before promotion.
+ */
+export interface UnsavedChangesBlocker1 {
+  kind: Kind53;
+  stage: Stage11;
+  target: Target11;
   [k: string]: unknown;
 }
 /**
@@ -3990,7 +3813,7 @@ export interface ExerciseUnknown1 {
 export interface ReviewCoverageStatus1 {
   covered: Covered1;
   total: Total1;
-  uncovered: Uncovered3;
+  uncovered: Uncovered1;
   [k: string]: unknown;
 }
 export interface Explanations1 {
@@ -4014,9 +3837,6 @@ export interface NorwegianStringExplanation1 {
   source: Source8;
   english: English3;
   [k: string]: unknown;
-}
-export interface ApprovalChanges1 {
-  [k: string]: WorkbenchProposal1;
 }
 /**
  * Current clip readiness and author-only audio blockers.
@@ -4046,7 +3866,7 @@ export interface WorkbenchAudioClipStatus1 {
   speakerName: Speakername2;
   origin: Origin8;
   characters: Characters1;
-  status: Status28;
+  status: Status26;
   durationMs: Durationms1;
   playUrl: Playurl1;
   findings: Findings5;
@@ -4113,11 +3933,11 @@ export interface WorkbenchSourceFinding2 {
  * One review or check finding shown as a margin note beside its block.
  */
 export interface WorkbenchFinding2 {
-  findingId: FindingId3;
+  findingId: FindingId2;
   target: BlockTarget2;
   origin: Origin9;
   severity: Severity5;
-  status: Status29;
+  status: Status27;
   code: Code8;
   excerpt: Excerpt2;
   explanation: Explanation6;
@@ -4127,7 +3947,7 @@ export interface WorkbenchFinding2 {
   previouslyResolved: PreviouslyResolved2;
   level: Level2;
   advisory: Advisory2;
-  reviewer: Reviewer4;
+  reviewer: Reviewer2;
   label: Label9;
   message: Message6;
   quoteEnglish: QuoteEnglish2;
@@ -4166,7 +3986,6 @@ export interface CurriculumFinding1 {
  * Curriculum response consumed by the workbench SPA.
  */
 export interface WorkbenchCurriculumPayload1 {
-  curriculumApproval: Curriculumapproval1;
   lessons: Lessons1;
   entries: Entries1;
   chat: Chat3;
@@ -4219,10 +4038,10 @@ export interface StoredChatTurn3 {
   proposalId: ProposalId6;
   turnId: TurnId6;
   codexTurnId: CodexTurnId3;
-  status: Status30;
+  status: Status28;
   partial: Partial6;
   error: Error5;
-  kind: Kind63;
+  kind: Kind61;
   origin: Origin10;
   mode: Mode6;
   blockId: BlockId6;
@@ -4233,7 +4052,7 @@ export interface StoredChatTurn3 {
  * Prompt-contained reference, including the exact row key for a selection.
  */
 export interface ContextReference4 {
-  kind: Kind56;
+  kind: Kind54;
   label: Label11;
   detail: Detail4;
   key: Key12;
@@ -4243,14 +4062,14 @@ export interface ContextReference4 {
  * A complete authored-order proposal.
  */
 export interface CurriculumReorderEdit5 {
-  kind: Kind57;
+  kind: Kind55;
   lessonIds: LessonIds15;
 }
 /**
  * A manual entry insertion with an explicit place in the authored order.
  */
 export interface CurriculumAddEdit5 {
-  kind: Kind58;
+  kind: Kind56;
   entry: CurriculumManualEntry5;
   afterLessonId: AfterLessonId6;
 }
@@ -4269,7 +4088,7 @@ export interface CurriculumManualEntry5 {
  * Remove curriculum entries while keeping lesson packages by default.
  */
 export interface CurriculumRemoveEdit5 {
-  kind: Kind59;
+  kind: Kind57;
   lessonIds: LessonIds16;
   deleteNeverPromotedDrafts: DeleteNeverPromotedDrafts5;
 }
@@ -4277,7 +4096,7 @@ export interface CurriculumRemoveEdit5 {
  * Replace two or more entries with one author-reviewed entry.
  */
 export interface CurriculumMergeEdit5 {
-  kind: Kind60;
+  kind: Kind58;
   lessonIds: LessonIds17;
   title: Title26;
   learnerOutcome: LearnerOutcome22;
@@ -4286,7 +4105,7 @@ export interface CurriculumMergeEdit5 {
  * Replace one entry with two or more separately authored outcomes.
  */
 export interface CurriculumSplitEdit5 {
-  kind: Kind61;
+  kind: Kind59;
   lessonId: LessonId15;
   parts: Parts5;
 }
@@ -4302,7 +4121,7 @@ export interface CurriculumSplitPart5 {
  * Edit an entry's outcome, level, and required or helpful prerequisites.
  */
 export interface CurriculumUpdateEdit5 {
-  kind: Kind62;
+  kind: Kind60;
   lessonId: LessonId16;
   title: Title28;
   learnerOutcome: LearnerOutcome24;
@@ -4341,7 +4160,6 @@ export interface CurriculumPlanSlot {
   helpfulPrerequisites: HelpfulPrerequisites12;
   provisionalFlags: ProvisionalFlags;
   ownerScope: CatalogOwnerScope | null;
-  humanGate: HumanGate;
 }
 /**
  * One approved teaching point retained in the catalog plan slot.
@@ -4360,7 +4178,7 @@ export interface CatalogTeachingPoint {
  * Human-approved atomic scope evidence copied into a plan slot.
  */
 export interface CatalogOwnerScope {
-  status: Status31;
+  status: Status29;
   learnerDecision: LearnerDecision;
   assessmentOperation: AssessmentOperation;
   reviewStatus: ReviewStatus;
@@ -4392,14 +4210,14 @@ export interface CurriculumMovedPrerequisite {
   lessonId: LessonId18;
   fromLessonId: FromLessonId1;
   toLessonId: ToLessonId1;
-  kind: Kind64;
+  kind: Kind62;
   [k: string]: unknown;
 }
 /**
  * A dependency issue located on one curriculum entry.
  */
 export interface CurriculumDependencyFinding {
-  findingId: FindingId4;
+  findingId: FindingId3;
   lessonId: LessonId19;
   prerequisiteId: PrerequisiteId;
   code: Code10;
@@ -4416,7 +4234,7 @@ export interface WorkbenchLessonActionResult {
   dist_files?: DistFiles;
   plan?: WorkbenchAudioPlan;
   proposal?: Proposal;
-  stages?: Stages1;
+  stages?: Stages;
   run_id?: RunId7;
   job_id?: JobId1;
   turn_id?: TurnId9;
@@ -4462,7 +4280,7 @@ export interface Frontmatter2 {
 export interface WorkbenchLessonHeader2 {
   title: Title31;
   cefrLevel: Cefrlevel4;
-  kind: Kind65;
+  kind: Kind63;
   goal: Goal2;
   [k: string]: unknown;
 }
@@ -4483,7 +4301,7 @@ export interface WorkbenchSourceFinding3 {
  */
 export interface WorkbenchSourceBlock3 {
   key: Key13;
-  kind: Kind66;
+  kind: Kind64;
   source: Source11;
   fields: Fields4;
   [k: string]: unknown;
@@ -4502,7 +4320,7 @@ export interface WorkbenchDraftStatus3 {
   [k: string]: unknown;
 }
 /**
- * Review, proposal, chat, approval and stale exercise state for one open lesson.
+ * Review, proposal, chat and stale exercise state for one open lesson.
  */
 export interface WorkbenchLessonState2 {
   findings: Findings11;
@@ -4510,9 +4328,6 @@ export interface WorkbenchLessonState2 {
   chat: Chat4;
   activeTurn: ActiveTurnMetadata2 | null;
   statusChips: StatusChips2;
-  approveBlockers: ApproveBlockers2;
-  approvalStages: ApprovalStages2;
-  approvable: Approvable2;
   exerciseStaleness: ExerciseStaleness2;
   promotable: Promotable2;
   promotionBlockers: PromotionBlockers2;
@@ -4524,18 +4339,17 @@ export interface WorkbenchLessonState2 {
   checkFindingCount: CheckFindingCount2;
   aiFindingCount: AiFindingCount2;
   explanations: Explanations2;
-  approvalChanges: ApprovalChanges2;
   [k: string]: unknown;
 }
 /**
  * One review or check finding shown as a margin note beside its block.
  */
 export interface WorkbenchFinding3 {
-  findingId: FindingId5;
+  findingId: FindingId4;
   target: BlockTarget3;
   origin: Origin11;
   severity: Severity7;
-  status: Status32;
+  status: Status30;
   code: Code12;
   excerpt: Excerpt3;
   explanation: Explanation10;
@@ -4545,7 +4359,7 @@ export interface WorkbenchFinding3 {
   previouslyResolved: PreviouslyResolved3;
   level: Level3;
   advisory: Advisory3;
-  reviewer: Reviewer5;
+  reviewer: Reviewer3;
   label: Label12;
   message: Message8;
   quoteEnglish: QuoteEnglish3;
@@ -4574,7 +4388,7 @@ export interface WorkbenchProposal2 {
   key: Key14;
   beforeRendered: BeforeRendered2;
   afterRendered: AfterRendered2;
-  status: Status33;
+  status: Status31;
   check: ProposalCheck3;
   changeSummary: ChangeSummary2;
   translations: Translations4;
@@ -4596,7 +4410,7 @@ export interface ProposalText2 {
  * Deterministic check of a temporary candidate or accepted draft.
  */
 export interface ProposalCheck3 {
-  status: Status34;
+  status: Status32;
   errors: Errors9;
   [k: string]: unknown;
 }
@@ -4628,10 +4442,10 @@ export interface StoredChatTurn4 {
   proposalId: ProposalId8;
   turnId: TurnId7;
   codexTurnId: CodexTurnId4;
-  status: Status35;
+  status: Status33;
   partial: Partial7;
   error: Error6;
-  kind: Kind74;
+  kind: Kind72;
   origin: Origin13;
   mode: Mode7;
   blockId: BlockId7;
@@ -4642,7 +4456,7 @@ export interface StoredChatTurn4 {
  * Prompt-contained reference, including the exact row key for a selection.
  */
 export interface ContextReference5 {
-  kind: Kind67;
+  kind: Kind65;
   label: Label13;
   detail: Detail6;
   key: Key15;
@@ -4652,14 +4466,14 @@ export interface ContextReference5 {
  * A complete authored-order proposal.
  */
 export interface CurriculumReorderEdit6 {
-  kind: Kind68;
+  kind: Kind66;
   lessonIds: LessonIds18;
 }
 /**
  * A manual entry insertion with an explicit place in the authored order.
  */
 export interface CurriculumAddEdit6 {
-  kind: Kind69;
+  kind: Kind67;
   entry: CurriculumManualEntry6;
   afterLessonId: AfterLessonId7;
 }
@@ -4678,7 +4492,7 @@ export interface CurriculumManualEntry6 {
  * Remove curriculum entries while keeping lesson packages by default.
  */
 export interface CurriculumRemoveEdit6 {
-  kind: Kind70;
+  kind: Kind68;
   lessonIds: LessonIds19;
   deleteNeverPromotedDrafts: DeleteNeverPromotedDrafts6;
 }
@@ -4686,7 +4500,7 @@ export interface CurriculumRemoveEdit6 {
  * Replace two or more entries with one author-reviewed entry.
  */
 export interface CurriculumMergeEdit6 {
-  kind: Kind71;
+  kind: Kind69;
   lessonIds: LessonIds20;
   title: Title33;
   learnerOutcome: LearnerOutcome27;
@@ -4695,7 +4509,7 @@ export interface CurriculumMergeEdit6 {
  * Replace one entry with two or more separately authored outcomes.
  */
 export interface CurriculumSplitEdit6 {
-  kind: Kind72;
+  kind: Kind70;
   lessonId: LessonId20;
   parts: Parts6;
 }
@@ -4711,7 +4525,7 @@ export interface CurriculumSplitPart6 {
  * Edit an entry's outcome, level, and required or helpful prerequisites.
  */
 export interface CurriculumUpdateEdit6 {
-  kind: Kind73;
+  kind: Kind71;
   lessonId: LessonId21;
   title: Title35;
   learnerOutcome: LearnerOutcome29;
@@ -4724,7 +4538,7 @@ export interface CurriculumUpdateEdit6 {
  */
 export interface ActiveTurnMetadata2 {
   turnId: TurnId8;
-  status: Status36;
+  status: Status34;
   partial: Partial8;
   [k: string]: unknown;
 }
@@ -4737,102 +4551,25 @@ export interface StatusChip2 {
   [k: string]: unknown;
 }
 /**
- * The deterministic source check has blocking errors.
- */
-export interface CheckErrorsBlocker2 {
-  kind: Kind75;
-  stage: Stage16;
-  target: Target14;
-  [k: string]: unknown;
-}
-/**
- * An unsettled proposal changes a source stage awaiting approval.
- */
-export interface OpenProposalBlocker2 {
-  stage: Stage17;
-  kind: Kind76;
-  target: Target15;
-  [k: string]: unknown;
-}
-/**
- * Current source blocks still need review coverage for one stage.
- */
-export interface ReviewCoverageBlocker2 {
-  stage: Stage18;
-  count: Count2;
-  uncovered: Uncovered4;
-  kind: Kind77;
-  target: Target16;
-  [k: string]: unknown;
-}
-/**
- * Promotion needs complete current audio with no open audio checks.
- */
-export interface AudioBlocker2 {
-  missing: Missing2;
-  stale: Stale2;
-  kind: Kind78;
-  stage: Stage19;
-  target: Target17;
-  [k: string]: unknown;
-}
-/**
- * Canonical source no longer matches the starting package for this draft.
- */
-export interface CanonicalChangedBlocker2 {
-  kind: Kind79;
-  stage: Stage20;
-  target: Target18;
-  [k: string]: unknown;
-}
-/**
- * Promotion requires an editable draft package.
- */
-export interface NoDraftBlocker2 {
-  kind: Kind80;
-  stage: Stage21;
-  target: Target19;
-  [k: string]: unknown;
-}
-/**
- * Client-side text still needs to be saved before approval.
- */
-export interface UnsavedChangesBlocker2 {
-  kind: Kind81;
-  stage: Stage22;
-  target: Target20;
-  [k: string]: unknown;
-}
-/**
- * Live hash-chain state and upstream changes for the approval dialog.
- */
-export interface StageApprovalStatus2 {
-  stage: Stage23;
-  status: Status37;
-  fileSha256: FileSha2562;
-  approvedSha256: ApprovedSha2562;
-  reviewer: Reviewer6;
-  upstreamDiff: UpstreamDiff2;
-  [k: string]: unknown;
-}
-/**
  * A linked exercise matches every section version it was checked against.
  */
 export interface ExerciseAligned2 {
   exerciseKey: ExerciseKey10;
   alignment: ExerciseAlignmentRecord2;
   history: History8;
-  status: Status38;
+  status: Status35;
   [k: string]: unknown;
 }
 /**
- * One owner or approval decision pinning an exercise to section versions.
+ * A local exercise decision or canonical comparison against section versions.
  */
 export interface ExerciseAlignmentRecord2 {
   exerciseKey: ExerciseKey11;
   checkedAgainst: CheckedAgainst2;
   sectionSources: SectionSources2;
   outcome: Outcome3;
+  canonicalSha256: CanonicalSha2562;
+  draftCreatedAt: DraftCreatedAt2;
   note: Note7;
   reason: KeepReason3 | null;
   comment: Comment4;
@@ -4853,7 +4590,7 @@ export interface ExerciseStale2 {
   changedSections: ChangedSections5;
   alignment: ExerciseAlignmentRecord2;
   history: History9;
-  status: Status39;
+  status: Status36;
   [k: string]: unknown;
 }
 /**
@@ -4863,7 +4600,7 @@ export interface ExerciseUntracked2 {
   exerciseKey: ExerciseKey13;
   history: History10;
   alignment: ExerciseAlignmentRecord2 | null;
-  status: Status40;
+  status: Status37;
   [k: string]: unknown;
 }
 /**
@@ -4873,7 +4610,63 @@ export interface ExerciseUnknown2 {
   exerciseKey: ExerciseKey14;
   reason: Reason2;
   history: History11;
-  status: Status41;
+  status: Status38;
+  [k: string]: unknown;
+}
+/**
+ * The deterministic source check has blocking errors.
+ */
+export interface CheckErrorsBlocker2 {
+  kind: Kind73;
+  stage: Stage12;
+  target: Target12;
+  [k: string]: unknown;
+}
+/**
+ * An unsettled proposal changes a source being promoted.
+ */
+export interface OpenProposalBlocker2 {
+  stage: Stage13;
+  kind: Kind74;
+  target: Target13;
+  [k: string]: unknown;
+}
+/**
+ * Promotion needs complete current audio with no open audio checks.
+ */
+export interface AudioBlocker2 {
+  missing: Missing2;
+  stale: Stale2;
+  kind: Kind75;
+  stage: Stage14;
+  target: Target14;
+  [k: string]: unknown;
+}
+/**
+ * Canonical source no longer matches the starting package for this draft.
+ */
+export interface CanonicalChangedBlocker2 {
+  kind: Kind76;
+  stage: Stage15;
+  target: Target15;
+  [k: string]: unknown;
+}
+/**
+ * Promotion requires an editable draft package.
+ */
+export interface NoDraftBlocker2 {
+  kind: Kind77;
+  stage: Stage16;
+  target: Target16;
+  [k: string]: unknown;
+}
+/**
+ * Client-side text still needs to be saved before promotion.
+ */
+export interface UnsavedChangesBlocker2 {
+  kind: Kind78;
+  stage: Stage17;
+  target: Target17;
   [k: string]: unknown;
 }
 /**
@@ -4882,7 +4675,7 @@ export interface ExerciseUnknown2 {
 export interface ReviewCoverageStatus2 {
   covered: Covered2;
   total: Total2;
-  uncovered: Uncovered5;
+  uncovered: Uncovered2;
   [k: string]: unknown;
 }
 export interface Explanations2 {
@@ -4906,9 +4699,6 @@ export interface NorwegianStringExplanation2 {
   source: Source12;
   english: English5;
   [k: string]: unknown;
-}
-export interface ApprovalChanges2 {
-  [k: string]: WorkbenchProposal2;
 }
 /**
  * Current clip readiness and author-only audio blockers.
@@ -4938,7 +4728,7 @@ export interface WorkbenchAudioClipStatus2 {
   speakerName: Speakername4;
   origin: Origin14;
   characters: Characters2;
-  status: Status42;
+  status: Status39;
   durationMs: Durationms2;
   playUrl: Playurl2;
   findings: Findings12;
@@ -5015,11 +4805,11 @@ export interface Proposal {
   createdAgainstSha256: CreatedAgainstSha256;
   note: Note8;
   blocks: Blocks4;
-  status: Status44;
+  status: Status41;
   check: ProposalCheck3;
   runId: RunId5;
   candidateReview: ReviewRun | null;
-  canonicalSha256: CanonicalSha256;
+  canonicalSha256: CanonicalSha2563;
   retries: Retries;
   [k: string]: unknown;
 }
@@ -5036,7 +4826,7 @@ export interface ProposalBlock {
   answerImpact: AnswerImpact3;
   uncertainty: Uncertainty3;
   pin: ExerciseAlignmentPin | null;
-  status: Status43;
+  status: Status40;
   check: ProposalCheck3;
   [k: string]: unknown;
 }
@@ -5093,13 +4883,13 @@ export interface ReviewRun {
  * A grounded AI finding and the author's optional resolution.
  */
 export interface ReviewFinding {
-  findingId: FindingId6;
+  findingId: FindingId5;
   key: Key18;
   criterion: Criterion;
   excerpt: Excerpt4;
   explanation: Explanation11;
   severity: Severity8;
-  status: Status45;
+  status: Status42;
   resolutionNote: ResolutionNote4;
   resolutionReason: ResolutionReason4 | null;
   resolutionComment: ResolutionComment4;
@@ -5109,7 +4899,7 @@ export interface ReviewFinding {
   citedExcerpt: CitedExcerpt;
   citationExact: CitationExact;
   advisory: Advisory4;
-  reviewer: Reviewer7;
+  reviewer: Reviewer4;
   blockHash: BlockHash8;
   quoteEnglish: QuoteEnglish4;
   suggestedChange: SuggestedChange4;
@@ -5217,7 +5007,7 @@ export interface WorkbenchLesson2 {
   [k: string]: unknown;
 }
 /**
- * Review, proposal, chat, approval and stale exercise state for one open lesson.
+ * Review, proposal, chat and stale exercise state for one open lesson.
  */
 export interface WorkbenchLessonState3 {
   findings: Findings14;
@@ -5225,9 +5015,6 @@ export interface WorkbenchLessonState3 {
   chat: Chat5;
   activeTurn: ActiveTurnMetadata3 | null;
   statusChips: StatusChips3;
-  approveBlockers: ApproveBlockers3;
-  approvalStages: ApprovalStages3;
-  approvable: Approvable3;
   exerciseStaleness: ExerciseStaleness3;
   promotable: Promotable3;
   promotionBlockers: PromotionBlockers3;
@@ -5239,18 +5026,17 @@ export interface WorkbenchLessonState3 {
   checkFindingCount: CheckFindingCount3;
   aiFindingCount: AiFindingCount3;
   explanations: Explanations3;
-  approvalChanges: ApprovalChanges3;
   [k: string]: unknown;
 }
 /**
  * One review or check finding shown as a margin note beside its block.
  */
 export interface WorkbenchFinding4 {
-  findingId: FindingId7;
+  findingId: FindingId6;
   target: BlockTarget4;
   origin: Origin17;
   severity: Severity9;
-  status: Status46;
+  status: Status43;
   code: Code14;
   excerpt: Excerpt5;
   explanation: Explanation12;
@@ -5260,7 +5046,7 @@ export interface WorkbenchFinding4 {
   previouslyResolved: PreviouslyResolved5;
   level: Level4;
   advisory: Advisory5;
-  reviewer: Reviewer8;
+  reviewer: Reviewer5;
   label: Label15;
   message: Message11;
   quoteEnglish: QuoteEnglish5;
@@ -5289,7 +5075,7 @@ export interface WorkbenchProposal3 {
   key: Key19;
   beforeRendered: BeforeRendered3;
   afterRendered: AfterRendered3;
-  status: Status47;
+  status: Status44;
   check: ProposalCheck4;
   changeSummary: ChangeSummary4;
   translations: Translations7;
@@ -5311,7 +5097,7 @@ export interface ProposalText3 {
  * Deterministic check of a temporary candidate or accepted draft.
  */
 export interface ProposalCheck4 {
-  status: Status48;
+  status: Status45;
   errors: Errors10;
   [k: string]: unknown;
 }
@@ -5343,10 +5129,10 @@ export interface StoredChatTurn5 {
   proposalId: ProposalId11;
   turnId: TurnId11;
   codexTurnId: CodexTurnId5;
-  status: Status49;
+  status: Status46;
   partial: Partial9;
   error: Error7;
-  kind: Kind89;
+  kind: Kind86;
   origin: Origin19;
   mode: Mode8;
   blockId: BlockId9;
@@ -5357,7 +5143,7 @@ export interface StoredChatTurn5 {
  * Prompt-contained reference, including the exact row key for a selection.
  */
 export interface ContextReference6 {
-  kind: Kind82;
+  kind: Kind79;
   label: Label16;
   detail: Detail7;
   key: Key20;
@@ -5367,14 +5153,14 @@ export interface ContextReference6 {
  * A complete authored-order proposal.
  */
 export interface CurriculumReorderEdit7 {
-  kind: Kind83;
+  kind: Kind80;
   lessonIds: LessonIds21;
 }
 /**
  * A manual entry insertion with an explicit place in the authored order.
  */
 export interface CurriculumAddEdit7 {
-  kind: Kind84;
+  kind: Kind81;
   entry: CurriculumManualEntry7;
   afterLessonId: AfterLessonId8;
 }
@@ -5393,7 +5179,7 @@ export interface CurriculumManualEntry7 {
  * Remove curriculum entries while keeping lesson packages by default.
  */
 export interface CurriculumRemoveEdit7 {
-  kind: Kind85;
+  kind: Kind82;
   lessonIds: LessonIds22;
   deleteNeverPromotedDrafts: DeleteNeverPromotedDrafts7;
 }
@@ -5401,7 +5187,7 @@ export interface CurriculumRemoveEdit7 {
  * Replace two or more entries with one author-reviewed entry.
  */
 export interface CurriculumMergeEdit7 {
-  kind: Kind86;
+  kind: Kind83;
   lessonIds: LessonIds23;
   title: Title38;
   learnerOutcome: LearnerOutcome31;
@@ -5410,7 +5196,7 @@ export interface CurriculumMergeEdit7 {
  * Replace one entry with two or more separately authored outcomes.
  */
 export interface CurriculumSplitEdit7 {
-  kind: Kind87;
+  kind: Kind84;
   lessonId: LessonId26;
   parts: Parts7;
 }
@@ -5426,7 +5212,7 @@ export interface CurriculumSplitPart7 {
  * Edit an entry's outcome, level, and required or helpful prerequisites.
  */
 export interface CurriculumUpdateEdit7 {
-  kind: Kind88;
+  kind: Kind85;
   lessonId: LessonId27;
   title: Title40;
   learnerOutcome: LearnerOutcome33;
@@ -5439,7 +5225,7 @@ export interface CurriculumUpdateEdit7 {
  */
 export interface ActiveTurnMetadata3 {
   turnId: TurnId12;
-  status: Status50;
+  status: Status47;
   partial: Partial10;
   [k: string]: unknown;
 }
@@ -5452,102 +5238,25 @@ export interface StatusChip3 {
   [k: string]: unknown;
 }
 /**
- * The deterministic source check has blocking errors.
- */
-export interface CheckErrorsBlocker3 {
-  kind: Kind90;
-  stage: Stage24;
-  target: Target21;
-  [k: string]: unknown;
-}
-/**
- * An unsettled proposal changes a source stage awaiting approval.
- */
-export interface OpenProposalBlocker3 {
-  stage: Stage25;
-  kind: Kind91;
-  target: Target22;
-  [k: string]: unknown;
-}
-/**
- * Current source blocks still need review coverage for one stage.
- */
-export interface ReviewCoverageBlocker3 {
-  stage: Stage26;
-  count: Count3;
-  uncovered: Uncovered6;
-  kind: Kind92;
-  target: Target23;
-  [k: string]: unknown;
-}
-/**
- * Promotion needs complete current audio with no open audio checks.
- */
-export interface AudioBlocker3 {
-  missing: Missing3;
-  stale: Stale3;
-  kind: Kind93;
-  stage: Stage27;
-  target: Target24;
-  [k: string]: unknown;
-}
-/**
- * Canonical source no longer matches the starting package for this draft.
- */
-export interface CanonicalChangedBlocker3 {
-  kind: Kind94;
-  stage: Stage28;
-  target: Target25;
-  [k: string]: unknown;
-}
-/**
- * Promotion requires an editable draft package.
- */
-export interface NoDraftBlocker3 {
-  kind: Kind95;
-  stage: Stage29;
-  target: Target26;
-  [k: string]: unknown;
-}
-/**
- * Client-side text still needs to be saved before approval.
- */
-export interface UnsavedChangesBlocker3 {
-  kind: Kind96;
-  stage: Stage30;
-  target: Target27;
-  [k: string]: unknown;
-}
-/**
- * Live hash-chain state and upstream changes for the approval dialog.
- */
-export interface StageApprovalStatus3 {
-  stage: Stage31;
-  status: Status51;
-  fileSha256: FileSha2563;
-  approvedSha256: ApprovedSha2563;
-  reviewer: Reviewer9;
-  upstreamDiff: UpstreamDiff3;
-  [k: string]: unknown;
-}
-/**
  * A linked exercise matches every section version it was checked against.
  */
 export interface ExerciseAligned3 {
   exerciseKey: ExerciseKey16;
   alignment: ExerciseAlignmentRecord3;
   history: History12;
-  status: Status52;
+  status: Status48;
   [k: string]: unknown;
 }
 /**
- * One owner or approval decision pinning an exercise to section versions.
+ * A local exercise decision or canonical comparison against section versions.
  */
 export interface ExerciseAlignmentRecord3 {
   exerciseKey: ExerciseKey17;
   checkedAgainst: CheckedAgainst4;
   sectionSources: SectionSources4;
   outcome: Outcome4;
+  canonicalSha256: CanonicalSha2564;
+  draftCreatedAt: DraftCreatedAt3;
   note: Note11;
   reason: KeepReason4 | null;
   comment: Comment5;
@@ -5568,7 +5277,7 @@ export interface ExerciseStale3 {
   changedSections: ChangedSections8;
   alignment: ExerciseAlignmentRecord3;
   history: History13;
-  status: Status53;
+  status: Status49;
   [k: string]: unknown;
 }
 /**
@@ -5578,7 +5287,7 @@ export interface ExerciseUntracked3 {
   exerciseKey: ExerciseKey19;
   history: History14;
   alignment: ExerciseAlignmentRecord3 | null;
-  status: Status54;
+  status: Status50;
   [k: string]: unknown;
 }
 /**
@@ -5588,7 +5297,63 @@ export interface ExerciseUnknown3 {
   exerciseKey: ExerciseKey20;
   reason: Reason3;
   history: History15;
-  status: Status55;
+  status: Status51;
+  [k: string]: unknown;
+}
+/**
+ * The deterministic source check has blocking errors.
+ */
+export interface CheckErrorsBlocker3 {
+  kind: Kind87;
+  stage: Stage18;
+  target: Target18;
+  [k: string]: unknown;
+}
+/**
+ * An unsettled proposal changes a source being promoted.
+ */
+export interface OpenProposalBlocker3 {
+  stage: Stage19;
+  kind: Kind88;
+  target: Target19;
+  [k: string]: unknown;
+}
+/**
+ * Promotion needs complete current audio with no open audio checks.
+ */
+export interface AudioBlocker3 {
+  missing: Missing3;
+  stale: Stale3;
+  kind: Kind89;
+  stage: Stage20;
+  target: Target20;
+  [k: string]: unknown;
+}
+/**
+ * Canonical source no longer matches the starting package for this draft.
+ */
+export interface CanonicalChangedBlocker3 {
+  kind: Kind90;
+  stage: Stage21;
+  target: Target21;
+  [k: string]: unknown;
+}
+/**
+ * Promotion requires an editable draft package.
+ */
+export interface NoDraftBlocker3 {
+  kind: Kind91;
+  stage: Stage22;
+  target: Target22;
+  [k: string]: unknown;
+}
+/**
+ * Client-side text still needs to be saved before promotion.
+ */
+export interface UnsavedChangesBlocker3 {
+  kind: Kind92;
+  stage: Stage23;
+  target: Target23;
   [k: string]: unknown;
 }
 /**
@@ -5597,7 +5362,7 @@ export interface ExerciseUnknown3 {
 export interface ReviewCoverageStatus3 {
   covered: Covered3;
   total: Total3;
-  uncovered: Uncovered7;
+  uncovered: Uncovered3;
   [k: string]: unknown;
 }
 export interface Explanations3 {
@@ -5622,18 +5387,15 @@ export interface NorwegianStringExplanation3 {
   english: English7;
   [k: string]: unknown;
 }
-export interface ApprovalChanges3 {
-  [k: string]: WorkbenchProposal3;
-}
 /**
  * One review or check finding shown as a margin note beside its block.
  */
 export interface WorkbenchFinding5 {
-  findingId: FindingId8;
+  findingId: FindingId7;
   target: BlockTarget5;
   origin: Origin20;
   severity: Severity10;
-  status: Status56;
+  status: Status52;
   code: Code15;
   excerpt: Excerpt6;
   explanation: Explanation13;
@@ -5643,7 +5405,7 @@ export interface WorkbenchFinding5 {
   previouslyResolved: PreviouslyResolved6;
   level: Level5;
   advisory: Advisory6;
-  reviewer: Reviewer10;
+  reviewer: Reviewer6;
   label: Label18;
   message: Message12;
   quoteEnglish: QuoteEnglish6;
@@ -5672,7 +5434,7 @@ export interface WorkbenchProposal4 {
   key: Key21;
   beforeRendered: BeforeRendered4;
   afterRendered: AfterRendered4;
-  status: Status57;
+  status: Status53;
   check: ProposalCheck5;
   changeSummary: ChangeSummary5;
   translations: Translations9;
@@ -5702,7 +5464,7 @@ export interface ProposalText4 {
  * Deterministic check of a temporary candidate or accepted draft.
  */
 export interface ProposalCheck5 {
-  status: Status58;
+  status: Status54;
   errors: Errors11;
   [k: string]: unknown;
 }
@@ -5751,49 +5513,26 @@ export interface WorkbenchStatusChip2 {
  */
 export interface ActiveTurnMetadata4 {
   turnId: TurnId13;
-  status: Status59;
+  status: Status55;
   partial: Partial11;
-  [k: string]: unknown;
-}
-/**
- * Live hash-chain state and upstream changes for the approval dialog.
- */
-export interface StageApprovalStatus4 {
-  stage: Stage32;
-  status: Status60;
-  fileSha256: FileSha2564;
-  approvedSha256: ApprovedSha2564;
-  reviewer: Reviewer11;
-  upstreamDiff: UpstreamDiff4;
   [k: string]: unknown;
 }
 /**
  * The deterministic source check has blocking errors.
  */
 export interface CheckErrorsBlocker4 {
-  kind: Kind97;
-  stage: Stage33;
-  target: Target28;
+  kind: Kind93;
+  stage: Stage24;
+  target: Target24;
   [k: string]: unknown;
 }
 /**
- * An unsettled proposal changes a source stage awaiting approval.
+ * An unsettled proposal changes a source being promoted.
  */
 export interface OpenProposalBlocker4 {
-  stage: Stage34;
-  kind: Kind98;
-  target: Target29;
-  [k: string]: unknown;
-}
-/**
- * Current source blocks still need review coverage for one stage.
- */
-export interface ReviewCoverageBlocker4 {
-  stage: Stage35;
-  count: Count4;
-  uncovered: Uncovered8;
-  kind: Kind99;
-  target: Target30;
+  stage: Stage25;
+  kind: Kind94;
+  target: Target25;
   [k: string]: unknown;
 }
 /**
@@ -5802,43 +5541,43 @@ export interface ReviewCoverageBlocker4 {
 export interface AudioBlocker4 {
   missing: Missing4;
   stale: Stale4;
-  kind: Kind100;
-  stage: Stage36;
-  target: Target31;
+  kind: Kind95;
+  stage: Stage26;
+  target: Target26;
   [k: string]: unknown;
 }
 /**
  * Canonical source no longer matches the starting package for this draft.
  */
 export interface CanonicalChangedBlocker4 {
-  kind: Kind101;
-  stage: Stage37;
-  target: Target32;
+  kind: Kind96;
+  stage: Stage27;
+  target: Target27;
   [k: string]: unknown;
 }
 /**
  * Promotion requires an editable draft package.
  */
 export interface NoDraftBlocker4 {
-  kind: Kind102;
-  stage: Stage38;
-  target: Target33;
+  kind: Kind97;
+  stage: Stage28;
+  target: Target28;
   [k: string]: unknown;
 }
 /**
- * Client-side text still needs to be saved before approval.
+ * Client-side text still needs to be saved before promotion.
  */
 export interface UnsavedChangesBlocker4 {
-  kind: Kind103;
-  stage: Stage39;
-  target: Target34;
+  kind: Kind98;
+  stage: Stage29;
+  target: Target29;
   [k: string]: unknown;
 }
 /**
  * Deterministic check of a temporary candidate or accepted draft.
  */
 export interface ProposalCheck6 {
-  status: Status61;
+  status: Status56;
   errors: Errors12;
   [k: string]: unknown;
 }
@@ -5854,10 +5593,10 @@ export interface StoredChatTurn6 {
   proposalId: ProposalId13;
   turnId: TurnId14;
   codexTurnId: CodexTurnId6;
-  status: Status62;
+  status: Status57;
   partial: Partial12;
   error: Error8;
-  kind: Kind111;
+  kind: Kind106;
   origin: Origin22;
   mode: Mode9;
   blockId: BlockId11;
@@ -5868,7 +5607,7 @@ export interface StoredChatTurn6 {
  * Prompt-contained reference, including the exact row key for a selection.
  */
 export interface ContextReference7 {
-  kind: Kind104;
+  kind: Kind99;
   label: Label21;
   detail: Detail8;
   key: Key22;
@@ -5878,14 +5617,14 @@ export interface ContextReference7 {
  * A complete authored-order proposal.
  */
 export interface CurriculumReorderEdit8 {
-  kind: Kind105;
+  kind: Kind100;
   lessonIds: LessonIds24;
 }
 /**
  * A manual entry insertion with an explicit place in the authored order.
  */
 export interface CurriculumAddEdit8 {
-  kind: Kind106;
+  kind: Kind101;
   entry: CurriculumManualEntry8;
   afterLessonId: AfterLessonId9;
 }
@@ -5904,7 +5643,7 @@ export interface CurriculumManualEntry8 {
  * Remove curriculum entries while keeping lesson packages by default.
  */
 export interface CurriculumRemoveEdit8 {
-  kind: Kind107;
+  kind: Kind102;
   lessonIds: LessonIds25;
   deleteNeverPromotedDrafts: DeleteNeverPromotedDrafts8;
 }
@@ -5912,7 +5651,7 @@ export interface CurriculumRemoveEdit8 {
  * Replace two or more entries with one author-reviewed entry.
  */
 export interface CurriculumMergeEdit8 {
-  kind: Kind108;
+  kind: Kind103;
   lessonIds: LessonIds26;
   title: Title42;
   learnerOutcome: LearnerOutcome35;
@@ -5921,7 +5660,7 @@ export interface CurriculumMergeEdit8 {
  * Replace one entry with two or more separately authored outcomes.
  */
 export interface CurriculumSplitEdit8 {
-  kind: Kind109;
+  kind: Kind104;
   lessonId: LessonId28;
   parts: Parts8;
 }
@@ -5937,7 +5676,7 @@ export interface CurriculumSplitPart8 {
  * Edit an entry's outcome, level, and required or helpful prerequisites.
  */
 export interface CurriculumUpdateEdit8 {
-  kind: Kind110;
+  kind: Kind105;
   lessonId: LessonId29;
   title: Title44;
   learnerOutcome: LearnerOutcome37;
@@ -5949,7 +5688,7 @@ export interface CurriculumUpdateEdit8 {
  * Prompt-contained reference, including the exact row key for a selection.
  */
 export interface ContextReference8 {
-  kind: Kind112;
+  kind: Kind107;
   label: Label22;
   detail: Detail9;
   key: Key23;
@@ -5981,17 +5720,19 @@ export interface ExerciseAligned4 {
   exerciseKey: ExerciseKey21;
   alignment: ExerciseAlignmentRecord4;
   history: History16;
-  status: Status63;
+  status: Status58;
   [k: string]: unknown;
 }
 /**
- * One owner or approval decision pinning an exercise to section versions.
+ * A local exercise decision or canonical comparison against section versions.
  */
 export interface ExerciseAlignmentRecord4 {
   exerciseKey: ExerciseKey22;
   checkedAgainst: CheckedAgainst5;
   sectionSources: SectionSources5;
   outcome: Outcome5;
+  canonicalSha256: CanonicalSha2565;
+  draftCreatedAt: DraftCreatedAt4;
   note: Note13;
   reason: KeepReason5 | null;
   comment: Comment6;
@@ -6012,7 +5753,7 @@ export interface ExerciseStale4 {
   changedSections: ChangedSections10;
   alignment: ExerciseAlignmentRecord4;
   history: History17;
-  status: Status64;
+  status: Status59;
   [k: string]: unknown;
 }
 /**
@@ -6031,7 +5772,7 @@ export interface ExerciseUntracked4 {
   exerciseKey: ExerciseKey24;
   history: History18;
   alignment: ExerciseAlignmentRecord4 | null;
-  status: Status65;
+  status: Status60;
   [k: string]: unknown;
 }
 /**
@@ -6041,17 +5782,19 @@ export interface ExerciseUnknown4 {
   exerciseKey: ExerciseKey25;
   reason: Reason4;
   history: History19;
-  status: Status66;
+  status: Status61;
   [k: string]: unknown;
 }
 /**
- * One owner or approval decision pinning an exercise to section versions.
+ * A local exercise decision or canonical comparison against section versions.
  */
 export interface ExerciseAlignmentRecord5 {
   exerciseKey: ExerciseKey26;
   checkedAgainst: CheckedAgainst6;
   sectionSources: SectionSources6;
   outcome: Outcome6;
+  canonicalSha256: CanonicalSha2566;
+  draftCreatedAt: DraftCreatedAt5;
   note: Note14;
   reason: KeepReason6 | null;
   comment: Comment7;
@@ -6146,7 +5889,7 @@ export interface Frontmatter3 {
 export interface WorkbenchLessonHeader3 {
   title: Title45;
   cefrLevel: Cefrlevel6;
-  kind: Kind113;
+  kind: Kind108;
   goal: Goal3;
   [k: string]: unknown;
 }
@@ -6167,7 +5910,7 @@ export interface WorkbenchSourceFinding4 {
  */
 export interface WorkbenchSourceBlock4 {
   key: Key24;
-  kind: Kind114;
+  kind: Kind109;
   source: Source19;
   fields: Fields5;
   [k: string]: unknown;
@@ -6210,11 +5953,11 @@ export interface WorkbenchSourceFinding5 {
  * One review or check finding shown as a margin note beside its block.
  */
 export interface WorkbenchFinding6 {
-  findingId: FindingId9;
+  findingId: FindingId8;
   target: BlockTarget8;
   origin: Origin23;
   severity: Severity13;
-  status: Status67;
+  status: Status62;
   code: Code20;
   excerpt: Excerpt7;
   explanation: Explanation18;
@@ -6224,7 +5967,7 @@ export interface WorkbenchFinding6 {
   previouslyResolved: PreviouslyResolved7;
   level: Level6;
   advisory: Advisory7;
-  reviewer: Reviewer12;
+  reviewer: Reviewer7;
   label: Label24;
   message: Message13;
   quoteEnglish: QuoteEnglish7;
@@ -6285,14 +6028,14 @@ export interface WorkbenchAudioFinding3 {
  * A complete authored-order proposal.
  */
 export interface CurriculumReorderEdit9 {
-  kind: Kind115;
+  kind: Kind110;
   lesson_ids: LessonIds27;
 }
 /**
  * A manual entry insertion with an explicit place in the authored order.
  */
 export interface CurriculumAddEdit9 {
-  kind: Kind116;
+  kind: Kind111;
   entry: CurriculumManualEntry9;
   after_lesson_id?: AfterLessonId10;
 }
@@ -6311,7 +6054,7 @@ export interface CurriculumManualEntry9 {
  * Remove curriculum entries while keeping lesson packages by default.
  */
 export interface CurriculumRemoveEdit9 {
-  kind: Kind117;
+  kind: Kind112;
   lesson_ids: LessonIds28;
   delete_never_promoted_drafts?: DeleteNeverPromotedDrafts9;
 }
@@ -6319,7 +6062,7 @@ export interface CurriculumRemoveEdit9 {
  * Replace two or more entries with one author-reviewed entry.
  */
 export interface CurriculumMergeEdit9 {
-  kind: Kind118;
+  kind: Kind113;
   lesson_ids: LessonIds29;
   title: Title47;
   learner_outcome: LearnerOutcome39;
@@ -6328,7 +6071,7 @@ export interface CurriculumMergeEdit9 {
  * Replace one entry with two or more separately authored outcomes.
  */
 export interface CurriculumSplitEdit9 {
-  kind: Kind119;
+  kind: Kind114;
   lesson_id: LessonId32;
   parts: Parts9;
 }
@@ -6344,20 +6087,13 @@ export interface CurriculumSplitPart9 {
  * Edit an entry's outcome, level, and required or helpful prerequisites.
  */
 export interface CurriculumUpdateEdit9 {
-  kind: Kind120;
+  kind: Kind115;
   lesson_id: LessonId33;
   title: Title49;
   learner_outcome: LearnerOutcome41;
   cefr_level: CefrLevel24;
   prerequisites: Prerequisites20;
   helpful_prerequisites: HelpfulPrerequisites20;
-}
-/**
- * The author's explicit decision for one located curriculum finding.
- */
-export interface CurriculumFindingDecision1 {
-  finding_id: FindingId10;
-  decision: Decision2;
 }
 /**
  * Reviewable cost and clip details returned before synthesis starts.
@@ -6438,7 +6174,7 @@ export interface WorkbenchAudioClipStatus3 {
   speakerName: Speakername6;
   origin: Origin26;
   characters: Characters7;
-  status: Status68;
+  status: Status63;
   durationMs: Durationms3;
   playUrl: Playurl3;
   findings: Findings17;
@@ -6491,7 +6227,7 @@ export interface WorkbenchAudioClipStatus4 {
   speakerName: Speakername8;
   origin: Origin27;
   characters: Characters8;
-  status: Status69;
+  status: Status64;
   durationMs: Durationms4;
   playUrl: Playurl4;
   findings: Findings18;

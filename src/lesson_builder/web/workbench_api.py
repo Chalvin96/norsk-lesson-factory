@@ -256,7 +256,7 @@ def _build_curriculum_payload(repo_root: Path) -> WorkbenchCurriculumPayload:
     lessons = list_workbench_lessons(repo_root, plan=plan)
     status_chips = {
         lesson.lesson_id: build_curriculum_lesson_status_chips(
-            repo_root, lesson.lesson_id, read_workbench_source(repo_root, lesson.lesson_id), plan=plan
+            repo_root, lesson.lesson_id, read_workbench_source(repo_root, lesson.lesson_id)
         )
         for lesson in lessons
         if lesson.source != "missing"
@@ -276,7 +276,6 @@ def _build_curriculum_payload(repo_root: Path) -> WorkbenchCurriculumPayload:
     }
     return {
         "lessons": cast(list[WorkbenchLesson], [serialize_json(lesson) for lesson in lessons]),
-        "curriculumApproval": plan.curriculum_approval,
         "entries": entries,
         "findings": cast(list[Any], serialize_json([finding for finding in findings if finding.lesson_id is None])),
         "chat": cast(
@@ -314,13 +313,12 @@ def _curriculum_entry(
 
 
 def _curriculum_projection_signature(root: Path) -> tuple[tuple[str, int, int, int], ...]:
-    """Track source, approval, local review and settings changes without parsing file contents."""
+    """Track source, local review and settings changes without parsing file contents."""
     paths = (
         root / "content" / "curriculum",
         root / "content" / "catalog",
         root / "content" / "lessons",
         root / "drafts",
-        root / "content" / "approvals",
         root / "store" / "workbench",
         root / ".workbench",
         root / "agents",

@@ -145,13 +145,15 @@ class KeepReason(StrEnum):
 
 
 class ExerciseAlignmentRecord(BaseModel):
-    """One owner or approval decision pinning an exercise to section versions."""
+    """A local exercise decision or canonical comparison against section versions."""
 
     model_config = ConfigDict(extra="forbid")
     exercise_key: str
     checked_against: dict[str, str]
     section_sources: dict[str, str] = Field(default_factory=dict)
-    outcome: Literal["approved", "regenerated", "kept"]
+    outcome: Literal["canonical", "regenerated", "kept"]
+    canonical_sha256: str | None = None
+    draft_created_at: str | None = None
     note: str | None = None
     reason: KeepReason | None = None
     comment: str | None = None
@@ -352,66 +354,6 @@ class ReviewLog(BaseModel):
 
     runs: list[ReviewRun] = Field(default_factory=list)
     coverage: list[ReviewCoverage] = Field(default_factory=list)
-
-
-class StageReviewEvidence(BaseModel):
-    """Review policy and the hash of the exact report with current owner decisions."""
-
-    model_config = ConfigDict(extra="forbid")
-    job: str
-    model: str | None
-    prompt_version: str | None
-    criteria_version: str | None
-    evidence_sha256: str
-    findings: list[ReviewFinding]
-
-
-class StageApprovalRecord(BaseModel):
-    """Versioned owner acceptance, with no claim of qualified Norwegian review."""
-
-    model_config = ConfigDict(extra="forbid")
-    schema_version: Literal[2] = 2
-    lesson_id: str
-    stage: Literal["plan", "lesson", "exercises"]
-    reviewer: Literal["human"] = "human"
-    file_sha256: str = Field(pattern=r"^[a-f0-9]{64}$")
-    upstream_approved_sha256: str | None
-    curriculum_slot_sha256: str | None
-    approved_at: str
-    code_commit: str
-    review: StageReviewEvidence | None
-    proposals_accepted: int = Field(ge=0)
-    proposals_rejected: int = Field(ge=0)
-    exercise_alignments: dict[str, ExerciseAlignmentRecord] = Field(default_factory=dict)
-    prior_approvals: list[StageApprovalRecord] = Field(default_factory=list)
-    acceptance_statement: Literal["Owner acceptance is not qualified Norwegian review."]
-
-
-class StageApprovalStatus(BaseModel):
-    """Live hash-chain state and upstream changes for the approval dialog."""
-
-    stage: Literal["plan", "lesson", "exercises"]
-    status: Literal["needs_approval", "stale", "baseline", "approved"]
-    file_sha256: str
-    approved_sha256: str | None
-    reviewer: Literal["human", "baseline"] | None
-    upstream_diff: str = ""
-
-
-class LegacyBaseline(BaseModel):
-    """Durable pins for existing snapshots whose historical slot hashes omitted order."""
-
-    model_config = ConfigDict(extra="forbid")
-    legacy_source_sha256: str
-    curriculum_slot_sha256: str
-
-
-class WorkbenchBaselines(BaseModel):
-    """Versioned baseline index retains legacy provenance without rewriting snapshots."""
-
-    model_config = ConfigDict(extra="forbid")
-    schema_version: Literal[2] = 2
-    lessons: dict[str, LegacyBaseline] = Field(default_factory=dict)
 
 
 class WorkbenchAudioCheckFinding(BaseModel):

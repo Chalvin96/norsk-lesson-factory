@@ -69,9 +69,6 @@
         "lesson.audio.synthesize": {
           "$ref": "#/$defs/AudioSynthesizeRequest"
         },
-        "lesson.approve": {
-          "$ref": "#/$defs/ApproveRequest"
-        },
         "lesson.promote": {
           "$ref": "#/$defs/EmptyRequest"
         },
@@ -192,9 +189,6 @@
         "ActiveTurnMetadata": {
           "$ref": "#/$defs/ActiveTurnMetadata"
         },
-        "StageApprovalStatus": {
-          "$ref": "#/$defs/StageApprovalStatus"
-        },
         "LessonGateBlocker": {
           "$ref": "#/$defs/LessonGateBlocker"
         },
@@ -239,9 +233,6 @@
         },
         "CurriculumFinding": {
           "$ref": "#/$defs/CurriculumFinding"
-        },
-        "CurriculumPlanApproval": {
-          "$ref": "#/$defs/CurriculumPlanApproval"
         },
         "FindingOrigin": {
           "$ref": "#/$defs/FindingOrigin"
@@ -329,9 +320,6 @@
         },
         "CurriculumEditRequest": {
           "$ref": "#/$defs/CurriculumEditRequest"
-        },
-        "CurriculumFindingDecision": {
-          "$ref": "#/$defs/CurriculumFindingDecision"
         },
         "WorkbenchAudioPlan": {
           "$ref": "#/$defs/WorkbenchAudioPlan"
@@ -556,7 +544,7 @@
       "type": "object"
     },
     "CurriculumSaveRequest": {
-      "description": "Reviewed or forced curriculum save request.",
+      "description": "Save edits against their exact preview.",
       "properties": {
         "edits": {
           "items": {
@@ -605,24 +593,11 @@
             }
           ],
           "title": "Review Digest"
-        },
-        "finding_decisions": {
-          "items": {
-            "$ref": "#/$defs/CurriculumSaveRequest__CurriculumFindingDecision"
-          },
-          "title": "Finding Decisions",
-          "type": "array"
-        },
-        "force": {
-          "title": "Force",
-          "type": "boolean"
         }
       },
       "required": [
         "edits",
-        "review_digest",
-        "finding_decisions",
-        "force"
+        "review_digest"
       ],
       "title": "CurriculumSaveRequest",
       "type": "object"
@@ -657,30 +632,6 @@
         "entry"
       ],
       "title": "CurriculumAddEdit",
-      "type": "object"
-    },
-    "CurriculumSaveRequest__CurriculumFindingDecision": {
-      "additionalProperties": false,
-      "description": "The author's explicit decision for one located curriculum finding.",
-      "properties": {
-        "finding_id": {
-          "title": "Finding Id",
-          "type": "string"
-        },
-        "decision": {
-          "enum": [
-            "accept",
-            "revise"
-          ],
-          "title": "Decision",
-          "type": "string"
-        }
-      },
-      "required": [
-        "finding_id",
-        "decision"
-      ],
-      "title": "CurriculumFindingDecision",
       "type": "object"
     },
     "CurriculumSaveRequest__CurriculumManualEntry": {
@@ -1541,25 +1492,6 @@
       "title": "AudioSynthesizeRequest",
       "type": "object"
     },
-    "ApproveRequest": {
-      "description": "Owner approval stage selection; omitted means every ready stage.",
-      "properties": {
-        "stages": {
-          "items": {
-            "enum": [
-              "plan",
-              "lesson",
-              "exercises"
-            ],
-            "type": "string"
-          },
-          "title": "Stages",
-          "type": "array"
-        }
-      },
-      "title": "ApproveRequest",
-      "type": "object"
-    },
     "DiscardRequest": {
       "description": "Explicit draft discard confirmation.",
       "properties": {
@@ -1658,15 +1590,6 @@
     "WorkbenchCurriculumPayload": {
       "description": "Curriculum response consumed by the workbench SPA.",
       "properties": {
-        "curriculumApproval": {
-          "enum": [
-            "pending_human",
-            "auto_approved",
-            "human_approved"
-          ],
-          "title": "Curriculumapproval",
-          "type": "string"
-        },
         "lessons": {
           "items": {
             "$ref": "#/$defs/WorkbenchCurriculumPayload__WorkbenchLesson"
@@ -1697,7 +1620,6 @@
         }
       },
       "required": [
-        "curriculumApproval",
         "lessons",
         "entries",
         "chat",
@@ -3148,7 +3070,7 @@
     },
     "WorkbenchLessonPayload__ExerciseAlignmentRecord": {
       "additionalProperties": false,
-      "description": "One owner or approval decision pinning an exercise to section versions.",
+      "description": "A local exercise decision or canonical comparison against section versions.",
       "properties": {
         "exerciseKey": {
           "title": "Exercise Key",
@@ -3170,12 +3092,36 @@
         },
         "outcome": {
           "enum": [
-            "approved",
+            "canonical",
             "regenerated",
             "kept"
           ],
           "title": "Outcome",
           "type": "string"
+        },
+        "canonicalSha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Canonical Sha256"
+        },
+        "draftCreatedAt": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Draft Created At"
         },
         "note": {
           "anyOf": [
@@ -3234,6 +3180,8 @@
         "checkedAgainst",
         "sectionSources",
         "outcome",
+        "canonicalSha256",
+        "draftCreatedAt",
         "note",
         "reason",
         "comment",
@@ -3508,16 +3456,24 @@
       "type": "object"
     },
     "WorkbenchLessonPayload__OpenProposalBlocker": {
-      "description": "An unsettled proposal changes a source stage awaiting approval.",
+      "description": "An unsettled proposal changes a source being promoted.",
       "properties": {
         "stage": {
-          "enum": [
-            "plan",
-            "lesson",
-            "exercises"
+          "anyOf": [
+            {
+              "enum": [
+                "plan",
+                "lesson",
+                "exercises"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
           ],
-          "title": "Stage",
-          "type": "string"
+          "default": null,
+          "title": "Stage"
         },
         "kind": {
           "const": "open_proposal",
@@ -3532,13 +3488,13 @@
           "type": "string"
         }
       },
+      "title": "OpenProposalBlocker",
+      "type": "object",
       "required": [
         "stage",
         "kind",
         "target"
-      ],
-      "title": "OpenProposalBlocker",
-      "type": "object"
+      ]
     },
     "WorkbenchLessonPayload__ProposalCheck": {
       "description": "Deterministic check of a temporary candidate or accepted draft.",
@@ -3598,51 +3554,6 @@
       "title": "ResolutionReason",
       "type": "string"
     },
-    "WorkbenchLessonPayload__ReviewCoverageBlocker": {
-      "description": "Current source blocks still need review coverage for one stage.",
-      "properties": {
-        "stage": {
-          "enum": [
-            "lesson",
-            "exercises"
-          ],
-          "title": "Stage",
-          "type": "string"
-        },
-        "count": {
-          "title": "Count",
-          "type": "integer"
-        },
-        "uncovered": {
-          "items": {
-            "type": "string"
-          },
-          "title": "Uncovered",
-          "type": "array"
-        },
-        "kind": {
-          "const": "review_coverage",
-          "default": "review_coverage",
-          "title": "Kind",
-          "type": "string"
-        },
-        "target": {
-          "const": "review",
-          "default": "review",
-          "title": "Target",
-          "type": "string"
-        }
-      },
-      "required": [
-        "stage",
-        "count",
-        "uncovered",
-        "kind",
-        "target"
-      ],
-      "title": "ReviewCoverageBlocker",
-      "type": "object"
-    },
     "WorkbenchLessonPayload__ReviewCoverageStatus": {
       "description": "Current source coverage counts and target identities still needing review.",
       "properties": {
@@ -3671,75 +3582,6 @@
         "total",
         "uncovered"
       ]
-    },
-    "WorkbenchLessonPayload__StageApprovalStatus": {
-      "description": "Live hash-chain state and upstream changes for the approval dialog.",
-      "properties": {
-        "stage": {
-          "enum": [
-            "plan",
-            "lesson",
-            "exercises"
-          ],
-          "title": "Stage",
-          "type": "string"
-        },
-        "status": {
-          "enum": [
-            "needs_approval",
-            "stale",
-            "baseline",
-            "approved"
-          ],
-          "title": "Status",
-          "type": "string"
-        },
-        "fileSha256": {
-          "title": "File Sha256",
-          "type": "string"
-        },
-        "approvedSha256": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Approved Sha256"
-        },
-        "reviewer": {
-          "anyOf": [
-            {
-              "enum": [
-                "human",
-                "baseline"
-              ],
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Reviewer"
-        },
-        "upstreamDiff": {
-          "default": "",
-          "title": "Upstream Diff",
-          "type": "string"
-        }
-      },
-      "required": [
-        "stage",
-        "status",
-        "fileSha256",
-        "approvedSha256",
-        "reviewer",
-        "upstreamDiff"
-      ],
-      "title": "StageApprovalStatus",
-      "type": "object"
     },
     "WorkbenchLessonPayload__StatusChip": {
       "description": "A short derived status label shown on a lesson or stage.",
@@ -3990,7 +3832,7 @@
       "type": "object"
     },
     "WorkbenchLessonPayload__UnsavedChangesBlocker": {
-      "description": "Client-side text still needs to be saved before approval.",
+      "description": "Client-side text still needs to be saved before promotion.",
       "properties": {
         "kind": {
           "const": "unsaved_changes",
@@ -4512,7 +4354,7 @@
       "type": "object"
     },
     "WorkbenchLessonPayload__WorkbenchLessonState": {
-      "description": "Review, proposal, chat, approval and stale exercise state for one open lesson.",
+      "description": "Review, proposal, chat and stale exercise state for one open lesson.",
       "properties": {
         "findings": {
           "default": [],
@@ -4557,49 +4399,6 @@
           "title": "Status Chips",
           "type": "array"
         },
-        "approveBlockers": {
-          "default": [],
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/WorkbenchLessonPayload__CheckErrorsBlocker"
-              },
-              {
-                "$ref": "#/$defs/WorkbenchLessonPayload__OpenProposalBlocker"
-              },
-              {
-                "$ref": "#/$defs/WorkbenchLessonPayload__ReviewCoverageBlocker"
-              },
-              {
-                "$ref": "#/$defs/WorkbenchLessonPayload__AudioBlocker"
-              },
-              {
-                "$ref": "#/$defs/WorkbenchLessonPayload__CanonicalChangedBlocker"
-              },
-              {
-                "$ref": "#/$defs/WorkbenchLessonPayload__NoDraftBlocker"
-              },
-              {
-                "$ref": "#/$defs/WorkbenchLessonPayload__UnsavedChangesBlocker"
-              }
-            ]
-          },
-          "title": "Approve Blockers",
-          "type": "array"
-        },
-        "approvalStages": {
-          "default": [],
-          "items": {
-            "$ref": "#/$defs/WorkbenchLessonPayload__StageApprovalStatus"
-          },
-          "title": "Approval Stages",
-          "type": "array"
-        },
-        "approvable": {
-          "default": false,
-          "title": "Approvable",
-          "type": "boolean"
-        },
         "exerciseStaleness": {
           "default": [],
           "items": {
@@ -4622,9 +4421,6 @@
               },
               {
                 "$ref": "#/$defs/WorkbenchLessonPayload__OpenProposalBlocker"
-              },
-              {
-                "$ref": "#/$defs/WorkbenchLessonPayload__ReviewCoverageBlocker"
               },
               {
                 "$ref": "#/$defs/WorkbenchLessonPayload__AudioBlocker"
@@ -4709,13 +4505,6 @@
           },
           "title": "Explanations",
           "type": "object"
-        },
-        "approvalChanges": {
-          "additionalProperties": {
-            "$ref": "#/$defs/WorkbenchLessonPayload__WorkbenchProposal"
-          },
-          "title": "Approval Changes",
-          "type": "object"
         }
       },
       "title": "WorkbenchLessonState",
@@ -4726,9 +4515,6 @@
         "chat",
         "activeTurn",
         "statusChips",
-        "approveBlockers",
-        "approvalStages",
-        "approvable",
         "exerciseStaleness",
         "promotable",
         "promotionBlockers",
@@ -4739,8 +4525,7 @@
         "reviewCoverage",
         "checkFindingCount",
         "aiFindingCount",
-        "explanations",
-        "approvalChanges"
+        "explanations"
       ]
     },
     "WorkbenchLessonPayload__WorkbenchPlanSource": {
@@ -6252,7 +6037,7 @@
     },
     "WorkbenchWriteResult__ExerciseAlignmentRecord": {
       "additionalProperties": false,
-      "description": "One owner or approval decision pinning an exercise to section versions.",
+      "description": "A local exercise decision or canonical comparison against section versions.",
       "properties": {
         "exerciseKey": {
           "title": "Exercise Key",
@@ -6274,12 +6059,36 @@
         },
         "outcome": {
           "enum": [
-            "approved",
+            "canonical",
             "regenerated",
             "kept"
           ],
           "title": "Outcome",
           "type": "string"
+        },
+        "canonicalSha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Canonical Sha256"
+        },
+        "draftCreatedAt": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Draft Created At"
         },
         "note": {
           "anyOf": [
@@ -6338,6 +6147,8 @@
         "checkedAgainst",
         "sectionSources",
         "outcome",
+        "canonicalSha256",
+        "draftCreatedAt",
         "note",
         "reason",
         "comment",
@@ -6612,16 +6423,24 @@
       "type": "object"
     },
     "WorkbenchWriteResult__OpenProposalBlocker": {
-      "description": "An unsettled proposal changes a source stage awaiting approval.",
+      "description": "An unsettled proposal changes a source being promoted.",
       "properties": {
         "stage": {
-          "enum": [
-            "plan",
-            "lesson",
-            "exercises"
+          "anyOf": [
+            {
+              "enum": [
+                "plan",
+                "lesson",
+                "exercises"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
           ],
-          "title": "Stage",
-          "type": "string"
+          "default": null,
+          "title": "Stage"
         },
         "kind": {
           "const": "open_proposal",
@@ -6636,13 +6455,13 @@
           "type": "string"
         }
       },
+      "title": "OpenProposalBlocker",
+      "type": "object",
       "required": [
         "stage",
         "kind",
         "target"
-      ],
-      "title": "OpenProposalBlocker",
-      "type": "object"
+      ]
     },
     "WorkbenchWriteResult__ProposalCheck": {
       "description": "Deterministic check of a temporary candidate or accepted draft.",
@@ -6702,51 +6521,6 @@
       "title": "ResolutionReason",
       "type": "string"
     },
-    "WorkbenchWriteResult__ReviewCoverageBlocker": {
-      "description": "Current source blocks still need review coverage for one stage.",
-      "properties": {
-        "stage": {
-          "enum": [
-            "lesson",
-            "exercises"
-          ],
-          "title": "Stage",
-          "type": "string"
-        },
-        "count": {
-          "title": "Count",
-          "type": "integer"
-        },
-        "uncovered": {
-          "items": {
-            "type": "string"
-          },
-          "title": "Uncovered",
-          "type": "array"
-        },
-        "kind": {
-          "const": "review_coverage",
-          "default": "review_coverage",
-          "title": "Kind",
-          "type": "string"
-        },
-        "target": {
-          "const": "review",
-          "default": "review",
-          "title": "Target",
-          "type": "string"
-        }
-      },
-      "required": [
-        "stage",
-        "count",
-        "uncovered",
-        "kind",
-        "target"
-      ],
-      "title": "ReviewCoverageBlocker",
-      "type": "object"
-    },
     "WorkbenchWriteResult__ReviewCoverageStatus": {
       "description": "Current source coverage counts and target identities still needing review.",
       "properties": {
@@ -6775,75 +6549,6 @@
         "total",
         "uncovered"
       ]
-    },
-    "WorkbenchWriteResult__StageApprovalStatus": {
-      "description": "Live hash-chain state and upstream changes for the approval dialog.",
-      "properties": {
-        "stage": {
-          "enum": [
-            "plan",
-            "lesson",
-            "exercises"
-          ],
-          "title": "Stage",
-          "type": "string"
-        },
-        "status": {
-          "enum": [
-            "needs_approval",
-            "stale",
-            "baseline",
-            "approved"
-          ],
-          "title": "Status",
-          "type": "string"
-        },
-        "fileSha256": {
-          "title": "File Sha256",
-          "type": "string"
-        },
-        "approvedSha256": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Approved Sha256"
-        },
-        "reviewer": {
-          "anyOf": [
-            {
-              "enum": [
-                "human",
-                "baseline"
-              ],
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Reviewer"
-        },
-        "upstreamDiff": {
-          "default": "",
-          "title": "Upstream Diff",
-          "type": "string"
-        }
-      },
-      "required": [
-        "stage",
-        "status",
-        "fileSha256",
-        "approvedSha256",
-        "reviewer",
-        "upstreamDiff"
-      ],
-      "title": "StageApprovalStatus",
-      "type": "object"
     },
     "WorkbenchWriteResult__StatusChip": {
       "description": "A short derived status label shown on a lesson or stage.",
@@ -7094,7 +6799,7 @@
       "type": "object"
     },
     "WorkbenchWriteResult__UnsavedChangesBlocker": {
-      "description": "Client-side text still needs to be saved before approval.",
+      "description": "Client-side text still needs to be saved before promotion.",
       "properties": {
         "kind": {
           "const": "unsaved_changes",
@@ -7747,7 +7452,7 @@
       "type": "object"
     },
     "WorkbenchWriteResult__WorkbenchLessonState": {
-      "description": "Review, proposal, chat, approval and stale exercise state for one open lesson.",
+      "description": "Review, proposal, chat and stale exercise state for one open lesson.",
       "properties": {
         "findings": {
           "default": [],
@@ -7792,49 +7497,6 @@
           "title": "Status Chips",
           "type": "array"
         },
-        "approveBlockers": {
-          "default": [],
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/WorkbenchWriteResult__CheckErrorsBlocker"
-              },
-              {
-                "$ref": "#/$defs/WorkbenchWriteResult__OpenProposalBlocker"
-              },
-              {
-                "$ref": "#/$defs/WorkbenchWriteResult__ReviewCoverageBlocker"
-              },
-              {
-                "$ref": "#/$defs/WorkbenchWriteResult__AudioBlocker"
-              },
-              {
-                "$ref": "#/$defs/WorkbenchWriteResult__CanonicalChangedBlocker"
-              },
-              {
-                "$ref": "#/$defs/WorkbenchWriteResult__NoDraftBlocker"
-              },
-              {
-                "$ref": "#/$defs/WorkbenchWriteResult__UnsavedChangesBlocker"
-              }
-            ]
-          },
-          "title": "Approve Blockers",
-          "type": "array"
-        },
-        "approvalStages": {
-          "default": [],
-          "items": {
-            "$ref": "#/$defs/WorkbenchWriteResult__StageApprovalStatus"
-          },
-          "title": "Approval Stages",
-          "type": "array"
-        },
-        "approvable": {
-          "default": false,
-          "title": "Approvable",
-          "type": "boolean"
-        },
         "exerciseStaleness": {
           "default": [],
           "items": {
@@ -7857,9 +7519,6 @@
               },
               {
                 "$ref": "#/$defs/WorkbenchWriteResult__OpenProposalBlocker"
-              },
-              {
-                "$ref": "#/$defs/WorkbenchWriteResult__ReviewCoverageBlocker"
               },
               {
                 "$ref": "#/$defs/WorkbenchWriteResult__AudioBlocker"
@@ -7944,13 +7603,6 @@
           },
           "title": "Explanations",
           "type": "object"
-        },
-        "approvalChanges": {
-          "additionalProperties": {
-            "$ref": "#/$defs/WorkbenchWriteResult__WorkbenchProposal"
-          },
-          "title": "Approval Changes",
-          "type": "object"
         }
       },
       "title": "WorkbenchLessonState",
@@ -7961,9 +7613,6 @@
         "chat",
         "activeTurn",
         "statusChips",
-        "approveBlockers",
-        "approvalStages",
-        "approvable",
         "exerciseStaleness",
         "promotable",
         "promotionBlockers",
@@ -7974,8 +7623,7 @@
         "reviewCoverage",
         "checkFindingCount",
         "aiFindingCount",
-        "explanations",
-        "approvalChanges"
+        "explanations"
       ]
     },
     "WorkbenchWriteResult__WorkbenchPlanSource": {
@@ -9178,15 +8826,6 @@
     "WorkbenchCurriculumSaveResult__WorkbenchCurriculumPayload": {
       "description": "Curriculum response consumed by the workbench SPA.",
       "properties": {
-        "curriculumApproval": {
-          "enum": [
-            "pending_human",
-            "auto_approved",
-            "human_approved"
-          ],
-          "title": "Curriculumapproval",
-          "type": "string"
-        },
         "lessons": {
           "items": {
             "$ref": "#/$defs/WorkbenchCurriculumSaveResult__WorkbenchLesson"
@@ -9217,7 +8856,6 @@
         }
       },
       "required": [
-        "curriculumApproval",
         "lessons",
         "entries",
         "chat",
@@ -9657,12 +9295,6 @@
             }
           ],
           "default": null
-        },
-        "humanGate": {
-          "const": "pending",
-          "default": "pending",
-          "title": "Human Gate",
-          "type": "string"
         }
       },
       "required": [
@@ -9680,8 +9312,7 @@
         "prerequisites",
         "helpfulPrerequisites",
         "provisionalFlags",
-        "ownerScope",
-        "humanGate"
+        "ownerScope"
       ],
       "title": "CurriculumPlanSlot",
       "type": "object"
@@ -10426,7 +10057,7 @@
     },
     "WorkbenchLessonActionResult__ExerciseAlignmentRecord": {
       "additionalProperties": false,
-      "description": "One owner or approval decision pinning an exercise to section versions.",
+      "description": "A local exercise decision or canonical comparison against section versions.",
       "properties": {
         "exerciseKey": {
           "title": "Exercise Key",
@@ -10448,12 +10079,36 @@
         },
         "outcome": {
           "enum": [
-            "approved",
+            "canonical",
             "regenerated",
             "kept"
           ],
           "title": "Outcome",
           "type": "string"
+        },
+        "canonicalSha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Canonical Sha256"
+        },
+        "draftCreatedAt": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Draft Created At"
         },
         "note": {
           "anyOf": [
@@ -10512,6 +10167,8 @@
         "checkedAgainst",
         "sectionSources",
         "outcome",
+        "canonicalSha256",
+        "draftCreatedAt",
         "note",
         "reason",
         "comment",
@@ -10786,16 +10443,24 @@
       "type": "object"
     },
     "WorkbenchLessonActionResult__OpenProposalBlocker": {
-      "description": "An unsettled proposal changes a source stage awaiting approval.",
+      "description": "An unsettled proposal changes a source being promoted.",
       "properties": {
         "stage": {
-          "enum": [
-            "plan",
-            "lesson",
-            "exercises"
+          "anyOf": [
+            {
+              "enum": [
+                "plan",
+                "lesson",
+                "exercises"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
           ],
-          "title": "Stage",
-          "type": "string"
+          "default": null,
+          "title": "Stage"
         },
         "kind": {
           "const": "open_proposal",
@@ -10810,13 +10475,13 @@
           "type": "string"
         }
       },
+      "title": "OpenProposalBlocker",
+      "type": "object",
       "required": [
         "stage",
         "kind",
         "target"
-      ],
-      "title": "OpenProposalBlocker",
-      "type": "object"
+      ]
     },
     "WorkbenchLessonActionResult__Proposal": {
       "description": "One turn's edits and decisions, retained when superseded or settled.",
@@ -11079,51 +10744,6 @@
       ],
       "title": "ResolutionReason",
       "type": "string"
-    },
-    "WorkbenchLessonActionResult__ReviewCoverageBlocker": {
-      "description": "Current source blocks still need review coverage for one stage.",
-      "properties": {
-        "stage": {
-          "enum": [
-            "lesson",
-            "exercises"
-          ],
-          "title": "Stage",
-          "type": "string"
-        },
-        "count": {
-          "title": "Count",
-          "type": "integer"
-        },
-        "uncovered": {
-          "items": {
-            "type": "string"
-          },
-          "title": "Uncovered",
-          "type": "array"
-        },
-        "kind": {
-          "const": "review_coverage",
-          "default": "review_coverage",
-          "title": "Kind",
-          "type": "string"
-        },
-        "target": {
-          "const": "review",
-          "default": "review",
-          "title": "Target",
-          "type": "string"
-        }
-      },
-      "required": [
-        "stage",
-        "count",
-        "uncovered",
-        "kind",
-        "target"
-      ],
-      "title": "ReviewCoverageBlocker",
-      "type": "object"
     },
     "WorkbenchLessonActionResult__ReviewCoverageStatus": {
       "description": "Current source coverage counts and target identities still needing review.",
@@ -11470,75 +11090,6 @@
       "title": "ReviewRun",
       "type": "object"
     },
-    "WorkbenchLessonActionResult__StageApprovalStatus": {
-      "description": "Live hash-chain state and upstream changes for the approval dialog.",
-      "properties": {
-        "stage": {
-          "enum": [
-            "plan",
-            "lesson",
-            "exercises"
-          ],
-          "title": "Stage",
-          "type": "string"
-        },
-        "status": {
-          "enum": [
-            "needs_approval",
-            "stale",
-            "baseline",
-            "approved"
-          ],
-          "title": "Status",
-          "type": "string"
-        },
-        "fileSha256": {
-          "title": "File Sha256",
-          "type": "string"
-        },
-        "approvedSha256": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Approved Sha256"
-        },
-        "reviewer": {
-          "anyOf": [
-            {
-              "enum": [
-                "human",
-                "baseline"
-              ],
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Reviewer"
-        },
-        "upstreamDiff": {
-          "default": "",
-          "title": "Upstream Diff",
-          "type": "string"
-        }
-      },
-      "required": [
-        "stage",
-        "status",
-        "fileSha256",
-        "approvedSha256",
-        "reviewer",
-        "upstreamDiff"
-      ],
-      "title": "StageApprovalStatus",
-      "type": "object"
-    },
     "WorkbenchLessonActionResult__StatusChip": {
       "description": "A short derived status label shown on a lesson or stage.",
       "properties": {
@@ -11788,7 +11339,7 @@
       "type": "object"
     },
     "WorkbenchLessonActionResult__UnsavedChangesBlocker": {
-      "description": "Client-side text still needs to be saved before approval.",
+      "description": "Client-side text still needs to be saved before promotion.",
       "properties": {
         "kind": {
           "const": "unsaved_changes",
@@ -12621,7 +12172,7 @@
       "type": "object"
     },
     "WorkbenchLessonActionResult__WorkbenchLessonState": {
-      "description": "Review, proposal, chat, approval and stale exercise state for one open lesson.",
+      "description": "Review, proposal, chat and stale exercise state for one open lesson.",
       "properties": {
         "findings": {
           "default": [],
@@ -12666,49 +12217,6 @@
           "title": "Status Chips",
           "type": "array"
         },
-        "approveBlockers": {
-          "default": [],
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/WorkbenchLessonActionResult__CheckErrorsBlocker"
-              },
-              {
-                "$ref": "#/$defs/WorkbenchLessonActionResult__OpenProposalBlocker"
-              },
-              {
-                "$ref": "#/$defs/WorkbenchLessonActionResult__ReviewCoverageBlocker"
-              },
-              {
-                "$ref": "#/$defs/WorkbenchLessonActionResult__AudioBlocker"
-              },
-              {
-                "$ref": "#/$defs/WorkbenchLessonActionResult__CanonicalChangedBlocker"
-              },
-              {
-                "$ref": "#/$defs/WorkbenchLessonActionResult__NoDraftBlocker"
-              },
-              {
-                "$ref": "#/$defs/WorkbenchLessonActionResult__UnsavedChangesBlocker"
-              }
-            ]
-          },
-          "title": "Approve Blockers",
-          "type": "array"
-        },
-        "approvalStages": {
-          "default": [],
-          "items": {
-            "$ref": "#/$defs/WorkbenchLessonActionResult__StageApprovalStatus"
-          },
-          "title": "Approval Stages",
-          "type": "array"
-        },
-        "approvable": {
-          "default": false,
-          "title": "Approvable",
-          "type": "boolean"
-        },
         "exerciseStaleness": {
           "default": [],
           "items": {
@@ -12731,9 +12239,6 @@
               },
               {
                 "$ref": "#/$defs/WorkbenchLessonActionResult__OpenProposalBlocker"
-              },
-              {
-                "$ref": "#/$defs/WorkbenchLessonActionResult__ReviewCoverageBlocker"
               },
               {
                 "$ref": "#/$defs/WorkbenchLessonActionResult__AudioBlocker"
@@ -12818,13 +12323,6 @@
           },
           "title": "Explanations",
           "type": "object"
-        },
-        "approvalChanges": {
-          "additionalProperties": {
-            "$ref": "#/$defs/WorkbenchLessonActionResult__WorkbenchProposal"
-          },
-          "title": "Approval Changes",
-          "type": "object"
         }
       },
       "title": "WorkbenchLessonState",
@@ -12835,9 +12333,6 @@
         "chat",
         "activeTurn",
         "statusChips",
-        "approveBlockers",
-        "approvalStages",
-        "approvable",
         "exerciseStaleness",
         "promotable",
         "promotionBlockers",
@@ -12848,8 +12343,7 @@
         "reviewCoverage",
         "checkFindingCount",
         "aiFindingCount",
-        "explanations",
-        "approvalChanges"
+        "explanations"
       ]
     },
     "WorkbenchLessonActionResult__WorkbenchPlanSource": {
@@ -13435,7 +12929,7 @@
       "type": "object"
     },
     "WorkbenchLessonState": {
-      "description": "Review, proposal, chat, approval and stale exercise state for one open lesson.",
+      "description": "Review, proposal, chat and stale exercise state for one open lesson.",
       "properties": {
         "findings": {
           "default": [],
@@ -13480,49 +12974,6 @@
           "title": "Status Chips",
           "type": "array"
         },
-        "approveBlockers": {
-          "default": [],
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/WorkbenchLessonState__CheckErrorsBlocker"
-              },
-              {
-                "$ref": "#/$defs/WorkbenchLessonState__OpenProposalBlocker"
-              },
-              {
-                "$ref": "#/$defs/WorkbenchLessonState__ReviewCoverageBlocker"
-              },
-              {
-                "$ref": "#/$defs/WorkbenchLessonState__AudioBlocker"
-              },
-              {
-                "$ref": "#/$defs/WorkbenchLessonState__CanonicalChangedBlocker"
-              },
-              {
-                "$ref": "#/$defs/WorkbenchLessonState__NoDraftBlocker"
-              },
-              {
-                "$ref": "#/$defs/WorkbenchLessonState__UnsavedChangesBlocker"
-              }
-            ]
-          },
-          "title": "Approve Blockers",
-          "type": "array"
-        },
-        "approvalStages": {
-          "default": [],
-          "items": {
-            "$ref": "#/$defs/WorkbenchLessonState__StageApprovalStatus"
-          },
-          "title": "Approval Stages",
-          "type": "array"
-        },
-        "approvable": {
-          "default": false,
-          "title": "Approvable",
-          "type": "boolean"
-        },
         "exerciseStaleness": {
           "default": [],
           "items": {
@@ -13545,9 +12996,6 @@
               },
               {
                 "$ref": "#/$defs/WorkbenchLessonState__OpenProposalBlocker"
-              },
-              {
-                "$ref": "#/$defs/WorkbenchLessonState__ReviewCoverageBlocker"
               },
               {
                 "$ref": "#/$defs/WorkbenchLessonState__AudioBlocker"
@@ -13632,13 +13080,6 @@
           },
           "title": "Explanations",
           "type": "object"
-        },
-        "approvalChanges": {
-          "additionalProperties": {
-            "$ref": "#/$defs/WorkbenchLessonState__WorkbenchProposal"
-          },
-          "title": "Approval Changes",
-          "type": "object"
         }
       },
       "title": "WorkbenchLessonState",
@@ -13649,9 +13090,6 @@
         "chat",
         "activeTurn",
         "statusChips",
-        "approveBlockers",
-        "approvalStages",
-        "approvable",
         "exerciseStaleness",
         "promotable",
         "promotionBlockers",
@@ -13662,8 +13100,7 @@
         "reviewCoverage",
         "checkFindingCount",
         "aiFindingCount",
-        "explanations",
-        "approvalChanges"
+        "explanations"
       ]
     },
     "WorkbenchLessonState__ActiveTurnMetadata": {
@@ -14262,7 +13699,7 @@
     },
     "WorkbenchLessonState__ExerciseAlignmentRecord": {
       "additionalProperties": false,
-      "description": "One owner or approval decision pinning an exercise to section versions.",
+      "description": "A local exercise decision or canonical comparison against section versions.",
       "properties": {
         "exerciseKey": {
           "title": "Exercise Key",
@@ -14284,12 +13721,36 @@
         },
         "outcome": {
           "enum": [
-            "approved",
+            "canonical",
             "regenerated",
             "kept"
           ],
           "title": "Outcome",
           "type": "string"
+        },
+        "canonicalSha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Canonical Sha256"
+        },
+        "draftCreatedAt": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Draft Created At"
         },
         "note": {
           "anyOf": [
@@ -14348,6 +13809,8 @@
         "checkedAgainst",
         "sectionSources",
         "outcome",
+        "canonicalSha256",
+        "draftCreatedAt",
         "note",
         "reason",
         "comment",
@@ -14622,16 +14085,24 @@
       "type": "object"
     },
     "WorkbenchLessonState__OpenProposalBlocker": {
-      "description": "An unsettled proposal changes a source stage awaiting approval.",
+      "description": "An unsettled proposal changes a source being promoted.",
       "properties": {
         "stage": {
-          "enum": [
-            "plan",
-            "lesson",
-            "exercises"
+          "anyOf": [
+            {
+              "enum": [
+                "plan",
+                "lesson",
+                "exercises"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
           ],
-          "title": "Stage",
-          "type": "string"
+          "default": null,
+          "title": "Stage"
         },
         "kind": {
           "const": "open_proposal",
@@ -14646,13 +14117,13 @@
           "type": "string"
         }
       },
+      "title": "OpenProposalBlocker",
+      "type": "object",
       "required": [
         "stage",
         "kind",
         "target"
-      ],
-      "title": "OpenProposalBlocker",
-      "type": "object"
+      ]
     },
     "WorkbenchLessonState__ProposalCheck": {
       "description": "Deterministic check of a temporary candidate or accepted draft.",
@@ -14712,51 +14183,6 @@
       "title": "ResolutionReason",
       "type": "string"
     },
-    "WorkbenchLessonState__ReviewCoverageBlocker": {
-      "description": "Current source blocks still need review coverage for one stage.",
-      "properties": {
-        "stage": {
-          "enum": [
-            "lesson",
-            "exercises"
-          ],
-          "title": "Stage",
-          "type": "string"
-        },
-        "count": {
-          "title": "Count",
-          "type": "integer"
-        },
-        "uncovered": {
-          "items": {
-            "type": "string"
-          },
-          "title": "Uncovered",
-          "type": "array"
-        },
-        "kind": {
-          "const": "review_coverage",
-          "default": "review_coverage",
-          "title": "Kind",
-          "type": "string"
-        },
-        "target": {
-          "const": "review",
-          "default": "review",
-          "title": "Target",
-          "type": "string"
-        }
-      },
-      "required": [
-        "stage",
-        "count",
-        "uncovered",
-        "kind",
-        "target"
-      ],
-      "title": "ReviewCoverageBlocker",
-      "type": "object"
-    },
     "WorkbenchLessonState__ReviewCoverageStatus": {
       "description": "Current source coverage counts and target identities still needing review.",
       "properties": {
@@ -14785,75 +14211,6 @@
         "total",
         "uncovered"
       ]
-    },
-    "WorkbenchLessonState__StageApprovalStatus": {
-      "description": "Live hash-chain state and upstream changes for the approval dialog.",
-      "properties": {
-        "stage": {
-          "enum": [
-            "plan",
-            "lesson",
-            "exercises"
-          ],
-          "title": "Stage",
-          "type": "string"
-        },
-        "status": {
-          "enum": [
-            "needs_approval",
-            "stale",
-            "baseline",
-            "approved"
-          ],
-          "title": "Status",
-          "type": "string"
-        },
-        "fileSha256": {
-          "title": "File Sha256",
-          "type": "string"
-        },
-        "approvedSha256": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Approved Sha256"
-        },
-        "reviewer": {
-          "anyOf": [
-            {
-              "enum": [
-                "human",
-                "baseline"
-              ],
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Reviewer"
-        },
-        "upstreamDiff": {
-          "default": "",
-          "title": "Upstream Diff",
-          "type": "string"
-        }
-      },
-      "required": [
-        "stage",
-        "status",
-        "fileSha256",
-        "approvedSha256",
-        "reviewer",
-        "upstreamDiff"
-      ],
-      "title": "StageApprovalStatus",
-      "type": "object"
     },
     "WorkbenchLessonState__StatusChip": {
       "description": "A short derived status label shown on a lesson or stage.",
@@ -15104,7 +14461,7 @@
       "type": "object"
     },
     "WorkbenchLessonState__UnsavedChangesBlocker": {
-      "description": "Client-side text still needs to be saved before approval.",
+      "description": "Client-side text still needs to be saved before promotion.",
       "properties": {
         "kind": {
           "const": "unsaved_changes",
@@ -15996,75 +15353,6 @@
       "title": "ActiveTurnMetadata",
       "type": "object"
     },
-    "StageApprovalStatus": {
-      "description": "Live hash-chain state and upstream changes for the approval dialog.",
-      "properties": {
-        "stage": {
-          "enum": [
-            "plan",
-            "lesson",
-            "exercises"
-          ],
-          "title": "Stage",
-          "type": "string"
-        },
-        "status": {
-          "enum": [
-            "needs_approval",
-            "stale",
-            "baseline",
-            "approved"
-          ],
-          "title": "Status",
-          "type": "string"
-        },
-        "fileSha256": {
-          "title": "File Sha256",
-          "type": "string"
-        },
-        "approvedSha256": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Approved Sha256"
-        },
-        "reviewer": {
-          "anyOf": [
-            {
-              "enum": [
-                "human",
-                "baseline"
-              ],
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Reviewer"
-        },
-        "upstreamDiff": {
-          "default": "",
-          "title": "Upstream Diff",
-          "type": "string"
-        }
-      },
-      "required": [
-        "stage",
-        "status",
-        "fileSha256",
-        "approvedSha256",
-        "reviewer",
-        "upstreamDiff"
-      ],
-      "title": "StageApprovalStatus",
-      "type": "object"
-    },
     "LessonGateBlocker": {
       "anyOf": [
         {
@@ -16072,9 +15360,6 @@
         },
         {
           "$ref": "#/$defs/LessonGateBlocker__OpenProposalBlocker"
-        },
-        {
-          "$ref": "#/$defs/LessonGateBlocker__ReviewCoverageBlocker"
         },
         {
           "$ref": "#/$defs/LessonGateBlocker__AudioBlocker"
@@ -16231,16 +15516,24 @@
       ]
     },
     "LessonGateBlocker__OpenProposalBlocker": {
-      "description": "An unsettled proposal changes a source stage awaiting approval.",
+      "description": "An unsettled proposal changes a source being promoted.",
       "properties": {
         "stage": {
-          "enum": [
-            "plan",
-            "lesson",
-            "exercises"
+          "anyOf": [
+            {
+              "enum": [
+                "plan",
+                "lesson",
+                "exercises"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
           ],
-          "title": "Stage",
-          "type": "string"
+          "default": null,
+          "title": "Stage"
         },
         "kind": {
           "const": "open_proposal",
@@ -16255,61 +15548,16 @@
           "type": "string"
         }
       },
-      "required": [
-        "stage",
-        "kind",
-        "target"
-      ],
       "title": "OpenProposalBlocker",
-      "type": "object"
-    },
-    "LessonGateBlocker__ReviewCoverageBlocker": {
-      "description": "Current source blocks still need review coverage for one stage.",
-      "properties": {
-        "stage": {
-          "enum": [
-            "lesson",
-            "exercises"
-          ],
-          "title": "Stage",
-          "type": "string"
-        },
-        "count": {
-          "title": "Count",
-          "type": "integer"
-        },
-        "uncovered": {
-          "items": {
-            "type": "string"
-          },
-          "title": "Uncovered",
-          "type": "array"
-        },
-        "kind": {
-          "const": "review_coverage",
-          "default": "review_coverage",
-          "title": "Kind",
-          "type": "string"
-        },
-        "target": {
-          "const": "review",
-          "default": "review",
-          "title": "Target",
-          "type": "string"
-        }
-      },
+      "type": "object",
       "required": [
         "stage",
-        "count",
-        "uncovered",
         "kind",
         "target"
-      ],
-      "title": "ReviewCoverageBlocker",
-      "type": "object"
+      ]
     },
     "LessonGateBlocker__UnsavedChangesBlocker": {
-      "description": "Client-side text still needs to be saved before approval.",
+      "description": "Client-side text still needs to be saved before promotion.",
       "properties": {
         "kind": {
           "const": "unsaved_changes",
@@ -17140,7 +16388,7 @@
     },
     "ExerciseAlignmentState__ExerciseAlignmentRecord": {
       "additionalProperties": false,
-      "description": "One owner or approval decision pinning an exercise to section versions.",
+      "description": "A local exercise decision or canonical comparison against section versions.",
       "properties": {
         "exerciseKey": {
           "title": "Exercise Key",
@@ -17162,12 +16410,36 @@
         },
         "outcome": {
           "enum": [
-            "approved",
+            "canonical",
             "regenerated",
             "kept"
           ],
           "title": "Outcome",
           "type": "string"
+        },
+        "canonicalSha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Canonical Sha256"
+        },
+        "draftCreatedAt": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Draft Created At"
         },
         "note": {
           "anyOf": [
@@ -17226,6 +16498,8 @@
         "checkedAgainst",
         "sectionSources",
         "outcome",
+        "canonicalSha256",
+        "draftCreatedAt",
         "note",
         "reason",
         "comment",
@@ -17417,7 +16691,7 @@
     },
     "ExerciseAlignmentRecord": {
       "additionalProperties": false,
-      "description": "One owner or approval decision pinning an exercise to section versions.",
+      "description": "A local exercise decision or canonical comparison against section versions.",
       "properties": {
         "exerciseKey": {
           "title": "Exercise Key",
@@ -17439,12 +16713,36 @@
         },
         "outcome": {
           "enum": [
-            "approved",
+            "canonical",
             "regenerated",
             "kept"
           ],
           "title": "Outcome",
           "type": "string"
+        },
+        "canonicalSha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Canonical Sha256"
+        },
+        "draftCreatedAt": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Draft Created At"
         },
         "note": {
           "anyOf": [
@@ -17503,6 +16801,8 @@
         "checkedAgainst",
         "sectionSources",
         "outcome",
+        "canonicalSha256",
+        "draftCreatedAt",
         "note",
         "reason",
         "comment",
@@ -17642,14 +16942,6 @@
       ],
       "title": "CurriculumFinding",
       "type": "object"
-    },
-    "CurriculumPlanApproval": {
-      "enum": [
-        "pending_human",
-        "auto_approved",
-        "human_approved"
-      ],
-      "type": "string"
     },
     "FindingOrigin": {
       "enum": [
@@ -18723,30 +18015,6 @@
         "helpful_prerequisites"
       ],
       "title": "CurriculumUpdateEdit",
-      "type": "object"
-    },
-    "CurriculumFindingDecision": {
-      "additionalProperties": false,
-      "description": "The author's explicit decision for one located curriculum finding.",
-      "properties": {
-        "finding_id": {
-          "title": "Finding Id",
-          "type": "string"
-        },
-        "decision": {
-          "enum": [
-            "accept",
-            "revise"
-          ],
-          "title": "Decision",
-          "type": "string"
-        }
-      },
-      "required": [
-        "finding_id",
-        "decision"
-      ],
-      "title": "CurriculumFindingDecision",
       "type": "object"
     },
     "WorkbenchAudioPlan": {

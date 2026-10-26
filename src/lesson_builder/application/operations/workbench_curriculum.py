@@ -11,6 +11,7 @@ from functools import lru_cache
 from pathlib import Path
 
 import yaml
+from pydantic import TypeAdapter
 
 from lesson_builder.application.operations.materialize_curriculum import validate_committed_curriculum_plan
 from lesson_builder.application.operations.workbench_records import CurriculumBaseline
@@ -19,7 +20,6 @@ from lesson_builder.application.settings import K_APPLICATION_WORKBENCH_UNORDERE
 from lesson_builder.domain.curriculum.models import CurriculumAddEdit
 from lesson_builder.domain.curriculum.models import CurriculumEdit
 from lesson_builder.domain.curriculum.models import CurriculumEditPreview
-from lesson_builder.domain.curriculum.models import CurriculumFindingDecision
 from lesson_builder.domain.curriculum.models import CurriculumMergeEdit
 from lesson_builder.domain.curriculum.models import CurriculumPlan
 from lesson_builder.domain.curriculum.models import CurriculumPlanSlot
@@ -90,10 +90,8 @@ def save_workbench_curriculum_edits(
     edits: Iterable[CurriculumEdit],
     *,
     review_digest: str | None = None,
-    finding_decisions: Iterable[CurriculumFindingDecision] = (),
-    force: bool = False,
 ) -> tuple[str, tuple[CurriculumFinding, ...]]:
-    """Review or force-save staged edits with any eligible draft removals."""
+    """Save previewed edits with any eligible draft removals."""
     edit_list = list(edits)
     if not edit_list:
         raise ValueError("at least one curriculum edit is required")
@@ -101,15 +99,16 @@ def save_workbench_curriculum_edits(
     original = read_curriculum(root)
     preview = preview_edits(original, edit_list)
     plan_path = _plan_path(root)
-    approval = (
-        "pending_human"
-        if force
-        else _require_reviewed_curriculum(root, edit_list, preview, review_digest, finding_decisions)
-    )
+    current_preview = preview_workbench_curriculum_edits(root, edit_list)
+    if review_digest != current_preview.review_digest:
+        raise ValueError("curriculum changed since preview; preview the current content before saving")
+    missing = [item for item in preview.dependency_findings if item.code == "curriculum.prerequisite_missing"]
+    if missing:
+        raise ValueError("fix missing prerequisites before saving: " + "; ".join(item.explanation for item in missing))
 
     baseline = _capture_baseline(root, original)
     before = plan_path.read_text(encoding="utf-8")
-    after = _rewrite_plan_source(before, original, preview.entries, approval)
+    after = _rewrite_plan_source(before, original, preview.entries)
     draft_targets, draft_commit_paths, _deleted_ids = _draft_deletion_targets(
         root, edit_list, {slot.catalog_id for slot in preview.entries}
     )
@@ -164,9 +163,7 @@ def find_stale_curriculum_entries(root: Path, plan: CurriculumPlan) -> set[str]:
         slot.catalog_id
         for slot in plan.slots
         if slot.catalog_id in baseline.slots
-        and normalize_curriculum_slot(
-            CurriculumPlanSlot.model_validate_json(baseline.slots[slot.catalog_id]), include_position=False
-        )
+        and normalize_curriculum_slot(_parse_baseline_slot(baseline.slots[slot.catalog_id]), include_position=False)
         != normalize_curriculum_slot(slot, include_position=False)
     }
 
@@ -183,31 +180,10 @@ def normalize_curriculum_slot(slot: CurriculumPlanSlot, *, include_position: boo
     return values
 
 
-def _require_reviewed_curriculum(
-    root: Path,
-    edits: list[CurriculumEdit],
-    preview: CurriculumEditPreview,
-    review_digest: str | None,
-    finding_decisions: Iterable[CurriculumFindingDecision],
-) -> str:
-    current_review = preview_workbench_curriculum_edits(root, edits)
-    if review_digest != current_review.review_digest:
-        raise ValueError("curriculum changed since review; review the current content before saving")
-    decisions = list(finding_decisions)
-    decision_map = {item.finding_id: item.decision for item in decisions}
-    if len(decision_map) != len(decisions):
-        raise ValueError("curriculum review contains duplicate finding decisions")
-    expected_ids = {item.finding_id for item in preview.dependency_findings}
-    if decision_map.keys() != expected_ids:
-        raise ValueError("review every current curriculum finding before saving")
-    missing = [item for item in preview.dependency_findings if item.code == "curriculum.prerequisite_missing"]
-    if missing:
-        raise ValueError(
-            "fix missing prerequisites before reviewed save: " + "; ".join(item.explanation for item in missing)
-        )
-    if any(value != "accept" for value in decision_map.values()):
-        raise ValueError("revise curriculum findings before saving")
-    return "human_approved"
+def _parse_baseline_slot(text: str) -> CurriculumPlanSlot:
+    values = TypeAdapter(dict[str, object]).validate_json(text)
+    values.pop("human_gate", None)
+    return CurriculumPlanSlot.model_validate(values)
 
 
 def _capture_baseline(root: Path, plan: CurriculumPlan) -> CurriculumBaseline:
@@ -217,14 +193,10 @@ def _capture_baseline(root: Path, plan: CurriculumPlan) -> CurriculumBaseline:
     return baseline
 
 
-def _rewrite_plan_source(
-    text: str, original: CurriculumPlan, final_entries: list[CurriculumPlanSlot], approval: str
-) -> str:
+def _rewrite_plan_source(text: str, original: CurriculumPlan, final_entries: list[CurriculumPlanSlot]) -> str:
     updates: dict[tuple[str | int, ...], str | int] = {}
     if "approved_entries" in original.summary and original.summary["approved_entries"] != len(final_entries):
         updates[("summary", "approved_entries")] = len(final_entries)
-    if original.curriculum_approval != approval:
-        updates[("curriculum_approval",)] = approval
     if updates:
         text = rewrite_yaml_scalars(text, updates)
     result = rewrite_yaml_sequence_items(

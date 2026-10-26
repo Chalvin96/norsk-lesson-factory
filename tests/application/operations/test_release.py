@@ -29,10 +29,6 @@ from lesson_builder.application.operations.release import verify_release
 from lesson_builder.application.operations.synthesize_audio import AudioCandidateIdentity
 from lesson_builder.application.operations.synthesize_audio import load_audio_settings
 from lesson_builder.application.operations.synthesize_audio import plan_lesson_audio_candidates
-from lesson_builder.application.operations.workbench_approval import curriculum_slot_digest
-from lesson_builder.application.operations.workbench_approval import derive_stage_statuses
-from lesson_builder.application.operations.workbench_curriculum import normalize_curriculum_slot
-from lesson_builder.application.operations.workbench_curriculum import read_curriculum
 from lesson_builder.application.operations.workbench_editing import read_workbench_source
 from lesson_builder.application.operations.workbench_records import Proposal
 from lesson_builder.application.operations.workbench_records import ProposalBlock
@@ -41,11 +37,9 @@ from lesson_builder.application.operations.workbench_records import WorkbenchAud
 from lesson_builder.application.operations.workbench_records import WorkbenchAudioIndex
 from lesson_builder.application.operations.workbench_records import WorkbenchAudioIndexClip
 from lesson_builder.application.operations.workbench_records import WorkbenchAudioReleaseVoices
-from lesson_builder.application.operations.workbench_state import build_curriculum_lesson_status_chips
 from lesson_builder.domain.lesson.services.transcript import derive_transcript_blocks
 from lesson_builder.workspace.workbench_store import read_workbench_record
 from lesson_builder.workspace.workbench_store import write_workbench_record
-from tests.application.factories import StageApprovalRecordFactory
 from tests.application.fakes import FakeTtsClient
 from tests.paths import K_CATALOG_PACKAGE_FIXTURE_ROOT
 
@@ -58,6 +52,18 @@ K_RELEASE_SCRATCH = ("store", "scratch", "release")
 @pytest.fixture(autouse=True)
 def no_ambient_github_repository(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.delenv("GITHUB_REPOSITORY", raising=False)
+
+
+def test_run_release_given_canonical_edit_without_receipts_expect_source_bound_plan(tmp_path: Path) -> None:
+    repo = _repo(tmp_path)
+    exercises = repo / "content" / "lessons" / K_LESSON_ID / "exercises.yaml"
+    exercises.write_text(exercises.read_text() + "\n# Canonical edit reviewed through Git.\n")
+
+    result = run_release(repo_root=repo)
+
+    assert result["lesson_count"] == 1
+    assert result["approved"] is False
+    assert not (repo / "content" / "approvals").exists()
 
 
 def _repo(tmp_path: Path) -> Path:
@@ -81,7 +87,6 @@ def _repo(tmp_path: Path) -> Path:
         }
     }
     (tmp_path / "config.yaml").write_text(yaml.safe_dump(config, allow_unicode=True), encoding="utf-8")
-    _write_current_stage_approvals(tmp_path)
     return tmp_path
 
 
@@ -105,25 +110,6 @@ def _identities(repo: Path) -> list[AudioCandidateIdentity]:
     return plan_lesson_audio_candidates(transcript_blocks=blocks, settings=settings)
 
 
-def _write_current_stage_approvals(repo: Path, lesson_id: str = K_LESSON_ID) -> None:
-    source = read_workbench_source(repo, lesson_id)
-    slot_digest = curriculum_slot_digest(repo, lesson_id)
-    upstream: str | None = None
-    for stage, filename in (("plan", "plan.md"), ("lesson", "lesson.md"), ("exercises", "exercises.yaml")):
-        file_digest = hashlib.sha256(source.files[filename].encode()).hexdigest()
-        record = StageApprovalRecordFactory.build(
-            lesson_id=lesson_id,
-            stage=stage,
-            file_sha256=file_digest,
-            upstream_approved_sha256=upstream,
-            curriculum_slot_sha256=slot_digest if stage == "plan" else None,
-        )
-        path = repo / "content" / "approvals" / "workbench" / lesson_id / stage / f"{file_digest}.yaml"
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(yaml.safe_dump(record.model_dump(mode="json"), allow_unicode=True), encoding="utf-8")
-        upstream = file_digest
-
-
 def _prerequisite_order_repo(tmp_path: Path, *, prerequisite_first: bool) -> Path:
     """Add the canonical prerequisite lesson so its order against the dependent varies."""
     repo = _repo(tmp_path)
@@ -142,7 +128,6 @@ def _prerequisite_order_repo(tmp_path: Path, *, prerequisite_first: bool) -> Pat
     dependent, prerequisite = plan["slots"]
     dependent["sequence_index"], prerequisite["sequence_index"] = (1, 0) if prerequisite_first else (0, 1)
     plan_path.write_text(yaml.safe_dump(plan, allow_unicode=True), encoding="utf-8")
-    _write_current_stage_approvals(repo, K_PREREQUISITE_LESSON_ID)
     return repo
 
 
@@ -216,26 +201,6 @@ def test_run_release_given_provider_free_workspace_expect_plan_without_credentia
     assert not (repo / "dist").exists()
 
 
-def test_run_release_given_canonical_slot_title_changed_expect_stale_stages_are_listed(
-    tmp_path: Path,
-) -> None:
-    repo = _repo(tmp_path)
-    _write_current_stage_approvals(repo)
-    plan_path = repo / "content" / "curriculum" / "plan.yaml"
-    plan = yaml.safe_load(plan_path.read_text(encoding="utf-8"))
-    plan["slots"][0]["title"] += " changed"
-    plan_path.write_text(yaml.safe_dump(plan, allow_unicode=True), encoding="utf-8")
-
-    for approve in (False, True):
-        with pytest.raises(ValueError, match="release blocked") as caught:
-            run_release(repo_root=repo, approve=approve)
-
-        message = str(caught.value)
-        assert f"{K_LESSON_ID} plan: stale" in message
-        assert f"{K_LESSON_ID} lesson: stale" in message
-        assert f"{K_LESSON_ID} exercises: stale" in message
-
-
 @pytest.mark.parametrize("approve", [False, True])
 def test_run_release_given_lesson_precedes_planned_prerequisite_expect_release_blocked(
     tmp_path: Path,
@@ -263,131 +228,8 @@ def test_run_release_given_prerequisite_precedes_dependent_expect_release_plan_p
     assert result["lesson_count"] == 2
 
 
-def test_slot_digest_given_position_change_expect_content_hash_unchanged(tmp_path: Path) -> None:
-    repo = _repo(tmp_path)
-    plan = read_curriculum(repo)
-    slot = plan.slots[0]
-    values = normalize_curriculum_slot(slot)
-    values.pop("sequence_index")
-    expected = hashlib.sha256(
-        json.dumps(values, sort_keys=True, ensure_ascii=False, separators=(",", ":")).encode()
-    ).hexdigest()
-    moved = slot.model_copy(update={"sequence_index": 10000})
-
-    digest = curriculum_slot_digest(repo, K_LESSON_ID, plan=plan.model_copy(update={"slots": [moved]}))
-
-    assert digest == expected
-
-
-def test_approval_given_legacy_index_above_compatibility_ceiling_expect_stale_chain(tmp_path: Path) -> None:
-    repo = _repo(tmp_path)
-    values = normalize_curriculum_slot(read_curriculum(repo).slots[0])
-    values["sequence_index"] = 10000
-    digest = hashlib.sha256(
-        json.dumps(values, sort_keys=True, ensure_ascii=False, separators=(",", ":")).encode()
-    ).hexdigest()
-    record_path = next((repo / "content/approvals/workbench" / K_LESSON_ID / "plan").glob("*.yaml"))
-    record = yaml.safe_load(record_path.read_bytes())
-    record["curriculum_slot_sha256"] = digest
-    record_path.write_text(yaml.safe_dump(record))
-
-    stages = derive_stage_statuses(repo, K_LESSON_ID, read_workbench_source(repo, K_LESSON_ID))
-
-    assert [stage.status for stage in stages] == ["stale"] * 3
-
-
-@pytest.mark.parametrize("legacy", [False, True], ids=["content_digest", "legacy_digest"])
-def test_approval_given_inserted_lesson_before_approved_lesson_expect_fresh_stages_chips_and_release_gate(
-    tmp_path: Path,
-    legacy: bool,
-) -> None:
-    repo = _repo(tmp_path)
-    plan = read_curriculum(repo)
-    slot = plan.slots[0]
-    if legacy:
-        values = normalize_curriculum_slot(slot)
-        values["sequence_index"] = 9999
-        digest = hashlib.sha256(
-            json.dumps(values, sort_keys=True, ensure_ascii=False, separators=(",", ":")).encode()
-        ).hexdigest()
-        record_path = next((repo / "content/approvals/workbench" / K_LESSON_ID / "plan").glob("*.yaml"))
-        record = yaml.safe_load(record_path.read_bytes())
-        record["curriculum_slot_sha256"] = digest
-        record_path.write_text(yaml.safe_dump(record))
-    inserted = slot.model_copy(update={"catalog_id": "new_draft", "sequence_index": 0})
-    moved = slot.model_copy(update={"sequence_index": slot.sequence_index + 1})
-    changed_plan = plan.model_copy(update={"slots": [inserted, moved]})
-    source = read_workbench_source(repo, K_LESSON_ID)
-
-    stages = derive_stage_statuses(repo, K_LESSON_ID, source, plan=changed_plan)
-    chips = build_curriculum_lesson_status_chips(repo, K_LESSON_ID, source, plan=changed_plan)
-    # The draft has no canonical package; the release gate still checks the approved lesson.
-    plan_path = repo / "content/curriculum/plan.yaml"
-    plan_path.write_text(yaml.safe_dump(plan.model_copy(update={"slots": [moved]}).model_dump(mode="json")))
-    result = run_release(repo_root=repo)
-
-    assert [stage.status for stage in stages] == ["approved"] * 3
-    assert "out of sync" not in [chip.label for chip in chips]
-    assert result["lesson_count"] == 1
-
-
-@pytest.mark.parametrize("legacy", [False, True], ids=["content_digest", "legacy_digest"])
-@pytest.mark.parametrize(
-    "field,value",
-    [
-        ("title", "Changed title"),
-        ("learner_outcome", "Changed outcome"),
-        ("prerequisites", ["new_required"]),
-        ("helpful_prerequisites", ["new_helpful"]),
-        ("cefr_level", "B2"),
-    ],
-)
-def test_approval_given_changed_slot_content_expect_stale_stages_and_release_gate(
-    tmp_path: Path,
-    legacy: bool,
-    field: str,
-    value: object,
-) -> None:
-    repo = _repo(tmp_path)
-    if legacy:
-        slot = read_curriculum(repo).slots[0]
-        digest = hashlib.sha256(
-            json.dumps(
-                normalize_curriculum_slot(slot), sort_keys=True, ensure_ascii=False, separators=(",", ":")
-            ).encode()
-        ).hexdigest()
-        record_path = next((repo / "content/approvals/workbench" / K_LESSON_ID / "plan").glob("*.yaml"))
-        record = yaml.safe_load(record_path.read_bytes())
-        record["curriculum_slot_sha256"] = digest
-        record_path.write_text(yaml.safe_dump(record))
-    plan_path = repo / "content/curriculum/plan.yaml"
-    plan = yaml.safe_load(plan_path.read_bytes())
-    plan["slots"][0][field] = value
-    plan_path.write_text(yaml.safe_dump(plan))
-
-    stages = derive_stage_statuses(repo, K_LESSON_ID, read_workbench_source(repo, K_LESSON_ID))
-
-    assert [stage.status for stage in stages] == ["stale"] * 3
-    with pytest.raises(ValueError, match=f"{K_LESSON_ID} plan: stale"):
-        run_release(repo_root=repo)
-
-
-def test_run_release_given_all_canonical_approvals_match_current_slots_expect_plan_proceeds(tmp_path: Path) -> None:
-    repo = _repo(tmp_path)
-    _write_current_stage_approvals(repo)
-
-    assert [
-        stage.status for stage in derive_stage_statuses(repo, K_LESSON_ID, read_workbench_source(repo, K_LESSON_ID))
-    ] == ["approved"] * 3
-    result = run_release(repo_root=repo)
-
-    assert result["approved"] is False
-    assert result["lesson_count"] == 1
-
-
 def test_run_release_given_draft_shadow_and_open_proposal_expect_pending_proposal_unchanged(tmp_path: Path) -> None:
     repo = _repo(tmp_path)
-    _write_current_stage_approvals(repo)
     shutil.copytree(repo / "content" / "lessons" / K_LESSON_ID, repo / "drafts" / K_LESSON_ID)
     draft_lesson = repo / "drafts" / K_LESSON_ID / "lesson.md"
     draft_lesson.write_text(draft_lesson.read_text(encoding="utf-8") + "\nDraft-only paragraph.\n", encoding="utf-8")
@@ -423,18 +265,6 @@ def test_run_release_given_draft_shadow_and_open_proposal_expect_pending_proposa
     proposal_after = ProposalLog.model_validate_json(proposal_path.read_bytes())
     assert proposal_path.read_bytes() == proposal_before
     assert proposal_after.proposals[0].blocks[0].status == "pending"
-
-
-def test_run_release_given_canonical_exercises_need_approval_expect_release_blocked(tmp_path: Path) -> None:
-    repo = _repo(tmp_path)
-    _write_current_stage_approvals(repo)
-    exercises = repo / "content" / "lessons" / K_LESSON_ID / "exercises.yaml"
-    exercises.write_text(exercises.read_text(encoding="utf-8") + "\n# direct canonical edit\n", encoding="utf-8")
-
-    with pytest.raises(ValueError, match="release blocked") as caught:
-        run_release(repo_root=repo)
-
-    assert f"{K_LESSON_ID} exercises: needs_approval" in str(caught.value)
 
 
 def test_run_release_given_explicit_destination_expect_exact_approval_command(tmp_path: Path) -> None:
@@ -815,7 +645,6 @@ def test_run_release_given_tagged_head_with_uncommitted_source_expect_refusal(tm
     subprocess.run(["git", "tag", K_TAG], cwd=repo, check=True)
     lesson = repo / "content" / "lessons" / K_LESSON_ID / "lesson.md"
     lesson.write_text(lesson.read_text(encoding="utf-8") + "\n", encoding="utf-8")
-    _write_current_stage_approvals(repo)
     monkeypatch.setenv("LESSON_AUDIO_PUBLIC_BASE_URL", "https://media.example.com")
     account = repo / "service-account.json"
     account.write_text("{}", encoding="utf-8")

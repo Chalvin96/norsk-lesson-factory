@@ -132,9 +132,6 @@ export function lessonPayload(overrides: Partial<LessonPayload> = {}): LessonPay
       ],
       activeTurn: null,
       statusChips: [{ label: 'baseline', tone: 'neutral' }],
-      approveBlockers: [{ kind: 'open_proposal', stage: 'lesson', target: 'proposal' }],
-      approvalStages: [],
-      approvable: true,
       exerciseStaleness: [],
       promotable: true,
       promotionBlockers: [],
@@ -146,7 +143,6 @@ export function lessonPayload(overrides: Partial<LessonPayload> = {}): LessonPay
       checkFindingCount: 0,
       aiFindingCount: 0,
       explanations: {},
-      approvalChanges: {},
     },
     audio: {
       clips: [
@@ -195,7 +191,6 @@ export function rowElement(id: string): HTMLElement {
 
 export function curriculumPayload(): CurriculumPayload {
   return {
-    curriculumApproval: 'auto_approved',
     lessons: [
       {
         lessonId: 'demo',

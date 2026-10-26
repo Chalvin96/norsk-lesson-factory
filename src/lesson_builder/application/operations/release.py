@@ -40,10 +40,8 @@ from lesson_builder.application.operations.synthesize_audio import plan_lesson_a
 from lesson_builder.application.operations.validate_distribution import load_planned_lesson_ids
 from lesson_builder.application.operations.validate_distribution import validate_audio_asset
 from lesson_builder.application.operations.validate_distribution import validate_committed_distribution
-from lesson_builder.application.operations.workbench_approval import derive_stage_statuses
 from lesson_builder.application.operations.workbench_audio import record_release_audio_voices
 from lesson_builder.application.operations.workbench_curriculum import read_curriculum
-from lesson_builder.application.operations.workbench_editing import read_workbench_source
 from lesson_builder.application.operations.workbench_records import WorkbenchAudioIndex
 from lesson_builder.application.settings import K_APPLICATION_AUDIO_COST_PER_MILLION_CHARS_USD
 from lesson_builder.clients.github.releases import download_release_asset
@@ -75,7 +73,7 @@ def run_release(
 ) -> dict[str, object]:
     """Plan or execute one source-bound release, with no interactive prompts."""
     root = Path(repo_root)
-    _require_fresh_canonical_approvals(root)
+    _require_valid_curriculum_order(root)
     if approve:
         plan = _read_existing_plan(root)
         planned_exclusions = _require_current_release_plan(root, plan)
@@ -222,15 +220,8 @@ def verify_release(
     }
 
 
-def _require_fresh_canonical_approvals(root: Path) -> None:
-    blockers: list[str] = []
+def _require_valid_curriculum_order(root: Path) -> None:
     plan = read_curriculum(root)
-    if plan.curriculum_approval == "pending_human":
-        raise ValueError(
-            "release blocked by pending curriculum review:\n"
-            "- curriculum plan: review required\n"
-            "Review and save the curriculum in the workbench before retrying."
-        )
     order_findings = [
         finding
         for finding in collect_curriculum_dependency_findings(plan)
@@ -239,20 +230,6 @@ def _require_fresh_canonical_approvals(root: Path) -> None:
     if order_findings:
         details = "\n".join(f"- {finding.lesson_id}: {finding.explanation}" for finding in order_findings)
         raise ValueError(f"release blocked by curriculum prerequisite order:\n{details}")
-    for lesson_id in load_planned_lesson_ids(root, plan=plan):
-        source = read_workbench_source(root, lesson_id, canonical_only=True)
-        out_of_sync_stages = [
-            stage
-            for stage in derive_stage_statuses(root, lesson_id, source, plan=plan)
-            if stage.status in ("needs_approval", "stale")
-        ]
-        blockers.extend(f"{lesson_id} {stage.stage}: {stage.status}" for stage in out_of_sync_stages)
-    if blockers:
-        details = "\n".join(f"- {blocker}" for blocker in blockers)
-        raise ValueError(
-            "release blocked by pending curriculum review or out-of-sync canonical lesson approvals:\n"
-            f"{details}\nRe-approve the affected stages in the workbench before retrying."
-        )
 
 
 def _release_audio_voices(root: Path, settings: AudioSettings) -> dict[str, dict[str, str]]:

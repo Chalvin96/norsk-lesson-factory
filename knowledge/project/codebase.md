@@ -57,7 +57,7 @@ Specific routing anchors:
   application boundary for compiling and auditing one authored package.
 - `application/operations/workbench_review.py` owns source-bound review
   coverage and evidence; `application/operations/workbench_lesson_gate.py`
-  owns approval and promotion blockers.
+  owns promotion blockers.
 - `application/operations/workbench_exercise_alignment.py` owns exercise
   section pins and staleness; checkpointed regeneration lives in
   `workflow/workbench_regeneration/`.

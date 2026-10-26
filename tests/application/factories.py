@@ -7,7 +7,6 @@ import factory
 from lesson_builder.application.operations.author_preview import AuthorPreview
 from lesson_builder.application.operations.workbench_lessons import WorkbenchLesson
 from lesson_builder.application.operations.workbench_records import ReviewRun
-from lesson_builder.application.operations.workbench_records import StageApprovalRecord
 
 
 class WorkbenchLessonFactory(factory.Factory):
@@ -58,28 +57,8 @@ class ReviewRunFactory(factory.Factory):
     summary = "Review completed."
 
 
-class StageApprovalRecordFactory(factory.Factory):
-    """One source-bound workbench stage approval record."""
-
-    class Meta:
-        model = StageApprovalRecord
-
-    lesson_id = "demo"
-    stage = "plan"
-    file_sha256 = "0" * 64
-    upstream_approved_sha256 = None
-    curriculum_slot_sha256 = None
-    approved_at = "2026-10-06T00:00:00+00:00"
-    code_commit = "test-commit"
-    review = None
-    proposals_accepted = 0
-    proposals_rejected = 0
-    acceptance_statement = "Owner acceptance is not qualified Norwegian review."
-
-
 __all__ = [
     "AuthorPreviewFactory",
     "ReviewRunFactory",
-    "StageApprovalRecordFactory",
     "WorkbenchLessonFactory",
 ]

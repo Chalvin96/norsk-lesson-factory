@@ -30,11 +30,6 @@ export function useSaveCurriculum() {
       writeJson<CurriculumSaveResult>('/api/curriculum/save', 'PUT', {
         edits: input.edits.map(toCurriculumEditRequest),
         review_digest: input.reviewDigest,
-        finding_decisions: input.findingDecisions.map(({ findingId, decision }) => ({
-          finding_id: findingId,
-          decision,
-        })),
-        force: input.force,
       }),
     onSuccess: (result) => client.setQueryData(['curriculum'], result.curriculum),
   });

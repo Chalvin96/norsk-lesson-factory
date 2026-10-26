@@ -7,9 +7,7 @@ export function formatLessonGateBlocker(blocker: LessonGateBlocker): string {
     case 'check_errors':
       return blocker.stage ? `${stageLabel(blocker.stage)}: Blocking check errors` : 'Blocking check errors';
     case 'open_proposal':
-      return `${stageLabel(blocker.stage)}: Open proposal`;
-    case 'review_coverage':
-      return `${stageLabel(blocker.stage)}: ${blocker.count} block${blocker.count === 1 ? '' : 's'} not reviewed`;
+      return 'Open proposal';
     case 'audio':
       if (blocker.missing || blocker.stale) {
         const missing = blocker.missing ? `${blocker.missing} missing` : '';
